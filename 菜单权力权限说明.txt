@@ -1,0 +1,75 @@
+一. 采用前端路由加后台路由共同控制：
+        	原因：后台单独控制的话灵活度太低，更改什么都需要在后台配置（还可以增加一些前端才有的页面，不用在后端也同时增加，比如一些说明
+页，公共页面404页面登录页面，提示页这种不需要生成路由的页面，按钮权限依赖产品思路更多）（像各级路由前的小图标等，也更应该由本地文件来
+控制，而不是跟后台联调才能测试图标）
+            1.左侧菜单生成方式(store里面的navlist）（permission.js里全局路由里处理）：用后台返回的菜单来生成左侧菜单（但是要遍历本地路由，将本地路由的meta成员赋值给
+后台对应路由成员的config属性，这样就能本地控制菜单的图标，同时也兼顾了后台数据拥有菜单显隐最高权限）。
+            2.router全局路由生成方式（store里面的hybridRouters）（permission.js里全局路由里处理）：用本地的路由列表生成。但是要遍历本地路由列表，将对
+应的后台返回的路由成员的meta传给本地路由，这样就可以根据mate成员来控制页面按钮操作权限。
+
+            菜单管理思路：
+				1.对于公共页面（404，login，tip这些页面），后台并不配置；依靠在前端设置路由，对于不想展示的设为hidden:true，就不会渲染（比如不想
+显示某个公共的提示一级分支）。
+				2.对于非公共页面，用本地路由和后台返回的路由拼接生成组合动态路由，就可以根据把本地有，但是后台返回没有的路由，
+设置为hidden：true，这样就是依靠后台来决定一级菜单了。
+		
+
+二. 后台菜单配置说明：
+	1. 填写菜单节点的描述字段： （1）必须把描述字段填写为本地路由的name字段（大小写不必严格区分）。{因为用本地路由和后台返回的路由拼接生成组合动态路由的
+时候，依靠此字段来匹配。}；（2）路径填写该页面的path方式访问的路由；
+	 2. 前端增加页面，必须去permission.js里面增加页面路由映射（因为后台返回的路由字符串要替换为路由对象才能使用）；
+
+
+
+后台菜单配置：（页面按钮配置命名规则，在config/column里的js文件中的操作对象action中配置，同时设置fn和alias）：
+add     添加（创建）(划转)
+detail   详情（查看编辑）
+del      删除
+edit     编辑 (修改)（修改/授权） (修改金额)（设置参数）
+move   迁移 （移出）
+pass     审核通过
+refuse  	拒绝（驳回）
+save      	保存
+preReview      初审
+nextReview     复审
+preReject        初审驳回
+nextReject       复审驳回
+lock                锁定
+unblock 	       解封
+judgment            判决 ，审核
+edit            修改金额
+activation    激活
+freeze         解冻
+email          补发邮件
+earnEdit                         收益记录
+transferEdit	      划转记录
+writeoffEdit                     销账记录
+reissueFunc	      补发回调
+entry		      入账
+batchAudit	     批量审核
+sellSet    		     出售设置
+chat 		     对话记录
+
+
+adjustAccountAdd          调账增
+adjustAccountReduce     调账减
+adjustAccountBatch        调账批量
+
+ 
+行内：（tr开头）（用在表格里面的switch控件）
+trputon   上架 （开关状态）
+trfill         充值
+trdraw     提出
+trstart      启动
+trroleauth   角色权限
+trorder     下单
+trlogin    登录
+trtrade    交易
+trhot     热门
+
+fetchPath
+
+
+充币  Recharge
+提币  Withdraw
+划转  Transfer

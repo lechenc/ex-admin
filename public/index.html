@@ -1,0 +1,63 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-14 18:48:00
+ * @LastEditTime: 2020-10-14 16:52:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \exchange-admin\public\index.html
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= webpackConfig.name %></title>
+    <script src=/config.js></script>
+  </head>
+  <script>
+    ;(function(){
+      // if (!/admin/.test(window.location.href)) {
+      //   return;
+      // }
+      const version = localStorage.getItem('_version');
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status <= 304) {
+          const response = xhr.responseText.replace(/\n|\s|\t/g, '')
+          if (response) {
+            localStorage.setItem('_version', response);
+          }
+          if (!response || !version) {
+            return;
+          }
+          console.log('version='+version+ '---'+'response='+response)
+          if (version !== response) {
+            window.location.reload();
+          }
+          // if (version !== xhr.responseText) {
+          //   if (/dappmi/.test(window.location.href)) {
+          //     console.log('now to reload!!!')
+          //     window.location.href = 'https://admin.dappmi.com/#/login?redirect=%2FwelcomeMain'
+          //   }
+          //   if(/alpex/.test(window.location.href)){
+          //     console.log('now to reload!!!')
+          //     window.location.href = 'https://admin.alpex.pro/#/login?redirect=%2FwelcomeMain'
+          //   }
+          //   // window.location.href = (window.SERVER_PATH + '').replace(/api/,'') + '#/login?redirect=%2FwelcomeMain';
+          // }
+        }
+      }
+      xhr.open('GET', './version.js', true);
+      xhr.send();
+    })()
+  </script>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= webpackConfig.name %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

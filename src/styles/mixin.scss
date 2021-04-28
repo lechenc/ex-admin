@@ -1,0 +1,135 @@
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin scrollBar {
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+    border-radius: 20px;
+  }
+}
+
+@mixin relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+/*
+ * @Autor: Diskfan
+ * @Date: 2019-08-06 15:42:50
+ * @LastEditors: Do not edit
+ * @LastEditTime: 2019-08-14 17:56:08
+ * @Description: mixin
+ */
+
+// 元素长宽
+@mixin wh($width, $height) {
+	width: $width;
+	height: $height;
+}
+
+// 字体颜色,大小, 水平布局
+@mixin font($size, $color: #333, $text-align: left){
+	font-size: $size;
+	color: $color;
+	text-align: $text-align;
+}
+
+// flex布局
+@mixin flex($justify-content: center, $align-items: center) {
+	display: flex;
+	justify-content: $justify-content;
+	align-items: $align-items;
+}
+
+@mixin full($width: 100%, $height: 100%) {
+	width: $width;
+	height:  $height;
+}
+@mixin transition($duration: 0.3s, $target: all) {
+	transition: $duration $target cubic-bezier(0.24, 0.75, 0.59, 1.01);
+	-webkit-transition: $duration $target cubic-bezier(0.24, 0.75, 0.59, 1.01);
+	-moz-transition: $duration $target cubic-bezier(0.24, 0.75, 0.59, 1.01);
+	-ms-transition: $duration $target cubic-bezier(0.24, 0.75, 0.59, 1.01);
+	-o-transition: $duration $target cubic-bezier(0.24, 0.75, 0.59, 1.01);
+}
+// 收缩面板header
+@mixin collapse-header($font-size: 18px) {
+	.el-collapse .el-collapse-item .el-collapse-item__header {
+		font-size: $font-size;
+		box-shadow:0px 1px 5px rgb(235, 233, 233);
+		color: #01174A;
+	}
+}
+
+// 页码
+@mixin page($height: 40px) {
+	width: 100%;
+	height: $height;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin space($width: 50px) {
+	width: $width;
+	height: 1px;
+	display: inline-block;
+}
+@mixin table-btns {
+	button {
+		padding: 3px 8px;
+	}
+}
+
+@mixin before {
+	&:before {
+		content: "*";
+		color: #f56c6c;
+		margin-right: 4px;
+	}
+}
+
+@mixin btn-loading($marginTop: 10px) {
+	.el-loading-spinner {
+		svg {
+			height: 22px;
+			width: 22px;
+			margin-top: $marginTop;
+		}
+	}
+}
+
+@mixin slide-up($length: 30px) {
+	.slide-up-enter-active, .slide-up-leave-active {
+		@include transition();
+	}
+	.slide-up-enter, .slide-up-leave-to {
+		transform: translateY($length);
+		opacity: 0;
+		-webkit-transform: translateY($length);
+		-moz-transform: translateY($length);
+		-ms-transform: translateY($length);
+		-o-transform: translateY($length);
+	}
+}
+
+@mixin img-boxshadow() {
+	img {
+		box-shadow:0px 0px 10px #cecdcd;
+	}
+}
