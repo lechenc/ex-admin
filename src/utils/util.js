@@ -19,7 +19,7 @@ import store from '@/store';
 
 // Vue.use(VueI18n)
 // const messages = { zh, en}
-// const defaultLocal:string = local();
+// const defaultLocal = local();
 // const i18n = new VueI18n({
 //   locale: defaultLocal,
 //   fallbackLocale: 'en',
@@ -931,7 +931,51 @@ function accDiv(arg1, arg2) {
   return (r1 / r2) * Math.pow(10, t2 - t1); //---整数相除 在乘上10的平方  小数点的长度
 }
 
+function randomRange(min, max, charStr) {
+  var returnStr = '';
+  var range; //生成的字符串长度
+  //随机生成字符
+  var autoGetStr = function() {
+    var charFun = function() {
+      var n = Math.floor(Math.random() * 62);
+      if (n < 10) {
+        return n; //1-10
+      } else if (n < 36) {
+        return String.fromCharCode(n + 55); //A-Z
+      } else {
+        return String.fromCharCode(n + 61); //a-z
+      }
+    };
+    while (returnStr.length < range) {
+      returnStr += charFun();
+    }
+  };
+
+  //根据指定的字符串中生成组合
+  var accordCharStrGet = function() {
+    for (var i = 0; i < range; i++) {
+      var index = Math.round(Math.random() * (charStr.length - 1));
+      returnStr += charStr.substring(index, index + 1);
+    }
+  };
+  if (typeof min == 'undefined') {
+    min = 10;
+  }
+  if (typeof max == 'string') {
+    charStr = max;
+  }
+  range = max && typeof max == 'number' ? Math.round(Math.random() * (max - min)) + min : min;
+
+  if (charStr) {
+    accordCharStrGet();
+  } else {
+    autoGetStr();
+  }
+  return returnStr;
+}
+
 export default {
+  randomRange,
   add,
   accDiv,
   accMul,

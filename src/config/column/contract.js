@@ -3654,7 +3654,74 @@ const agentTransferfig = [
   },
 ];
 
+const apiKeyCol = [
+  {
+    label: '备注',
+    prop: 'keyName',
+  },
+  {
+    label: 'API Key',
+    prop: 'appKey',
+  },
+  {
+    label: 'Secret Key',
+    prop: 'englishKeyName',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type:"time"
+  },
+  {
+    label: '开关',
+    prop: 'status',
+    type: 'switch',
+    fn: 'trstatus',
+    alias:"trstatus"
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width:80,
+    btnGroup: [
+      {
+        label: '删除',
+        fn: 'delete',
+        type:"primary",
+        alias:"delete"
+      },
+    ]
+  }
+]
+
+const apiKeyColNoBtn = [
+  {
+    label: '备注',
+    prop: 'keyName',
+  },
+  {
+    label: 'API Key',
+    prop: 'appKey',
+  },
+  {
+    label: 'Secret Key',
+    prop: 'englishKeyName',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type:"time"
+  },
+]
+
+const apiKeyConfig = [
+]
+
 export {
+  apiKeyConfig,
+  apiKeyColNoBtn,
+  apiKeyCol,
   agentTransferfig,
   agentTransferCol,
   contractResultConfig,

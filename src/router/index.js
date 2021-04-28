@@ -1528,6 +1528,21 @@ export const asyncRouterMap = [
           },
         ],
       },
+
+      {
+        path: 'apiConfig',
+        name: 'ApiConfig',
+        redirect: '/contract/apiConfig/apiKey',
+        meta: { title: 'API管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'apiKey',
+            name: 'ApiKey',
+            component: () => import('@/views/contract/apiConfig/apiKey'),
+            meta: { title: 'API设置', icon: '', role: [] },
+          },
+        ],
+      },
     ],
   },
 
