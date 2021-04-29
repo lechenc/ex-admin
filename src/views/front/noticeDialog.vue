@@ -49,10 +49,17 @@
       </el-row>
 
       <el-row :span="24">
-        <el-form-item label="链接" prop="url">
+        <el-form-item label="中文链接" prop="url">
           <el-input size="small" placeholder="请输入链接" v-model.trim="form.url"></el-input>
         </el-form-item>
       </el-row>
+
+
+      <el-row :span="24">
+          <el-form-item label="英文链接" prop="englishLink">
+            <el-input size="small" placeholder="请输入链接" v-model.trim="form.englishLink"></el-input>
+          </el-form-item>
+        </el-row>
       <el-row :span="24">
         <el-form-item label="排序" prop="weight">
           <el-input size="small" placeholder="请输入排序" type="Number" v-model.trim="form.weight"></el-input>
@@ -105,6 +112,8 @@ export default {
         title: [{ required: true, message: '请输入标题' }],
         englishTitle: [{ required: true, message: '请输入标题' }],
         weight: [{ required: true, message: '请输入排序' }],
+        url: [{ required: true, message: '请输入链接' }],
+
       },
       loading: false,
       //form> newsLang 中英文：0中文，1英文
@@ -114,6 +123,7 @@ export default {
         title: '',
         content: '',
         url: '',
+        englishLink:'',
         weight: '',
         status: false,
         type: 0,
@@ -185,6 +195,7 @@ export default {
           title: '',
           content: '',
           url: '',
+          englishLink:'',
           weight: '',
           status: false,
           type: 0,
@@ -195,8 +206,8 @@ export default {
       if (this.type === 1) {
         // 编辑（多加一个id）
         this.title = '编辑首页公告';
-        const { id, title, englishTitle, content,type, englishContent, url, weight, status } = this.row;
-        this.form = { id, title, englishTitle, content, englishContent,type, url, weight, status };
+        const { id, title, englishTitle, content,type, englishContent, url, englishLink, weight, status } = this.row;
+        this.form = { id, title, englishTitle, content, englishContent,type, url, weight,englishLink, status };
       }
     },
   },
