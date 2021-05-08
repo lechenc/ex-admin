@@ -13,16 +13,16 @@ window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
 //   window.SERVER_PATH = 'http://192.168.0.241/api'; // 通用接口地址/
 // }
 if (/dappmi/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口
+  window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 通用接口地址/
 }
 // window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
 // window.SERVER_PATH = 'http://192.168.3.45:16425'; // 通用接口地址
 
-if (/linkkn/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.linkkn.vip/api'; // 通用接口地址/
+if(/alpex/.test(window.location.href)){
+  window.SERVER_PATH = 'https://admin.alpex.pro/api/'; // 通用接口地址
 }
 // console.error('强制测试服务器')
 // window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
-var urlPicTmp = /linkkn/.test(window.location.href) ? '' : '/'
+var urlPicTmp = /alpex/.test(window.location.href) ? '' : '/'
 window.SERVER_PATH_PIC = window.SERVER_PATH + urlPicTmp  + 'admin/user/file/upload-file'; // 通用接口地址/
 window.SERVER_PATH_FILE = window.SERVER_PATH + '/admin/user/upload/package';
