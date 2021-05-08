@@ -228,7 +228,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('VoucherParameters', [], []);
+    let authObj = this.$util.getAuthority('Maintenance', [], []);
     this.isCURDAuth = authObj.isModify;
 
     this.getList();
