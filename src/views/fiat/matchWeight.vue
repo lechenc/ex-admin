@@ -168,6 +168,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        appId:0
       };
       Object.assign(params, this.search_params_obj);
       this.listLoading = true;
