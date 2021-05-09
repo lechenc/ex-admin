@@ -4,36 +4,32 @@
  * @LastEditTime: 2020-12-17 14:32:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\system\role.vue
+ * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\system\groupList.vue
  -->
 <template>
-  <div class="role-container">
+  <div class="groupList-container">
+    <div class="container-top">
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+    </div>
+
     <div class="container-btn" v-if="isCURDAuth">
-      <el-button type="primary" size="medium" @click="addRole">添加角色</el-button>
+      <el-button type="primary" size="medium" @click="addgroupList">添加角色</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
-     <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <icon-page :total="total" :pages="pages"></icon-page>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 添加 -->
     <el-dialog :title="formName" :visible.sync="dialogFormVisible">
-      <el-form :model="roleForm" ref="roleForm" :rules="rules">
+      <el-form :model="groupListForm" ref="groupListForm" :rules="rules">
         <el-form-item label="角色名称" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="roleForm.name" autocomplete="off"></el-input>
+          <el-input v-model="groupListForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion='true' :check-strictly="true" :data="treeData" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+          <el-tree :accordion="true" :check-strictly="true" :data="treeData" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -47,15 +43,15 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { roleCol, roleColNoBtn } from '@/config/column/system';
+import { groupListCol, groupListColNoBtn, groupListConfig } from '@/config/column/system';
 import $api from '@/api/api';
 
 export default {
-  name: 'Role',
+  name: 'GroupList',
   components: {
     Btable,
     Bsearch,
-    iconPage
+    iconPage,
   },
   data() {
     return {
@@ -63,6 +59,7 @@ export default {
       btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
       list: [], //委托列表
+      searchCofig: [], // 搜索框配置
       configs: [], // 委托列表列配置
       // search_params_obj: {}, // 搜索框对象
       current_page: 1, // 当前页码
@@ -76,7 +73,7 @@ export default {
       rules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      roleForm: {
+      groupListForm: {
         id: '',
         name: '',
         menuId: '',
@@ -88,29 +85,42 @@ export default {
     };
   },
   methods: {
-    addRole() {
+     doSearch(data) {
+      this.current_page = 1;
+      this.search_params_obj = data;
+      this.getList();
+    },
+    doReset() {
+      this.search_params_obj = {};
+      this.searchCofig.forEach((v) => {
+        v['value'] = '';
+      });
+      this.getList();
+      // this.getList();
+    },
+    addgroupList() {
       this.formName = '添加角色';
       this.dialogFormVisible = true;
-      this.roleForm.id = '';
-      this.roleForm.name = '';
-      this.roleForm.menuId = '';
+      this.Form.id = '';
+      this.Form.name = '';
+      this.Form.menuId = '';
       setTimeout(() => {
         this.$refs.tree.setCheckedKeys([]);
       }, 0);
     },
     confirmOp() {
-      this.$refs['roleForm'].validate(async valid => {
+      this.$refs['Form'].validate(async (valid) => {
         if (valid) {
-           let tmpCheck = this.$refs['tree'].getCheckedKeys();
+          let tmpCheck = this.$refs['tree'].getCheckedKeys();
           // let tmpHalfCheck = this.$refs['tree'].getHalfCheckedKeys();
-          //  this.roleForm.menuId = tmpCheck.concat(tmpHalfCheck).join(',');
+          //  this.Form.menuId = tmpCheck.concat(tmpHalfCheck).join(',');
           //  debugger
-          this.roleForm.menuId = tmpCheck.join(',');
-          const { id, name, menuId } = this.roleForm;
+          this.Form.menuId = tmpCheck.join(',');
+          const { id, name, menuId } = this.Form;
           if (id === '') {
             // 新增
             this.btnLoading = true;
-            const res = await $api.addRole({
+            const res = await $api.add({
               name: name,
               menuId: menuId,
             });
@@ -126,7 +136,7 @@ export default {
           } else {
             // 修改
             this.btnLoading = true;
-            const res = await $api.editRole({
+            const res = await $api.edit({
               id: id,
               name: name,
               menuId: menuId,
@@ -142,7 +152,7 @@ export default {
             this.btnLoading = false;
           }
         } else {
-          // console.log('roleForm submit error');
+          // console.log('Form submit error');
           return false;
         }
       });
@@ -156,7 +166,7 @@ export default {
           id: row.id,
           status: row.status ? 0 : 1,
         };
-        const res = await $api.editRole(params);
+        const res = await $api.edit(params);
         if (res) {
           this.$message({ message: res.data.message, type: 'success' });
           this.getList();
@@ -165,8 +175,8 @@ export default {
       // 编辑
       if (fn === 'edit') {
         this.formName = '编辑';
-        this.roleForm.id = row.id;
-        this.roleForm.name = row.name;
+        this.groupListForm.id = row.id;
+        this.groupListForm.name = row.name;
         const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
         // let getArr = this.delSameItem(id_list, row.halfArr)
         // debugger
@@ -179,7 +189,7 @@ export default {
       if (fn === 'delete') {
         this.$confirm('确定删除？', '提示', { confirmButtonText: '确定', cancelButtonText: '取消' })
           .then(async () => {
-            const res = await $api.deleteRole({ id: row.id });
+            const res = await $api.deletegroupList({ id: row.id });
             if (res) {
               this.$message({
                 message: '删除角色成功',
@@ -189,7 +199,7 @@ export default {
             }
           })
           .catch(() => {
-            // console.log('deleteRole error');
+            // console.log('deletegroupList error');
           });
       }
     },
@@ -211,7 +221,7 @@ export default {
       if (res) {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
-        records.forEach(v => {
+        records.forEach((v) => {
           v['status'] = v['status'] ? false : true;
         });
         this.list = records;
@@ -226,35 +236,36 @@ export default {
       const res = await $api.getMenuList({
         pageNum: 1,
         pageSize: 100,
-        userType:0
+        userType: 0,
       });
       if (res) {
         this.treeData = res.data.data;
       }
     },
     //删除雷同项
-    delSameItem(aArr,bArr){
-      let tmpArr = []
-      aArr.forEach((v)=>{
-        if(!bArr.includes(v)){
-          tmpArr.push(v)
+    delSameItem(aArr, bArr) {
+      let tmpArr = [];
+      aArr.forEach((v) => {
+        if (!bArr.includes(v)) {
+          tmpArr.push(v);
         }
-      })
-      return tmpArr
-    }
+      });
+      return tmpArr;
+    },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('Role', roleCol, roleColNoBtn);
+    let authObj = this.$util.getAuthority('GroupList', groupListCol, groupListColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
 
+    this.searchCofig = this.$util.clone(groupListConfig);
     this.getList();
     this.getMenuInfo();
   },
 };
 </script>
 <style lang="scss">
-.role-container {
+.groupList-container {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;

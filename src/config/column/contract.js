@@ -2015,6 +2015,10 @@ const flowRecordContractCol = [
         text: '空仓',
         val: 2,
       },
+      {
+        text: '-',
+        val: -1,
+      },
     ],
   },
   {
@@ -3131,12 +3135,12 @@ const contractTacticsCol = [
   {
     label: '创建时间',
     prop: 'createTime',
-    type:'time'
+    type: 'time',
   },
   {
     label: '更新时间',
     prop: 'updateTime',
-    type:'time'
+    type: 'time',
   },
   {
     label: '操作',

@@ -1815,7 +1815,7 @@ const unfreezeManageConfig = [
   {
     type: 'text',
     label: '子订单号',
-    subType: 'uid',
+    // subType: 'uid',
     prop: 'id',
     value: '',
   },

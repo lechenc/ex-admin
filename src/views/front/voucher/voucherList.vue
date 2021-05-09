@@ -238,10 +238,8 @@ export default {
     },
     'form.timeType'(newVal) {
       if (newVal == 0) {
-        console.log('newVal', newVal);
         delete this.form.effectiveDay;
       } else if (newVal == 1) {
-        console.log('newVal', newVal);
         delete this.form.effectiveStartTime;
         delete this.form.effectiveEndTime;
       }
@@ -366,7 +364,7 @@ export default {
       this.dialogVisible = true;
       this.$nextTick(() => {
         this.$refs['form'].resetFields();
-        this.$refs['twoTimer'].resetValue();
+        // this.$refs['twoTimer'].resetValue();
         this.form = {
           id: '',
           experienceName: '',
@@ -412,7 +410,6 @@ export default {
             effectiveDay,
             ...repo
           } = this.form;
-          console.log('timeType', timeType);
           const params = {
             // 这里补充一个coinMarket(币对的name)
             coinMarket: this.symbolList.filter((v) => v['value'] == coinId)[0].label || '',
@@ -430,10 +427,11 @@ export default {
           } else if (timeType == 1) {
             params.effectiveDay = +effectiveDay;
           }
-          console.log('params', params);
+          
           !id ? Object.assign(params) : Object.assign(params, { id });
           this.btnLoading = true;
           // 新增 编辑
+          console.log('id',id)
           const res = !id ? await $api.createExperience(params) : await $api.editExperience(params);
           if (res) {
             let txt = !id ? '添加成功' : '编辑成功';
