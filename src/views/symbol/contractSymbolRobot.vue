@@ -14,7 +14,7 @@
       <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 添加 编辑 -->
-    <el-dialog :title="formName" :visible.sync="dialogFormVisible">
+    <el-dialog width="600px" :title="formName" :visible.sync="dialogFormVisible">
       <el-form :model="robotForm" ref="robotForm" :rules="rules">
         <el-form-item label="主流币机器人ID" :label-width="formLabelWidth" prop="uid">
           <el-select v-model="robotForm.uid" placeholder="" wdith="20%" :disabled="!!robotForm.id">
@@ -207,7 +207,6 @@ export default {
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data;
-      console.log('data', data);
       // 列表里去除，只在编辑里才能修改
       // // 设置上架开关
       // if (fn === 'trstart') {

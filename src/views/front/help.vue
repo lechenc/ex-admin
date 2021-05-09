@@ -124,7 +124,7 @@ export default {
           { min: 1, max: 150, message: '长度在150字符以内', trigger: 'blur' },
         ],
         url: [{ required: true, message: '请输入' }],
-        englishLink: [{ required: true, message: '请输入' }],
+        // englishLink: [{ required: true, message: '请输入' }],
         sort: [{ required: true, message: '请输入' }],
       },
       showDialog: false,

@@ -2213,7 +2213,7 @@ export default class api {
   static grantExperienceList(data) {
     return Fetch.post('/admin/account/contract/query/grantExperienceList', data);
   }
-  // 体验金券 - 抽奖 - 抽奖任务列表
+  // 运营管理 - 抽奖 - 抽奖任务列表
   static getAlltask(data) {
     return Fetch.post('/admin/account/activity/get-all-task', data);
   }
@@ -2222,10 +2222,7 @@ export default class api {
   static getVoucherParameters(data) {
     return Fetch.post('/admin/user/get/giveCoinConfig', data);
   }
-  // 体验金券 - 条件参数设置  - 保存修改
-  static updateVoucherParameters(data) {
-    return Fetch.post('/admin/account/activity/get-all-task', data);
-  }
+
   // 体验金券 - 尊贵会员名额管理  - 列表
   static getVoucherVipUserList(data) {
     return Fetch.post('/admin/account/quota/query-list', data);

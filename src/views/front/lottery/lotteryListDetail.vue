@@ -406,6 +406,7 @@ export default {
     // 获取任务类型列表
     async getTaskList() {
       const res = await $api.getAlltask({});
+      console.log('res',res)
       if (res) {
         this.taskListFormal = res.data.data;
       }

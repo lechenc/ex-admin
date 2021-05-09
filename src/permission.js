@@ -264,6 +264,11 @@ const mapComponents = {
   Oplog: () => import('@/views/system/oplog'),
   ConfigPath: () => import('@/views/system/configPath'),
   DomainName: () => import('@/views/system/domainName'),
+  Maintenance: () => import('@/views/system/maintenance'),
+  GroupList: () => import('@/views/system/groupList'),
+  BranchList: () => import('@/views/system/branchList'),
+  PositionList: () => import('@/views/system/positionList'),
+  AccountList: () => import('@/views/system/accountList'),
 
   Version: () => import('@/views/app/version'),
   LocalPackage: () => import('@/views/app/localPackage'),
