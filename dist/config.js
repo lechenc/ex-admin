@@ -20,8 +20,8 @@ if (/dappmi/.test(window.location.href)) {
 // window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
 // window.SERVER_PATH = 'http://192.168.3.45:16425'; // 通用接口地址
 
-if (/linkkn/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.linkkn.vip/api'; // 通用接口地址/
+if(/alpex/.test(window.location.href)){
+  window.SERVER_PATH = 'https://admin.alpex.pro/api/'; // 通用接口地址
 }
 
 if(/linkkn/.test(window.location.href)){
