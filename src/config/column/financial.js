@@ -1807,25 +1807,23 @@ const unfreezeManageConfig = [
     value: '',
   },
   {
-    type: 'text',
     label: '订单号',
+    type: 'onlyNumber',
     prop: 'orderId',
     value: '',
   },
   {
-    type: 'text',
     label: '子订单号',
     // subType: 'uid',
     prop: 'id',
     value: '',
   },
   {
-    type: 'text',
     label: 'UID',
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    type: 'onlyNumber',
   },
   {
     type: 'select',
