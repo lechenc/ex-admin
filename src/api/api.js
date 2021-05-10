@@ -2687,5 +2687,20 @@ export default class api {
     return Fetch.post('/admin/user/app-key-page', data);
   }
 
+  // 合约管理 api管理 apikey设置 添加
+  static addApiKeyConfig(data) {
+    return Fetch.post('/admin/user/add/app-key', data);
+  }
+
+  // 合约管理 api管理 apikey设置 编辑
+  static updateApiKeyConfigSwitch(data) {
+    return Fetch.post('/admin/user/edit/app-key', data);
+  }
+
+  // 合约管理 api管理 apikey设置 删除
+  static delApiKeyConfig(data) {
+    return Fetch.post('/admin/user/delete/app-key', data);
+  }
+
   
 }

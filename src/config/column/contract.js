@@ -3660,25 +3660,30 @@ const agentTransferfig = [
 
 const apiKeyConfigCol = [
   {
-    label: '备注',
+    label: 'UID',
     prop: 'uid',
   },
   {
+    label: '备注',
+    prop: 'destext',
+  },
+  {
     label: 'API Key',
-    prop: 'createTime1',
+    prop: 'appKey',
   },
   {
     label: 'Secret Key',
-    prop: 'coinMarket',
+    prop: 'appSecret',
   },
 
   {
-    label: '创建时间',
-    prop: 'createTime',
+    label: '更新时间',
+    prop: 'updateTime',
+    type:'time'
   },
   {
     label: '开关',
-    prop: 'status',
+    prop: 'isShow',
     type: 'switch',
     fn: 'trswitch',
     alias: 'trswitch',
@@ -3700,96 +3705,27 @@ const apiKeyConfigCol = [
 
 const apiKeyConfigColNoBtn = [
   {
-    label: 'UID',
-    prop: 'uid',
+    label: '备注',
+    prop: 'destext',
   },
   {
-    label: '时间',
-    prop: 'createTime',
+    label: 'API Key',
+    prop: 'appKey',
   },
   {
-    label: '币对',
-    prop: 'coinMarket',
-  },
-  {
-    label: '类型',
-    prop: 'type',
-    type: 'filter',
-    show_type: 'text',
-    filters: [
-      {
-        text: '币币转入合约账户',
-        val: 7,
-      },
-      {
-        text: '合约账户转出币币账户',
-        val: 8,
-      },
-      {
-        text: '法币转入合约账户',
-        val: 12,
-      },
-      {
-        text: '合约账户转入法币账户',
-        val: 13,
-      },
-    ],
+    label: 'Secret Key',
+    prop: 'appSecret',
   },
 
   {
-    label: '金额',
-    prop: 'amount',
+    label: '更新时间',
+    prop: 'updateTime',
+    type:'time'
   },
 ];
 
 const apiKeyConfigConfig = [
-  {
-    type: 'text',
-    label: 'UID',
-    prop: 'uid',
-    value: '',
-    placeHolder: '请输入',
-  },
-  {
-    type: 'select',
-    label: '币对',
-    prop: 'coinId',
-    value: '',
-    list: [],
-  },
-  {
-    type: 'select',
-    label: '类型',
-    prop: 'type',
-    value: '',
-    // 7币币转入合约账户 8：合约账户转出币币账户 12 法币转入合约账户 13 合约账户转入法币账户
-    list: [
-      {
-        label: '币币转入合约账户',
-        value: 7,
-      },
-      {
-        label: '合约账户转出币币账户',
-        value: 8,
-      },
-      {
-        label: '法币转入合约账户',
-        value: 12,
-      },
-      {
-        label: '合约账户转入法币账户',
-        value: 13,
-      },
-    ],
-  },
-
-  {
-    type: 'date_rank',
-    label: '时间',
-    prop: 'startTime',
-    prop2: 'endTime',
-    value: '',
-  },
+  
 ];
 
 export {

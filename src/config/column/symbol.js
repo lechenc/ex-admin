@@ -29,6 +29,10 @@ const coinCol = [
     prop: 'decimalPlaces',
   },
   {
+    label: '排序',
+    prop: 'position',
+  },
+  {
     label: '转出手续费',
     prop: 'tranOutFee',
   },
@@ -96,6 +100,10 @@ const coinColNoBtn = [
   {
     label: '币种小数位',
     prop: 'decimalPlaces',
+  },
+  {
+    label: '排序',
+    prop: 'position',
   },
   {
     label: '转出手续费',
