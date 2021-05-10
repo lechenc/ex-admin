@@ -436,6 +436,7 @@ const mapComponents = {
   ServiceChargeContract: () => import('@/views/contract/order/serviceChargeContract'),
   PositionContract: () => import('@/views/contract/store/positionContract'),
   CloseContract: () => import('@/views/contract/store/closeContract'),
+  ApiKeyConfig: () => import('@/views/contract/apiManage/apiKeyConfig'),
   
 
   // 模拟盘 模拟交易管理

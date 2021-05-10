@@ -2682,5 +2682,10 @@ export default class api {
     return Fetch.post('/admin/user/update/SysVerificationConfig', data);
   }
 
+  // 合约管理 api管理 apikey设置 列表
+  static getApiKeyConfigList(data) {
+    return Fetch.post('/admin/user/app-key-page', data);
+  }
+
   
 }

@@ -1562,6 +1562,21 @@ export const asyncRouterMap = [
           },
         ],
       },
+
+      {
+        path: 'apiManage',
+        name: 'ApiManage',
+        redirect: '/contract/apiManage/apiKeyConfig',
+        meta: { title: 'API管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'apiKeyConfig',
+            name: 'ApiKeyConfig',
+            component: () => import('@/views/contract/apiManage/apiKeyConfig'),
+            meta: { title: 'API Key设置', icon: '', role: [] },
+          },
+        ],
+      },
     ],
   },
 
