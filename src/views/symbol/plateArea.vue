@@ -217,13 +217,7 @@ export default {
       this.cowIndex = index;
     },
     uploadIcon(response, file, fileList) {
-      //console.log('response', response);
-      //console.log('file', file);
-
-      // this.chainForm.list[this.cowIndex].iconUrl = response.data[0].url;
-      this.chainForm.list[this.cowIndex].img = '123123';
-      console.log('[this.cowIndex]',[this.cowIndex])
-      console.log('this.chainForm.list',this.chainForm.list[this.cowIndex])
+      this.chainForm.list[this.cowIndex].img = response.data[0].url;
     },
     // 表格操作
     async doHandle(data) {
@@ -248,6 +242,7 @@ export default {
             desc,
             descEn,
             list,
+            googleCode: '',
           };
         });
       }
@@ -300,6 +295,7 @@ export default {
           desc: '',
           descEn: '',
           list: [],
+          googleCode: '',
         };
         this.addSymbolGroups();
       });
@@ -341,12 +337,19 @@ export default {
           });
           if (ret) return this.$message.error('请补充表格');
 
-          const { id, name, desc, descEn, list } = this.chainForm;
+          const { id, name, desc, descEn, googleCode } = this.chainForm;
+          const list = JSON.parse(JSON.stringify(this.chainForm.list));
+          if (list.length) {
+            list.forEach((v) => {
+              v.sort = v.sort ? 1 : 0;
+            });
+          }
           let params = {
             name,
             desc,
             descEn,
             list,
+            googleCode,
           };
           if (this.btnLoading) return;
           if (id) {
@@ -359,7 +362,7 @@ export default {
             text = !id ? '添加成功！' : '修改成功！';
             this.$message({ message: text, type: 'success' });
             this.getList();
-            this.isModify = false;
+            this.dialogFormVisible = false;
           }
           this.btnLoading = false;
         }
