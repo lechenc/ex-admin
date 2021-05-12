@@ -2707,6 +2707,16 @@ export default class api {
     return Fetch.post('/market/plate/find', data);
   }
 
+  // 币种管理  板块专区管理 添加
+  static addApiKeyConfig(data) {
+    return Fetch.post('/market/plate/find', data);
+  }
+
+  // 币种管理  板块专区管理 编辑
+  static updateApiKeyConfig(data) {
+    return Fetch.post('/market/plate/find', data);
+  }
+
   // 币种管理 小额资产展示管理 修改
   static updateSmallAmountShow(data) {
     return Fetch.post('/admin/account/update-small-assets-display', data);

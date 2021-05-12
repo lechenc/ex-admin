@@ -43,14 +43,14 @@
             :label-width="formLabelWidth"
             :model="symbolGroup"
             :rules="{
-              symbol1: [
+              coinMarket: [
                 {
                   required: true,
                   message: '必填',
                   trigger: 'blur',
                 },
               ],
-              iconUrl: [
+              img: [
                 {
                   required: true,
                   message: '必填',
@@ -61,8 +61,8 @@
           >
             <el-row class="my-row" :span="24">
               <el-col :span="12">
-                <el-form-item label="交易对" prop="symbol1">
-                  <el-select v-model="symbolGroup.symbol1" placeholder="请选择">
+                <el-form-item label="交易对" prop="coinMarket">
+                  <el-select v-model="symbolGroup.coinMarket" placeholder="请选择">
                     <el-option v-for="item in symbollist" :label="item.label" :value="item.value" :key="item.value"> </el-option>
                   </el-select>
                 </el-form-item>
@@ -98,8 +98,8 @@
 
         <el-row :span="24">
           <el-col :span="23">
-            <el-form-item label="谷歌验证码" prop="chainName">
-              <el-input v-model="chainForm.chainName" autocomplete="off" type="text"></el-input>
+            <el-form-item label="谷歌验证码" prop="googleCode">
+              <el-input v-model.trim="chainForm.googleCode" @input="checkVal('googleCode')" autocomplete="off" type="text"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -143,14 +143,28 @@ export default {
       dialogFormVisible: false,
       chainForm: {},
       rules: {
-        chainName: [
+        name: [
           {
             required: true,
             message: '必填',
             trigger: 'blur',
           },
         ],
-        chainName1: [
+        desc: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur',
+          },
+        ],
+        descEn: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur',
+          },
+        ],
+        googleCode: [
           {
             required: true,
             message: '必填',
@@ -171,6 +185,9 @@ export default {
     },
   },
   methods: {
+    checkVal(val) {
+      this.chainForm[val] = (this.chainForm[val] + '').replace(/[^\d]/g, '');
+    },
     exceed(file, fileList) {
       this.$message.error('单次只能选择一张图片进行上传！');
     },
@@ -203,21 +220,34 @@ export default {
       //console.log('response', response);
       //console.log('file', file);
 
-      this.chainForm.list[this.cowIndex].iconUrl = response.data[0].url;
+      // this.chainForm.list[this.cowIndex].iconUrl = response.data[0].url;
+      this.chainForm.list[this.cowIndex].img = '123123';
+      console.log('[this.cowIndex]',[this.cowIndex])
+      console.log('this.chainForm.list',this.chainForm.list[this.cowIndex])
     },
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data;
       // 编辑币种
       if (fn === 'edit') {
-        this.formName = '编辑链类型';
+        this.formName = '编辑板块专区管理';
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['chainForm'].resetFields();
-          const { id, chainName } = row;
+
+          const { id, name, desc, descEn } = row;
+          const list = JSON.parse(JSON.stringify(row.list));
+          if (list.length) {
+            list.forEach((v) => {
+              v.sort = v.sort == 1 ? true : false;
+            });
+          }
           this.chainForm = {
             id,
-            chainName,
+            name,
+            desc,
+            descEn,
+            list,
           };
         });
       }
@@ -250,7 +280,7 @@ export default {
     addSymbolGroups() {
       //console.log('chainForm.list', this.chainForm.list);
       this.chainForm.list.push({
-        symbol1: '',
+        coinMarket: '',
         sort: false,
         img: '',
       });
@@ -259,12 +289,13 @@ export default {
       this.chainForm.list.splice(index, 1);
       //console.log('this.chainForm.list', this.chainForm.list);
     },
-    // 添加链类型
+    // 添加
     addChain() {
-      this.formName = '添加';
+      this.formName = '添加板块专区管理';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.chainForm = {
+          id: '',
           name: '',
           desc: '',
           descEn: '',
@@ -301,14 +332,36 @@ export default {
 
     // 提交
     confirmOp() {
-      this.$refs['chainForm'].validate((valid) => {
+      this.$refs['chainForm'].validate(async (valid) => {
         if (valid) {
           var ret = this.chainForm.list.some((v) => {
-            if (!v.symbol1 || !v.img) {
+            if (!v.coinMarket || !v.img) {
               return true;
             }
           });
           if (ret) return this.$message.error('请补充表格');
+
+          const { id, name, desc, descEn, list } = this.chainForm;
+          let params = {
+            name,
+            desc,
+            descEn,
+            list,
+          };
+          if (this.btnLoading) return;
+          if (id) {
+            params.id = id;
+          }
+          this.btnLoading = true;
+          const res = !id ? await $api.addApiKeyConfig(params) : await $api.updateApiKeyConfig(params);
+          if (res) {
+            let text = '';
+            text = !id ? '添加成功！' : '修改成功！';
+            this.$message({ message: text, type: 'success' });
+            this.getList();
+            this.isModify = false;
+          }
+          this.btnLoading = false;
         }
       });
     },
@@ -345,6 +398,7 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+        console.log('this.list', this.list);
         this.listLoading = false;
       }
     },
@@ -375,7 +429,7 @@ export default {
   }
   .my-row {
     display: flex;
-    align-items: center;
+    // align-items: center;
     padding: 13px 0;
 
     .el-form-item {

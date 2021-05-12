@@ -602,8 +602,8 @@ const plateAreaCol = [
   {
     label: '相关交易对-是否合约',
     prop: 'list',
-    key1:'tbCoinMarketId',
-    key2:'tbUsdtContractCoinMarketId',
+    key1:'coinMarket',
+    key2:'sort',
     type: 'valueArr',
   },
   {

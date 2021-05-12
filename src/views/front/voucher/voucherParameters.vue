@@ -290,34 +290,31 @@ export default {
     },
     // 保存页面修改
     async confirmSend(form) {
-      this.$refs['form'].validate(async (valid) => {
-        if (valid) {
-          const { agentUid, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
-          let params = {
-            agentUid,
-            activityType: type,
-            triggerVOS,
-            openPositionAmount,
-            incomeAmount,
-            inviteNumber,
-          };
-          if (!id) {
-          } else {
-            params.id = id;
-          }
+      console.log('form', form);
+      const { agentUid, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
+      let params = {
+        agentUid,
+        activityType: type,
+        triggerVOS,
+        openPositionAmount,
+        incomeAmount,
+        inviteNumber,
+      };
+      if (!id) {
+      } else {
+        params.id = id;
+      }
 
-          this.confirmLoading = true;
-          const res = !id ? await $api.addVoucherParameters(params) : await $api.editVoucherParameters(params);
-          if (res) {
-            let text = '';
-            text = !id ? '添加成功！' : '修改成功！';
-            this.$message({ message: text, type: 'success' });
-            this.getList();
-            this.isModify = false;
-          }
-          this.confirmLoading = false;
-        }
-      });
+      this.confirmLoading = true;
+      const res = !id ? await $api.addVoucherParameters(params) : await $api.editVoucherParameters(params);
+      if (res) {
+        let text = '';
+        text = !id ? '添加成功！' : '修改成功！';
+        this.$message({ message: text, type: 'success' });
+        this.getList();
+        this.isModify = false;
+      }
+      this.confirmLoading = false;
     },
     async getSymbolList() {
       // 交易对获取

@@ -137,7 +137,9 @@
       <!-- 显示一个数组 -->
       <el-table-column v-if="config.type === 'valueArr'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
-          <span class="valueArr" v-for="(item, ixx) in scope.row[config.prop]" :key="ixx"> {{ item[config.key1] }}( {{ item[config.key2] ? '是' : '否' }} ) </span>
+          <span class="valueArr" v-for="(item, ixx) in scope.row[config.prop]" :key="ixx"> 
+            {{ item[config.key1] }}( {{ item[config.key2] ? '是' : '否' }} ) 
+          </span>
         </template>
       </el-table-column>
 
