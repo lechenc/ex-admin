@@ -547,7 +547,7 @@ export default {
           // 固定值
           this.coinForm.tranOutFee = this.coinForm.tranOutFee > 10000 ? 10000 : this.coinForm.tranOutFee;
         }
-        this.coinForm.tranOutFee = (this.coinForm.tranOutFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+        // this.coinForm.tranOutFee = (this.coinForm.tranOutFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
       } else if (val === 'fee_type') {
         if (this.coinForm.fee_type == '1') {
           // 百分比
@@ -555,10 +555,10 @@ export default {
         } else {
           this.coinForm.exchangeFee = this.coinForm.exchangeFee > 10000 ? 10000 : this.coinForm.exchangeFee;
         }
-        this.coinForm.exchangeFee = (this.coinForm.exchangeFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+        // this.coinForm.exchangeFee = (this.coinForm.exchangeFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
       } else {
         this.coinForm.exchangeOutSingleMinAmount = this.coinForm.exchangeOutSingleMinAmount;
-        this.coinForm.exchangeOutSingleMinAmount = (this.coinForm.exchangeOutSingleMinAmount + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+        // this.coinForm.exchangeOutSingleMinAmount = (this.coinForm.exchangeOutSingleMinAmount + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
       }
       if (this.coinForm[val] < 0) {
         this.coinForm[val] = 0;
