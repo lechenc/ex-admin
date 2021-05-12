@@ -32,17 +32,17 @@
           if (!response || !version) {
             return;
           }
-          console.log('version='+version+ '---'+'response='+response)
+          //console.log('version='+version+ '---'+'response='+response)
           if (version !== response) {
             window.location.reload();
           }
           // if (version !== xhr.responseText) {
           //   if (/dappmi/.test(window.location.href)) {
-          //     console.log('now to reload!!!')
+          //     //console.log('now to reload!!!')
           //     window.location.href = 'https://admin.dappmi.com/#/login?redirect=%2FwelcomeMain'
           //   }
           //   if(/alpex/.test(window.location.href)){
-          //     console.log('now to reload!!!')
+          //     //console.log('now to reload!!!')
           //     window.location.href = 'https://admin.alpex.pro/#/login?redirect=%2FwelcomeMain'
           //   }
           //   // window.location.href = (window.SERVER_PATH + '').replace(/api/,'') + '#/login?redirect=%2FwelcomeMain';

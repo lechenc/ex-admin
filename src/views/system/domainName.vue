@@ -125,7 +125,7 @@ export default {
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data;
-      console.log('row', row);
+      //console.log('row', row);
       // 编辑币种
       if (fn === 'edit') {
         this.formName = '编辑域名';

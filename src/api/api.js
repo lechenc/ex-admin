@@ -2702,5 +2702,30 @@ export default class api {
     return Fetch.post('/admin/user/delete/app-key', data);
   }
 
+  // 币种管理  板块专区管理 列表
+  static getApiKeyConfigList(data) {
+    return Fetch.post('/market/plate/find', data);
+  }
+
+  // 币种管理 小额资产展示管理 修改
+  static updateSmallAmountShow(data) {
+    return Fetch.post('/admin/account/update-small-assets-display', data);
+  }
+
+  // 币种管理 小额资产展示管理 信息
+  static getSmallAmountShow(data) {
+    return Fetch.post('/admin/account/query/querySmallAssetsDisplay', data);
+  }
+
+  // 运营管理/体验金券管理/条件参数设置 新增
+  static addVoucherParameters(data) {
+    return Fetch.post('/admin/account/create/condition', data);
+  }
+
+  // 运营管理/体验金券管理/条件参数设置 编辑
+  static editVoucherParameters(data) {
+    return Fetch.post('/admin/account/edit/condition', data);
+  }
+
   
 }

@@ -96,7 +96,7 @@ export default {
             }
           })
           .catch(() => {
-            console.log('cancel');
+            //console.log('cancel');
           });
       }
     },

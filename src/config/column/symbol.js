@@ -589,15 +589,22 @@ const chainTypeColNoBtn = [
 const plateAreaCol = [
   {
     label: '板块名称',
-    prop: 'chainName',
+    prop: 'name',
   },
   {
     label: '板块描述',
-    prop: 'coinName',
+    prop: 'desc',
+  },
+  {
+    label: '英文描述',
+    prop: 'descEn',
   },
   {
     label: '相关交易对-是否合约',
-    prop: 'createTime1',
+    prop: 'list',
+    key1:'tbCoinMarketId',
+    key2:'tbUsdtContractCoinMarketId',
+    type: 'valueArr',
   },
   {
     label: '创建时间',

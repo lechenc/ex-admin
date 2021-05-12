@@ -243,7 +243,7 @@ export default {
       Object.assign(params, this.search_params_obj);
       const res = await $api.getColumnList(params);
       if (res) {
-        console.log('res', res);
+        //console.log('res', res);
         const { records, current, total, pages } = res.data.data;
         this.total = total;
         this.pages = pages;

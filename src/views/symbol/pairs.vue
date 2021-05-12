@@ -258,7 +258,7 @@ export default {
             type: 'success',
           });
         } else {
-          // console.log("editSymbol error");
+          // //console.log("editSymbol error");
           this.getList();
         }
       }
@@ -275,7 +275,7 @@ export default {
             type: 'success',
           });
         } else {
-          // console.log("editSymbol error");
+          // //console.log("editSymbol error");
           this.getList();
         }
       }
@@ -347,7 +347,7 @@ export default {
           }
           this.btnLoading = false;
         } else {
-          console.log('error submit!!');
+          //console.log('error submit!!');
           return false;
         }
       });

@@ -135,7 +135,7 @@ export default {
   },
   methods: {
     async doHandle(data) {
-      console.log(data);
+      //console.log(data);
       const { fn, row } = data;
       this.curRow = row;
       if (fn === 'detail') {

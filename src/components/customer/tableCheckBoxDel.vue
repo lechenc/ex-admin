@@ -173,7 +173,7 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log(this.multipleSelection);
+      //console.log(this.multipleSelection);
     },
     handleCurrentChange(val) {
       this.pageData.pageNum = val;

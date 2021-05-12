@@ -152,7 +152,7 @@ export default {
             this.btnLoading = false;
           }
         } else {
-          // console.log('Form submit error');
+          // //console.log('Form submit error');
           return false;
         }
       });
@@ -199,7 +199,7 @@ export default {
             }
           })
           .catch(() => {
-            // console.log('deletepositionList error');
+            // //console.log('deletepositionList error');
           });
       }
     },

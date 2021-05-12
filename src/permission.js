@@ -55,7 +55,7 @@ router.beforeEach(async (to, from, next) => {
                 next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
               })
               .catch(err => {
-                console.log(err);
+                //console.log(err);
               });
           } else if (!isRefresh && store.state.app.hybridRouters.length > 0) {
             // 防止特殊情况：刷新后动态路由丢失，所以要重新add+route操作 store.state.app.routers.length

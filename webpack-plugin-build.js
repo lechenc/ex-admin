@@ -14,7 +14,7 @@ const versionFile = path.resolve(__dirname, file);
 class WebpackPluginBuild {
   apply (compiler) {
     const model = process.env.BABEL_ENV;
-    console.log('\x1B[36m%s\x1B[0m', `当前版本: ${model}`);
+    //console.log('\x1B[36m%s\x1B[0m', `当前版本: ${model}`);
     compiler.hooks.done.tap('done', async () => {
       let versionText = '1.0.1_08/17/00';
       if (exists(versionFile)) {
@@ -26,18 +26,18 @@ class WebpackPluginBuild {
         }
       }
       let dateTimes = +versionText.replace(/.*\//g, '') + 1 + ''; // 当天第几次
-      console.log('versionText', versionText);
+      //console.log('versionText', versionText);
       const lastDate = versionText.replace(/.*_|\/\d+$/g, '');
       versionText = versionText.replace(/_.*$/, '');
       const date = (new Date()).toISOString().replace(/^\d{4}-|T.*$/g, '').replace(/-/g, '/');
       let version = +versionText.replace(/\./g, '');
-      console.log(lastDate, date);
+      //console.log(lastDate, date);
       if (lastDate.replace(/[^\d]/g, '') !== date.replace(/[^\d]/g, '')) {
         version++;
         dateTimes = 1;
       }
       versionText = version.toString().replace(/(\d{1})$/, '.$1').replace(/(\d{1}\.\d{1})/, '.$1');
-      console.log('model ->', model)
+      //console.log('model ->', model)
       const writeText = `${versionText}_${date}/${dateTimes.toString()[1] ? dateTimes : '0' + dateTimes.toString()}_${model === 'production' ? 'pro' : 'dev'}`;
       fs.writeFileSync(versionFile, writeText);
       fs.writeFileSync(path.resolve(__dirname, 'dist/' + file), writeText);

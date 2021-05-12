@@ -15,29 +15,29 @@
       <el-form :label-width="formLabelWidth" :model="chainForm" ref="chainForm" :rules="rules">
         <el-row :span="24">
           <el-col :span="23">
-            <el-form-item label="板块名称" prop="chainName">
-              <el-input v-model="chainForm.chainName" autocomplete="off" type="text"></el-input>
+            <el-form-item label="板块名称" prop="name">
+              <el-input v-model="chainForm.name" autocomplete="off" type="text"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :span="24">
           <el-col :span="23">
-            <el-form-item label="板块描述" prop="chainName">
-              <el-input rows="3" v-model="chainForm.chainName" autocomplete="off" type="textarea"></el-input>
+            <el-form-item label="板块描述" prop="desc">
+              <el-input rows="3" v-model="chainForm.desc" autocomplete="off" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :span="24">
           <el-col :span="23">
-            <el-form-item label="英文描述" prop="chainName1">
-              <el-input rows="3" v-model="chainForm.chainName1" autocomplete="off" type="textarea"></el-input>
+            <el-form-item label="英文描述" prop="descEn">
+              <el-input rows="3" v-model="chainForm.descEn" autocomplete="off" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <template v-for="(symbolGroup, index) in chainForm.symbolGroups">
+        <template v-for="(symbolGroup, index) in chainForm.list">
           <el-form
             :key="index"
             :label-width="formLabelWidth"
@@ -70,15 +70,15 @@
 
               <el-col :span="12">
                 <el-form-item label-width="100px" label="是否合约">
-                  <el-switch v-model="symbolGroup.symbol" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+                  <el-switch v-model="symbolGroup.sort" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
                 </el-form-item>
               </el-col>
             </el-row>
 
-            <el-row :class="{ 'my-border': index + 1 != chainForm.symbolGroups.length }" class="my-row" :gutter="10" :span="24">
+            <el-row :class="{ 'my-border': index + 1 != chainForm.list.length }" class="my-row" :gutter="10" :span="24">
               <el-col :span="21">
-                <el-form-item label="icon" prop="iconUrl">
-                  <el-input size="small" placeholder="请输入链接" v-model="symbolGroup.iconUrl">
+                <el-form-item label="icon" prop="img">
+                  <el-input size="small" placeholder="请输入链接" v-model="symbolGroup.img">
                     <el-upload accept=".png,.img" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="false" :before-upload="beforeUpload" :on-success="uploadIcon" :on-error="uploadError" slot="append" :limit="1" :on-exceed="exceed" ref="iconDot">
                       <el-button size="small" @click="getUploadIconIndex(index)" type="primary">点击上传</el-button>
                     </el-upload>
@@ -196,14 +196,14 @@ export default {
       return extension && isLt2M;
     },
     getUploadIconIndex(index) {
-      console.log('index', index);
+      //console.log('index', index);
       this.cowIndex = index;
     },
     uploadIcon(response, file, fileList) {
-      console.log('response', response);
-      console.log('file', file);
+      //console.log('response', response);
+      //console.log('file', file);
 
-      this.chainForm.symbolGroups[this.cowIndex].iconUrl = response.data[0].url;
+      this.chainForm.list[this.cowIndex].iconUrl = response.data[0].url;
     },
     // 表格操作
     async doHandle(data) {
@@ -248,16 +248,16 @@ export default {
       }
     },
     addSymbolGroups() {
-      console.log('chainForm.symbolGroups', this.chainForm.symbolGroups);
-      this.chainForm.symbolGroups.push({
+      //console.log('chainForm.list', this.chainForm.list);
+      this.chainForm.list.push({
         symbol1: '',
-        symbol: false,
-        iconUrl: '',
+        sort: false,
+        img: '',
       });
     },
     delSymbolGroups(index) {
-      this.chainForm.symbolGroups.splice(index, 1);
-      console.log('this.chainForm.symbolGroups', this.chainForm.symbolGroups);
+      this.chainForm.list.splice(index, 1);
+      //console.log('this.chainForm.list', this.chainForm.list);
     },
     // 添加链类型
     addChain() {
@@ -265,9 +265,10 @@ export default {
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.chainForm = {
-          id: '',
-          chainName: '',
-          symbolGroups: [],
+          name: '',
+          desc: '',
+          descEn: '',
+          list: [],
         };
         this.addSymbolGroups();
       });
@@ -302,8 +303,8 @@ export default {
     confirmOp() {
       this.$refs['chainForm'].validate((valid) => {
         if (valid) {
-          var ret = this.chainForm.symbolGroups.some((v) => {
-            if (!v.symbol1 || !v.iconUrl) {
+          var ret = this.chainForm.list.some((v) => {
+            if (!v.symbol1 || !v.img) {
               return true;
             }
           });
@@ -337,7 +338,7 @@ export default {
       };
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getChainPage(query_data);
+      const res = await $api.getApiKeyConfigList(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
@@ -356,7 +357,7 @@ export default {
   },
   async mounted() {
     let authObj = this.$util.getAuthority('PlateArea', plateAreaCol, plateAreaColNoBtn);
-    console.log('authObj', authObj);
+    //console.log('authObj', authObj);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
     this.getList();
@@ -378,7 +379,7 @@ export default {
     padding: 13px 0;
 
     .el-form-item {
-      margin-bottom: 0;
+      margin-bottom: 5px;
     }
     /deep/.el-form-item__error {
       padding-top: 0 !important;

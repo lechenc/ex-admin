@@ -109,7 +109,7 @@ export default {
       if (this.assetsListLoading) return;
       this.assetsListLoading = true;
       const res = await $api.getAnalystMimicAccount({ uid: this.uid });
-      // console.log('res',res)
+      // //console.log('res',res)
       if (res) {
         this.list = res.data.data.coinAccountList
       }

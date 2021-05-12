@@ -87,7 +87,7 @@ export default {
 		//增加商户
 		handleSelectionChange (val) {
 			this.multipleSelection = val;
-			console.log(this.multipleSelection)
+			//console.log(this.multipleSelection)
 		},
 		addMerchantSelectSizeChange (val) {
 			this.merchantFormData.pageSize = val

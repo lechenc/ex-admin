@@ -727,7 +727,7 @@ async function exportData(type, max = 10000, loading = null) {
         pageNum: 1,
         pageSize: 10,
       });
-      // console.log("now ="+getRes)
+      // //console.log("now ="+getRes)
       let exportnumber = +getRes.data.data.total || 0;
       if (exportnumber > max) {
         loading.setText('导出确认');

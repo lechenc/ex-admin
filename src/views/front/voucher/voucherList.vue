@@ -431,7 +431,7 @@ export default {
           !id ? Object.assign(params) : Object.assign(params, { id });
           this.btnLoading = true;
           // 新增 编辑
-          console.log('id',id)
+          //console.log('id',id)
           const res = !id ? await $api.createExperience(params) : await $api.editExperience(params);
           if (res) {
             let txt = !id ? '添加成功' : '编辑成功';

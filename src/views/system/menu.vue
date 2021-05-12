@@ -148,8 +148,8 @@ export default {
       }
     },
     sort(draggingNode, dropNode, type, event) {
-      /* console.log('排序')
-      console.log(dropNode)   //dropNode.parent.childNodes =[] 拖拽之后的重新组合的数组 */
+      /* //console.log('排序')
+      //console.log(dropNode)   //dropNode.parent.childNodes =[] 拖拽之后的重新组合的数组 */
       let obj = {
         aboveId: '',
         arr: [],
@@ -228,7 +228,7 @@ export default {
             }
           }
         } else {
-          console.log('error submit!!');
+          //console.log('error submit!!');
           return false;
         }
       });
@@ -287,7 +287,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('Menu', [], []);
 
-    // console.log(...authObj.btnArr);
+    // //console.log(...authObj.btnArr);
     this.isAdd = authObj.isAdd;
     this.isCURDAuth = authObj.isModify;
   },

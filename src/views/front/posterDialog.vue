@@ -100,7 +100,7 @@ export default {
   },
   watch: {
     resulta(newVal) {
-      console.log('newVal', newVal);
+      //console.log('newVal', newVal);
     },
   },
   data() {
@@ -189,7 +189,7 @@ export default {
       this.$refs.upzh.handleRemove(file);
     },
     uploadEn(response, file, fileList) {
-      console.log('file144', file);
+      //console.log('file144', file);
       this.form.imgUrlEn = response.data[0].url;
       this.$refs.enzh.handleRemove(file);
       // this.form.bannerUrlEn = response.result.urls[0];

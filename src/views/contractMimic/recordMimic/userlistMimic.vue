@@ -72,7 +72,7 @@ export default {
         this.listLoading = false;
         this.getList();
       }
-      console.log('data', data);
+      //console.log('data', data);
     },
     doSearch(data) {
       this.current_page = 1;

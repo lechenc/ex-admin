@@ -127,17 +127,17 @@ export default {
   },
   methods: {
     upload1(response, file, fileList) {
-      console.log('response', response);
-      console.log('response.data[0].url', response.data[0].url);
+      //console.log('response', response);
+      //console.log('response.data[0].url', response.data[0].url);
       this.form.imgUrl = response.data[0].url;
       // this.form.imgUrl = response.data[0].url;
-      console.log('form.imgUrl', this.form.imgUrl);
+      //console.log('form.imgUrl', this.form.imgUrl);
       this.$refs.imgUrl.handleRemove(file);
     },
     upload(response, file, fileList) {
-      console.log('response', response);
+      //console.log('response', response);
       this.form.imgUrl = response.data[0].url;
-      console.log('form.imgUrl', this.form.imgUrl);
+      //console.log('form.imgUrl', this.form.imgUrl);
       this.$refs.imgUrl.handleRemove(file);
     },
     exceed(file, fileList) {
