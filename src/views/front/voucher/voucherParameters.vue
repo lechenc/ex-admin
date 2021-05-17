@@ -163,15 +163,6 @@ export default {
         inviteNumber: [{ required: true, message: '必填', trigger: 'blur' }],
         openPositionAmount: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      contentList: {
-        0: '注册',
-        1: '净入金',
-        2: '邀请',
-        3: '抽奖',
-        4: '实名',
-        5: '开仓交易额',
-        6: '新手指引活动',
-      },
       symbollist: [],
       netCashRules: {},
       addForm: {},
@@ -183,16 +174,19 @@ export default {
           label: '净入金金额开仓交易额',
           value: 0,
           arr: 'formArr1',
+          isModify: 'isModify1',
         },
         {
           label: '代理净入金',
           value: 1,
           arr: 'formArr2',
+          isModify: 'isModify2',
         },
         {
           label: '直推邀请',
           value: 2,
           arr: 'formArr3',
+          isModify: 'isModify3',
         },
       ],
     };
@@ -216,14 +210,14 @@ export default {
             inviteNumber: '',
             content: '',
             agentUid: '',
-            activityType: '',
+            activityType: this.addTypeList[type].value,
             triggerVOS: [
               {
                 netIncomeTargetAmount: '',
                 lowNumber: '',
                 tradeTargetAmount: '',
-                activityType: '',
-                triggerType: '',
+                activityType: this.addTypeList[type].value,
+                triggerType: this.addTypeList[type].value,
               },
             ],
           });
@@ -290,11 +284,10 @@ export default {
     },
     // 保存页面修改
     async confirmSend(form) {
-      console.log('form', form);
-      const { agentUid, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
+      const { agentUid, activityType, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
       let params = {
         agentUid,
-        activityType: type,
+        activityType,
         triggerVOS,
         openPositionAmount,
         incomeAmount,
@@ -312,7 +305,7 @@ export default {
         text = !id ? '添加成功！' : '修改成功！';
         this.$message({ message: text, type: 'success' });
         this.getList();
-        this.isModify = false;
+        this[this.addTypeList[activityType]].isModify = false;
       }
       this.confirmLoading = false;
     },

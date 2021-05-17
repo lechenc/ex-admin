@@ -405,26 +405,26 @@ const domainNameColNoBtn = [
 ];
 
 // 集团管理
-const groupListCol = [
+const peopleManagementCol = [
   {
     label: '集团名称',
     prop: 'account',
   },
   {
-    label: '部门名称',
-    prop: 'roleName',
-  },
-  {
-    label: '部门人数',
+    label: '部门数量',
     prop: 'content',
   },
   {
     label: '职位数量',
     prop: 'requestAddress',
   },
+  {
+    label: '人员总数',
+    prop: 'requestAddress2',
+  },
 
   {
-    label: '时间',
+    label: '添加时间',
     prop: 'createTime',
     type: 'time',
   },
@@ -462,26 +462,26 @@ const groupListCol = [
   },
 ];
 
-const groupListColNoBtn = [
+const peopleManagementColNoBtn = [
   {
     label: '集团名称',
     prop: 'account',
   },
   {
-    label: '部门名称',
-    prop: 'roleName',
-  },
-  {
-    label: '部门人数',
+    label: '部门数量',
     prop: 'content',
   },
   {
     label: '职位数量',
     prop: 'requestAddress',
   },
+  {
+    label: '人员总数',
+    prop: 'requestAddress2',
+  },
 
   {
-    label: '时间',
+    label: '添加时间',
     prop: 'createTime',
     type: 'time',
   },
@@ -490,9 +490,11 @@ const groupListColNoBtn = [
     prop: 'createTime1',
     type: 'time',
   },
+  
+  
 ];
 
-const groupListConfig = [
+const peopleManagementConfig = [
   {
     type: 'select',
     label: '集团名称',
@@ -509,234 +511,11 @@ const groupListConfig = [
   },
 ];
 
-// 部门管理
-const branchListCol = [
-  {
-    label: '集团名称',
-    prop: 'account',
-  },
-  {
-    label: '部门名称',
-    prop: 'roleName',
-  },
-  {
-    label: '部门人数',
-    prop: 'content',
-  },
-  {
-    label: '职位数量',
-    prop: 'requestAddress',
-  },
-
-  {
-    label: '时间',
-    prop: 'createTime',
-    type: 'time',
-  },
-  {
-    label: '更新时间',
-    prop: 'createTime1',
-    type: 'time',
-  },
-  {
-    label: '可用状态',
-    prop: 'status',
-    type: 'switch',
-    fn: 'switch',
-    alias: 'trswitch',
-  },
-  {
-    label: '操作',
-    width: '180',
-    prop: 'action',
-    type: 'action',
-    btnGroup: [
-      {
-        label: '编辑',
-        fn: 'edit',
-        type: 'primary',
-        alias: 'edit',
-      },
-      {
-        label: '删除',
-        fn: 'del',
-        type: 'primary',
-        alias: 'del',
-      },
-    ],
-  },
-];
-
-const branchListColNoBtn = [
-  {
-    label: '集团名称',
-    prop: 'account',
-  },
-  {
-    label: '部门名称',
-    prop: 'roleName',
-  },
-  {
-    label: '部门人数',
-    prop: 'content',
-  },
-  {
-    label: '职位数量',
-    prop: 'requestAddress',
-  },
-
-  {
-    label: '时间',
-    prop: 'createTime',
-    type: 'time',
-  },
-  {
-    label: '更新时间',
-    prop: 'createTime1',
-    type: 'time',
-  },
-];
-
-const branchListConfig = [
-  {
-    type: 'select',
-    label: '部门名称',
-    prop: 'auditStatus1',
-    value: '',
-    list: [],
-  },
-];
-
-// 职位管理
-const positionListCol = [
-  {
-    label: '职务名称',
-    prop: 'account1',
-  },
-  {
-    label: '集团名称',
-    prop: 'account',
-  },
-  {
-    label: '部门名称',
-    prop: 'roleName',
-  },
-  {
-    label: '部门人数',
-    prop: 'content',
-  },
-  {
-    label: '职位数量',
-    prop: 'requestAddress',
-  },
-
-  {
-    label: '时间',
-    prop: 'createTime',
-    type: 'time',
-  },
-  {
-    label: '更新时间',
-    prop: 'createTime1',
-    type: 'time',
-  },
-  {
-    label: '可用状态',
-    prop: 'status',
-    type: 'switch',
-    fn: 'switch',
-    alias: 'trswitch',
-  },
-  {
-    label: '操作',
-    width: '180',
-    prop: 'action',
-    type: 'action',
-    btnGroup: [
-      {
-        label: '编辑',
-        fn: 'edit',
-        type: 'primary',
-        alias: 'edit',
-      },
-      {
-        label: '删除',
-        fn: 'del',
-        type: 'primary',
-        alias: 'del',
-      },
-    ],
-  },
-];
-
-const positionListColNoBtn = [
-  {
-    label: '职务名称',
-    prop: 'account1',
-  },
-  {
-    label: '集团名称',
-    prop: 'account',
-  },
-  {
-    label: '部门名称',
-    prop: 'roleName',
-  },
-  {
-    label: '部门人数',
-    prop: 'content',
-  },
-  {
-    label: '职位数量',
-    prop: 'requestAddress',
-  },
-
-  {
-    label: '时间',
-    prop: 'createTime',
-    type: 'time',
-  },
-  {
-    label: '更新时间',
-    prop: 'createTime1',
-    type: 'time',
-  },
-];
-
-const positionListConfig = [
-  {
-    type: 'select',
-    label: '集团名称',
-    prop: 'auditStatus',
-    value: '',
-    list: [],
-  },
-  {
-    type: 'select',
-    label: '部门名称',
-    prop: 'auditStatus1',
-    value: '',
-    list: [],
-  },
-  {
-    type: 'select',
-    label: '职位名称',
-    prop: 'auditStatus2',
-    value: '',
-    list: [],
-  },
-];
 
 export {
-  positionListCol,
-  positionListColNoBtn,
-  positionListConfig,
-  branchListCol,
-  branchListColNoBtn,
-  branchListConfig,
-  groupListCol,
-  groupListColNoBtn,
-  groupListConfig,
+  peopleManagementCol,
+  peopleManagementColNoBtn,
+  peopleManagementConfig,
   domainNameCol,
   domainNameColNoBtn,
   logCol,

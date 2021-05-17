@@ -601,9 +601,9 @@ const plateAreaCol = [
   },
   {
     label: '相关交易对-是否合约',
-    prop: 'list',
+    prop: 'pairList',
     key1:'coinMarket',
-    key2:'sort',
+    key2:'supportContract',
     type: 'valueArr',
   },
   {

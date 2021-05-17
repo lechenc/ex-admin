@@ -1,43 +1,18 @@
 
 <template>
   <div class="voucherParameters-container">
-    <el-form :model="form" ref="form" label-width="150px" :rules="rules" size="medium">
+    <el-form :model="form" ref="form" label-width="190px" :rules="rules" size="medium">
       <el-card class="box-card">
         <div class="box-card-con">
-          <el-form-item label="维护开关：" prop="imgUrlEn">
+          <el-form-item label="全局维护开关：" prop="globalSwitch">
             <el-col :span="8">
-              <el-switch :disabled="!isModify" v-model="form.bannerStatus" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+              <el-switch :disabled="!isModify" v-model="form.globalSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
             </el-col>
           </el-form-item>
 
-          <el-form-item label="Android维护专用图：" prop="imgUrl">
+          <el-form-item label="中文Android维护专用图：" prop="androidPicCn">
             <el-col :span="8">
-              <el-input :disabled="!isModify" size="small" v-model="form.imgUrl" placeholder="请选择上传">
-                <el-upload
-                  :disabled="!isModify"
-                  slot="append"
-                  :action="$img_api"
-                  multiple
-                  :data="{ type: 'exchange' }"
-                  name="file"
-                  accept=".jpg,.png"
-                  :limit="1"
-                  :before-upload="beforeUpload"
-                  :show-file-list="false"
-                  :on-success="upload1"
-                  :on-error="uploadCompressError"
-                  :on-exceed="exceed"
-                  ref="imgUrl"
-                >
-                  <el-button :disabled="!isModify" size="small" type="primary">点击上传</el-button>
-                </el-upload>
-              </el-input>
-            </el-col>
-          </el-form-item>
-
-          <el-form-item label="IOS维护专用图：" prop="proofImg">
-            <el-col :span="8">
-              <el-input :disabled="!isModify" size="small" v-model="form.imgUrlEn" placeholder="请选择上传">
+              <el-input :disabled="!isModify" size="small" v-model="form.androidPicCn" placeholder="请选择上传">
                 <el-upload
                   :disabled="!isModify"
                   slot="append"
@@ -52,17 +27,17 @@
                   :on-success="upload"
                   :on-error="uploadCompressError"
                   :on-exceed="exceed"
-                  ref="uploads"
+                  ref="androidPicCn"
                 >
-                  <el-button :disabled="!isModify" size="small" type="primary">点击上传</el-button>
+                  <el-button :disabled="!isModify" @click="uploadBtn('androidPicCn')" size="small" type="primary">点击上传</el-button>
                 </el-upload>
               </el-input>
             </el-col>
           </el-form-item>
 
-          <el-form-item label="PC维护专用图：" prop="proofImg">
+          <el-form-item label="英文Android维护专用图：" prop="androidPicEn">
             <el-col :span="8">
-              <el-input :disabled="!isModify" size="small" v-model="form.imgUrlEn" placeholder="请选择上传">
+              <el-input :disabled="!isModify" size="small" v-model="form.androidPicEn" placeholder="请选择上传">
                 <el-upload
                   :disabled="!isModify"
                   slot="append"
@@ -77,16 +52,116 @@
                   :on-success="upload"
                   :on-error="uploadCompressError"
                   :on-exceed="exceed"
-                  ref="uploads"
+                  ref="androidPicEn"
                 >
-                  <el-button :disabled="!isModify" size="small" type="primary">点击上传</el-button>
+                  <el-button @click="uploadBtn('androidPicEn')" :disabled="!isModify" size="small" type="primary">点击上传</el-button>
                 </el-upload>
               </el-input>
             </el-col>
           </el-form-item>
 
-          <el-form-item label="谷歌验证码：" prop="inviteNumber">
-            <el-col :span="8"><el-input @input="checkVal('inviteNumber', 'noDot')" type="text" placeholder="请输入" v-model="form.inviteNumber" :disabled="!isModify"></el-input> </el-col>
+          <el-form-item label="中文IOS维护专用图：" prop="iosPicCn">
+            <el-col :span="8">
+              <el-input :disabled="!isModify" size="small" v-model="form.iosPicCn" placeholder="请选择上传">
+                <el-upload
+                  :disabled="!isModify"
+                  slot="append"
+                  :action="$img_api"
+                  multiple
+                  :data="{ type: 'exchange' }"
+                  name="file"
+                  accept=".jpg,.png"
+                  :limit="1"
+                  :before-upload="beforeUpload"
+                  :show-file-list="false"
+                  :on-success="upload"
+                  :on-error="uploadCompressError"
+                  :on-exceed="exceed"
+                  ref="iosPicCn"
+                >
+                  <el-button @click="uploadBtn('iosPicCn')" :disabled="!isModify" size="small" type="primary">点击上传</el-button>
+                </el-upload>
+              </el-input>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="英文IOS维护专用图：" prop="iosPicEn">
+            <el-col :span="8">
+              <el-input :disabled="!isModify" size="small" v-model="form.iosPicEn" placeholder="请选择上传">
+                <el-upload
+                  :disabled="!isModify"
+                  slot="append"
+                  :action="$img_api"
+                  multiple
+                  :data="{ type: 'exchange' }"
+                  name="file"
+                  accept=".jpg,.png"
+                  :limit="1"
+                  :before-upload="beforeUpload"
+                  :show-file-list="false"
+                  :on-success="upload"
+                  :on-error="uploadCompressError"
+                  :on-exceed="exceed"
+                  ref="iosPicEn"
+                >
+                  <el-button @click="uploadBtn('iosPicEn')" :disabled="!isModify" size="small" type="primary">点击上传</el-button>
+                </el-upload>
+              </el-input>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="中文PC维护专用图：" prop="pcPicCn">
+            <el-col :span="8">
+              <el-input :disabled="!isModify" size="small" v-model="form.pcPicCn" placeholder="请选择上传">
+                <el-upload
+                  :disabled="!isModify"
+                  slot="append"
+                  :action="$img_api"
+                  multiple
+                  :data="{ type: 'exchange' }"
+                  name="file"
+                  accept=".jpg,.png"
+                  :limit="1"
+                  :before-upload="beforeUpload"
+                  :show-file-list="false"
+                  :on-success="upload"
+                  :on-error="uploadCompressError"
+                  :on-exceed="exceed"
+                  ref="pcPicCn"
+                >
+                  <el-button @click="uploadBtn('pcPicCn')" :disabled="!isModify" size="small" type="primary">点击上传</el-button>
+                </el-upload>
+              </el-input>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="英文PC维护专用图：" prop="pcPicEn">
+            <el-col :span="8">
+              <el-input :disabled="!isModify" size="small" v-model="form.pcPicEn" placeholder="请选择上传">
+                <el-upload
+                  :disabled="!isModify"
+                  slot="append"
+                  :action="$img_api"
+                  multiple
+                  :data="{ type: 'exchange' }"
+                  name="file"
+                  accept=".jpg,.png"
+                  :limit="1"
+                  :before-upload="beforeUpload"
+                  :show-file-list="false"
+                  :on-success="upload"
+                  :on-error="uploadCompressError"
+                  :on-exceed="exceed"
+                  ref="pcPicEn"
+                >
+                  <el-button @click="uploadBtn('pcPicEn')" :disabled="!isModify" size="small" type="primary">点击上传</el-button>
+                </el-upload>
+              </el-input>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="谷歌验证码：" prop="googleCode">
+            <el-col :span="8"><el-input @input="checkVal('googleCode', 'noDot')" type="text" placeholder="请输入" v-model="form.googleCode" :disabled="!isModify"></el-input> </el-col>
           </el-form-item>
         </div>
         <div v-if="isCURDAuth">
@@ -115,30 +190,35 @@ export default {
       confirmLoading: false, // 提交loading
       list: [], //委托列表
       labelWidth: '140px',
+      key: '',
       form: {
-        imgUrl: '',
+        androidPicCn: '',
+        androidPicEn: '',
+        iosPicCn: '',
+        iosPicEn: '',
+        pcPicCn: '',
+        pcPicEn: '',
+        globalSwitch: false,
+        googleCode: '',
       },
       rules: {
-        incomeAmount: [{ required: true, message: '必填', trigger: 'blur' }],
-        inviteNumber: [{ required: true, message: '必填', trigger: 'blur' }],
-        openPositionAmount: [{ required: true, message: '必填', trigger: 'blur' }],
+        androidPicCn: [{ required: true, message: '必填', trigger: 'blur' }],
+        androidPicEn: [{ required: true, message: '必填', trigger: 'blur' }],
+        iosPicCn: [{ required: true, message: '必填', trigger: 'blur' }],
+        iosPicEn: [{ required: true, message: '必填', trigger: 'blur' }],
+        pcPicCn: [{ required: true, message: '必填', trigger: 'blur' }],
+        pcPicEn: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     };
   },
   methods: {
-    upload1(response, file, fileList) {
-      //console.log('response', response);
-      //console.log('response.data[0].url', response.data[0].url);
-      this.form.imgUrl = response.data[0].url;
-      // this.form.imgUrl = response.data[0].url;
-      //console.log('form.imgUrl', this.form.imgUrl);
-      this.$refs.imgUrl.handleRemove(file);
-    },
     upload(response, file, fileList) {
-      //console.log('response', response);
-      this.form.imgUrl = response.data[0].url;
-      //console.log('form.imgUrl', this.form.imgUrl);
-      this.$refs.imgUrl.handleRemove(file);
+      this.$refs[this.key].handleRemove(file);
+      this.form[this.key] = response.data[0].url;
+    },
+    uploadBtn(key) {
+      this.key = key;
     },
     exceed(file, fileList) {
       this.$message.error('单次只能选择1个文件进行上传！');
@@ -184,17 +264,12 @@ export default {
       if (this.listLoading) return;
       const query_data = {};
       this.listLoading = true;
-      const res = await $api.getAllTriggerConditionNew(query_data);
+      const res = await $api.getMaintenanceList(query_data);
       if (res) {
-        const tmp = res.data.data[0];
-
-        this.form = {
-          id: tmp.id,
-          incomeAmount: tmp.incomeAmount,
-          inviteNumber: tmp.inviteNumber,
-          openPositionAmount: tmp.openPositionAmount,
-          imgUrl:''
-        };
+        console.log('res');
+        const tmp = res.data.data;
+        tmp.globalSwitch ? true : false;
+        this.form = tmp;
       }
       this.listLoading = false;
     },
@@ -202,23 +277,22 @@ export default {
     async confirmSend() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { openPositionAmount, incomeAmount, inviteNumber, id } = this.form;
+          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn, pcPicCn, pcPicEn, globalSwitch, googleCode } = this.form;
           let params = {
-            incomeAmount: parseFloat(incomeAmount),
-            inviteNumber: parseFloat(inviteNumber),
-            openPositionAmount: parseFloat(openPositionAmount),
+            androidPicCn,
+            androidPicEn,
+            iosPicCn,
+            iosPicEn,
+            pcPicCn,
+            pcPicEn,
+            globalSwitch: globalSwitch ? 1 : 0,
+            googleCode,
           };
-          if (!id) {
-          } else {
-            params.id = id;
-          }
 
           this.confirmLoading = true;
-          const res = !id ? await $api.addVoucherParameters(params) : await $api.editVoucherParameters(params);
+          const res = await $api.editMaintenance(params) 
           if (res) {
-            let text = '';
-            text = !id ? '添加成功！' : '修改成功！';
-            this.$message({ message: text, type: 'success' });
+            this.$message({ message: '修改成功！', type: 'success' });
             this.getList();
             this.isModify = false;
           }

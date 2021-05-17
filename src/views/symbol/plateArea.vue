@@ -37,13 +37,13 @@
           </el-col>
         </el-row>
 
-        <template v-for="(symbolGroup, index) in chainForm.list">
+        <template v-for="(symbolGroup, index) in chainForm.pairList">
           <el-form
             :key="index"
             :label-width="formLabelWidth"
             :model="symbolGroup"
             :rules="{
-              coinMarket: [
+              tbCoinMarketId: [
                 {
                   required: true,
                   message: '必填',
@@ -57,25 +57,40 @@
                   trigger: 'blur',
                 },
               ],
+              sort: [
+                {
+                  required: true,
+                  message: '必填',
+                  trigger: 'blur',
+                },
+              ],
             }"
           >
             <el-row class="my-row" :span="24">
               <el-col :span="12">
-                <el-form-item label="交易对" prop="coinMarket">
-                  <el-select v-model="symbolGroup.coinMarket" placeholder="请选择">
-                    <el-option v-for="item in symbollist" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+                <el-form-item label="交易对" prop="tbCoinMarketId">
+                  <el-select v-model="symbolGroup.tbCoinMarketId" placeholder="请选择">
+                    <el-option v-for="item in symbollist" :label="item.label" :value="item.tbCoinMarketId" :key="item.tbCoinMarketId"> </el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
                 <el-form-item label-width="100px" label="是否合约">
-                  <el-switch v-model="symbolGroup.sort" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+                  <el-switch :disabled="getSupportContract(symbolGroup.tbCoinMarketId)" v-model="symbolGroup.supportContract" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
                 </el-form-item>
               </el-col>
             </el-row>
 
-            <el-row :class="{ 'my-border': index + 1 != chainForm.list.length }" class="my-row" :gutter="10" :span="24">
+            <el-row class="my-row" :span="24">
+              <el-col :span="12">
+                <el-form-item label="排序" prop="sort">
+                  <el-input v-model.trim="symbolGroup.sort" @input="symbolGroup.sort = symbolGroup.sort.replace(/[^\d]/g, '')" autocomplete="off" type="text"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :class="{ 'my-border': index + 1 != chainForm.pairList.length }" class="my-row" :gutter="10" :span="24">
               <el-col :span="21">
                 <el-form-item label="icon" prop="img">
                   <el-input size="small" placeholder="请输入链接" v-model="symbolGroup.img">
@@ -99,7 +114,7 @@
         <el-row :span="24">
           <el-col :span="23">
             <el-form-item label="谷歌验证码" prop="googleCode">
-              <el-input v-model.trim="chainForm.googleCode" @input="checkVal('googleCode')" autocomplete="off" type="text"></el-input>
+              <el-input v-model.trim="chainForm.googleCode" @input="checkVal('chainForm', 'googleCode')" autocomplete="off" type="text"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -107,6 +122,23 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 删除 谷歌验证 -->
+    <el-dialog :visible.sync="dialogVisible" width="500px" title="谷歌验证码">
+      <el-form :model="delForm" label-width="100px" ref="delForm" :rules="delRules">
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="谷歌验证码" prop="googleCode">
+              <el-input v-model.trim="delForm.googleCode" @input="checkVal('delForm', 'googleCode')" autocomplete="off" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="inner-footer">
+        <el-button @click.stop="dialogVisible = false" style="margin-right: 10px">取消</el-button>
+        <el-button type="primary" :loading="delBtnLoading" @click.stop="confirmDel">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -172,10 +204,23 @@ export default {
           },
         ],
       },
+
       formName: '',
       formLabelWidth: '100px',
       symbollist: [],
       cowIndex: '',
+      dialogVisible: false,
+      delForm: {},
+      delRules: {
+        googleCode: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur',
+          },
+        ],
+      },
+      delBtnLoading: false,
     };
   },
   filters: {
@@ -184,9 +229,44 @@ export default {
       return parseTime(v);
     },
   },
+  computed: {
+    getSupportContract() {
+      return function (tbCoinMarketId) {
+        if (tbCoinMarketId) {
+          let res = this.symbollist.filter((v) => {
+            return (v.tbCoinMarketId == tbCoinMarketId);
+          })[0].supportContract;
+          return res ? false : true;
+        } else {
+          return false;
+        }
+      };
+    },
+  },
   methods: {
-    checkVal(val) {
-      this.chainForm[val] = (this.chainForm[val] + '').replace(/[^\d]/g, '');
+    // 删除谷歌验证
+    confirmDel() {
+      this.$refs['delForm'].validate(async (valid) => {
+        if (valid) {
+          const { id, googleCode } = this.delForm;
+          if (this.delBtnLoading) return;
+          this.delBtnLoading = true;
+          let params = {
+            id,
+            googleCode,
+          };
+          const res = await $api.delPlateAreaList(params);
+          if (res) {
+            this.$message({ message: '删除成功', type: 'success' });
+            this.dialogVisible = false;
+            this.getList();
+          }
+          this.delBtnLoading = false;
+        }
+      });
+    },
+    checkVal(obj, val) {
+      this[obj][val] = (this[obj][val] + '').replace(/[^\d]/g, '');
     },
     exceed(file, fileList) {
       this.$message.error('单次只能选择一张图片进行上传！');
@@ -217,7 +297,7 @@ export default {
       this.cowIndex = index;
     },
     uploadIcon(response, file, fileList) {
-      this.chainForm.list[this.cowIndex].img = response.data[0].url;
+      this.chainForm.pairList[this.cowIndex].img = response.data[0].url;
     },
     // 表格操作
     async doHandle(data) {
@@ -228,12 +308,11 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['chainForm'].resetFields();
-
           const { id, name, desc, descEn } = row;
-          const list = JSON.parse(JSON.stringify(row.list));
-          if (list.length) {
-            list.forEach((v) => {
-              v.sort = v.sort == 1 ? true : false;
+          const pairList = JSON.parse(JSON.stringify(row.pairList));
+          if (pairList.length) {
+            pairList.forEach((v) => {
+              v.supportContract = v.supportContract == 1 ? true : false;
             });
           }
           this.chainForm = {
@@ -241,7 +320,7 @@ export default {
             name,
             desc,
             descEn,
-            list,
+            pairList,
             googleCode: '',
           };
         });
@@ -249,40 +328,27 @@ export default {
       if (fn === 'detail') {
       }
       if (fn === 'del') {
-        this.$confirm('确定删除？', '温馨提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        })
-          .then(async () => {
-            const params = {
-              id: row.id,
-            };
-            const res = await $api.setDeleteChain(params);
-            if (res) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!',
-              });
-              this.getList();
-            }
-          })
-          .catch(() => {
-            // this.$message({ type: "info", message: "已取消删除" });
-          });
+        this.dialogVisible = true;
+        this.$nextTick(() => {
+          this.$refs['delForm'].resetFields();
+          const { id } = row;
+          this.delForm = {
+            id,
+            googleCode: '',
+          };
+        });
       }
     },
     addSymbolGroups() {
-      //console.log('chainForm.list', this.chainForm.list);
-      this.chainForm.list.push({
-        coinMarket: '',
-        sort: false,
+      this.chainForm.pairList.push({
+        tbCoinMarketId: '',
+        supportContract: false,
         img: '',
+        sort: '',
       });
     },
     delSymbolGroups(index) {
-      this.chainForm.list.splice(index, 1);
-      //console.log('this.chainForm.list', this.chainForm.list);
+      this.chainForm.pairList.splice(index, 1);
     },
     // 添加
     addChain() {
@@ -294,61 +360,36 @@ export default {
           name: '',
           desc: '',
           descEn: '',
-          list: [],
+          pairList: [],
           googleCode: '',
         };
         this.addSymbolGroups();
       });
     },
-    // asdasd(){
-    //       const { id, chainName } = this.chainForm;
-    //       const params = {
-    //         chainName: chainName,
-    //       };
-    //       this.btnLoading = true;
-    //       // 新增 编辑
-    //       const res =
-    //         id === ''
-    //           ? await $api.setAddChain(params)
-    //           : await $api.setUpdateChain({
-    //               id,
-    //               ...params,
-    //             });
-    //       if (res) {
-    //         let txt = id === '' ? '添加成功' : '编辑成功';
-    //         this.$message({
-    //           message: res.data.message,
-    //           type: 'success',
-    //         });
-    //         this.dialogFormVisible = false;
-    //         this.getList();
-    //       }
-    //       this.btnLoading = false;
-    // },
 
     // 提交
     confirmOp() {
       this.$refs['chainForm'].validate(async (valid) => {
         if (valid) {
-          var ret = this.chainForm.list.some((v) => {
-            if (!v.coinMarket || !v.img) {
+          var ret = this.chainForm.pairList.some((v) => {
+            if (!v.tbCoinMarketId || !v.img || !v.sort) {
               return true;
             }
           });
           if (ret) return this.$message.error('请补充表格');
 
           const { id, name, desc, descEn, googleCode } = this.chainForm;
-          const list = JSON.parse(JSON.stringify(this.chainForm.list));
-          if (list.length) {
-            list.forEach((v) => {
-              v.sort = v.sort ? 1 : 0;
+          const pairList = JSON.parse(JSON.stringify(this.chainForm.pairList));
+          if (pairList.length) {
+            pairList.forEach((v) => {
+              v.supportContract = v.supportContract ? 1 : 0;
             });
           }
           let params = {
             name,
             desc,
             descEn,
-            list,
+            pairList,
             googleCode,
           };
           if (this.btnLoading) return;
@@ -356,7 +397,7 @@ export default {
             params.id = id;
           }
           this.btnLoading = true;
-          const res = !id ? await $api.addApiKeyConfig(params) : await $api.updateApiKeyConfig(params);
+          const res = !id ? await $api.addPlateArea(params) : await $api.updatePlateArea(params);
           if (res) {
             let text = '';
             text = !id ? '添加成功！' : '修改成功！';
@@ -394,21 +435,21 @@ export default {
       };
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getApiKeyConfigList(query_data);
+      const res = await $api.getPlateAreaList(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
         this.pages = pages;
         this.current_page = current;
         this.list = records;
-        console.log('this.list', this.list);
         this.listLoading = false;
       }
     },
     async getSymbolList() {
       // 交易对获取
-      this.$store.dispatch('common/getSymbolListContract').then(() => {
-        this.symbollist = this.$store.state.common.symbollistContract;
+      this.$store.dispatch('common/getSymbolListSupportContract').then(() => {
+        this.symbollist = this.$store.state.common.symbolListSupportContract;
+        console.log('this.symbollist', this.symbollist);
       });
     },
   },

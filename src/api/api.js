@@ -223,6 +223,8 @@ export default class api {
     return Fetch.post('/admin/market/coinMarkets', data);
   }
 
+  
+
   // 币种管理--查询机器人
   static getRobotList(data) {
     return Fetch.post('/admin/user/robot-page', data);
@@ -2702,20 +2704,7 @@ export default class api {
     return Fetch.post('/admin/user/delete/app-key', data);
   }
 
-  // 币种管理  板块专区管理 列表
-  static getApiKeyConfigList(data) {
-    return Fetch.post('/market/plate/find', data);
-  }
-
-  // 币种管理  板块专区管理 添加
-  static addApiKeyConfig(data) {
-    return Fetch.post('/market/plate/add', data);
-  }
-
-  // 币种管理  板块专区管理 编辑
-  static updateApiKeyConfig(data) {
-    return Fetch.post('/market/plate/edit', data);
-  }
+ 
 
   // 币种管理 小额资产展示管理 修改
   static updateSmallAmountShow(data) {
@@ -2735,6 +2724,41 @@ export default class api {
   // 运营管理/体验金券管理/条件参数设置 编辑
   static editVoucherParameters(data) {
     return Fetch.post('/admin/account/edit/condition', data);
+  }
+
+  // 系统管理/维护管理 列表
+  static getMaintenanceList(data) {
+    return Fetch.post('/user/MaintenanceManagementList', data);
+  }
+
+  // 系统管理/维护管理 修改
+  static editMaintenance(data) {
+    return Fetch.post('/user/UpdateMaintenanceManagement', data);
+  }
+
+  // 币种管理--交易对列表 一个含有是否支持合约的接口
+  static getSymbolListSupportContract(data) {
+    return Fetch.post('/market/plate/coinMarkets', data);
+  }
+
+  //  币种管理  板块专区管理 删除
+  static delPlateAreaList(data) {
+    return Fetch.post('/market/plate/del', data);
+  }
+
+   // 币种管理  板块专区管理 列表
+   static getPlateAreaList(data) {
+    return Fetch.post('/market/plate/find', data);
+  }
+
+  // 币种管理  板块专区管理 添加
+  static addPlateArea(data) {
+    return Fetch.post('/market/plate/add', data);
+  }
+
+  // 币种管理  板块专区管理 编辑
+  static updatePlateArea(data) {
+    return Fetch.post('/market/plate/edit', data);
   }
 
   
