@@ -105,7 +105,7 @@ export default {
 					this.mergeArray(list)
 					if (res.data.result.list && res.data.result.list.length > 0) {
 						list[0].hasChildren = true
-						console.log(list[0])
+						//console.log(list[0])
 						// this.mergeArray(list)
 					}
 				} else {
@@ -151,7 +151,7 @@ export default {
 			}
 		},
 		mergeArray (list) {
-			// console.log(list)
+			// //console.log(list)
 			if (this.groupId !== '') {
 				return
 			}

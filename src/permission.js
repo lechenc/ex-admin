@@ -55,7 +55,7 @@ router.beforeEach(async (to, from, next) => {
                 next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
               })
               .catch(err => {
-                console.log(err);
+                //console.log(err);
               });
           } else if (!isRefresh && store.state.app.hybridRouters.length > 0) {
             // 防止特殊情况：刷新后动态路由丢失，所以要重新add+route操作 store.state.app.routers.length
@@ -265,10 +265,7 @@ const mapComponents = {
   ConfigPath: () => import('@/views/system/configPath'),
   DomainName: () => import('@/views/system/domainName'),
   Maintenance: () => import('@/views/system/maintenance'),
-  GroupList: () => import('@/views/system/groupList'),
-  BranchList: () => import('@/views/system/branchList'),
-  PositionList: () => import('@/views/system/positionList'),
-  AccountList: () => import('@/views/system/accountList'),
+  PeopleManagement: () => import('@/views/system/peopleManagement'),
 
   Version: () => import('@/views/app/version'),
   LocalPackage: () => import('@/views/app/localPackage'),
@@ -436,6 +433,7 @@ const mapComponents = {
   ServiceChargeContract: () => import('@/views/contract/order/serviceChargeContract'),
   PositionContract: () => import('@/views/contract/store/positionContract'),
   CloseContract: () => import('@/views/contract/store/closeContract'),
+  ApiKeyConfig: () => import('@/views/contract/apiManage/apiKeyConfig'),
   
 
   // 模拟盘 模拟交易管理

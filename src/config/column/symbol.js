@@ -29,6 +29,10 @@ const coinCol = [
     prop: 'decimalPlaces',
   },
   {
+    label: '排序',
+    prop: 'position',
+  },
+  {
     label: '转出手续费',
     prop: 'tranOutFee',
   },
@@ -96,6 +100,10 @@ const coinColNoBtn = [
   {
     label: '币种小数位',
     prop: 'decimalPlaces',
+  },
+  {
+    label: '排序',
+    prop: 'position',
   },
   {
     label: '转出手续费',
@@ -581,15 +589,22 @@ const chainTypeColNoBtn = [
 const plateAreaCol = [
   {
     label: '板块名称',
-    prop: 'chainName',
+    prop: 'name',
   },
   {
     label: '板块描述',
-    prop: 'coinName',
+    prop: 'desc',
+  },
+  {
+    label: '英文描述',
+    prop: 'descEn',
   },
   {
     label: '相关交易对-是否合约',
-    prop: 'createTime1',
+    prop: 'pairList',
+    key1:'coinMarket',
+    key2:'supportContract',
+    type: 'valueArr',
   },
   {
     label: '创建时间',

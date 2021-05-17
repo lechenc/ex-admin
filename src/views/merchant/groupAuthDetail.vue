@@ -64,7 +64,7 @@ export default {
   methods: {
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      // console.log(this.multipleSelection);
+      // //console.log(this.multipleSelection);
     },
     handleCurrentChange(val) {
       this.pageNum = val;

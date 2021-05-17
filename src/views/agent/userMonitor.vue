@@ -198,7 +198,7 @@ export default {
           this.cForm.amountAll = res.data.data;
         }
 
-        // console.log('res', res);
+        // //console.log('res', res);
       }
     },
     doSearch(data) {
@@ -275,7 +275,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('UserMonitor', userMonitorCol, userMonitorColNoBtn);
-    // console.log('authObj', authObj);
+    // //console.log('authObj', authObj);
     this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(userMonitorConfig);

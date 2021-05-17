@@ -151,7 +151,7 @@ export default {
       this.getList();
     },
     exportExcel(val) {
-      // console.log('val',val);
+      // //console.log('val',val);
       this.search_params_obj = val.query;
       const num = val.num;
       utils.exportData.apply(this, [num]);

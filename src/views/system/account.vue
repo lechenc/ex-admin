@@ -179,7 +179,7 @@ export default {
           }
           this.delBtnLoading = false;
         } else {
-          // console.log('delForm valid error');
+          // //console.log('delForm valid error');
         }
       });
     },
@@ -233,7 +233,7 @@ export default {
             this.btnLoading = false;
           }
         } else {
-          // console.log('error submit!!');
+          // //console.log('error submit!!');
           return false;
         }
       });
@@ -263,7 +263,7 @@ export default {
         this.delFormVisible = true;
       }
       // if (fn === "switchCoin") {
-      // 	console.log(row);
+      // 	//console.log(row);
       // 	// 用户状态,0-有效,1-失效
       // 	const params = {
       // 		id: row.id,

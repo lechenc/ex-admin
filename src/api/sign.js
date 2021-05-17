@@ -27,8 +27,8 @@ const sign = (p, t, pad, a, b, c) => {
   //   arr.push(`${i}=${typeof p[i] === 'object' ? JSON.stringify(p[i]) : p[i]}`);
   // } 
   // str = (arr.length ? arr.join('&') + '&' : '' ) + `${c}=${t - 688}&${b}=${a}`;
-  // console.log(p,t,a,b,c,str)
-  // console.log(str)
+  // //console.log(p,t,a,b,c,str)
+  // //console.log(str)
   // 签名url字段排序加密
   p[c] = t - 688;
   p[b] = a;

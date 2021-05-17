@@ -513,7 +513,7 @@ export default {
     async getSymbolList() {
       this.$store.dispatch('common/getCoinList').then(() => {
         let coin_List = this.$store.state.common.coinlist;
-        console.log('coin_List', coin_List);
+        //console.log('coin_List', coin_List);
         this.coin_List = coin_List.filter((v) => {
           return v.label == 'USDT';
         });
@@ -743,7 +743,7 @@ export default {
             phoneEmailThird,
             selfCommission,
           };
-          // console.log('this.cForm', this.cForm);
+          // //console.log('this.cForm', this.cForm);
           // this.editBeforeLevelMode = levelMode;
 
           // this.oldPwd = password;

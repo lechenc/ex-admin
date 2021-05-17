@@ -135,7 +135,7 @@ export default {
         pageSize: this.pageSize,
         optType: 85,
       };
-      console.log('this.search_params_obj',this.search_params_obj)
+      //console.log('this.search_params_obj',this.search_params_obj)
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime =  this.search_params_obj.endTime.replace(/\//gi, '-')
         this.search_params_obj.startTime = this.search_params_obj.startTime.replace(/\//gi, '-')
@@ -158,7 +158,7 @@ export default {
     requiredParams(params) {
      
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-         console.log('params', params);
+         //console.log('params', params);
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
         params.endTime = nowV.replace(/\//gi, '-');

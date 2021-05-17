@@ -3658,7 +3658,80 @@ const agentTransferfig = [
   },
 ];
 
+const apiKeyConfigCol = [
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '备注',
+    prop: 'destext',
+  },
+  {
+    label: 'API Key',
+    prop: 'appKey',
+  },
+  {
+    label: 'Secret Key',
+    prop: 'appSecret',
+  },
+
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type:'time'
+  },
+  {
+    label: '开关',
+    prop: 'isShow',
+    type: 'switch',
+    fn: 'trswitch',
+    alias: 'trswitch',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    btnGroup: [
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'primary',
+        alias: 'del',
+      },
+    ],
+  },
+];
+
+const apiKeyConfigColNoBtn = [
+  {
+    label: '备注',
+    prop: 'destext',
+  },
+  {
+    label: 'API Key',
+    prop: 'appKey',
+  },
+  {
+    label: 'Secret Key',
+    prop: 'appSecret',
+  },
+
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type:'time'
+  },
+];
+
+const apiKeyConfigConfig = [
+  
+];
+
 export {
+  apiKeyConfigCol,
+  apiKeyConfigColNoBtn,
+  apiKeyConfigConfig,
   agentTransferfig,
   agentTransferCol,
   contractResultConfig,

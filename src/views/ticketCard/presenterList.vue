@@ -309,7 +309,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('PresenterList', presenterListCol, presenterListNoBtn);
-    console.log('authObj', authObj);
+    //console.log('authObj', authObj);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
     this.searchCofig = this.$util.clone(presenterListConfig);

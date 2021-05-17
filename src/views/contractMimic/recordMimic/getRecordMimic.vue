@@ -126,7 +126,7 @@ export default {
       // 交易对获取
       this.$store.dispatch('common/getsymbolMimiclistContract').then(() => {
         this.symbollist = this.$store.state.common.symbolMimiclistContract;
-        console.log('this.symbollist',this.symbollist)
+        //console.log('this.symbollist',this.symbollist)
         this.searchCofig[4]['list'] = this.symbollist;
       });
     },

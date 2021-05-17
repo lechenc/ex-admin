@@ -170,7 +170,7 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data;
-      // console.log('data', data);
+      // //console.log('data', data);
       if (fn == 'supple') {
         this.dialogFormVisible = true;
         this.cForm.agentUID = row.agentUid;
@@ -181,7 +181,7 @@ export default {
           this.cForm.amountAll = res.data.data;
         }
 
-        // console.log('res', res);
+        // //console.log('res', res);
       }
     },
     doSearch(data) {
@@ -243,7 +243,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('agentMonitor', agentMonitorCol, agentMonitorColNoBtn);
-    // console.log('authObj', authObj);
+    // //console.log('authObj', authObj);
     this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(agentMonitorConfig);

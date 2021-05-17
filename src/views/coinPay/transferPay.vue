@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     async doHandle(data) {
-      console.log(data);
+      //console.log(data);
       const { fn, row } = data;
       this.curRow = row;
       if (fn === 'detail') {
@@ -152,7 +152,7 @@ export default {
       this.current_page = 1;
       this.search_params_obj = data;
       this.getList();
-      console.log(this.searchCofig);
+      //console.log(this.searchCofig);
     },
     doReset() {
       this.search_params_obj = {};
@@ -160,7 +160,7 @@ export default {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-      console.log(this.searchCofig[0].value);
+      //console.log(this.searchCofig[0].value);
       this.getList();
     },
     exportExcel(val) {

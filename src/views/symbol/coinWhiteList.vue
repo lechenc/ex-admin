@@ -272,7 +272,7 @@ export default {
           params.coinId = this.coinList.filter((v) => v.label == coinName)[0].value;
           this.btnLoading = true;
           // 新增 编辑
-          console.log('id', id);
+          //console.log('id', id);
           const res = id == '' ? await $api.addEditCoinWhiteList({ ...params, type: 1 }) : await $api.addEditCoinWhiteList({ ...params, id, type: 2 });
           if (res) {
             let txt = id === '' ? '新增成功' : '编辑成功';
@@ -308,7 +308,7 @@ export default {
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
       const res = await $api.getCoinWhiteList(query_data);
-      console.log('res', res);
+      //console.log('res', res);
       if (res) {
         this.list = res.data.data;
         this.listLoading = false;

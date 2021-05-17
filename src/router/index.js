@@ -536,31 +536,10 @@ export const asyncRouterMap = [
       },
 
       {
-        path: 'groupList',
-        name: 'GroupList',
-        component: () => import('@/views/system/groupList'),
-        meta: { title: '集团管理', icon: '', role: [] },
-      },
-
-      {
-        path: 'branchList',
-        name: 'BranchList',
-        component: () => import('@/views/system/branchList'),
-        meta: { title: '部门管理', icon: '', role: [] },
-      },
-
-      {
-        path: 'positionList',
-        name: 'PositionList',
-        component: () => import('@/views/system/positionList'),
-        meta: { title: '职位管理', icon: '', role: [] },
-      },
-
-      {
-        path: 'accountList',
-        name: 'AccountList',
-        component: () => import('@/views/system/accountList'),
-        meta: { title: '账号管理', icon: '', role: [] },
+        path: 'peopleManagement',
+        name: 'PeopleManagement',
+        component: () => import('@/views/system/peopleManagement'),
+        meta: { title: '人员管理', icon: '', role: [] },
       },
     ],
   },
@@ -1559,6 +1538,21 @@ export const asyncRouterMap = [
             name: 'EarningsFlow',
             component: () => import('@/views/contract/accountManagement/earningsFlow'),
             meta: { title: '收益流水', icon: '', role: [] },
+          },
+        ],
+      },
+
+      {
+        path: 'apiManage',
+        name: 'ApiManage',
+        redirect: '/contract/apiManage/apiKeyConfig',
+        meta: { title: 'API管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'apiKeyConfig',
+            name: 'ApiKeyConfig',
+            component: () => import('@/views/contract/apiManage/apiKeyConfig'),
+            meta: { title: 'API Key设置', icon: '', role: [] },
           },
         ],
       },

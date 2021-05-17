@@ -237,7 +237,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('TicketCardList', ticketCardListCol, ticketCardListNoBtn);
     this.configs = authObj.val;
-    console.log('ticketCardListConfig',ticketCardListConfig)
+    //console.log('ticketCardListConfig',ticketCardListConfig)
     this.searchCofig = this.$util.clone(ticketCardListConfig);
     // 初始化今天，和前天的时间
     this.toDay = this.$util.diyTime('toDay');

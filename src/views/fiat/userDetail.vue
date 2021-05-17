@@ -346,7 +346,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('cancel');
+          //console.log('cancel');
         });
     },
     // 是否发布广告
@@ -367,7 +367,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('cancel');
+          //console.log('cancel');
         });
     },
     // 提交修改佣金表单

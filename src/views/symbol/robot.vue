@@ -152,7 +152,7 @@ export default {
             type: 'success'
           });
         } else {
-          console.log('editRobot error');
+          //console.log('editRobot error');
           // this.getList();
         }
       }
@@ -194,7 +194,7 @@ export default {
       if (ret.valid) {
         this.getAmountSection = ret.form.min + '-' + ret.form.max;
       } else {
-        // console.log('rangeValue error');
+        // //console.log('rangeValue error');
       }
     },
     // 添加交易对
@@ -249,7 +249,7 @@ export default {
           }
           this.btnLoading = false;
         } else {
-          // console.log('error submit!!');
+          // //console.log('error submit!!');
           return false;
         }
       });

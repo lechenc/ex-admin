@@ -314,7 +314,7 @@ export default {
       //   .then(async () => {
       //   })
       //   .catch(() => {
-      //     console.log('cancel');
+      //     //console.log('cancel');
       //   });
     },
     // 修改金额上报 (这个功能暂时屏蔽了)
@@ -368,7 +368,7 @@ export default {
               this.$router.go(-1);
             })
             .catch(() => {
-              console.log('cancel');
+              //console.log('cancel');
             });
         }
       });

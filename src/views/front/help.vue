@@ -216,7 +216,7 @@ export default {
           .catch(() => {});
       }
       if (fn === 'switchCoin') {
-        // console.log('row',row)
+        // //console.log('row',row)
         const res = await $api.editHelp({ id: row.id, status: row.status ? 1 : 0 });
         if (res) {
           this.$message({ type: 'success', message: res.data.message });
@@ -248,7 +248,7 @@ export default {
     },
     async getHelpListColumn() {
       const res = await $api.getHelpListWithColumn({});
-      console.log('res', res);
+      //console.log('res', res);
       if (res) {
         this.columnArr = res.data.data;
       }

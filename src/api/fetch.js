@@ -101,7 +101,7 @@ export class Fetch {
    static async dealRespones(promise) {
     return promise
       .then(res => {
-        // console.log(res);|| res.status === 200
+        // //console.log(res);|| res.status === 200
         if (res.data.code === 1 || res.data.code === 200 ) {
           return res;
         } else {
@@ -113,7 +113,7 @@ export class Fetch {
         }
       })
       .catch(err => {
-        console.log(err);
+        //console.log(err);
         Message.error('服务器请求错误');
       });
       // try{
@@ -128,7 +128,7 @@ export class Fetch {
       //     }
       //   }
       // }catch(err){
-      //   console.log(err);
+      //   //console.log(err);
       //   Message.error('服务器请求错误');
       // }
   }

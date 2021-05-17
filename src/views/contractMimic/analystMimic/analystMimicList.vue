@@ -184,7 +184,7 @@ export default {
     },
     doHandle(data) {
       const { fn, row } = data;
-      console.log('row', row);
+      //console.log('row', row);
       if (fn === 'detail') {
         this.$router.push({
           path: '/contractMimic/analystMimic/analystMimicDetail',

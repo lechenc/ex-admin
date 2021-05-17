@@ -286,7 +286,7 @@ export default {
     getRangeVal(val) {
       // val.valid
       // val.form
-      console.log('asd');
+      //console.log('asd');
     },
     requiredParams(params) {
       if (this.search_params_obj.coinMarket) {
