@@ -66,12 +66,12 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { analystMimicListCol, analystMimicListConfig } from '@/config/column/contractMimic';
+import { analystMimicListCol,analystMimicListColNoBtn, analystMimicListConfig } from '@/config/column/contractMimic';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 import mMd5 from '@/utils/module_md5';
 export default {
-  name: 'UserlistMimic',
+  name: 'AnalystMimicList',
   components: {
     Btable,
     Bsearch,
@@ -140,7 +140,7 @@ export default {
             return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' });
           }
           let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid } = this.form;
-          let params = { googleCode, loginSwitch: loginSwitch ? 1 : 0 };
+          let params = { googleCode, loginSwitch: loginSwitch ? 0 : 1 };
           if (phone) {
             const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
             const msg = phoneReg.test(phone);
@@ -197,7 +197,7 @@ export default {
         this.title = '编辑分析师';
         let { loginSwitch, uid, phone, email, loginPassword, googleCode } = row;
         this.form = {
-          loginSwitch: loginSwitch ? true : false,
+          loginSwitch: loginSwitch ? false : true,
           uid,
           phone,
           phoneAreaCode: 86,
@@ -278,8 +278,8 @@ export default {
     },
   },
   mounted() {
-    // let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
-    this.configs = analystMimicListCol;
+    let authObj = this.$util.getAuthority('AnalystMimicList', analystMimicListCol, analystMimicListColNoBtn);
+    this.configs = authObj.val;
 
     // 初始化今天，和昨天的时间
     this.toDay = this.$util.diyTime('toDay');

@@ -413,6 +413,7 @@ const mapComponents = {
   RefundRecord: () => import('@/views/agent/refundRecord'),
   ApportionRecord: () => import('@/views/agent/apportionRecord'),
   AgentLevel: () => import('@/views/agent/agentLevel'),
+  EarnestMoneyList: () => import('@/views/agent/earnestMoneyList'),
   BusinessFinancialFlow: () => import('@/views/agent/businessFinancialFlow'),
   AgentFinancialFlow: () => import('@/views/agent/agentFinancialFlow'),
   UserMonitor: () => import('@/views/agent/userMonitor'),

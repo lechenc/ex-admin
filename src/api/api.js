@@ -2761,5 +2761,12 @@ export default class api {
     return Fetch.post('/market/plate/edit', data);
   }
 
+  // 代理管理 保证金流水 列表
+  static getEarnestMoneyList(data) {
+    return Fetch.post('/account/contract/query-coin-change-expand', data);
+  }
+
+  
+
   
 }
