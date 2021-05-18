@@ -1946,7 +1946,94 @@ const agentMonitorConfig = [
   },
 ];
 
+const earnestMoneyListCol = [
+  {
+    label: '时间',
+    prop: 'createTime',
+  },
+  {
+    label: '订单号',
+    prop: 'relateRecdId',
+  },
+  {
+    label: '代理UID',
+    prop: 'uid',
+  },
+  {
+    label: '类型',
+    prop: 'optType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+
+      {
+        text: '补充保证金',
+        val: 109,
+      },
+      {
+        text: '释放保证金',
+        val: 110,
+      },
+
+
+    ],
+  },
+
+  {
+    label: '变动保证金',
+    prop: 'amount',
+  },
+  {
+    label: '变动前保证金',
+    prop: 'beforeAmount',
+  },
+  {
+    label: '变动后保证金',
+    prop: 'afterAmount',
+  },
+  
+];
+
+const earnestMoneyListConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'select',
+    label: '类型',
+    prop: 'optType',
+    value: '',
+    // 1：待审核，2：已完成，3：已驳回
+    list: [
+      {
+        label: '补充保证金',
+        value: 109,
+      },
+      {
+        label: '释放保证金',
+        value: 110,
+      },
+    ],
+  },
+  {
+    type: 'onlyNumber',
+    label: '订单号',
+    prop: 'relateRecdId',
+    value: '',
+    placeHolder: '请输入',
+  },
+ 
+
+  
+];
+
 export {
+  earnestMoneyListConfig,
+  earnestMoneyListCol,
   agentMonitorConfig,
   agentMonitorCol,
   agentMonitorColNoBtn,

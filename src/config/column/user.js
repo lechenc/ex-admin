@@ -15,7 +15,7 @@ const userCol = [
   {
     label: '用户类型',
     prop: 'userType',
-    width: 100,
+    width: 120,
     type: 'filter',
     show_type: 'text',
     filters: [
@@ -63,30 +63,30 @@ const userCol = [
     prop: 'cardNo',
     width: '200',
   },
-  // {
-  //   label: '昵称',
-  //   prop: 'nickName',
-  // },
-  // {
-  //   label: '头像页',
-  //   prop: 'cardFrontUrl',
-  //   type: 'img',
-  // },
-  // {
-  //   label: '国徽页',
-  //   prop: 'cardBackUrl',
-  //   type: 'img',
-  // },
-  // {
-  //   label: '手持证件页',
-  //   prop: 'antiMoneyUrl',
-  //   type: 'img',
-  // },
-  // {
-  //   label: '录制视频',
-  //   prop: 'videoUrl',
-  //   type: 'video',
-  // },
+  {
+    label: '昵称',
+    prop: 'nickName',
+  },
+  {
+    label: '头像页',
+    prop: 'cardFrontUrl',
+    type: 'img',
+  },
+  {
+    label: '国徽页',
+    prop: 'cardBackUrl',
+    type: 'img',
+  },
+  {
+    label: '手持证件页',
+    prop: 'antiMoneyUrl',
+    type: 'img',
+  },
+  {
+    label: '录制视频',
+    prop: 'videoUrl',
+    type: 'video',
+  },
   {
     label: '邀请人UID',
     prop: 'inviterUid',
@@ -157,7 +157,7 @@ const userCol = [
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '正常', val: 1, type: 'success' }, { text: '失效', val: 0, type: 'warning' }],
+    filters: [{ text: '正常', val: 0, type: 'success' }, { text: '失效', val: 1, type: 'warning' }],
   },
   {
     label: '交易状态',
@@ -218,7 +218,7 @@ const userColNoBtn = [
   {
     label: '用户类型',
     prop: 'userType',
-    width: 100,
+    width: 120,
     type: 'filter',
     show_type: 'text',
     filters: [
@@ -266,30 +266,30 @@ const userColNoBtn = [
     prop: 'cardNo',
     width: '200',
   },
-  // {
-  //   label: '昵称',
-  //   prop: 'nickName',
-  // },
-  // {
-  //   label: '头像页',
-  //   prop: 'cardFrontUrl',
-  //   type: 'img',
-  // },
-  // {
-  //   label: '国徽页',
-  //   prop: 'cardBackUrl',
-  //   type: 'img',
-  // },
-  // {
-  //   label: '手持证件页',
-  //   prop: 'antiMoneyUrl',
-  //   type: 'img',
-  // },
-  // {
-  //   label: '录制视频',
-  //   prop: 'videoUrl',
-  //   type: 'video',
-  // },
+  {
+    label: '昵称',
+    prop: 'nickName',
+  },
+  {
+    label: '头像页',
+    prop: 'cardFrontUrl',
+    type: 'img',
+  },
+  {
+    label: '国徽页',
+    prop: 'cardBackUrl',
+    type: 'img',
+  },
+  {
+    label: '手持证件页',
+    prop: 'antiMoneyUrl',
+    type: 'img',
+  },
+  {
+    label: '录制视频',
+    prop: 'videoUrl',
+    type: 'video',
+  },
   {
     label: '邀请人UID',
     prop: 'inviterUid',
@@ -362,7 +362,7 @@ const userColNoBtn = [
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '正常', val: 1, type: 'success' }, { text: '失效', val: 0, type: 'warning' }],
+    filters: [{ text: '正常', val: 0, type: 'success' }, { text: '失效', val: 1, type: 'warning' }],
   },
   {
     label: '交易状态',
@@ -486,15 +486,15 @@ const userConfig = [
     label: '登录状态',
     prop: 'userLoginStatus',
     value: '',
+    list: [{ label: '正常', value: 0 }, { label: '失效', value: 1 }],
+  },
+  {
+    type: 'select',
+    label: '提币状态',
+    prop: 'userWithdrawStatus',
+    value: '',
     list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
   },
-  // {
-  //   type: 'select',
-  //   label: '提币状态',
-  //   prop: 'userWithdrawStatus',
-  //   value: '',
-  //   list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
-  // },
   {
     type: 'text',
     label: '设备号',
@@ -523,20 +523,20 @@ const userConfig = [
     value: '',
     placeHolder: '请输入',
   },
-  // {
-  //   type: 'select',
-  //   label: '交易状态',
-  //   prop: 'userTradeStatus',
-  //   value: '',
-  //   list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
-  // },
-  // {
-  //   type: 'select',
-  //   label: '法币状态',
-  //   prop: 'userOtcStatus',
-  //   value: '',
-  //   list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
-  // },
+  {
+    type: 'select',
+    label: '交易状态',
+    prop: 'userTradeStatus',
+    value: '',
+    list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
+  },
+  {
+    type: 'select',
+    label: '法币状态',
+    prop: 'userOtcStatus',
+    value: '',
+    list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
+  },
 ];
 
 const userColOtcList = [

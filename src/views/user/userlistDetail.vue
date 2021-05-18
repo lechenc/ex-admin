@@ -64,6 +64,9 @@
           <div>
             提币状态：<span>{{ is_draw | boolDiy }}</span>
           </div>
+          <div>
+            广告状态：<span>{{ is_advertise | boolDiy }}</span>
+          </div>
         </div>
       </div>
     </el-card>
@@ -233,7 +236,7 @@ export default {
   methods: {
     resetGoogleCode() {
       if (!this.current_row.googleVerify) {
-        this.$message.error('未绑定谷歌秘钥')
+        this.$message.error('未绑定谷歌秘钥');
       } else {
         this.$router.push({
           path: '/user/resetUserGoogleCode',
@@ -271,11 +274,21 @@ export default {
         cancelButtonText: '取消',
       })
         .then(async () => {
-          let params = {
-            userId: this.current_row.userId,
-            operate: this.operareObj[type],
-            status: !!this[type] ? 0 : 1,
-          };
+          let params = null;
+          if (type == 'is_login') {
+            params = {
+              userId: this.current_row.userId,
+              operate: this.operareObj[type],
+              status: !!this[type] ? 1 : 0,
+            };
+          } else {
+            params = {
+              userId: this.current_row.userId,
+              operate: this.operareObj[type],
+              status: !!this[type] ? 0 : 1,
+            };
+          }
+
           const res = await $api.updateOperateStatus(params);
           if (res) {
             this.$message({
@@ -368,7 +381,7 @@ export default {
         const { records } = res.data.data;
         if (records && records.length > 0) {
           this.current_row = records[0];
-          this.is_login = !!this.current_row.userLoginStatus; // 登录状态
+          this.is_login = !this.current_row.userLoginStatus; // 登录状态
           this.is_exchange = !!this.current_row.userTradeStatus; // 交易状态
           this.is_c2c = !!this.current_row.userOtcStatus; // 法币状态
           this.is_draw = !!this.current_row.userWithdrawStatus; // 提币状态

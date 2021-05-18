@@ -467,11 +467,11 @@ const analystMimicListConfig = [
     list: [
       {
         label: '关闭',
-        value: 0,
+        value: 1,
       },
       {
         label: '开启',
-        value: 1,
+        value: 0,
       },
     ],
   },
@@ -498,11 +498,60 @@ const analystMimicListCol = [
     filters: [
       {
         text: '开',
-        val: 1,
+        val: 0,
       },
       {
         text: '关',
+        val: 1,
+      },
+    ],
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '120',
+    btnGroup: [
+      {
+        label: '查看详情',
+        fn: 'detail',
+        type: 'text',
+      },
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'text',
+      },
+    ],
+  },
+];
+
+const analystMimicListColNoBtn = [
+  {
+    label: '分析师UID',
+    prop: 'uid',
+  },
+  {
+    label: '手机号',
+    prop: 'phone',
+  },
+  {
+    label: '邮箱',
+    prop: 'email',
+  },
+  {
+    label: '登录开关',
+    prop: 'loginSwitch',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '开',
         val: 0,
+      },
+      {
+        text: '关',
+        val: 1,
       },
     ],
   },
@@ -1940,6 +1989,7 @@ export {
   userlistMimicConfig,
   userlistMimicCol,
   analystMimicListConfig,
+  analystMimicListColNoBtn,
   analystMimicListCol,
   analystMimicDetailCol,
 };

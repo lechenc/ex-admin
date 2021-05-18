@@ -1329,6 +1329,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/agentLevel'),
         meta: { title: '代理层级关系', icon: '', role: [] },
       },
+
+      {
+        path: 'earnestMoneyList',
+        name: 'EarnestMoneyList',
+        component: () => import('@/views/agent/earnestMoneyList'),
+        meta: { title: '保证金流水', icon: '', role: [] },
+      },
     ],
   },
 
