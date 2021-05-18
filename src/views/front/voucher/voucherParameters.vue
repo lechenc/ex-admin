@@ -1,31 +1,142 @@
 
 <template>
   <div class="voucherParameters-container">
-    <el-form :model="form" ref="form" :rules="rules" size="medium">
-      <el-card class="box-card">
-        <div class="box-card-con">
-          <H5>条件十二: 贵族会员福利</H5>
-          <el-form-item label="需入金量达到" prop="incomeAmount" :label-width="labelWidth">
-            <el-col :span="8"><el-input @input="checkVal('incomeAmount', 'noDot')" type="text" placeholder="请输入" v-model="form.incomeAmount" :disabled="!isModify"></el-input> </el-col>
-          </el-form-item>
-          <el-form-item label="需开仓交易额" prop="openPositionAmount" :label-width="labelWidth">
-            <el-col :span="8"><el-input @input="checkVal('openPositionAmount', 'noDot')" type="text" placeholder="请输入" v-model="form.openPositionAmount" :disabled="!isModify"></el-input> </el-col>
-          </el-form-item>
-          <el-form-item label="可获得邀请名额" prop="inviteNumber" :label-width="labelWidth">
-            <el-col :span="8"><el-input @input="checkVal('inviteNumber', 'noDot')" type="text" placeholder="请输入" v-model="form.inviteNumber" :disabled="!isModify"></el-input> </el-col>
-          </el-form-item>
-        </div>
-        <div v-if="isCURDAuth">
-          <div class="middle" v-if="!isModify">
-            <el-button type="primary" size="medium" @click="isModify = true">修改</el-button>
+    <el-card class="box-card">
+      <el-button type="primary" @click="addType"> 添加新类型 </el-button>
+
+      <div class="con" v-for="(form, index) in formArr1" :key="index">
+        <el-form :model="form" ref="form" :rules="rules" size="medium">
+          <div class="box-card-con">
+            <H5>条件十二: 贵族会员福利</H5>
+            <el-row :span="24">
+              <el-col :span="8">
+                <el-form-item label="需入金量达到USDT：" prop="incomeAmount" :label-width="labelWidth">
+                  <el-input @input="checkVal('incomeAmount', 'noDot')" type="text" placeholder="请输入" v-model="form.incomeAmount" :disabled="!isModify1"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="需开仓交易额USDT：" prop="openPositionAmount" :label-width="labelWidth">
+                  <el-input @input="checkVal('openPositionAmount', 'noDot')" type="text" placeholder="请输入" v-model="form.openPositionAmount" :disabled="!isModify1"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="可获得邀请名额" prop="inviteNumber" :label-width="labelWidth">
+                  <el-input @input="checkVal('inviteNumber', 'noDot')" type="text" placeholder="请输入" v-model="form.inviteNumber" :disabled="!isModify1"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </div>
-          <div class="middle" v-if="isModify">
-            <el-button type="primary" plain size="medium" @click="cancelSend">取消</el-button>
-            <el-button type="primary" size="medium" :loading="confirmLoading" @click="confirmSend">提交修改</el-button>
+          <div v-if="isCURDAuth">
+            <div class="middle" v-if="!isModify1">
+              <el-button type="primary" size="medium" @click="isModify1 = true">修改</el-button>
+            </div>
+            <div class="middle" v-if="isModify1">
+              <el-button type="primary" plain size="medium" @click="cancelSend1">取消</el-button>
+              <el-button type="primary" size="medium" :loading="confirmLoading" @click="confirmSend(form)">提交修改</el-button>
+            </div>
           </div>
+        </el-form>
+      </div>
+
+      <div class="con" v-for="(form, index) in formArr2" :key="index">
+        <el-form :model="form" ref="form" :rules="netCashRules">
+          <H5>条件十三: 代理净入金{{ index + 1 }}</H5>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item :required="true" label="关联代理UID" :label-width="labelWidth">
+                <el-input :disabled="!isModify2" rows="3" @input="form.agentUid = form.agentUid.replace(/[^\d,]/g, '')" type="textarea" placeholder="请输入代理UID,以逗号隔开" v-model.trim="form.agentUid"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-row v-for="(fl, idx) in form.triggerVOS" :key="idx">
+                <el-col :span="10">
+                  <el-form-item :required="true" :label="idx + 1 + ' 累计净划入'" label-width="180px">
+                    <el-select :disabled="!isModify2" v-model="fl.coinName" placeholder="请选择">
+                      <el-option v-for="item in symbollist" :label="item.label" :value="item.label" :key="item.value"> </el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                  <el-form-item :required="true" label="达到USDT" :label-width="labelWidth">
+                    <el-input :disabled="!isModify2" @input="fl.netIncomeTargetAmount = fl.netIncomeTargetAmount.replace(/[^\d]/g, '')" type="text" placeholder="请输入" v-model.trim="fl.netIncomeTargetAmount"></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="4">
+                  <el-button :disabled="!isModify2" @click.stop="delTriggerIdList('formArr2', index, idx)" style="margin-left: 20px; margin-top: 5px" size="small" round plain type="danger">删除</el-button>
+                </el-col>
+              </el-row>
+              <el-row class="type-middle">
+                <el-button :disabled="!isModify2" type="primary" size="medium" @click="addNetCash('formArr2', index)">+添加</el-button>
+              </el-row>
+            </el-col>
+          </el-row>
+          <div v-if="isCURDAuth">
+            <div class="middle" v-if="!isModify2">
+              <el-button type="primary" size="medium" @click="isModify2 = true">修改</el-button>
+            </div>
+            <div class="middle" v-if="isModify2">
+              <el-button type="primary" plain size="medium" @click="cancelSend2">取消</el-button>
+              <el-button type="primary" size="medium" :loading="confirmLoading" @click="confirmSend(form)">提交修改</el-button>
+            </div>
+          </div>
+        </el-form>
+      </div>
+
+      <div class="con" v-for="(form, index) in formArr3" :key="index">
+        <el-form :model="form" ref="form" :rules="netCashRules">
+          <H5>条件十四: 直推邀请{{ index + 1 }}</H5>
+          <el-row>
+            <el-col :span="24">
+              <el-row v-for="(fl, idx) in form.triggerVOS" :key="idx">
+                <el-col :span="7">
+                  <el-form-item :required="true" :label="idx + 1 + ' 邀请直推新用户数量'" label-width="200px">
+                    <el-input :disabled="!isModify3" @input="fl.lowNumber = fl.lowNumber.replace(/[^\d]/g, '')" type="text" placeholder="请输入" v-model.trim="fl.lowNumber"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="7">
+                  <el-form-item :required="true" label="需完成开仓交易额USDT：" label-width="200px">
+                    <el-input :disabled="!isModify3" @input="fl.tradeTargetAmount = fl.tradeTargetAmount.replace(/[^\d]/g, '')" type="text" placeholder="请输入" v-model.trim="fl.tradeTargetAmount"></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                  <el-button :disabled="!isModify3" @click.stop="delTriggerIdList('formArr3', index, idx)" style="margin-left: 20px; margin-top: 5px" size="small" round plain type="danger">删除</el-button>
+                </el-col>
+              </el-row>
+              <el-row class="type-middle">
+                <el-button :disabled="!isModify3" type="primary" size="medium" @click="addNetCash('formArr3', index)">+添加</el-button>
+              </el-row>
+            </el-col>
+          </el-row>
+
+          <div v-if="isCURDAuth">
+            <div class="middle" v-if="!isModify3">
+              <el-button type="primary" size="medium" @click="isModify3 = true">修改</el-button>
+            </div>
+            <div class="middle" v-if="isModify3">
+              <el-button type="primary" plain size="medium" @click="cancelSend3">取消</el-button>
+              <el-button type="primary" size="medium" :loading="confirmLoading" @click="confirmSend(form)">提交修改</el-button>
+            </div>
+          </div>
+        </el-form>
+      </div>
+
+      <!-- 弹窗 -->
+      <el-dialog :visible.sync="dialogVisible" width="500px" title="添加新类型">
+        <el-form :model="addForm" :label-width="labelWidth" ref="addForm" :rules="addRules">
+          <el-form-item label="类型" prop="type">
+            <el-select v-model="addForm.type" placeholder="请选择">
+              <el-option v-for="item in addTypeList" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="inner-footer">
+          <el-button @click.stop="dialogVisible = false" style="margin-right: 10px">取消</el-button>
+          <el-button type="primary" @click.stop="confirmAdd">确定</el-button>
         </div>
-      </el-card>
-    </el-form>
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 <script>
@@ -35,39 +146,124 @@ import utils from '@/utils/util';
 export default {
   data() {
     return {
+      dialogVisible: false,
       isCURDAuth: true, // 是否有增删改查权限
-      isModify: false, // 是否可以修改(控制页面内是否修改操作)
+      isModify1: false, // 是否可以修改(控制页面内是否修改操作)
+      isModify2: false,
+      isModify3: false,
       listLoading: false, // 表格loading
       confirmLoading: false, // 提交loading
       list: [], //委托列表
       labelWidth: '140px',
-      form: {
-        id: '',
-        incomeAmount: '',
-        inviteNumber: '',
-        openPositionAmount: '',
-      },
+      formArr1: [],
+      formArr2: [],
+      formArr3: [],
       rules: {
         incomeAmount: [{ required: true, message: '必填', trigger: 'blur' }],
         inviteNumber: [{ required: true, message: '必填', trigger: 'blur' }],
         openPositionAmount: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      symbollist: [],
+      netCashRules: {},
+      addForm: {},
+      addRules: {
+        type: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      addTypeList: [
+        {
+          label: '净入金金额开仓交易额',
+          value: 0,
+          arr: 'formArr1',
+          isModify: 'isModify1',
+        },
+        {
+          label: '代理净入金',
+          value: 1,
+          arr: 'formArr2',
+          isModify: 'isModify2',
+        },
+        {
+          label: '直推邀请',
+          value: 2,
+          arr: 'formArr3',
+          isModify: 'isModify3',
+        },
+      ],
     };
   },
   methods: {
-    cancelSend() {
-      this.isModify = false;
+    delTriggerIdList(arr, index, idx) {
+      if (this[arr][index].triggerVOS.length == 1) {
+        this[arr] = [];
+      } else {
+        this[arr][index].triggerVOS.splice(idx, 1);
+      }
+    },
+    confirmAdd() {
+      this.$refs['addForm'].validate(async (valid) => {
+        if (valid) {
+          const { type } = this.addForm;
+          this[this.addTypeList[type].arr].push({
+            id: '',
+            openPositionAmount: '',
+            incomeAmount: '',
+            inviteNumber: '',
+            content: '',
+            agentUid: '',
+            activityType: this.addTypeList[type].value,
+            triggerVOS: [
+              {
+                netIncomeTargetAmount: '',
+                lowNumber: '',
+                tradeTargetAmount: '',
+                activityType: this.addTypeList[type].value,
+                triggerType: this.addTypeList[type].value,
+              },
+            ],
+          });
+          this.dialogVisible = false;
+        }
+      });
+    },
+    addType() {
+      this.dialogVisible = true;
+      this.$nextTick(() => {
+        this.addForm = {
+          type: '',
+        };
+      });
+    },
+    addNetCash(arr, index) {
+      console.log('index', index);
+      this[arr][index].triggerVOS.push({
+        netIncomeTargetAmount: '',
+        lowNumber: '',
+        tradeTargetAmount: '',
+        activityType: '',
+        triggerType: '',
+      });
+    },
+    cancelSend1() {
+      this.isModify1 = false;
+      this.getList();
+    },
+    cancelSend2() {
+      this.isModify2 = false;
+      this.getList();
+    },
+    cancelSend3() {
+      this.isModify3 = false;
       this.getList();
     },
     // 对输入值的范围进行限制
     checkVal(val, nodot) {
       // 有第二个参数则是禁止小数位，必须整数
-      if (nodot) {
-        this.form[val] = (this.form[val] + '').replace(/[^\d]/g, '');
-      }
-      if (this.form[val] < 0) {
-        this.form[val] = 0;
-      }
+      // if (nodot) {
+      //   this.form[val] = (this.form[val] + '').replace(/[^\d]/g, '');
+      // }
+      // if (this.form[val] < 0) {
+      //   this.form[val] = 0;
+      // }
     },
     // getlist
     async getList() {
@@ -76,50 +272,62 @@ export default {
       this.listLoading = true;
       const res = await $api.getAllTriggerConditionNew(query_data);
       if (res) {
-        const tmp = res.data.data[0];
-
-        this.form = {
-          id: tmp.id,
-          incomeAmount: tmp.incomeAmount,
-          inviteNumber: tmp.inviteNumber,
-          openPositionAmount: tmp.openPositionAmount,
-        };
+        // const tmp = res.data.data[0];
+        // this.form = {
+        //   id: tmp.id,
+        //   incomeAmount: tmp.incomeAmount,
+        //   inviteNumber: tmp.inviteNumber,
+        //   openPositionAmount: tmp.openPositionAmount,
+        // };
       }
       this.listLoading = false;
     },
     // 保存页面修改
-    async confirmSend() {
-      this.$refs['form'].validate(async (valid) => {
-        if (valid) {
-          const { openPositionAmount, incomeAmount, inviteNumber, id } = this.form;
-          let params = {
-            incomeAmount: parseFloat(incomeAmount),
-            inviteNumber: parseFloat(inviteNumber),
-            openPositionAmount: parseFloat(openPositionAmount),
-          };
-          if (!id) {
-          } else {
-            params.id = id;
-          }
+    async confirmSend(form) {
+      const { agentUid, activityType, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
+      let params = {
+        agentUid,
+        activityType,
+        triggerVOS,
+        openPositionAmount,
+        incomeAmount,
+        inviteNumber,
+      };
+      if (!id) {
+      } else {
+        params.id = id;
+      }
 
-          this.confirmLoading = true;
-          const res = !id ? await $api.addVoucherParameters(params) : await $api.editVoucherParameters(params);
-          if (res) {
-            let text = '';
-            text = !id ? '添加成功！' : '修改成功！';
-            this.$message({ message: text, type: 'success' });
-            this.getList();
-            this.isModify = false;
+      this.confirmLoading = true;
+      const res = !id ? await $api.addVoucherParameters(params) : await $api.editVoucherParameters(params);
+      if (res) {
+        let text = '';
+        text = !id ? '添加成功！' : '修改成功！';
+        this.$message({ message: text, type: 'success' });
+        this.getList();
+        this[this.addTypeList[activityType]].isModify = false;
+      }
+      this.confirmLoading = false;
+    },
+    async getSymbolList() {
+      // 交易对获取
+      this.$store.dispatch('common/getSymbolListContract').then(() => {
+        let list = [];
+        let symbollist = this.$store.state.common.symbollistContract;
+        //暂时只要BTCUSDT
+        symbollist.forEach((v) => {
+          if (v.label == 'BTCUSDT') {
+            list.push(v);
           }
-          this.confirmLoading = false;
-        }
+        });
+        this.symbollist = list;
       });
     },
   },
   mounted() {
     let authObj = this.$util.getAuthority('VoucherParameters', [], []);
     this.isCURDAuth = authObj.isModify;
-
+    this.getSymbolList();
     this.getList();
   },
 };
@@ -132,18 +340,23 @@ export default {
     margin: 10px 0;
     font-size: 18px;
   }
-
+  h5 {
+    font-size: 16px;
+  }
+  h5::before {
+    content: '';
+    border-left: 5px solid #03a7f0;
+    margin-right: 10px;
+  }
+  .type-middle {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
   .box-card {
     margin-bottom: 20px;
     .box-card-con {
-      h5 {
-        font-size: 16px;
-      }
-      h5::before {
-        content: '';
-        border-left: 5px solid #03a7f0;
-        margin-right: 10px;
-      }
       .con-line {
         display: flex;
         flex-direction: row;
@@ -158,12 +371,6 @@ export default {
             text-align: right;
           }
         }
-      }
-      .middle {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
       }
       .dot {
         margin: 0 10px;

@@ -314,7 +314,7 @@ export default {
       //   .then(async () => {
       //   })
       //   .catch(() => {
-      //     console.log('cancel');
+      //     //console.log('cancel');
       //   });
     },
     // 修改金额上报 (这个功能暂时屏蔽了)
@@ -368,7 +368,7 @@ export default {
               this.$router.go(-1);
             })
             .catch(() => {
-              console.log('cancel');
+              //console.log('cancel');
             });
         }
       });
@@ -391,7 +391,7 @@ export default {
         this.isSaleProEmpty = !this.$util.isEmptyObject(this.saleProofInfo) ? true : false;
         this.appealId = res.data.data.otcOrderDetail.id;
         this.resultRow = res.data.data.audit;
-        console.log('res',res)
+        //console.log('res',res)
         this.list.push(res.data.data.otcOrderDetail);
         // res.data.result.forEach((val, idx) => {
         //   if (val.isBuyer == 1) {

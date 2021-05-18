@@ -191,7 +191,7 @@ export default {
         this.$refs.iconDot2.clearFiles();
         return;
       }
-      console.log('response',response)
+      //console.log('response',response)
       this.form.blackIconUrl = response.data[0].url;
       this.$refs.iconDot2.handleRemove(file);
       this.$refs.iconDot2.clearFiles();

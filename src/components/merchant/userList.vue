@@ -89,7 +89,7 @@ export default {
       this.subUserToGroup(userIds.substring(0, userIds.length - 1));
     },
     subUserToGroup(userIds) {
-      console.log(userIds);
+      //console.log(userIds);
       if (this.groupId !== "") {
         this.$confirm("此操作将会将用户移出该分组，确定删除？", "提示", {
           confirmButtonText: "确定",
@@ -134,7 +134,7 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log(this.multipleSelection);
+      //console.log(this.multipleSelection);
     },
     handleCurrentChange(val) {
       this.pageData.pageNum = val;

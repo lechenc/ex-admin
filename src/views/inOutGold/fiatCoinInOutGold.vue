@@ -45,7 +45,7 @@ export default {
   },
   watch: {
     'search_params_obj.type': function (newVal, oldVal) {
-      console.log('newVal',newVal)
+      //console.log('newVal',newVal)
       if (newVal == 1) {
         this.searchCofig[3]['value'] = ''
         this.searchCofig[3]['list'] = [

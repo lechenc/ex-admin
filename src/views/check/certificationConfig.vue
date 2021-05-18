@@ -62,8 +62,8 @@ export default {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
           if (this.btnSendLoading) return;
-          console.log('this.form.verifiedDayCount', this.form.verifiedDayCount);
-          console.log('this.form.verifiedSumCount', this.form.verifiedSumCount);
+          //console.log('this.form.verifiedDayCount', this.form.verifiedDayCount);
+          //console.log('this.form.verifiedSumCount', this.form.verifiedSumCount);
           if (parseFloat(this.form.verifiedSumCount) < parseFloat(this.form.verifiedDayCount)) {
             return this.$message.error('每日限制次数不得大于总限制次数');
           }
@@ -91,7 +91,7 @@ export default {
     async getDetail() {
       const res = await $api.apiGetCertificationConfig({});
       if (res) {
-        console.log('res', res);
+        //console.log('res', res);
         let obj = res.data.data;
         this.form.verifiedSwift = obj.verifiedSwift ? true : false;
         this.form.verifiedDayCount = obj.verifiedDayCount;

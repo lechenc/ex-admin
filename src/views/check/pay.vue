@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      //console.log(tab, event);
     },
     // 主表格操作
     async doHandle(data) {
@@ -153,7 +153,7 @@ export default {
             this.updateAuditPayStatus(this.curRow, 1);
           })
           .catch(() => {
-            console.log('cancel');
+            //console.log('cancel');
           });
       } else if (fn === 'refuse') {
         this.rejectVisible = true;

@@ -528,6 +528,19 @@ export const asyncRouterMap = [
         component: () => import('@/views/system/domainName'),
         meta: { title: '域名管理', icon: '', role: [] },
       },
+      {
+        path: 'maintenance',
+        name: 'Maintenance',
+        component: () => import('@/views/system/maintenance'),
+        meta: { title: '维护管理', icon: '', role: [] },
+      },
+
+      {
+        path: 'peopleManagement',
+        name: 'PeopleManagement',
+        component: () => import('@/views/system/peopleManagement'),
+        meta: { title: '人员管理', icon: '', role: [] },
+      },
     ],
   },
   // app管理
@@ -1529,19 +1542,17 @@ export const asyncRouterMap = [
         ],
       },
 
-     
-      
       {
-        path: 'apiConfig',
-        name: 'ApiConfig',
-        redirect: '/contract/apiConfig/apiKey',
+        path: 'apiManage',
+        name: 'ApiManage',
+        redirect: '/contract/apiManage/apiKeyConfig',
         meta: { title: 'API管理', icon: '', role: [] },
         children: [
           {
-            path: 'apiKey',
-            name: 'ApiKey',
-            component: () => import('@/views/contract/apiConfig/apiKey'),
-            meta: { title: 'API设置', icon: '', role: [] },
+            path: 'apiKeyConfig',
+            name: 'ApiKeyConfig',
+            component: () => import('@/views/contract/apiManage/apiKeyConfig'),
+            meta: { title: 'API Key设置', icon: '', role: [] },
           },
         ],
       },

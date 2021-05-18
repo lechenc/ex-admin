@@ -237,7 +237,7 @@ export default {
         this.modeIsShow = false;
       } else if (val == 2) {
         this.modeIsShow = true;
-        console.log('123123');
+        //console.log('123123');
       }
     },
     // 添加级别

@@ -309,7 +309,7 @@ export default {
       //   .then(async () => {
       //   })
       //   .catch(() => {
-      //     console.log('cancel');
+      //     //console.log('cancel');
       //   });
     },
     // 修改金额上报
@@ -363,7 +363,7 @@ export default {
               this.$router.go(-1);
             })
             .catch(() => {
-              console.log('cancel');
+              //console.log('cancel');
             });
         }
       });

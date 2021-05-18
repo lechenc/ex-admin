@@ -195,6 +195,15 @@
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="排序" :label-width="formLabelWidth" prop="position">
+              <el-input v-model="coinForm.position" autocomplete="off" type="text" @input="checkVal('position')"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row :span="24">
           <el-col :span="6">
             <el-form-item label="是否上架" :label-width="formLabelWidth" prop="isTrade">
@@ -288,6 +297,7 @@ export default {
         coinIntroduction: '', //币种介绍
         coinIntroductionEnglish: '', //币种介绍（英文）
         officialWebsite: '', // 官网
+        position:'',// 排序
         blockchainBrowser: '', // 区块链浏览器
         decimalPlaces: '', //小数位
         tranOutSingleMinAmount: '', // 单笔最小提币数量
@@ -365,6 +375,7 @@ export default {
           coinIntroduction: '', //币种介绍
           coinIntroductionEnglish: '', //币种介绍（英文）
           officialWebsite: '', // 官网
+          position:'',
           blockchainBrowser: '', // 区块链浏览器
           decimalPlaces: '', //小数位
           tranOutSingleMinAmount: '', // 单笔最小提币数量
@@ -478,6 +489,7 @@ export default {
             coinIntroduction,
             coinIntroductionEnglish,
             officialWebsite,
+            position,
             blockchainBrowser,
             decimalPlaces,
             tranOutSingleMinAmount,
@@ -512,6 +524,7 @@ export default {
             coinIntroduction,
             coinIntroductionEnglish,
             officialWebsite,
+            position,
             blockchainBrowser,
             decimalPlaces,
             tranOutSingleMinAmount,
@@ -545,20 +558,20 @@ export default {
           this.coinForm.tranOutFee = this.coinForm.tranOutFee > 100 ? 100 : this.coinForm.tranOutFee;
         } else {
           // 固定值
-          this.coinForm.tranOutFee = this.coinForm.tranOutFee > 10000 ? 10000 : this.coinForm.tranOutFee;
+          // this.coinForm.tranOutFee = this.coinForm.tranOutFee > 10000 ? 10000 : this.coinForm.tranOutFee;
         }
-        this.coinForm.tranOutFee = (this.coinForm.tranOutFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+        // this.coinForm.tranOutFee = (this.coinForm.tranOutFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
       } else if (val === 'fee_type') {
         if (this.coinForm.fee_type == '1') {
           // 百分比
           this.coinForm.exchangeFee = this.coinForm.exchangeFee > 100 ? 100 : this.coinForm.exchangeFee;
         } else {
-          this.coinForm.exchangeFee = this.coinForm.exchangeFee > 10000 ? 10000 : this.coinForm.exchangeFee;
+          // this.coinForm.exchangeFee = this.coinForm.exchangeFee > 10000 ? 10000 : this.coinForm.exchangeFee;
         }
-        this.coinForm.exchangeFee = (this.coinForm.exchangeFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+        // this.coinForm.exchangeFee = (this.coinForm.exchangeFee + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
       } else {
         this.coinForm.exchangeOutSingleMinAmount = this.coinForm.exchangeOutSingleMinAmount;
-        this.coinForm.exchangeOutSingleMinAmount = (this.coinForm.exchangeOutSingleMinAmount + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+        // this.coinForm.exchangeOutSingleMinAmount = (this.coinForm.exchangeOutSingleMinAmount + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
       }
       if (this.coinForm[val] < 0) {
         this.coinForm[val] = 0;

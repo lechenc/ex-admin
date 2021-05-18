@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      //console.log(tab, event);
     },
     async doHandle(data) {
       const { fn, row } = data;

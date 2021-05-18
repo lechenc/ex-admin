@@ -203,7 +203,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('cancel');
+          //console.log('cancel');
         });
     },
     // 新增归集条目（这里的新增其实并不是真正意义的新增，只是把已有的更改状态，划分为归集或者默认归集）

@@ -112,7 +112,7 @@ export default {
   beforeCreate() {
     // localStorage.clear();
     // session.clear();
-    // console.log(123)
+    // //console.log(123)
   },
   methods: {
     showPwd() {
@@ -151,7 +151,7 @@ export default {
           }
           this.loginLoding = false;
         } else {
-          // console.log('error submit!!');
+          // //console.log('error submit!!');
           return false;
         }
       });

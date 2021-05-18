@@ -1,25 +1,17 @@
 <template>
   <div class="menu-title">
     <el-row>
-      <el-col :span="22" style="text-align:right; margin-top:100px;margin-bottom: 30px;">
+      <el-col :span="22" style="text-align: right; margin-top: 100px; margin-bottom: 30px">
         <el-button :disabled="!isCURDAuth" size="medium" type="primary" @click="addMenu">创建一级菜单</el-button>
       </el-col>
     </el-row>
     <el-tree draggable :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
       <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span class="sac-label">
-          {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i
-        ></span>
+        <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
         <span class="sac-btn">
-          <el-button :disabled="!isCURDAuth" type="text" size="mini" @click="() => append(node, data)">
-            新增
-          </el-button>
-          <el-button :disabled="!isCURDAuth" type="text" size="mini" @click="() => modify(node, data)">
-            修改
-          </el-button>
-          <el-button :disabled="!isCURDAuth" type="text" size="mini" @click="() => remove(node, data)">
-            删除
-          </el-button>
+          <el-button :disabled="!isCURDAuth" type="text" size="mini" @click="() => append(node, data)"> 新增 </el-button>
+          <el-button :disabled="!isCURDAuth" type="text" size="mini" @click="() => modify(node, data)"> 修改 </el-button>
+          <el-button :disabled="!isCURDAuth" type="text" size="mini" @click="() => remove(node, data)"> 删除 </el-button>
         </span>
       </span>
     </el-tree>
@@ -37,7 +29,7 @@
         <el-form-item label="页面路由:" prop="menuUrl">
           <el-input v-model="ruleForm.menuUrl" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="描述:" style=" position: relative;">
+        <el-form-item label="描述:" style="position: relative">
           <!-- <span class="tips_textarea">{{ ruleForm.desctext ? ruleForm.desctext.length : "0" }}/50</span> -->
           <el-input type="textarea" placeholder="请输入描述" v-model="ruleForm.desctext"></el-input>
         </el-form-item>
@@ -68,7 +60,7 @@ export default {
         menuUrl: '',
         parentId: '',
         desctext: '',
-        userType:0,
+        userType: 0,
       },
       defaultProps: {
         children: 'children',
@@ -148,8 +140,8 @@ export default {
       }
     },
     sort(draggingNode, dropNode, type, event) {
-      /* console.log('排序')
-      console.log(dropNode)   //dropNode.parent.childNodes =[] 拖拽之后的重新组合的数组 */
+      /* //console.log('排序')
+      //console.log(dropNode)   //dropNode.parent.childNodes =[] 拖拽之后的重新组合的数组 */
       let obj = {
         aboveId: '',
         arr: [],
@@ -169,7 +161,7 @@ export default {
     },
 
     async determine() {
-      this.$refs.ruleForm.validate(async valid => {
+      this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           // 修改
           if (this.ruleForm.id) {
@@ -207,14 +199,14 @@ export default {
             if (this.currentNode) {
               const parent = this.currentNode.parent;
               const children = parent.data.children || parent.data;
-              const index = children.findIndex(d => d.id === this.currentData.id);
+              const index = children.findIndex((d) => d.id === this.currentData.id);
               const currentChildren = children[index];
               this.ruleForm.parentId = currentChildren.id;
             } else {
               // 新增一级
               this.ruleForm.parentId = 0;
             }
-            let params = Object.assign({ userType:0 } ,this.ruleForm)
+            let params = Object.assign({ userType: 0 }, this.ruleForm);
             const res = await $api.addMenu(params);
             if (res) {
               this.$message({
@@ -228,7 +220,7 @@ export default {
             }
           }
         } else {
-          console.log('error submit!!');
+          //console.log('error submit!!');
           return false;
         }
       });
@@ -268,7 +260,7 @@ export default {
     },
     // 获取路径树
     async getAllSysUrl() {
-      const res = await $api.getMenuList({ userType:0});
+      const res = await $api.getMenuList({ userType: 0 });
       if (res) {
         this.treeData = res.data.data;
       }
@@ -287,7 +279,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('Menu', [], []);
 
-    // console.log(...authObj.btnArr);
+    // //console.log(...authObj.btnArr);
     this.isAdd = authObj.isAdd;
     this.isCURDAuth = authObj.isModify;
   },

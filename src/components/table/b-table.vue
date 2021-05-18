@@ -134,6 +134,15 @@
         </template>
       </el-table-column>
 
+      <!-- 显示一个数组 -->
+      <el-table-column v-if="config.type === 'valueArr'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
+        <template slot-scope="scope">
+          <span class="valueArr" v-for="(item, ixx) in scope.row[config.prop]" :key="ixx"> 
+            {{ item[config.key1] }}  {{ item[config.key2] ? '(是)' : '(否)' }} 
+          </span>
+        </template>
+      </el-table-column>
+
       <el-table-column v-if="config.type === 'textArr'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
           <div class="colline">
@@ -549,6 +558,20 @@ export default {
       background: #ffffff !important;
       font-size: 15px;
       font-weight: 600;
+    }
+  }
+  .valueArr {
+    &::after {
+      content: ';';
+      font-family: 'iconfont';
+      display: inline-block;
+    }
+    &:last-child {
+      &::after {
+        content: '';
+        font-family: 'iconfont';
+        display: inline-block;
+      }
     }
   }
   .el-table__row {

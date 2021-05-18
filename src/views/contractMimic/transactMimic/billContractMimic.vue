@@ -116,8 +116,8 @@ export default {
       // if (this.search_params_obj.coinMarket) {
       //   if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
       //     let tmpName = '';
-      //     console.log('this.coin_List',this.coin_List)
-      //     console.log('this.search_params_obj',this.search_params_obj)
+      //     //console.log('this.coin_List',this.coin_List)
+      //     //console.log('this.search_params_obj',this.search_params_obj)
       //     tmpName = this.coin_List.filter(v => v['value'] == this.search_params_obj.coinMarket)[0].label;
       //     this.search_params_obj.coinMarket = tmpName;
       //   }

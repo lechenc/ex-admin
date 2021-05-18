@@ -149,7 +149,7 @@ export default {
         //   debugger
         //   v.coinName = this.coinList.filter(f => f.value == v.coinId)[0].label;
         // });
-        // console.log(records)
+        // //console.log(records)
         // this.totalExFee = totalExFee;
         // this.totalArrivalAccount = totalArrivalAccount;
         this.list = records;

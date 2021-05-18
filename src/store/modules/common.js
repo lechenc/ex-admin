@@ -13,11 +13,12 @@ const getDefaultState = () => {
     coinlist: [],
     fiatcoinlist: [],
     symbollist: [],
+    symbolListSupportContract:[],
     symbollistContract: [],
     workorderlist: [],
     symbolMimiclistContract: [],
-    symbolMimicListAnalyst:[],
-    symbolMimicListAnalystAll:[],
+    symbolMimicListAnalyst: [],
+    symbolMimicListAnalystAll: [],
   };
 };
 
@@ -29,6 +30,9 @@ const mutations = {
   },
   SET_SYMBOLLIST: (state, list) => {
     state.symbollist = list;
+  },
+  SET_SYMBOLLISTSUPPORTCONTRACT: (state, list) => {
+    state.symbolListSupportContract = list;
   },
   SET_SYMBOLLISTCONTRACT: (state, list) => {
     state.symbollistContract = list;
@@ -58,7 +62,7 @@ const actions = {
         .getCoinList({ pageNum: 1, pageSize: 100 })
         .then(res => {
           const list = res.data.data.map(v => {
-            return { label: v['coinName'], value: v['coinId'] ,decimalPlaces: v['decimalPlaces'] };
+            return { label: v['coinName'], value: v['coinId'], decimalPlaces: v['decimalPlaces'] };
           });
           commit('SET_COINLIST', list);
           resolve();
@@ -91,9 +95,38 @@ const actions = {
         .getSymbolList({ pageNum: 1, pageSize: 100 })
         .then(res => {
           const list = res.data.data.records.map(v => {
-            return { label: v['coinMarket'], value: v['coinMarketId'] };
+            return {
+              label: v['coinMarket'],
+              value: v['coinMarketId'],
+            };
           });
           commit('SET_SYMBOLLIST', list);
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  // 一个含有是否支持合约的接口
+  getSymbolListSupportContract({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      $api
+        .getSymbolListSupportContract({  })
+        .then(res => {
+          console.log('res',res)
+          const list = res.data.data.map(v => {
+            return {
+              label: v['coinMarket'],
+              value: v['coinMarketId'],
+              // 币币id
+              tbCoinMarketId: v['id'],
+              // 是否支持合约
+              supportContract: v['supportContract'],
+            };
+          });
+          commit('SET_SYMBOLLISTSUPPORTCONTRACT', list);
           resolve();
         })
         .catch(error => {

@@ -128,7 +128,7 @@ export default {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
-      console.log('this.search_params_obj',this.search_params_obj);
+      //console.log('this.search_params_obj',this.search_params_obj);
       if (!this.search_params_obj.coinName) {
         this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
         return;

@@ -170,7 +170,7 @@ export default {
         }
         const values = data.map(item => Number(item[column.property]));
         if (~sumKeys.indexOf(column.property)) {
-          console.log(column.property, values);
+          //console.log(column.property, values);
           sums[index] = values.length ? this.$util.add(...values) : 0;
           if ('averagePrice' === column.property) {
             sums[index] = Precision.divide(sums[index], values.filter(el => el).length);

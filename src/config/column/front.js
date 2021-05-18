@@ -18,8 +18,12 @@ const noticeCol = [
     prop: 'englishTitle',
   },
   {
-    label: '链接',
+    label: '中文链接',
     prop: 'url',
+  },
+  {
+    label: '英文链接',
+    prop: 'englishLink',
   },
   {
     label: '排序',
@@ -61,16 +65,20 @@ const noticeCol = [
 // 前台管理 -- 公告管理 -- table
 const noticeColNoBtn = [
   {
-    label: '标题',
+    label: '中文标题',
     prop: 'title',
   },
   {
     label: '英文标题',
-    prop: 'title1',
+    prop: 'englishTitle',
   },
   {
-    label: '链接',
+    label: '中文链接',
     prop: 'url',
+  },
+  {
+    label: '英文链接',
+    prop: 'englishLink',
   },
   {
     label: '排序',
@@ -532,27 +540,31 @@ const helpCol = [
 const helpColNoBtn = [
   {
     label: '栏目名称',
-    prop: 'bannerName',
+    prop: 'chineseSubjectName',
   },
   {
     label: '中文标题',
-    prop: 'bannerUrl',
+    prop: 'chineseTitle',
   },
   {
     label: '英文标题',
-    prop: 'bannerUrlEn',
+    prop: 'englishTitle',
   },
   {
-    label: '链接',
-    prop: 'jumpUrl',
+    label: '中文链接',
+    prop: 'url',
+  },
+  {
+    label: '英文链接',
+    prop: 'englishLink',
   },
   {
     label: '排序',
-    prop: 'weight',
+    prop: 'sort',
   },
   {
     label: '创建时间',
-    prop: 'weight',
+    prop: 'createTime',
   },
 ];
 

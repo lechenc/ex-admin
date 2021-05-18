@@ -401,7 +401,7 @@ export default {
     async getPieData() {
       const res = await $api.getProfitAndLossGraphicals({});
       if (res) {
-        console.log('res', res);
+        //console.log('res', res);
         const tmp = res.data.data && res.data.data.coinRateVOList;
         let seriesData = [];
         let legendData = [];

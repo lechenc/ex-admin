@@ -727,7 +727,7 @@ async function exportData(type, max = 10000, loading = null) {
         pageNum: 1,
         pageSize: 10,
       });
-      // console.log("now ="+getRes)
+      // //console.log("now ="+getRes)
       let exportnumber = +getRes.data.data.total || 0;
       if (exportnumber > max) {
         loading.setText('导出确认');
@@ -930,6 +930,25 @@ function accDiv(arg1, arg2) {
   r2 = Number(arg2.toString().replace('.', '')); //--去除小数点变整数
   return (r1 / r2) * Math.pow(10, t2 - t1); //---整数相除 在乘上10的平方  小数点的长度
 }
+
+// }
+
+/**
+ * 生成密码字符串
+ * 33~47：!~/
+ * 48~57：0~9
+ * 58~64：:~@
+ * 65~90：A~Z
+ * 91~96：[~`
+ * 97~122：a~z
+ * 123~127：{~
+ * @param length 长度
+ * @param hasNum 是否包含数字 1-包含 0-不包含
+ * @param hasChar 是否包含字母 1-包含 0-不包含
+ * @param hasSymbol 是否包含其他符号 1-包含 0-不包含
+ * @param caseSense 是否大小写敏感 1-敏感 0-不敏感
+ * @param lowerCase 是否只需要小写，只有当hasChar为0且caseSense为1时起作用 1-全部小写 0-全部大写
+ */
 
 function randomRange(min, max, charStr) {
   var returnStr = '';

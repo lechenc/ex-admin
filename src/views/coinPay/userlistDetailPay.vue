@@ -281,7 +281,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('cancel');
+          //console.log('cancel');
         });
     },
     // 法币收款方式表格操作按钮
@@ -309,7 +309,7 @@ export default {
       }
     },
     handleClick(tab, event) {
-      // console.log(tab, event);
+      // //console.log(tab, event);
     },
     goInvitePage(val) {
       this.invite_curr_page = val;

@@ -2015,6 +2015,10 @@ const flowRecordContractCol = [
         text: '空仓',
         val: 2,
       },
+      {
+        text: '-',
+        val: -1,
+      },
     ],
   },
   {
@@ -3131,12 +3135,12 @@ const contractTacticsCol = [
   {
     label: '创建时间',
     prop: 'createTime',
-    type:'time'
+    type: 'time',
   },
   {
     label: '更新时间',
     prop: 'updateTime',
-    type:'time'
+    type: 'time',
   },
   {
     label: '操作',
@@ -3654,10 +3658,14 @@ const agentTransferfig = [
   },
 ];
 
-const apiKeyCol = [
+const apiKeyConfigCol = [
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
   {
     label: '备注',
-    prop: 'keyName',
+    prop: 'destext',
   },
   {
     label: 'API Key',
@@ -3665,40 +3673,40 @@ const apiKeyCol = [
   },
   {
     label: 'Secret Key',
-    prop: 'englishKeyName',
+    prop: 'appSecret',
   },
+
   {
-    label: '创建时间',
-    prop: 'createTime',
-    type:"time"
+    label: '更新时间',
+    prop: 'updateTime',
+    type:'time'
   },
   {
     label: '开关',
-    prop: 'status',
+    prop: 'isShow',
     type: 'switch',
-    fn: 'trstatus',
-    alias:"trstatus"
+    fn: 'trswitch',
+    alias: 'trswitch',
   },
   {
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:80,
     btnGroup: [
       {
         label: '删除',
-        fn: 'delete',
-        type:"primary",
-        alias:"delete"
+        fn: 'del',
+        type: 'primary',
+        alias: 'del',
       },
-    ]
-  }
-]
+    ],
+  },
+];
 
-const apiKeyColNoBtn = [
+const apiKeyConfigColNoBtn = [
   {
     label: '备注',
-    prop: 'keyName',
+    prop: 'destext',
   },
   {
     label: 'API Key',
@@ -3706,22 +3714,24 @@ const apiKeyColNoBtn = [
   },
   {
     label: 'Secret Key',
-    prop: 'englishKeyName',
+    prop: 'appSecret',
   },
-  {
-    label: '创建时间',
-    prop: 'createTime',
-    type:"time"
-  },
-]
 
-const apiKeyConfig = [
-]
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type:'time'
+  },
+];
+
+const apiKeyConfigConfig = [
+  
+];
 
 export {
-  apiKeyConfig,
-  apiKeyColNoBtn,
-  apiKeyCol,
+  apiKeyConfigCol,
+  apiKeyConfigColNoBtn,
+  apiKeyConfigConfig,
   agentTransferfig,
   agentTransferCol,
   contractResultConfig,

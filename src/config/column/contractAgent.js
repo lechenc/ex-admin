@@ -882,6 +882,18 @@ const agentFinancialFlowCol = [
       { text: '提币待审核', val: 1 },
       { text: '提币成功', val: 2 },
       { text: '提币失败', val: 3 },
+
+      { text: '买下单', val: 4 },
+      { text: '卖下单', val: 5 },
+      { text: '买成交', val: 6 },
+      { text: '卖成交', val: 7 },
+      { text: '买撤单', val: 8 },
+      { text: '卖撤单', val: 9 },
+      { text: '锁仓手动释放可用金额', val: 20 },
+      { text: '锁仓冻结金额', val: 21 },
+      { text: '锁仓手动释放冻结金额', val: 23 },
+      { text: '广告下架', val: 39 },
+
       { text: '合约返佣', val: 88 },
       { text: '合约返佣结算', val: 95 },
       { text: '普通用户手续费返佣', val: 101 },
@@ -944,6 +956,19 @@ const agentFinancialFlowConfig = [
       { label: '提币待审核', value: 1 },
       { label: '提币成功', value: 2 },
       { label: '提币失败', value: 3 },
+
+      { label: '买下单', value: 4 },
+      { label: '卖下单', value: 5 },
+      { label: '买成交', value: 6 },
+      { label: '卖成交', value: 7 },
+      { label: '买撤单', value: 8 },
+      { label: '卖撤单', value: 9 },
+      { label: '锁仓手动释放可用金额', value: 20 },
+      { label: '锁仓冻结金额', value: 21 },
+      { label: '锁仓手动释放冻结金额', value: 23 },
+      { label: '广告下架', value: 39 },
+
+
       { label: '合约返佣', value: 88 },
       { label: '合约返佣结算', value: 95 },
       { label: '普通用户手续费返佣', value: 101 },

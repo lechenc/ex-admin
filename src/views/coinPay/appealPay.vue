@@ -108,7 +108,7 @@ export default {
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
-      console.log('query_data', query_data, this.search_params_obj)
+      //console.log('query_data', query_data, this.search_params_obj)
       this.listLoading = true;
       const res = await $api.infoShortListNew(query_data);
       if (res) {

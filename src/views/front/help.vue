@@ -124,7 +124,7 @@ export default {
           { min: 1, max: 150, message: '长度在150字符以内', trigger: 'blur' },
         ],
         url: [{ required: true, message: '请输入' }],
-        englishLink: [{ required: true, message: '请输入' }],
+        // englishLink: [{ required: true, message: '请输入' }],
         sort: [{ required: true, message: '请输入' }],
       },
       showDialog: false,
@@ -216,7 +216,7 @@ export default {
           .catch(() => {});
       }
       if (fn === 'switchCoin') {
-        // console.log('row',row)
+        // //console.log('row',row)
         const res = await $api.editHelp({ id: row.id, status: row.status ? 1 : 0 });
         if (res) {
           this.$message({ type: 'success', message: res.data.message });
@@ -248,7 +248,7 @@ export default {
     },
     async getHelpListColumn() {
       const res = await $api.getHelpListWithColumn({});
-      console.log('res', res);
+      //console.log('res', res);
       if (res) {
         this.columnArr = res.data.data;
       }

@@ -244,7 +244,7 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
-      console.log('this.search_params_obj', this.symbollist);
+      //console.log('this.search_params_obj', this.symbollist);
       this.getList();
     },
     doReset() {
@@ -283,7 +283,7 @@ export default {
       if (this.search_params_obj.coinId) {
         let tmpName = '';
         tmpName = this.symbollist.filter((v) => v['value'] == this.search_params_obj.coinId)[0].value;
-        console.log('this.symbollist', tmpName);
+        //console.log('this.symbollist', tmpName);
         this.search_params_obj.coinId = tmpName;
       }
     },
@@ -323,7 +323,7 @@ export default {
             list.push(v);
           }
         });
-        console.log('list', list);
+        //console.log('list', list);
         this.list = list;
       }
       this.listLoading = false;

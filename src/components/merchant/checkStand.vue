@@ -130,7 +130,7 @@ export default {
         this.defaultForm.CHECK_STAND_PAY_TYPE.push(Number(element));
       });
       // this.defaultForm.CHECK_STAND_PAY_TYPE = newVal.info.payList.split(',')
-      console.log(newVal);
+      //console.log(newVal);
       this.payList = newVal.payList;
     },
   },
