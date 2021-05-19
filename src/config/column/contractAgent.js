@@ -65,7 +65,7 @@ const agentsListsCol = [
     filters: [{ text: '周', val: 1 }, { text: '月', val: 2 }, { text: '日', val: 3 }],
     prop2: 'delayDay',
   },
-  
+
   {
     label: '可释放保证金',
     prop: 'amount',
@@ -123,7 +123,7 @@ const agentsListsCol = [
         type: 'primary',
         alias: 'edit2',
       },
-      
+
       {
         label: '释放保证金',
         fn: 'releaseMoney',
@@ -967,7 +967,6 @@ const agentFinancialFlowConfig = [
       { label: '锁仓冻结金额', value: 21 },
       { label: '锁仓手动释放冻结金额', value: 23 },
       { label: '广告下架', value: 39 },
-
 
       { label: '合约返佣', value: 88 },
       { label: '合约返佣结算', value: 95 },
@@ -1965,17 +1964,18 @@ const earnestMoneyListCol = [
     type: 'filter',
     show_type: 'text',
     filters: [
-
       {
         text: '补充保证金',
-        val: 109,
+        val: 2,
       },
       {
         text: '释放保证金',
-        val: 110,
+        val: 3,
       },
-
-
+      {
+        text: '结算保证金',
+        val: 1,
+      },
     ],
   },
 
@@ -1991,7 +1991,6 @@ const earnestMoneyListCol = [
     label: '变动后保证金',
     prop: 'afterAmount',
   },
-  
 ];
 
 const earnestMoneyListConfig = [
@@ -2011,11 +2010,15 @@ const earnestMoneyListConfig = [
     list: [
       {
         label: '补充保证金',
-        value: 109,
+        value: 2,
       },
       {
         label: '释放保证金',
-        value: 110,
+        value: 3,
+      },
+      {
+        label: '结算保证金',
+        value: 1,
       },
     ],
   },
@@ -2026,9 +2029,6 @@ const earnestMoneyListConfig = [
     value: '',
     placeHolder: '请输入',
   },
- 
-
-  
 ];
 
 export {
