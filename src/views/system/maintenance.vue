@@ -290,7 +290,7 @@ export default {
             id
           };
 
-          this.confirmLoading = true;
+          // this.confirmLoading = true;
           const res = await $api.editMaintenance(params) 
           if (res) {
             this.$message({ message: '修改成功！', type: 'success' });
