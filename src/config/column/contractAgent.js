@@ -1953,7 +1953,7 @@ const earnestMoneyListCol = [
   },
   {
     label: '订单号',
-    prop: 'relateRecdId',
+    prop: 'id',
   },
   {
     label: '代理UID',
@@ -2030,7 +2030,7 @@ const earnestMoneyListConfig = [
   {
     type: 'onlyNumber',
     label: '订单号',
-    prop: 'relateRecdId',
+    prop: 'id',
     value: '',
     placeHolder: '请输入',
   },
