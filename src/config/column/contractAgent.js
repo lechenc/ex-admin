@@ -1974,6 +1974,10 @@ const earnestMoneyListCol = [
         text: '释放保证金',
         val: 110,
       },
+      {
+        text: '结算保证金',
+        val: 1,
+      },
 
 
     ],
@@ -2016,6 +2020,10 @@ const earnestMoneyListConfig = [
       {
         label: '释放保证金',
         value: 110,
+      },
+      {
+        label: '结算保证金',
+        value: 1,
       },
     ],
   },
