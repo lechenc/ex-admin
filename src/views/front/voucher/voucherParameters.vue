@@ -215,6 +215,7 @@ export default {
               {
                 netIncomeTargetAmount: '',
                 lowNumber: '',
+                triggerCondition:this.addTypeList[type].value,
                 tradeTargetAmount: '',
                 activityType: this.addTypeList[type].value,
                 triggerType: this.addTypeList[type].value,
@@ -238,6 +239,7 @@ export default {
       this[arr][index].triggerVOS.push({
         netIncomeTargetAmount: '',
         lowNumber: '',
+        triggerCondition:'',
         tradeTargetAmount: '',
         activityType: '',
         triggerType: '',

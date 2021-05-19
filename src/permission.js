@@ -489,7 +489,8 @@ const mapComponents = {
   EarningsRecord: () => import('@/views/contract/accountManagement/earningsRecord'),
   EarningsFlow: () => import('@/views/contract/accountManagement/earningsFlow'),
   // RefundRecordNew: () => import('@/views/contract/transact/refundRecordNew'),
-  
+  // API管理
+  ApiKey: () => import('@/views/contract/apiConfig/apiKey'),
   // 点卡管理
   TicketCardList: () => import('@/views/ticketCard/ticketCardList'),
   PresenterList: () => import('@/views/ticketCard/presenterList'),

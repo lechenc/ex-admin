@@ -1,5 +1,5 @@
 <template>
-  <div class="key-container">
+  <div class="apiKey-container">
     <div class="container-btn" v-if="isCURDAuth">
       <el-button type="primary" size="medium" @click="addLine">添加</el-button>
     </div>
@@ -8,109 +8,40 @@
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
 
     <!-- 添加弹窗 -->
     <el-dialog :visible.sync="dialogVisible" width="600px" :title="title">
       <el-form :model="form" ref="form" :rules="rules">
-        <el-form-item label="名称" prop="keyName" :label-width="labelWidth">
+        <el-form-item label="备注" prop="keyName" :label-width="labelWidth">
           <el-input type="text" placeholder="请输入" v-model="form.keyName"> </el-input>
         </el-form-item>
-        <el-form-item label="英文名称" prop="englishKeyName" :label-width="labelWidth">
-          <el-input type="text" placeholder="请输入" v-model="form.englishKeyName"> </el-input>
-        </el-form-item>
-        <el-form-item label="key" prop="appKey" :label-width="labelWidth">
-          <el-input type="text" placeholder="请输入" v-model="form.appKey"> </el-input>
-        </el-form-item>
 
-        <el-form-item label="排序" prop="sort" :label-width="labelWidth">
-          <el-input type="number" placeholder="请输入" v-model.trim="form.sort" @input="checkVal('sort')"> </el-input>
-        </el-form-item>
+        <el-form-item label="API Key:" prop="backSecret" :label-width="labelWidth">
+          <el-col :span="19">
+            <el-input type="text" placeholder="请输入" v-model="form.backSecret" @input="checkVal('backSecret')" :disabled="true"> </el-input>
+          </el-col>
 
-        <el-form-item label="indexName" prop="indexName" :label-width="labelWidth">
-          <el-input type="text" placeholder="请输入" v-model="form.indexName"> </el-input>
+          <el-col :span="4">
+            <el-button class="btn-right" type="primary" size="medium" @click.stop="editPwd('backSecret')">获取Key</el-button>
+          </el-col>
         </el-form-item>
 
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="白天icon" :label-width="labelWidth" prop="iconUrl">
-              <el-input  size="small" v-model="form.iconUrl" placeholder="请选择上传">
-                <el-upload
-                
-                  :action="$img_api"
-                  multiple
-                  name="file"
-                  :data="{ type: 'exchange' }"
-                  :show-file-list="true"
-                  :on-success="uploadIcon"
-                  :on-error="uploadError"
-                  slot="append"
-                  :limit="1"
-                  :on-exceed="exceed"
-                  ref="iconDot"
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
-              </el-input>
-            </el-form-item>
+        <el-form-item style="margin: 5px 0px;" label="Secret Key:" prop="cashAccesskey" :label-width="labelWidth">
+          <el-col :span="19">
+            <el-input type="text" placeholder="请输入" v-model="form.cashAccesskey" @input="checkVal('cashAccesskey')" :disabled="true"> </el-input>
           </el-col>
-        </el-row>
 
-         <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="黑天icon" :label-width="labelWidth" prop="blackIconUrl">
-              <el-input   size="small" v-model="form.blackIconUrl" placeholder="请选择上传">
-                <el-upload
-                  :action="$img_api"
-                  multiple
-                  name="file"
-                  :data="{ type: 'exchange' }"
-                  :show-file-list="true"
-                  :on-success="uploadIcon2"
-                  :on-error="uploadError2"
-                  slot="append"
-                  :limit="1"
-                  :on-exceed="exceed2"
-                  ref="iconDot2"
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
-              </el-input>
-            </el-form-item>
+          <el-col :span="4">
+            <el-button class="btn-right" type="primary" size="medium" @click.stop="editPwd('cashAccesskey')">获取Key</el-button>
           </el-col>
-        </el-row>
+        </el-form-item>
+        <el-form-item style="margin: 5px 0px;" :label-width="labelWidth"> 密钥仅显示1次,遗失后不可找回,请务必妥善保存 </el-form-item>
 
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="URL" :label-width="labelWidth" prop="htmlUrl">
-              <el-input v-model="form.htmlUrl" autocomplete="off" placeholder="请输入h5 url"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="是否首页展示" :label-width="labelWidth" prop="status">
-              <el-switch v-model="form.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="是否登录展示" :label-width="labelWidth" prop="onlineStatus">
-              <el-switch v-model="form.onlineStatus" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item label="谷歌验证" prop="keyName" :label-width="labelWidth">
+          <el-input type="text" placeholder="请输入" v-model.trim="form.keyName"> </el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="dialogVisible = false">取消</el-button>
@@ -123,11 +54,11 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { keyCol, keyColNoBtn, keyConfig } from '@/config/column/app';
+import { apiKeyCol, apiKeyColNoBtn, apiKeyConfig } from '@/config/column/contract';
 import $api from '@/api/api';
 
 export default {
-  name: 'Key',
+  name: 'ApiKey',
   components: {
     Btable,
     Bsearch,
@@ -149,19 +80,7 @@ export default {
       title: '添加',
       labelWidth: '100px',
       dialogVisible: false, // 是否显示弹窗
-      form: {
-        id: '',
-        keyName: '',
-        englishKeyName:'',
-        appKey: '',
-        iconUrl: '',
-        blackIconUrl:'',
-        htmlUrl: '',
-        indexName: '',
-        status: false,
-        onlineStatus: false,
-        sort:0,
-      },
+      form: {},
       rules: {
         keyName: [{ required: true, message: '必填' }],
         englishKeyName: [{ required: true, message: '必填' }],
@@ -175,6 +94,10 @@ export default {
     };
   },
   methods: {
+    // 生成32位密钥
+    editPwd(key) {
+      this.form[key] = this.$util.randomRange(32);
+    },
     uploadIcon(response, file, fileList) {
       if (!response.data) {
         this.$message.error('图片上传失败');
@@ -191,7 +114,7 @@ export default {
         this.$refs.iconDot2.clearFiles();
         return;
       }
-      //console.log('response',response)
+      console.log('response', response);
       this.form.blackIconUrl = response.data[0].url;
       this.$refs.iconDot2.handleRemove(file);
       this.$refs.iconDot2.clearFiles();
@@ -225,12 +148,12 @@ export default {
             englishKeyName: row.englishKeyName,
             appKey: row.appKey,
             iconUrl: row.iconUrl,
-            blackIconUrl:row.blackIconUrl,
+            blackIconUrl: row.blackIconUrl,
             htmlUrl: row.htmlUrl,
             indexName: row.indexName,
             status: row.status ? true : false,
             onlineStatus: row.onlineStatus ? true : false,
-            sort:row.sort,
+            sort: row.sort,
           };
         });
       }
@@ -284,7 +207,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.getList();
@@ -301,22 +224,24 @@ export default {
         this.form = {
           id: '',
           keyName: '',
-          englishKeyName:'',
+          englishKeyName: '',
           appKey: '',
           iconUrl: '',
-          blackIconUrl:'',
+          blackIconUrl: '',
           htmlUrl: '',
           indexName: '',
           status: false,
           onlineStatus: false,
-          sort:''
+          sort: '',
+          backSecret: '',
+          cashAccesskey: '',
         };
         this.$refs['form'].resetFields();
       });
     },
     // 提交
     confirmOp() {
-      this.$refs['form'].validate(async valid => {
+      this.$refs['form'].validate(async (valid) => {
         if (valid) {
           const { id, appKey, status, onlineStatus, ...prop } = this.form;
           const params = {
@@ -351,7 +276,7 @@ export default {
       const res = await $api.getUserKeyPage(params);
       if (res) {
         const { records, total, current, pages } = res.data.data;
-        records.forEach(v => {
+        records.forEach((v) => {
           v['status'] = v['status'] ? true : false;
           v['onlineStatus'] = v['onlineStatus'] ? true : false;
         });
@@ -364,27 +289,27 @@ export default {
     },
     // 对输入值的范围进行限制
     checkVal(val) {
-      this.form[val] = (this.form[val] + '').replace(/[^\d]/g, "");
+      this.form[val] = (this.form[val] + '').replace(/[^\d]/g, '');
       if (this.form[val] > 100) {
         this.form[val] = 100;
       }
       if (this.form[val] < 0) {
         this.form[val] = 0;
       }
-    }
+    },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('Key', keyCol, keyColNoBtn);
+    let authObj = this.$util.getAuthority('ApiKey', apiKeyCol, apiKeyColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
 
-    this.searchCofig = this.$util.clone(keyConfig);
+    this.searchCofig = this.$util.clone(apiKeyConfig);
     this.getList();
   },
 };
 </script>
 <style lang="scss">
-.key-container {
+.apiKey-container {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;

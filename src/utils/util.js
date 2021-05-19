@@ -19,7 +19,7 @@ import store from '@/store';
 
 // Vue.use(VueI18n)
 // const messages = { zh, en}
-// const defaultLocal:string = local();
+// const defaultLocal = local();
 // const i18n = new VueI18n({
 //   locale: defaultLocal,
 //   fallbackLocale: 'en',

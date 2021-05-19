@@ -200,6 +200,7 @@ export default {
         pcPicEn: '',
         globalSwitch: false,
         googleCode: '',
+        id:'',
       },
       rules: {
         androidPicCn: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -266,7 +267,6 @@ export default {
       this.listLoading = true;
       const res = await $api.getMaintenanceList(query_data);
       if (res) {
-        console.log('res');
         const tmp = res.data.data;
         tmp.globalSwitch ? true : false;
         this.form = tmp;
@@ -277,7 +277,7 @@ export default {
     async confirmSend() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn, pcPicCn, pcPicEn, globalSwitch, googleCode } = this.form;
+          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn, pcPicCn, pcPicEn, globalSwitch, googleCode,id } = this.form;
           let params = {
             androidPicCn,
             androidPicEn,
@@ -285,11 +285,12 @@ export default {
             iosPicEn,
             pcPicCn,
             pcPicEn,
-            globalSwitch: globalSwitch ? 1 : 0,
+            globalSwitch,
             googleCode,
+            id
           };
 
-          this.confirmLoading = true;
+          // this.confirmLoading = true;
           const res = await $api.editMaintenance(params) 
           if (res) {
             this.$message({ message: '修改成功！', type: 'success' });
@@ -303,6 +304,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('Maintenance', [], []);
+    console.log('authObj',authObj)
     this.isCURDAuth = authObj.isModify;
 
     this.getList();
