@@ -71,6 +71,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        type:2,
       };
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
