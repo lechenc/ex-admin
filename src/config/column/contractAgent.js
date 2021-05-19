@@ -1968,15 +1968,11 @@ const earnestMoneyListCol = [
 
       {
         text: '补充保证金',
-        val: 2,
+        val: 109,
       },
       {
         text: '释放保证金',
-        val: 3,
-      },
-      {
-        text: '结算保证金',
-        val: 1,
+        val: 110,
       },
 
 
@@ -2015,22 +2011,18 @@ const earnestMoneyListConfig = [
     list: [
       {
         label: '补充保证金',
-        value: 2,
+        value: 109,
       },
       {
         label: '释放保证金',
-        value: 3,
-      },
-      {
-        label: '结算保证金',
-        value: 1,
+        value: 110,
       },
     ],
   },
   {
     type: 'onlyNumber',
     label: '订单号',
-    prop: 'id',
+    prop: 'relateRecdId',
     value: '',
     placeHolder: '请输入',
   },
