@@ -215,7 +215,7 @@ export default {
               {
                 netIncomeTargetAmount: '',
                 lowNumber: '',
-                triggerCondition:this.addTypeList[type].value,
+                triggerCondition: '',
                 tradeTargetAmount: '',
                 activityType: this.addTypeList[type].value,
                 triggerType: this.addTypeList[type].value,
@@ -239,7 +239,7 @@ export default {
       this[arr][index].triggerVOS.push({
         netIncomeTargetAmount: '',
         lowNumber: '',
-        triggerCondition:'',
+        triggerCondition: '',
         tradeTargetAmount: '',
         activityType: '',
         triggerType: '',
@@ -287,6 +287,13 @@ export default {
     // 保存页面修改
     async confirmSend(form) {
       const { agentUid, activityType, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
+      triggerVOS.forEach((v) => {
+        if (activityType == 1) {
+          v.triggerCondition = `累计净划入BTCUSDT合约账户达到${v.netIncomeTargetAmount}USDT`;
+        } else if (activityType == 2) {
+          v.triggerCondition = `邀请${v.lowNumber}个直推新注册用户，完成一笔≥${v.tradeTargetAmount}USDT 的合约实盘交易`;
+        }
+      });
       let params = {
         agentUid,
         activityType,
