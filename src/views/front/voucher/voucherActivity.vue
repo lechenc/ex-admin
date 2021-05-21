@@ -234,6 +234,15 @@ export default {
           // 净转入 状态 发放频率设置为0
           this.form.grantDay = '';
           this.showCheckbox = false;
+        } else if (newVal == 1 || newVal == 2) {
+          // 获取 邀请 和 净划入 type1 ,2  的触发条件
+          let params = {
+            activityType: newVal,
+          };
+          const res = await $api.getSpecialTriggerCondition(params);
+          if (res) {
+            console.log('res', res);
+          }
         } else {
           if (newVal == 6) {
             this.showCheckbox = true;
@@ -274,7 +283,7 @@ export default {
     showTriggerArrList() {
       return (val) => {
         //讲option的显示数据进行深拷贝
-        if (!this.triggerArrNow || this.triggerArrNow.length <= 0) return;
+        if (!this.triggerArrNow || this.triggerArrNow.length <= 0) return [];
         let newList = JSON.parse(JSON.stringify(this.triggerArrNow));
         //处理selectList数据，返回一个新数组arr
         //arr数组就相当于所有Select选中的数据集合（没有选中的为''，不影响判断），只要在这个集合里面，其他的下拉框就不应该有这个选项
@@ -284,6 +293,7 @@ export default {
         });
         //过滤出newList里面需要显示的数据
         newList = newList.filter((item) => {
+          console.log('item', item);
           //当前下拉框的选中的数据需要显示
           //val就是当前下拉框选中的值
           if (val == item.value) {
@@ -350,7 +360,7 @@ export default {
         this.triggerArrAll = JSON.parse(JSON.stringify(this.triggerArrAllOld));
       }
     },
-    // 获取所有触发条件 新
+    // 获取 净入金和开仓交易额 type5 的触发条件
     async getAllTriggerConditionNew() {
       const res = await $api.getAllTriggerConditionNew({});
       if (res.data) {

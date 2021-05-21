@@ -4,43 +4,41 @@
     <el-card class="box-card">
       <el-button type="primary" @click="addType"> 添加新类型 </el-button>
 
-      <div class="con" v-for="(form, index) in formArr1" :key="index">
-        <el-form :model="form" ref="form" :rules="rules" size="medium">
-          <div class="box-card-con">
-            <H5>条件十二: 贵族会员福利</H5>
-            <el-row :span="24">
-              <el-col :span="8">
-                <el-form-item label="需入金量达到USDT：" prop="incomeAmount" :label-width="labelWidth">
-                  <el-input @input="checkVal('incomeAmount', 'noDot')" type="text" placeholder="请输入" v-model="form.incomeAmount" :disabled="!isModify1"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="需开仓交易额USDT：" prop="openPositionAmount" :label-width="labelWidth">
-                  <el-input @input="checkVal('openPositionAmount', 'noDot')" type="text" placeholder="请输入" v-model="form.openPositionAmount" :disabled="!isModify1"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="可获得邀请名额" prop="inviteNumber" :label-width="labelWidth">
-                  <el-input @input="checkVal('inviteNumber', 'noDot')" type="text" placeholder="请输入" v-model="form.inviteNumber" :disabled="!isModify1"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
+      <el-form :model="form1" ref="form" :rules="rules" size="medium">
+        <div class="box-card-con">
+          <H5>条件十二: 贵族会员福利</H5>
+          <el-row :span="24">
+            <el-col :span="8">
+              <el-form-item label="需入金量达到USDT：" prop="incomeAmount" :label-width="labelWidth">
+                <el-input @input="checkVal('incomeAmount', 'noDot')" type="text" placeholder="请输入" v-model="form1.incomeAmount" :disabled="!isModify1"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="需开仓交易额USDT：" prop="openPositionAmount" :label-width="labelWidth">
+                <el-input @input="checkVal('openPositionAmount', 'noDot')" type="text" placeholder="请输入" v-model="form1.openPositionAmount" :disabled="!isModify1"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="可获得邀请名额" prop="inviteNumber" :label-width="labelWidth">
+                <el-input @input="checkVal('inviteNumber', 'noDot')" type="text" placeholder="请输入" v-model="form1.inviteNumber" :disabled="!isModify1"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-if="isCURDAuth">
+          <div class="middle" v-if="!isModify1">
+            <el-button type="primary" size="medium" @click="isModify1 = true">修改</el-button>
           </div>
-          <div v-if="isCURDAuth">
-            <div class="middle" v-if="!isModify1">
-              <el-button type="primary" size="medium" @click="isModify1 = true">修改</el-button>
-            </div>
-            <div class="middle" v-if="isModify1">
-              <el-button type="primary" plain size="medium" @click="cancelSend1">取消</el-button>
-              <el-button type="primary" size="medium" :loading="confirmLoading" @click="confirmSend(form)">提交修改</el-button>
-            </div>
+          <div class="middle" v-if="isModify1">
+            <el-button type="primary" plain size="medium" @click="cancelSend1">取消</el-button>
+            <el-button type="primary" size="medium" :loading="confirmLoading" @click="confirmSend(form1)">提交修改</el-button>
           </div>
-        </el-form>
-      </div>
+        </div>
+      </el-form>
 
-      <div class="con" v-for="(form, index) in formArr2" :key="index">
+      <div class="con" v-for="(form, index) in formArr2" :key="form.myKey">
         <el-form :model="form" ref="form" :rules="netCashRules">
-          <H5>条件十三: 代理净入金{{ index + 1 }}</H5>
+          <H5 v-text="(form.conditionName = '条件十三: 代理净入金' + (index + 1))"></H5>
           <el-row>
             <el-col :span="8">
               <el-form-item :required="true" label="关联代理UID" :label-width="labelWidth">
@@ -51,7 +49,7 @@
               <el-row v-for="(fl, idx) in form.triggerVOS" :key="idx">
                 <el-col :span="10">
                   <el-form-item :required="true" :label="idx + 1 + ' 累计净划入'" label-width="180px">
-                    <el-select :disabled="!isModify2" v-model="fl.coinName" placeholder="请选择">
+                    <el-select :disabled="!isModify2" v-model="coinName" placeholder="请选择">
                       <el-option v-for="item in symbollist" :label="item.label" :value="item.label" :key="item.value"> </el-option>
                     </el-select>
                   </el-form-item>
@@ -83,9 +81,9 @@
         </el-form>
       </div>
 
-      <div class="con" v-for="(form, index) in formArr3" :key="index">
+      <div class="con" v-for="(form, index) in formArr3" :key="form.myKey">
         <el-form :model="form" ref="form" :rules="netCashRules">
-          <H5>条件十四: 直推邀请{{ index + 1 }}</H5>
+          <H5 v-text="(form.conditionName = '条件十四: 直推邀请' + (index + 1))"></H5>
           <el-row>
             <el-col :span="24">
               <el-row v-for="(fl, idx) in form.triggerVOS" :key="idx">
@@ -127,7 +125,7 @@
         <el-form :model="addForm" :label-width="labelWidth" ref="addForm" :rules="addRules">
           <el-form-item label="类型" prop="type">
             <el-select v-model="addForm.type" placeholder="请选择">
-              <el-option v-for="item in addTypeList" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+              <el-option v-for="item in addTypeList" :label="item.label" :value="item.index" :key="item.index"> </el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -146,6 +144,17 @@ import utils from '@/utils/util';
 export default {
   data() {
     return {
+      form1: {
+        id: '',
+        openPositionAmount: '',
+        incomeAmount: '',
+        inviteNumber: '',
+        content: '',
+        agentUid: '',
+        conditionName: '',
+        activityType: 0,
+      },
+      coinName: 'BTCUSDT',
       dialogVisible: false,
       isCURDAuth: true, // 是否有增删改查权限
       isModify1: false, // 是否可以修改(控制页面内是否修改操作)
@@ -171,20 +180,16 @@ export default {
       },
       addTypeList: [
         {
-          label: '净入金金额开仓交易额',
-          value: 0,
-          arr: 'formArr1',
-          isModify: 'isModify1',
-        },
-        {
           label: '代理净入金',
           value: 1,
+          index: 0,
           arr: 'formArr2',
           isModify: 'isModify2',
         },
         {
           label: '直推邀请',
           value: 2,
+          index: 1,
           arr: 'formArr3',
           isModify: 'isModify3',
         },
@@ -205,7 +210,9 @@ export default {
           const { type } = this.addForm;
           this[this.addTypeList[type].arr].push({
             id: '',
+            myKey: new Date().getTime(),
             openPositionAmount: '',
+            conditionName: '',
             incomeAmount: '',
             inviteNumber: '',
             content: '',
@@ -223,6 +230,7 @@ export default {
             ],
           });
           this.dialogVisible = false;
+          this[this.addTypeList[type].isModify] = true;
         }
       });
     },
@@ -274,31 +282,38 @@ export default {
       this.listLoading = true;
       const res = await $api.getAllTriggerConditionNew(query_data);
       if (res) {
-        // const tmp = res.data.data[0];
-        // this.form = {
-        //   id: tmp.id,
-        //   incomeAmount: tmp.incomeAmount,
-        //   inviteNumber: tmp.inviteNumber,
-        //   openPositionAmount: tmp.openPositionAmount,
-        // };
+        const tmp = res.data.data;
+        this.form1 = tmp.filter((v) => {
+          return v.activityType == 0;
+        })[0];
+        this.formArr2 = tmp.filter((v) => {
+          return v.activityType == 1;
+        });
+        this.formArr3 = tmp.filter((v) => {
+          return v.activityType == 2;
+        });
       }
       this.listLoading = false;
     },
     // 保存页面修改
     async confirmSend(form) {
-      const { agentUid, activityType, triggerVOS, id, openPositionAmount, incomeAmount, inviteNumber } = form;
-      triggerVOS.forEach((v) => {
-        if (activityType == 1) {
-          v.triggerCondition = `累计净划入BTCUSDT合约账户达到${v.netIncomeTargetAmount}USDT`;
-        } else if (activityType == 2) {
-          v.triggerCondition = `邀请${v.lowNumber}个直推新注册用户，完成一笔≥${v.tradeTargetAmount}USDT 的合约实盘交易`;
-        }
-      });
+      const { agentUid, activityType, triggerVOS, id, openPositionAmount, conditionName, incomeAmount, inviteNumber } = form;
+      if (triggerVOS && triggerVOS.length) {
+        triggerVOS.forEach((v) => {
+          if (activityType == 1) {
+            v.triggerCondition = `累计净划入BTCUSDT合约账户达到${v.netIncomeTargetAmount}USDT`;
+          } else if (activityType == 2) {
+            v.triggerCondition = `邀请${v.lowNumber}个直推新注册用户，完成一笔≥${v.tradeTargetAmount}USDT 的合约实盘交易`;
+          }
+        });
+      }
+
       let params = {
         agentUid,
         activityType,
         triggerVOS,
         openPositionAmount,
+        conditionName,
         incomeAmount,
         inviteNumber,
       };
@@ -314,15 +329,21 @@ export default {
         text = !id ? '添加成功！' : '修改成功！';
         this.$message({ message: text, type: 'success' });
         this.getList();
-        this[this.addTypeList[activityType]].isModify = false;
+        if (activityType == 1) {
+          this.isModify2 = false;
+        } else if (activityType == 2) {
+          this.isModify3 = false;
+        } else if (activityType == 0) {
+          this.isModify1 = false;
+        }
       }
       this.confirmLoading = false;
     },
     async getSymbolList() {
       // 交易对获取
-      this.$store.dispatch('common/getSymbolListContract').then(() => {
+      this.$store.dispatch('common/getSymbolList').then(() => {
         let list = [];
-        let symbollist = this.$store.state.common.symbollistContract;
+        let symbollist = this.$store.state.common.symbollist;
         //暂时只要BTCUSDT
         symbollist.forEach((v) => {
           if (v.label == 'BTCUSDT') {
@@ -336,7 +357,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('VoucherParameters', [], []);
     this.isCURDAuth = authObj.isModify;
-    this.getSymbolList();
+    // this.getSymbolList();
     this.getList();
   },
 };

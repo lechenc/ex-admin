@@ -2766,6 +2766,25 @@ export default class api {
     return Fetch.post('/account/contract/query-coin-change-expand', data);
   }
 
+  // 系统管理 人员管理 列表
+  static apiGetPeopleManagementList(data) {
+    return Fetch.post('/admin/user/structureTreeList', data);
+  }
+
+  // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
+  static getSpecialTriggerCondition(data) {
+    return Fetch.post('/admin/account/contract/user/getAllConditionByType', data);
+  }
+
+  // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
+  static getSpecialTriggerCondition(data) {
+    return Fetch.post('/admin/account/contract/user/getAllConditionByType', data);
+  }
+
+  
+
+  
+
   
 
   
