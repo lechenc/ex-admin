@@ -2002,6 +2002,13 @@ const earnestMoneyListConfig = [
     value: '',
   },
   {
+    type: 'text',
+    label: '代理UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
     type: 'select',
     label: '类型',
     prop: 'optType',
