@@ -332,9 +332,11 @@ export default {
   methods: {
     typeChange(val) {
       this.selectList = [];
-      this.$nextTick(() => {
-        document.getElementById('addKeyIdBtn').click();
-      });
+      if (val != 1 && val != 2) {
+        this.$nextTick(() => {
+          document.getElementById('addKeyIdBtn').click();
+        });
+      }
     },
     delKeyIdList(index) {
       this.selectList.splice(index, 1);
