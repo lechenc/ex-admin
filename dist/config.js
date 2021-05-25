@@ -8,7 +8,8 @@
  */
 // window.SERVER_PATH = 'http://192.168.0.241/api'; // 开发接口地
 // window.SERVER_PATH = 'http://192.168.0.245/api'; // 开发接口地2(新)
-window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
+window.SERVER_PATH = 'http://192.168.0.245/api'; // 测试接口地址.
+// window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
 // window.SERVER_PATH = 'https://admin.linkkn.vip/api'; // 线上(内部).
 
 // if (/192\.168\.0\.24./.test(window.location.href)) {

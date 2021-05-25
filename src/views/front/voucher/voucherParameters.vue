@@ -284,14 +284,14 @@ export default {
       if (res) {
         const tmp = res.data.data;
         this.form1 = tmp.filter((v) => {
-          return v.activityType == 0;
-        })[0];
+          return v.activityType == 0 ;
+        })[0] || {};
         this.formArr2 = tmp.filter((v) => {
           return v.activityType == 1;
-        });
+        })||  {};
         this.formArr3 = tmp.filter((v) => {
           return v.activityType == 2;
-        });
+        })||  {};
       }
       this.listLoading = false;
     },
