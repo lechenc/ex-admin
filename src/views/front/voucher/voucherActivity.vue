@@ -20,11 +20,23 @@
         <el-form-item label="活动名称" prop="activityName" :label-width="labelWidth">
           <el-input style="width: 250px" type="text" placeholder="请输入" v-model="form.activityName" maxlength="20"> </el-input>
         </el-form-item>
-        <el-form-item label="活动类型" prop="activityType" :label-width="labelWidth">
-          <el-select @change="typeChange" v-model="form.activityType" placeholder="请选择" style="width: 250px">
-            <el-option v-for="(item, index) in activityTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
-          </el-select>
-        </el-form-item>
+
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="活动类型" prop="activityType" :label-width="labelWidth">
+              <el-select @change="typeChange" v-model="form.activityType" placeholder="请选择" style="width: 250px">
+                <el-option v-for="(item, index) in activityTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col v-if="voucherParametersShow" :span="10">
+            <el-form-item label="条件类型" prop="activityType" :label-width="labelWidth">
+              <el-select @change="voucherParametersChange" v-model="form.voucherParameters" placeholder="请选择" style="width: 250px">
+                <el-option v-for="(item, index) in voucherParametersList" :key="index" :label="item.conditionName" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
         <div>
           <el-row>
@@ -158,7 +170,8 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-
+      voucherParametersList: [],
+      voucherParametersShow: false, // activityTypeList 为 1 ,2 的时候显示
       selectList: [], // 具体存放触发条件，体验金名称，送券数量的数组，来源于activityVOList
 
       title: '',
@@ -175,6 +188,7 @@ export default {
         effectiveEndTime: '',
         status: false,
         activityVOList: [],
+        voucherParameters: '',
       },
       rules: {
         activityName: [{ required: true, message: '必填' }],
@@ -228,6 +242,8 @@ export default {
         }
 
         if (newVal == 5) {
+          this.voucherParametersShow = false;
+          this.form.voucherParameters = '';
           this.triggerArrAll = this.triggerArrAllNew;
           this.triggerArrNow = this.triggerArrAll;
           this.form.grantMode = newVal == 0 ? 0 : 1;
@@ -236,14 +252,27 @@ export default {
           this.showCheckbox = false;
         } else if (newVal == 1 || newVal == 2) {
           // 获取 邀请 和 净划入 type1 ,2  的触发条件
+          this.voucherParametersShow = true;
+          this.showCheckbox = false;
+          this.triggerArrNow = []
           let params = {
             activityType: newVal,
           };
+          // 净转入 状态 发放频率设置为0
+          if (newVal == 1 ) {
+            this.form.grantDay = 0;
+          }else{
+            this.form.grantDay = '';
+          }
+          this.form.grantMode = newVal == 0 ? 0 : 1;
           const res = await $api.getSpecialTriggerCondition(params);
           if (res) {
-            console.log('res', res);
+            let list = res.data.data;
+            this.voucherParametersList = list;
           }
         } else {
+          this.voucherParametersShow = false;
+          this.form.voucherParameters = '';
           if (newVal == 6) {
             this.showCheckbox = true;
           } else {
@@ -285,6 +314,7 @@ export default {
         //讲option的显示数据进行深拷贝
         if (!this.triggerArrNow || this.triggerArrNow.length <= 0) return [];
         let newList = JSON.parse(JSON.stringify(this.triggerArrNow));
+        console.log('newList', newList);
         //处理selectList数据，返回一个新数组arr
         //arr数组就相当于所有Select选中的数据集合（没有选中的为''，不影响判断），只要在这个集合里面，其他的下拉框就不应该有这个选项
         const arr = this.selectList.map((item) => {
@@ -293,7 +323,6 @@ export default {
         });
         //过滤出newList里面需要显示的数据
         newList = newList.filter((item) => {
-          console.log('item', item);
           //当前下拉框的选中的数据需要显示
           //val就是当前下拉框选中的值
           if (val == item.value) {
@@ -305,6 +334,7 @@ export default {
             }
           }
         });
+        console.log('newList', newList);
         return newList;
       };
     },
@@ -330,6 +360,23 @@ export default {
     },
   },
   methods: {
+    async voucherParametersChange(val) {
+      if (val) {
+        let params = {
+          id: val,
+        };
+        const res = await $api.getSpecialTriggerById(params);
+        let list = res.data.data;
+        if (list.length) {
+          this.triggerArrNow = list.map((v) => {
+            return { label: v.triggerCondition, value: v.id, activityType: v.activityType };
+          });
+          this.$nextTick(() => {
+            document.getElementById('addKeyIdBtn').click();
+          });
+        }
+      }
+    },
     typeChange(val) {
       this.selectList = [];
       if (val != 1 && val != 2) {
@@ -351,6 +398,7 @@ export default {
         this.selectList.push({ triggerId: '', experienceId: '', couponNumber: '', relationIds: [] });
       }
     },
+
     // 获取所有触发条件
     async getAllTriggerCondition() {
       const res = await $api.getAllTriggerCondition({});

@@ -65,7 +65,7 @@
                 </el-col>
               </el-row>
               <el-row class="type-middle">
-                <el-button :disabled="!isModify2" type="primary" size="medium" @click="addNetCash('formArr2', index)">+添加</el-button>
+                <el-button :disabled="!isModify2" type="primary" size="medium" @click="addNetCash('formArr2', index, 1)">+添加</el-button>
               </el-row>
             </el-col>
           </el-row>
@@ -103,7 +103,7 @@
                 </el-col>
               </el-row>
               <el-row class="type-middle">
-                <el-button :disabled="!isModify3" type="primary" size="medium" @click="addNetCash('formArr3', index)">+添加</el-button>
+                <el-button :disabled="!isModify3" type="primary" size="medium" @click="addNetCash('formArr3', index, 2)">+添加</el-button>
               </el-row>
             </el-col>
           </el-row>
@@ -152,7 +152,7 @@ export default {
         content: '',
         agentUid: '',
         conditionName: '',
-        activityType: 0,
+        activityType: 5,
       },
       coinName: 'BTCUSDT',
       dialogVisible: false,
@@ -198,11 +198,7 @@ export default {
   },
   methods: {
     delTriggerIdList(arr, index, idx) {
-      if (this[arr][index].triggerVOS.length == 1) {
-        this[arr] = [];
-      } else {
-        this[arr][index].triggerVOS.splice(idx, 1);
-      }
+      this[arr][index].triggerVOS.splice(idx, 1);
     },
     confirmAdd() {
       this.$refs['addForm'].validate(async (valid) => {
@@ -242,15 +238,15 @@ export default {
         };
       });
     },
-    addNetCash(arr, index) {
+    addNetCash(arr, index, value) {
       console.log('index', index);
       this[arr][index].triggerVOS.push({
         netIncomeTargetAmount: '',
         lowNumber: '',
         triggerCondition: '',
         tradeTargetAmount: '',
-        activityType: '',
-        triggerType: '',
+        activityType: value,
+        triggerType: value,
       });
     },
     cancelSend1() {
@@ -283,15 +279,18 @@ export default {
       const res = await $api.getAllTriggerConditionNew(query_data);
       if (res) {
         const tmp = res.data.data;
-        this.form1 = tmp.filter((v) => {
-          return v.activityType == 0 ;
-        })[0] || {};
-        this.formArr2 = tmp.filter((v) => {
-          return v.activityType == 1;
-        })||  {};
-        this.formArr3 = tmp.filter((v) => {
-          return v.activityType == 2;
-        })||  {};
+        this.form1 =
+          tmp.filter((v) => {
+            return v.activityType == 5;
+          })[0] || {};
+        this.formArr2 =
+          tmp.filter((v) => {
+            return v.activityType == 1;
+          }) || {};
+        this.formArr3 =
+          tmp.filter((v) => {
+            return v.activityType == 2;
+          }) || {};
       }
       this.listLoading = false;
     },
@@ -305,6 +304,24 @@ export default {
           } else if (activityType == 2) {
             v.triggerCondition = `邀请${v.lowNumber}个直推新注册用户，完成一笔≥${v.tradeTargetAmount}USDT 的合约实盘交易`;
           }
+        });
+      }
+      if (activityType == 1) {
+        let flag = false;
+        triggerVOS.some((v) => {
+          if (!v.netIncomeTargetAmount) {
+            flag = true;
+          }
+        });
+        if (flag) return this.$message.error('请完成表格');
+      }
+      if (activityType == 2) {
+        let flag = false;
+        triggerVOS.some((v) => {
+          if (!v.lowNumber || !v.tradeTargetAmount) {
+            flag = true;
+          }
+          if (flag) return this.$message.error('请完成表格');
         });
       }
 
@@ -333,7 +350,7 @@ export default {
           this.isModify2 = false;
         } else if (activityType == 2) {
           this.isModify3 = false;
-        } else if (activityType == 0) {
+        } else if (activityType == 5) {
           this.isModify1 = false;
         }
       }
