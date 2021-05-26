@@ -11,7 +11,6 @@
               v-model="formR.target1"
               class="box-date-picker"
               :disabled="isdisabled"
-              @input="checkVal('target1')"
               placeholder="最小值"
               @change="handleMinChange"
             >
@@ -26,7 +25,6 @@
               :size="sizeDiy"
               v-model="formR.target2"
               :disabled="isdisabled"
-              @input="checkVal('target2')"
               placeholder="最大值"
               @change="handleMaxChange"
             ></el-input> </el-form-item

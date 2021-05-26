@@ -152,13 +152,13 @@ export default {
           },
         ],
 
-        markFloatingRatio: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'change',
-          },
-        ],
+        // markFloatingRatio: [
+        //   {
+        //     required: true,
+        //     message: '必填',
+        //     trigger: 'change',
+        //   },
+        // ],
 
         
         minSheets: [
