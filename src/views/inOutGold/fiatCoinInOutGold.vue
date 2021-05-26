@@ -41,20 +41,24 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
+      typeObj: {
+        1: '法币入金',
+        2: '法币出金',
+      },
     };
   },
   watch: {
     'search_params_obj.type': function (newVal, oldVal) {
       //console.log('newVal',newVal)
       if (newVal == 1) {
-        this.searchCofig[3]['value'] = ''
+        this.searchCofig[3]['value'] = '';
         this.searchCofig[3]['list'] = [
           { label: '法币买入', value: '36' },
           { label: '申诉买家赢，法币买入', value: '37' },
           { label: '法币交易返佣', value: '40' },
         ];
       } else if (newVal == 2) {
-        this.searchCofig[3]['value'] = ''
+        this.searchCofig[3]['value'] = '';
         this.searchCofig[3]['list'] = [
           { label: '法币卖出', value: '32' },
           { label: '法币交易手续费', value: '82' },
@@ -62,7 +66,7 @@ export default {
           { label: '划出至合约', value: '52' },
         ];
       } else {
-        this.searchCofig[3]['value'] = ''
+        this.searchCofig[3]['value'] = '';
         this.searchCofig[3]['list'] = [
           { label: '法币买入', value: '36' },
           { label: '申诉买家赢，法币买入', value: '37' },
@@ -117,7 +121,7 @@ export default {
       if (res) {
         const getObj = res.data.data;
         if (getObj) {
-          this.$alert(`<p>币种：${tmpName}</p> <p>数量：${getObj.amount}</p>  `, '统计结果', {
+          this.$alert(`<p>出入金类型：  ${this.typeObj[params.type] || '全部'}</p>  <p>币种：${tmpName}</p> <p>数量：${getObj.amount}</p>  `, '统计结果', {
             dangerouslyUseHTMLString: true,
           }).catch(() => {});
         } else {

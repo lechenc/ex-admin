@@ -490,46 +490,16 @@ const peopleManagementColNoBtn = [
     prop: 'createTime1',
     type: 'time',
   },
-  
-  
 ];
 
 const peopleManagementConfig = [
   {
-    type: 'select',
-    label: '集团名称',
-    prop: 'auditStatus',
+    type: 'text',
+    label: '搜索成员或部门',
+    prop: 'name',
     value: '',
-    list: [],
-  },
-  {
-    type: 'select',
-    label: '部门名称',
-    prop: 'auditStatus1',
-    value: '',
-    list: [],
+    width: '350px',
   },
 ];
 
-
-export {
-  peopleManagementCol,
-  peopleManagementColNoBtn,
-  peopleManagementConfig,
-  domainNameCol,
-  domainNameColNoBtn,
-  logCol,
-  logConfig,
-  roleCol,
-  roleColNoBtn,
-  accountCol,
-  accountColNoBtn,
-  accountConfig,
-  pwdCol,
-  pwdNoBtn,
-  gcodeCol,
-  gcodeNoBtn,
-  configPathCol,
-  configPathColNoBtn,
-  configPathConfig,
-};
+export { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };

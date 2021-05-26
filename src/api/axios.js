@@ -30,7 +30,6 @@ axios.interceptors.request.use(
     config.headers.deviceType = 3
     // sourceType 后管端类型
     config.headers.sourceType = 0
-    console.log('config',config)
     if(data.login){
       delete config.data.login
     }else{

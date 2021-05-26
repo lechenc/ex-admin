@@ -15,16 +15,16 @@
       <div class="center-sidebar">
         <div class="center-sidebar-title">人员结构</div>
         <div class="center-sidebar-tree">
-          <el-tree draggable :allow-drop="collapse" @node-drop="sort" :data="sidebarTreeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
+          <el-tree :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
               <span class="sac-btn">
-                <el-dropdown trigger="click">
+                <el-dropdown trigger="click" @command="handleCommand">
                   <span class="el-dropdown-link"> <i class="el-icon-arrow-down el-icon-more"></i> </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>添加子部门</el-dropdown-item>
-                    <el-dropdown-item>编辑部门</el-dropdown-item>
-                    <el-dropdown-item>删除部门</el-dropdown-item>
+                    <el-dropdown-item :command="{ type: 'add', node, data }">添加子部门</el-dropdown-item>
+                    <el-dropdown-item :command="{ type: 'edit', node, data }">编辑部门</el-dropdown-item>
+                    <el-dropdown-item :command="{ type: 'del', node, data }">删除部门</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </span>
@@ -48,18 +48,18 @@
     </div>
 
     <!-- 添加 -->
-    <el-dialog :title="formName" :visible.sync="dialogFormVisible">
-      <el-form :model="peopleManagementForm" ref="peopleManagementForm" :rules="rules">
-        <el-form-item label="角色名称" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="peopleManagementForm.name" autocomplete="off"></el-input>
+    <el-dialog :title="sidebarDialogTitle"  :visible.sync="sidebarDialogVisible">
+      <el-form :model="sidebarForm" ref="sidebarForm" :rules="sidebarRules">
+        <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" :label-width="formLabelWidth" class="tree-line">
           <el-tree :accordion="true" :check-strictly="true" :data="treeData" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
+        <el-button @click="sidebarDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sidebarConfirmOp" :loading="sidebarBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -80,6 +80,10 @@ export default {
   },
   data() {
     return {
+      sidebarForm:{},
+      sidebarDialogTitle:'',
+      sidebarDialogVisible:false,
+      sidebarBtnLoading:false,
       defaultProps: {
         children: 'children',
         label: 'name',
@@ -90,7 +94,7 @@ export default {
       list: [], //委托列表
       searchCofig: [], // 搜索框配置
       configs: [], // 委托列表列配置
-      // search_params_obj: {}, // 搜索框对象
+      // search_params_obj: {}, // 搜索框对象q
       current_page: 1, // 当前页码
       pageSize: this.$pageSize, // 当前每页显示页码数
       total: 0, // 总条数
@@ -99,9 +103,13 @@ export default {
       dialogFormVisible: false,
       formName: '添加角色',
       formLabelWidth: '120px',
+      currentNode: '',
+      currentData: '',
+      dialogTitle: '',
       rules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      sidebarRules:{},
       sidebarTreeData: [
         {
           name: '董事会',
@@ -121,9 +129,30 @@ export default {
         label: 'name',
         children: 'children',
       },
+      ruleForm: {},
+      currentForm: {},
     };
   },
   methods: {
+    sidebarConfirmOp(){},
+    handleNodeClick(data) {
+      console.log('123123');
+    },
+
+    resetFields() {
+      this.$nextTick(() => {
+        this.sidebarForm = {
+          position: 0, //排序,数字大的排前面还是数字小的排前面
+          requestUrl: '', // 接口url
+          name: '', // 名称
+          menuUrl: '', // 菜单url
+          parentId: '', // 父节点
+          desctext: '', //描述
+        };
+        this.$refs.sidebarForm.resetFields();
+      });
+    },
+
     // 点击弹出描述
     showDescription(describe) {
       this.$alert(describe, '描述', {
@@ -131,7 +160,55 @@ export default {
         closeOnClickModal: false,
       }).catch(() => {});
     },
-    append(node, data) {},
+    handleCommand(command) {
+      let { type, node, data } = command;
+      if (type == 'add') {
+        this.sidebarDialogTitle = `创建 ${data.name} 的子菜单`;
+        this.sidebarDialogVisible = true;
+        this.currentNode = node;
+        this.currentData = data;
+        this.resetFields();
+      } else if (type == 'edit') {
+        this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
+        this.sidebarDialogVisible = true;
+        this.sidebarForm = JSON.parse(JSON.stringify(data));
+        this.sidebarForm.desctext = this.sidebarForm.desctext;
+        this.currentForm = JSON.parse(JSON.stringify(data));
+        this.currentForm.desctext = this.currentForm.desctext;
+      } else if (type == 'del') {
+        if (data.children.length > 0) {
+          this.$message.error({
+            title: '错误',
+            message: '请先删除子菜单！',
+          });
+          return;
+        }
+        this.$confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.deleteMenu({
+              id: data.id,
+            });
+            if (res) {
+              this.$message({
+                title: '成功',
+                message: `删除${data.name}菜单成功`,
+                type: 'success',
+              });
+              this.getAllSysUrl();
+            }
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除',
+            });
+          });
+      }
+    },
     collapse(moveNode, inNode, type) {},
     sort(draggingNode, dropNode, type, event) {
       /* //console.log('排序')
@@ -262,6 +339,7 @@ export default {
     },
     // getlist
     async getList() {
+      return;
       if (this.listLoading) return;
       const params = {
         pageNum: this.current_page,
@@ -269,7 +347,7 @@ export default {
       };
       // Object.assign(params, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getRoleList(params);
+      const res = await $api.getPeopleManagementList(params);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
@@ -284,14 +362,10 @@ export default {
       this.listLoading = false;
     },
     // 权限菜单
-    async getMenuInfo() {
-      const res = await $api.getMenuList({
-        pageNum: 1,
-        pageSize: 100,
-        userType: 0,
-      });
+    async getMenuList() {
+      const res = await $api.apiGetPeopleManagementList({});
       if (res) {
-        this.treeData = res.data.data;
+        this.treeData.push(res.data.data[0]);
       }
     },
     //删除雷同项
@@ -312,7 +386,7 @@ export default {
 
     this.searchCofig = this.$util.clone(peopleManagementConfig);
     this.getList();
-    this.getMenuInfo();
+    this.getMenuList();
   },
 };
 </script>
@@ -332,7 +406,8 @@ export default {
       .center-sidebar-title {
         font-size: 25px;
         font-weight: 600;
-        background-color: #aaaaaa;
+        background-color: #409eff;
+        color: #fff;
         padding: 10px 0;
         margin-bottom: 10px;
         text-align: center;
@@ -340,12 +415,10 @@ export default {
 
       .center-sidebar-tree {
         min-height: 635px;
-        
       }
       .el-tree-node__content {
-        background-color: #fff;
         height: 35px;
-        
+
         .el-tree-node__label {
           font-size: 15px;
         }
@@ -363,8 +436,8 @@ export default {
         .sac-btn {
           margin-right: 10px;
         }
-        .el-dropdown-link{
-          padding: 10px 15px; 
+        .el-dropdown-link {
+          padding: 10px 15px;
           padding-right: 5px;
         }
       }
