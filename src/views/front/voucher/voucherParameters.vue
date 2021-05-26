@@ -321,8 +321,8 @@ export default {
           if (!v.lowNumber || !v.tradeTargetAmount) {
             flag = true;
           }
-          if (flag) return this.$message.error('请完成表格');
         });
+        if (flag) return this.$message.error('请完成表格');
       }
 
       let params = {

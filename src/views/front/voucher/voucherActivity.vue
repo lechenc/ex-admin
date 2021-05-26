@@ -31,7 +31,7 @@
           </el-col>
           <el-col v-if="voucherParametersShow" :span="10">
             <el-form-item label="条件类型" prop="activityType" :label-width="labelWidth">
-              <el-select @change="voucherParametersChange" v-model="form.voucherParameters" placeholder="请选择" style="width: 250px">
+              <el-select @change="relationConditionIdChange" v-model="form.relationConditionId" placeholder="请选择" style="width: 250px">
                 <el-option v-for="(item, index) in voucherParametersList" :key="index" :label="item.conditionName" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
@@ -188,7 +188,7 @@ export default {
         effectiveEndTime: '',
         status: false,
         activityVOList: [],
-        voucherParameters: '',
+        relationConditionId: '',
       },
       rules: {
         activityName: [{ required: true, message: '必填' }],
@@ -243,7 +243,6 @@ export default {
 
         if (newVal == 5) {
           this.voucherParametersShow = false;
-          this.form.voucherParameters = '';
           this.triggerArrAll = this.triggerArrAllNew;
           this.triggerArrNow = this.triggerArrAll;
           this.form.grantMode = newVal == 0 ? 0 : 1;
@@ -254,14 +253,14 @@ export default {
           // 获取 邀请 和 净划入 type1 ,2  的触发条件
           this.voucherParametersShow = true;
           this.showCheckbox = false;
-          this.triggerArrNow = []
+          this.triggerArrNow = [];
           let params = {
             activityType: newVal,
           };
           // 净转入 状态 发放频率设置为0
-          if (newVal == 1 ) {
+          if (newVal == 1) {
             this.form.grantDay = 0;
-          }else{
+          } else {
             this.form.grantDay = '';
           }
           this.form.grantMode = newVal == 0 ? 0 : 1;
@@ -272,7 +271,6 @@ export default {
           }
         } else {
           this.voucherParametersShow = false;
-          this.form.voucherParameters = '';
           if (newVal == 6) {
             this.showCheckbox = true;
           } else {
@@ -305,7 +303,6 @@ export default {
           }
         }
       },
-      // immediate: true,
     },
   },
   computed: {
@@ -314,7 +311,6 @@ export default {
         //讲option的显示数据进行深拷贝
         if (!this.triggerArrNow || this.triggerArrNow.length <= 0) return [];
         let newList = JSON.parse(JSON.stringify(this.triggerArrNow));
-        console.log('newList', newList);
         //处理selectList数据，返回一个新数组arr
         //arr数组就相当于所有Select选中的数据集合（没有选中的为''，不影响判断），只要在这个集合里面，其他的下拉框就不应该有这个选项
         const arr = this.selectList.map((item) => {
@@ -334,7 +330,6 @@ export default {
             }
           }
         });
-        console.log('newList', newList);
         return newList;
       };
     },
@@ -360,14 +355,15 @@ export default {
     },
   },
   methods: {
-    async voucherParametersChange(val) {
-      if (val) {
+    async relationConditionIdChange(newVal) {
+      this.selectList = [];
+      if (newVal) {
         let params = {
-          id: val,
+          id: newVal,
         };
         const res = await $api.getSpecialTriggerById(params);
         let list = res.data.data;
-        if (list.length) {
+        if (res && list.length) {
           this.triggerArrNow = list.map((v) => {
             return { label: v.triggerCondition, value: v.id, activityType: v.activityType };
           });
@@ -379,6 +375,7 @@ export default {
     },
     typeChange(val) {
       this.selectList = [];
+      this.form.relationConditionId = '';
       if (val != 1 && val != 2) {
         this.$nextTick(() => {
           document.getElementById('addKeyIdBtn').click();
@@ -413,7 +410,7 @@ export default {
     // 获取 净入金和开仓交易额 type5 的触发条件
     async getAllTriggerConditionNew() {
       const res = await $api.getAllTriggerConditionNew({});
-      if (res.data) {
+      if (res) {
         let tmp = res.data.data;
         this.triggerArrAllNew = tmp.map((v) => {
           return { label: v.content, value: v.id, activityType: 5 };
@@ -450,6 +447,7 @@ export default {
             effectiveEndTime: (row.effectiveEndTime + '').replace(/\-/g, '/'),
             status: row.status,
             activityVOList: row.activityVOList,
+            relationConditionId: row.relationConditionId,
           };
 
           // 已选的重置
@@ -687,9 +685,6 @@ export default {
             relationTriggerId: relationTriggerId,
             ...repo,
           };
-          if (this.form.activityType == 5) {
-            params.relationConditionId = relationTriggerId;
-          }
 
           !id ? Object.assign(params) : Object.assign(params, { id });
           this.btnLoading = true;
