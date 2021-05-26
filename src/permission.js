@@ -224,6 +224,7 @@ const mapComponents = {
   ResetUserGoogleCode: () => import('@/views/user/resetUserGoogleCode'),
   RegistRestric: () => import('@/views/user/registRestric'),
   GiveRestric: () => import('@/views/user/giveRestric'),
+  MoveRelationship: () => import('@/views/user/moveRelationship'),
 
 
   Examine: () => import('@/views/check/examine'),

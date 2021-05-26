@@ -197,6 +197,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/user/giveRestric'),
         meta: { title: '送币限制', icon: '', role: [] },
       },
+
+      {
+        path: 'moveRelationship',
+        name: 'MoveRelationship',
+        component: () => import('@/views/user/moveRelationship'),
+        meta: { title: '迁移邀请关系', icon: '', role: [] },
+      },
       
       
     ],
