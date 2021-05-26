@@ -1,5 +1,5 @@
 <template>
-  <div class="appealPay-container">
+  <div class="moveRelationship-container">
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
@@ -26,12 +26,12 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { appealCol, appealColNoBtn, appealConfig } from '@/config/column/coinPay';
+import { moveRelationshipCol, moveRelationshipColNoBtn, moveRelationshipConfig } from '@/config/column/user';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 
 export default {
-  name: 'AppealPay',
+  name: 'MoveRelationship',
   components: {
     Btable,
     Bsearch,
@@ -141,19 +141,19 @@ export default {
     }
   },
   mounted() {
-    let authObj = this.$util.getAuthority('Appeal', appealCol, appealColNoBtn);
+    let authObj = this.$util.getAuthority('MoveRelationship', moveRelationshipCol, moveRelationshipColNoBtn);
     this.configs = authObj.val;
     // this.isCURDAuth = authObj.isAdd;
         // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
-    this.searchCofig = this.$util.clone(appealConfig);
+    this.searchCofig = this.$util.clone(moveRelationshipConfig);
     this.getList();
   },
 };
 </script>
 <style scope lang="scss">
-.appealPay-container {
+.moveRelationship-container {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;
