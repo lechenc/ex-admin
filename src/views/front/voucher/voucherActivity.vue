@@ -20,11 +20,23 @@
         <el-form-item label="活动名称" prop="activityName" :label-width="labelWidth">
           <el-input style="width: 250px" type="text" placeholder="请输入" v-model="form.activityName" maxlength="20"> </el-input>
         </el-form-item>
-        <el-form-item label="活动类型" prop="activityType" :label-width="labelWidth">
-          <el-select @change="typeChange" v-model="form.activityType" placeholder="请选择" style="width: 250px">
-            <el-option v-for="(item, index) in activityTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
-          </el-select>
-        </el-form-item>
+
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="活动类型" prop="activityType" :label-width="labelWidth">
+              <el-select @change="typeChange" v-model="form.activityType" placeholder="请选择" style="width: 250px">
+                <el-option v-for="(item, index) in activityTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col v-if="voucherParametersShow" :span="10">
+            <el-form-item label="条件类型" prop="activityType" :label-width="labelWidth">
+              <el-select @change="relationConditionIdChange" v-model="form.relationConditionId" placeholder="请选择" style="width: 250px">
+                <el-option v-for="(item, index) in voucherParametersList" :key="index" :label="item.conditionName" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
         <div>
           <el-row>
@@ -78,7 +90,7 @@
             <el-option v-for="(item, index) in grantModeArr" :key="index" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="发券频率" prop="grantDay" :label-width="labelWidth">
+        <el-form-item v-if="grantDayShow" label="发券频率" prop="grantDay" :label-width="labelWidth">
           <el-input :disabled="form.grantMode == 0 || form.activityType == 1 || form.activityType == 4" style="width: 250px" type="number" placeholder="请输入1到24的正整数" v-model="form.grantDay" @input="checkVal2('grantDay')"> </el-input>
         </el-form-item>
         <el-form-item label="总成本限制" prop="amountLimit" :label-width="labelWidth">
@@ -158,7 +170,8 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-
+      voucherParametersList: [],
+      voucherParametersShow: false, // activityTypeList 为 1 ,2 的时候显示
       selectList: [], // 具体存放触发条件，体验金名称，送券数量的数组，来源于activityVOList
 
       title: '',
@@ -175,6 +188,7 @@ export default {
         effectiveEndTime: '',
         status: false,
         activityVOList: [],
+        relationConditionId: '',
       },
       rules: {
         activityName: [{ required: true, message: '必填' }],
@@ -217,6 +231,7 @@ export default {
       rulesPrize: {
         uid: [{ required: true, message: '必填' }],
       },
+      grantDayShow: true,
     };
   },
   watch: {
@@ -226,8 +241,14 @@ export default {
         if (newVal === '') {
           return;
         }
+        if (newVal == 0) {
+          this.grantDayShow = false;
+        } else {
+          this.grantDayShow = true;
+        }
 
         if (newVal == 5) {
+          this.voucherParametersShow = false;
           this.triggerArrAll = this.triggerArrAllNew;
           this.triggerArrNow = this.triggerArrAll;
           this.form.grantMode = newVal == 0 ? 0 : 1;
@@ -236,14 +257,26 @@ export default {
           this.showCheckbox = false;
         } else if (newVal == 1 || newVal == 2) {
           // 获取 邀请 和 净划入 type1 ,2  的触发条件
+          this.voucherParametersShow = true;
+          this.showCheckbox = false;
+          this.triggerArrNow = [];
           let params = {
             activityType: newVal,
           };
+          // 净转入 状态 发放频率设置为0
+          if (newVal == 1) {
+            this.form.grantDay = 0;
+          } else {
+            this.form.grantDay = '';
+          }
+          this.form.grantMode = newVal == 0 ? 0 : 1;
           const res = await $api.getSpecialTriggerCondition(params);
           if (res) {
-            console.log('res', res);
+            let list = res.data.data;
+            this.voucherParametersList = list;
           }
         } else {
+          this.voucherParametersShow = false;
           if (newVal == 6) {
             this.showCheckbox = true;
           } else {
@@ -276,7 +309,6 @@ export default {
           }
         }
       },
-      // immediate: true,
     },
   },
   computed: {
@@ -293,7 +325,6 @@ export default {
         });
         //过滤出newList里面需要显示的数据
         newList = newList.filter((item) => {
-          console.log('item', item);
           //当前下拉框的选中的数据需要显示
           //val就是当前下拉框选中的值
           if (val == item.value) {
@@ -330,8 +361,27 @@ export default {
     },
   },
   methods: {
+    async relationConditionIdChange(newVal) {
+      this.selectList = [];
+      if (newVal) {
+        let params = {
+          id: newVal,
+        };
+        const res = await $api.getSpecialTriggerById(params);
+        let list = res.data.data;
+        if (res && list.length) {
+          this.triggerArrNow = list.map((v) => {
+            return { label: v.triggerCondition, value: v.id, activityType: v.activityType };
+          });
+          this.$nextTick(() => {
+            document.getElementById('addKeyIdBtn').click();
+          });
+        }
+      }
+    },
     typeChange(val) {
       this.selectList = [];
+      this.form.relationConditionId = '';
       if (val != 1 && val != 2) {
         this.$nextTick(() => {
           document.getElementById('addKeyIdBtn').click();
@@ -351,6 +401,7 @@ export default {
         this.selectList.push({ triggerId: '', experienceId: '', couponNumber: '', relationIds: [] });
       }
     },
+
     // 获取所有触发条件
     async getAllTriggerCondition() {
       const res = await $api.getAllTriggerCondition({});
@@ -365,7 +416,7 @@ export default {
     // 获取 净入金和开仓交易额 type5 的触发条件
     async getAllTriggerConditionNew() {
       const res = await $api.getAllTriggerConditionNew({});
-      if (res.data) {
+      if (res) {
         let tmp = res.data.data;
         this.triggerArrAllNew = tmp.map((v) => {
           return { label: v.content, value: v.id, activityType: 5 };
@@ -402,6 +453,7 @@ export default {
             effectiveEndTime: (row.effectiveEndTime + '').replace(/\-/g, '/'),
             status: row.status,
             activityVOList: row.activityVOList,
+            relationConditionId: row.relationConditionId,
           };
 
           // 已选的重置
@@ -435,6 +487,13 @@ export default {
                 couponNumber: v.couponNumber,
               });
             });
+            if (row.activityType == 2 || row.activityType == 1) {
+              this.$nextTick(() => {
+                this.triggerArrNow = row.activityVOList.map((v) => {
+                  return { label: v.triggerCondition, value: v.triggerId, activityType: row.activityType };
+                });
+              });
+            }
           }
         });
       }
@@ -639,9 +698,6 @@ export default {
             relationTriggerId: relationTriggerId,
             ...repo,
           };
-          if (this.form.activityType == 5) {
-            params.relationConditionId = relationTriggerId;
-          }
 
           !id ? Object.assign(params) : Object.assign(params, { id });
           this.btnLoading = true;

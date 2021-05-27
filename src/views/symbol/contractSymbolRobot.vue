@@ -137,13 +137,13 @@ export default {
             trigger: 'blur',
           },
         ],
-        mockCoinMarket: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur',
-          },
-        ],
+        // mockCoinMarket: [
+        //   {
+        //     required: true,
+        //     message: '必填',
+        //     trigger: 'blur',
+        //   },
+        // ],
         floatingRatio: [
           {
             required: true,

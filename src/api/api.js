@@ -2781,6 +2781,13 @@ export default class api {
     return Fetch.post('/admin/account/contract/user/getAllConditionByType', data);
   }
 
+  // 运营管理/体验金券管理/活动列表 通过条件id获取对应的所有触发条件
+  static getSpecialTriggerById(data) {
+    return Fetch.post('/admin/account/contract/user/getAllTriggerById', data);
+  }
+
+  
+
   
 
   

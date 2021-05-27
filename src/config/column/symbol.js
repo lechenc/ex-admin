@@ -416,10 +416,6 @@ const contractSymbolRobotCol = [
     filters: [{ text: '未启动', val: 1 }, { text: '已启动', val: 2 }],
   },
   {
-    label: '模拟交易对',
-    prop: 'mockCoinMarket',
-  },
-  {
     label: '是否模拟',
     prop: 'isMock',
     width: 100,
@@ -427,6 +423,11 @@ const contractSymbolRobotCol = [
     show_type: 'text',
     filters: [{ text: '否', val: 0 }, { text: '是', val: 1 }],
   },
+  {
+    label: '模拟交易对',
+    prop: 'mockCoinMarket',
+  },
+  
   {
     label: '是否正常',
     prop: 'isFormal',
@@ -474,9 +475,14 @@ const contractSymbolRobotColNoBtn = [
     prop: 'coinMarket',
   },
   {
-    label: '成交价浮动比例',
+    label: '下单标记价浮动比例',
+    prop: 'markFloatingRatio',
+  },
+  {
+    label: '下单成交价浮动比例',
     prop: 'floatingRatio',
   },
+
   {
     label: '最新成交最小张数',
     prop: 'minSheets',
@@ -500,6 +506,27 @@ const contractSymbolRobotColNoBtn = [
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '未启动', val: 1 }, { text: '已启动', val: 2 }],
+  },
+  {
+    label: '是否模拟',
+    prop: 'isMock',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '否', val: 0 }, { text: '是', val: 1 }],
+  },
+  {
+    label: '模拟交易对',
+    prop: 'mockCoinMarket',
+  },
+  
+  {
+    label: '是否正常',
+    prop: 'isFormal',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '都关闭', val: 0 }, { text: '正常打开', val: 1 }, { text: '模拟盘打开', val: 2 }, { text: '都打开', val: 3 }],
   },
   {
     label: '创建时间',
