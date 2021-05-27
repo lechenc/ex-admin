@@ -96,7 +96,7 @@ const coinInOutGoldCol = [
       { text: '特殊调账-', val: '61' },
       { text: '标仓周奖励', val: '15' },
       { text: '标仓季度奖励', val: '16' },
-      { text: 'TC划转至币币', val: '11O' },
+      // { text: 'OTC划转至币币', val: '11O' },
       { text: '合约划转至币币', val: '51' },
       { text: '领取红包', val: '107' },
       { text: '过期红包退还金额', val: '108' },
@@ -161,13 +161,6 @@ const coinInOutGoldConfig = [
     list: [],
   },
   {
-    type: 'onlyNumber',
-    label: '订单号',
-    prop: 'relateRecdId',
-    value: '',
-    placeHolder: '请输入',
-  },
-  {
     type: 'select',
     label: '类型',
     prop: 'optType',
@@ -185,7 +178,7 @@ const coinInOutGoldConfig = [
       { label: '特殊调账-', value: '61' },
       { label: '标仓周奖励', value: '15' },
       { label: '标仓季度奖励', value: '16' },
-      { label: 'TC划转至币币', value: '11O' },
+      // { label: 'OTC划转至币币', value: '11O' },
       { label: '合约划转至币币', value: '51' },
       { label: '领取红包', value: '107' },
       { label: '过期红包退还金额', value: '108' },
@@ -295,13 +288,6 @@ const fiatCoinInOutGoldConfig = [
     value: '',
     list: [],
   },
-  {
-    type: 'onlyNumber',
-    label: '订单号',
-    prop: 'relateRecdId',
-    value: '',
-    placeHolder: '请输入',
-  },
   
 ];
 
@@ -384,13 +370,6 @@ const contractInOutGoldConfig = [
     prop: 'coinId',
     value: '',
     list: [],
-  },
-  {
-    type: 'onlyNumber',
-    label: '订单号',
-    prop: 'relateRecdId',
-    value: '',
-    placeHolder: '请输入',
   },
   {
     type: 'select',

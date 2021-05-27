@@ -41,6 +41,10 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
+      typeObj: {
+        1: '合约入金',
+        2: '合约出金',
+      },
     };
   },
   methods: {
@@ -54,7 +58,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
       this.getList();
     },
     // 页容变化
@@ -72,7 +76,7 @@ export default {
     async calTotal(data) {
       this.search_params_obj = data;
       this.calLoading = true;
-      const params = { };
+      const params = {};
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
       let tmpName = '';
@@ -85,7 +89,7 @@ export default {
       if (res) {
         const getObj = res.data.data;
         if (getObj) {
-          this.$alert(`<p>币种：${tmpName}</p> <p>数量：${getObj.amount}</p>  `, '统计结果', {
+          this.$alert(`<p>出入金类型：  ${this.typeObj[params.type] || '全部'}</p> <p>币种：${tmpName}</p> <p>数量：${getObj.amount}</p>  `, '统计结果', {
             dangerouslyUseHTMLString: true,
           }).catch(() => {});
         } else {
@@ -119,10 +123,7 @@ export default {
         params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
         params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
         // 组件时间初始必须format格式
-        this.searchCofig[0].value = [
-          this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-          this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss'),
-        ];
+        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss')];
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);

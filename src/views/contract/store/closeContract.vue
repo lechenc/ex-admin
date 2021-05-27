@@ -112,10 +112,11 @@ export default {
       this.uid = val.uid;
       this.startTime = val.startTime;
       this.endTime = val.endTime;
-      if (val.coinId) {
+      if (val.coinMarket) {
         let tmpName = '';
-        tmpName = this.symbollist.filter((v) => v['value'] == val.coinId)[0].label;
+        tmpName = this.symbollist.filter((v) => v['value'] == val.coinMarket)[0].label;
         this.coinMarket = tmpName;
+        val.coinMarket = tmpName;
       }
       const query_data = {
         pageNum: this.current_page,

@@ -35,7 +35,11 @@
           <el-input v-model="robotForm.depthParameter" autocomplete="off" type="number"></el-input>
         </el-form-item>
 
-        <el-form-item label="成交价浮动比例" :label-width="formLabelWidth" prop="floatingRatio">
+        <el-form-item label="下单标记价浮动比例" :label-width="formLabelWidth" prop="markFloatingRatio">
+          <el-input v-model="robotForm.markFloatingRatio" autocomplete="off" type="number"></el-input>
+        </el-form-item>
+
+        <el-form-item label="下单成交价浮动比例" :label-width="formLabelWidth" prop="floatingRatio">
           <el-input v-model="robotForm.floatingRatio" autocomplete="off" type="number"></el-input>
         </el-form-item>
         <el-form-item label="最新成交最小张数" :label-width="formLabelWidth" prop="minSheets">
@@ -123,6 +127,7 @@ export default {
         isMock: false,
         mockCoinMarket: '',
         isFormal: '',
+        markFloatingRatio:'',
       },
       rules: {
         isFormal: [
@@ -146,6 +151,16 @@ export default {
             trigger: 'change',
           },
         ],
+
+        // markFloatingRatio: [
+        //   {
+        //     required: true,
+        //     message: '必填',
+        //     trigger: 'change',
+        //   },
+        // ],
+
+        
         minSheets: [
           {
             required: true,
@@ -228,7 +243,7 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['robotForm'].resetFields();
-          const { id, uid, coinMarket, isFormal, proportion, depthParameter, status, mockCoinMarket, isMock, googleCode, floatingRatio, minSheets, maxSheets } = row;
+          const { id, uid, coinMarket, isFormal, proportion, depthParameter, status, mockCoinMarket, isMock, googleCode, floatingRatio,markFloatingRatio, minSheets, maxSheets } = row;
           this.robotForm = {
             id,
             uid,
@@ -241,6 +256,7 @@ export default {
             isMock: isMock == 1 ? true : false,
             googleCode,
             floatingRatio,
+            markFloatingRatio,
             minSheets,
             maxSheets,
           };
@@ -272,6 +288,7 @@ export default {
           status: false,
           googleCode: '',
           floatingRatio: '',
+          markFloatingRatio:'',
           minSheets: '',
           maxSheets: '',
           isMock: false,

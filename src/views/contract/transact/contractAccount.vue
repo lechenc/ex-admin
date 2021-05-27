@@ -47,7 +47,7 @@
         </el-row>
         <el-row :span="24">
           <el-form-item label="基本利率" :label-width="formLabelWidth" prop="basicInterestRate">
-            <el-input type="number" v-model="dForm.basicInterestRate" autocomplete="off" placeholder="" @input="checkVal('basicInterestRate', 'nodot')"></el-input>
+            <el-input type="number" v-model="dForm.basicInterestRate" autocomplete="off" placeholder="" ></el-input>
           </el-form-item>
         </el-row>
 

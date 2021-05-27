@@ -383,9 +383,14 @@ const contractSymbolRobotCol = [
     prop: 'coinMarket',
   },
   {
-    label: '成交价浮动比例',
+    label: '下单标记价浮动比例',
+    prop: 'markFloatingRatio',
+  },
+  {
+    label: '下单成交价浮动比例',
     prop: 'floatingRatio',
   },
+
   {
     label: '最新成交最小张数',
     prop: 'minSheets',
@@ -602,8 +607,8 @@ const plateAreaCol = [
   {
     label: '相关交易对-是否合约',
     prop: 'pairList',
-    key1:'coinMarket',
-    key2:'supportContract',
+    key1: 'coinMarket',
+    key2: 'supportContract',
     type: 'valueArr',
   },
   {

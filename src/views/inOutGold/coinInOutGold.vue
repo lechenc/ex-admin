@@ -41,6 +41,10 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
+      typeObj: {
+        1: '币币入金',
+        2: '币币出金',
+      },
     };
   },
   methods: {
@@ -88,7 +92,7 @@ export default {
       if (res) {
         const getObj = res.data.data;
         if (getObj) {
-          this.$alert(`<p>币种：${tmpName}</p> <p>数量：${getObj.amount}</p>  `, '统计结果', {
+          this.$alert(`<p>出入金类型：  ${this.typeObj[params.type] || '全部'}</p>  <p>币种：${tmpName}</p> <p>数量：${getObj.amount}</p>  `, '统计结果', {
             dangerouslyUseHTMLString: true,
           }).catch(() => {});
         } else {
