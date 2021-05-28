@@ -2766,9 +2766,24 @@ export default class api {
     return Fetch.post('/account/contract/query-coin-change-expand', data);
   }
 
-  // 系统管理 人员管理 列表
+  // 系统管理 人员管理 权限列表 
   static apiGetPeopleManagementList(data) {
     return Fetch.post('/admin/user/structureTreeList', data);
+  }
+
+  // 系统管理 人员管理 权限列表 添加子部门
+  static apiAddPeopleManagementList(data) {
+    return Fetch.post('/admin/user/add/sys-role', data);
+  }
+
+  // 系统管理 人员管理 权限列表 编辑子部门
+  static apiEditPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-role', data);
+  }
+
+  // 系统管理 人员管理 权限列表 删除菜单
+  static apiEditPeopleManagementList(data) {
+    return Fetch.post('/admin/user/delete/sys-user', data);
   }
 
   // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件

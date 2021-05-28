@@ -62,7 +62,7 @@
         </el-form-item>
 
         <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-          <el-input v-model="sidebarForm.googleCode" placeholder="请输入"></el-input>
+          <el-input @input="checkVal('sidebarForm', 'googleCode')" v-model.trim="sidebarForm.googleCode" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -89,6 +89,7 @@ export default {
   data() {
     return {
       sidebarForm: {
+        id: '',
         name: '',
         menuId: [
           {
@@ -204,7 +205,11 @@ export default {
       rules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      sidebarRules: {},
+      sidebarRules: {
+        name: [{ required: true, message: '必填', trigger: 'blur' }],
+        menuId: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
       sidebarTreeData: [
         {
           name: '董事会',
@@ -229,11 +234,46 @@ export default {
     };
   },
   methods: {
+    checkVal(obj, key) {
+      this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
+    },
     filterNode(value, data) {
       if (!value) return true;
       return data.name.indexOf(value) !== -1;
     },
-    sidebarConfirmOp() {},
+    sidebarConfirmOp() {
+      this.$refs['sidebarForm'].validate(async (valid) => {
+        if (valid) {
+          const { id, name, menuId, status, googleCode } = this.sidebarForm;
+          if (this.sidebarBtnLoading) return;
+          const params = {
+            name,
+            menuId,
+            googleCode,
+            status: status ? 1 : 0,
+          };
+          this.sidebarBtnLoading = true;
+          // 新增 编辑
+          const res =
+            id === ''
+              ? await $api.apiAddPeopleManagementList(params)
+              : await $api.apiEditPeopleManagementList({
+                  id,
+                  ...params,
+                });
+          if (res) {
+            let txt = id === '' ? '添加成功' : '编辑成功';
+            this.$message({
+              message: txt,
+              type: 'success',
+            });
+            this.sidebarDialogVisible = false;
+            this.getMenuList();
+          }
+          this.sidebarBtnLoading = false;
+        }
+      });
+    },
     handleNodeClick(data) {
       console.log('123123');
     },
@@ -241,12 +281,52 @@ export default {
     resetFields() {
       this.$nextTick(() => {
         this.sidebarForm = {
-          position: 0, //排序,数字大的排前面还是数字小的排前面
-          requestUrl: '', // 接口url
-          name: '', // 名称
-          menuUrl: '', // 菜单url
-          parentId: '', // 父节点
-          desctext: '', //描述
+          id: '',
+          name: '',
+          menuId: [
+            {
+              id: 0,
+              name: '顶级 0',
+              children: [
+                {
+                  id: 1,
+                  name: '一级 1',
+                  children: [
+                    {
+                      id: 4,
+                      name: '二级 1-1',
+                      children: [
+                        {
+                          id: 9,
+                          name: '三级 1-1-1',
+                        },
+                        {
+                          id: 10,
+                          name: '三级 1-1-2',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  id: 2,
+                  name: '一级 2',
+                  children: [
+                    {
+                      id: 5,
+                      name: '二级 2-1',
+                    },
+                    {
+                      id: 6,
+                      name: '二级 2-2',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          status: false,
+          googleCode: '',
         };
         this.$refs.sidebarForm.resetFields();
       });
@@ -275,7 +355,7 @@ export default {
         this.currentForm = JSON.parse(JSON.stringify(data));
         this.currentForm.desctext = this.currentForm.desctext;
       } else if (type == 'del') {
-        if (data.children.length > 0) {
+        if (!!data.children && data.children.length > 0) {
           this.$message.error({
             title: '错误',
             message: '请先删除子菜单！',
