@@ -15,7 +15,7 @@
       <div class="center-sidebar">
         <div class="center-sidebar-title">人员结构</div>
         <div class="center-sidebar-tree">
-          <el-tree :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
+          <el-tree :default-expanded-keys="[0]" :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
               <span class="sac-btn">
@@ -48,7 +48,7 @@
     </div>
 
     <!-- 添加 -->
-    <el-dialog :title="sidebarDialogTitle"  :visible.sync="sidebarDialogVisible">
+    <el-dialog :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
       <el-form :model="sidebarForm" ref="sidebarForm" :rules="sidebarRules">
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
@@ -80,10 +80,10 @@ export default {
   },
   data() {
     return {
-      sidebarForm:{},
-      sidebarDialogTitle:'',
-      sidebarDialogVisible:false,
-      sidebarBtnLoading:false,
+      sidebarForm: {},
+      sidebarDialogTitle: '',
+      sidebarDialogVisible: false,
+      sidebarBtnLoading: false,
       defaultProps: {
         children: 'children',
         label: 'name',
@@ -99,7 +99,48 @@ export default {
       pageSize: this.$pageSize, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
-      treeData: [], //菜单
+      treeData: [
+        {
+          id: 0,
+          name: '顶级 0',
+          children: [
+            {
+              id: 1,
+              name: '一级 1',
+              children: [
+                {
+                  id: 4,
+                  name: '二级 1-1',
+                  children: [
+                    {
+                      id: 9,
+                      name: '三级 1-1-1',
+                    },
+                    {
+                      id: 10,
+                      name: '三级 1-1-2',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 2,
+              name: '一级 2',
+              children: [
+                {
+                  id: 5,
+                  name: '二级 2-1',
+                },
+                {
+                  id: 6,
+                  name: '二级 2-2',
+                },
+              ],
+            },
+          ],
+        },
+      ], //菜单
       dialogFormVisible: false,
       formName: '添加角色',
       formLabelWidth: '120px',
@@ -109,7 +150,7 @@ export default {
       rules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      sidebarRules:{},
+      sidebarRules: {},
       sidebarTreeData: [
         {
           name: '董事会',
@@ -134,7 +175,7 @@ export default {
     };
   },
   methods: {
-    sidebarConfirmOp(){},
+    sidebarConfirmOp() {},
     handleNodeClick(data) {
       console.log('123123');
     },
@@ -363,6 +404,7 @@ export default {
     },
     // 权限菜单
     async getMenuList() {
+      return;
       const res = await $api.apiGetPeopleManagementList({});
       if (res) {
         this.treeData.push(res.data.data[0]);
