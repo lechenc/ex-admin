@@ -151,8 +151,6 @@ const coinInOutGoldConfig = [
     list: [{ label: '币币入金', value: '1' }, { label: '币币出金', value: '2' }],
   },
 
-  
-
   {
     type: 'select',
     label: '币种',
@@ -189,7 +187,6 @@ const coinInOutGoldConfig = [
       { label: '发送红包', value: '106' },
     ],
   },
-  
 ];
 
 const fiatCoinInOutGoldCol = [
@@ -219,7 +216,17 @@ const fiatCoinInOutGoldCol = [
     prop: 'optType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '法币买入', val: '36' }, { text: '申诉买家赢，法币买入', val: '37' }, { text: '法币交易返佣', val: '40' }, { text: '法币卖出', val: '32' }, { text: '法币交易手续费', val: '82' }, { text: '划出至币币', val: '11' }, { text: '划出至合约', val: '52' }],
+    filters: [
+      { text: '法币买入', val: '36' },
+      { text: '申诉买家赢，法币买入', val: '37' },
+      { text: '法币交易返佣', val: '40' },
+      { text: '法币卖出', val: '32' },
+      { text: '法币交易手续费', val: '82' },
+      { text: '划出至币币', val: '11' },
+      { text: '划出至合约', val: '52' },
+      { text: '币币划入', val: '10' },
+      { text: '合约划入', val: '53' },
+    ],
   },
   {
     label: '变动资产',
@@ -278,6 +285,8 @@ const fiatCoinInOutGoldConfig = [
       { label: '法币交易手续费', value: '82' },
       { label: '划出至币币', value: '11' },
       { label: '划出至合约', value: '52' },
+      { label: '币币划入', value: '10' },
+      { label: '合约划入', value: '53' },
     ],
   },
 
@@ -288,7 +297,6 @@ const fiatCoinInOutGoldConfig = [
     value: '',
     list: [],
   },
-  
 ];
 
 const contractInOutGoldCol = [

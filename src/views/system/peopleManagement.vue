@@ -15,7 +15,7 @@
       <div class="center-sidebar">
         <div class="center-sidebar-title">人员结构</div>
         <div class="center-sidebar-tree">
-          <el-tree :default-expanded-keys="[0]" :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
+          <el-tree ref="sidebarTree" :filter-node-method="filterNode" :default-expanded-keys="[0]" :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
               <span class="sac-btn">
@@ -53,8 +53,16 @@
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="权限" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion="true" :check-strictly="true" :data="treeData" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+        <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
+          <el-tree :accordion="true" :check-strictly="true" :data="sidebarForm.menuId" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+        </el-form-item>
+
+        <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
+          <el-switch v-model="sidebarForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
+          <el-input v-model="sidebarForm.googleCode" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -80,7 +88,53 @@ export default {
   },
   data() {
     return {
-      sidebarForm: {},
+      sidebarForm: {
+        name: '',
+        menuId: [
+          {
+            id: 0,
+            name: '顶级 0',
+            children: [
+              {
+                id: 1,
+                name: '一级 1',
+                children: [
+                  {
+                    id: 4,
+                    name: '二级 1-1',
+                    children: [
+                      {
+                        id: 9,
+                        name: '三级 1-1-1',
+                      },
+                      {
+                        id: 10,
+                        name: '三级 1-1-2',
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: 2,
+                name: '一级 2',
+                children: [
+                  {
+                    id: 5,
+                    name: '二级 2-1',
+                  },
+                  {
+                    id: 6,
+                    name: '二级 2-2',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        status: false,
+        googleCode: '',
+      },
       sidebarDialogTitle: '',
       sidebarDialogVisible: false,
       sidebarBtnLoading: false,
@@ -175,6 +229,10 @@ export default {
     };
   },
   methods: {
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.name.indexOf(value) !== -1;
+    },
     sidebarConfirmOp() {},
     handleNodeClick(data) {
       console.log('123123');
@@ -404,7 +462,6 @@ export default {
     },
     // 权限菜单
     async getMenuList() {
-      return;
       const res = await $api.apiGetPeopleManagementList({});
       if (res) {
         this.treeData.push(res.data.data[0]);
@@ -429,6 +486,17 @@ export default {
     this.searchCofig = this.$util.clone(peopleManagementConfig);
     this.getList();
     this.getMenuList();
+
+    this.$watch(
+      function () {
+        return this.searchCofig[0].value;
+      },
+      function (newVal, oldValue) {
+        if (newVal) {
+          this.$refs.sidebarTree.filter(newVal);
+        }
+      },
+    );
   },
 };
 </script>

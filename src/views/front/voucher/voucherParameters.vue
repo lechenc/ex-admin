@@ -279,23 +279,32 @@ export default {
       const res = await $api.getAllTriggerConditionNew(query_data);
       if (res) {
         const tmp = res.data.data;
-        this.form1 =
-          tmp.filter((v) => {
-            return v.activityType == 5;
-          })[0] || {};
+        this.form1 = tmp.filter((v) => {
+          return v.activityType == 5;
+        })[0] || {
+          id: '',
+          openPositionAmount: '',
+          incomeAmount: '',
+          inviteNumber: '',
+          content: '',
+          agentUid: '',
+          conditionName: '',
+          activityType: 5,
+        };
         this.formArr2 =
           tmp.filter((v) => {
             return v.activityType == 1;
-          }) || {};
+          }) || [];
         this.formArr3 =
           tmp.filter((v) => {
             return v.activityType == 2;
-          }) || {};
+          }) || [];
       }
       this.listLoading = false;
     },
     // 保存页面修改
     async confirmSend(form) {
+      console.log('form', form);
       const { agentUid, activityType, triggerVOS, id, openPositionAmount, conditionName, incomeAmount, inviteNumber } = form;
       if (triggerVOS && triggerVOS.length) {
         triggerVOS.forEach((v) => {
@@ -338,6 +347,7 @@ export default {
       } else {
         params.id = id;
       }
+      console.log('params', params);
 
       this.confirmLoading = true;
       const res = !id ? await $api.addVoucherParameters(params) : await $api.editVoucherParameters(params);

@@ -502,6 +502,11 @@ const billContractConfig = [
 
 const generalEntrustContractCol = [
   {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
     label: 'UID',
     prop: 'uid',
   },
@@ -683,11 +688,6 @@ const generalEntrustContractCol = [
       },
     ],
   },
-  {
-    label: '创建时间',
-    prop: 'createTime',
-    type: 'time',
-  },
 ];
 
 const generalEntrustContractConfig = [
@@ -842,6 +842,11 @@ const generalEntrustContractConfig = [
 ];
 
 const planEntrustContractCol = [
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
   {
     label: 'UID',
     prop: 'uid',
@@ -1015,11 +1020,6 @@ const planEntrustContractCol = [
       },
     ],
   },
-  {
-    label: '创建时间',
-    prop: 'createTime',
-    type: 'time',
-  },
 ];
 
 const planEntrustContractConfig = [
@@ -1174,6 +1174,11 @@ const planEntrustContractConfig = [
 
 const dealContractCol = [
   {
+    label: '时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
     label: 'UID',
     prop: 'uid',
   },
@@ -1189,11 +1194,7 @@ const dealContractCol = [
     label: '成交单号',
     prop: 'dealNo',
   },
-  {
-    label: '时间',
-    prop: 'createTime',
-    type: 'time',
-  },
+
   {
     label: '币对',
     prop: 'coinMarket',
@@ -1350,8 +1351,18 @@ const dealContractConfig = [
 
 const positionContractCol = [
   {
+    label: '时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
     label: 'UID',
     prop: 'uid',
+  },
+  {
+    label: '最上级代理商UID',
+    prop: 'topAgentId',
+    width: 140,
   },
   {
     label: '代理商UID',
@@ -1464,11 +1475,6 @@ const positionContractCol = [
     label: '仓位保证金（券）',
     prop: 'experienceGold',
   },
-  {
-    label: '时间',
-    prop: 'createTime',
-    type: 'time',
-  },
 ];
 
 const positionContractConfig = [
@@ -1487,10 +1493,21 @@ const positionContractConfig = [
     placeHolder: '请输入',
   },
   {
-    type: 'text',
+    type: 'onlyNumber',
+    label: '最上级代理商UID',
+    prop: 'topAgentId',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '代理商UID',
     prop: 'agentId',
     value: '',
-    type: 'text',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
     label: '仓位ID',
     prop: 'positionId',
     value: '',
@@ -1549,8 +1566,18 @@ const positionContractConfig = [
 
 const closeContractCol = [
   {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
     label: 'UID',
     prop: 'uid',
+  },
+  {
+    label: '最上级代理商UID',
+    prop: 'topAgentId',
+    width: 140,
   },
   {
     label: '代理商UID',
@@ -1660,12 +1687,6 @@ const closeContractCol = [
       },
     ],
   },
-
-  {
-    label: '创建时间',
-    prop: 'createTime',
-    type: 'time',
-  },
 ];
 
 const closeContractConfig = [
@@ -1680,6 +1701,13 @@ const closeContractConfig = [
     type: 'onlyNumber',
     label: 'UID',
     prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '最上级代理商UID',
+    prop: 'topAgentId',
     value: '',
     placeHolder: '请输入',
   },
@@ -3679,7 +3707,7 @@ const apiKeyConfigCol = [
   {
     label: '更新时间',
     prop: 'updateTime',
-    type:'time'
+    type: 'time',
   },
   {
     label: '开关',
@@ -3720,13 +3748,11 @@ const apiKeyConfigColNoBtn = [
   {
     label: '更新时间',
     prop: 'updateTime',
-    type:'time'
+    type: 'time',
   },
 ];
 
-const apiKeyConfigConfig = [
-  
-];
+const apiKeyConfigConfig = [];
 
 export {
   apiKeyConfigCol,

@@ -90,7 +90,7 @@
             <el-option v-for="(item, index) in grantModeArr" :key="index" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="发券频率" prop="grantDay" :label-width="labelWidth">
+        <el-form-item v-if="grantDayShow" label="发券频率" prop="grantDay" :label-width="labelWidth">
           <el-input :disabled="form.grantMode == 0 || form.activityType == 1 || form.activityType == 4" style="width: 250px" type="number" placeholder="请输入1到24的正整数" v-model="form.grantDay" @input="checkVal2('grantDay')"> </el-input>
         </el-form-item>
         <el-form-item label="总成本限制" prop="amountLimit" :label-width="labelWidth">
@@ -231,6 +231,7 @@ export default {
       rulesPrize: {
         uid: [{ required: true, message: '必填' }],
       },
+      grantDayShow: true,
     };
   },
   watch: {
@@ -239,6 +240,11 @@ export default {
         // 两个都存在才能选择
         if (newVal === '') {
           return;
+        }
+        if (newVal == 0) {
+          this.grantDayShow = false;
+        } else {
+          this.grantDayShow = true;
         }
 
         if (newVal == 5) {
@@ -481,6 +487,13 @@ export default {
                 couponNumber: v.couponNumber,
               });
             });
+            if (row.activityType == 2 || row.activityType == 1) {
+              this.$nextTick(() => {
+                this.triggerArrNow = row.activityVOList.map((v) => {
+                  return { label: v.triggerCondition, value: v.triggerId, activityType: row.activityType };
+                });
+              });
+            }
           }
         });
       }
