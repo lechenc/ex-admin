@@ -77,11 +77,11 @@ const userCol = [
     prop: 'cardBackUrl',
     type: 'img',
   },
-  {
-    label: '手持证件页',
-    prop: 'antiMoneyUrl',
-    type: 'img',
-  },
+  // {
+  //   label: '手持证件页',
+  //   prop: 'antiMoneyUrl',
+  //   type: 'img',
+  // },
   {
     label: '录制视频',
     prop: 'videoUrl',
@@ -280,11 +280,11 @@ const userColNoBtn = [
     prop: 'cardBackUrl',
     type: 'img',
   },
-  {
-    label: '手持证件页',
-    prop: 'antiMoneyUrl',
-    type: 'img',
-  },
+  // {
+  //   label: '手持证件页',
+  //   prop: 'antiMoneyUrl',
+  //   type: 'img',
+  // },
   {
     label: '录制视频',
     prop: 'videoUrl',
