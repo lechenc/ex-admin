@@ -210,7 +210,7 @@ export default {
       // 交易对获取
       this.$store.dispatch('common/getSymbolListContract').then(() => {
         this.symbollist = this.$store.state.common.symbollistContract;
-        this.searchCofig[3]['list'] = this.symbollist;
+        this.searchCofig[4]['list'] = this.symbollist;
       });
     },
   },
