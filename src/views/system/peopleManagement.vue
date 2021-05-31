@@ -15,7 +15,7 @@
       <div class="center-sidebar">
         <div class="center-sidebar-title">人员结构</div>
         <div class="center-sidebar-tree">
-          <el-tree ref="sidebarTree" :filter-node-method="filterNode" :default-expanded-keys="[1]" :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="roleId" :props="defaultProps" :expand-on-click-node="false">
+          <el-tree ref="sidebarTree" :filter-node-method="filterNode" :default-expanded-keys="[1]" :draggable="false"  :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="roleId" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
               <span class="sac-btn">
@@ -171,7 +171,7 @@ export default {
             menuId,
             googleCode,
             status: status ? 1 : 0,
-            roleId: this.currentData.roleId,
+            parentRoleId: this.currentData.roleId,
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
@@ -194,10 +194,6 @@ export default {
           this.sidebarBtnLoading = false;
         }
       });
-    },
-    handleNodeClick(data) {
-      console.log('data', data);
-      // sidebarForm.menuId
     },
 
     resetFields() {
@@ -236,6 +232,7 @@ export default {
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
+        console.log('data',data)
         this.sidebarForm = newData;
         // this.sidebarForm.desctext = this.sidebarForm.desctext;
         this.currentData = JSON.parse(JSON.stringify(data));
