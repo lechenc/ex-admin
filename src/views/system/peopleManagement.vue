@@ -171,6 +171,7 @@ export default {
             menuId,
             googleCode,
             status: status ? 1 : 0,
+            roleId: this.currentData.roleId,
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
@@ -229,15 +230,20 @@ export default {
         this.sidebarDialogVisible = true;
         this.currentNode = node;
         this.currentData = data;
-        console.log('data1', data);
         this.resetFields();
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
-        this.sidebarForm = JSON.parse(JSON.stringify(data));
-        this.sidebarForm.desctext = this.sidebarForm.desctext;
-        this.currentForm = JSON.parse(JSON.stringify(data));
-        this.currentForm.desctext = this.currentForm.desctext;
+        let newData = JSON.parse(JSON.stringify(data));
+        newData.status = newData.status ? true : false;
+        this.sidebarForm = newData;
+        // this.sidebarForm.desctext = this.sidebarForm.desctext;
+        this.currentData = JSON.parse(JSON.stringify(data));
+        // this.currentForm.desctext = this.currentForm.desctext;
+        const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
+        setTimeout(() => {
+          this.$refs['sidebarTree'].setCheckedKeys(id_list);
+        }, 0);
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
           this.$message.error({
@@ -322,7 +328,7 @@ export default {
                 type: 'success',
               });
               this.dialogFormVisible = false;
-              this.getList();
+              this.getMenuList();
             }
             this.btnLoading = false;
           } else {
@@ -428,7 +434,7 @@ export default {
     async getMenuList() {
       const res = await $api.apiGetPeopleManagementList({});
       if (res) {
-        this.treeData.push(res.data.data[0]);
+        this.treeData = res.data.data;
       }
     },
     //删除雷同项
@@ -456,9 +462,7 @@ export default {
         return this.searchCofig[0].value;
       },
       function (newVal, oldValue) {
-        if (newVal) {
-          this.$refs.sidebarTree.filter(newVal);
-        }
+        this.$refs.sidebarTree.filter(newVal);
       },
     );
   },
