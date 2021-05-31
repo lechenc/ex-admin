@@ -124,7 +124,7 @@ export default {
         this.$nextTick(() => {
           this.$refs['form'].resetFields();
           this.form = {
-            id: this.curRow.id,
+            id: this.curRow.settlementId,
             bonus: this.curRow.bonus,
             realityBonus: this.curRow.realityBonus,
             googleCode: '',
