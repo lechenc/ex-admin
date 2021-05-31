@@ -319,7 +319,7 @@ const contractInOutGoldCol = [
     prop: 'type',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '合约出金', val: '1' }, { text: '合约入金', val: '2' }],
+    filters: [{ text: '合约出金', val: '2' }, { text: '合约入金', val: '1' }],
   },
   // 合约出入金,type=1为合约出金,type=2为合约入金
   {

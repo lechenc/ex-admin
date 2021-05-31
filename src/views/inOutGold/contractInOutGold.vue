@@ -163,13 +163,13 @@ export default {
       },
       // 合约出入金,type=1为合约出金,type=2为合约入金
       function (newVal, oldValue) {
-        if (newVal == 2) {
+        if (newVal == 1) {
           this.searchCofig[4]['value'] = '';
           this.searchCofig[4]['list'] = [
             { label: '币币划入合约', value: '7' },
             { label: '法币划入合约', value: '12' },
           ];
-        } else if (newVal == 1) {
+        } else if (newVal == 2) {
           this.searchCofig[4]['value'] = '';
           this.searchCofig[4]['list'] = [
             { label: '开仓手续费', value: '10' },
