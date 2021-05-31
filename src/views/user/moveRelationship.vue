@@ -119,7 +119,7 @@
 
       <div v-else slot="footer" class="dialog-footer dialog-footer-check">
         <el-button type="success" @click="checkConfirmOp(recheckType, 1)">审核通过</el-button>
-        <el-button type="danger" @click="checkConfirmOp(recheckType, 2)">审核驳回</el-button>
+        <el-button type="danger" @click="checkConfirmOp(recheckType, 0)">审核驳回</el-button>
       </div>
     </el-dialog>
   </div>
@@ -190,7 +190,6 @@ export default {
           const { id, firstAuditRemark, reviewAuditRemark } = this.checkForm;
           const params = {
             id,
-            changeState: State,
           };
 
           const res =
@@ -198,13 +197,17 @@ export default {
               ? await $api.apiUpdateFirstAuditStatus({
                   ...params,
                   firstAuditRemark,
+                  changeState: State ? 1 : 2,
                 })
               : await $api.apiUpdateReviewAuditStatus({
                   ...params,
                   reviewAuditRemark,
+                  changeState: State ? 3 : 4,
                 });
           if (res) {
             this.$message({ message: '成功', type: 'success' });
+            this.checkDialogFormVisible = false
+            this.getList()
           }
         }
       });
@@ -222,6 +225,7 @@ export default {
           if (res) {
             this.$message({ message: '迁移成功', type: 'success' });
             this.dialogFormVisible = false;
+            this.getList()
           }
         }
       });
