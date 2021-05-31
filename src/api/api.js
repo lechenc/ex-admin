@@ -2806,6 +2806,21 @@ export default class api {
     return Fetch.post('/admin/user/userRelationChange/queryUserRelationChangeList', data);
   }
 
+  // 用户管理/迁移邀请关系 添加
+  static apiAddMoveRelationshipList(data) {
+    return Fetch.post('/admin/user/userRelationChange/addRelationChange', data);
+  }
+
+  // 用户管理/迁移邀请关系 初审
+  static apiUpdateFirstAuditStatus(data) {
+    return Fetch.post('/admin/user/userRelationChange/updateFirstAuditStatus', data);
+  }
+
+  // 用户管理/迁移邀请关系 复审
+  static apiUpdateReviewAuditStatus(data) {
+    return Fetch.post('/admin/user/userRelationChange/updateReviewAuditStatus', data);
+  }
+
   
 
   

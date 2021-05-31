@@ -1056,7 +1056,7 @@ const moveRelationshipCol = [
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: 0, val: '待初审' }, { text: 1, val: '待复审' }, { text: 2, val: '初审驳回' }, { text: 3, val: '复审通过' }, { text: 4, val: '复审驳回' }],
+    filters: [{ val: 0, text: '待初审' }, { val: 1, text: '待复审' }, { val: 2, text: '初审驳回' }, { val: 3, text: '复审通过' }, { val: 4, text: '复审驳回' }],
   },
   {
     label: '提交时间',
@@ -1084,7 +1084,7 @@ const moveRelationshipCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '120',
+    width: '240',
     btnGroup: [
 
       {
@@ -1093,7 +1093,7 @@ const moveRelationshipCol = [
         filter_type: 'array',
         filter_key: 'auditStatus',
         filter_status: ['0'],
-        type: 'primary',
+        type: 'success',
         alias: 'firstTrial',
       },
 
@@ -1103,7 +1103,7 @@ const moveRelationshipCol = [
         filter_type: 'array',
         filter_key: 'auditStatus',
         filter_status: ['1'],
-        type: 'primary',
+        type: 'success',
         alias: 'recheck',
       },
       {
@@ -1118,92 +1118,49 @@ const moveRelationshipCol = [
 
 const moveRelationshipColNoBtn = [
   {
-    label: 'UID',
-    prop: 'uid',
+    label: '订单号',
+    prop: 'orderId',
   },
   {
-    label: '用户类型',
-    prop: 'userType',
-    width: 100,
+    label: '需迁移的UID',
+    prop: 'changeUid',
+  },
+  {
+    label: '原上级的UID',
+    prop: 'formerParentUid',
+  },
+  {
+    label: '迁移至的UID',
+    prop: 'laterParentUid',
+  },
+  {
+    label: '状态',
+    prop: 'auditStatus',
+    width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 1, text: '普通用户' }, { val: 20, text: 'TP商户账号' }, { val: 21, text: '顶级代理商账号' }, { val: 22, text: '代理商账号' }, { val: 24, text: '顶级广告商' }, { val: 25, text: '广告商代理' }, { val: 31, text: '商务端' }, { val: 32, text: '商务代理' }],
+    filters: [{ val: 0, text: '待初审' }, { val: 1, text: '待复审' }, { val: 2, text: '初审驳回' }, { val: 3, text: '复审通过' }, { val: 4, text: '复审驳回' }],
   },
   {
-    label: '手机',
-    prop: 'phone',
-    width: '150',
+    label: '提交时间',
+    prop: 'createTime',
   },
   {
-    label: '邮箱',
-    prop: 'email',
-    width: '200',
+    label: '初审时间',
+    prop: 'firstAuditTime',
   },
   {
-    label: '姓名',
-    prop: 'realName',
-  },
-  {
-    label: '邀请人UID',
-    prop: 'inviterUid',
-  },
-  {
-    label: '邀请码',
-    prop: 'inviteCode',
-  },
-  {
-    label: '邀请下级人数',
-    prop: 'sonCount',
+    label: '初审人',
+    prop: 'firstAuditUserName',
   },
 
   {
-    label: '实名状态',
-    prop: 'userVerifiedStatus',
-    type: 'filter',
-    show_type: 'text',
-    width: 120,
-    filters: [{ text: '高级待审核', val: 0, type: 'info' }, { text: '初级认证成功', val: 1, type: 'success' }, { text: '高级认证失败', val: 2, type: 'warning' }, { text: '未认证', val: 3, type: 'primary' }, { text: '高级认证成功', val: 4, type: 'success' }],
+    label: '复审时间',
+    prop: 'reviewAuditTime',
   },
   {
-    label: '入金状态',
-    prop: 'depositStatus',
-    width: 90,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '初级', val: 1 }, { text: '中级', val: 2 }, { text: '高级', val: 3 }, { text: '超级', val: 4 }],
-  },
-  {
-    label: '是否尊贵会员',
-    prop: 'userFlag',
-    width: 90,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '是', val: 1 }, { text: '否', val: 0 }],
-  },
-  {
-    label: '当前资产',
-    prop: 'amount',
-    width: '100',
-  },
-  {
-    label: '7天资产动向',
-    prop: 'sevenDaysAmount',
-    width: '100',
-  },
-  {
-    label: '15天资产动向',
-    prop: 'fifteenDaysAmount',
-    width: '100',
-  },
-  {
-    label: '30天资产动向',
-    prop: 'thirtyDaysAmount',
-    width: '100',
-  },
-  {
-    label: '注册时间',
-    prop: 'registerTime',
-    type: 'time',
+    label: '复审人',
+    prop: 'reviewAuditUserName',
   },
 ];
 
