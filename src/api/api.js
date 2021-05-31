@@ -2801,6 +2801,13 @@ export default class api {
     return Fetch.post('/admin/account/contract/user/getAllTriggerById', data);
   }
 
+  // 用户管理/迁移邀请关系 列表
+  static apiGetMoveRelationshipList(data) {
+    return Fetch.post('/admin/user/userRelationChange/queryUserRelationChangeList', data);
+  }
+
+  
+
   
 
   

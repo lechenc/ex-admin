@@ -1036,48 +1036,48 @@ const validatedVipUserCol = [
 const moveRelationshipCol = [
   {
     label: '订单号',
-    prop: 'uid',
+    prop: 'orderId',
   },
   {
     label: '需迁移的UID',
-    prop: 'uid1',
+    prop: 'changeUid',
   },
   {
     label: '原上级的UID',
-    prop: 'uid2',
+    prop: 'formerParentUid',
   },
   {
     label: '迁移至的UID',
-    prop: 'realName',
+    prop: 'laterParentUid',
   },
   {
     label: '状态',
-    prop: 'depositStatus',
+    prop: 'auditStatus',
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '初级', val: 1 }, { text: '中级', val: 2 }, { text: '高级', val: 3 }, { text: '超级', val: 4 }],
+    filters: [{ text: 0, val: '待初审' }, { text: 1, val: '待复审' }, { text: 2, val: '初审驳回' }, { text: 3, val: '复审通过' }, { text: 4, val: '复审驳回' }],
   },
   {
     label: '提交时间',
-    prop: 'inviterUid',
+    prop: 'createTime',
   },
   {
     label: '初审时间',
-    prop: 'inviteCode',
+    prop: 'firstAuditTime',
   },
   {
     label: '初审人',
-    prop: 'sonCount',
+    prop: 'firstAuditUserName',
   },
 
   {
     label: '复审时间',
-    prop: 'inviteCode1',
+    prop: 'reviewAuditTime',
   },
   {
     label: '复审人',
-    prop: 'sonCount1',
+    prop: 'reviewAuditUserName',
   },
 
   {
@@ -1086,15 +1086,23 @@ const moveRelationshipCol = [
     type: 'action',
     width: '120',
     btnGroup: [
+
       {
         label: '初审',
         fn: 'firstTrial',
+        filter_type: 'array',
+        filter_key: 'auditStatus',
+        filter_status: ['0'],
         type: 'primary',
         alias: 'firstTrial',
       },
+
       {
         label: '复审',
         fn: 'recheck',
+        filter_type: 'array',
+        filter_key: 'auditStatus',
+        filter_status: ['1'],
         type: 'primary',
         alias: 'recheck',
       },
@@ -1210,28 +1218,28 @@ const moveRelationshipConfig = [
   {
     type: 'onlyNumber',
     label: '订单号',
-    prop: 'uid',
+    prop: 'orderId',
     value: '',
     placeHolder: '请输入',
   },
   {
     type: 'onlyNumber',
     label: '需迁移的UID',
-    prop: 'uid1',
+    prop: 'changeUid',
     value: '',
     placeHolder: '请输入',
   },
   {
     type: 'onlyNumber',
     label: '原上级的UID',
-    prop: 'uid2',
+    prop: 'formerParentUid',
     value: '',
     placeHolder: '请输入',
   },
   {
     type: 'onlyNumber',
     label: '迁移至的UID',
-    prop: 'uid3',
+    prop: 'laterParentUid',
     value: '',
     placeHolder: '请输入',
   },
@@ -1239,9 +1247,9 @@ const moveRelationshipConfig = [
   {
     type: 'select',
     label: '状态',
-    prop: 'userType',
+    prop: 'auditStatus',
     value: '',
-    list: [{ label: '普通用户', value: 1 }, { value: 20, label: 'TP商户账号' }, { value: 21, label: '顶级代理商账号' }, { value: 22, label: '代理商账号' }, { value: 24, label: '顶级广告商' }, { value: 25, label: '广告商代理' }, { value: 31, label: '商务端' }, { value: 32, label: '商务代理' }],
+    list: [{ value: 0, label: '待初审' }, { value: 1, label: '待复审' }, { value: 2, label: '初审驳回' }, { value: 3, label: '复审通过' }, { value: 4, label: '复审驳回' }],
   },
 ];
 
