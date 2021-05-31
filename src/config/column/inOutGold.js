@@ -373,7 +373,7 @@ const contractInOutGoldConfig = [
     label: '出入金类型',
     prop: 'type',
     value: '',
-    list: [{ label: '合约入金', value: '2' }, { label: '合约出金', value: '1' }],
+    list: [{ label: '合约入金', value: '1' }, { label: '合约出金', value: '2' }],
   },
 
   {
