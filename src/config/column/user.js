@@ -1110,7 +1110,6 @@ const moveRelationshipCol = [
         label: '查看详情',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
       },
     ],
   },
