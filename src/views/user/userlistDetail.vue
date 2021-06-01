@@ -22,6 +22,10 @@
           <div>邀请下级人数：{{ current_row.sonCount }}</div>
           <div>注册时间：{{ current_row.registerTime }}</div>
           <div>最后登录IP：{{ current_row.loginIp }}</div>
+          <div>直推邀请下级人数：{{ current_row.phone }}</div>
+          <div>所有总人数：{{ current_row.phone }}</div>
+          <div>国家区号：{{ current_row.phone }}</div>
+          <div>昵称：{{ current_row.phone }}</div>
         </div>
         <h3>用户状态</h3>
         <div v-if="!isModify">
