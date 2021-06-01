@@ -41,7 +41,7 @@
       <el-form :model="checkForm" label-width="120px" ref="checkForm" :rules="checkRules">
         <el-row :span="24">
           <el-col :span="12">
-            <el-form-item label="当前状态: "> {{ typeObj[currentForm.auditStatus] }}}</el-form-item>
+            <el-form-item label="当前状态: "> {{ typeObj[currentForm.auditStatus] }}</el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="迁移至的UID: "> {{ currentForm.laterParentUid }}</el-form-item>
