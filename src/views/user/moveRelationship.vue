@@ -37,7 +37,7 @@
     </el-dialog>
 
     <!-- 审核/ 详情 -->
-    <el-dialog :title="checkTitle" labelw :visible.sync="checkDialogFormVisible" width="700px">
+    <el-dialog :title="checkTitle" :visible.sync="checkDialogFormVisible" width="700px">
       <el-form :model="checkForm" label-width="120px" ref="checkForm" :rules="checkRules">
         <el-row :span="24">
           <el-col :span="12">
@@ -78,7 +78,7 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="recheckType != 1">
+        <el-row :span="24" v-if="recheckType != 0">
           <el-col :span="12">
             <el-form-item label="初审时间: "> {{ currentForm.firstAuditTime }}</el-form-item>
           </el-col>
@@ -90,12 +90,12 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="初审备注: " prop="firstAuditRemark">
-              <el-input rows="2" :disabled="recheckType != 1" v-model="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+              <el-input rows="2" :disabled="recheckType != 0" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="recheckType == 3">
+        <el-row :span="24" v-if="recheckType == 3 || recheckType == 4">
           <el-col :span="12">
             <el-form-item label="复审时间: "> {{ currentForm.reviewAuditTime }}</el-form-item>
           </el-col>
@@ -104,22 +104,22 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="recheckType != 1">
+        <el-row :span="24" v-if="recheckType != 0 && recheckType != 2">
           <el-col :span="24">
             <el-form-item label="复审备注: " prop="reviewAuditRemark">
-              <el-input rows="2" :disabled="recheckType == 3" v-model="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+              <el-input rows="2" :disabled="recheckType != 1" v-model.trim="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <div v-if="recheckType == 3" slot="footer" class="dialog-footer dialog-footer-check">
+      <div v-if="recheckType != 0 && recheckType != 1" slot="footer" class="dialog-footer dialog-footer-check">
         <el-button @click="checkDialogFormVisible = false">确 定</el-button>
         <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
       </div>
 
       <div v-else slot="footer" class="dialog-footer dialog-footer-check">
-        <el-button type="success" @click="checkConfirmOp(recheckType, 1)">审核通过</el-button>
-        <el-button type="danger" @click="checkConfirmOp(recheckType, 0)">审核驳回</el-button>
+        <el-button type="success" @click="checkConfirmOp(1)">审核通过</el-button>
+        <el-button type="danger" @click="checkConfirmOp(0)">审核驳回</el-button>
       </div>
     </el-dialog>
   </div>
@@ -184,7 +184,7 @@ export default {
     };
   },
   methods: {
-    checkConfirmOp(type, State) {
+    checkConfirmOp(State) {
       this.$refs['checkForm'].validate(async (valid) => {
         if (valid) {
           const { id, firstAuditRemark, reviewAuditRemark } = this.checkForm;
@@ -193,7 +193,7 @@ export default {
           };
 
           const res =
-            type === 1
+            this.recheckType === 0
               ? await $api.apiUpdateFirstAuditStatus({
                   ...params,
                   firstAuditRemark,
@@ -206,8 +206,8 @@ export default {
                 });
           if (res) {
             this.$message({ message: '成功', type: 'success' });
-            this.checkDialogFormVisible = false
-            this.getList()
+            this.checkDialogFormVisible = false;
+            this.getList();
           }
         }
       });
@@ -225,7 +225,7 @@ export default {
           if (res) {
             this.$message({ message: '迁移成功', type: 'success' });
             this.dialogFormVisible = false;
-            this.getList()
+            this.getList();
           }
         }
       });
@@ -233,16 +233,22 @@ export default {
     // 创建迁移
     addMoveRelationship() {
       this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.roleForm = {
+          changeUid: '',
+          laterParentUid: '',
+          googleCode: '',
+        };
+      });
     },
     // 表格里的操作
     async doHandle(data) {
       let { fn, row } = data;
       this.row = row;
-      console.log('row', row);
+      this.recheckType = row.auditStatus;
       if (fn === 'firstTrial') {
         this.checkDialogFormVisible = true;
         this.checkTitle = '初审';
-        this.recheckType = 1;
         this.currentForm = row;
         this.$nextTick(() => {
           this.checkForm = {
@@ -255,7 +261,6 @@ export default {
       if (fn === 'recheck') {
         this.checkDialogFormVisible = true;
         this.checkTitle = '复审';
-        this.recheckType = 2;
         this.currentForm = row;
         this.$nextTick(() => {
           this.checkForm = {
@@ -268,7 +273,6 @@ export default {
       if (fn === 'detail') {
         this.checkDialogFormVisible = true;
         this.checkTitle = '详情';
-        this.recheckType = 3;
         this.currentForm = row;
         this.$nextTick(() => {
           this.checkForm = {
@@ -329,18 +333,21 @@ export default {
       this.listLoading = false;
     },
     formatTime(val) {
-      return !~(val + '').indexOf('/') ? val : parseInt(new Date(val).getTime() / 1000);
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
     },
+
+    // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
-        params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
-        // 组件时间初始必须format格式
-        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
+        this.searchCofig[0].value = [befV, nowV];
+        params.endCreateTime = nowV.replace(/\//gi, '-');
+        params.startCreateTime = befV.replace(/\//gi, '-');
       }
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      if (this.search_params_obj.startCreateTime) {
+        this.search_params_obj.endCreateTime = this.formatTime(this.search_params_obj.endCreateTime);
+        this.search_params_obj.startCreateTime = this.formatTime(this.search_params_obj.startCreateTime);
       }
     },
   },

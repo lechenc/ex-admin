@@ -160,6 +160,14 @@
             </el-col>
           </el-form-item>
 
+          <el-form-item label="中文标题：" prop="googleCode">
+            <el-col :span="8"><el-input  type="text" placeholder="请输入" v-model.trim="form.googleCode" :disabled="!isModify"></el-input> </el-col>
+          </el-form-item>
+
+          <el-form-item label="英文标题：" prop="googleCode">
+            <el-col :span="8"><el-input  type="text" placeholder="请输入" v-model.trim="form.googleCode" :disabled="!isModify"></el-input> </el-col>
+          </el-form-item>
+
           <el-form-item label="谷歌验证码：" prop="googleCode">
             <el-col :span="8"><el-input @input="checkVal('googleCode', 'noDot')" type="text" placeholder="请输入" v-model="form.googleCode" :disabled="!isModify"></el-input> </el-col>
           </el-form-item>

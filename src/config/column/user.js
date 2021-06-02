@@ -1167,9 +1167,9 @@ const moveRelationshipColNoBtn = [
 const moveRelationshipConfig = [
   {
     type: 'date_rank',
-    label: '注册时间',
-    prop: 'startTime',
-    prop2: 'endTime',
+    label: '时间',
+    prop: 'startCreateTime',
+    prop2: 'endCreateTime',
     value: '',
   },
   {
