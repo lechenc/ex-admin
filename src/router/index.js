@@ -204,6 +204,21 @@ export const asyncRouterMap = [
         component: () => import('@/views/user/moveRelationship'),
         meta: { title: '迁移邀请关系', icon: '', role: [] },
       },
+
+      {
+        path: 'riskList',
+        name: 'RiskList',
+        component: () => import('@/views/user/riskList'),
+        meta: { title: '风控记录', icon: '', role: [] },
+      },
+
+      {
+        path: 'riskConfig',
+        name: 'RiskConfig',
+        hidden: true,
+        component: () => import('@/views/user/riskConfig'),
+        meta: { title: '风控参数配置', icon: '', role: [] },
+      },
       
       
     ],

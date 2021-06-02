@@ -5,7 +5,7 @@
     </div>
 
     <div class="container-btn" v-if="isCURDAuth">
-      <el-button type="primary" size="medium" @click="addMoveRelationship">创建迁移</el-button>
+      <el-button type="primary" size="medium" @click="addRiskConfig">风控参数配置</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -90,7 +90,7 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="初审备注: " prop="firstAuditRemark">
-              <el-input rows="2" :disabled="isDetail" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+              <el-input rows="2" :disabled="recheckType != 0" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -107,12 +107,12 @@
         <el-row :span="24" v-if="recheckType != 0 && recheckType != 2">
           <el-col :span="24">
             <el-form-item label="复审备注: " prop="reviewAuditRemark">
-              <el-input rows="2" :disabled="isDetail" v-model.trim="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+              <el-input rows="2" :disabled="recheckType != 1" v-model.trim="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <div v-if="isDetail" slot="footer" class="dialog-footer dialog-footer-check">
+      <div v-if="recheckType != 0 && recheckType != 1" slot="footer" class="dialog-footer dialog-footer-check">
         <el-button @click="checkDialogFormVisible = false">确 定</el-button>
         <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
       </div>
@@ -149,7 +149,6 @@ export default {
         3: '复审通过',
         4: '复审驳回',
       },
-      isDetail: false,
       checkForm: {},
       currentForm: {},
       btnLoading: false,
@@ -232,47 +231,49 @@ export default {
       });
     },
     // 创建迁移
-    addMoveRelationship() {
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        this.roleForm = {
-          changeUid: '',
-          laterParentUid: '',
-          googleCode: '',
-        };
-      });
+    addRiskConfig() {
+      this.$router.push('/user/riskConfig')
     },
     // 表格里的操作
     async doHandle(data) {
       let { fn, row } = data;
       this.row = row;
       this.recheckType = row.auditStatus;
-
-      this.$nextTick(() => {
-        this.checkForm = {
-          id: row.id,
-          firstAuditRemark: row.firstAuditRemark,
-          reviewAuditRemark: row.reviewAuditRemark,
-        };
-        this.$refs['checkForm'].resetFields();
-      });
       if (fn === 'firstTrial') {
         this.checkDialogFormVisible = true;
         this.checkTitle = '初审';
         this.currentForm = row;
-        this.isDetail = false;
+        this.$nextTick(() => {
+          this.checkForm = {
+            id: row.id,
+            firstAuditRemark: '',
+            reviewAuditRemark: '',
+          };
+        });
       }
       if (fn === 'recheck') {
         this.checkDialogFormVisible = true;
         this.checkTitle = '复审';
         this.currentForm = row;
-        this.isDetail = false;
+        this.$nextTick(() => {
+          this.checkForm = {
+            id: row.id,
+            firstAuditRemark: row.firstAuditRemark,
+            reviewAuditRemark: '',
+          };
+        });
       }
       if (fn === 'detail') {
         this.checkDialogFormVisible = true;
         this.checkTitle = '详情';
         this.currentForm = row;
-        this.isDetail = true;
+        this.$nextTick(() => {
+          this.checkForm = {
+            id: row.id,
+            firstAuditRemark: row.firstAuditRemark,
+            reviewAuditRemark: row.reviewAuditRemark,
+          };
+        });
       }
     },
     doSearch(data) {
