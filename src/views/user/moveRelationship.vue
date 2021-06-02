@@ -329,18 +329,25 @@ export default {
       this.listLoading = false;
     },
     formatTime(val) {
-      return !~(val + '').indexOf('/') ? val : parseInt(new Date(val).getTime() / 1000);
+      return ~(val + "").indexOf("-") ? val : val.replace(/\//gi, "-");
     },
+
+    // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
-        params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
-        // 组件时间初始必须format格式
-        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+        let befV = this.$util.dateFormat(this.ago, "YYYY/MM/DD HH:mm:ss");
+        let nowV = this.$util.dateFormat(this.toDay, "YYYY/MM/DD HH:mm:ss");
+        this.searchCofig[0].value = [befV, nowV];
+        params.endCreateTime = nowV.replace(/\//gi, "-");
+        params.startCreateTime = befV.replace(/\//gi, "-");
       }
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      if (this.search_params_obj.startCreateTime) {
+        this.search_params_obj.endCreateTime = this.formatTime(
+          this.search_params_obj.endCreateTime
+        );
+        this.search_params_obj.startCreateTime = this.formatTime(
+          this.search_params_obj.startCreateTime
+        );
       }
     },
   },
