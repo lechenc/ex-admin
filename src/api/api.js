@@ -2821,6 +2821,11 @@ export default class api {
     return Fetch.post('/admin/user/userRelationChange/updateReviewAuditStatus', data);
   }
 
+  // 用户管理/ 获取风控参数配置 
+  static apiGetRiskConfig(data) {
+    return Fetch.post('/admin/user/cro/getBlastControlConfig', data);
+  }
+
   
 
   
