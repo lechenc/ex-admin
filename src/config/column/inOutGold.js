@@ -219,7 +219,6 @@ const fiatCoinInOutGoldCol = [
     filters: [
       { text: '法币买入', val: '36' },
       { text: '申诉买家赢，法币买入', val: '37' },
-      { text: '法币交易返佣', val: '40' },
       { text: '法币卖出', val: '32' },
       { text: '法币交易手续费', val: '82' },
       { text: '划出至币币', val: '11' },
@@ -280,7 +279,6 @@ const fiatCoinInOutGoldConfig = [
     list: [
       { label: '法币买入', value: '36' },
       { label: '申诉买家赢，法币买入', value: '37' },
-      { label: '法币交易返佣', value: '40' },
       { label: '法币卖出', value: '32' },
       { label: '法币交易手续费', value: '82' },
       { label: '划出至币币', value: '11' },

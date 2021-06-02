@@ -2825,6 +2825,27 @@ export default class api {
   static apiGetRiskConfig(data) {
     return Fetch.post('/admin/user/cro/getBlastControlConfig', data);
   }
+  // 用户管理/ 编辑 风控参数配置 
+  static apiEditRiskConfig(data) {
+    return Fetch.post('/admin/user/cro/updateBlastControlConfig', data);
+  }
+
+  // 用户管理/ 获取 风控记录 列表
+  static apiGetriskListList(data) {
+    return Fetch.post('/admin/user/cro/getLimitRecordInfoByPage', data);
+  }
+
+
+  // 用户管理/ 获取 风控记录 详情
+  static apiGetriskListInfo(data) {
+    return Fetch.post('/admin/user/cro/getLimitRecordInfoById', data);
+  }
+
+  // 用户管理/ 获取 风控记录 编辑
+  static apiEditriskList(data) {
+    return Fetch.post('/admin/user/cro/updateRecordStatus', data);
+  }
+  
 
   
 

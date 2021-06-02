@@ -1,7 +1,7 @@
 <template>
   <div class="moveRelationship-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
     <div class="container-btn" v-if="isCURDAuth">
@@ -150,6 +150,7 @@ export default {
         4: '复审驳回',
       },
       isDetail: false,
+      excelLoading: false, // 导出loading
       checkForm: {},
       currentForm: {},
       btnLoading: false,
@@ -185,6 +186,19 @@ export default {
     };
   },
   methods: {
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.apiGetMoveRelationshipList(params);
+      this.excelLoading = false;
+      return res;
+    },
     checkConfirmOp(State) {
       this.$refs['checkForm'].validate(async (valid) => {
         if (valid) {

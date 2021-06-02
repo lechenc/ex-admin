@@ -9,21 +9,25 @@
 
 <template>
   <div class="riskConfig-container">
+    <el-row class="sac-row">
+      <el-col :span="4">
+        <el-button size="medium" type="primary" plain @click="$router.go(-1)">返回</el-button>
+      </el-col>
+    </el-row>
     <el-form :model="form" ref="form" :rules="rules" label-width="160px" size="medium">
       <el-card class="box-card">
         <div class="box-card-con">
           <H5>风控参数配置</H5>
-          <el-form-item label="相同的注册IP人数达到: " prop="registerIp" :label-width="labelWidth">
-            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerIp" @input="checkVal('registerIp')" :disabled="!isModify"></el-input>
+          <el-form-item label="相同的注册IP人数达到: " prop="registerIpLimit" :label-width="labelWidth">
+            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerIpLimit" @input="checkVal('registerIpLimit')" :disabled="!isModify"></el-input>
           </el-form-item>
 
-          <el-form-item label="相同的登录IP人数达到: " prop="loginIp" :label-width="labelWidth">
-            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.loginIp" @input="checkVal('loginIp')" :disabled="!isModify"></el-input>
+          <el-form-item label="相同的登录IP人数达到: " prop="loginIpLimit" :label-width="labelWidth">
+            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.loginIpLimit" @input="checkVal('loginIpLimit')" :disabled="!isModify"></el-input>
           </el-form-item>
 
-          
-          <el-form-item label="相同的设备号人数达到: " prop="registerDevice"  :label-width="labelWidth">
-           <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerDevice" @input="checkVal('registerDevice')" :disabled="!isModify"></el-input>
+          <el-form-item label="相同的注册设备号人数达到: " prop="registerDeviceLimit" :label-width="labelWidth">
+            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerDeviceLimit" @input="checkVal('registerDeviceLimit')" :disabled="!isModify"></el-input>
           </el-form-item>
 
           <div v-if="btnArr.includes('detailEdit')">
@@ -32,7 +36,7 @@
             </div>
             <div class="middle" v-if="isModify">
               <el-button type="primary" plain size="medium" @click="isModify = false">取消</el-button>
-              <el-button type="primary" size="medium" @click="confirmSend()" :loading="btnLoading">提交修改</el-button>
+              <el-button type="primary" size="medium" @click="confirmSend" :loading="btnLoading">提交修改</el-button>
             </div>
           </div>
         </div>
@@ -56,48 +60,55 @@ export default {
       isRegisterSwitch: false, // 是否开启
 
       form: {
-        registeredSwift: false,
-        registeredCount: '',
+        registerIpLimit: '',
+        loginIpLimit: '',
+        registerDeviceLimit: '',
       },
-      rules: {},
+      rules: {
+        registerIpLimit: [{ required: true, message: '必填', trigger: 'blur' }],
+        loginIpLimit: [{ required: true, message: '必填', trigger: 'blur' }],
+        registerDeviceLimit: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
     };
   },
   methods: {
     // getlist
     async getList() {
       if (this.listLoading) return;
-      const query_data = {
-        // coinName: this.coinName,
-      };
+      const query_data = {};
       this.listLoading = true;
       const res = await $api.apiGetRiskConfig(query_data);
       if (res) {
-        let { registeredSwift, registeredCount } = res.data.data;
+        let { registerIpLimit, loginIpLimit, registerDeviceLimit, id } = res.data.data;
         this.form = {
-          registeredCount: registeredCount,
-          registeredCount: registeredCount,
-          registeredCount: registeredCount,
+          registerIpLimit,
+          loginIpLimit,
+          registerDeviceLimit,
+          id,
         };
       }
       this.listLoading = false;
     },
     // 控制输入的范围
     checkVal(val) {
+      this.form[val] = (this.form[val] + '').replace(/[^\d]/g, '');
       if (this.form[val] < 0) {
         this.form[val] = 0;
       }
     },
     // 保存页面修改
-    async confirmSend(ggCode) {
+    async confirmSend() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { registeredCount } = this.form;
+          const { registerIpLimit, loginIpLimit, registerDeviceLimit, id } = this.form;
           let params = {
-            registeredSwift: this.isRegisterSwitch ? 1 : 0,
-            registeredCount: registeredCount,
+            registerIpLimit,
+            loginIpLimit,
+            registerDeviceLimit,
+            id,
           };
           this.btnLoading = true;
-          const res = await $api.getUserRUpdate(params);
+          const res = await $api.apiEditRiskConfig(params);
           if (res) {
             this.$message({
               message: '修改成功！',
@@ -121,9 +132,15 @@ export default {
 </script>
 
 <style lang="scss">
-.registRestric-container {
+.riskConfig-container {
   padding: 4px 10px 10px 10px;
+  .sac-row {
+    margin-bottom: 20px;
 
+    .el-col {
+      margin-top: 20px;
+    }
+  }
   h4 {
     margin: 10px 0;
     font-size: 18px;

@@ -41,7 +41,7 @@ function addSearch(obj) {
 export class Fetch {
   // get请求
   static get(url, data) {
-    data.token = getToken('admin_token');
+    // data.token = getToken('admin_token');
     const uri = url + addSearch(data);
     return Fetch.dealRespones(axios.get(uri, global.URLCONFIGJSON));
   }

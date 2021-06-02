@@ -1,5 +1,5 @@
 <template>
-  <div class="moveRelationship-container">
+  <div class="riskList-container">
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
@@ -15,111 +15,77 @@
       <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
 
-    <!-- 添加 -->
-    <el-dialog title="迁移邀请关系" labelw :visible.sync="dialogFormVisible" width="500px">
-      <el-form :model="roleForm" label-width="120px" ref="roleForm" :rules="rules">
-        <el-form-item label="需迁移的UID" prop="changeUid">
-          <el-input v-model.trim="roleForm.changeUid" autocomplete="off"></el-input>
-        </el-form-item>
+    <!-- 编辑/ 详情 -->
+    <el-dialog :title="checkTitle" :visible.sync="dialogFormVisible" width="700px">
+      <el-form v-loading="dialogLoading" :model="currentForm" label-width="120px" ref="currentForm" :rules="rules">
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="异常设备号: "> <el-input :disabled="true" v-model="currentForm.abnormalDevNo" ></el-input></el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="迁移至的UID" prop="laterParentUid">
-          <el-input v-model.trim="roleForm.laterParentUid" autocomplete="off"></el-input>
-        </el-form-item>
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="异常注册IP: "> <el-input :disabled="true" v-model="currentForm.abnormalRegisterIp" ></el-input> </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="谷歌验证码" prop="googleCode">
-          <el-input v-model.trim="roleForm.googleCode" autocomplete="off"></el-input>
-        </el-form-item>
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="异常登录IP: "> <el-input :disabled="true" v-model="currentForm.abnormalLoginIp" ></el-input> </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="异常注册IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalRegisterIpUids" ></el-input> </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="异常登录IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalLoginIpUids" ></el-input> </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="异常设备号关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalDevNoUids" ></el-input> </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="23">
+            <el-form-item label="创建时间: "> {{ currentForm.createTime }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="处理状态: " prop="disposeStatus">
+              <template>
+                <el-select :disabled="isDetail" v-model="currentForm.disposeStatus" placeholder="请选择">
+                  <el-option v-for="item in typeArr" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+                </el-select>
+              </template>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="处理时间: "> {{ currentForm.disposeTime }}</el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+
+      <div v-if="isDetail && !dialogLoading" slot="footer" class="dialog-footer dialog-footer-check">
+        <el-button @click="dialogFormVisible = false">知 道 了</el-button>
+      </div>
+
+      <div v-if="!isDetail && !dialogLoading" slot="footer" class="dialog-footer dialog-footer-check">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
-      </div>
-    </el-dialog>
-
-    <!-- 审核/ 详情 -->
-    <el-dialog :title="checkTitle" :visible.sync="checkDialogFormVisible" width="700px">
-      <el-form :model="checkForm" label-width="120px" ref="checkForm" :rules="checkRules">
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="当前状态: "> {{ typeObj[currentForm.auditStatus] }}</el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="迁移至的UID: "> {{ currentForm.laterParentUid }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="需要迁移的UID: "> {{ currentForm.changeUid }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="原上级的UID: "> {{ currentForm.formerParentUid }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="提交时间: "> {{ currentForm.createTime }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="提交人: "> {{ currentForm.creatorUserName }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="订单号: "> {{ currentForm.orderId }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24" v-if="recheckType != 0">
-          <el-col :span="12">
-            <el-form-item label="初审时间: "> {{ currentForm.firstAuditTime }}</el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="初审人: "> {{ currentForm.firstAuditUserName }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="初审备注: " prop="firstAuditRemark">
-              <el-input rows="2" :disabled="recheckType != 0" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24" v-if="recheckType == 3 || recheckType == 4">
-          <el-col :span="12">
-            <el-form-item label="复审时间: "> {{ currentForm.reviewAuditTime }}</el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="复审人: "> {{ currentForm.reviewAuditUserName }}</el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24" v-if="recheckType != 0 && recheckType != 2">
-          <el-col :span="24">
-            <el-form-item label="复审备注: " prop="reviewAuditRemark">
-              <el-input rows="2" :disabled="recheckType != 1" v-model.trim="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <div v-if="recheckType != 0 && recheckType != 1" slot="footer" class="dialog-footer dialog-footer-check">
-        <el-button @click="checkDialogFormVisible = false">确 定</el-button>
-        <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
-      </div>
-
-      <div v-else slot="footer" class="dialog-footer dialog-footer-check">
-        <el-button type="success" @click="checkConfirmOp(1)">审核通过</el-button>
-        <el-button type="danger" @click="checkConfirmOp(0)">审核驳回</el-button>
+        <el-button type="primary" @click="confirmOp" :loading="btnLoading"> 确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -128,12 +94,12 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { moveRelationshipCol, moveRelationshipColNoBtn, moveRelationshipConfig } from '@/config/column/user';
+import { riskListCol, riskListColNoBtn, riskListConfig } from '@/config/column/user';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 
 export default {
-  name: 'MoveRelationship',
+  name: 'riskList',
   components: {
     Btable,
     Bsearch,
@@ -141,35 +107,21 @@ export default {
   },
   data() {
     return {
-      // { val: 0, text: '待初审' }, { val: 1, text: '待复审' }, { val: 2, text: '初审驳回' }, { val: 3, text: '复审通过' }, { val: 4, text: '复审驳回' },
-      typeObj: {
-        0: '待初审',
-        1: '待复审',
-        2: '初审驳回',
-        3: '复审通过',
-        4: '复审驳回',
-      },
-      checkForm: {},
+      dialogLoading: false,
+      isDetail: false,
+      typeArr: [
+        { value: 0, label: '待处理' },
+        { value: 1, label: '异常处理' },
+        { value: 2, label: '正常处理' },
+      ],
       currentForm: {},
       btnLoading: false,
       recheckType: '',
       checkTitle: '',
-      checkRules: {
-        firstAuditRemark: [{ required: true, message: '必填', trigger: 'blur' }],
-        reviewAuditRemark: [{ required: true, message: '必填', trigger: 'blur' }],
-      },
-      roleForm: {
-        changeUid: '',
-        laterParentUid: '',
-        googleCode: '',
-      },
       rules: {
-        changeUid: [{ required: true, message: '必填', trigger: 'blur' }],
-        laterParentUid: [{ required: true, message: '必填', trigger: 'blur' }],
-        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        disposeStatus: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       dialogFormVisible: false,
-      checkDialogFormVisible: false,
       isCURDAuth: false, // 权限：是否能增删改查
       listLoading: false, // 表格loading
       list: [], //委托列表
@@ -181,49 +133,19 @@ export default {
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
+      curId: '',
     };
   },
   methods: {
-    checkConfirmOp(State) {
-      this.$refs['checkForm'].validate(async (valid) => {
-        if (valid) {
-          const { id, firstAuditRemark, reviewAuditRemark } = this.checkForm;
-          const params = {
-            id,
-          };
-
-          const res =
-            this.recheckType === 0
-              ? await $api.apiUpdateFirstAuditStatus({
-                  ...params,
-                  firstAuditRemark,
-                  changeState: State ? 1 : 2,
-                })
-              : await $api.apiUpdateReviewAuditStatus({
-                  ...params,
-                  reviewAuditRemark,
-                  changeState: State ? 3 : 4,
-                });
-          if (res) {
-            this.$message({ message: '成功', type: 'success' });
-            this.checkDialogFormVisible = false;
-            this.getList();
-          }
-        }
-      });
-    },
     async confirmOp() {
-      this.$refs['roleForm'].validate(async (valid) => {
+      this.$refs['currentForm'].validate(async (valid) => {
         if (valid) {
-          const { changeUid, laterParentUid, googleCode } = this.roleForm;
-          const params = {
-            changeUid,
-            laterParentUid,
-            googleCode,
-          };
-          const res = await $api.apiAddMoveRelationshipList(params);
+          const res = await $api.apiEditriskList({
+            id: this.curId,
+            status: this.currentForm.disposeStatus,
+          });
           if (res) {
-            this.$message({ message: '迁移成功', type: 'success' });
+            this.$message.success('处理成功');
             this.dialogFormVisible = false;
             this.getList();
           }
@@ -232,48 +154,48 @@ export default {
     },
     // 创建迁移
     addRiskConfig() {
-      this.$router.push('/user/riskConfig')
+      this.$router.push('/user/riskConfig');
     },
     // 表格里的操作
     async doHandle(data) {
       let { fn, row } = data;
       this.row = row;
-      this.recheckType = row.auditStatus;
-      if (fn === 'firstTrial') {
-        this.checkDialogFormVisible = true;
-        this.checkTitle = '初审';
-        this.currentForm = row;
-        this.$nextTick(() => {
-          this.checkForm = {
-            id: row.id,
-            firstAuditRemark: '',
-            reviewAuditRemark: '',
-          };
-        });
-      }
-      if (fn === 'recheck') {
-        this.checkDialogFormVisible = true;
-        this.checkTitle = '复审';
-        this.currentForm = row;
-        this.$nextTick(() => {
-          this.checkForm = {
-            id: row.id,
-            firstAuditRemark: row.firstAuditRemark,
-            reviewAuditRemark: '',
-          };
-        });
-      }
+
       if (fn === 'detail') {
-        this.checkDialogFormVisible = true;
+        this.dialogLoading = true;
+        this.dialogFormVisible = true;
         this.checkTitle = '详情';
-        this.currentForm = row;
-        this.$nextTick(() => {
-          this.checkForm = {
-            id: row.id,
-            firstAuditRemark: row.firstAuditRemark,
-            reviewAuditRemark: row.reviewAuditRemark,
-          };
+        this.isDetail = true;
+        const res = await $api.apiGetriskListInfo({
+          id: row.id,
         });
+        if (res) {
+          this.dialogLoading = false;
+          let data = res.data.data;
+          data.abnormalRegisterIpUids = data.abnormalRegisterIpUids.split(',');
+          data.abnormalLoginIpUids = data.abnormalLoginIpUids.split(',');
+          data.abnormalDevNoUids = data.abnormalDevNoUids.split(',');
+          this.currentForm = data;
+        }
+      }
+
+      if (fn === 'edit') {
+        this.dialogLoading = true;
+        this.isDetail = false;
+        this.checkTitle = '编辑';
+        this.dialogFormVisible = true;
+        const res = await $api.apiGetriskListInfo({
+          id: row.id,
+        });
+        if (res) {
+          this.dialogLoading = false;
+          this.curId = row.id;
+          let data = res.data.data;
+          data.abnormalRegisterIpUids =  JSON.parse(data.abnormalRegisterIpUids).join();
+          data.abnormalLoginIpUids =  JSON.parse(data.abnormalLoginIpUids).join();
+          data.abnormalDevNoUids = JSON.parse(data.abnormalDevNoUids).join();
+          this.currentForm = data;
+        }
       }
     },
     doSearch(data) {
@@ -286,7 +208,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      // this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
       this.getList();
     },
     exportExcel() {
@@ -307,14 +229,13 @@ export default {
     async getList() {
       if (this.listLoading) return;
       const query_data = {
-        pageNum: this.current_page,
+        pageIndex: this.current_page,
         pageSize: this.pageSize,
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
-      //console.log('query_data', query_data, this.search_params_obj)
       this.listLoading = true;
-      const res = await $api.apiGetMoveRelationshipList(query_data);
+      const res = await $api.apiGetriskListList(query_data);
       if (res) {
         let { records, total, current, pages } = res.data.data;
         this.total = +total;
@@ -332,32 +253,33 @@ export default {
     // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
+        return;
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
         this.searchCofig[0].value = [befV, nowV];
-        params.endCreateTime = nowV.replace(/\//gi, '-');
-        params.startCreateTime = befV.replace(/\//gi, '-');
+        params.endTime = nowV.replace(/\//gi, '-');
+        params.startTime = befV.replace(/\//gi, '-');
       }
-      if (this.search_params_obj.startCreateTime) {
-        this.search_params_obj.endCreateTime = this.formatTime(this.search_params_obj.endCreateTime);
-        this.search_params_obj.startCreateTime = this.formatTime(this.search_params_obj.startCreateTime);
+      if (this.search_params_obj.startTime) {
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
       }
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('MoveRelationship', moveRelationshipCol, moveRelationshipColNoBtn);
+    let authObj = this.$util.getAuthority('riskList', riskListCol, riskListColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
-    this.searchCofig = this.$util.clone(moveRelationshipConfig);
+    this.searchCofig = this.$util.clone(riskListConfig);
     this.getList();
   },
 };
 </script>
 <style scope lang="scss">
-.moveRelationship-container {
+.riskList-container {
   padding: 4px 10px 10px 10px;
   .dialog-footer-check {
     display: flex;

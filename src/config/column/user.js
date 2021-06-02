@@ -1086,7 +1086,6 @@ const moveRelationshipCol = [
     type: 'action',
     width: '240',
     btnGroup: [
-
       {
         label: '初审',
         fn: 'firstTrial',
@@ -1210,4 +1209,157 @@ const moveRelationshipConfig = [
   },
 ];
 
-export { moveRelationshipCol, moveRelationshipColNoBtn, moveRelationshipConfig, userCol, userColNoBtn, userConfig, userColOtcList, userColInOutGoldList, validatedUserlistCol, validatedUserlistColNoBtn, validatedUserlistConfig, validatedUserAccountCol, validatedVipUserCol };
+const riskListCol = [
+  {
+    label: '异常设备号',
+    prop: 'devNo',
+  },
+  {
+    label: '异常注册IP',
+    prop: 'registerIp',
+  },
+  {
+    label: '异常登录IP',
+    prop: 'loginIp',
+  },
+  {
+    label: '迁移至的UID',
+    prop: 'laterParentUid',
+  },
+  {
+    label: '当前状态',
+    prop: 'disposeStatus',
+    width: 90,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '异常处理' }, { val: 2, text: '正常处理' }],
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+  },
+  {
+    label: '处理时间',
+    prop: 'disposeTime',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '240',
+    btnGroup: [
+      {
+        filter_type: 'array',
+        label: '编辑',
+        filter_key: 'disposeStatus',
+        filter_status: ['0'],
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+
+      {
+
+        label: '查看详情',
+        fn: 'detail',
+        type: 'primary',
+        alias: 'detail',
+      },
+    ],
+  },
+];
+
+const riskListColNoBtn = [
+  {
+    label: '异常设备号',
+    prop: 'devNo',
+  },
+  {
+    label: '异常注册IP',
+    prop: 'registerIp',
+  },
+  {
+    label: '异常登录IP',
+    prop: 'loginIp',
+  },
+  {
+    label: '迁移至的UID',
+    prop: 'laterParentUid',
+  },
+  {
+    label: '当前状态',
+    prop: 'disposeStatus',
+    width: 90,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '异常处理' }, { val: 2, text: '正常处理' }],
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+  },
+  {
+    label: '处理时间',
+    prop: 'disposeTime',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+  },
+];
+
+const riskListConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'text',
+    label: '异常注册IP',
+    prop: 'registerIp',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'text',
+    label: '异常登录ip',
+    prop: 'loginIp',
+    value: '',
+    placeHolder: '请输入',
+  },
+
+  {
+    type: 'select',
+    label: '当前状态',
+    prop: 'disposeStatus',
+    value: '',
+    // 0=待处理,1=异常处理,2=正常处理
+    list: [{ value: 0, label: '待处理' }, { value: 1, label: '异常处理' }, { value: 2, label: '正常处理' }],
+  },
+];
+
+export {
+  riskListCol,
+  riskListColNoBtn,
+  riskListConfig,
+  moveRelationshipCol,
+  moveRelationshipColNoBtn,
+  moveRelationshipConfig,
+  userCol,
+  userColNoBtn,
+  userConfig,
+  userColOtcList,
+  userColInOutGoldList,
+  validatedUserlistCol,
+  validatedUserlistColNoBtn,
+  validatedUserlistConfig,
+  validatedUserAccountCol,
+  validatedVipUserCol,
+};
