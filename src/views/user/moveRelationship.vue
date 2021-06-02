@@ -37,7 +37,7 @@
     </el-dialog>
 
     <!-- 审核/ 详情 -->
-    <el-dialog :title="checkTitle" labelw :visible.sync="checkDialogFormVisible" width="700px">
+    <el-dialog  :title="checkTitle"  :visible.sync="checkDialogFormVisible" width="700px">
       <el-form :model="checkForm" label-width="120px" ref="checkForm" :rules="checkRules">
         <el-row :span="24">
           <el-col :span="12">
