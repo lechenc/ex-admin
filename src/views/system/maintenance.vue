@@ -168,7 +168,7 @@
             <el-col :span="8"><el-input type="text" placeholder="请输入" v-model.trim="form.titleEn" :disabled="!isModify"></el-input> </el-col>
           </el-form-item>
 
-          <b-two-date-timer :disabled="!isModify" ref="twoTimer" :labelWidth="labelWidth" labelWords="维护时间" :date1.sync="form.gateStartTime" :date2.sync="form.gateEndTime"></b-two-date-timer>
+          <b-two-date-timer :isdisabled="!isModify" ref="twoTimer" :labelWidth="labelWidth" labelWords="维护时间" :date1.sync="form.gateStartTime" :date2.sync="form.gateEndTime"></b-two-date-timer>
 
           <el-form-item label="谷歌验证码：" prop="googleCode">
             <el-col :span="8"><el-input @input="checkVal('googleCode', 'noDot')" type="text" placeholder="请输入" v-model="form.googleCode" :disabled="!isModify"></el-input> </el-col>
