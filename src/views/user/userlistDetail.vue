@@ -19,13 +19,12 @@
           <div>证件号码：{{ current_row.cardNo }}</div>
           <div>上级邀请人：{{ current_row.inviterUid }}</div>
           <div>邀请码：{{ current_row.inviteCode }}</div>
-          <div>邀请下级人数：{{ current_row.sonCount }}</div>
           <div>注册时间：{{ current_row.registerTime }}</div>
           <div>最后登录IP：{{ current_row.loginIp }}</div>
-          <div>直推邀请下级人数：{{ current_row.phone }}</div>
-          <div>所有总人数：{{ current_row.phone }}</div>
-          <div>国家区号：{{ current_row.phone }}</div>
-          <div>昵称：{{ current_row.phone }}</div>
+          <div>直推邀请下级人数：{{ current_row.sonCount }}</div>
+          <div>所有总人数：{{ current_row.allSonCount }}</div>
+          <div>国家区号：{{ current_row.phoneAreaCode }}</div>
+          <div>昵称：{{ current_row.nickName }}</div>
         </div>
         <h3>用户状态</h3>
         <div v-if="!isModify">
