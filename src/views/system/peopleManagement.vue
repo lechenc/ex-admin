@@ -152,12 +152,7 @@ export default {
   },
   methods: {
     async sidebarTreeClick(data) {
-      const res = await $api.apiGetPeopleManagementListById({
-        id: data.roleId,
-      });
-      if (res) {
-        console.log('res'.res)
-      }
+      this.getList(data.id);
     },
     checkVal(obj, key) {
       this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
@@ -412,8 +407,7 @@ export default {
       this.getList();
     },
     // getlist
-    async getList() {
-      return;
+    async getList(id) {
       if (this.listLoading) return;
       const params = {
         pageNum: this.current_page,
@@ -421,7 +415,7 @@ export default {
       };
       // Object.assign(params, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getPeopleManagementList(params);
+      const res = await $api.apiGetPeopleManagementListById(params);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
@@ -459,7 +453,6 @@ export default {
     this.isCURDAuth = authObj.isAdd;
 
     this.searchCofig = this.$util.clone(peopleManagementConfig);
-    this.getList();
     this.getMenuList();
 
     this.$watch(
