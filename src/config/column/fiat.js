@@ -787,6 +787,10 @@ const appealCol = [
     prop: 'masterCode',
   },
   {
+    label: '确认付款时间',
+    prop: 'payTime',
+  },
+  {
     label: '申诉时间',
     prop: 'createTime',
     type: 'time',
@@ -796,10 +800,7 @@ const appealCol = [
     prop: 'auditTime',
     type: 'time',
   },
-  {
-    label: '确认付款时间',
-    prop: 'payTime',
-  },
+  
   
   {
     label: '判决人',
@@ -935,6 +936,10 @@ const appealColNoBtn = [
     prop: 'masterCode',
   },
   {
+    label: '确认付款时间',
+    prop: 'payTime',
+  },
+  {
     label: '申诉时间',
     prop: 'createTime',
     type: 'time',
@@ -944,10 +949,7 @@ const appealColNoBtn = [
     prop: 'auditTime',
     type: 'time',
   },
-  {
-    label: '确认付款时间',
-    prop: 'payTime',
-  },
+  
   {
     label: '判决人',
     prop: 'auditUserName',
