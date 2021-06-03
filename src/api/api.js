@@ -2845,6 +2845,11 @@ export default class api {
   static apiEditriskList(data) {
     return Fetch.post('/admin/user/cro/updateRecordStatus', data);
   }
+
+  // 系统管理 人员管理 根据id获取角色列表
+  static apiGetPeopleManagementListById(data) {
+    return Fetch.post('/admin/user/sys-user-list', data);
+  }
   
 
   
