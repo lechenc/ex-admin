@@ -101,6 +101,7 @@ export default {
     target2: {
       get() {
         this.formR.target2 = this.date2;
+        console.log('this.date2',this.date2)
         return this.date2;
       },
       set(val) {
