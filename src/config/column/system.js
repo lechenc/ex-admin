@@ -329,7 +329,7 @@ const configPathConfig = [
   },
 ];
 
-//角色管理
+//域名管理
 const domainNameCol = [
   {
     label: '域名地址',
@@ -383,7 +383,7 @@ const domainNameCol = [
   },
 ];
 
-//角色管理
+//域名管理
 const domainNameColNoBtn = [
   {
     label: '域名地址',
@@ -404,23 +404,98 @@ const domainNameColNoBtn = [
   },
 ];
 
+//固定域名管理
+const domainNameFixedCol = [
+  {
+    label: '固定域名地址',
+    prop: 'domainName',
+  },
+  {
+    label: '排序',
+    prop: 'sort',
+  },
+  {
+    label: '是否默认',
+    prop: 'isDefault',
+    type: 'switch',
+    fn: 'trDefault',
+    alias: 'trDefault',
+  },
+  {
+    label: '备注',
+    prop: 'remark',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    width: '240',
+    type: 'action',
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '详情',
+        fn: 'detail',
+        type: 'primary',
+        alias: 'detail',
+      },
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'danger',
+        alias: 'del',
+      },
+    ],
+  },
+];
+
+//固定域名管理
+const domainNameFixedColNoBtn = [
+  {
+    label: '固定域名地址',
+    prop: 'domainName',
+  },
+  {
+    label: '排序',
+    prop: 'sort',
+  },
+  {
+    label: '备注',
+    prop: 'remark',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+];
+
 // 集团管理
 const peopleManagementCol = [
   {
-    label: '集团名称',
+    label: '账号',
     prop: 'account',
   },
   {
-    label: '部门数量',
-    prop: 'content',
+    label: '职务',
+    prop: 'jobName',
   },
   {
-    label: '职位数量',
-    prop: 'requestAddress',
+    label: '部门',
+    prop: 'deptName',
   },
   {
-    label: '人员总数',
-    prop: 'requestAddress2',
+    label: '备注',
+    prop: 'name',
   },
 
   {
@@ -430,7 +505,7 @@ const peopleManagementCol = [
   },
   {
     label: '更新时间',
-    prop: 'createTime1',
+    prop: 'updateTime',
     type: 'time',
   },
   {
@@ -464,20 +539,20 @@ const peopleManagementCol = [
 
 const peopleManagementColNoBtn = [
   {
-    label: '集团名称',
+    label: '账号',
     prop: 'account',
   },
   {
-    label: '部门数量',
-    prop: 'content',
+    label: '职务',
+    prop: 'jobName',
   },
   {
-    label: '职位数量',
-    prop: 'requestAddress',
+    label: '部门',
+    prop: 'deptName',
   },
   {
-    label: '人员总数',
-    prop: 'requestAddress2',
+    label: '备注',
+    prop: 'name',
   },
 
   {
@@ -487,7 +562,7 @@ const peopleManagementColNoBtn = [
   },
   {
     label: '更新时间',
-    prop: 'createTime1',
+    prop: 'updateTime',
     type: 'time',
   },
 ];
@@ -502,4 +577,4 @@ const peopleManagementConfig = [
   },
 ];
 
-export { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };
+export {domainNameFixedCol,domainNameFixedColNoBtn, peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };

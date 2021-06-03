@@ -1,25 +1,127 @@
 <template>
   <div class="moveRelationship-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+    </div>
+
+    <div class="container-btn" v-if="isCURDAuth">
+      <el-button type="primary" size="medium" @click="addMoveRelationship">创建迁移</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
+
+    <!-- 添加 -->
+    <el-dialog title="迁移邀请关系" labelw :visible.sync="dialogFormVisible" width="500px">
+      <el-form :model="roleForm" label-width="120px" ref="roleForm" :rules="rules">
+        <el-form-item label="需迁移的UID" prop="changeUid">
+          <el-input v-model.trim="roleForm.changeUid" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="迁移至的UID" prop="laterParentUid">
+          <el-input v-model.trim="roleForm.laterParentUid" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" prop="googleCode">
+          <el-input v-model.trim="roleForm.googleCode" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 审核/ 详情 -->
+    <el-dialog :title="checkTitle" :visible.sync="checkDialogFormVisible" width="700px">
+      <el-form :model="checkForm" label-width="120px" ref="checkForm" :rules="checkRules">
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="当前状态: "> {{ typeObj[currentForm.auditStatus] }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="迁移至的UID: "> {{ currentForm.laterParentUid }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="需要迁移的UID: "> {{ currentForm.changeUid }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="原上级的UID: "> {{ currentForm.formerParentUid }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="提交时间: "> {{ currentForm.createTime }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="提交人: "> {{ currentForm.creatorUserName }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="订单号: "> {{ currentForm.orderId }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24" v-if="recheckType != 0">
+          <el-col :span="12">
+            <el-form-item label="初审时间: "> {{ currentForm.firstAuditTime }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="初审人: "> {{ currentForm.firstAuditUserName }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="24">
+            <el-form-item label="初审备注: " prop="firstAuditRemark">
+              <el-input rows="2" :disabled="isDetail" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24" v-if="recheckType == 3 || recheckType == 4">
+          <el-col :span="12">
+            <el-form-item label="复审时间: "> {{ currentForm.reviewAuditTime }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="复审人: "> {{ currentForm.reviewAuditUserName }}</el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24" v-if="recheckType != 0 && recheckType != 2">
+          <el-col :span="24">
+            <el-form-item label="复审备注: " prop="reviewAuditRemark">
+              <el-input rows="2" :disabled="isDetail" v-model.trim="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div v-if="isDetail" slot="footer" class="dialog-footer dialog-footer-check">
+        <el-button @click="checkDialogFormVisible = false">确 定</el-button>
+        <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
+      </div>
+
+      <div v-else slot="footer" class="dialog-footer dialog-footer-check">
+        <el-button type="success" @click="checkConfirmOp(1)">审核通过</el-button>
+        <el-button type="danger" @click="checkConfirmOp(0)">审核驳回</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -35,11 +137,42 @@ export default {
   components: {
     Btable,
     Bsearch,
-    iconPage
+    iconPage,
   },
   data() {
     return {
-      isCURDAuth: true, // 权限：是否能增删改查
+      // { val: 0, text: '待初审' }, { val: 1, text: '待复审' }, { val: 2, text: '初审驳回' }, { val: 3, text: '复审通过' }, { val: 4, text: '复审驳回' },
+      typeObj: {
+        0: '待初审',
+        1: '待复审',
+        2: '初审驳回',
+        3: '复审通过',
+        4: '复审驳回',
+      },
+      isDetail: false,
+      excelLoading: false, // 导出loading
+      checkForm: {},
+      currentForm: {},
+      btnLoading: false,
+      recheckType: '',
+      checkTitle: '',
+      checkRules: {
+        firstAuditRemark: [{ required: true, message: '必填', trigger: 'blur' }],
+        reviewAuditRemark: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      roleForm: {
+        changeUid: '',
+        laterParentUid: '',
+        googleCode: '',
+      },
+      rules: {
+        changeUid: [{ required: true, message: '必填', trigger: 'blur' }],
+        laterParentUid: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      dialogFormVisible: false,
+      checkDialogFormVisible: false,
+      isCURDAuth: false, // 权限：是否能增删改查
       listLoading: false, // 表格loading
       list: [], //委托列表
       dataList: [], // 用于导出的数据
@@ -53,18 +186,107 @@ export default {
     };
   },
   methods: {
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.apiGetMoveRelationshipList(params);
+      this.excelLoading = false;
+      return res;
+    },
+    checkConfirmOp(State) {
+      this.$refs['checkForm'].validate(async (valid) => {
+        if (valid) {
+          const { id, firstAuditRemark, reviewAuditRemark } = this.checkForm;
+          const params = {
+            id,
+          };
+
+          const res =
+            this.recheckType === 0
+              ? await $api.apiUpdateFirstAuditStatus({
+                  ...params,
+                  firstAuditRemark,
+                  changeState: State ? 1 : 2,
+                })
+              : await $api.apiUpdateReviewAuditStatus({
+                  ...params,
+                  reviewAuditRemark,
+                  changeState: State ? 3 : 4,
+                });
+          if (res) {
+            this.$message({ message: '成功', type: 'success' });
+            this.checkDialogFormVisible = false;
+            this.getList();
+          }
+        }
+      });
+    },
+    async confirmOp() {
+      this.$refs['roleForm'].validate(async (valid) => {
+        if (valid) {
+          const { changeUid, laterParentUid, googleCode } = this.roleForm;
+          const params = {
+            changeUid,
+            laterParentUid,
+            googleCode,
+          };
+          const res = await $api.apiAddMoveRelationshipList(params);
+          if (res) {
+            this.$message({ message: '迁移成功', type: 'success' });
+            this.dialogFormVisible = false;
+            this.getList();
+          }
+        }
+      });
+    },
+    // 创建迁移
+    addMoveRelationship() {
+      this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.roleForm = {
+          changeUid: '',
+          laterParentUid: '',
+          googleCode: '',
+        };
+      });
+    },
     // 表格里的操作
     async doHandle(data) {
       let { fn, row } = data;
       this.row = row;
+      this.recheckType = row.auditStatus;
+
+      this.$nextTick(() => {
+        this.checkForm = {
+          id: row.id,
+          firstAuditRemark: row.firstAuditRemark,
+          reviewAuditRemark: row.reviewAuditRemark,
+        };
+        this.$refs['checkForm'].resetFields();
+      });
+      if (fn === 'firstTrial') {
+        this.checkDialogFormVisible = true;
+        this.checkTitle = '初审';
+        this.currentForm = row;
+        this.isDetail = false;
+      }
+      if (fn === 'recheck') {
+        this.checkDialogFormVisible = true;
+        this.checkTitle = '复审';
+        this.currentForm = row;
+        this.isDetail = false;
+      }
       if (fn === 'detail') {
-        this.$router.push({ path: '/coinPay/appealJudgePay', query: { label: 'detail', id: row.id, appealStatus: row.appealStatus } });
-      }
-      if (fn === 'edit') {
-        this.$router.push({ path: '/coinPay/appealJudgePay', query: { label: 'edit', id: row.id, appealStatus: row.appealStatus } });
-      }
-      if (fn === 'judgment') {
-        this.$router.push({ path: '/coinPay/appealJudgePay', query: { label: 'judgment', id: row.id, appealStatus: row.appealStatus } });
+        this.checkDialogFormVisible = true;
+        this.checkTitle = '详情';
+        this.currentForm = row;
+        this.isDetail = true;
       }
     },
     doSearch(data) {
@@ -74,7 +296,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -100,17 +322,12 @@ export default {
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        // appealTradeType:2,
-        appId:3,
-        // appealStatus:'0',
-        // tradeId:'',
-        // advType:'',
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
       //console.log('query_data', query_data, this.search_params_obj)
       this.listLoading = true;
-      const res = await $api.infoShortListNew(query_data);
+      const res = await $api.apiGetMoveRelationshipList(query_data);
       if (res) {
         let { records, total, current, pages } = res.data.data;
         this.total = +total;
@@ -122,29 +339,29 @@ export default {
       this.listLoading = false;
     },
     formatTime(val) {
-      return !~(val + '').indexOf('/') ? val : parseInt(new Date(val).getTime() / 1000);
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
     },
+
+    // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
-        params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
-        // 组件时间初始必须format格式
-        this.searchCofig[0].value = [
-          this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-          this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss'),
-        ];
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
+        this.searchCofig[0].value = [befV, nowV];
+        params.endCreateTime = nowV.replace(/\//gi, '-');
+        params.startCreateTime = befV.replace(/\//gi, '-');
       }
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      if (this.search_params_obj.startCreateTime) {
+        this.search_params_obj.endCreateTime = this.formatTime(this.search_params_obj.endCreateTime);
+        this.search_params_obj.startCreateTime = this.formatTime(this.search_params_obj.startCreateTime);
       }
-    }
+    },
   },
   mounted() {
     let authObj = this.$util.getAuthority('MoveRelationship', moveRelationshipCol, moveRelationshipColNoBtn);
     this.configs = authObj.val;
-    // this.isCURDAuth = authObj.isAdd;
-        // 初始化今天，之前的时间
+    this.isCURDAuth = authObj.isAdd;
+    // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.searchCofig = this.$util.clone(moveRelationshipConfig);
@@ -155,8 +372,12 @@ export default {
 <style scope lang="scss">
 .moveRelationship-container {
   padding: 4px 10px 10px 10px;
-  .container-top {
-    margin: 10px 0;
+  .dialog-footer-check {
+    display: flex;
+    justify-content: center;
+  }
+  .container-btn {
+    margin: 20px 0;
   }
   .container-footer {
     display: flex;

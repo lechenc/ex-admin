@@ -238,7 +238,7 @@ export default {
           })[0].supportContract;
           return res ? false : true;
         } else {
-          return false;
+          return true;
         }
       };
     },
@@ -449,7 +449,6 @@ export default {
       // 交易对获取
       this.$store.dispatch('common/getSymbolListSupportContract').then(() => {
         this.symbollist = this.$store.state.common.symbolListSupportContract;
-        console.log('this.symbollist', this.symbollist);
       });
     },
   },

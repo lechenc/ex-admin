@@ -1036,66 +1036,73 @@ const validatedVipUserCol = [
 const moveRelationshipCol = [
   {
     label: '订单号',
-    prop: 'uid',
+    prop: 'orderId',
   },
   {
     label: '需迁移的UID',
-    prop: 'uid1',
+    prop: 'changeUid',
   },
   {
     label: '原上级的UID',
-    prop: 'uid2',
+    prop: 'formerParentUid',
   },
   {
     label: '迁移至的UID',
-    prop: 'realName',
+    prop: 'laterParentUid',
   },
   {
     label: '状态',
-    prop: 'depositStatus',
+    prop: 'auditStatus',
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '初级', val: 1 }, { text: '中级', val: 2 }, { text: '高级', val: 3 }, { text: '超级', val: 4 }],
+    filters: [{ val: 0, text: '待初审' }, { val: 1, text: '待复审' }, { val: 2, text: '初审驳回' }, { val: 3, text: '复审通过' }, { val: 4, text: '复审驳回' }],
   },
   {
     label: '提交时间',
-    prop: 'inviterUid',
+    prop: 'createTime',
   },
   {
     label: '初审时间',
-    prop: 'inviteCode',
+    prop: 'firstAuditTime',
   },
   {
     label: '初审人',
-    prop: 'sonCount',
+    prop: 'firstAuditUserName',
   },
 
   {
     label: '复审时间',
-    prop: 'inviteCode1',
+    prop: 'reviewAuditTime',
   },
   {
     label: '复审人',
-    prop: 'sonCount1',
+    prop: 'reviewAuditUserName',
   },
 
   {
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '120',
+    width: '240',
     btnGroup: [
       {
         label: '初审',
         fn: 'firstTrial',
-        type: 'primary',
+        filter_type: 'array',
+        filter_key: 'auditStatus',
+        filter_status: ['0'],
+        type: 'success',
         alias: 'firstTrial',
       },
+
       {
         label: '复审',
         fn: 'recheck',
-        type: 'primary',
+        filter_type: 'array',
+        filter_key: 'auditStatus',
+        filter_status: ['1'],
+        type: 'success',
         alias: 'recheck',
       },
       {
@@ -1110,128 +1117,85 @@ const moveRelationshipCol = [
 
 const moveRelationshipColNoBtn = [
   {
-    label: 'UID',
-    prop: 'uid',
+    label: '订单号',
+    prop: 'orderId',
   },
   {
-    label: '用户类型',
-    prop: 'userType',
-    width: 100,
+    label: '需迁移的UID',
+    prop: 'changeUid',
+  },
+  {
+    label: '原上级的UID',
+    prop: 'formerParentUid',
+  },
+  {
+    label: '迁移至的UID',
+    prop: 'laterParentUid',
+  },
+  {
+    label: '状态',
+    prop: 'auditStatus',
+    width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 1, text: '普通用户' }, { val: 20, text: 'TP商户账号' }, { val: 21, text: '顶级代理商账号' }, { val: 22, text: '代理商账号' }, { val: 24, text: '顶级广告商' }, { val: 25, text: '广告商代理' }, { val: 31, text: '商务端' }, { val: 32, text: '商务代理' }],
+    filters: [{ val: 0, text: '待初审' }, { val: 1, text: '待复审' }, { val: 2, text: '初审驳回' }, { val: 3, text: '复审通过' }, { val: 4, text: '复审驳回' }],
   },
   {
-    label: '手机',
-    prop: 'phone',
-    width: '150',
+    label: '提交时间',
+    prop: 'createTime',
   },
   {
-    label: '邮箱',
-    prop: 'email',
-    width: '200',
+    label: '初审时间',
+    prop: 'firstAuditTime',
   },
   {
-    label: '姓名',
-    prop: 'realName',
-  },
-  {
-    label: '邀请人UID',
-    prop: 'inviterUid',
-  },
-  {
-    label: '邀请码',
-    prop: 'inviteCode',
-  },
-  {
-    label: '邀请下级人数',
-    prop: 'sonCount',
+    label: '初审人',
+    prop: 'firstAuditUserName',
   },
 
   {
-    label: '实名状态',
-    prop: 'userVerifiedStatus',
-    type: 'filter',
-    show_type: 'text',
-    width: 120,
-    filters: [{ text: '高级待审核', val: 0, type: 'info' }, { text: '初级认证成功', val: 1, type: 'success' }, { text: '高级认证失败', val: 2, type: 'warning' }, { text: '未认证', val: 3, type: 'primary' }, { text: '高级认证成功', val: 4, type: 'success' }],
+    label: '复审时间',
+    prop: 'reviewAuditTime',
   },
   {
-    label: '入金状态',
-    prop: 'depositStatus',
-    width: 90,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '初级', val: 1 }, { text: '中级', val: 2 }, { text: '高级', val: 3 }, { text: '超级', val: 4 }],
-  },
-  {
-    label: '是否尊贵会员',
-    prop: 'userFlag',
-    width: 90,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '是', val: 1 }, { text: '否', val: 0 }],
-  },
-  {
-    label: '当前资产',
-    prop: 'amount',
-    width: '100',
-  },
-  {
-    label: '7天资产动向',
-    prop: 'sevenDaysAmount',
-    width: '100',
-  },
-  {
-    label: '15天资产动向',
-    prop: 'fifteenDaysAmount',
-    width: '100',
-  },
-  {
-    label: '30天资产动向',
-    prop: 'thirtyDaysAmount',
-    width: '100',
-  },
-  {
-    label: '注册时间',
-    prop: 'registerTime',
-    type: 'time',
+    label: '复审人',
+    prop: 'reviewAuditUserName',
   },
 ];
 
 const moveRelationshipConfig = [
   {
     type: 'date_rank',
-    label: '注册时间',
-    prop: 'startTime',
-    prop2: 'endTime',
+    label: '时间',
+    prop: 'startCreateTime',
+    prop2: 'endCreateTime',
     value: '',
   },
   {
     type: 'onlyNumber',
     label: '订单号',
-    prop: 'uid',
+    prop: 'orderId',
     value: '',
     placeHolder: '请输入',
   },
   {
     type: 'onlyNumber',
     label: '需迁移的UID',
-    prop: 'uid1',
+    prop: 'changeUid',
     value: '',
     placeHolder: '请输入',
   },
   {
     type: 'onlyNumber',
     label: '原上级的UID',
-    prop: 'uid2',
+    prop: 'formerParentUid',
     value: '',
     placeHolder: '请输入',
   },
   {
     type: 'onlyNumber',
     label: '迁移至的UID',
-    prop: 'uid3',
+    prop: 'laterParentUid',
     value: '',
     placeHolder: '请输入',
   },
@@ -1239,10 +1203,163 @@ const moveRelationshipConfig = [
   {
     type: 'select',
     label: '状态',
-    prop: 'userType',
+    prop: 'auditStatus',
     value: '',
-    list: [{ label: '普通用户', value: 1 }, { value: 20, label: 'TP商户账号' }, { value: 21, label: '顶级代理商账号' }, { value: 22, label: '代理商账号' }, { value: 24, label: '顶级广告商' }, { value: 25, label: '广告商代理' }, { value: 31, label: '商务端' }, { value: 32, label: '商务代理' }],
+    list: [{ value: 0, label: '待初审' }, { value: 1, label: '待复审' }, { value: 2, label: '初审驳回' }, { value: 3, label: '复审通过' }, { value: 4, label: '复审驳回' }],
   },
 ];
 
-export { moveRelationshipCol, moveRelationshipColNoBtn, moveRelationshipConfig, userCol, userColNoBtn, userConfig, userColOtcList, userColInOutGoldList, validatedUserlistCol, validatedUserlistColNoBtn, validatedUserlistConfig, validatedUserAccountCol, validatedVipUserCol };
+const riskListCol = [
+  {
+    label: '异常设备号',
+    prop: 'devNo',
+  },
+  {
+    label: '异常注册IP',
+    prop: 'registerIp',
+  },
+  {
+    label: '异常登录IP',
+    prop: 'loginIp',
+  },
+  {
+    label: '迁移至的UID',
+    prop: 'laterParentUid',
+  },
+  {
+    label: '当前状态',
+    prop: 'disposeStatus',
+    width: 90,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '异常处理' }, { val: 2, text: '正常处理' }],
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+  },
+  {
+    label: '处理时间',
+    prop: 'disposeTime',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '240',
+    btnGroup: [
+      {
+        filter_type: 'array',
+        label: '编辑',
+        filter_key: 'disposeStatus',
+        filter_status: ['0'],
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+
+      {
+
+        label: '查看详情',
+        fn: 'detail',
+        type: 'primary',
+        alias: 'detail',
+      },
+    ],
+  },
+];
+
+const riskListColNoBtn = [
+  {
+    label: '异常设备号',
+    prop: 'devNo',
+  },
+  {
+    label: '异常注册IP',
+    prop: 'registerIp',
+  },
+  {
+    label: '异常登录IP',
+    prop: 'loginIp',
+  },
+  {
+    label: '迁移至的UID',
+    prop: 'laterParentUid',
+  },
+  {
+    label: '当前状态',
+    prop: 'disposeStatus',
+    width: 90,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '异常处理' }, { val: 2, text: '正常处理' }],
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+  },
+  {
+    label: '处理时间',
+    prop: 'disposeTime',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+  },
+];
+
+const riskListConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'text',
+    label: '异常注册IP',
+    prop: 'registerIp',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'text',
+    label: '异常登录ip',
+    prop: 'loginIp',
+    value: '',
+    placeHolder: '请输入',
+  },
+
+  {
+    type: 'select',
+    label: '当前状态',
+    prop: 'disposeStatus',
+    value: '',
+    // 0=待处理,1=异常处理,2=正常处理
+    list: [{ value: 0, label: '待处理' }, { value: 1, label: '异常处理' }, { value: 2, label: '正常处理' }],
+  },
+];
+
+export {
+  riskListCol,
+  riskListColNoBtn,
+  riskListConfig,
+  moveRelationshipCol,
+  moveRelationshipColNoBtn,
+  moveRelationshipConfig,
+  userCol,
+  userColNoBtn,
+  userConfig,
+  userColOtcList,
+  userColInOutGoldList,
+  validatedUserlistCol,
+  validatedUserlistColNoBtn,
+  validatedUserlistConfig,
+  validatedUserAccountCol,
+  validatedVipUserCol,
+};

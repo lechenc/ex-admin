@@ -166,7 +166,6 @@ export default {
           this.searchCofig[3]['list'] = [
             { label: '法币买入', value: '36' },
             { label: '申诉买家赢，法币买入', value: '37' },
-            { label: '法币交易返佣', value: '40' },
             { label: '币币划入', value: '10' },
             { label: '合约划入', value: '53' },
           ];
@@ -183,7 +182,6 @@ export default {
           this.searchCofig[3]['list'] = [
             { label: '法币买入', value: '36' },
             { label: '申诉买家赢，法币买入', value: '37' },
-            { label: '法币交易返佣', value: '40' },
             { label: '法币卖出', value: '32' },
             { label: '法币交易手续费', value: '82' },
             { label: '划出至币币', value: '11' },

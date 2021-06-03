@@ -9,7 +9,7 @@
               type="datetime"
               :size="sizeDiy"
               v-model="target1"
-              value-format="yyyy/MM/dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
               placeholder="开始日期"
               :picker-options="pickerOptionsStart(target2)"
               class="box-date-picker"
@@ -28,7 +28,7 @@
               type="datetime"
               :size="sizeDiy"
               v-model="target2"
-              value-format="yyyy/MM/dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
               placeholder="结束日期"
               :picker-options="pickerOptionsEnd(target1)"
               class="box-date-picker"
@@ -101,6 +101,7 @@ export default {
     target2: {
       get() {
         this.formR.target2 = this.date2;
+        console.log('this.date2',this.date2)
         return this.date2;
       },
       set(val) {
@@ -131,6 +132,7 @@ export default {
     },
     pickerOptionsStart(val) {
       let endDateVal = val;
+      console.log('val',val)
       return {
         disabledDate(date) {
           let overT = new Date();

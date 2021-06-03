@@ -15,7 +15,7 @@
       <div class="center-sidebar">
         <div class="center-sidebar-title">人员结构</div>
         <div class="center-sidebar-tree">
-          <el-tree :draggable="false" @node-click="handleNodeClick" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
+          <el-tree ref="sidebarTree" @node-click="sidebarTreeClick" :filter-node-method="filterNode" :default-expanded-keys="[1]" :draggable="false" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="roleId" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
               <span class="sac-btn">
@@ -34,7 +34,7 @@
       </div>
       <div class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
-          <span class="btn-text"> 运营部 (2人) </span>
+          <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
           <el-button type="primary" size="medium" @click="addpeopleManagement">添加角色</el-button>
         </div>
         <div>
@@ -47,19 +47,51 @@
       </div>
     </div>
 
-    <!-- 添加 -->
-    <el-dialog :title="sidebarDialogTitle"  :visible.sync="sidebarDialogVisible">
+    <!-- 添加部门 -->
+    <el-dialog :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
       <el-form :model="sidebarForm" ref="sidebarForm" :rules="sidebarRules">
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="权限" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion="true" :check-strictly="true" :data="treeData" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+        <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
+          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+        </el-form-item>
+
+        <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
+          <el-switch v-model="sidebarForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
+          <el-input @input="checkVal('sidebarForm', 'googleCode')" v-model.trim="sidebarForm.googleCode" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="sidebarDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="sidebarConfirmOp" :loading="sidebarBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 添加部门 -->
+    <el-dialog :title="userDialogTitle" :visible.sync="userDialogVisible">
+      <el-form :model="userForm" ref="userForm" :rules="userRules">
+        <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="userForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
+          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+        </el-form-item>
+
+        <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
+          <el-switch v-model="userForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
+          <el-input @input="checkVal('userForm', 'googleCode')" v-model.trim="userForm.googleCode" placeholder="请输入"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="userDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sidebarConfirmOp" :loading="userBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -80,16 +112,27 @@ export default {
   },
   data() {
     return {
-      sidebarForm:{},
-      sidebarDialogTitle:'',
-      sidebarDialogVisible:false,
-      sidebarBtnLoading:false,
+      userRules:{},
+      userDialogTitle:'',
+      userDialogVisible:false,
+      userForm:{},
+      sidebarForm: {
+        id: '',
+        name: '',
+        menuId: [],
+        status: false,
+        googleCode: '',
+      },
+      userBtnLoading:false,
+      sidebarDialogTitle: '',
+      sidebarDialogVisible: false,
+      
+      sidebarBtnLoading: false,
       defaultProps: {
         children: 'children',
         label: 'name',
       },
       isCURDAuth: true, // 是否有增删改查权限
-      btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
       list: [], //委托列表
       searchCofig: [], // 搜索框配置
@@ -100,16 +143,18 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       treeData: [], //菜单
-      dialogFormVisible: false,
       formName: '添加角色',
       formLabelWidth: '120px',
       currentNode: '',
-      currentData: '',
+      currentData: {},
       dialogTitle: '',
       rules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      sidebarRules:{},
+      sidebarRules: {
+        name: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
       sidebarTreeData: [
         {
           name: '董事会',
@@ -134,22 +179,68 @@ export default {
     };
   },
   methods: {
-    sidebarConfirmOp(){},
-    handleNodeClick(data) {
-      console.log('123123');
+    async sidebarTreeClick(data) {
+      this.currentData = JSON.parse(JSON.stringify(data));
+      this.getList(data.roleId);
+    },
+    checkVal(obj, key) {
+      this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
+    },
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.name.indexOf(value) !== -1;
+    },
+    sidebarConfirmOp() {
+      this.$refs['sidebarForm'].validate(async (valid) => {
+        if (valid) {
+          let tmpCheck = this.$refs['tree'].getCheckedKeys();
+          this.sidebarForm.menuId = tmpCheck.join(',');
+          const { id, name, menuId, status, googleCode } = this.sidebarForm;
+          if (this.sidebarBtnLoading) return;
+
+          const params = {
+            name,
+            menuId,
+            googleCode,
+            status: status ? 1 : 0,
+            parentRoleId: this.currentData.roleId,
+          };
+          this.sidebarBtnLoading = true;
+          // 新增 编辑
+          const res =
+            id === ''
+              ? await $api.apiAddPeopleManagementList(params)
+              : await $api.apiEditPeopleManagementList({
+                  id,
+                  ...params,
+                });
+          if (res) {
+            let txt = id === '' ? '添加成功' : '编辑成功';
+            this.$message({
+              message: txt,
+              type: 'success',
+            });
+            this.sidebarDialogVisible = false;
+            this.getMenuList();
+          }
+          this.sidebarBtnLoading = false;
+        }
+      });
     },
 
     resetFields() {
       this.$nextTick(() => {
         this.sidebarForm = {
-          position: 0, //排序,数字大的排前面还是数字小的排前面
-          requestUrl: '', // 接口url
-          name: '', // 名称
-          menuUrl: '', // 菜单url
-          parentId: '', // 父节点
-          desctext: '', //描述
+          id: '',
+          name: '',
+          menuId: '',
+          status: false,
+          googleCode: '',
         };
         this.$refs.sidebarForm.resetFields();
+        setTimeout(() => {
+          this.$refs.tree.setCheckedKeys([]);
+        }, 0);
       });
     },
 
@@ -166,17 +257,23 @@ export default {
         this.sidebarDialogTitle = `创建 ${data.name} 的子菜单`;
         this.sidebarDialogVisible = true;
         this.currentNode = node;
-        this.currentData = data;
         this.resetFields();
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
-        this.sidebarForm = JSON.parse(JSON.stringify(data));
-        this.sidebarForm.desctext = this.sidebarForm.desctext;
-        this.currentForm = JSON.parse(JSON.stringify(data));
-        this.currentForm.desctext = this.currentForm.desctext;
+        let newData = JSON.parse(JSON.stringify(data));
+        newData.status = newData.status ? true : false;
+        console.log('data', data);
+        this.sidebarForm = newData;
+        // this.sidebarForm.desctext = this.sidebarForm.desctext;
+        
+        // this.currentForm.desctext = this.currentForm.desctext;
+        const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
+        setTimeout(() => {
+          this.$refs['sidebarTree'].setCheckedKeys(id_list);
+        }, 0);
       } else if (type == 'del') {
-        if (data.children.length > 0) {
+        if (!!data.children && data.children.length > 0) {
           this.$message.error({
             title: '错误',
             message: '请先删除子菜单！',
@@ -228,14 +325,14 @@ export default {
       // this.getList();
     },
     addpeopleManagement() {
-      this.formName = '添加角色';
-      this.dialogFormVisible = true;
-      this.Form.id = '';
-      this.Form.name = '';
-      this.Form.menuId = '';
-      setTimeout(() => {
-        this.$refs.tree.setCheckedKeys([]);
-      }, 0);
+      this.userDialogTitle = '添加角色';
+      this.userDialogVisible = true;
+      // this.Form.id = '';
+      // this.Form.name = '';
+      // this.Form.menuId = '';
+      // setTimeout(() => {
+      //   this.$refs.tree.setCheckedKeys([]);
+      // }, 0);
     },
     confirmOp() {
       this.$refs['Form'].validate(async (valid) => {
@@ -248,7 +345,7 @@ export default {
           const { id, name, menuId } = this.Form;
           if (id === '') {
             // 新增
-            this.btnLoading = true;
+            this.userBtnLoading = true;
             const res = await $api.add({
               name: name,
               menuId: menuId,
@@ -258,13 +355,13 @@ export default {
                 message: '新增角色成功',
                 type: 'success',
               });
-              this.dialogFormVisible = false;
-              this.getList();
+              this.userDialogVisible = false;
+              this.getMenuList();
             }
-            this.btnLoading = false;
+            this.userBtnLoading = false;
           } else {
             // 修改
-            this.btnLoading = true;
+            this.userBtnLoading = true;
             const res = await $api.edit({
               id: id,
               name: name,
@@ -275,10 +372,10 @@ export default {
                 message: '编辑角色成功',
                 type: 'success',
               });
-              this.dialogFormVisible = false;
+              this.userDialogVisible = false;
               this.getList();
             }
-            this.btnLoading = false;
+            this.userBtnLoading = false;
           }
         } else {
           // //console.log('Form submit error');
@@ -309,7 +406,7 @@ export default {
         const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
         // let getArr = this.delSameItem(id_list, row.halfArr)
         // debugger
-        this.dialogFormVisible = true;
+        this.userDialogVisible = true;
         setTimeout(() => {
           this.$refs['tree'].setCheckedKeys(id_list);
         }, 0);
@@ -338,22 +435,23 @@ export default {
       this.getList();
     },
     // getlist
-    async getList() {
-      return;
+    async getList(id) {
       if (this.listLoading) return;
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        id: id,
       };
       // Object.assign(params, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getPeopleManagementList(params);
+      const res = await $api.apiGetPeopleManagementListById(params);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
         records.forEach((v) => {
-          v['status'] = v['status'] ? false : true;
+          v['status'] = v['status'] ? true : false;
         });
+        console.log('records', records);
         this.list = records;
         this.total = total;
         this.pages = pages;
@@ -365,7 +463,7 @@ export default {
     async getMenuList() {
       const res = await $api.apiGetPeopleManagementList({});
       if (res) {
-        this.treeData.push(res.data.data[0]);
+        this.treeData = res.data.data;
       }
     },
     //删除雷同项
@@ -385,8 +483,16 @@ export default {
     this.isCURDAuth = authObj.isAdd;
 
     this.searchCofig = this.$util.clone(peopleManagementConfig);
-    this.getList();
     this.getMenuList();
+
+    this.$watch(
+      function () {
+        return this.searchCofig[0].value;
+      },
+      function (newVal, oldValue) {
+        this.$refs.sidebarTree.filter(newVal);
+      },
+    );
   },
 };
 </script>

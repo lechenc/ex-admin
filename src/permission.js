@@ -225,6 +225,8 @@ const mapComponents = {
   RegistRestric: () => import('@/views/user/registRestric'),
   GiveRestric: () => import('@/views/user/giveRestric'),
   MoveRelationship: () => import('@/views/user/moveRelationship'),
+  RiskList: () => import('@/views/user/riskList'),
+  RiskConfig: () => import('@/views/user/riskConfig'),
 
 
   Examine: () => import('@/views/check/examine'),
@@ -265,8 +267,10 @@ const mapComponents = {
   Oplog: () => import('@/views/system/oplog'),
   ConfigPath: () => import('@/views/system/configPath'),
   DomainName: () => import('@/views/system/domainName'),
+  DomainNameFixed: () => import('@/views/system/domainNameFixed'),
   Maintenance: () => import('@/views/system/maintenance'),
   PeopleManagement: () => import('@/views/system/peopleManagement'),
+  StructureTree: () => import('@/views/system/structureTree'),
 
   Version: () => import('@/views/app/version'),
   LocalPackage: () => import('@/views/app/localPackage'),

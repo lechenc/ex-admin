@@ -204,6 +204,21 @@ export const asyncRouterMap = [
         component: () => import('@/views/user/moveRelationship'),
         meta: { title: '迁移邀请关系', icon: '', role: [] },
       },
+
+      {
+        path: 'riskList',
+        name: 'RiskList',
+        component: () => import('@/views/user/riskList'),
+        meta: { title: '风控记录', icon: '', role: [] },
+      },
+
+      {
+        path: 'riskConfig',
+        name: 'RiskConfig',
+        hidden: true,
+        component: () => import('@/views/user/riskConfig'),
+        meta: { title: '风控参数配置', icon: '', role: [] },
+      },
       
       
     ],
@@ -535,6 +550,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/system/domainName'),
         meta: { title: '域名管理', icon: '', role: [] },
       },
+
+      {
+        path: 'domainNameFixed',
+        name: 'DomainNameFixed',
+        component: () => import('@/views/system/domainNameFixed'),
+        meta: { title: '固定域名管理', icon: '', role: [] },
+      },
       {
         path: 'maintenance',
         name: 'Maintenance',
@@ -547,6 +569,14 @@ export const asyncRouterMap = [
         name: 'PeopleManagement',
         component: () => import('@/views/system/peopleManagement'),
         meta: { title: '人员管理', icon: '', role: [] },
+      },
+
+      
+      {
+        path: 'structureTree',
+        name: 'StructureTree',
+        component: () => import('@/views/system/structureTree'),
+        meta: { title: '结构架构树', icon: '', role: [] },
       },
     ],
   },

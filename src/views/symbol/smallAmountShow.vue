@@ -107,13 +107,7 @@ export default {
     this.btnArr = authObj.btnArr;
     this.$store.dispatch('common/getCoinList').then(() => {
       let coinList = this.$store.state.common.coinlist;
-      let list = [];
-      coinList.forEach((v) => {
-        if (v.coinName == 'coinName' || (v.coinName == 'coinName') == 'CNY') {
-          list.push(v);
-        }
-      });
-      this.coinList = list;
+      this.coinList = coinList;
     });
     this.getDetail();
   },

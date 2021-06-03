@@ -2766,9 +2766,24 @@ export default class api {
     return Fetch.post('/account/contract/query-coin-change-expand', data);
   }
 
-  // 系统管理 人员管理 列表
+  // 系统管理 人员管理 权限列表 
   static apiGetPeopleManagementList(data) {
     return Fetch.post('/admin/user/structureTreeList', data);
+  }
+
+  // 系统管理 人员管理 权限列表 添加子部门
+  static apiAddPeopleManagementList(data) {
+    return Fetch.post('/admin/user/add/sys-role', data);
+  }
+
+  // 系统管理 人员管理 权限列表 编辑子部门
+  static apiEditPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-role', data);
+  }
+
+  // 系统管理 人员管理 权限列表 删除菜单
+  static apiEditPeopleManagementList(data) {
+    return Fetch.post('/admin/user/delete/sys-user', data);
   }
 
   // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
@@ -2785,6 +2800,79 @@ export default class api {
   static getSpecialTriggerById(data) {
     return Fetch.post('/admin/account/contract/user/getAllTriggerById', data);
   }
+
+  // 用户管理/迁移邀请关系 列表
+  static apiGetMoveRelationshipList(data) {
+    return Fetch.post('/admin/user/userRelationChange/queryUserRelationChangeList', data);
+  }
+
+  // 用户管理/迁移邀请关系 添加
+  static apiAddMoveRelationshipList(data) {
+    return Fetch.post('/admin/user/userRelationChange/addRelationChange', data);
+  }
+
+  // 用户管理/迁移邀请关系 初审
+  static apiUpdateFirstAuditStatus(data) {
+    return Fetch.post('/admin/user/userRelationChange/updateFirstAuditStatus', data);
+  }
+
+  // 用户管理/迁移邀请关系 复审
+  static apiUpdateReviewAuditStatus(data) {
+    return Fetch.post('/admin/user/userRelationChange/updateReviewAuditStatus', data);
+  }
+
+  // 用户管理/ 获取风控参数配置 
+  static apiGetRiskConfig(data) {
+    return Fetch.post('/admin/user/cro/getBlastControlConfig', data);
+  }
+  // 用户管理/ 编辑 风控参数配置 
+  static apiEditRiskConfig(data) {
+    return Fetch.post('/admin/user/cro/updateBlastControlConfig', data);
+  }
+
+  // 用户管理/ 获取 风控记录 列表
+  static apiGetriskListList(data) {
+    return Fetch.post('/admin/user/cro/getLimitRecordInfoByPage', data);
+  }
+
+
+  // 用户管理/ 获取 风控记录 详情
+  static apiGetriskListInfo(data) {
+    return Fetch.post('/admin/user/cro/getLimitRecordInfoById', data);
+  }
+
+  // 用户管理/ 获取 风控记录 编辑
+  static apiEditriskList(data) {
+    return Fetch.post('/admin/user/cro/updateRecordStatus', data);
+  }
+
+  // 系统管理 人员管理 根据id获取角色列表
+  static apiGetPeopleManagementListById(data) {
+    return Fetch.post('/admin/user/sys-user-list', data);
+  }
+
+  // 系统管理 域名管理 列表
+  static apiGetDomainNameFixedList(data) {
+    return Fetch.post('/admin/user/other-domain-name-page', data);
+  }
+
+  // 系统管理 域名管理 添加域名
+  static apiSetAddDomainNameFixed(data) {
+    return Fetch.post('/admin/user/add/other-domain-name', data);
+  }
+
+  // 系统管理 域名管理 编辑域名
+  static apiSetUpdateDomainNameFixed(data) {
+    return Fetch.post('/admin/user/edit/other-domain-name', data);
+  }
+
+  // 系统管理 域名管理 删除域名
+  static apiSetDeleteDomainNameFixed(data) {
+    return Fetch.post('/admin/user/delete/other-domain-name', data);
+  }
+  
+
+  
 
   
 

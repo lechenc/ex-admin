@@ -1,7 +1,7 @@
 
 <template>
   <div class="voucherParameters-container">
-    <el-form :model="form" ref="form" label-width="190px" :rules="rules" size="medium">
+    <el-form :model="form" ref="form" label-width="180px" :rules="rules" size="medium">
       <el-card class="box-card">
         <div class="box-card-con">
           <el-form-item label="全局维护开关：" prop="globalSwitch">
@@ -160,6 +160,16 @@
             </el-col>
           </el-form-item>
 
+          <el-form-item label="中文标题：" prop="titleCn">
+            <el-col :span="8"><el-input type="text" placeholder="请输入" v-model.trim="form.titleCn" :disabled="!isModify"></el-input> </el-col>
+          </el-form-item>
+
+          <el-form-item label="英文标题：" prop="titleEn">
+            <el-col :span="8"><el-input type="text" placeholder="请输入" v-model.trim="form.titleEn" :disabled="!isModify"></el-input> </el-col>
+          </el-form-item>
+
+          <b-two-date-timer :isdisabled="!isModify" ref="twoTimer" :labelWidth="labelWidth" labelWords="维护时间" :date1.sync="form.gateStartTime" :date2.sync="form.gateEndTime"></b-two-date-timer>
+
           <el-form-item label="谷歌验证码：" prop="googleCode">
             <el-col :span="8"><el-input @input="checkVal('googleCode', 'noDot')" type="text" placeholder="请输入" v-model="form.googleCode" :disabled="!isModify"></el-input> </el-col>
           </el-form-item>
@@ -180,8 +190,12 @@
 <script>
 import $api from '@/api/api';
 import utils from '@/utils/util';
+import BTwoDateTimer from '@/components/b-two-date-timer';
 
 export default {
+  components: {
+    BTwoDateTimer,
+  },
   data() {
     return {
       isCURDAuth: true, // 是否有增删改查权限
@@ -189,7 +203,7 @@ export default {
       listLoading: false, // 表格loading
       confirmLoading: false, // 提交loading
       list: [], //委托列表
-      labelWidth: '140px',
+      labelWidth: '180px',
       key: '',
       form: {
         androidPicCn: '',
@@ -200,7 +214,11 @@ export default {
         pcPicEn: '',
         globalSwitch: false,
         googleCode: '',
-        id:'',
+        titleCn:'',
+        titleEn:'',
+        gateStartTime:'',
+        gateEndTime:'',
+        id: '',
       },
       rules: {
         androidPicCn: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -210,6 +228,8 @@ export default {
         pcPicCn: [{ required: true, message: '必填', trigger: 'blur' }],
         pcPicEn: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        titleCn: [{ required: true, message: '必填', trigger: 'blur' }],
+        titleEn: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     };
   },
@@ -277,7 +297,7 @@ export default {
     async confirmSend() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn, pcPicCn, pcPicEn, globalSwitch, googleCode,id } = this.form;
+          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn,titleCn,titleEn,gateStartTime,gateEndTime, pcPicCn, pcPicEn, globalSwitch, googleCode, id } = this.form;
           let params = {
             androidPicCn,
             androidPicEn,
@@ -287,11 +307,15 @@ export default {
             pcPicEn,
             globalSwitch,
             googleCode,
-            id
+            id,
+            titleCn,
+            titleEn,
+            gateStartTime,
+            gateEndTime
           };
 
           // this.confirmLoading = true;
-          const res = await $api.editMaintenance(params) 
+          const res = await $api.editMaintenance(params);
           if (res) {
             this.$message({ message: '修改成功！', type: 'success' });
             this.getList();
@@ -304,7 +328,6 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('Maintenance', [], []);
-    console.log('authObj',authObj)
     this.isCURDAuth = authObj.isModify;
 
     this.getList();

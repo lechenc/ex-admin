@@ -219,7 +219,6 @@ const fiatCoinInOutGoldCol = [
     filters: [
       { text: '法币买入', val: '36' },
       { text: '申诉买家赢，法币买入', val: '37' },
-      { text: '法币交易返佣', val: '40' },
       { text: '法币卖出', val: '32' },
       { text: '法币交易手续费', val: '82' },
       { text: '划出至币币', val: '11' },
@@ -280,7 +279,6 @@ const fiatCoinInOutGoldConfig = [
     list: [
       { label: '法币买入', value: '36' },
       { label: '申诉买家赢，法币买入', value: '37' },
-      { label: '法币交易返佣', value: '40' },
       { label: '法币卖出', value: '32' },
       { label: '法币交易手续费', value: '82' },
       { label: '划出至币币', value: '11' },
@@ -319,14 +317,18 @@ const contractInOutGoldCol = [
     prop: 'type',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '合约入金', val: '1' }, { text: '合约出金', val: '2' }],
+    filters: [{ text: '合约出金', val: '2' }, { text: '合约入金', val: '1' }],
   },
+  // 合约出入金,type=1为合约出金,type=2为合约入金
   {
     label: '类型',
     prop: 'optType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币划入合约', val: '50' }, { text: '法币划入合约', val: '52' }, { text: '合约交易手续费', val: '96' }, { text: '合约交易资金费率', val: '94' }, { text: '划出至币币', val: '51' }, { text: '划出至法币', val: '53' }],
+    // 7：币币转入合约账户 8：合约账户转出币币账户 9：资金费用 10：开仓手续费 11：平仓手续费
+    // 12 法币转入合约账户 13 合约账户转出法币账户
+    // 入金只有划入
+    filters: [{ text: '币币划入合约', val: '7' }, { text: '法币划入合约', val: '12' }, { text: '开仓手续费', val: '10' }, { text: '平仓手续费 ', val: '11' }, { text: '合约交易资金费率', val: '9' }, { text: '划出至币币', val: '8' }, { text: '划出至法币', val: '13' }],
   },
   {
     label: '变动资产',
@@ -384,7 +386,15 @@ const contractInOutGoldConfig = [
     label: '类型',
     prop: 'optType',
     value: '',
-    list: [{ label: '币币划入合约', value: '50' }, { label: '法币划入合约', value: '52' }, { label: '合约交易手续费', value: '96' }, { label: '合约交易资金费率', value: '94' }, { label: '划出至币币', value: '51' }, { label: '划出至法币', value: '53' }],
+    list: [
+      { label: '币币划入合约', value: '7' },
+      { label: '法币划入合约', value: '12' },
+      { label: '开仓手续费', value: '10' },
+      { label: '平仓手续费 ', value: '11' },
+      { label: '合约交易资金费率', value: '9' },
+      { label: '划出至币币', value: '8' },
+      { label: '划出至法币', value: '13' },
+    ],
   },
 ];
 

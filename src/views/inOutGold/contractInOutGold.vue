@@ -156,6 +156,42 @@ export default {
     this.ago = this.$util.diyTime('ago');
     this.getList();
     this.getSymbolList();
+
+    this.$watch(
+      function () {
+        return this.searchCofig[2].value;
+      },
+      // 合约出入金,type=1为合约出金,type=2为合约入金
+      function (newVal, oldValue) {
+        if (newVal == 1) {
+          this.searchCofig[4]['value'] = '';
+          this.searchCofig[4]['list'] = [
+            { label: '币币划入合约', value: '7' },
+            { label: '法币划入合约', value: '12' },
+          ];
+        } else if (newVal == 2) {
+          this.searchCofig[4]['value'] = '';
+          this.searchCofig[4]['list'] = [
+            { label: '开仓手续费', value: '10' },
+            { label: '平仓手续费 ', value: '11' },
+            { label: '合约交易资金费率', value: '9' },
+            { label: '划出至币币', value: '8' },
+            { label: '划出至法币', value: '13' },
+          ];
+        } else {
+          this.searchCofig[4]['value'] = '';
+          this.searchCofig[4]['list'] = [
+            { label: '币币划入合约', value: '7' },
+            { label: '法币划入合约', value: '12' },
+            { label: '开仓手续费', value: '10' },
+            { label: '平仓手续费 ', value: '11' },
+            { label: '合约交易资金费率', value: '9' },
+            { label: '划出至币币', value: '8' },
+            { label: '划出至法币', value: '13' },
+          ];
+        }
+      },
+    );
   },
 };
 </script>
