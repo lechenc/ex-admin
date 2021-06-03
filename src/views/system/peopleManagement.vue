@@ -152,7 +152,7 @@ export default {
   },
   methods: {
     async sidebarTreeClick(data) {
-      this.getList(data.id);
+      this.getList(data.roleId);
     },
     checkVal(obj, key) {
       this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
@@ -412,6 +412,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        id: id,
       };
       // Object.assign(params, this.search_params_obj);
       this.listLoading = true;
