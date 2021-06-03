@@ -407,20 +407,20 @@ const domainNameColNoBtn = [
 // 集团管理
 const peopleManagementCol = [
   {
-    label: '集团名称',
+    label: '账号',
     prop: 'account',
   },
   {
-    label: '部门数量',
-    prop: 'content',
+    label: '职务',
+    prop: 'jobName',
   },
   {
-    label: '职位数量',
-    prop: 'requestAddress',
+    label: '部门',
+    prop: 'deptName',
   },
   {
-    label: '人员总数',
-    prop: 'requestAddress2',
+    label: '备注',
+    prop: 'name',
   },
 
   {
@@ -430,7 +430,7 @@ const peopleManagementCol = [
   },
   {
     label: '更新时间',
-    prop: 'createTime1',
+    prop: 'updateTime',
     type: 'time',
   },
   {
@@ -464,20 +464,20 @@ const peopleManagementCol = [
 
 const peopleManagementColNoBtn = [
   {
-    label: '集团名称',
+    label: '账号',
     prop: 'account',
   },
   {
-    label: '部门数量',
-    prop: 'content',
+    label: '职务',
+    prop: 'jobName',
   },
   {
-    label: '职位数量',
-    prop: 'requestAddress',
+    label: '部门',
+    prop: 'deptName',
   },
   {
-    label: '人员总数',
-    prop: 'requestAddress2',
+    label: '备注',
+    prop: 'name',
   },
 
   {
@@ -487,7 +487,7 @@ const peopleManagementColNoBtn = [
   },
   {
     label: '更新时间',
-    prop: 'createTime1',
+    prop: 'updateTime',
     type: 'time',
   },
 ];

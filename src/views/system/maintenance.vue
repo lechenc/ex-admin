@@ -297,7 +297,7 @@ export default {
     async confirmSend() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn, pcPicCn, pcPicEn, globalSwitch, googleCode, id } = this.form;
+          const { androidPicCn, androidPicEn, iosPicCn, iosPicEn,titleCn,titleEn,gateStartTime,gateEndTime, pcPicCn, pcPicEn, globalSwitch, googleCode, id } = this.form;
           let params = {
             androidPicCn,
             androidPicEn,
@@ -308,6 +308,10 @@ export default {
             globalSwitch,
             googleCode,
             id,
+            titleCn,
+            titleEn,
+            gateStartTime,
+            gateEndTime
           };
 
           // this.confirmLoading = true;

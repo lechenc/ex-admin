@@ -131,6 +131,7 @@ export default {
     },
     pickerOptionsStart(val) {
       let endDateVal = val;
+      console.log('val',val)
       return {
         disabledDate(date) {
           let overT = new Date();

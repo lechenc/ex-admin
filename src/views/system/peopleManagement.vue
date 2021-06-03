@@ -34,7 +34,7 @@
       </div>
       <div class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
-          <span class="btn-text"> 运营部 (2人) </span>
+          <span class="btn-text"> {{ curName }} ({{ total }}人) </span>
           <el-button type="primary" size="medium" @click="addpeopleManagement">添加角色</el-button>
         </div>
         <div>
@@ -148,10 +148,12 @@ export default {
       },
       ruleForm: {},
       currentForm: {},
+      curName: '',
     };
   },
   methods: {
     async sidebarTreeClick(data) {
+      this.curName = data.name;
       this.getList(data.roleId);
     },
     checkVal(obj, key) {
@@ -421,8 +423,9 @@ export default {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
         records.forEach((v) => {
-          v['status'] = v['status'] ? false : true;
+          v['status'] = v['status'] ? true : false;
         });
+        console.log('records', records);
         this.list = records;
         this.total = total;
         this.pages = pages;
