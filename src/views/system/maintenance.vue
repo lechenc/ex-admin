@@ -328,7 +328,6 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('Maintenance', [], []);
-    console.log('authObj', authObj);
     this.isCURDAuth = authObj.isModify;
 
     this.getList();

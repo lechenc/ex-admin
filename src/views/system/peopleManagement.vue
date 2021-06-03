@@ -34,7 +34,7 @@
       </div>
       <div class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
-          <span class="btn-text"> {{ curName }} ({{ total }}人) </span>
+          <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
           <el-button type="primary" size="medium" @click="addpeopleManagement">添加角色</el-button>
         </div>
         <div>
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <!-- 添加 -->
+    <!-- 添加部门 -->
     <el-dialog :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
       <el-form :model="sidebarForm" ref="sidebarForm" :rules="sidebarRules">
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
@@ -70,6 +70,30 @@
         <el-button type="primary" @click="sidebarConfirmOp" :loading="sidebarBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 添加部门 -->
+    <el-dialog :title="userDialogTitle" :visible.sync="userDialogVisible">
+      <el-form :model="userForm" ref="userForm" :rules="userRules">
+        <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="userForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
+          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+        </el-form-item>
+
+        <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
+          <el-switch v-model="userForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
+          <el-input @input="checkVal('userForm', 'googleCode')" v-model.trim="userForm.googleCode" placeholder="请输入"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="userDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sidebarConfirmOp" :loading="userBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -88,6 +112,10 @@ export default {
   },
   data() {
     return {
+      userRules:{},
+      userDialogTitle:'',
+      userDialogVisible:false,
+      userForm:{},
       sidebarForm: {
         id: '',
         name: '',
@@ -95,15 +123,16 @@ export default {
         status: false,
         googleCode: '',
       },
+      userBtnLoading:false,
       sidebarDialogTitle: '',
       sidebarDialogVisible: false,
+      
       sidebarBtnLoading: false,
       defaultProps: {
         children: 'children',
         label: 'name',
       },
       isCURDAuth: true, // 是否有增删改查权限
-      btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
       list: [], //委托列表
       searchCofig: [], // 搜索框配置
@@ -114,7 +143,6 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       treeData: [], //菜单
-      dialogFormVisible: false,
       formName: '添加角色',
       formLabelWidth: '120px',
       currentNode: '',
@@ -148,12 +176,11 @@ export default {
       },
       ruleForm: {},
       currentForm: {},
-      curName: '',
     };
   },
   methods: {
     async sidebarTreeClick(data) {
-      this.curName = data.name;
+      this.currentData = JSON.parse(JSON.stringify(data));
       this.getList(data.roleId);
     },
     checkVal(obj, key) {
@@ -230,7 +257,6 @@ export default {
         this.sidebarDialogTitle = `创建 ${data.name} 的子菜单`;
         this.sidebarDialogVisible = true;
         this.currentNode = node;
-        this.currentData = data;
         this.resetFields();
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
@@ -240,7 +266,7 @@ export default {
         console.log('data', data);
         this.sidebarForm = newData;
         // this.sidebarForm.desctext = this.sidebarForm.desctext;
-        this.currentData = JSON.parse(JSON.stringify(data));
+        
         // this.currentForm.desctext = this.currentForm.desctext;
         const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
         setTimeout(() => {
@@ -299,14 +325,14 @@ export default {
       // this.getList();
     },
     addpeopleManagement() {
-      this.formName = '添加角色';
-      this.dialogFormVisible = true;
-      this.Form.id = '';
-      this.Form.name = '';
-      this.Form.menuId = '';
-      setTimeout(() => {
-        this.$refs.tree.setCheckedKeys([]);
-      }, 0);
+      this.userDialogTitle = '添加角色';
+      this.userDialogVisible = true;
+      // this.Form.id = '';
+      // this.Form.name = '';
+      // this.Form.menuId = '';
+      // setTimeout(() => {
+      //   this.$refs.tree.setCheckedKeys([]);
+      // }, 0);
     },
     confirmOp() {
       this.$refs['Form'].validate(async (valid) => {
@@ -319,7 +345,7 @@ export default {
           const { id, name, menuId } = this.Form;
           if (id === '') {
             // 新增
-            this.btnLoading = true;
+            this.userBtnLoading = true;
             const res = await $api.add({
               name: name,
               menuId: menuId,
@@ -329,13 +355,13 @@ export default {
                 message: '新增角色成功',
                 type: 'success',
               });
-              this.dialogFormVisible = false;
+              this.userDialogVisible = false;
               this.getMenuList();
             }
-            this.btnLoading = false;
+            this.userBtnLoading = false;
           } else {
             // 修改
-            this.btnLoading = true;
+            this.userBtnLoading = true;
             const res = await $api.edit({
               id: id,
               name: name,
@@ -346,10 +372,10 @@ export default {
                 message: '编辑角色成功',
                 type: 'success',
               });
-              this.dialogFormVisible = false;
+              this.userDialogVisible = false;
               this.getList();
             }
-            this.btnLoading = false;
+            this.userBtnLoading = false;
           }
         } else {
           // //console.log('Form submit error');
@@ -380,7 +406,7 @@ export default {
         const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
         // let getArr = this.delSameItem(id_list, row.halfArr)
         // debugger
-        this.dialogFormVisible = true;
+        this.userDialogVisible = true;
         setTimeout(() => {
           this.$refs['tree'].setCheckedKeys(id_list);
         }, 0);
