@@ -10,8 +10,8 @@
 <template>
   <div class="structureTree-container">
     <el-card class="box-card">
-      <div class="tree">
-        <div class="tree-content" >
+      <div class="tree" @mousedown.stop="move">
+        <div class="tree-content">
           <tree-item :tree-data="treeData" :tree-first="true" />
         </div>
       </div>
@@ -109,21 +109,20 @@ export default {
     margin: 10px 0;
     font-size: 18px;
   }
+  h5 {
+    font-size: 16px;
+  }
+
+  h5::before {
+    content: '';
+    border-left: 5px solid #03a7f0;
+    margin-right: 10px;
+  }
 
   .box-card {
     margin-bottom: 20px;
-
+    overflow: scroll;
     .box-card-con {
-      h5 {
-        font-size: 16px;
-      }
-
-      h5::before {
-        content: '';
-        border-left: 5px solid #03a7f0;
-        margin-right: 10px;
-      }
-
       .con-line {
         display: flex;
         flex-direction: row;
@@ -172,6 +171,9 @@ export default {
         font-weight: 600;
       }
     }
+  }
+
+  .tree-content {
   }
 }
 </style>
