@@ -1034,10 +1034,11 @@ const teamAssetsCol = [
     label: '下面整条链的手续费合计',
     prop: 'commissionStat',
   },
+  //11
   {
     label: '自身获得手续费合计',
     prop: 'myselfStat',
-    
+
   },
   {
     label: '下面整条链团队长合计',

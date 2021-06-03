@@ -9,7 +9,7 @@
       <div class="box-card-con">
         <H3>用户信息</H3>
         <div>
-          <div>UID：{{ current_row.uid }}</div>
+          <div>UID ：{{ current_row.uid }}</div>
           <!--		<div>用户类型：{{ current_row.uid | userType }}</div> **** -->
           <div>手机：{{ current_row.phone }}</div>
           <div>邮箱：{{ current_row.email }}</div>
@@ -25,6 +25,7 @@
           <div>所有总人数：{{ current_row.allSonCount }}</div>
           <div>国家区号：{{ current_row.phoneAreaCode }}</div>
           <div>昵称：{{ current_row.nickName }}</div>
+
         </div>
         <h3>用户状态</h3>
         <div v-if="!isModify">
