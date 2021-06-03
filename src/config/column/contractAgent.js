@@ -1025,6 +1025,32 @@ const teamAssetsCol = [
     label: '历史总返佣',
     prop: 'returnSumAmount',
   },
+
+  {
+    label: '下面整条链的合约盈亏总合计',
+    prop: 'allStat',
+  },
+  {
+    label: '下面整条链的手续费合计',
+    prop: 'commissionStat',
+  },
+  {
+    label: '自身获得手续费合计',
+    prop: 'myselfStat',
+    
+  },
+  {
+    label: '下面整条链团队长合计',
+    prop: 'captainStats',
+  },
+  {
+    label: '自身获得团队长合计',
+    prop: 'captainStat',
+  },
+  {
+    label: '下面整条链合约净入金合计',
+    prop: 'inOutStat',
+  },
 ];
 
 const teamInfoCol = [
