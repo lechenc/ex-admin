@@ -563,6 +563,14 @@ export const asyncRouterMap = [
         component: () => import('@/views/system/peopleManagement'),
         meta: { title: '人员管理', icon: '', role: [] },
       },
+
+      
+      {
+        path: 'structureTree',
+        name: 'StructureTree',
+        component: () => import('@/views/system/structureTree'),
+        meta: { title: '结构架构树', icon: '', role: [] },
+      },
     ],
   },
   // app管理

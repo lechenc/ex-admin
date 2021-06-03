@@ -269,6 +269,7 @@ const mapComponents = {
   DomainName: () => import('@/views/system/domainName'),
   Maintenance: () => import('@/views/system/maintenance'),
   PeopleManagement: () => import('@/views/system/peopleManagement'),
+  StructureTree: () => import('@/views/system/structureTree'),
 
   Version: () => import('@/views/app/version'),
   LocalPackage: () => import('@/views/app/localPackage'),
