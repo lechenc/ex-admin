@@ -2850,6 +2850,26 @@ export default class api {
   static apiGetPeopleManagementListById(data) {
     return Fetch.post('/admin/user/sys-user-list', data);
   }
+
+  // 系统管理 域名管理 列表
+  static apiGetDomainNameFixedList(data) {
+    return Fetch.post('/admin/user/other-domain-name-page', data);
+  }
+
+  // 系统管理 域名管理 添加域名
+  static apiSetAddDomainNameFixed(data) {
+    return Fetch.post('/admin/user/add/other-domain-name', data);
+  }
+
+  // 系统管理 域名管理 编辑域名
+  static apiSetUpdateDomainNameFixed(data) {
+    return Fetch.post('/admin/user/edit/other-domain-name', data);
+  }
+
+  // 系统管理 域名管理 删除域名
+  static apiSetDeleteDomainNameFixed(data) {
+    return Fetch.post('/admin/user/delete/other-domain-name', data);
+  }
   
 
   

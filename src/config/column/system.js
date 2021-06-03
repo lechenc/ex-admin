@@ -329,7 +329,7 @@ const configPathConfig = [
   },
 ];
 
-//角色管理
+//域名管理
 const domainNameCol = [
   {
     label: '域名地址',
@@ -383,10 +383,85 @@ const domainNameCol = [
   },
 ];
 
-//角色管理
+//域名管理
 const domainNameColNoBtn = [
   {
     label: '域名地址',
+    prop: 'domainName',
+  },
+  {
+    label: '排序',
+    prop: 'sort',
+  },
+  {
+    label: '备注',
+    prop: 'remark',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+];
+
+//固定域名管理
+const domainNameFixedCol = [
+  {
+    label: '固定域名地址',
+    prop: 'domainName',
+  },
+  {
+    label: '排序',
+    prop: 'sort',
+  },
+  {
+    label: '是否默认',
+    prop: 'isDefault',
+    type: 'switch',
+    fn: 'trDefault',
+    alias: 'trDefault',
+  },
+  {
+    label: '备注',
+    prop: 'remark',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    width: '240',
+    type: 'action',
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '详情',
+        fn: 'detail',
+        type: 'primary',
+        alias: 'detail',
+      },
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'danger',
+        alias: 'del',
+      },
+    ],
+  },
+];
+
+//固定域名管理
+const domainNameFixedColNoBtn = [
+  {
+    label: '固定域名地址',
     prop: 'domainName',
   },
   {
@@ -502,4 +577,4 @@ const peopleManagementConfig = [
   },
 ];
 
-export { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };
+export {domainNameFixedCol,domainNameFixedColNoBtn, peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };

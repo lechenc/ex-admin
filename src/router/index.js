@@ -550,6 +550,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/system/domainName'),
         meta: { title: '域名管理', icon: '', role: [] },
       },
+
+      {
+        path: 'domainNameFixed',
+        name: 'DomainNameFixed',
+        component: () => import('@/views/system/domainNameFixed'),
+        meta: { title: '固定域名管理', icon: '', role: [] },
+      },
       {
         path: 'maintenance',
         name: 'Maintenance',
