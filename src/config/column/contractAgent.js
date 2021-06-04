@@ -261,7 +261,7 @@ const agentsListsConfig = [
     prop: 'userGrade',
     value: '',
     //  1 一级代理商， 2 二级代理商
-    list: [{ label: '一级', value: 1 }, { label: '二级', value: 2 }],
+    list: [{ label: '一级', value: 1 }, { label: '二级', value: 2 }, { label: '三级', value: 3 }],
   },
   {
     type: 'select',
@@ -1040,10 +1040,10 @@ const teamAssetsCol = [
     prop: 'myselfStat',
 
   },
-  {
-    label: '下面整条链团队长合计',
-    prop: 'captainStats',
-  },
+  // {
+  //   label: '下面整条链团队长合计',
+  //   prop: 'captainStats',
+  // },
   {
     label: '自身获得团队长合计',
     prop: 'captainStat',
