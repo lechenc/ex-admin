@@ -349,7 +349,7 @@ export default {
       rules: {
         uid: [{ required: true, message: '必填', trigger: 'blur' }],
         username: [{ required: true, message: '必填', trigger: 'blur' }],
-        remark: [{ required: true, message: '必填', trigger: 'blur' }],
+        // remark: [{ required: true, message: '必填', trigger: 'blur' }],
         password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
         commissionPercent: [{ required: true, message: '必填', trigger: 'blur' }],
         packPercent: [{ required: true, message: '必填', trigger: 'blur' }],

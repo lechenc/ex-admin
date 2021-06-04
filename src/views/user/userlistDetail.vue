@@ -25,7 +25,6 @@
           <div>所有总人数：{{ current_row.allSonCount }}</div>
           <div>国家区号：{{ current_row.phoneAreaCode }}</div>
           <div>昵称：{{ current_row.nickName }}</div>
-
         </div>
         <h3>用户状态</h3>
         <div v-if="!isModify">
