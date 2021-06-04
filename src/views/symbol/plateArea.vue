@@ -16,7 +16,7 @@
         <el-row :span="24">
           <el-col :span="23">
             <el-form-item label="板块名称" prop="name">
-              <el-input v-model="chainForm.name" autocomplete="off" type="text"></el-input>
+              <el-input :disabled='isDetail' v-model="chainForm.name" autocomplete="off" type="text"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -24,7 +24,7 @@
         <el-row :span="24">
           <el-col :span="23">
             <el-form-item label="板块描述" prop="desc">
-              <el-input rows="3" v-model="chainForm.desc" autocomplete="off" type="textarea"></el-input>
+              <el-input :disabled='isDetail'  rows="3" v-model="chainForm.desc" autocomplete="off" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -32,7 +32,7 @@
         <el-row :span="24">
           <el-col :span="23">
             <el-form-item label="英文描述" prop="descEn">
-              <el-input rows="3" v-model="chainForm.descEn" autocomplete="off" type="textarea"></el-input>
+              <el-input :disabled='isDetail' rows="3" v-model="chainForm.descEn" autocomplete="off" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -69,7 +69,7 @@
             <el-row class="my-row" :span="24">
               <el-col :span="12">
                 <el-form-item label="交易对" prop="tbCoinMarketId">
-                  <el-select v-model="symbolGroup.tbCoinMarketId" placeholder="请选择">
+                  <el-select :disabled='isDetail' v-model="symbolGroup.tbCoinMarketId" placeholder="请选择">
                     <el-option v-for="item in symbollist" :label="item.label" :value="item.tbCoinMarketId" :key="item.tbCoinMarketId"> </el-option>
                   </el-select>
                 </el-form-item>
@@ -77,7 +77,7 @@
 
               <el-col :span="12">
                 <el-form-item label-width="100px" label="是否合约">
-                  <el-switch :disabled="getSupportContract(symbolGroup.tbCoinMarketId)" v-model="symbolGroup.supportContract" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+                  <el-switch   :disabled="getSupportContract(symbolGroup.tbCoinMarketId) || isDetail" v-model="symbolGroup.supportContract" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -85,7 +85,7 @@
             <el-row class="my-row" :span="24">
               <el-col :span="12">
                 <el-form-item label="排序" prop="sort">
-                  <el-input v-model.trim="symbolGroup.sort" @input="symbolGroup.sort = symbolGroup.sort.replace(/[^\d]/g, '')" autocomplete="off" type="text"></el-input>
+                  <el-input :disabled='isDetail' v-model.trim="symbolGroup.sort" @input="symbolGroup.sort = symbolGroup.sort.replace(/[^\d]/g, '')" autocomplete="off" type="text"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -94,24 +94,24 @@
               <el-col :span="21">
                 <el-form-item label="icon" prop="img">
                   <el-input size="small" placeholder="请输入链接" v-model="symbolGroup.img">
-                    <el-upload accept=".png,.img" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="false" :before-upload="beforeUpload" :on-success="uploadIcon" :on-error="uploadError" slot="append" :limit="1" :on-exceed="exceed" ref="iconDot">
+                    <el-upload :disabled='isDetail' accept=".png,.img" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="false" :before-upload="beforeUpload" :on-success="uploadIcon" :on-error="uploadError" slot="append" :limit="1" :on-exceed="exceed" ref="iconDot">
                       <el-button size="small" @click="getUploadIconIndex(index)" type="primary">点击上传</el-button>
                     </el-upload>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="3">
-                <el-button type="danger" @click="delSymbolGroups(index)" size="small" round>删除</el-button>
+                <el-button :disabled='isDetail' type="danger" @click="delSymbolGroups(index)" size="small" round>删除</el-button>
               </el-col>
             </el-row>
           </el-form>
         </template>
 
-        <el-row class="my-add" type="flex" :span="24" justify="center">
-          <el-button @click="addSymbolGroups" size="small" type="primary"> +添加交易对 </el-button>
+        <el-row v-if="disabled" class="my-add" type="flex" :span="24" justify="center">
+          <el-button :disabled='isDetail' @click="addSymbolGroups" size="small" type="primary"> +添加交易对 </el-button>
         </el-row>
 
-        <el-row :span="24">
+        <el-row v-if="disabled" :span="24">
           <el-col :span="23">
             <el-form-item label="谷歌验证码" prop="googleCode">
               <el-input v-model.trim="chainForm.googleCode" @input="checkVal('chainForm', 'googleCode')" autocomplete="off" type="text"></el-input>
@@ -119,7 +119,7 @@
           </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div v-if="disabled" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
       </div>
@@ -161,6 +161,7 @@ export default {
   },
   data() {
     return {
+      isDetail: false,
       isCURDAuth: true, // 是否有增删改查权限
       btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
@@ -234,7 +235,7 @@ export default {
       return function (tbCoinMarketId) {
         if (tbCoinMarketId) {
           let res = this.symbollist.filter((v) => {
-            return (v.tbCoinMarketId == tbCoinMarketId);
+            return v.tbCoinMarketId == tbCoinMarketId;
           })[0].supportContract;
           return res ? false : true;
         } else {
@@ -304,6 +305,7 @@ export default {
       const { fn, row } = data;
       // 编辑币种
       if (fn === 'edit') {
+        this.isDetail = false;
         this.formName = '编辑板块专区管理';
         this.dialogFormVisible = true;
         this.$nextTick(() => {
@@ -326,6 +328,27 @@ export default {
         });
       }
       if (fn === 'detail') {
+        this.isDetail = true;
+        this.formName = '板块专区管理详情';
+        this.dialogFormVisible = true;
+        this.$nextTick(() => {
+          this.$refs['chainForm'].resetFields();
+          const { id, name, desc, descEn } = row;
+          const pairList = JSON.parse(JSON.stringify(row.pairList));
+          if (pairList.length) {
+            pairList.forEach((v) => {
+              v.supportContract = v.supportContract == 1 ? true : false;
+            });
+          }
+          this.chainForm = {
+            id,
+            name,
+            desc,
+            descEn,
+            pairList,
+            googleCode: '',
+          };
+        });
       }
       if (fn === 'del') {
         this.dialogVisible = true;
