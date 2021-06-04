@@ -93,7 +93,7 @@
             <el-row :class="{ 'my-border': index + 1 != chainForm.pairList.length }" class="my-row" :gutter="10" :span="24">
               <el-col :span="21">
                 <el-form-item label="icon" prop="img">
-                  <el-input size="small" placeholder="请输入链接" v-model="symbolGroup.img">
+                  <el-input :disabled='isDetail' size="small" placeholder="请输入链接" v-model="symbolGroup.img">
                     <el-upload :disabled='isDetail' accept=".png,.img" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="false" :before-upload="beforeUpload" :on-success="uploadIcon" :on-error="uploadError" slot="append" :limit="1" :on-exceed="exceed" ref="iconDot">
                       <el-button size="small" @click="getUploadIconIndex(index)" type="primary">点击上传</el-button>
                     </el-upload>
