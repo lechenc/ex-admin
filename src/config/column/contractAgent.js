@@ -1197,14 +1197,14 @@ const refundRecordCol = [
   //   label: '平台获得金额',
   //   prop: 'platformAmount',
   // },
-  // {
-  //   label: '结算状态',
-  //   prop: 'grantStatus',
-  //   width: 120,
-  //   type: 'filter',
-  //   show_type: 'text',
-  //   filters: [{ text: '已结算', val: 1 }, { text: '未结算', val: 0 }]
-  // },
+  {
+    label: '结算状态',
+    prop: 'grantStatus',
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '已结算', val: 1 }, { text: '未结算', val: 0 }]
+  },
   {
     label: '仓位ID',
     prop: 'relateRecdId',
