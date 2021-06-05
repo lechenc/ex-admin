@@ -261,7 +261,7 @@ const agentsListsConfig = [
     prop: 'userGrade',
     value: '',
     //  1 一级代理商， 2 二级代理商
-    list: [{ label: '一级', value: 1 }, { label: '二级', value: 2 }],
+    list: [{ label: '一级', value: 1 }, { label: '二级', value: 2 }, { label: '三级', value: 3 }],
   },
   {
     type: 'select',
@@ -1025,6 +1025,33 @@ const teamAssetsCol = [
     label: '历史总返佣',
     prop: 'returnSumAmount',
   },
+
+  {
+    label: '下面整条链的合约盈亏总合计',
+    prop: 'allStat',
+  },
+  {
+    label: '下面整条链的手续费合计',
+    prop: 'commissionStat',
+  },
+  //11
+  {
+    label: '自身获得手续费合计',
+    prop: 'myselfStat',
+
+  },
+  // {
+  //   label: '下面整条链团队长合计',
+  //   prop: 'captainStats',
+  // },
+  {
+    label: '自身获得团队长合计',
+    prop: 'captainStat',
+  },
+  {
+    label: '下面整条链合约净入金合计',
+    prop: 'inOutStat',
+  },
 ];
 
 const teamInfoCol = [
@@ -1170,14 +1197,14 @@ const refundRecordCol = [
   //   label: '平台获得金额',
   //   prop: 'platformAmount',
   // },
-  // {
-  //   label: '结算状态',
-  //   prop: 'grantStatus',
-  //   width: 120,
-  //   type: 'filter',
-  //   show_type: 'text',
-  //   filters: [{ text: '已结算', val: 1 }, { text: '未结算', val: 0 }]
-  // },
+  {
+    label: '结算状态',
+    prop: 'grantStatus',
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '已结算', val: 1 }, { text: '未结算', val: 0 }]
+  },
   {
     label: '仓位ID',
     prop: 'relateRecdId',

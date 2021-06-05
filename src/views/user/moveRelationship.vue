@@ -87,10 +87,10 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="recheckType != 0 || !isDetail">
           <el-col :span="24">
             <el-form-item label="初审备注: " prop="firstAuditRemark">
-              <el-input rows="2" :disabled="isDetail" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
+              <el-input rows="2" :disabled="isDetail || recheckType == 1" v-model.trim="checkForm.firstAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -104,7 +104,7 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="recheckType != 0 && recheckType != 2">
+        <el-row :span="24" v-if="recheckType != 0 && recheckType != 2 && (recheckType != 1 || !isDetail)">
           <el-col :span="24">
             <el-form-item label="复审备注: " prop="reviewAuditRemark">
               <el-input rows="2" :disabled="isDetail" v-model.trim="checkForm.reviewAuditRemark" placeholder="请输入内容" type="textarea"> </el-input>
