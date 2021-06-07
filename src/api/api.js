@@ -443,9 +443,14 @@ export default class api {
     return Fetch.post('/admin/user/system-logger-page', data);
   }
 
-  // 系统管理--登录
+  // // 系统管理--登录
+  // static login(data) {
+  //   return Fetch.postlogin('/admin/user/login', data);
+  // }
+
+  // 系统管理--登录(新)
   static login(data) {
-    return Fetch.postlogin('/admin/user/login', data);
+    return Fetch.postlogin('/admin/user/newlogin', data);
   }
 
   // 审核管理 - 用户管理 - 更新用户状态
