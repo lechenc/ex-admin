@@ -263,15 +263,13 @@ export default {
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
-        console.log('data', data);
+        
         this.sidebarForm = newData;
         // this.sidebarForm.desctext = this.sidebarForm.desctext;
         
         // this.currentForm.desctext = this.currentForm.desctext;
-        const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
-        setTimeout(() => {
-          this.$refs['sidebarTree'].setCheckedKeys(id_list);
-        }, 0);
+        // const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
+        this.$refs.sidebarTree.setCheckedNodes(this.currentData.childrenMenu);
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
           this.$message.error({
