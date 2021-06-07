@@ -1211,6 +1211,10 @@ const moveRelationshipConfig = [
 
 const riskListCol = [
   {
+    label: 'UID',
+    prop: 'userUid',
+  },
+  {
     label: '异常设备号',
     prop: 'devNo',
   },
@@ -1250,7 +1254,7 @@ const riskListCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '240',
+    width: '200',
     btnGroup: [
       {
         filter_type: 'array',
@@ -1274,6 +1278,10 @@ const riskListCol = [
 ];
 
 const riskListColNoBtn = [
+  {
+    label: 'UID',
+    prop: 'userUid',
+  },
   {
     label: '异常设备号',
     prop: 'devNo',
@@ -1313,6 +1321,7 @@ const riskListColNoBtn = [
 ];
 
 const riskListConfig = [
+  
   {
     type: 'date_rank',
     label: '时间',
