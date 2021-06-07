@@ -5,6 +5,7 @@
     </div>
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="addLine">参数编辑</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
