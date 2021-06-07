@@ -2871,6 +2871,7 @@ export default class api {
     return Fetch.post('/admin/user/delete/other-domain-name', data);
   }
   
+  
 
   
 
