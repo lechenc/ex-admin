@@ -1311,17 +1311,16 @@ const refundRecordConfig = [
   //   value: '',
   //   list: [{ label: '已结算', value: 1 }, { label: '待结算', value: 0 }],
   // },
-  // {
-  //   type: 'select',
-  //   label: '结算状态',
-  //   prop: 'jiesuanzhuangtai',
-  //   value: '',
-  //   list: [
-  //     { label: '待结算', value: 1 },
-  //     { label: '已结算', value: 2 }
-  //   ]
-  //   //, { label: '现货返佣', value: 2 }
-  // },
+  {
+    type: 'select',
+    label: '结算状态',
+    prop: 'isReward',
+    value: '',
+    list: [
+      { label: '未结算', value: 0 },
+      { label: '已结算', value: 1 }
+    ]
+  },
 ];
 
 const refundRecordNewCol = [
