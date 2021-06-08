@@ -48,7 +48,7 @@ export default {
   methods: {
     // getlist
     async getList() {
-      const res = await $api.apiGetPeopleManagementList({});
+      const res = await $api.apiGetStructureTreeList({});
       if (res) {
         this.treeData = res.data.data;
       }

@@ -54,7 +54,7 @@
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+          <el-tree default-expand-all :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
@@ -78,7 +78,7 @@
           <el-input v-model="userForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+          <el-tree :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
@@ -112,10 +112,10 @@ export default {
   },
   data() {
     return {
-      userRules:{},
-      userDialogTitle:'',
-      userDialogVisible:false,
-      userForm:{},
+      userRules: {},
+      userDialogTitle: '',
+      userDialogVisible: false,
+      userForm: {},
       sidebarForm: {
         id: '',
         name: '',
@@ -123,10 +123,10 @@ export default {
         status: false,
         googleCode: '',
       },
-      userBtnLoading:false,
+      userBtnLoading: false,
       sidebarDialogTitle: '',
       sidebarDialogVisible: false,
-      
+
       sidebarBtnLoading: false,
       defaultProps: {
         children: 'children',
@@ -263,13 +263,15 @@ export default {
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
-        
+
         this.sidebarForm = newData;
         // this.sidebarForm.desctext = this.sidebarForm.desctext;
-        
+
         // this.currentForm.desctext = this.currentForm.desctext;
         // const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
-        this.$refs.sidebarTree.setCheckedNodes(this.currentData.childrenMenu);
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
+        });
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
           this.$message.error({
