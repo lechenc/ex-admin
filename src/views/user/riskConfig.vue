@@ -26,7 +26,7 @@
             <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.loginIpLimit" @input="checkVal('loginIpLimit')" :disabled="!isModify"></el-input>
           </el-form-item>
 
-          <el-form-item label="相同的注册设备号人数达到: " prop="registerDeviceLimit" :label-width="labelWidth">
+          <el-form-item label="相同的设备号人数达到: " prop="registerDeviceLimit" :label-width="labelWidth">
             <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerDeviceLimit" @input="checkVal('registerDeviceLimit')" :disabled="!isModify"></el-input>
           </el-form-item>
 
