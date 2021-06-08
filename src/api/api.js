@@ -2772,7 +2772,7 @@ export default class api {
   }
 
   // 系统管理 人员管理 权限列表 删除菜单
-  static apiEditPeopleManagementList(data) {
+  static apiDelPeopleManagementList(data) {
     return Fetch.post('/admin/user/delete/sys-user', data);
   }
 

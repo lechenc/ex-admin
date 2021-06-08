@@ -71,7 +71,7 @@
       </div>
     </el-dialog>
 
-    <!-- 添加部门 -->
+    <!-- 添加人员 -->
     <el-dialog :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
@@ -195,7 +195,8 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['tree'].getCheckedKeys();
           this.sidebarForm.menuId = tmpCheck.join(',');
-          const { id, name, menuId, status, googleCode } = this.sidebarForm;
+          console.log('this.sidebarForm',this.sidebarForm)
+          const { roleId, name, menuId, status, googleCode } = this.sidebarForm;
           if (this.sidebarBtnLoading) return;
 
           const params = {
@@ -207,15 +208,17 @@ export default {
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
+          console.log('params',params)
+          console.log('roleId',roleId)
           const res =
-            id === ''
+            roleId === ''
               ? await $api.apiAddPeopleManagementList(params)
               : await $api.apiEditPeopleManagementList({
-                  id,
+                  roleId,
                   ...params,
                 });
           if (res) {
-            let txt = id === '' ? '添加成功' : '编辑成功';
+            let txt = roleId === '' ? '添加成功' : '编辑成功';
             this.$message({
               message: txt,
               type: 'success',
@@ -261,6 +264,7 @@ export default {
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
+        console.log('data',data)
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
 
