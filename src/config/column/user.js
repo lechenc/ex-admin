@@ -1210,33 +1210,37 @@ const moveRelationshipConfig = [
 ];
 
 const riskListCol = [
+  // {
+  //   label: '异常设备号',
+  //   prop: 'devNo',
+  // },
+  // {
+  //   label: '异常注册IP',
+  //   prop: 'registerIp',
+  // },
+  // {
+  //   label: '异常登录IP',
+  //   prop: 'loginIp',
+  // },
+  // {
+  //   label: '迁移至的UID',
+  //   prop: 'laterParentUid',
+  // },
   {
-    label: 'UID',
-    prop: 'userUid',
-  },
-  {
-    label: '异常设备号',
-    prop: 'devNo',
-  },
-  {
-    label: '异常注册IP',
-    prop: 'registerIp',
-  },
-  {
-    label: '异常登录IP',
-    prop: 'loginIp',
-  },
-  {
-    label: '迁移至的UID',
-    prop: 'laterParentUid',
+    label: '异常类型',
+    prop: 'limitType',
+    width: 160,
+    type: 'filter',
+    show_type: 'text',
+    filters: [ { val: 0, text: '异常设备' }, { val: 1, text: '异常注册IP' }, { val: 2, text: '异常登录' }],
   },
   {
     label: '当前状态',
     prop: 'disposeStatus',
-    width: 90,
+    width:160,
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '异常处理' }, { val: 2, text: '正常处理' }],
+    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '已按异常处理' }, { val: 2, text: '已按正常处理' }],
   },
   {
     label: '创建时间',
@@ -1267,7 +1271,6 @@ const riskListCol = [
       },
 
       {
-
         label: '查看详情',
         fn: 'detail',
         type: 'primary',
@@ -1278,25 +1281,29 @@ const riskListCol = [
 ];
 
 const riskListColNoBtn = [
+  // {
+  //   label: '异常设备号',
+  //   prop: 'devNo',
+  // },
+  // {
+  //   label: '异常注册IP',
+  //   prop: 'registerIp',
+  // },
+  // {
+  //   label: '异常登录IP',
+  //   prop: 'loginIp',
+  // },
+  // {
+  //   label: '迁移至的UID',
+  //   prop: 'laterParentUid',
+  // },
   {
-    label: 'UID',
-    prop: 'userUid',
-  },
-  {
-    label: '异常设备号',
-    prop: 'devNo',
-  },
-  {
-    label: '异常注册IP',
-    prop: 'registerIp',
-  },
-  {
-    label: '异常登录IP',
-    prop: 'loginIp',
-  },
-  {
-    label: '迁移至的UID',
-    prop: 'laterParentUid',
+    label: '异常类型',
+    prop: 'limitType',
+    width: 90,
+    type: 'filter',
+    show_type: 'text',
+    filters: [ { val: 0, text: '异常设备' }, { val: 1, text: '异常注册IP' }, { val: 2, text: '异常登录' }],
   },
   {
     label: '当前状态',
@@ -1304,7 +1311,7 @@ const riskListColNoBtn = [
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '异常处理' }, { val: 2, text: '正常处理' }],
+    filters: [{ val: 0, text: '待处理' }, { val: 1, text: '已按异常处理' }, { val: 2, text: '已按正常处理' }],
   },
   {
     label: '创建时间',
@@ -1321,7 +1328,6 @@ const riskListColNoBtn = [
 ];
 
 const riskListConfig = [
-  
   {
     type: 'date_rank',
     label: '时间',
@@ -1330,18 +1336,12 @@ const riskListConfig = [
     value: '',
   },
   {
-    type: 'text',
-    label: '异常注册IP',
-    prop: 'registerIp',
+    type: 'select',
+    label: '异常类型',
+    prop: 'limitType',
     value: '',
-    placeHolder: '请输入',
-  },
-  {
-    type: 'text',
-    label: '异常登录ip',
-    prop: 'loginIp',
-    value: '',
-    placeHolder: '请输入',
+
+    list: [{ value: 0, label: '异常设备' }, { value: 1, label: '异常注册IP' }, { value: 2, label: '异常登录' }],
   },
 
   {
@@ -1350,7 +1350,7 @@ const riskListConfig = [
     prop: 'disposeStatus',
     value: '',
     // 0=待处理,1=异常处理,2=正常处理
-    list: [{ value: 0, label: '待处理' }, { value: 1, label: '异常处理' }, { value: 2, label: '正常处理' }],
+    list: [{ value: 0, label: '待处理' }, { value: 1, label: '已按异常处理' }, { value: 2, label: '已按正常处理' }],
   },
 ];
 
