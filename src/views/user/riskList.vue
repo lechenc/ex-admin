@@ -30,37 +30,37 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24"  v-if="limitType==0" >
+        <el-row :span="24" v-if="limitType == 0">
           <el-col :span="23">
-            <el-form-item label="异常设备号: "> <el-input :disabled="true" v-model="currentForm.abnormalDevNo"></el-input></el-form-item>
+            <el-form-item label="异常设备号: "> <el-input :disabled="true" v-model="limitIp"></el-input></el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="limitType==1">
+        <el-row :span="24" v-if="limitType == 1">
           <el-col :span="23">
-            <el-form-item label="异常注册IP: "> <el-input :disabled="true" v-model="currentForm.abnormalRegisterIp"></el-input> </el-form-item>
+            <el-form-item label="异常注册IP: "> <el-input :disabled="true" v-model="limitIp"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="limitType==2">
+        <el-row :span="24" v-if="limitType == 2">
           <el-col :span="23">
-            <el-form-item label="异常登录IP: "> <el-input :disabled="true" v-model="currentForm.abnormalLoginIp"></el-input> </el-form-item>
+            <el-form-item label="异常登录IP: "> <el-input :disabled="true" v-model="limitIp"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="limitType==1">
+        <el-row :span="24" v-if="limitType == 1">
           <el-col :span="23">
             <el-form-item label="异常注册IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalRegisterIpUids"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="limitType==2">
+        <el-row :span="24" v-if="limitType == 2">
           <el-col :span="23">
             <el-form-item label="异常登录IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalLoginIpUids"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24" v-if="limitType==0">
+        <el-row :span="24" v-if="limitType == 0">
           <el-col :span="23">
             <el-form-item label="异常设备号关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalDevNoUids"></el-input> </el-form-item>
           </el-col>
@@ -178,7 +178,8 @@ export default {
     async doHandle(data) {
       let { fn, row } = data;
       this.row = row;
-
+      this.limitType = row.limitType;
+      this.limitIp = row.serialNumber;
       if (fn === 'detail') {
         this.dialogLoading = true;
         this.dialogFormVisible = true;
@@ -193,7 +194,6 @@ export default {
           this.currentForm = data;
         }
       }
-      this.limitType = row.limitType;
 
       if (fn === 'edit') {
         this.dialogLoading = true;

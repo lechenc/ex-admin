@@ -1232,12 +1232,17 @@ const riskListCol = [
     width: 160,
     type: 'filter',
     show_type: 'text',
-    filters: [ { val: 0, text: '异常设备' }, { val: 1, text: '异常注册IP' }, { val: 2, text: '异常登录' }],
+    filters: [{ val: 0, text: '异常设备' }, { val: 1, text: '异常注册IP' }, { val: 2, text: '异常登录' }],
+  },
+
+  {
+    label: '异常数据',
+    prop: 'serialNumber',
   },
   {
     label: '当前状态',
     prop: 'disposeStatus',
-    width:160,
+    width: 160,
     type: 'filter',
     show_type: 'text',
     filters: [{ val: 0, text: '待处理' }, { val: 1, text: '已按异常处理' }, { val: 2, text: '已按正常处理' }],
@@ -1249,10 +1254,6 @@ const riskListCol = [
   {
     label: '处理时间',
     prop: 'disposeTime',
-  },
-  {
-    label: '更新时间',
-    prop: 'updateTime',
   },
   {
     label: '操作',
@@ -1303,7 +1304,11 @@ const riskListColNoBtn = [
     width: 90,
     type: 'filter',
     show_type: 'text',
-    filters: [ { val: 0, text: '异常设备' }, { val: 1, text: '异常注册IP' }, { val: 2, text: '异常登录' }],
+    filters: [{ val: 0, text: '异常设备' }, { val: 1, text: '异常注册IP' }, { val: 2, text: '异常登录' }],
+  },
+  {
+    label: '异常数据',
+    prop: 'serialNumber',
   },
   {
     label: '当前状态',
@@ -1320,10 +1325,6 @@ const riskListColNoBtn = [
   {
     label: '处理时间',
     prop: 'disposeTime',
-  },
-  {
-    label: '更新时间',
-    prop: 'updateTime',
   },
 ];
 
