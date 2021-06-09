@@ -22,6 +22,7 @@ axios.defaults.baseURL = window.SERVER_PATH
 // axios.defaults.baseURL = "http://47.57.8.70:16422"; // 开发
 // axios.defaults.baseURL = process.env.VUE_APP_BASE_API; // 配置环境
 
+
 // request 拦截器
 axios.interceptors.request.use(
   function(config) {
