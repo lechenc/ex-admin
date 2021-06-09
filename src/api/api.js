@@ -2870,6 +2870,13 @@ export default class api {
   static apiSetDeleteDomainNameFixed(data) {
     return Fetch.post('/admin/user/delete/other-domain-name', data);
   }
+
+  // 代理管理 代理列表 参数配置
+  static apiParamsConfirmOp(data) {
+    return Fetch.post('/admin/user/delete/other-domain-name', data);
+  }
+
+  
   
   
 

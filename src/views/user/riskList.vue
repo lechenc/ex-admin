@@ -19,38 +19,50 @@
     <el-dialog :title="checkTitle" :visible.sync="dialogFormVisible" width="700px">
       <el-form v-loading="dialogLoading" :model="currentForm" label-width="120px" ref="currentForm" :rules="rules">
         <el-row :span="24">
-          <el-col :span="23">
-            <el-form-item label="异常设备号: "> <el-input :disabled="true" v-model="currentForm.abnormalDevNo" ></el-input></el-form-item>
+          <el-col :span="12">
+            <el-form-item label="异常类型: ">
+              <template>
+                <el-select disabled v-model="limitType" placeholder="">
+                  <el-option v-for="item in limitTypeArr" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+                </el-select>
+              </template>
+            </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="limitType == 0">
           <el-col :span="23">
-            <el-form-item label="异常注册IP: "> <el-input :disabled="true" v-model="currentForm.abnormalRegisterIp" ></el-input> </el-form-item>
+            <el-form-item label="异常设备号: "> <el-input :disabled="true" v-model="limitIp"></el-input></el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="limitType == 1">
           <el-col :span="23">
-            <el-form-item label="异常登录IP: "> <el-input :disabled="true" v-model="currentForm.abnormalLoginIp" ></el-input> </el-form-item>
+            <el-form-item label="异常注册IP: "> <el-input :disabled="true" v-model="limitIp"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="limitType == 2">
           <el-col :span="23">
-            <el-form-item label="异常注册IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalRegisterIpUids" ></el-input> </el-form-item>
+            <el-form-item label="异常登录IP: "> <el-input :disabled="true" v-model="limitIp"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="limitType == 1">
           <el-col :span="23">
-            <el-form-item label="异常登录IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalLoginIpUids" ></el-input> </el-form-item>
+            <el-form-item label="异常注册IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalRegisterIpUids"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="limitType == 2">
           <el-col :span="23">
-            <el-form-item label="异常设备号关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalDevNoUids" ></el-input> </el-form-item>
+            <el-form-item label="异常登录IP关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalLoginIpUids"></el-input> </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24" v-if="limitType == 0">
+          <el-col :span="23">
+            <el-form-item label="异常设备号关联UID: "> <el-input :disabled="true" rows="5" type="textarea" v-model="currentForm.abnormalDevNoUids"></el-input> </el-form-item>
           </el-col>
         </el-row>
 
@@ -107,12 +119,18 @@ export default {
   },
   data() {
     return {
+      limitType: '',
       dialogLoading: false,
       isDetail: false,
       typeArr: [
         { value: 0, label: '待处理' },
         { value: 1, label: '异常处理' },
         { value: 2, label: '正常处理' },
+      ],
+      limitTypeArr: [
+        { value: 0, label: '异常设备' },
+        { value: 1, label: '异常注册IP' },
+        { value: 2, label: '异常登录' },
       ],
       currentForm: {},
       btnLoading: false,
@@ -160,7 +178,8 @@ export default {
     async doHandle(data) {
       let { fn, row } = data;
       this.row = row;
-
+      this.limitType = row.limitType;
+      this.limitIp = row.serialNumber;
       if (fn === 'detail') {
         this.dialogLoading = true;
         this.dialogFormVisible = true;
@@ -172,9 +191,6 @@ export default {
         if (res) {
           this.dialogLoading = false;
           let data = res.data.data;
-          data.abnormalRegisterIpUids = data.abnormalRegisterIpUids.split(',');
-          data.abnormalLoginIpUids = data.abnormalLoginIpUids.split(',');
-          data.abnormalDevNoUids = data.abnormalDevNoUids.split(',');
           this.currentForm = data;
         }
       }
@@ -191,9 +207,6 @@ export default {
           this.dialogLoading = false;
           this.curId = row.id;
           let data = res.data.data;
-          data.abnormalRegisterIpUids =  JSON.parse(data.abnormalRegisterIpUids).join();
-          data.abnormalLoginIpUids =  JSON.parse(data.abnormalLoginIpUids).join();
-          data.abnormalDevNoUids = JSON.parse(data.abnormalDevNoUids).join();
           this.currentForm = data;
         }
       }

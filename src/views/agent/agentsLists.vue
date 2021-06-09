@@ -5,6 +5,7 @@
     </div>
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">参数编辑</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
@@ -83,7 +84,7 @@
 
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="是否本人手续费返佣" prop="selfCommission">
+            <el-form-item :label-width="formLabelWidth" label="是否本人手续费返佣" prop="selfCommission">
               <el-row :span="24">
                 <el-col :span="8">
                   <el-select v-model="cForm.selfCommission" placeholder="请选择">
@@ -265,6 +266,33 @@
         <el-button type="primary" @click="releaseMoneyconfirmOp" :loading="releaseMoneybtnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 参数配置 -->
+    <el-dialog title="代理商参数设置" width="600px" :visible.sync="paramsVisible">
+      <el-form :model="paramsForm" :label-width="formLabelWidth" ref="paramsForm" :rules="paramsRules">
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="CPT模式允许超过100%可设置范围" prop="agentUID">
+              <el-input type="text" v-model.trim="paramsForm.agentUID" placeholder="请输入">
+                <div slot="append">%</div>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="管理员谷歌" prop="googleCode">
+              <el-input type="text" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="paramsVisible = false">取 消</el-button>
+        <el-button type="primary" @click="paramsConfirmOp" :loading="paramsBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -293,11 +321,19 @@ export default {
       }
     };
     return {
+      paramsRules: {
+        agentUID: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      paramsForm: {},
+      paramsVisible: false, // 参数配置
+      paramsBtnLoading: false,
       emailReg: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
       phoneReg: /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/,
       listLoading: false, // 表格loading
       btnLoading: false, // 提交loading
       calLoading: false,
+
       list: [], //委托列表
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
@@ -320,7 +356,7 @@ export default {
         { label: '团队长模式', value: 2 },
       ], // 代理模式列表 这个版本写死,以后可能会用接口动态获取
       agentLevelList: [], // 代理级别列表,动态获取
-      formLabelWidth: '150px',
+      formLabelWidth: '170px',
       editBeforeLevelMode: 0, // 原先的模式的状态
       userId: '',
       cForm: {
@@ -495,6 +531,38 @@ export default {
     },
   },
   methods: {
+    // 参数配置确定
+    paramsConfirmOp() {
+      this.$refs['paramsForm'].validate(async (valid) => {
+        if (valid) {
+          const { agentUID, googleCode } = this.paramsForm;
+          if (this.paramsBtnLoading) return;
+          const params = {
+            agentUID,
+            googleCode,
+          };
+
+          this.paramsBtnLoading = true;
+          const res = await $api.apiParamsConfirmOp(params);
+          if (res) {
+            this.$message({ message: '设置成功', type: 'success' });
+            this.paramsVisible = false;
+            this.getList();
+          }
+          this.paramsBtnLoading = false;
+        }
+      });
+    },
+    editParams() {
+      this.paramsVisible = true;
+      this.$nextTick(() => {
+        this.$refs['paramsForm'].resetFields();
+        this.paramsForm = {
+          agentUID: '',
+          googleCode: '',
+        };
+      });
+    },
     changeDecimal(val) {
       this.releaseMoneyForm.amount = '';
       let decimal = this.coin_List.filter((v) => v['label'] == val)[0].decimalPlaces;
@@ -536,7 +604,7 @@ export default {
           const res = await $api.apiReleaseAgentMargin(params);
           if (res) {
             this.$message.success('操作成功');
-            this.releaseMoneyVisible = false
+            this.releaseMoneyVisible = false;
             this.getList();
           }
           this.releaseMoneybtnLoading = false;
