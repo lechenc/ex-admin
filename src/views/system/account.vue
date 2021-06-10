@@ -113,13 +113,6 @@ export default {
       passwordType: 'password',
       oldPwd: '', // 修改密码时候记录原密码，修改过就传密码，否则就不传这个字段（跟后台约定的）
       userForm: {
-        authGoogle: '',
-        googleCode: '',
-        account: '',
-        password: '',
-        roleId: '',
-        status: false,
-        id: '',
       },
       role_list: [], // 角色列表
       rules: {

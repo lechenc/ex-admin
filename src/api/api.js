@@ -2865,15 +2865,15 @@ export default class api {
     return Fetch.post('/admin/user/delete/other-domain-name', data);
   }
 
-  // // 系统管理--登录
-  // static login(data) {
-  //   return Fetch.postlogin('/admin/user/login', data);
-  // }
-
-  // 系统管理--登录(新)
+  // 系统管理--登录
   static login(data) {
-    return Fetch.postlogin('/admin/user/newlogin', data);
+    return Fetch.postlogin('/admin/user/login', data);
   }
+
+  // // 系统管理--登录(新)
+  // static login(data) {
+  //   return Fetch.postlogin('/admin/user/newlogin', data);
+  // }
 
   // 系统管理  架构树
   static apiGetStructureTreeList(data) {
@@ -2883,5 +2883,15 @@ export default class api {
   // 系统管理 人员管理 左侧结构
   static apiGetPeopleManagementList(data) {
     return Fetch.post('/admin/user/sys-role-all', data);
+  }
+
+  // 系统管理 人员管理 权限列表 添加人员
+  static apiAddUserPeopleManagementList(data) {
+    return Fetch.post('/admin/user/add/sys-user', data);
+  }
+
+  // 系统管理 人员管理 权限列表 编辑人员
+  static apiEditUserPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-user', data);
   }
 }

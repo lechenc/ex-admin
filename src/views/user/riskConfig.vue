@@ -14,21 +14,31 @@
         <el-button size="medium" type="primary" plain @click="$router.go(-1)">返回</el-button>
       </el-col>
     </el-row>
-    <el-form :model="form" ref="form" :rules="rules" label-width="160px" size="medium">
+    <el-form :model="form" ref="form" :rules="rules" label-width="180px" size="medium">
       <el-card class="box-card">
         <div class="box-card-con">
           <H5>风控参数配置</H5>
-          <el-form-item label="相同的注册IP人数达到: " prop="registerIpLimit" :label-width="labelWidth">
-            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerIpLimit" @input="checkVal('registerIpLimit')" :disabled="!isModify"></el-input>
-          </el-form-item>
-
-          <el-form-item label="相同的登录IP人数达到: " prop="loginIpLimit" :label-width="labelWidth">
-            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.loginIpLimit" @input="checkVal('loginIpLimit')" :disabled="!isModify"></el-input>
-          </el-form-item>
-
-          <el-form-item label="相同的注册设备号人数达到: " prop="registerDeviceLimit" :label-width="labelWidth">
-            <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerDeviceLimit" @input="checkVal('registerDeviceLimit')" :disabled="!isModify"></el-input>
-          </el-form-item>
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="相同的注册IP人数达到: " prop="registerIpLimit">
+                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerIpLimit" @input="checkVal('registerIpLimit')" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="相同的登录IP人数达到: " prop="loginIpLimit">
+                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.loginIpLimit" @input="checkVal('loginIpLimit')" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="相同的设备号人数达到: " prop="registerDeviceLimit">
+                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerDeviceLimit" @input="checkVal('registerDeviceLimit')" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
           <div v-if="btnArr.includes('detailEdit')">
             <div class="middle" v-if="!isModify">

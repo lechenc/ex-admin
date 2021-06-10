@@ -32,10 +32,10 @@
           </el-tree>
         </div>
       </div>
-      <div class="center-content">
+      <div v-if="contentIsShow" class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
           <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
-          <el-button type="primary" size="medium" @click="addpeopleManagement">添加角色</el-button>
+          <el-button type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
           <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -48,7 +48,7 @@
     </div>
 
     <!-- 添加部门 -->
-    <el-dialog :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
+    <el-dialog width="600px" :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
       <el-form :model="sidebarForm" ref="sidebarForm" :rules="sidebarRules">
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
@@ -72,26 +72,50 @@
     </el-dialog>
 
     <!-- 添加人员 -->
-    <el-dialog :title="userDialogTitle" :visible.sync="userDialogVisible">
+    <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
-        <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="userForm.name" autocomplete="off"></el-input>
+        <el-form-item label="账号名" :label-width="formLabelWidth" prop="name">
+          <el-input type="text" v-model="userForm.name" autocomplete="off"></el-input>
         </el-form-item>
+
+        <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
+          <el-input type="password" show-password v-model="userForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="所属部门" :label-width="formLabelWidth" prop="roleName">
+          <el-input type="text" disabled v-model="userForm.roleName" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="职务" :label-width="formLabelWidth" prop="jobName">
+          <el-input type="text" v-model="userForm.jobName" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="级别" :label-width="formLabelWidth" prop="jobName">
+          <el-radio v-model="userForm.isOwer" :label="0" border>普通成员</el-radio>
+          <el-radio v-model="userForm.isOwer" :label="1" border>部门负责人</el-radio>
+        </el-form-item>
+
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
           <el-tree :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+        </el-form-item>
+
+        <el-form-item :label="userForm.id === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
+          <el-input v-model="userForm.googleCode" autocomplete="off">
+            <div slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</div>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="adminGoogleCode">
+          <el-input @input="checkVal('userForm', 'adminGoogleCode')" v-model.trim="userForm.adminGoogleCode" placeholder="请输入"></el-input>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
           <el-switch v-model="userForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
         </el-form-item>
-
-        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-          <el-input @input="checkVal('userForm', 'googleCode')" v-model.trim="userForm.googleCode" placeholder="请输入"></el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="userDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sidebarConfirmOp" :loading="userBtnLoading">确 定</el-button>
+        <el-button type="primary" @click="userConfirmOp" :loading="userBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -112,7 +136,15 @@ export default {
   },
   data() {
     return {
-      userRules: {},
+      contentIsShow: false,
+      userRules: {
+        name: [{ required: true, message: '必填', trigger: 'blur' }],
+        password: [{ required: true, message: '必填', trigger: 'blur' }],
+        roleName: [{ required: true, message: '必填', trigger: 'blur' }],
+        jobName: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        adminGoogleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
       userDialogTitle: '',
       userDialogVisible: false,
       userForm: {},
@@ -179,9 +211,31 @@ export default {
     };
   },
   methods: {
+    // 获取一个谷歌密钥
+    async getGoogleCode() {
+      if (!this.userForm.name) {
+        this.$message({
+          message: '请先填写账号名',
+          type: 'error',
+        });
+        return;
+      }
+      const res = await $api.getGoogleCode({
+        account: this.userForm.name,
+      });
+      if (res) {
+        console.log('res', res);
+        this.userForm.googleCode = res.data.data.secretKey;
+        console.log('googleCode', this.userForm.googleCode);
+        // 防止默认校验提示空，就主动校验
+        this.$nextTick(() => {
+          this.$refs.userForm.validateField('googleCode');
+        });
+      }
+    },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
-      this.getList(data.roleId);
+      this.getList(this.currentData.roleId);
     },
     checkVal(obj, key) {
       this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
@@ -195,7 +249,7 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['tree'].getCheckedKeys();
           this.sidebarForm.menuId = tmpCheck.join(',');
-          console.log('this.sidebarForm',this.sidebarForm)
+          console.log('this.sidebarForm', this.sidebarForm);
           const { roleId, name, menuId, status, googleCode } = this.sidebarForm;
           if (this.sidebarBtnLoading) return;
 
@@ -208,8 +262,8 @@ export default {
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
-          console.log('params',params)
-          console.log('roleId',roleId)
+          console.log('params', params);
+          console.log('roleId', roleId);
           const res =
             roleId === ''
               ? await $api.apiAddPeopleManagementList(params)
@@ -227,6 +281,48 @@ export default {
             this.getMenuList();
           }
           this.sidebarBtnLoading = false;
+        }
+      });
+    },
+    userConfirmOp() {
+      this.$refs['userForm'].validate(async (valid) => {
+        if (valid) {
+          let tmpCheck = this.$refs['userTree'].getCheckedKeys();
+          this.userForm.menuId = tmpCheck.join(',');
+          const { id, menuId, name, roleId, password, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
+          if (this.userBtnLoading) return;
+
+          const params = {
+            menuId,
+            name,
+            password,
+            roleName,
+            jobName,
+            isOwer,
+            googleCode,
+            adminGoogleCode,
+            status: status ? 1 : 0,
+            roleId,
+          };
+          this.userBtnLoading = true;
+          // 新增 编辑
+          const res =
+            id === ''
+              ? await $api.apiAddUserPeopleManagementList(params)
+              : await $api.apiEditUserPeopleManagementList({
+                  id,
+                  ...params,
+                });
+          if (res) {
+            let txt = id === '' ? '添加成功' : '编辑成功';
+            this.$message({
+              message: txt,
+              type: 'success',
+            });
+            this.userDialogVisible = false;
+            this.getList(this.currentData.roleId);
+          }
+          this.userBtnLoading = false;
         }
       });
     },
@@ -264,15 +360,10 @@ export default {
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
-        console.log('data',data)
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
 
         this.sidebarForm = newData;
-        // this.sidebarForm.desctext = this.sidebarForm.desctext;
-
-        // this.currentForm.desctext = this.currentForm.desctext;
-        // const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
         this.$nextTick(() => {
           this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
         });
@@ -329,14 +420,27 @@ export default {
       // this.getList();
     },
     addpeopleManagement() {
-      this.userDialogTitle = '添加角色';
+      this.userDialogTitle = `添加 ${this.currentData.name} 的成员`;
       this.userDialogVisible = true;
-      // this.Form.id = '';
-      // this.Form.name = '';
-      // this.Form.menuId = '';
-      // setTimeout(() => {
-      //   this.$refs.tree.setCheckedKeys([]);
-      // }, 0);
+      this.$nextTick(() => {
+        this.$refs['userForm'].resetFields();
+        this.userForm = {
+          id: '',
+          name: '',
+          password: '',
+          roleName: this.currentData.name,
+          jobName: '',
+          menuId: '',
+          isOwer: 0,
+          roleId: this.currentData.roleId,
+          googleCode: '',
+          adminGoogleCode: '',
+          status: false,
+        };
+      });
+      setTimeout(() => {
+        this.$refs.userTree.setCheckedKeys([]);
+      }, 0);
     },
     confirmOp() {
       this.$refs['Form'].validate(async (valid) => {
@@ -450,17 +554,19 @@ export default {
       this.listLoading = true;
       const res = await $api.apiGetPeopleManagementListById(params);
       if (res) {
-        const { records, total, current, pages } = res.data.data;
-        // 角色状态，0有效，1失效
-        records.forEach((v) => {
-          v['status'] = v['status'] ? true : false;
-        });
-        console.log('records', records);
-        this.list = records;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
+        // const { records, total, current, pages } = res.data.data;
+        // // 角色状态，0有效，1失效
+        // records.forEach((v) => {
+        //   v['status'] = v['status'] ? true : false;
+        // });
+        // console.log('records', records);
+        // this.list = records;
+        // this.total = total;
+        // this.pages = pages;
+        // this.current_page = current;
+        this.list = res.data.data;
       }
+      this.contentIsShow = true;
       this.listLoading = false;
     },
     // 权限菜单
@@ -503,6 +609,11 @@ export default {
 <style lang="scss">
 .peopleManagement-container {
   padding: 4px 10px 10px 10px;
+  .gcode {
+    font-size: 12px;
+    color: #304156;
+    cursor: pointer;
+  }
   .container-center {
     display: flex;
     height: 100%;
