@@ -171,6 +171,7 @@ const agentsListsColNoBtn = [
     label: '创建时间',
     prop: 'createTime',
   },
+  
   {
     label: '手续费返佣比例',
     prop: 'commissionPercent',
