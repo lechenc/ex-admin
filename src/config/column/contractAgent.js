@@ -426,99 +426,49 @@ const agentsListsDetailTeam = [
 
 const businessListsCol = [
   {
-    label: '商务账号',
+    label: '商务UID',
+    prop: 'uid',
+  },
+  {
+    label: '商务级别',
+    prop: 'level',
+  },
+  {
+    label: '上级商务UID',
+    prop: 'upperUid',
+  },
+  {
+    label: '登录名',
     prop: 'username',
   },
   {
-    label: '商务UID',
-    prop: 'businessUid',
-  },
-  {
-    label: '代理模式',
-    prop: 'agentMode',
+    label: '是否本人手续费返佣',
+    prop: 'selfCommission',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '手续费模式', val: 1 }],
+    filters: [{ text: '是', val: 1 }, { text: '否', val: 1 }],
+  },
+
+  {
+    label: '手续费比例',
+    prop: 'commissionPercent',
   },
   {
-    label: '代理级别',
-    prop: 'level',
-    // type: 'filter',
-    // show_type: 'text',
-    // filters: [
-    //   { text: '限价', val: 1, type: '' },
-    //   { text: '市价', val: 2, type: 'warning' },
-    // ]
-  },
-  {
-    label: '手续费返佣比例',
-    prop: 'feeCommission',
-  },
-  {
-    label: '低流量返佣比例',
-    prop: 'feeCommissionLow',
-  },
-  {
-    label: '返佣结算时间',
-    prop: 'delayUnit',
+    label: '手续费返佣结算时间',
+    prop: 'feeDelayUnit',
     type: 'textAndfilter',
     show_type: 'text',
-    filters: [{ text: '周', val: 1 }, { text: '月', val: 2 }],
-    prop2: 'delayDay',
+    filters: [{ text: '周', val: 1 }, { text: '月', val: 2 }, { text: '日', val: 3 }],
+    prop2: 'feeDelayDay',
   },
 
   {
-    label: '持仓列表开关',
-    prop: 'positionListSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '平仓列表开关',
-    prop: 'closePositionListSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '充币列表开关',
-    prop: 'depositListSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '提币列表开关',
-    prop: 'withdrawListSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '用户资产开关',
-    prop: 'userAssetsSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '法币订单开关',
-    prop: 'otcSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
+    label: '更新时间',
+    prop: 'updateTime',
   },
 
   {
-    label: '低流量开关',
-    prop: 'lowSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '限制登录开关',
+    label: '登录开关',
     prop: 'loginSwitch',
     type: 'filter',
     show_type: 'text',
@@ -531,13 +481,7 @@ const businessListsCol = [
     show_type: 'text',
     filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
   },
-  {
-    label: '限制提币开关',
-    prop: 'withdrawSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
+
   {
     label: '操作',
     prop: 'action',
@@ -562,108 +506,95 @@ const businessListsCol = [
 
 const businessListsColNoBtn = [
   {
-    label: '商务账号',
+    label: '商务UID',
+    prop: 'uid',
+  },
+  {
+    label: '商务级别',
+    prop: 'level',
+  },
+  {
+    label: '上级商务UID',
+    prop: 'upperUid',
+  },
+  {
+    label: '登录名',
     prop: 'username',
   },
   {
-    label: '商务UID',
-    prop: 'businessUid',
-  },
-  {
-    label: '代理模式',
-    prop: 'agentMode',
+    label: '是否本人手续费返佣',
+    prop: 'selfCommission',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '手续费模式', val: 1 }],
+    filters: [{ text: '是', val: 1 }, { text: '否', val: 1 }],
+  },
+
+  {
+    label: '手续费比例',
+    prop: 'commissionPercent',
   },
   {
-    label: '代理级别',
-    prop: 'level',
-    // type: 'filter',
-    // show_type: 'text',
-    // filters: [
-    //   { text: '限价', val: 1, type: '' },
-    //   { text: '市价', val: 2, type: 'warning' },
-    // ]
-  },
-  {
-    label: '手续费返佣比例',
-    prop: 'feeCommission',
-  },
-  {
-    label: '低流量返佣比例',
-    prop: 'feeCommissionLow',
-  },
-  {
-    label: '低流量开关',
-    prop: 'lowSwitch',
-    type: 'filter',
+    label: '手续费返佣结算时间',
+    prop: 'feeDelayUnit',
+    type: 'textAndfilter',
     show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
+    filters: [{ text: '周', val: 1 }, { text: '月', val: 2 }, { text: '日', val: 3 }],
+    prop2: 'feeDelayDay',
   },
+
   {
-    label: '限制登录开关',
-    prop: 'loginSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '返佣开关',
-    prop: 'commissionSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
-  },
-  {
-    label: '限制提币开关',
-    prop: 'withdrawSwitch',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }],
+    label: '更新时间',
+    prop: 'updateTime',
   },
 ];
 
 const businessListsConfig = [
   {
-    type: 'text',
+    type: 'onlyNumber',
     label: '商务UID',
     prop: 'businessUid',
     value: '',
     placeHolder: '请输入',
   },
   {
-    type: 'select',
-    label: '代理模式',
-    prop: 'agentMode',
+    type: 'onlyNumber',
+    label: '商务UID',
+    prop: 'upperUid',
     value: '',
-    list: [{ label: '手续费模式', value: 1 }],
+    placeHolder: '请输入',
   },
   {
     type: 'select',
-    label: '低流量开关',
-    prop: 'lowSwitch',
+    label: '商务级别',
+    prop: 'commissionLevel',
     value: '',
-    list: [{ label: '开启', value: 1 }, { label: '关闭', value: 0 }],
+    list: [],
   },
   {
     type: 'select',
-    label: '返佣开关',
+    label: '是否本人手续费',
+    prop: 'selfCommission',
+    value: '',
+    list: [{ label: '是', value: 1 }, { label: '否', value: 0 }],
+  },
+  {
+    type: 'select',
+    label: '返佣模式',
     prop: 'commissionSwitch',
     value: '',
-    list: [{ label: '开启', value: 1 }, { label: '关闭', value: 0 }],
+    list: [{ label: 'ALPEX模式', value: 1 }, { label: 'CPT模式', value: 0 }],
   },
   {
     type: 'select',
-    label: '限制登录开关',
+    label: '登录开关',
     prop: 'loginSwitch',
     value: '',
     list: [{ label: '开启', value: 1 }, { label: '关闭', value: 0 }],
   },
   {
     type: 'select',
-    label: '限制提币开关',
-    prop: 'withdrawSwitch',
+    label: '返佣开关',
+    prop: 'commissionSwitch1',
     value: '',
     list: [{ label: '关闭', value: 0 }, { label: '开启', value: 1 }],
   },
@@ -1045,7 +976,6 @@ const teamAssetsCol = [
   {
     label: '自身获得手续费合计',
     prop: 'myselfStat',
-
   },
   // {
   //   label: '下面整条链团队长合计',
@@ -1210,7 +1140,7 @@ const refundRecordCol = [
     width: 120,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '已结算', val: 1 }, { text: '未结算', val: 0 }]
+    filters: [{ text: '已结算', val: 1 }, { text: '未结算', val: 0 }],
   },
   {
     label: '仓位ID',
@@ -1323,10 +1253,7 @@ const refundRecordConfig = [
     label: '结算状态',
     prop: 'isReward',
     value: '',
-    list: [
-      { label: '未结算', value: 0 },
-      { label: '已结算', value: 1 }
-    ]
+    list: [{ label: '未结算', value: 0 }, { label: '已结算', value: 1 }],
   },
 ];
 

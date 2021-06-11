@@ -74,8 +74,8 @@
     <!-- 添加人员 -->
     <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
-        <el-form-item label="账号名" :label-width="formLabelWidth" prop="name">
-          <el-input type="text" v-model="userForm.name" autocomplete="off"></el-input>
+        <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
+          <el-input type="text" v-model="userForm.account" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -90,7 +90,11 @@
           <el-input type="text" v-model="userForm.jobName" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="级别" :label-width="formLabelWidth" prop="jobName">
+        <el-form-item label="备注" :label-width="formLabelWidth" prop="name">
+          <el-input type="text" v-model="userForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="级别" :label-width="formLabelWidth" prop="isOwer">
           <el-radio v-model="userForm.isOwer" :label="0" border>普通成员</el-radio>
           <el-radio v-model="userForm.isOwer" :label="1" border>部门负责人</el-radio>
         </el-form-item>
@@ -126,7 +130,7 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig } from '@/config/column/system';
 import $api from '@/api/api';
-
+import mMd5 from '@/utils/module_md5';
 export default {
   name: 'PeopleManagement',
   components: {
@@ -139,6 +143,8 @@ export default {
       contentIsShow: false,
       userRules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
+        account: [{ required: true, message: '必填', trigger: 'blur' }],
+
         password: [{ required: true, message: '必填', trigger: 'blur' }],
         roleName: [{ required: true, message: '必填', trigger: 'blur' }],
         jobName: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -249,7 +255,6 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['tree'].getCheckedKeys();
           this.sidebarForm.menuId = tmpCheck.join(',');
-          console.log('this.sidebarForm', this.sidebarForm);
           const { roleId, name, menuId, status, googleCode } = this.sidebarForm;
           if (this.sidebarBtnLoading) return;
 
@@ -264,15 +269,14 @@ export default {
           // 新增 编辑
           console.log('params', params);
           console.log('roleId', roleId);
-          const res =
-            roleId === ''
-              ? await $api.apiAddPeopleManagementList(params)
-              : await $api.apiEditPeopleManagementList({
-                  roleId,
-                  ...params,
-                });
+          const res = !roleId
+            ? await $api.apiAddPeopleManagementList(params)
+            : await $api.apiEditPeopleManagementList({
+                roleId,
+                ...params,
+              });
           if (res) {
-            let txt = roleId === '' ? '添加成功' : '编辑成功';
+            let txt = !roleId ? '添加成功' : '编辑成功';
             this.$message({
               message: txt,
               type: 'success',
@@ -289,13 +293,14 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['userTree'].getCheckedKeys();
           this.userForm.menuId = tmpCheck.join(',');
-          const { id, menuId, name, roleId, password, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
+          const { id, menuId, name, roleId, password, account, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
           if (this.userBtnLoading) return;
 
           const params = {
+            account,
             menuId,
             name,
-            password,
+            password: mMd5.md5(password),
             roleName,
             jobName,
             isOwer,
@@ -408,15 +413,15 @@ export default {
     },
     doSearch(data) {
       this.current_page = 1;
-      this.search_params_obj = data;
-      this.getList();
+      // this.search_params_obj = data;
+      this.getList(this.currentData.roleId);
     },
     doReset() {
       this.search_params_obj = {};
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.getList();
+      this.getList(this.currentData.roleId);
       // this.getList();
     },
     addpeopleManagement() {
@@ -428,6 +433,7 @@ export default {
           id: '',
           name: '',
           password: '',
+          account: '',
           roleName: this.currentData.name,
           jobName: '',
           menuId: '',
@@ -554,17 +560,16 @@ export default {
       this.listLoading = true;
       const res = await $api.apiGetPeopleManagementListById(params);
       if (res) {
-        // const { records, total, current, pages } = res.data.data;
-        // // 角色状态，0有效，1失效
-        // records.forEach((v) => {
-        //   v['status'] = v['status'] ? true : false;
-        // });
-        // console.log('records', records);
-        // this.list = records;
-        // this.total = total;
-        // this.pages = pages;
-        // this.current_page = current;
-        this.list = res.data.data;
+        const { records, total, current, pages } = res.data.data;
+        // 角色状态，0有效，1失效
+        records.forEach((v) => {
+          v['status'] = v['status'] ? true : false;
+        });
+        console.log('records', records);
+        this.list = records;
+        this.total = total;
+        this.pages = pages;
+        this.current_page = current;
       }
       this.contentIsShow = true;
       this.listLoading = false;

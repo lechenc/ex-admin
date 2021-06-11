@@ -570,8 +570,15 @@ const peopleManagementColNoBtn = [
 const peopleManagementConfig = [
   {
     type: 'text',
-    label: '搜索成员或部门',
+    label: '搜索部门',
     prop: 'name',
+    value: '',
+    width: '350px',
+  },
+  {
+    type: 'text',
+    label: '搜索成员',
+    prop: 'name1',
     value: '',
     width: '350px',
   },

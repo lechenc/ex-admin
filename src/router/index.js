@@ -1310,18 +1310,24 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/businessLists'),
         meta: { title: '商务列表', icon: '', role: [] },
       },
-      {
-        path: 'businessListsConfig',
-        name: 'BusinessListsConfig',
-        component: () => import('@/views/agent/businessListsConfig'),
-        meta: { title: '商务等级配置', icon: '', role: [] },
-      },
-      {
-        path: 'businessListsDetail',
-        name: 'BusinessListsDetail',
-        component: () => import('@/views/agent/businessListsDetail'),
-        meta: { title: '商务详情', icon: '', role: [] },
-      },
+      // {
+      //   path: 'businessListsConfig',
+      //   name: 'BusinessListsConfig',
+      //   component: () => import('@/views/agent/businessListsConfig'),
+      //   meta: { title: '商务等级配置', icon: '', role: [] },
+      // },
+      // {
+      //   path: 'businessListsDetail',
+      //   name: 'BusinessListsDetail',
+      //   component: () => import('@/views/agent/businessListsDetail'),
+      //   meta: { title: '商务详情', icon: '', role: [] },
+      // },
+      // {
+      //   path: 'businessFinancialFlow',
+      //   name: 'BusinessFinancialFlow',
+      //   component: () => import('@/views/agent/businessFinancialFlow'),
+      //   meta: { title: '商务财务流水', icon: '', role: [] },
+      // },
 
       {
         path: 'agentTransfer',
@@ -1342,12 +1348,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/apportionRecord'),
         meta: { title: '代理团队长返佣记录', icon: '', role: [] },
       },
-      {
-        path: 'businessFinancialFlow',
-        name: 'BusinessFinancialFlow',
-        component: () => import('@/views/agent/businessFinancialFlow'),
-        meta: { title: '商务财务流水', icon: '', role: [] },
-      },
+     
       {
         path: 'agentFinancialFlow',
         name: 'AgentFinancialFlow',
