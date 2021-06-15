@@ -133,6 +133,12 @@ const rechargeConfig = [
     prop: 'toAddress',
     value: '',
   },
+  {
+    type: 'text',
+    label: 'ERC20链类别区分',
+    prop: 'chainName',
+    value: '',
+  },
 ];
 
 // 财务管理 -- 币币资金流水
