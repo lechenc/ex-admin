@@ -2862,15 +2862,15 @@ export default class api {
     return Fetch.post('/admin/user/delete/other-domain-name', data);
   }
 
-  // 系统管理--登录
-  static login(data) {
-    return Fetch.postlogin('/admin/user/login', data);
-  }
-
-  // // 系统管理--登录(新)
+  // // 系统管理--登录
   // static login(data) {
-  //   return Fetch.postlogin('/admin/user/newlogin', data);
+  //   return Fetch.postlogin('/admin/user/login', data);
   // }
+
+  // 系统管理--登录(新)
+  static login(data) {
+    return Fetch.postlogin('/admin/user/newlogin', data);
+  }
 
   // 系统管理  架构树
   static apiGetStructureTreeList(data) {

@@ -241,7 +241,7 @@ export default {
     },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
-      this.getList(this.currentData.roleId);
+      this.getList(this.currentData);
     },
     checkVal(obj, key) {
       this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
@@ -325,7 +325,7 @@ export default {
               type: 'success',
             });
             this.userDialogVisible = false;
-            this.getList(this.currentData.roleId);
+            this.getList(this.currentData);
           }
           this.userBtnLoading = false;
         }
@@ -414,14 +414,14 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       // this.search_params_obj = data;
-      this.getList(this.currentData.roleId);
+      this.getList(this.currentData);
     },
     doReset() {
       this.search_params_obj = {};
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.getList(this.currentData.roleId);
+      this.getList(this.currentData);
       // this.getList();
     },
     addpeopleManagement() {
@@ -514,16 +514,16 @@ export default {
       }
       // 编辑
       if (fn === 'edit') {
-        this.formName = '编辑';
-        this.peopleManagementForm.id = row.id;
-        this.peopleManagementForm.name = row.name;
-        const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
-        // let getArr = this.delSameItem(id_list, row.halfArr)
-        // debugger
-        this.userDialogVisible = true;
-        setTimeout(() => {
-          this.$refs['tree'].setCheckedKeys(id_list);
-        }, 0);
+        this.userDialogTitle = `编辑 ${row.name} 的子菜单`;
+        // this.peopleManagementForm.id = row.id;
+        // this.peopleManagementForm.name = row.name;
+        // const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
+        // // let getArr = this.delSameItem(id_list, row.halfArr)
+        // // debugger
+        // this.userDialogVisible = true;
+        // setTimeout(() => {
+        //   this.$refs['tree'].setCheckedKeys(id_list);
+        // }, 0);
       }
       // 删除
       if (fn === 'delete') {
@@ -549,12 +549,14 @@ export default {
       this.getList();
     },
     // getlist
-    async getList(id) {
+    async getList(obj) {
       if (this.listLoading) return;
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        id: id,
+        id: obj.roleId,
+        level: obj.level,
+        parentRoleIdPath: obj.parentRoleIdPath,
       };
       // Object.assign(params, this.search_params_obj);
       this.listLoading = true;
