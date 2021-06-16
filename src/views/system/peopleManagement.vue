@@ -159,8 +159,8 @@ export default {
     const validatePassword = (rule, value, callback) => {
       if (value == '') {
         callback(new Error('请输入密码'));
-      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/g.test(value) && '******' !== value) {
-        callback(new Error('请输入包含字母和数字的6-16位密码'));
+      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/g.test(value) && '******' !== value) {
+        callback(new Error('请输入包含字母和数字的8-16位密码'));
       } else {
         callback();
       }
