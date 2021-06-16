@@ -2911,8 +2911,5 @@ export default class api {
 
   
 
-  // 合约-代理-商务-列表
-  static getBusinessList(data) {
-    return Fetch.post('/user/business/query/list', data);
-  }
+  
 }
