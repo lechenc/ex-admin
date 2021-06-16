@@ -2758,15 +2758,7 @@ export default class api {
     return Fetch.post('/admin/user/structureTreeList', data);
   }
 
-  // 系统管理 人员管理 权限列表 添加子部门
-  static apiAddPeopleManagementList(data) {
-    return Fetch.post('/admin/user/add/sys-role', data);
-  }
-
-  // 系统管理 人员管理 权限列表 编辑子部门
-  static apiEditPeopleManagementList(data) {
-    return Fetch.post('/admin/user/edit/sys-role', data);
-  }
+ 
 
   // 系统管理 人员管理 权限列表 删除菜单
   static apiDelPeopleManagementList(data) {
@@ -2891,6 +2883,33 @@ export default class api {
   static apiEditUserPeopleManagementList(data) {
     return Fetch.post('/admin/user/edit/sys-user', data);
   }
+
+  // 系统管理 人员管理 权限列表 人员开关
+  static apiSwitchUserPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-user-status', data);
+  }
+
+  // 系统管理 人员管理 权限列表 删除人员
+  static apiDeleteUserPeopleManagement(data) {
+    return Fetch.post('/admin/user/delete/sys-user', data);
+  }
+
+  // 系统管理 人员管理 权限列表 删除部门
+  static apiDeletePeopleManagement(data) {
+    return Fetch.post('/admin/user/delete/sys-role', data);
+  }
+
+   // 系统管理 人员管理 权限列表 添加子部门
+   static apiAddPeopleManagementList(data) {
+    return Fetch.post('/admin/user/add/sys-role', data);
+  }
+
+  // 系统管理 人员管理 权限列表 编辑子部门
+  static apiEditPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-role', data);
+  }
+
+  
 
   // 合约-代理-商务-列表
   static getBusinessList(data) {

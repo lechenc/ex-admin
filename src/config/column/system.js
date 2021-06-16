@@ -521,9 +521,13 @@ const peopleManagementCol = [
     prop: 'action',
     type: 'action',
     btnGroup: [
+      
       {
         label: '编辑',
         fn: 'edit',
+        // 根据一个传入的值判断是否展示
+        filter_key:'deptName',
+        filter_type: 'filter_label',
         type: 'primary',
         alias: 'edit',
       },

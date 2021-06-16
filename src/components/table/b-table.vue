@@ -137,9 +137,7 @@
       <!-- 显示一个数组 -->
       <el-table-column v-if="config.type === 'valueArr'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
-          <span class="valueArr" v-for="(item, ixx) in scope.row[config.prop]" :key="ixx"> 
-            {{ item[config.key1] }}  {{ item[config.key2] ? '(是)' : '(否)' }} 
-          </span>
+          <span class="valueArr" v-for="(item, ixx) in scope.row[config.prop]" :key="ixx"> {{ item[config.key1] }} {{ item[config.key2] ? '(是)' : '(否)' }} </span>
         </template>
       </el-table-column>
 
@@ -359,6 +357,10 @@
             <template v-else-if="btn.filter_type == 'arrayExcept' && !btn.filter_status.includes(scope.row[btn.filter_key] + '')">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
+            <!-- // 根据一个传入的值判断是否展示 -->
+            <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value== (scope.row[btn.filter_key] + '') ">
+              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
+            </template>
 
             <template
               v-else-if="
@@ -399,6 +401,10 @@ export default {
     data: {
       type: Array,
       default: [],
+    },
+    filter_type_value: {
+      type: String,
+      default: '',
     },
     configs: {
       type: Array,

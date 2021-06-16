@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+      <el-page-header @back="goBack" > </el-page-header>
       <div class="title-container">
         <h3 class="title">管理后台</h3>
       </div>
@@ -16,17 +17,7 @@
         <span class="svg-container">
           <svg-icon icon-class="pwd" />
         </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="密码"
-          name="password"
-          tabindex="2"
-          autocomplete="new-password"
-          @keyup.enter.native="handleLogin"
-        />
+        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="密码" name="password" tabindex="2" autocomplete="new-password" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
@@ -36,18 +27,10 @@
         <span class="svg-container">
           <svg-icon icon-class="pwd" />
         </span>
-        <el-input
-          ref="googleCode"
-          v-model="loginForm.googleCode"
-          placeholder="谷歌验证码"
-          name="googleCode"
-          type="text"
-          tabindex="3"
-          autocomplete="off"
-        />
+        <el-input ref="googleCode" v-model="loginForm.googleCode" placeholder="谷歌验证码" name="googleCode" type="text" tabindex="3" autocomplete="off" />
       </el-form-item>
 
-      <el-button :loading="loginLoding" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loginLoding" type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleLogin">登录</el-button>
     </el-form>
   </div>
 </template>
@@ -86,7 +69,7 @@ export default {
       }
     };
     return {
-      loginLoding:false,
+      loginLoding: false,
       loginForm: {
         account: '',
         password: '',
@@ -103,7 +86,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect;
       },
       immediate: true,
@@ -115,6 +98,7 @@ export default {
     // //console.log(123)
   },
   methods: {
+    goBack(){},
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = '';
@@ -128,9 +112,8 @@ export default {
     handleLogin() {
       localStorage.clear();
       // this.$router.push({ path: '/' })
-      this.$refs.loginForm.validate(async valid => {
+      this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
-
           const params = {
             account: this.loginForm.account,
             password: mMd5.hbmd5(this.loginForm.password),
@@ -156,6 +139,9 @@ export default {
         }
       });
     },
+  },
+  mounted(){
+    document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '返回旧版登录'
   }
 };
 </script>
@@ -302,18 +288,18 @@ $light_gray: #5584ff;
 }
 
 @media screen and(max-width: 750px) {
- .login-container {
-  .login-form {
-    position: relative;
-    width: 300px;
-    height: 410px;
-    padding: 10px 15px 0;
-  }
- }
-}
-/*横屏 css*/  
-@media screen and (orientation: landscape) {  
+  .login-container {
     .login-form {
+      position: relative;
+      width: 300px;
+      height: 410px;
+      padding: 10px 15px 0;
+    }
+  }
+}
+/*横屏 css*/
+@media screen and (orientation: landscape) {
+  .login-form {
     position: relative;
     width: 410px;
     height: auto;
@@ -323,11 +309,11 @@ $light_gray: #5584ff;
     background: #fff;
     border-radius: 5px;
   }
-    .title-container {
+  .title-container {
     .title {
       font-size: 24px;
       margin: 5px auto 5px auto;
     }
   }
-}  
+}
 </style>

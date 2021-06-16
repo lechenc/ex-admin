@@ -38,7 +38,7 @@
           <el-button type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
-          <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+          <Btable :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
         </div>
         <div class="container-footer">
           <icon-page :total="total" :pages="pages"></icon-page>
@@ -79,7 +79,7 @@
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-          <el-input type="password" show-password v-model="userForm.password" autocomplete="off"></el-input>
+          <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="所属部门" :label-width="formLabelWidth" prop="roleName">
@@ -122,6 +122,23 @@
         <el-button type="primary" @click="userConfirmOp" :loading="userBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 删除 -->
+    <el-dialog width="500px" title="确认删除?" :visible.sync="delDialogVisible">
+      <el-form :model="delForm" ref="delForm" :rules="delRules">
+        <el-form-item :label="delLabel" :label-width="formLabelWidth" prop="account">
+          <el-input disabled type="text" v-model="delForm.account" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="adminGoogleCode">
+          <el-input @input="checkVal('delForm', 'adminGoogleCode')" v-model.trim="delForm.adminGoogleCode" placeholder="请输入"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="delDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="delConfirmOp" :loading="delBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -139,13 +156,31 @@ export default {
     iconPage,
   },
   data() {
+    const validatePassword = (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('请输入密码'));
+      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/g.test(value) && '******' !== value) {
+        callback(new Error('请输入包含字母和数字的6-16位密码'));
+      } else {
+        callback();
+      }
+    };
     return {
+      delLabel: '',
+      delDialogVisible: false,
+      delBtnLoading: false,
+      delForm: {},
+      delRules: {
+        adminGoogleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        account: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      filter_type_value: '',
       contentIsShow: false,
       userRules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
         account: [{ required: true, message: '必填', trigger: 'blur' }],
 
-        password: [{ required: true, message: '必填', trigger: 'blur' }],
+        password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
         roleName: [{ required: true, message: '必填', trigger: 'blur' }],
         jobName: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -217,6 +252,41 @@ export default {
     };
   },
   methods: {
+    delConfirmOp() {
+      this.$refs['delForm'].validate(async (valid) => {
+        if (valid) {
+          let { type } = this.delForm;
+          if (this.delBtnLoading) return;
+          let params;
+          if (type == 1) {
+            let { userId, adminGoogleCode } = this.delForm;
+            params = { userId, adminGoogleCode };
+          } else {
+            let { parentRoleIdPath, adminGoogleCode } = this.delForm;
+            params = { parentRoleIdPath, adminGoogleCode };
+          }
+
+          this.delBtnLoading = true;
+
+          const res = type == 1 ? await $api.apiDeleteUserPeopleManagement(params) : await $api.apiDeletePeopleManagement(params);
+          if (res) {
+            this.$message({
+              message: '删除成功',
+              type: 'success',
+            });
+            this.delDialogVisible = false;
+            if (type == 1) {
+              this.getList(this.currentData);
+            } else {
+              this.getMenuList();
+              this.getList(this.currentData);
+            }
+          }
+
+          this.delBtnLoading = false;
+        }
+      });
+    },
     // 获取一个谷歌密钥
     async getGoogleCode() {
       if (!this.userForm.name) {
@@ -241,6 +311,7 @@ export default {
     },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
+      this.filter_type_value = this.currentData.name;
       this.getList(this.currentData);
     },
     checkVal(obj, key) {
@@ -293,14 +364,13 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['userTree'].getCheckedKeys();
           this.userForm.menuId = tmpCheck.join(',');
-          const { id, menuId, name, roleId, password, account, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
+          const { userId, menuId, name, roleId, password, account, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
           if (this.userBtnLoading) return;
 
           const params = {
             account,
             menuId,
             name,
-            password: mMd5.md5(password),
             roleName,
             jobName,
             isOwer,
@@ -309,17 +379,20 @@ export default {
             status: status ? 1 : 0,
             roleId,
           };
+          if ((userId && password !== '******') || !userId) {
+            params.password = mMd5.hbmd5(password);
+          }
           this.userBtnLoading = true;
           // 新增 编辑
           const res =
-            id === ''
+            userId === ''
               ? await $api.apiAddUserPeopleManagementList(params)
               : await $api.apiEditUserPeopleManagementList({
-                  id,
+                  userId,
                   ...params,
                 });
           if (res) {
-            let txt = id === '' ? '添加成功' : '编辑成功';
+            let txt = userId === '' ? '添加成功' : '编辑成功';
             this.$message({
               message: txt,
               type: 'success',
@@ -380,30 +453,18 @@ export default {
           });
           return;
         }
-        this.$confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        })
-          .then(async () => {
-            const res = await $api.deleteMenu({
-              id: data.id,
-            });
-            if (res) {
-              this.$message({
-                title: '成功',
-                message: `删除${data.name}菜单成功`,
-                type: 'success',
-              });
-              this.getAllSysUrl();
-            }
-          })
-          .catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除',
-            });
-          });
+        this.delDialogVisible = true;
+
+        this.$nextTick(() => {
+          this.delForm = {
+            type: 2,
+            parentRoleIdPath: data.parentRoleIdPath,
+            account: data.name,
+            adminGoogleCode: '',
+          };
+          this.delLabel = '部门名称';
+          this.$refs['delForm'].resetFields();
+        }, 0);
       }
     },
     collapse(moveNode, inNode, type) {},
@@ -425,12 +486,12 @@ export default {
       // this.getList();
     },
     addpeopleManagement() {
-      this.userDialogTitle = `添加 ${this.currentData.name} 的成员`;
+      this.userDialogTitle = `添加成员`;
       this.userDialogVisible = true;
       this.$nextTick(() => {
         this.$refs['userForm'].resetFields();
         this.userForm = {
-          id: '',
+          userId: '',
           name: '',
           password: '',
           account: '',
@@ -487,7 +548,7 @@ export default {
                 type: 'success',
               });
               this.userDialogVisible = false;
-              this.getList();
+              this.getMenuList();
             }
             this.userBtnLoading = false;
           }
@@ -500,47 +561,60 @@ export default {
     async doHandle(data) {
       const { fn, row } = data;
       // 角色权限开关
-      if (fn === 'switchCoin') {
+      if (fn === 'switch') {
         // 角色状态，0有效，1失效
         let params = {
-          id: row.id,
-          status: row.status ? 0 : 1,
+          userId: row.userId,
+          status: row.status ? 1 : 0,
         };
-        const res = await $api.edit(params);
+        const res = await $api.apiSwitchUserPeopleManagementList(params);
         if (res) {
           this.$message({ message: res.data.message, type: 'success' });
-          this.getList();
+          this.getList(this.currentData);
+        } else {
+          this.getList(this.currentData);
         }
       }
       // 编辑
       if (fn === 'edit') {
-        this.userDialogTitle = `编辑 ${row.name} 的子菜单`;
-        // this.peopleManagementForm.id = row.id;
-        // this.peopleManagementForm.name = row.name;
-        // const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
-        // // let getArr = this.delSameItem(id_list, row.halfArr)
-        // // debugger
-        // this.userDialogVisible = true;
-        // setTimeout(() => {
-        //   this.$refs['tree'].setCheckedKeys(id_list);
-        // }, 0);
+        this.userDialogTitle = `编辑成员`;
+        this.userDialogVisible = true;
+        console.log('row', row);
+        const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
+        this.userForm = {
+          userId,
+          name,
+          password,
+          account,
+          roleName: deptName,
+          jobName,
+          menuId,
+          isOwer,
+          roleId,
+          googleCode,
+          status,
+        };
+        setTimeout(() => {
+          this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
+        }, 0);
+        this.$nextTick(() => {
+          this.$refs['userForm'].resetFields();
+        }, 0);
       }
       // 删除
-      if (fn === 'delete') {
-        this.$confirm('确定删除？', '提示', { confirmButtonText: '确定', cancelButtonText: '取消' })
-          .then(async () => {
-            const res = await $api.deletepeopleManagement({ id: row.id });
-            if (res) {
-              this.$message({
-                message: '删除角色成功',
-                type: 'success',
-              });
-              this.getList();
-            }
-          })
-          .catch(() => {
-            // //console.log('deletepeopleManagement error');
-          });
+      if (fn === 'del') {
+        this.delDialogVisible = true;
+
+        this.$nextTick(() => {
+          this.delForm = {
+            type: 1,
+            adminGoogleCode: '',
+            account: row.account,
+            userId: row.userId,
+          };
+          this.delLabel = '账号名称';
+          this.$refs['delForm'].resetFields();
+        }, 0);
       }
     },
     // 分页
@@ -567,7 +641,6 @@ export default {
         records.forEach((v) => {
           v['status'] = v['status'] ? true : false;
         });
-        console.log('records', records);
         this.list = records;
         this.total = total;
         this.pages = pages;
@@ -595,7 +668,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('peopleManagement', peopleManagementCol, peopleManagementColNoBtn);
+    let authObj = this.$util.getAuthority('PeopleManagement', peopleManagementCol, peopleManagementColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
 
