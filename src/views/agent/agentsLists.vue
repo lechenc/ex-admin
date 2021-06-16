@@ -5,7 +5,7 @@
     </div>
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
-      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">参数编辑</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
@@ -268,12 +268,12 @@
     </el-dialog>
 
     <!-- 参数配置 -->
-    <el-dialog title="代理商参数设置" width="600px" :visible.sync="paramsVisible">
+    <el-dialog title="商务返佣参数设置 " width="600px" :visible.sync="paramsVisible">
       <el-form :model="paramsForm" :label-width="formLabelWidth" ref="paramsForm" :rules="paramsRules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="CPT模式允许超过100%可设置范围" prop="agentUID">
-              <el-input type="text" v-model.trim="paramsForm.agentUID" placeholder="请输入">
+            <el-form-item label="允许一级商务可设置范围" prop="agentUID">
+              <el-input @input="paramsCheckVal('agentUID')" type="number" v-model.trim="paramsForm.agentUID" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -283,7 +283,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="管理员谷歌" prop="googleCode">
-              <el-input type="text" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
+              <el-input type="text" @input="paramsCheckVal('googleCode', 'nodot')" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -668,6 +668,17 @@ export default {
       }
       if (this.cForm[val] < 0) {
         this.cForm[val] = 0;
+      }
+    },
+    paramsCheckVal(val, nodot) {
+      if (this.paramsForm[val] >= 100) {
+        this.paramsForm[val] = 100;
+      }
+      if (this.paramsForm[val] < 0) {
+        this.paramsForm[val] = 0;
+      }
+      if (nodot) {
+        this.paramsForm[val] = (this.paramsForm[val] + '').replace(/[^\d]/g, '');
       }
     },
     uploadIcon(response, file, fileList) {

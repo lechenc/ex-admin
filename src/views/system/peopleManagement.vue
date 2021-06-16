@@ -32,13 +32,13 @@
           </el-tree>
         </div>
       </div>
-      <div class="center-content">
+      <div v-if="contentIsShow" class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
           <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
-          <el-button type="primary" size="medium" @click="addpeopleManagement">添加角色</el-button>
+          <el-button type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
-          <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+          <Btable :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
         </div>
         <div class="container-footer">
           <icon-page :total="total" :pages="pages"></icon-page>
@@ -48,13 +48,13 @@
     </div>
 
     <!-- 添加部门 -->
-    <el-dialog :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
+    <el-dialog width="600px" :title="sidebarDialogTitle" :visible.sync="sidebarDialogVisible">
       <el-form :model="sidebarForm" ref="sidebarForm" :rules="sidebarRules">
         <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+          <el-tree default-expand-all :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
@@ -71,27 +71,72 @@
       </div>
     </el-dialog>
 
-    <!-- 添加部门 -->
-    <el-dialog :title="userDialogTitle" :visible.sync="userDialogVisible">
+    <!-- 添加人员 -->
+    <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
-        <el-form-item label="子部门名称" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="userForm.name" autocomplete="off"></el-input>
+        <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
+          <el-input type="text" v-model="userForm.account" autocomplete="off"></el-input>
         </el-form-item>
+
+        <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
+          <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="所属部门" :label-width="formLabelWidth" prop="roleName">
+          <el-input type="text" disabled v-model="userForm.roleName" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="职务" :label-width="formLabelWidth" prop="jobName">
+          <el-input type="text" v-model="userForm.jobName" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="备注" :label-width="formLabelWidth" prop="name">
+          <el-input type="text" v-model="userForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="级别" :label-width="formLabelWidth" prop="isOwer">
+          <el-radio v-model="userForm.isOwer" :label="0" border>普通成员</el-radio>
+          <el-radio v-model="userForm.isOwer" :label="1" border>部门负责人</el-radio>
+        </el-form-item>
+
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+          <el-tree :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+        </el-form-item>
+
+        <el-form-item :label="userForm.id === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
+          <el-input v-model="userForm.googleCode" autocomplete="off">
+            <div slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</div>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="adminGoogleCode">
+          <el-input @input="checkVal('userForm', 'adminGoogleCode')" v-model.trim="userForm.adminGoogleCode" placeholder="请输入"></el-input>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
           <el-switch v-model="userForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
         </el-form-item>
-
-        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-          <el-input @input="checkVal('userForm', 'googleCode')" v-model.trim="userForm.googleCode" placeholder="请输入"></el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="userDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sidebarConfirmOp" :loading="userBtnLoading">确 定</el-button>
+        <el-button type="primary" @click="userConfirmOp" :loading="userBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 删除 -->
+    <el-dialog width="500px" title="确认删除?" :visible.sync="delDialogVisible">
+      <el-form :model="delForm" ref="delForm" :rules="delRules">
+        <el-form-item :label="delLabel" :label-width="formLabelWidth" prop="account">
+          <el-input disabled type="text" v-model="delForm.account" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="adminGoogleCode">
+          <el-input @input="checkVal('delForm', 'adminGoogleCode')" v-model.trim="delForm.adminGoogleCode" placeholder="请输入"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="delDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="delConfirmOp" :loading="delBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -102,7 +147,7 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig } from '@/config/column/system';
 import $api from '@/api/api';
-
+import mMd5 from '@/utils/module_md5';
 export default {
   name: 'PeopleManagement',
   components: {
@@ -111,11 +156,39 @@ export default {
     iconPage,
   },
   data() {
+    const validatePassword = (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('请输入密码'));
+      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/g.test(value) && '******' !== value) {
+        callback(new Error('请输入包含字母和数字的6-16位密码'));
+      } else {
+        callback();
+      }
+    };
     return {
-      userRules:{},
-      userDialogTitle:'',
-      userDialogVisible:false,
-      userForm:{},
+      delLabel: '',
+      delDialogVisible: false,
+      delBtnLoading: false,
+      delForm: {},
+      delRules: {
+        adminGoogleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        account: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      filter_type_value: '',
+      contentIsShow: false,
+      userRules: {
+        name: [{ required: true, message: '必填', trigger: 'blur' }],
+        account: [{ required: true, message: '必填', trigger: 'blur' }],
+
+        password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
+        roleName: [{ required: true, message: '必填', trigger: 'blur' }],
+        jobName: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        adminGoogleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      userDialogTitle: '',
+      userDialogVisible: false,
+      userForm: {},
       sidebarForm: {
         id: '',
         name: '',
@@ -123,10 +196,10 @@ export default {
         status: false,
         googleCode: '',
       },
-      userBtnLoading:false,
+      userBtnLoading: false,
       sidebarDialogTitle: '',
       sidebarDialogVisible: false,
-      
+
       sidebarBtnLoading: false,
       defaultProps: {
         children: 'children',
@@ -179,9 +252,67 @@ export default {
     };
   },
   methods: {
+    delConfirmOp() {
+      this.$refs['delForm'].validate(async (valid) => {
+        if (valid) {
+          let { type } = this.delForm;
+          if (this.delBtnLoading) return;
+          let params;
+          if (type == 1) {
+            let { userId, adminGoogleCode } = this.delForm;
+            params = { userId, adminGoogleCode };
+          } else {
+            let { parentRoleIdPath, adminGoogleCode } = this.delForm;
+            params = { parentRoleIdPath, adminGoogleCode };
+          }
+
+          this.delBtnLoading = true;
+
+          const res = type == 1 ? await $api.apiDeleteUserPeopleManagement(params) : await $api.apiDeletePeopleManagement(params);
+          if (res) {
+            this.$message({
+              message: '删除成功',
+              type: 'success',
+            });
+            this.delDialogVisible = false;
+            if (type == 1) {
+              this.getList(this.currentData);
+            } else {
+              this.getMenuList();
+              this.getList(this.currentData);
+            }
+          }
+
+          this.delBtnLoading = false;
+        }
+      });
+    },
+    // 获取一个谷歌密钥
+    async getGoogleCode() {
+      if (!this.userForm.name) {
+        this.$message({
+          message: '请先填写账号名',
+          type: 'error',
+        });
+        return;
+      }
+      const res = await $api.getGoogleCode({
+        account: this.userForm.name,
+      });
+      if (res) {
+        console.log('res', res);
+        this.userForm.googleCode = res.data.data.secretKey;
+        console.log('googleCode', this.userForm.googleCode);
+        // 防止默认校验提示空，就主动校验
+        this.$nextTick(() => {
+          this.$refs.userForm.validateField('googleCode');
+        });
+      }
+    },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
-      this.getList(data.roleId);
+      this.filter_type_value = this.currentData.name;
+      this.getList(this.currentData);
     },
     checkVal(obj, key) {
       this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
@@ -195,7 +326,7 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['tree'].getCheckedKeys();
           this.sidebarForm.menuId = tmpCheck.join(',');
-          const { id, name, menuId, status, googleCode } = this.sidebarForm;
+          const { roleId, name, menuId, status, googleCode } = this.sidebarForm;
           if (this.sidebarBtnLoading) return;
 
           const params = {
@@ -207,15 +338,16 @@ export default {
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
-          const res =
-            id === ''
-              ? await $api.apiAddPeopleManagementList(params)
-              : await $api.apiEditPeopleManagementList({
-                  id,
-                  ...params,
-                });
+          console.log('params', params);
+          console.log('roleId', roleId);
+          const res = !roleId
+            ? await $api.apiAddPeopleManagementList(params)
+            : await $api.apiEditPeopleManagementList({
+                roleId,
+                ...params,
+              });
           if (res) {
-            let txt = id === '' ? '添加成功' : '编辑成功';
+            let txt = !roleId ? '添加成功' : '编辑成功';
             this.$message({
               message: txt,
               type: 'success',
@@ -224,6 +356,51 @@ export default {
             this.getMenuList();
           }
           this.sidebarBtnLoading = false;
+        }
+      });
+    },
+    userConfirmOp() {
+      this.$refs['userForm'].validate(async (valid) => {
+        if (valid) {
+          let tmpCheck = this.$refs['userTree'].getCheckedKeys();
+          this.userForm.menuId = tmpCheck.join(',');
+          const { userId, menuId, name, roleId, password, account, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
+          if (this.userBtnLoading) return;
+
+          const params = {
+            account,
+            menuId,
+            name,
+            roleName,
+            jobName,
+            isOwer,
+            googleCode,
+            adminGoogleCode,
+            status: status ? 1 : 0,
+            roleId,
+          };
+          if ((userId && password !== '******') || !userId) {
+            params.password = mMd5.hbmd5(password);
+          }
+          this.userBtnLoading = true;
+          // 新增 编辑
+          const res =
+            userId === ''
+              ? await $api.apiAddUserPeopleManagementList(params)
+              : await $api.apiEditUserPeopleManagementList({
+                  userId,
+                  ...params,
+                });
+          if (res) {
+            let txt = userId === '' ? '添加成功' : '编辑成功';
+            this.$message({
+              message: txt,
+              type: 'success',
+            });
+            this.userDialogVisible = false;
+            this.getList(this.currentData);
+          }
+          this.userBtnLoading = false;
         }
       });
     },
@@ -263,15 +440,11 @@ export default {
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
-        console.log('data', data);
+
         this.sidebarForm = newData;
-        // this.sidebarForm.desctext = this.sidebarForm.desctext;
-        
-        // this.currentForm.desctext = this.currentForm.desctext;
-        const id_list = data.menuId.indexOf(',') > -1 ? data.menuId.split(',') : [data.menuId];
-        setTimeout(() => {
-          this.$refs['sidebarTree'].setCheckedKeys(id_list);
-        }, 0);
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
+        });
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
           this.$message.error({
@@ -280,30 +453,18 @@ export default {
           });
           return;
         }
-        this.$confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        })
-          .then(async () => {
-            const res = await $api.deleteMenu({
-              id: data.id,
-            });
-            if (res) {
-              this.$message({
-                title: '成功',
-                message: `删除${data.name}菜单成功`,
-                type: 'success',
-              });
-              this.getAllSysUrl();
-            }
-          })
-          .catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除',
-            });
-          });
+        this.delDialogVisible = true;
+
+        this.$nextTick(() => {
+          this.delForm = {
+            type: 2,
+            parentRoleIdPath: data.parentRoleIdPath,
+            account: data.name,
+            adminGoogleCode: '',
+          };
+          this.delLabel = '部门名称';
+          this.$refs['delForm'].resetFields();
+        }, 0);
       }
     },
     collapse(moveNode, inNode, type) {},
@@ -313,26 +474,40 @@ export default {
     },
     doSearch(data) {
       this.current_page = 1;
-      this.search_params_obj = data;
-      this.getList();
+      // this.search_params_obj = data;
+      this.getList(this.currentData);
     },
     doReset() {
       this.search_params_obj = {};
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.getList();
+      this.getList(this.currentData);
       // this.getList();
     },
     addpeopleManagement() {
-      this.userDialogTitle = '添加角色';
+      this.userDialogTitle = `添加成员`;
       this.userDialogVisible = true;
-      // this.Form.id = '';
-      // this.Form.name = '';
-      // this.Form.menuId = '';
-      // setTimeout(() => {
-      //   this.$refs.tree.setCheckedKeys([]);
-      // }, 0);
+      this.$nextTick(() => {
+        this.$refs['userForm'].resetFields();
+        this.userForm = {
+          userId: '',
+          name: '',
+          password: '',
+          account: '',
+          roleName: this.currentData.name,
+          jobName: '',
+          menuId: '',
+          isOwer: 0,
+          roleId: this.currentData.roleId,
+          googleCode: '',
+          adminGoogleCode: '',
+          status: false,
+        };
+      });
+      setTimeout(() => {
+        this.$refs.userTree.setCheckedKeys([]);
+      }, 0);
     },
     confirmOp() {
       this.$refs['Form'].validate(async (valid) => {
@@ -373,7 +548,7 @@ export default {
                 type: 'success',
               });
               this.userDialogVisible = false;
-              this.getList();
+              this.getMenuList();
             }
             this.userBtnLoading = false;
           }
@@ -386,47 +561,60 @@ export default {
     async doHandle(data) {
       const { fn, row } = data;
       // 角色权限开关
-      if (fn === 'switchCoin') {
+      if (fn === 'switch') {
         // 角色状态，0有效，1失效
         let params = {
-          id: row.id,
-          status: row.status ? 0 : 1,
+          userId: row.userId,
+          status: row.status ? 1 : 0,
         };
-        const res = await $api.edit(params);
+        const res = await $api.apiSwitchUserPeopleManagementList(params);
         if (res) {
           this.$message({ message: res.data.message, type: 'success' });
-          this.getList();
+          this.getList(this.currentData);
+        } else {
+          this.getList(this.currentData);
         }
       }
       // 编辑
       if (fn === 'edit') {
-        this.formName = '编辑';
-        this.peopleManagementForm.id = row.id;
-        this.peopleManagementForm.name = row.name;
-        const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
-        // let getArr = this.delSameItem(id_list, row.halfArr)
-        // debugger
+        this.userDialogTitle = `编辑成员`;
         this.userDialogVisible = true;
+        console.log('row', row);
+        const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
+        this.userForm = {
+          userId,
+          name,
+          password,
+          account,
+          roleName: deptName,
+          jobName,
+          menuId,
+          isOwer,
+          roleId,
+          googleCode,
+          status,
+        };
         setTimeout(() => {
-          this.$refs['tree'].setCheckedKeys(id_list);
+          this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
+        }, 0);
+        this.$nextTick(() => {
+          this.$refs['userForm'].resetFields();
         }, 0);
       }
       // 删除
-      if (fn === 'delete') {
-        this.$confirm('确定删除？', '提示', { confirmButtonText: '确定', cancelButtonText: '取消' })
-          .then(async () => {
-            const res = await $api.deletepeopleManagement({ id: row.id });
-            if (res) {
-              this.$message({
-                message: '删除角色成功',
-                type: 'success',
-              });
-              this.getList();
-            }
-          })
-          .catch(() => {
-            // //console.log('deletepeopleManagement error');
-          });
+      if (fn === 'del') {
+        this.delDialogVisible = true;
+
+        this.$nextTick(() => {
+          this.delForm = {
+            type: 1,
+            adminGoogleCode: '',
+            account: row.account,
+            userId: row.userId,
+          };
+          this.delLabel = '账号名称';
+          this.$refs['delForm'].resetFields();
+        }, 0);
       }
     },
     // 分页
@@ -435,12 +623,14 @@ export default {
       this.getList();
     },
     // getlist
-    async getList(id) {
+    async getList(obj) {
       if (this.listLoading) return;
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        id: id,
+        id: obj.roleId,
+        level: obj.level,
+        parentRoleIdPath: obj.parentRoleIdPath,
       };
       // Object.assign(params, this.search_params_obj);
       this.listLoading = true;
@@ -451,12 +641,12 @@ export default {
         records.forEach((v) => {
           v['status'] = v['status'] ? true : false;
         });
-        console.log('records', records);
         this.list = records;
         this.total = total;
         this.pages = pages;
         this.current_page = current;
       }
+      this.contentIsShow = true;
       this.listLoading = false;
     },
     // 权限菜单
@@ -478,7 +668,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('peopleManagement', peopleManagementCol, peopleManagementColNoBtn);
+    let authObj = this.$util.getAuthority('PeopleManagement', peopleManagementCol, peopleManagementColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
 
@@ -499,6 +689,11 @@ export default {
 <style lang="scss">
 .peopleManagement-container {
   padding: 4px 10px 10px 10px;
+  .gcode {
+    font-size: 12px;
+    color: #304156;
+    cursor: pointer;
+  }
   .container-center {
     display: flex;
     height: 100%;

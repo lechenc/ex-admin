@@ -4,8 +4,8 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-btn" v-if="btnArr.length">
-      <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加</el-button>
-      <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/agent/businessListsConfig')">商务等级配置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加子商务</el-button>
+      <el-button type="primary" size="medium" v-if="false" @click="$router.push('/agent/businessListsConfig')">商务等级配置</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -18,54 +18,110 @@
     <!-- 添加 编辑 -->
     <el-dialog :title="formName" width="700px" :visible.sync="dialogFormVisible">
       <el-form :model="cForm" ref="cForm" :rules="rules">
+
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="代理模式" :label-width="formLabelWidth" prop="agentMode">
-              <el-select v-model.trim="cForm.agentMode" placeholder="" wdith="20%">
-                <el-option v-for="(item, idx) in agentModelList" :key="idx" :label="item.label" :value="item.value"></el-option>
-              </el-select>
+            <el-form-item label="上级商务商UID" :label-width="formLabelWidth" prop="username">
+              <el-input type="text" v-model.trim="cForm.username" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="商务级别" :label-width="formLabelWidth" prop="level">
-              <el-select v-model.trim="cForm.level" wdith="20%" :placeholder="inputLevelTxt" :disabled="!!!cForm.agentMode">
-                <el-option v-for="(item, idx) in agentLevelList" :key="idx" :label="item.label" :value="item.value"></el-option>
-              </el-select>
+            <el-form-item label="子商务商UID" :label-width="formLabelWidth" prop="username">
+              <el-input type="text" v-model.trim="cForm.username" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
+
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="账号名" :label-width="formLabelWidth" prop="username">
-              <el-input type="text" v-model.trim="cForm.username" placeholder="请输入6-20位字符，不可输入特殊字符"></el-input>
+            <el-form-item label="登录名" :label-width="formLabelWidth" prop="username">
+              <el-input type="text" v-model.trim="cForm.username" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="登录密码" :label-width="formLabelWidth" prop="password">
-              <el-input v-model.trim="cForm.password" type="password" autocomplete="off" placeholder="请输入6-20位字符，不可输入特殊字符">
-                <!-- <span slot="append" class="show-pwd" @click="showPwd">
-                  <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                </span> -->
+              <el-input
+                v-model.trim="cForm.password"
+                show-password
+                type="password"
+                autocomplete="off"
+                placeholder="请输入包含字母和数字的6-16位密码"
+              >
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="该账号谷歌密钥" :label-width="formLabelWidth" prop="googleStr">
-              <el-input v-model.trim="cForm.googleStr" autocomplete="off" placeholder="" type="text" :disabled="true">
-                <div slot="append">
-                  <el-button slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</el-button>
-                  <el-button slot="append" v-clipboard:copy="cForm.googleStr" v-clipboard:success="onCopy" v-clipboard:error="onError">复制</el-button>
-                </div>
-              </el-input>
+            <el-form-item label="备注" :label-width="formLabelWidth" prop="username">
+              <el-input type="text" v-model.trim="cForm.username" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
+        
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="手续费比例" :label-width="formLabelWidth" prop="username">
+              <el-input type="text" v-model.trim="cForm.username" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item :label-width="formLabelWidth" label="是否本人手续费返佣" prop="selfCommission">
+              <el-row :span="24">
+                <el-col :span="8">
+                  <el-select v-model="cForm.selfCommission" placeholder="请选择">
+                    <el-option :value="0" label="否"></el-option>
+                    <el-option :value="1" label="是"></el-option>
+                  </el-select>
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="手续费返佣结算时间" :label-width="formLabelWidth" prop="feeDelayDay">
+              <el-row :span="24">
+                <el-col :span="8">
+                  <el-select @change="delayUnitChange(cForm.feeDelayUnit, 'feeDelayDay')" v-model="cForm.feeDelayUnit" placeholder="请选择">
+                    <el-option v-for="item in delayUnitList" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="16">
+                  <el-input :disabled="cForm.feeDelayUnit == 3" type="text" v-model="cForm.feeDelayDay" placeholder="请输入" @input="checkVal('feeDelayDay')"></el-input>
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="12">
+            <el-form-item label="登录开关" :label-width="formLabelWidth" prop="loginSwitch">
+              <el-switch v-model="cForm.loginSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="返佣开关" :label-width="formLabelWidth" prop="commissionSwitch">
+              <el-switch v-model="cForm.commissionSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="管理员谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
@@ -73,77 +129,9 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="返佣开关" :label-width="formLabelWidth" prop="commissionSwitch">
-              <el-switch v-model="cForm.commissionSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="限制登录开关" :label-width="formLabelWidth" prop="loginSwitch">
-              <el-switch v-model="cForm.loginSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="低流量开关" :label-width="formLabelWidth" prop="lowSwitch">
-              <el-switch v-model="cForm.lowSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="限制提币开关" :label-width="formLabelWidth" prop="withdrawSwitch">
-              <el-switch v-model="cForm.withdrawSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="持仓列表开关" :label-width="formLabelWidth" prop="positionListSwitch">
-              <el-switch v-model="cForm.positionListSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="平仓列表开关" :label-width="formLabelWidth" prop="closePositionListSwitch">
-              <el-switch v-model="cForm.closePositionListSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="充币列表开关" :label-width="formLabelWidth" prop="depositListSwitch">
-              <el-switch v-model="cForm.depositListSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="提币列表开关" :label-width="formLabelWidth" prop="withdrawListSwitch">
-              <el-switch v-model="cForm.withdrawListSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="用户资产开关" :label-width="formLabelWidth" prop="userAssetsSwitch">
-              <el-switch v-model="cForm.userAssetsSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :span="24">
-          <el-col :span="24">
-            <el-form-item label="法币订单开关" :label-width="formLabelWidth" prop="otcSwitch">
-              <el-switch v-model="cForm.otcSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        
+        
+      
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -187,6 +175,11 @@ export default {
       }
     };
     return {
+      delayUnitList: [
+        { label: '按周', value: 1 },
+        { label: '按月', value: 2 },
+        { label: '按日', value: 3 },
+      ],
       listLoading: false, // 表格loading
       btnLoading: false, // 提交loading
       calLoading: false,
@@ -263,6 +256,14 @@ export default {
     },
   },
   methods: {
+    delayUnitChange(val, key) {
+      if (val == 3) {
+        this.cForm[key] = 16;
+        this.$refs['cForm'].validateField(key);
+      } else {
+        this.cForm[key] = '';
+      }
+    },
     onCopy() {
       this.$message.success('复制成功');
     },
@@ -383,7 +384,7 @@ export default {
       }
     },
     addLine() {
-      this.formName = '添加商务';
+      this.formName = '添加子商务';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['cForm'].resetFields();
@@ -486,16 +487,8 @@ export default {
         this.pages = pages;
         this.current_page = current;
         records.forEach((v) => {
-          v['commissionSwitch'] = v['commissionSwitch'] ? true : false;
           v['loginSwitch'] = v['loginSwitch'] ? true : false;
-          v['lowSwitch'] = v['lowSwitch'] ? true : false;
-          v['withdrawSwitch'] = v['withdrawSwitch'] ? true : false;
-          v['positionListSwitch'] = v['positionListSwitch'] ? true : false;
-          v['closePositionListSwitch'] = v['closePositionListSwitch'] ? true : false;
-          v['depositListSwitch'] = v['depositListSwitch'] ? true : false;
-          v['withdrawListSwitch'] = v['withdrawListSwitch'] ? true : false;
-          v['userAssetsSwitch'] = v['userAssetsSwitch'] ? true : false;
-          v['otcSwitch'] = v['otcSwitch'] ? true : false;
+          v['commissionSwitch'] = v['commissionSwitch'] ? true : false;
         });
         this.list = records;
       }
@@ -516,7 +509,7 @@ export default {
     this.configs = authObj.val;
     this.btnArr = authObj.btnArr || [];
     this.searchCofig = this.$util.clone(businessListsConfig);
-
+    console.log('authObj', authObj);
     // 初始化今天，和前天的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
