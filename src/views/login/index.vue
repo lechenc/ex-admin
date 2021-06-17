@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <el-page-header @back="goBack" > </el-page-header>
+      <el-page-header @back="goBack"> </el-page-header>
       <div class="title-container">
         <h3 class="title">管理后台</h3>
       </div>
@@ -70,6 +70,7 @@ export default {
     };
     return {
       loginLoding: false,
+      isNew: false,
       loginForm: {
         account: '',
         password: '',
@@ -98,7 +99,29 @@ export default {
     // //console.log(123)
   },
   methods: {
-    goBack(){},
+    goBack() {
+      if (this.isNew) {
+        this.isNew = false;
+        this.$nextTick(() => {
+          this.loginForm = {
+            account: '',
+            password: '',
+            googleCode: '',
+          };
+          document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '旧版登录';
+        });
+      } else {
+        this.isNew = true;
+        this.$nextTick(() => {
+          this.loginForm = {
+            account: '',
+            password: '',
+            googleCode: '',
+          };
+          document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
+        });
+      }
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = '';
@@ -124,7 +147,7 @@ export default {
           // setCookies("user_name", this.loginForm.account);
           // this.$router.push({ path: "/" });
           this.loginLoding = true;
-          const res = await $api.login(params);
+          const res = !this.isNew ? await $api.login(params) : await $api.newLogin(params);
           if (res) {
             const { list, token } = res.data.data;
             setToken(token);
@@ -140,9 +163,10 @@ export default {
       });
     },
   },
-  mounted(){
-    document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '返回旧版登录'
-  }
+  mounted() {
+    document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
+    this.isNew = false;
+  },
 };
 </script>
 

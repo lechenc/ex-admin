@@ -579,13 +579,6 @@ const peopleManagementConfig = [
     value: '',
     width: '350px',
   },
-  {
-    type: 'text',
-    label: '搜索成员',
-    prop: 'name1',
-    value: '',
-    width: '350px',
-  },
 ];
 
 export {domainNameFixedCol,domainNameFixedColNoBtn, peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };
