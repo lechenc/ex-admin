@@ -1560,6 +1560,12 @@ export const asyncRouterMap = [
             component: () => import('@/views/contract/risk/contractTactics'),
             meta: { title: '合约策略点管理', icon: '', role: [] },
           },
+          {
+            path: 'highFrequencyConfig',
+            name: 'HighFrequencyConfig',
+            component: () => import('@/views/contract/risk/highFrequencyConfig'),
+            meta: { title: '高频参数管理', icon: '', role: [] },
+          },
         ],
       },
       {

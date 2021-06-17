@@ -283,7 +283,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="管理员谷歌" prop="googleCode">
-              <el-input type="text" @input="paramsCheckVal('googleCode', 'nodot')" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
+              <el-input type="text" @input="paramsForm.googleCode = paramsForm.googleCode.replace(/[^\d]/g, '')" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

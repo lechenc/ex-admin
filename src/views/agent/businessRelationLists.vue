@@ -14,9 +14,14 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-middle">
-      <el-table :data="list" height="100%" style="width: 100%; height: 100%" row-key="businessUid" border lazy :load="load" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" size="mini" class="new-table" ref="tablenow" :indent="45">
+      <el-table :data="list" height="100%" style="width: 100%; height: 100%" row-key="userId" border lazy :load="load" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" size="mini" class="new-table" ref="tablenow" :indent="45">
         <el-table-column prop="businessUid" label="商务UID" width="auto" min-width="290"></el-table-column>
-
+        <el-table-column label="用户类型" width="auto" min-width="290">
+          <template slot-scope="scope">
+            {{ scope.row['businessType'] | businessTypeFilter }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="remark" label="备注" width="auto" min-width="290"></el-table-column>
         <el-table-column prop="feeCommission" label="手续费返佣比例" align="center" width="150"> </el-table-column>
         <el-table-column prop="packPercent" label="团队长打包比例" align="center" width="150"> </el-table-column>
         <el-table-column prop="availableBalance" label="可用" align="center" width="150"> </el-table-column>
@@ -173,9 +178,7 @@
         <el-row :span="24">
           <el-col :span="21">
             <el-form-item label="管理员谷歌" :label-width="formLabelWidth" prop="googleCode">
-              <el-input type="text" v-model="editForm.googleCode" placeholder="请输入" @input="checkVal('googleCode')">
-                
-              </el-input>
+              <el-input type="text" v-model="editForm.googleCode" placeholder="请输入" @input="checkVal('googleCode')"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -246,7 +249,6 @@ export default {
         feeCommission: [{ required: true, message: '必填', trigger: 'blur' }],
         packPercent: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
-        
       },
 
       dialogSetVisible: false, // 显示设置弹框
@@ -263,17 +265,18 @@ export default {
       dom: null,
     };
   },
+
   methods: {
     confirmOp() {
       this.$refs['editForm'].validate(async (valid) => {
         if (valid) {
-          const { userId, feeCommission, packPercent,googleCode } = this.editForm;
+          const { userId, feeCommission, packPercent, googleCode } = this.editForm;
           const params = {
             commissionPercent: feeCommission + '%',
             packPercent: packPercent + '%',
             userId: userId,
             needCheckGoogleCode: true,
-            googleCode
+            googleCode,
           };
 
           this.btnLoading = true;
@@ -341,7 +344,7 @@ export default {
       if (!this.search_params_obj.businessUid && (this.search_params_obj.type == 0 || this.search_params_obj.type == 2)) {
         return this.$message.error('必须输入UID才能定位');
       }
-      if (!this.search_params_obj.type && this.search_params_obj.type!=0&& this.search_params_obj.type != 1) {
+      if (!this.search_params_obj.type && this.search_params_obj.type != 0 && this.search_params_obj.type != 1) {
         return this.$message.error('必须选择层级关系');
       }
       this.getList();
@@ -404,15 +407,19 @@ export default {
       return list;
     },
     async load(tree, treeNode, resolve) {
-      const res = await $api.apiGetBusinessRelationList({
-        businessUid: tree.businessUid,
-        type: 2,
-      });
-      const { list } = res.data.data;
-      list.forEach((v) => {
-        v['hasChildren'] = true;
-      });
-      resolve(list);
+      try {
+        const res = await $api.apiGetBusinessRelationList({
+          businessUid: tree.businessUid,
+          type: 2,
+        });
+        const { list } = res.data.data;
+        list.forEach((v) => {
+          v['hasChildren'] = true;
+        });
+        resolve(list);
+      } catch (error) {
+        console.log('error');
+      }
     },
 
     // 点击定位（查父级）
@@ -477,7 +484,7 @@ export default {
             legalInRate: this.delPercent(legalInRate),
             legalOutRate: this.delPercent(legalOutRate),
           };
-          
+
           this.btnLoading = true;
           // 编辑
           // const res = this.isEditPanel == 'btn' ? await $api.setUpdatePlatformUserRates(params) : await $api.updateDownUserRates(params)
@@ -504,28 +511,32 @@ export default {
 
     // getlist 获取首页表格数据
     async getList(type) {
-      if (this.listLoading) return;
-      // if (this.search_params_obj.direction && !this.search_params_obj.uid) {
-      //   this.$message({ message: '必须输入UID才能定位', type: 'danger' });
-      //   return;
-      // }
-      const query_data = {
-        type,
-      };
-      Object.assign(query_data, this.search_params_obj);
-      this.listLoading = true;
-      let res = await $api.apiGetBusinessRelationList(query_data);
-      if (res) {
-        const { list } = res.data.data;
-        list.forEach((v) => {
-          v['hasChildren'] = true;
-        });
-        this.list = list;
+      try {
+        if (this.listLoading) return;
+        // if (this.search_params_obj.direction && !this.search_params_obj.uid) {
+        //   this.$message({ message: '必须输入UID才能定位', type: 'danger' });
+        //   return;
+        // }
+        const query_data = {
+          type,
+        };
+        Object.assign(query_data, this.search_params_obj);
+        this.listLoading = true;
+        let res = await $api.apiGetBusinessRelationList(query_data);
+        if (res) {
+          const { list } = res.data.data;
+          list.forEach((v) => {
+            v['hasChildren'] = true;
+          });
+          this.list = list;
 
-        this.listLoading = false;
-      } else {
-        this.list = [];
-        this.listLoading = false;
+          this.listLoading = false;
+        } else {
+          this.list = [];
+          this.listLoading = false;
+        }
+      } catch (error) {
+        console.log('error', error);
       }
     },
 
@@ -583,6 +594,15 @@ export default {
         return '不是';
       } else if (val === 1) {
         return '是';
+      }
+    },
+    businessTypeFilter(val) {
+      if (val === 31) {
+        return '商务';
+      } else if (val === 32) {
+        return '商务代理';
+      } else {
+        return '';
       }
     },
   },

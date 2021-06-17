@@ -490,6 +490,7 @@ const mapComponents = {
   ContractEstimate: () => import('@/views/contract/risk/contractEstimate'),
   ContractResult: () => import('@/views/contract/risk/contractResult'),
   ContractTactics: () => import('@/views/contract/risk/contractTactics'),
+  HighFrequencyConfig: () => import('@/views/contract/risk/highFrequencyConfig'),
   //账号管理
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),
