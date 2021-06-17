@@ -80,7 +80,6 @@ export default {
       this.search_params_obj = data;
       this.calLoading = true;
       const params = {
-        userType: 1
       };
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
