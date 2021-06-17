@@ -475,6 +475,7 @@ export default {
             legalInRate: this.delPercent(legalInRate),
             legalOutRate: this.delPercent(legalOutRate),
           };
+          
           this.btnLoading = true;
           // 编辑
           // const res = this.isEditPanel == 'btn' ? await $api.setUpdatePlatformUserRates(params) : await $api.updateDownUserRates(params)
