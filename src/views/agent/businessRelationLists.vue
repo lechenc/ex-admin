@@ -281,7 +281,7 @@ export default {
           if (res) {
             this.$message({ message: '编辑成功', type: 'success' });
             this.dialogFormVisible = false;
-            this.getList(0);
+            this.getList(1);
             this.btnLoading = false;
           }
         }
@@ -338,10 +338,10 @@ export default {
       this.current_page = 1;
       this.search_params_obj = data;
       // this.getList('search');
-      if (!this.search_params_obj.businessUid && (this.search_params_obj.type == 1 || this.search_params_obj.type == 2)) {
+      if (!this.search_params_obj.businessUid && (this.search_params_obj.type == 0 || this.search_params_obj.type == 2)) {
         return this.$message.error('必须输入UID才能定位');
       }
-      if (!this.search_params_obj.type && this.search_params_obj.type != 0) {
+      if (!this.search_params_obj.type && this.search_params_obj.type!=0&& this.search_params_obj.type != 1) {
         return this.$message.error('必须选择层级关系');
       }
       this.getList();
@@ -351,8 +351,8 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[1].value = 0;
-      this.getList(0);
+      this.searchCofig[1].value = 1;
+      this.getList(1);
     },
 
     // 页容变化
@@ -590,7 +590,7 @@ export default {
     let authObj = this.$util.getAuthority('BusinessRelationLists', [], []);
     this.btnArr = authObj.btnArr || [];
     this.searchCofig = this.$util.clone(businessRelationListsConfig);
-    this.getList(0);
+    this.getList(1);
   },
 };
 </script>
