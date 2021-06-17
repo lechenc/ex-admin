@@ -100,8 +100,8 @@ export default {
   },
   methods: {
     goBack() {
-      if (this.isNew) {
-        this.isNew = false;
+      if (!this.isNew) {
+        this.isNew = true;
         this.$nextTick(() => {
           this.loginForm = {
             account: '',
@@ -111,7 +111,7 @@ export default {
           document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '旧版登录';
         });
       } else {
-        this.isNew = true;
+        this.isNew = false;
         this.$nextTick(() => {
           this.loginForm = {
             account: '',
