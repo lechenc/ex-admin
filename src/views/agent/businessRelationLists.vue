@@ -174,7 +174,7 @@
           <el-col :span="21">
             <el-form-item label="管理员谷歌" :label-width="formLabelWidth" prop="googleCode">
               <el-input type="text" v-model="editForm.googleCode" placeholder="请输入" @input="checkVal('googleCode')">
-                <template slot="append">%</template>
+                
               </el-input>
             </el-form-item>
           </el-col>
@@ -245,6 +245,8 @@ export default {
         businessUid: [{ required: true, message: '必填', trigger: 'blur' }],
         feeCommission: [{ required: true, message: '必填', trigger: 'blur' }],
         packPercent: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        
       },
 
       dialogSetVisible: false, // 显示设置弹框
