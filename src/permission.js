@@ -408,6 +408,7 @@ const mapComponents = {
 
 
   AgentsLists: () => import('@/views/agent/agentsLists'),
+  BusinessRelationLists: () => import('@/views/agent/businessRelationLists'),
   AgentsListsConfig: () => import('@/views/agent/agentsListsConfig'),
   AgentsListsDetail: () => import('@/views/agent/agentsListsDetail'),
   AgentRefundRecordNew: () => import('@/views/agent/agentRefundRecordNew'),

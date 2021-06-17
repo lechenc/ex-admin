@@ -2909,6 +2909,11 @@ export default class api {
     return Fetch.post('/admin/user/edit/sys-role', data);
   }
 
+  // 商务层级关系列表
+  static apiGetBusinessRelationList(data) {
+    return Fetch.post('/admin/user/contract/query-business-relation', data);
+  }
+
   
 
   

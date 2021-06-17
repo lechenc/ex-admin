@@ -809,6 +809,35 @@ const agentFinancialFlowCol = [
   //   show_type: 'text',
   //   filters: [{ text: '是', val: 1 }, { text: '否', val: 0 }],
   // },
+
+  {
+    label: '用户类型',
+    prop: 'userType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      { text: '普通用户', val: 1 },
+      { text: '后台管理员用户', val: 2 },
+      { text: '机器人', val: 3 },
+      { text: 'CPT用户', val: 4 },
+      { text: '系统用户', val: 100 },
+      { text: '收益账号', val: 101 },
+      { text: '成本账号', val: 102 },
+      { text: '支出账号', val: 103 },
+      { text: '支出子账号', val: 104 },
+      { text: '收入账号', val: 105 },
+      { text: '合约收益账号', val: 106 },
+      { text: 'TP商户账号', val: 20 },
+      { text: '顶级代理商账号', val: 21 },
+      { text: '代理商账号', val: 22 },
+      { text: '平台商户账号', val: 23 },
+      { text: '顶级承兑商', val: 24 },
+      { text: '承兑商代理', val: 25 },
+      { text: '商务端', val: 31 },
+      { text: '商务代理', val: 32 },
+      { text: '分析师', val: 41 },
+    ],
+  },
   {
     label: '类型',
     prop: 'optType',
@@ -1998,7 +2027,30 @@ const earnestMoneyListConfig = [
   },
 ];
 
+// 商务层级关系
+const businessRelationListsConfig = [
+  {
+    type: 'onlyNumber',
+    label: '商务UID',
+    prop: 'businessUid',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'select',
+    label: '商务关系',
+    prop: 'type',
+    value: 0,
+    list: [
+      { label: '当前级别', value: 0 },
+      { label: '查上级', value: 1 },
+      { label: '查下级', value: 2 },
+    ]
+  }
+]
+
 export {
+  businessRelationListsConfig,
   earnestMoneyListConfig,
   earnestMoneyListCol,
   agentMonitorConfig,

@@ -1304,12 +1304,12 @@ export const asyncRouterMap = [
         meta: { title: '代理商详情', icon: '', role: [] },
       },
 
-      // {
-      //   path: 'businessLists',
-      //   name: 'BusinessLists',
-      //   component: () => import('@/views/agent/businessLists'),
-      //   meta: { title: '商务列表', icon: '', role: [] },
-      // },
+      {
+        path: 'businessRelationLists',
+        name: 'BusinessRelationLists',
+        component: () => import('@/views/agent/businessRelationLists'),
+        meta: { title: '商务层级关系', icon: '', role: [] },
+      },
       // {
       //   path: 'businessListsConfig',
       //   name: 'BusinessListsConfig',
