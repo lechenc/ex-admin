@@ -2914,6 +2914,17 @@ export default class api {
     return Fetch.post('/admin/user/contract/query-business-relation', data);
   }
 
+  // 商务手续费返佣列表
+  static apiGetBusinessRefundRecordList(data) {
+    return Fetch.post('/admin/account/business-coin-market-commission-page', data);
+  }
+
+  // 商务手续费返佣列表 合计
+  static apiGetBusinessRefundRecordSum(data) {
+    // return Fetch.post('/admin/account/contract/queryCommissionSum', data);
+    return Fetch.post('/admin/account/business-coin-market-commission-total', data);
+  }
+
   
 
   

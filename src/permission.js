@@ -424,6 +424,7 @@ const mapComponents = {
   AgentFinancialFlow: () => import('@/views/agent/agentFinancialFlow'),
   UserMonitor: () => import('@/views/agent/userMonitor'),
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
+  BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
 
 
   CoinContract: () => import('@/views/contract/transact/coinContract'),

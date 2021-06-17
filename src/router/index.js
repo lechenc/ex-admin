@@ -1374,6 +1374,14 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/earnestMoneyList'),
         meta: { title: '保证金流水', icon: '', role: [] },
       },
+
+      
+      {
+        path: 'businessRefundRecord',
+        name: 'BusinessRefundRecord',
+        component: () => import('@/views/agent/businessRefundRecord'),
+        meta: { title: '商务手续费返佣记录', icon: '', role: [] },
+      },
     ],
   },
 

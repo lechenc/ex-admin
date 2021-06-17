@@ -269,7 +269,7 @@ export default {
         if (valid) {
           const { userId, feeCommission, packPercent,googleCode } = this.editForm;
           const params = {
-            feeCommission: feeCommission + '%',
+            commissionPercent: feeCommission + '%',
             packPercent: packPercent + '%',
             userId: userId,
             needCheckGoogleCode: true,

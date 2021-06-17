@@ -2034,22 +2034,134 @@ const businessRelationListsConfig = [
     label: '商务UID',
     prop: 'businessUid',
     value: '',
-    placeHolder: '请输入'
+    placeHolder: '请输入',
   },
   {
     type: 'select',
     label: '商务关系',
     prop: 'type',
-    value: 0,
-    list: [
-      { label: '当前级别', value: 0 },
-      { label: '查上级', value: 1 },
-      { label: '查下级', value: 2 },
-    ]
-  }
-]
+    value: 1,
+    list: [{ label: '查上级', value: 0 }, { label: '当前级别', value: 1 }, { label: '查下级', value: 2 }],
+  },
+];
+
+// 商务手续费返佣记录
+const businessRefundRecordCol = [
+  {
+    label: '时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '用户UID',
+    prop: 'uid',
+  },
+  {
+    label: '商务UID',
+    prop: 'businessUid',
+  },
+  {
+    label: '返佣类型',
+    prop: 'orderType',
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '合约返佣', val: 1 }, { text: '币币返佣', val: 2 }],
+  },
+  {
+    label: '币对',
+    prop: 'coinMarket',
+  },
+  {
+    label: '成交方向',
+    prop: 'direction',
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    // 1:进, 2:出
+    filters: [{ text: '进', val: 1 }, { text: '出', val: 2 }],
+  },
+  {
+    label: '成交数量',
+    prop: 'positionAmount',
+  },
+  {
+    label: '成交金额',
+    prop: 'dealAmount',
+  },
+  {
+    label: '手续费金额',
+    prop: 'originFeeAmountSum',
+  },
+  {
+    label: '商务返佣金额',
+    width: 130,
+    prop: 'commissionAmount',
+  },
+  {
+    label: '结算状态',
+    prop: 'businessGrantStatus',
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '已结算', val: 1 }, { text: '待结算', val: 0 }],
+  },
+  {
+    label: '订单号',
+    prop: 'orderNumber',
+  },
+];
+
+const businessRefundRecordConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '商务UID',
+    prop: 'toUid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '订单号',
+    prop: 'orderNumber',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'select',
+    label: '币对',
+    prop: 'coinMarket',
+    value: '',
+    list: [],
+  },
+  
+  {
+    type: 'select',
+    label: '返佣类型',
+    prop: 'orderType',
+    value: '',
+    list: [{ label: '合约返佣', value: 1 }, { label: '币币返佣', value: 2 }],
+  },
+  
+];
 
 export {
+  businessRefundRecordConfig,
+  businessRefundRecordCol,
   businessRelationListsConfig,
   earnestMoneyListConfig,
   earnestMoneyListCol,
