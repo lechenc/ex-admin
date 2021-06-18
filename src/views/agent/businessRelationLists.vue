@@ -271,7 +271,7 @@ export default {
     confirmOp() {
       this.$refs['editForm'].validate(async (valid) => {
         if (valid) {
-          const { userId, feeCommission, packPercent, googleCode } = this.editForm;
+          const { userId, feeCommission, packPercent, googleCode,inviterUid } = this.editForm;
           const params = {
             commissionPercent: feeCommission + '%',
             packPercent: packPercent + '%',
@@ -285,7 +285,11 @@ export default {
           if (res) {
             this.$message({ message: '编辑成功', type: 'success' });
             this.dialogFormVisible = false;
-            this.getList(1);
+            if (inviterUid==0) {
+              this.getList(1);
+            } else {
+              this.load(this.tree, this.treeNode, this.resolve);
+            }
           }
           this.btnLoading = false;
         }
@@ -303,8 +307,9 @@ export default {
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs.editForm.resetFields();
-        const { businessUid, userId, feeCommission, packPercent } = row;
+        const { businessUid, userId, feeCommission, packPercent,inviterUid } = row;
         this.editForm = {
+          inviterUid,
           businessUid,
           userId,
           feeCommission: feeCommission.split('%').join(''),
@@ -413,7 +418,9 @@ export default {
           businessUid: tree.businessUid,
           type: 2,
         });
-        console.log('res', res);
+        this.tree = tree;
+        this.treeNode = treeNode;
+        this.resolve = resolve;
         const { list } = res.data.data;
         list.forEach((v) => {
           v['hasChildren'] = v['haveLower'];
