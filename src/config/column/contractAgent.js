@@ -2159,7 +2159,7 @@ const businessRefundRecordConfig = [
   {
     type: 'select',
     label: '结算状态',
-    prop: 'businessGrantStatus',
+    prop: 'isReward',
     value: '',
     list: [ { label: '已结算', value: 1 }, { label: '待结算', value: 0 }],
   },

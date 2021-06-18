@@ -285,8 +285,9 @@ export default {
             this.$message({ message: '编辑成功', type: 'success' });
             this.dialogFormVisible = false;
             this.getList(1);
-            this.btnLoading = false;
+            
           }
+          this.btnLoading = false;
         }
       });
     },
