@@ -412,9 +412,10 @@ export default {
           businessUid: tree.businessUid,
           type: 2,
         });
+        console.log('res',res)
         const { list } = res.data.data;
         list.forEach((v) => {
-          v['hasChildren'] = true;
+          v['hasChildren'] = v['haveLower'];
         });
         resolve(list);
       } catch (error) {
@@ -526,7 +527,7 @@ export default {
         if (res) {
           const { list } = res.data.data;
           list.forEach((v) => {
-            v['hasChildren'] = true;
+            v['hasChildren'] = v['haveLower'];
           });
           this.list = list;
 

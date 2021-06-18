@@ -2925,6 +2925,20 @@ export default class api {
     return Fetch.post('/admin/account/business-coin-market-commission-total', data);
   }
 
+  // 高频配置 查询
+  static apiGetHighFrequencyConfig(data) {
+    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
+  }
+
+
+    // 高频配置 编辑
+   static apiEditHighFrequencyConfig(data) {
+    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
+  }
+
+
+  
+
   
 
   

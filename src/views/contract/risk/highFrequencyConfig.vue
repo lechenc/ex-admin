@@ -15,27 +15,73 @@
           <H5>高频参数管理</H5>
           <el-row :span="24">
             <el-col :span="12">
-              <el-form-item label="相同的注册IP人数达到: " prop="registerIpLimit">
-                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerIpLimit" @input="checkVal('registerIpLimit')" :disabled="!isModify"></el-input>
+              <el-form-item label="监控范围: " prop="monitorRange">
+                <el-checkbox-group :disabled="!isModify" v-model="form.monitorRange">
+                  <el-checkbox v-for="item in monitorRangeArr" :label="item.value" :key="item.value">{{ item.label }}</el-checkbox>
+                </el-checkbox-group>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :span="24">
             <el-col :span="12">
-              <el-form-item label="相同的登录IP人数达到: " prop="loginIpLimit">
-                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.loginIpLimit" @input="checkVal('loginIpLimit')" :disabled="!isModify"></el-input>
+              <el-form-item label="阶段时间内(min):  " prop="phaseTime">
+                <el-input style="width: 55%" type="text" placeholder="请输入" v-model="form.phaseTime" @input="checkVal('phaseTime')" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :span="24">
             <el-col :span="12">
-              <el-form-item label="相同的设备号人数达到: " prop="registerDeviceLimit">
-                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.registerDeviceLimit" @input="checkVal('registerDeviceLimit')" :disabled="!isModify"></el-input>
+              <el-form-item label="①高频交易开仓次数: " prop="highFrequencyOpenTimes">
+                <el-input style="width: 55%" type="text" placeholder="请输入" v-model="form.highFrequencyOpenTimes" @input="checkVal('highFrequencyOpenTimes')" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
-          <div v-if="btnArr.includes('detailEdit')">
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="②高频交易平仓次数: " prop="highFrequencyCloseTimes">
+                <el-input style="width: 55%" type="text" placeholder="请输入" v-model="form.highFrequencyCloseTimes" @input="checkVal('highFrequencyCloseTimes')" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="③盈利达到（USDT）: " prop="profitLimit">
+                <el-input style="width: 55%" type="text" placeholder="请输入" v-model="form.profitLimit" @input="checkVal('profitLimit')" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="限制选项: " prop="limitOptions">
+                <el-checkbox-group :disabled="!isModify" v-model="form.limitOptions">
+                  <el-checkbox v-for="item in limitOptionsArr" :label="item.value" :key="item.value">{{ item.label }}</el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="生效方式: " prop="effectiveWay">
+                <el-select :disabled="!isModify" v-model="form.effectiveWay" placeholder="请选择">
+                  <el-option v-for="item in effectiveWayArr" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="总开关: " prop="masterSwitch">
+                <el-switch :disabled="!isModify" v-model="form.masterSwitch" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <div v-if="btnArr.includes('edit')">
             <div class="middle" v-if="!isModify">
               <el-button type="primary" size="medium" @click="isModify = true">编辑</el-button>
             </div>
@@ -56,6 +102,49 @@ export default {
   name: 'HighFrequencyConfig',
   data() {
     return {
+      //  1、普通用户；2、代理下方用户； 3、代理商； 4、APIkey用户
+      monitorRangeArr: [
+        {
+          label: '普通用户',
+          value: 1,
+        },
+        {
+          label: '代理下方用户',
+          value: 2,
+        },
+        {
+          label: '代理商',
+          value: 3,
+        },
+        {
+          label: 'APIkey用户',
+          value: 4,
+        },
+      ],
+      limitOptionsArr: [
+        {
+          label: '划转',
+          value: 1,
+        },
+        {
+          label: '提币',
+          value: 2,
+        },
+        {
+          label: '法币',
+          value: 3,
+        },
+      ],
+      effectiveWayArr: [
+        {
+          label: '满足①②③任何一个既生效',
+          value: 1,
+        },
+        {
+          label: '同时满足既生效',
+          value: 2,
+        },
+      ],
       btnArr: [],
       btnLoading: false, // 提交
       isModify: false, // 是否可以修改(控制页面内是否修改操作)
@@ -65,14 +154,21 @@ export default {
       isRegisterSwitch: false, // 是否开启
 
       form: {
-        registerIpLimit: '',
-        loginIpLimit: '',
-        registerDeviceLimit: '',
+        monitorRange: [],
+        phaseTime: '',
+        highFrequencyOpenTimes: '',
+        highFrequencyCloseTimes: '',
+        profitLimit: '',
+        limitOptions: [],
+        effectiveWay: '',
+        masterSwitch: false,
       },
       rules: {
-        registerIpLimit: [{ required: true, message: '必填', trigger: 'blur' }],
-        loginIpLimit: [{ required: true, message: '必填', trigger: 'blur' }],
-        registerDeviceLimit: [{ required: true, message: '必填', trigger: 'blur' }],
+        phaseTime: [{ required: true, message: '必填', trigger: 'blur' }],
+        highFrequencyOpenTimes: [{ required: true, message: '必填', trigger: 'blur' }],
+        highFrequencyCloseTimes: [{ required: true, message: '必填', trigger: 'blur' }],
+        profitLimit: [{ required: true, message: '必填', trigger: 'blur' }],
+        effectiveWay: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     };
   },
@@ -80,6 +176,7 @@ export default {
     // getlist
     async getList() {
       try {
+        return
         if (this.listLoading) return;
         const query_data = {};
         this.listLoading = true;
@@ -95,7 +192,7 @@ export default {
         }
         this.listLoading = false;
       } catch (error) {
-        console.log('error')
+        console.log('error');
       }
     },
     // 控制输入的范围
@@ -109,15 +206,19 @@ export default {
     async confirmSend() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { registerIpLimit, loginIpLimit, registerDeviceLimit, id } = this.form;
+          const { monitorRange, phaseTime, highFrequencyOpenTimes, highFrequencyCloseTimes, profitLimit, limitOptions, effectiveWay, masterSwitch } = this.form;
           let params = {
-            registerIpLimit,
-            loginIpLimit,
-            registerDeviceLimit,
-            id,
+            monitorRange,
+            phaseTime,
+            highFrequencyOpenTimes,
+            highFrequencyCloseTimes,
+            profitLimit,
+            limitOptions,
+            effectiveWay,
+            masterSwitch: masterSwitch ? 1 : 2,
           };
           this.btnLoading = true;
-          const res = await $api.apiEditRiskConfig(params);
+          const res = await $api.apiEditHighFrequencyConfig(params);
           if (res) {
             this.$message({
               message: '修改成功！',
@@ -132,7 +233,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('RiskList', [], []);
+    let authObj = this.$util.getAuthority('HighFrequencyConfig', [], []);
     this.btnArr = authObj.btnArr;
 
     this.getList();
