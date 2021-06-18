@@ -63,7 +63,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :span="24">
+        <el-row v-if="!isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="团队长返佣比例" :label-width="formLabelWidth" prop="packPercent">
               <el-input type="text" v-model.trim="cForm.packPercent" placeholder="请输入" @input="checkVal('packPercent', 1)">
@@ -114,7 +114,7 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row v-if="!isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="团队长返佣结算时间" :label-width="formLabelWidth" prop="delayDay">
               <el-row :span="24">
@@ -139,7 +139,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="设置代理总盈利阀值" :label-width="formLabelWidth" prop="profitMargin">
               <el-input class="my-mumber-input" @input="checkVal('profitMargin')" type="text" v-model.trim="cForm.profitMargin" placeholder="请输入"></el-input>
@@ -147,7 +147,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="设置用户盈利阀值" :label-width="formLabelWidth" prop="userProfitMargin">
               <el-input class="my-mumber-input" @input="checkVal('userProfitMargin')" type="text" v-model.trim="cForm.userProfitMargin" placeholder="请输入"></el-input>
@@ -155,7 +155,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailFirst">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailFirst" placeholder="请输入"></el-input>
@@ -163,7 +163,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailSecond">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailSecond" placeholder="请输入"></el-input>
@@ -171,7 +171,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailThird">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailThird" placeholder="请输入"></el-input>
@@ -325,6 +325,7 @@ export default {
         agentUID: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      isBusiness:false,
       paramsForm: {},
       paramsVisible: false, // 参数配置
       paramsBtnLoading: false,
@@ -770,6 +771,11 @@ export default {
       if (fn === 'edit') {
         this.formName = '编辑代理商';
         this.dialogFormVisible = true;
+        if (row.userType == 31) {
+          this.isBusiness = true;
+        } else {
+          this.isBusiness = false;
+        }
         this.$nextTick(() => {
           this.$refs['cForm'].resetFields();
           const {

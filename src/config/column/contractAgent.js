@@ -2148,7 +2148,7 @@ const businessRefundRecordConfig = [
     value: '',
     list: [],
   },
-  
+
   {
     type: 'select',
     label: '返佣类型',
@@ -2156,7 +2156,13 @@ const businessRefundRecordConfig = [
     value: '',
     list: [{ label: '合约返佣', value: 1 }, { label: '币币返佣', value: 2 }],
   },
-  
+  {
+    type: 'select',
+    label: '结算状态',
+    prop: 'businessGrantStatus',
+    value: '',
+    list: [ { label: '已结算', value: 1 }, { label: '待结算', value: 0 }],
+  },
 ];
 
 export {
