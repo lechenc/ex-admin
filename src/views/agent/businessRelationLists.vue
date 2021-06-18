@@ -159,7 +159,7 @@
         <el-row :span="24">
           <el-col :span="21">
             <el-form-item label="手续费返佣比例" :label-width="formLabelWidth" prop="feeCommission">
-              <el-input type="text" v-model="editForm.feeCommission" placeholder="请输入" @input="checkVal('feeCommission', 1)">
+              <el-input type="text" v-model="editForm.feeCommission" placeholder="请输入" @input="checkVal('feeCommission', 'not')">
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -168,7 +168,7 @@
         <el-row :span="24">
           <el-col :span="21">
             <el-form-item label="团队长返佣比例" :label-width="formLabelWidth" prop="packPercent">
-              <el-input type="text" v-model="editForm.packPercent" placeholder="请输入" @input="checkVal('packPercent', 1)">
+              <el-input type="text" v-model="editForm.packPercent" placeholder="请输入" @input="checkVal('packPercent', 'not')">
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -541,17 +541,10 @@ export default {
     },
 
     // 对输入值的范围进行限制
-    checkVal(val, num) {
-      // this.editForm[val] = (this.editForm[val] + '').replace(/\%/, '')
-      if (num) {
+    checkVal(val, not) {
+      this.editForm[val] = (this.editForm[val] + '').replace(/[^\d]/g, '');
+      if (not) {
         this.editForm[val] = this.editForm[val] > 100 ? 100 : this.editForm[val];
-        this.editForm[val] = (this.editForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-      } else {
-        this.editForm[val] = (this.editForm[val] + '').replace(/[^\d]/g, '');
-      }
-
-      if (this.editForm[val] < 0) {
-        this.editForm[val] = 0;
       }
     },
 
