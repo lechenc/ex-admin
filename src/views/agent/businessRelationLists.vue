@@ -14,7 +14,7 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-middle">
-      <el-table :data="list" height="100%" style="width: 100%; height: 100%" row-key="userId" border lazy :load="load" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" size="mini" class="new-table" ref="tablenow" :indent="45">
+      <el-table v-loading="loading" :data="list" height="100%" style="width: 100%; height: 100%" row-key="userId" border lazy :load="load" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" size="mini" class="new-table" ref="tablenow" :indent="45">
         <el-table-column prop="businessUid" label="商务UID" width="auto" min-width="290"></el-table-column>
         <el-table-column label="用户类型" width="auto" min-width="290">
           <template slot-scope="scope">
@@ -207,6 +207,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       form: {},
       editForm: {},
       formLabelWidth: '150px',
@@ -285,7 +286,6 @@ export default {
             this.$message({ message: '编辑成功', type: 'success' });
             this.dialogFormVisible = false;
             this.getList(1);
-            
           }
           this.btnLoading = false;
         }
@@ -413,7 +413,7 @@ export default {
           businessUid: tree.businessUid,
           type: 2,
         });
-        console.log('res',res)
+        console.log('res', res);
         const { list } = res.data.data;
         list.forEach((v) => {
           v['hasChildren'] = v['haveLower'];
@@ -514,7 +514,7 @@ export default {
     // getlist 获取首页表格数据
     async getList(type) {
       try {
-        if (this.listLoading) return;
+        if (this.loading) return;
         // if (this.search_params_obj.direction && !this.search_params_obj.uid) {
         //   this.$message({ message: '必须输入UID才能定位', type: 'danger' });
         //   return;
@@ -523,7 +523,7 @@ export default {
           type,
         };
         Object.assign(query_data, this.search_params_obj);
-        this.listLoading = true;
+        this.loading = true;
         let res = await $api.apiGetBusinessRelationList(query_data);
         if (res) {
           const { list } = res.data.data;
@@ -531,12 +531,10 @@ export default {
             v['hasChildren'] = v['haveLower'];
           });
           this.list = list;
-
-          this.listLoading = false;
         } else {
           this.list = [];
-          this.listLoading = false;
         }
+        this.loading = false;
       } catch (error) {
         console.log('error', error);
       }

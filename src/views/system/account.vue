@@ -180,7 +180,7 @@ export default {
       this.$refs['userForm'].validate(async (valid) => {
         if (valid) {
           const { authGoogle, googleCode, password, roleId, id, account, status } = this.userForm;
-          if (id === '') {
+          if (!id) {
             // 新增
             const params = {
               authGoogle,

@@ -325,7 +325,7 @@ export default {
         agentUID: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      isBusiness:false,
+      isBusiness: false,
       paramsForm: {},
       paramsVisible: false, // 参数配置
       paramsBtnLoading: false,
@@ -771,11 +771,7 @@ export default {
       if (fn === 'edit') {
         this.formName = '编辑代理商';
         this.dialogFormVisible = true;
-        if (row.userType == 31) {
-          this.isBusiness = true;
-        } else {
-          this.isBusiness = false;
-        }
+
         this.$nextTick(() => {
           this.$refs['cForm'].resetFields();
           const {
@@ -802,8 +798,18 @@ export default {
             phoneEmailThird,
             selfCommission,
           } = row;
+          
           if (userGrade == 2) {
             this.twoLevelModel = true;
+          }else{
+            this.twoLevelModel = false;
+          }
+          console.log('userGrade',userGrade)
+          console.log('row.userType',row.userType)
+          if (row.userType == 31) {
+            this.isBusiness = true;
+          } else {
+            this.isBusiness = false;
           }
           this.cForm = {
             uid,
