@@ -5,7 +5,7 @@
     </div>
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
-      <el-button type="primary" size="medium" v-if="btnArr.includes('params') && false" @click="editParams">商务返佣参数设置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
@@ -272,8 +272,8 @@
       <el-form :model="paramsForm" :label-width="formLabelWidth" ref="paramsForm" :rules="paramsRules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="允许一级商务可设置范围" prop="agentUID">
-              <el-input @input="paramsCheckVal('agentUID')" type="number" v-model.trim="paramsForm.agentUID" placeholder="请输入">
+            <el-form-item label="允许一级商务可设置范围" prop="commissionPercent">
+              <el-input @input="paramsCheckVal('commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -322,7 +322,7 @@ export default {
     };
     return {
       paramsRules: {
-        agentUID: [{ required: true, message: '必填', trigger: 'blur' }],
+        commissionPercent: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       isBusiness: false,
@@ -508,15 +508,15 @@ export default {
     paramsConfirmOp() {
       this.$refs['paramsForm'].validate(async (valid) => {
         if (valid) {
-          const { agentUID, googleCode } = this.paramsForm;
+          const { commissionPercent, googleCode } = this.paramsForm;
           if (this.paramsBtnLoading) return;
           const params = {
-            agentUID,
+            commissionPercent:commissionPercent+'%',
             googleCode,
           };
 
           this.paramsBtnLoading = true;
-          const res = await $api.apiParamsConfirmOp(params);
+          const res = await $api.apiSetRebateConfig(params);
           if (res) {
             this.$message({ message: '设置成功', type: 'success' });
             this.paramsVisible = false;
@@ -526,15 +526,19 @@ export default {
         }
       });
     },
-    editParams() {
+    async editParams() {
       this.paramsVisible = true;
-      this.$nextTick(() => {
-        this.$refs['paramsForm'].resetFields();
-        this.paramsForm = {
-          agentUID: '',
-          googleCode: '',
-        };
-      });
+      const res = await $api.apiGetRebateConfig({});
+      if (res) {
+        const data = res.data.data;
+        this.$nextTick(() => {
+          this.$refs['paramsForm'].resetFields();
+          this.paramsForm = {
+            commissionPercent: data.paramValue.split('%')[0],
+            googleCode: '',
+          };
+        });
+      }
     },
     changeDecimal(val) {
       this.releaseMoneyForm.amount = '';
@@ -894,7 +898,7 @@ export default {
           };
           if (!this.isBusiness) {
             params.packPercent = packPercent + '%';
-          }else{
+          } else {
             params.packPercent = 0 + '%';
           }
           if ((userId && password !== '********') || !userId) {

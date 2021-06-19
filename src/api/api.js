@@ -2936,6 +2936,16 @@ export default class api {
     return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
   }
 
+  // 代理商列表  商务返佣参数设置 查询
+  static apiGetRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/getMaxCommissionPercent', data);
+  }
+
+  // 代理商列表  商务返佣参数设置 设置
+  static apiSetRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/setMaxCommissionPercent', data);
+  }
+
 
   
 

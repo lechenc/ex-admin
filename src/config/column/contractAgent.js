@@ -280,7 +280,14 @@ const agentsListsConfig = [
   },
   {
     type: 'select',
-    label: '代理商级别',
+    label: '类型',
+    prop: 'usertype',
+    value: '',
+    list: [{ label: '商务', value: 31 }, { label: '代理', value: 32 }],
+  },
+  {
+    type: 'select',
+    label: '级别',
     prop: 'userGrade',
     value: '',
     //  1 一级代理商， 2 二级代理商
