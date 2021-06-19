@@ -874,7 +874,7 @@ const agentFinancialFlowCol = [
       { text: '顶级承兑商', val: 24 },
       { text: '承兑商代理', val: 25 },
       { text: '商务端', val: 31 },
-      { text: '商务代理', val: 32 },
+      { text: '商务', val: 32 },
       { text: '分析师', val: 41 },
     ],
   },
