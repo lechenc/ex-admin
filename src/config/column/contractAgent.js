@@ -2103,21 +2103,8 @@ const businessRefundRecordCol = [
     prop: 'coinMarket',
   },
   {
-    label: '成交方向',
-    prop: 'direction',
-    width: 120,
-    type: 'filter',
-    show_type: 'text',
-    // 1:进, 2:出
-    filters: [{ text: '进', val: 1 }, { text: '出', val: 2 }],
-  },
-  {
     label: '成交数量',
     prop: 'positionAmount',
-  },
-  {
-    label: '成交金额',
-    prop: 'dealAmount',
   },
   {
     label: '手续费金额',
