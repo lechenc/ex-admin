@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <el-page-header @back="goBack"> </el-page-header>
+      <!-- <el-page-header @back="goBack"> </el-page-header> -->
       <div class="title-container">
         <h3 class="title">管理后台</h3>
       </div>
