@@ -17,7 +17,14 @@ const agentsListsCol = [
     prop: 'upperUid',
   },
   {
-    label: '代理商级别',
+    label: '类型',
+    prop: 'userType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '商务', val: 31 }, { text: '代理', val: 32 }],
+  },
+  {
+    label: '级别',
     prop: 'userGrade',
   },
 

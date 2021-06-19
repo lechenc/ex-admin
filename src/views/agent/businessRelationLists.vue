@@ -271,13 +271,14 @@ export default {
     confirmOp() {
       this.$refs['editForm'].validate(async (valid) => {
         if (valid) {
-          const { userId, feeCommission, packPercent, googleCode,inviterUid } = this.editForm;
+          const { userId, feeCommission, packPercent, googleCode,inviterUid,businessType } = this.editForm;
           const params = {
             commissionPercent: feeCommission + '%',
             packPercent: packPercent + '%',
             userId: userId,
             needCheckGoogleCode: true,
             googleCode,
+            userType:businessType
           };
 
           this.btnLoading = true;
@@ -307,13 +308,14 @@ export default {
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs.editForm.resetFields();
-        const { businessUid, userId, feeCommission, packPercent,inviterUid } = row;
+        const { businessUid, userId, feeCommission, packPercent,inviterUid ,businessType} = row;
         this.editForm = {
           inviterUid,
           businessUid,
           userId,
           feeCommission: feeCommission.split('%').join(''),
           packPercent: packPercent.split('%').join(''),
+          businessType
         };
       });
     },
