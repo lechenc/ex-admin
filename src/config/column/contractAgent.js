@@ -27,6 +27,10 @@ const agentsListsCol = [
     label: '级别',
     prop: 'userGrade',
   },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+  },
 
   {
     label: '登录名',
@@ -157,8 +161,19 @@ const agentsListsColNoBtn = [
     prop: 'upperUid',
   },
   {
-    label: '代理商级别',
+    label: '类型',
+    prop: 'userType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '商务', val: 31 }, { text: '代理', val: 32 }],
+  },
+  {
+    label: '级别',
     prop: 'userGrade',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
   },
 
   {
@@ -205,6 +220,7 @@ const agentsListsColNoBtn = [
     filters: [{ text: '周', val: 1 }, { text: '月', val: 2 }, { text: '日', val: 3 }],
     prop2: 'delayDay',
   },
+
   {
     label: '可释放保证金',
     prop: 'amount',
