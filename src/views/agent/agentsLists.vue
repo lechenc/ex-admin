@@ -511,7 +511,7 @@ export default {
           const { commissionPercent, googleCode } = this.paramsForm;
           if (this.paramsBtnLoading) return;
           const params = {
-            commissionPercent:commissionPercent+'%',
+            commissionPercent: commissionPercent + '%',
             googleCode,
           };
 
@@ -948,19 +948,12 @@ export default {
         this.total = total;
         this.pages = pages;
         this.current_page = current;
-        // records.forEach((v) => {
-        //   v['commissionSwitch'] = v['commissionSwitch'] ? true : false;
-        //   v['loginSwitch'] = v['loginSwitch'] ? true : false;
-        //   v['withdrawSwitch'] = v['withdrawSwitch'] ? true : false;
-
-        //   v['positionListSwitch'] = v['positionListSwitch'] ? true : false;
-        //   v['closePositionListSwitch'] = v['closePositionListSwitch'] ? true : false;
-        //   v['depositListSwitch'] = v['depositListSwitch'] ? true : false;
-        //   v['withdrawListSwitch'] = v['withdrawListSwitch'] ? true : false;
-        //   v['contractAssetsSwitch'] = v['contractAssetsSwitch'] ? true : false;
-        //   v['userAssetsSwitch'] = v['userAssetsSwitch'] ? true : false;
-        //   v['otcSwitch'] = v['otcSwitch'] ? true : false;
-        // });
+        records.forEach((v) => {
+          if (v.userGrade == 1) {
+            // 一级手动把类型改为商务
+            v.userType = 31;
+          }
+        });
         this.list = records;
       }
       this.listLoading = false;
