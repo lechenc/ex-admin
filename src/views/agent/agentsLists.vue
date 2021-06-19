@@ -530,7 +530,7 @@ export default {
       this.paramsVisible = true;
       const res = await $api.apiGetRebateConfig({});
       if (res) {
-        let data = null || 0;
+        let data = res.data.data || 0;
         this.$nextTick(() => {
           this.$refs['paramsForm'].resetFields();
           if (data) {
