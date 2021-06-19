@@ -602,7 +602,7 @@ export default {
       if (val === 31) {
         return '商务';
       } else if (val === 32) {
-        return '商务代理';
+        return '代理';
       } else {
         return '';
       }
