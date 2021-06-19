@@ -647,16 +647,14 @@ export default {
         this.cForm[val] = 0;
       }
     },
-    paramsCheckVal(val, nodot) {
+    paramsCheckVal(val) {
       if (this.paramsForm[val] >= 100) {
         this.paramsForm[val] = 100;
       }
       if (this.paramsForm[val] < 0) {
         this.paramsForm[val] = 0;
       }
-      if (nodot) {
-        this.paramsForm[val] = (this.paramsForm[val] + '').replace(/[^\d]/g, '');
-      }
+      this.paramsForm[val] = (this.paramsForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 2小数
     },
     uploadIcon(response, file, fileList) {
       if (!response.data) {
