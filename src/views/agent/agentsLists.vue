@@ -948,12 +948,6 @@ export default {
         this.total = total;
         this.pages = pages;
         this.current_page = current;
-        records.forEach((v) => {
-          if (v.userGrade == 1) {
-            // 一级手动把类型改为商务
-            v.userType = 31;
-          }
-        });
         this.list = records;
       }
       this.listLoading = false;
