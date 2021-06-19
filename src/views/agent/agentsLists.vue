@@ -482,34 +482,6 @@ export default {
       },
       // immediate: true,
     },
-    dialogFormVisible(newVal) {
-      if (!newVal) {
-        this.twoLevelModel = false;
-        this.cForm = {
-          uid: '',
-          username: '',
-          remark: '',
-          password: '',
-          commissionPercent: '',
-          packPercent: '',
-          bondPercent: '',
-          delayDay: '',
-          feeDelayDay: '',
-          delayUnit: 1,
-          feeDelayUnit: 1,
-          commissionSwitch: true,
-          loginSwitch: true,
-          bondLimit: '',
-          googleCode: '',
-          profitMargin: '',
-          userProfitMargin: '',
-          phoneEmailFirst: '',
-          phoneEmailSecond: '',
-          phoneEmailThird: '',
-          selfCommission: 0,
-        };
-      }
-    },
     // 'cForm.delayUnit': {
     //   handler(newVal, oldVal) {
     //     if (newVal) {
@@ -798,14 +770,12 @@ export default {
             phoneEmailThird,
             selfCommission,
           } = row;
-          
+
           if (userGrade == 2) {
             this.twoLevelModel = true;
-          }else{
+          } else {
             this.twoLevelModel = false;
           }
-          console.log('userGrade',userGrade)
-          console.log('row.userType',row.userType)
           if (row.userType == 31) {
             this.isBusiness = true;
           } else {
@@ -878,30 +848,31 @@ export default {
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['cForm'].resetFields();
-        // this.cForm = {
-        //   userId: '',
-        //   businessUid: '',
-        //   agentMode: '',
-        //   levelMode: '',
-        //   level: '',
-        //   username: '',
-        //   password: '',
-        //   googleStr: '',
-        //   googleCode: '',
-        //   communityPhoto: '',
-        //   communityName: '',
-        //   commissionSwitch: false,
-        //   loginSwitch: false,
-        //   withdrawSwitch: false,
-
-        //   positionListSwitch: false,
-        //   closePositionListSwitch: false,
-        //   depositListSwitch: false,
-        //   withdrawListSwitch: false,
-        //   contractAssetsSwitch: false,
-        //   userAssetsSwitch: false,
-        //   otcSwitch: false,
-        // };
+        this.twoLevelModel = false;
+        this.isBusiness = false;
+        this.cForm = {
+          uid: '',
+          username: '',
+          remark: '',
+          password: '',
+          commissionPercent: '',
+          packPercent: '',
+          bondPercent: '',
+          delayDay: '',
+          feeDelayDay: '',
+          delayUnit: 1,
+          feeDelayUnit: 1,
+          commissionSwitch: true,
+          loginSwitch: true,
+          bondLimit: '',
+          googleCode: '',
+          profitMargin: '',
+          userProfitMargin: '',
+          phoneEmailFirst: '',
+          phoneEmailSecond: '',
+          phoneEmailThird: '',
+          selfCommission: 0,
+        };
         // this.rules.businessUid[0].required = true;
         // this.rules.agentMode[0].required = true;
         // this.rules.level[0].required = true;
@@ -918,10 +889,14 @@ export default {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
             commissionPercent: commissionPercent + '%',
-            packPercent: packPercent + '%',
             bondPercent: bondPercent + '%',
             ...repo,
           };
+          if (!this.isBusiness) {
+            params.packPercent = packPercent + '%';
+          }else{
+            params.packPercent = 0 + '%';
+          }
           if ((userId && password !== '********') || !userId) {
             params.password = mMd5.md5(password);
           }
