@@ -223,8 +223,6 @@ export default class api {
     return Fetch.post('/admin/market/coinMarkets', data);
   }
 
-  
-
   // 币种管理--查询机器人
   static getRobotList(data) {
     return Fetch.post('/admin/user/robot-page', data);
@@ -441,11 +439,6 @@ export default class api {
   // 系统管理--操作日志
   static systemLogPage(data) {
     return Fetch.post('/admin/user/system-logger-page', data);
-  }
-
-  // 系统管理--登录
-  static login(data) {
-    return Fetch.postlogin('/admin/user/login', data);
   }
 
   // 审核管理 - 用户管理 - 更新用户状态
@@ -1909,10 +1902,7 @@ export default class api {
     return Fetch.post('/admin/user/query/business/agent/list', data);
   }
 
-  // 合约-代理-商务-列表
-  static getBusinessList(data) {
-    return Fetch.post('/admin/user/query/business/list', data);
-  }
+  
 
   // 合约-代理-修改商务或者代理商
   static updateBusinessAgent(data) {
@@ -2589,8 +2579,7 @@ export default class api {
   static apiEditGoogleCode(data) {
     return Fetch.post('/admin/user/edit/google-verify', data);
   }
-  
-  
+
   // 出入金管理 出入金统计 列表
   static getInOutGoldInfoList(data) {
     return Fetch.post('/admin/account/user/coin-statistics', data);
@@ -2704,8 +2693,6 @@ export default class api {
     return Fetch.post('/admin/user/delete/app-key', data);
   }
 
- 
-
   // 币种管理 小额资产展示管理 修改
   static updateSmallAmountShow(data) {
     return Fetch.post('/admin/account/update-small-assets-display', data);
@@ -2746,8 +2733,8 @@ export default class api {
     return Fetch.post('/market/plate/del', data);
   }
 
-   // 币种管理  板块专区管理 列表
-   static getPlateAreaList(data) {
+  // 币种管理  板块专区管理 列表
+  static getPlateAreaList(data) {
     return Fetch.post('/market/plate/find', data);
   }
 
@@ -2766,23 +2753,15 @@ export default class api {
     return Fetch.post('/account/contract/query-coin-change-expand', data);
   }
 
-  // 系统管理 人员管理 权限列表 
-  static apiGetPeopleManagementList(data) {
+  // 系统管理 人员管理 架构树
+  static apiGetStructureTreeList(data) {
     return Fetch.post('/admin/user/structureTreeList', data);
   }
 
-  // 系统管理 人员管理 权限列表 添加子部门
-  static apiAddPeopleManagementList(data) {
-    return Fetch.post('/admin/user/add/sys-role', data);
-  }
-
-  // 系统管理 人员管理 权限列表 编辑子部门
-  static apiEditPeopleManagementList(data) {
-    return Fetch.post('/admin/user/edit/sys-role', data);
-  }
+ 
 
   // 系统管理 人员管理 权限列表 删除菜单
-  static apiEditPeopleManagementList(data) {
+  static apiDelPeopleManagementList(data) {
     return Fetch.post('/admin/user/delete/sys-user', data);
   }
 
@@ -2821,11 +2800,11 @@ export default class api {
     return Fetch.post('/admin/user/userRelationChange/updateReviewAuditStatus', data);
   }
 
-  // 用户管理/ 获取风控参数配置 
+  // 用户管理/ 获取风控参数配置
   static apiGetRiskConfig(data) {
     return Fetch.post('/admin/user/cro/getBlastControlConfig', data);
   }
-  // 用户管理/ 编辑 风控参数配置 
+  // 用户管理/ 编辑 风控参数配置
   static apiEditRiskConfig(data) {
     return Fetch.post('/admin/user/cro/updateBlastControlConfig', data);
   }
@@ -2834,7 +2813,6 @@ export default class api {
   static apiGetriskListList(data) {
     return Fetch.post('/admin/user/cro/getLimitRecordInfoByPage', data);
   }
-
 
   // 用户管理/ 获取 风控记录 详情
   static apiGetriskListInfo(data) {
@@ -2876,15 +2854,98 @@ export default class api {
     return Fetch.post('/admin/user/delete/other-domain-name', data);
   }
 
-  
-  
-  
+  // 系统管理--登录
+  static login(data) {
+    return Fetch.postlogin('/admin/user/login', data);
+  }
 
-  
+  // 系统管理--登录(新)
+  static newLogin(data) {
+    return Fetch.postlogin('/admin/user/newlogin', data);
+  }
 
-  
+  // 系统管理  架构树
+  static apiGetStructureTreeList(data) {
+    return Fetch.post('/admin/user/structureTreeList', data);
+  }
 
-  
+  // 系统管理 人员管理 左侧结构
+  static apiGetPeopleManagementList(data) {
+    return Fetch.post('/admin/user/sys-role-all', data);
+  }
+
+  // 系统管理 人员管理 权限列表 添加人员
+  static apiAddUserPeopleManagementList(data) {
+    return Fetch.post('/admin/user/add/sys-user', data);
+  }
+
+  // 系统管理 人员管理 权限列表 编辑人员
+  static apiEditUserPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-user', data);
+  }
+
+  // 系统管理 人员管理 权限列表 人员开关
+  static apiSwitchUserPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-user-status', data);
+  }
+
+  // 系统管理 人员管理 权限列表 删除人员
+  static apiDeleteUserPeopleManagement(data) {
+    return Fetch.post('/admin/user/delete/sys-user', data);
+  }
+
+  // 系统管理 人员管理 权限列表 删除部门
+  static apiDeletePeopleManagement(data) {
+    return Fetch.post('/admin/user/delete/sys-role', data);
+  }
+
+   // 系统管理 人员管理 权限列表 添加子部门
+   static apiAddPeopleManagementList(data) {
+    return Fetch.post('/admin/user/add/sys-role', data);
+  }
+
+  // 系统管理 人员管理 权限列表 编辑子部门
+  static apiEditPeopleManagementList(data) {
+    return Fetch.post('/admin/user/edit/sys-role', data);
+  }
+
+  // 商务层级关系列表
+  static apiGetBusinessRelationList(data) {
+    return Fetch.post('/admin/user/contract/query-business-relation', data);
+  }
+
+  // 商务手续费返佣列表
+  static apiGetBusinessRefundRecordList(data) {
+    return Fetch.post('/admin/account/business-coin-market-commission-page', data);
+  }
+
+  // 商务手续费返佣列表 合计
+  static apiGetBusinessRefundRecordSum(data) {
+    // return Fetch.post('/admin/account/contract/queryCommissionSum', data);
+    return Fetch.post('/admin/account/business-coin-market-commission-total', data);
+  }
+
+  // 高频配置 查询
+  static apiGetHighFrequencyConfig(data) {
+    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
+  }
+
+
+    // 高频配置 编辑
+   static apiEditHighFrequencyConfig(data) {
+    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
+  }
+
+  // 代理商列表  商务返佣参数设置 查询
+  static apiGetRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/getMaxCommissionPercent', data);
+  }
+
+  // 代理商列表  商务返佣参数设置 设置
+  static apiSetRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/setMaxCommissionPercent', data);
+  }
+
 
   
 

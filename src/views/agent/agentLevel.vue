@@ -197,6 +197,7 @@ export default {
             packPercent: packPercent + '%',
             userId: userId,
             googleCode,
+            needCheckGoogleCode: true,
           };
 
           this.btnLoading = true;

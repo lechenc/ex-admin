@@ -1204,6 +1204,10 @@ const dealContractCol = [
     prop: 'entrustNo',
   },
   {
+    label: '委托价',
+    prop: 'entrustPrice',
+  },
+  {
     label: '对手委托单号',
     prop: 'targetEntrustNo',
   },

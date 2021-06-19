@@ -1305,23 +1305,29 @@ export const asyncRouterMap = [
       },
 
       {
-        path: 'businessLists',
-        name: 'BusinessLists',
-        component: () => import('@/views/agent/businessLists'),
-        meta: { title: '商务列表', icon: '', role: [] },
+        path: 'businessRelationLists',
+        name: 'BusinessRelationLists',
+        component: () => import('@/views/agent/businessRelationLists'),
+        meta: { title: '商务层级关系', icon: '', role: [] },
       },
-      {
-        path: 'businessListsConfig',
-        name: 'BusinessListsConfig',
-        component: () => import('@/views/agent/businessListsConfig'),
-        meta: { title: '商务等级配置', icon: '', role: [] },
-      },
-      {
-        path: 'businessListsDetail',
-        name: 'BusinessListsDetail',
-        component: () => import('@/views/agent/businessListsDetail'),
-        meta: { title: '商务详情', icon: '', role: [] },
-      },
+      // {
+      //   path: 'businessListsConfig',
+      //   name: 'BusinessListsConfig',
+      //   component: () => import('@/views/agent/businessListsConfig'),
+      //   meta: { title: '商务等级配置', icon: '', role: [] },
+      // },
+      // {
+      //   path: 'businessListsDetail',
+      //   name: 'BusinessListsDetail',
+      //   component: () => import('@/views/agent/businessListsDetail'),
+      //   meta: { title: '商务详情', icon: '', role: [] },
+      // },
+      // {
+      //   path: 'businessFinancialFlow',
+      //   name: 'BusinessFinancialFlow',
+      //   component: () => import('@/views/agent/businessFinancialFlow'),
+      //   meta: { title: '商务财务流水', icon: '', role: [] },
+      // },
 
       {
         path: 'agentTransfer',
@@ -1342,12 +1348,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/apportionRecord'),
         meta: { title: '代理团队长返佣记录', icon: '', role: [] },
       },
-      {
-        path: 'businessFinancialFlow',
-        name: 'BusinessFinancialFlow',
-        component: () => import('@/views/agent/businessFinancialFlow'),
-        meta: { title: '商务财务流水', icon: '', role: [] },
-      },
+     
       {
         path: 'agentFinancialFlow',
         name: 'AgentFinancialFlow',
@@ -1372,6 +1373,14 @@ export const asyncRouterMap = [
         name: 'EarnestMoneyList',
         component: () => import('@/views/agent/earnestMoneyList'),
         meta: { title: '保证金流水', icon: '', role: [] },
+      },
+
+      
+      {
+        path: 'businessRefundRecord',
+        name: 'BusinessRefundRecord',
+        component: () => import('@/views/agent/businessRefundRecord'),
+        meta: { title: '商务手续费返佣记录', icon: '', role: [] },
       },
     ],
   },
@@ -1550,6 +1559,12 @@ export const asyncRouterMap = [
             name: 'ContractTactics',
             component: () => import('@/views/contract/risk/contractTactics'),
             meta: { title: '合约策略点管理', icon: '', role: [] },
+          },
+          {
+            path: 'highFrequencyConfig',
+            name: 'HighFrequencyConfig',
+            component: () => import('@/views/contract/risk/highFrequencyConfig'),
+            meta: { title: '高频参数管理', icon: '', role: [] },
           },
         ],
       },

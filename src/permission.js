@@ -408,21 +408,23 @@ const mapComponents = {
 
 
   AgentsLists: () => import('@/views/agent/agentsLists'),
+  BusinessRelationLists: () => import('@/views/agent/businessRelationLists'),
   AgentsListsConfig: () => import('@/views/agent/agentsListsConfig'),
   AgentsListsDetail: () => import('@/views/agent/agentsListsDetail'),
   AgentRefundRecordNew: () => import('@/views/agent/agentRefundRecordNew'),
-  BusinessLists: () => import('@/views/agent/businessLists'),
-  BusinessListsConfig: () => import('@/views/agent/businessListsConfig'),
-  BusinessListsDetail: () => import('@/views/agent/businessListsDetail'),
+  // BusinessLists: () => import('@/views/agent/businessLists'),
+  // BusinessListsConfig: () => import('@/views/agent/businessListsConfig'),
+  // BusinessListsDetail: () => import('@/views/agent/businessListsDetail'),
+  // BusinessFinancialFlow: () => import('@/views/agent/businessFinancialFlow'),
   AgentTransfer: () => import('@/views/agent/agentTransfer'),
   RefundRecord: () => import('@/views/agent/refundRecord'),
   ApportionRecord: () => import('@/views/agent/apportionRecord'),
   AgentLevel: () => import('@/views/agent/agentLevel'),
   EarnestMoneyList: () => import('@/views/agent/earnestMoneyList'),
-  BusinessFinancialFlow: () => import('@/views/agent/businessFinancialFlow'),
   AgentFinancialFlow: () => import('@/views/agent/agentFinancialFlow'),
   UserMonitor: () => import('@/views/agent/userMonitor'),
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
+  BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
 
 
   CoinContract: () => import('@/views/contract/transact/coinContract'),
@@ -488,6 +490,7 @@ const mapComponents = {
   ContractEstimate: () => import('@/views/contract/risk/contractEstimate'),
   ContractResult: () => import('@/views/contract/risk/contractResult'),
   ContractTactics: () => import('@/views/contract/risk/contractTactics'),
+  HighFrequencyConfig: () => import('@/views/contract/risk/highFrequencyConfig'),
   //账号管理
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),

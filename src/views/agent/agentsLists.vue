@@ -5,7 +5,7 @@
     </div>
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
-      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">参数编辑</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
@@ -63,7 +63,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :span="24">
+        <el-row v-if="!isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="团队长返佣比例" :label-width="formLabelWidth" prop="packPercent">
               <el-input type="text" v-model.trim="cForm.packPercent" placeholder="请输入" @input="checkVal('packPercent', 1)">
@@ -114,7 +114,7 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <el-row v-if="!isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="团队长返佣结算时间" :label-width="formLabelWidth" prop="delayDay">
               <el-row :span="24">
@@ -139,7 +139,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="设置代理总盈利阀值" :label-width="formLabelWidth" prop="profitMargin">
               <el-input class="my-mumber-input" @input="checkVal('profitMargin')" type="text" v-model.trim="cForm.profitMargin" placeholder="请输入"></el-input>
@@ -147,7 +147,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="设置用户盈利阀值" :label-width="formLabelWidth" prop="userProfitMargin">
               <el-input class="my-mumber-input" @input="checkVal('userProfitMargin')" type="text" v-model.trim="cForm.userProfitMargin" placeholder="请输入"></el-input>
@@ -155,7 +155,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailFirst">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailFirst" placeholder="请输入"></el-input>
@@ -163,7 +163,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailSecond">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailSecond" placeholder="请输入"></el-input>
@@ -171,7 +171,7 @@
           </el-col>
         </el-row>
 
-        <el-row v-if="twoLevelModel" :span="24">
+        <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailThird">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailThird" placeholder="请输入"></el-input>
@@ -268,12 +268,12 @@
     </el-dialog>
 
     <!-- 参数配置 -->
-    <el-dialog title="代理商参数设置" width="600px" :visible.sync="paramsVisible">
+    <el-dialog title="商务返佣参数设置 " width="600px" :visible.sync="paramsVisible">
       <el-form :model="paramsForm" :label-width="formLabelWidth" ref="paramsForm" :rules="paramsRules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="CPT模式允许超过100%可设置范围" prop="agentUID">
-              <el-input type="text" v-model.trim="paramsForm.agentUID" placeholder="请输入">
+            <el-form-item label="允许一级商务可设置范围" prop="commissionPercent">
+              <el-input @input="paramsCheckVal('commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -283,7 +283,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="管理员谷歌" prop="googleCode">
-              <el-input type="text" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
+              <el-input type="text" @input="paramsForm.googleCode = paramsForm.googleCode.replace(/[^\d]/g, '')" v-model.trim="paramsForm.googleCode" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -322,9 +322,10 @@ export default {
     };
     return {
       paramsRules: {
-        agentUID: [{ required: true, message: '必填', trigger: 'blur' }],
+        commissionPercent: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      isBusiness: false,
       paramsForm: {},
       paramsVisible: false, // 参数配置
       paramsBtnLoading: false,
@@ -481,34 +482,6 @@ export default {
       },
       // immediate: true,
     },
-    dialogFormVisible(newVal) {
-      if (!newVal) {
-        this.twoLevelModel = false;
-        this.cForm = {
-          uid: '',
-          username: '',
-          remark: '',
-          password: '',
-          commissionPercent: '',
-          packPercent: '',
-          bondPercent: '',
-          delayDay: '',
-          feeDelayDay: '',
-          delayUnit: 1,
-          feeDelayUnit: 1,
-          commissionSwitch: true,
-          loginSwitch: true,
-          bondLimit: '',
-          googleCode: '',
-          profitMargin: '',
-          userProfitMargin: '',
-          phoneEmailFirst: '',
-          phoneEmailSecond: '',
-          phoneEmailThird: '',
-          selfCommission: 0,
-        };
-      }
-    },
     // 'cForm.delayUnit': {
     //   handler(newVal, oldVal) {
     //     if (newVal) {
@@ -535,15 +508,15 @@ export default {
     paramsConfirmOp() {
       this.$refs['paramsForm'].validate(async (valid) => {
         if (valid) {
-          const { agentUID, googleCode } = this.paramsForm;
+          const { commissionPercent, googleCode } = this.paramsForm;
           if (this.paramsBtnLoading) return;
           const params = {
-            agentUID,
+            commissionPercent: commissionPercent + '%',
             googleCode,
           };
 
           this.paramsBtnLoading = true;
-          const res = await $api.apiParamsConfirmOp(params);
+          const res = await $api.apiSetRebateConfig(params);
           if (res) {
             this.$message({ message: '设置成功', type: 'success' });
             this.paramsVisible = false;
@@ -553,15 +526,19 @@ export default {
         }
       });
     },
-    editParams() {
+    async editParams() {
       this.paramsVisible = true;
-      this.$nextTick(() => {
-        this.$refs['paramsForm'].resetFields();
-        this.paramsForm = {
-          agentUID: '',
-          googleCode: '',
-        };
-      });
+      const res = await $api.apiGetRebateConfig({});
+      if (res) {
+        const data = res.data.data;
+        this.$nextTick(() => {
+          this.$refs['paramsForm'].resetFields();
+          this.paramsForm = {
+            commissionPercent: data.paramValue.split('%')[0],
+            googleCode: '',
+          };
+        });
+      }
     },
     changeDecimal(val) {
       this.releaseMoneyForm.amount = '';
@@ -670,6 +647,15 @@ export default {
         this.cForm[val] = 0;
       }
     },
+    paramsCheckVal(val) {
+      if (this.paramsForm[val] >= 100) {
+        this.paramsForm[val] = 100;
+      }
+      if (this.paramsForm[val] < 0) {
+        this.paramsForm[val] = 0;
+      }
+      this.paramsForm[val] = (this.paramsForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 2小数
+    },
     uploadIcon(response, file, fileList) {
       if (!response.data) {
         this.$message.error('图片上传失败');
@@ -759,6 +745,7 @@ export default {
       if (fn === 'edit') {
         this.formName = '编辑代理商';
         this.dialogFormVisible = true;
+
         this.$nextTick(() => {
           this.$refs['cForm'].resetFields();
           const {
@@ -785,8 +772,16 @@ export default {
             phoneEmailThird,
             selfCommission,
           } = row;
+
           if (userGrade == 2) {
             this.twoLevelModel = true;
+          } else {
+            this.twoLevelModel = false;
+          }
+          if (row.userType == 31) {
+            this.isBusiness = true;
+          } else {
+            this.isBusiness = false;
           }
           this.cForm = {
             uid,
@@ -855,30 +850,31 @@ export default {
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['cForm'].resetFields();
-        // this.cForm = {
-        //   userId: '',
-        //   businessUid: '',
-        //   agentMode: '',
-        //   levelMode: '',
-        //   level: '',
-        //   username: '',
-        //   password: '',
-        //   googleStr: '',
-        //   googleCode: '',
-        //   communityPhoto: '',
-        //   communityName: '',
-        //   commissionSwitch: false,
-        //   loginSwitch: false,
-        //   withdrawSwitch: false,
-
-        //   positionListSwitch: false,
-        //   closePositionListSwitch: false,
-        //   depositListSwitch: false,
-        //   withdrawListSwitch: false,
-        //   contractAssetsSwitch: false,
-        //   userAssetsSwitch: false,
-        //   otcSwitch: false,
-        // };
+        this.twoLevelModel = false;
+        this.isBusiness = false;
+        this.cForm = {
+          uid: '',
+          username: '',
+          remark: '',
+          password: '',
+          commissionPercent: '',
+          packPercent: '',
+          bondPercent: '',
+          delayDay: '',
+          feeDelayDay: '',
+          delayUnit: 1,
+          feeDelayUnit: 1,
+          commissionSwitch: true,
+          loginSwitch: true,
+          bondLimit: '',
+          googleCode: '',
+          profitMargin: '',
+          userProfitMargin: '',
+          phoneEmailFirst: '',
+          phoneEmailSecond: '',
+          phoneEmailThird: '',
+          selfCommission: 0,
+        };
         // this.rules.businessUid[0].required = true;
         // this.rules.agentMode[0].required = true;
         // this.rules.level[0].required = true;
@@ -895,10 +891,14 @@ export default {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
             commissionPercent: commissionPercent + '%',
-            packPercent: packPercent + '%',
             bondPercent: bondPercent + '%',
             ...repo,
           };
+          if (!this.isBusiness) {
+            params.packPercent = packPercent + '%';
+          } else {
+            params.packPercent = 0 + '%';
+          }
           if ((userId && password !== '********') || !userId) {
             params.password = mMd5.md5(password);
           }
@@ -948,19 +948,12 @@ export default {
         this.total = total;
         this.pages = pages;
         this.current_page = current;
-        // records.forEach((v) => {
-        //   v['commissionSwitch'] = v['commissionSwitch'] ? true : false;
-        //   v['loginSwitch'] = v['loginSwitch'] ? true : false;
-        //   v['withdrawSwitch'] = v['withdrawSwitch'] ? true : false;
-
-        //   v['positionListSwitch'] = v['positionListSwitch'] ? true : false;
-        //   v['closePositionListSwitch'] = v['closePositionListSwitch'] ? true : false;
-        //   v['depositListSwitch'] = v['depositListSwitch'] ? true : false;
-        //   v['withdrawListSwitch'] = v['withdrawListSwitch'] ? true : false;
-        //   v['contractAssetsSwitch'] = v['contractAssetsSwitch'] ? true : false;
-        //   v['userAssetsSwitch'] = v['userAssetsSwitch'] ? true : false;
-        //   v['otcSwitch'] = v['otcSwitch'] ? true : false;
-        // });
+        records.forEach((v) => {
+          if (v.userGrade == 1) {
+            // 一级手动把类型改为商务
+            v.userType = 31;
+          }
+        });
         this.list = records;
       }
       this.listLoading = false;

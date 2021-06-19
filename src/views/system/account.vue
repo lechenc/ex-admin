@@ -18,16 +18,8 @@
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
-     <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <icon-page :total="total" :pages="pages"></icon-page>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 添加 编辑 -->
     <el-dialog :title="formName" :visible.sync="dialogFormVisible">
@@ -89,11 +81,11 @@ import $api from '@/api/api';
 import mMd5 from '@/utils/module_md5';
 
 export default {
-	name: 'Account',
+  name: 'Account',
   components: {
     Btable,
     Bsearch,
-    iconPage
+    iconPage,
   },
   data() {
     return {
@@ -112,15 +104,7 @@ export default {
       dialogFormVisible: false,
       passwordType: 'password',
       oldPwd: '', // 修改密码时候记录原密码，修改过就传密码，否则就不传这个字段（跟后台约定的）
-      userForm: {
-        authGoogle: '',
-        googleCode: '',
-        account: '',
-        password: '',
-        roleId: '',
-        status: false,
-        id: '',
-      },
+      userForm: {},
       role_list: [], // 角色列表
       rules: {
         account: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -149,20 +133,28 @@ export default {
     async addAccount() {
       this.formName = '添加账号';
       this.dialogFormVisible = true;
-      this.userForm.authGoogle = '';
-      this.userForm.googleCode = '';
-      this.userForm.account = '';
-      this.userForm.password = '';
-      this.userForm.roleId = '';
-      this.userForm.status = false;
+      // this.userForm.authGoogle = '';
+      // this.userForm.googleCode = '';
+      // this.userForm.account = '';
+      // this.userForm.password = '';
+      // this.userForm.roleId = '';
+      // this.userForm.status = false;
       // this.userForm.id = "";
       this.$nextTick(() => {
         this.$refs['userForm'].resetFields();
+        this.userForm = {
+          authGoogle: '',
+          googleCode: '',
+          account: '',
+          password: '',
+          roleId: '',
+          status: false,
+        };
       });
     },
     // 删除账号
     confirmDel() {
-      this.$refs['delForm'].validate(async valid => {
+      this.$refs['delForm'].validate(async (valid) => {
         if (valid) {
           this.delBtnLoading = true;
           const res = await $api.deleteAccount({
@@ -185,10 +177,10 @@ export default {
     },
     // 新增/编辑账号
     confirmOp() {
-      this.$refs['userForm'].validate(async valid => {
+      this.$refs['userForm'].validate(async (valid) => {
         if (valid) {
           const { authGoogle, googleCode, password, roleId, id, account, status } = this.userForm;
-          if (id === '') {
+          if (!id) {
             // 新增
             const params = {
               authGoogle,
@@ -303,7 +295,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.getList();
@@ -327,7 +319,7 @@ export default {
       if (res) {
         const { records, total, current, pages } = res.data.data;
         // 用户状态,0-有效,1-失效
-        records.forEach(v => {
+        records.forEach((v) => {
           v['status'] = v['status'] ? false : true;
         });
         this.list = records;
@@ -382,7 +374,7 @@ export default {
 </script>
 <style lang="scss">
 .account-container {
-    padding: 4px 10px 10px 10px;
+  padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;
   }
