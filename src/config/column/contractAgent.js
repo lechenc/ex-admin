@@ -281,7 +281,7 @@ const agentsListsConfig = [
   {
     type: 'select',
     label: '类型',
-    prop: 'usertype',
+    prop: 'userType',
     value: '',
     list: [{ label: '商务', value: 31 }, { label: '代理', value: 32 }],
   },
