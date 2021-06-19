@@ -40,10 +40,6 @@ const agentsListsCol = [
     label: '备注',
     prop: 'remark',
   },
-  {
-    label: '创建时间',
-    prop: 'createTime',
-  },
 
   {
     label: '手续费返佣比例',
@@ -188,10 +184,6 @@ const agentsListsColNoBtn = [
   {
     label: '备注',
     prop: 'remark',
-  },
-  {
-    label: '创建时间',
-    prop: 'createTime',
   },
   
   {

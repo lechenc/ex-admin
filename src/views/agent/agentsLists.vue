@@ -530,13 +530,20 @@ export default {
       this.paramsVisible = true;
       const res = await $api.apiGetRebateConfig({});
       if (res) {
-        const data = res.data.data;
+        let data = null || 0;
         this.$nextTick(() => {
           this.$refs['paramsForm'].resetFields();
-          this.paramsForm = {
-            commissionPercent: data.paramValue.split('%')[0] || 0,
-            googleCode: '',
-          };
+          if (data) {
+            this.paramsForm = {
+              commissionPercent: data.paramValue.split('%')[0],
+              googleCode: '',
+            };
+          } else {
+            this.paramsForm = {
+              commissionPercent: 0,
+              googleCode: '',
+            };
+          }
         });
       }
     },
