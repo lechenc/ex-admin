@@ -534,7 +534,7 @@ export default {
         this.$nextTick(() => {
           this.$refs['paramsForm'].resetFields();
           this.paramsForm = {
-            commissionPercent: data.paramValue.split('%')[0],
+            commissionPercent: data.paramValue.split('%')[0] || 0,
             googleCode: '',
           };
         });
