@@ -2946,6 +2946,11 @@ export default class api {
     return Fetch.post('/admin/user/contract/agent/setMaxCommissionPercent', data);
   }
 
+   // 代理商列表  代理商级别 获取
+   static apiGetAgentLevel(data) {
+    return Fetch.post('/admin/user/contract/agent/init', data);
+  }
+
 
   
 
