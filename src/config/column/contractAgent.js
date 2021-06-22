@@ -25,7 +25,7 @@ const agentsListsCol = [
   },
   {
     label: '级别',
-    prop: 'userGrade',
+    prop: 'commissionLevel',
   },
   {
     label: '创建时间',
@@ -170,7 +170,7 @@ const agentsListsColNoBtn = [
   },
   {
     label: '级别',
-    prop: 'userGrade',
+    prop: 'commissionLevel',
   },
   {
     label: '创建时间',
@@ -290,10 +290,9 @@ const agentsListsConfig = [
   {
     type: 'select',
     label: '级别',
-    prop: 'userGrade',
+    prop: 'commissionLevel',
     value: '',
-    //  1 一级代理商， 2 二级代理商
-    list: [{ label: '一级', value: 1 }, { label: '二级', value: 2 }, { label: '三级', value: 3 }],
+    list: [],
   },
   {
     type: 'select',

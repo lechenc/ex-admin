@@ -2951,6 +2951,18 @@ export default class api {
     return Fetch.post('/admin/user/contract/agent/init', data);
   }
 
+  // 代理商列表  代理返佣参数设置 查询
+  static apiGetAgentRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/getAgentMaxCommissionPercent', data);
+  }
+
+   // 代理商列表  代理返佣参数设置 设置
+   static apiSetAgentRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/setAgentMaxCommissionPercent', data);
+  }
+
+  
+
 
   
 

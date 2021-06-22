@@ -6,6 +6,7 @@
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('agentParams')" @click="editAgentParams">代理返佣参数设置</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
@@ -267,7 +268,7 @@
       </div>
     </el-dialog>
 
-    <!-- 参数配置 -->
+    <!-- 商务参数配置 -->
     <el-dialog title="商务返佣参数设置 " width="600px" :visible.sync="paramsVisible">
       <el-form :model="paramsForm" :label-width="formLabelWidth" ref="paramsForm" :rules="paramsRules">
         <el-row :span="24">
@@ -291,6 +292,33 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="paramsVisible = false">取 消</el-button>
         <el-button type="primary" @click="paramsConfirmOp" :loading="paramsBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 代理参数配置 -->
+    <el-dialog title="代理返佣参数设置 " width="600px" :visible.sync="agentParamsVisible">
+      <el-form :model="agentParamsForm" :label-width="formLabelWidth" ref="agentParamsForm" :rules="paramsRules">
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="允许一级代理可设置范围" prop="commissionPercent">
+              <el-input @input="paramsCheckVal('commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
+                <div slot="append">%</div>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="管理员谷歌" prop="googleCode">
+              <el-input type="text" @input="agentParamsForm.googleCode = agentParamsForm.googleCode.replace(/[^\d]/g, '')" v-model.trim="agentParamsForm.googleCode" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="agentParamsVisible = false">取 消</el-button>
+        <el-button type="primary" @click="agentParamsConfirmOp" :loading="agentParamsBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -427,6 +455,12 @@ export default {
       releaseMoneybtnLoading: false,
       coin_List: [],
       decimalReg: /^(\-)*(\d+)\.(\d\d\d\d).*$/,
+      curLevelArr: [],
+      agentLevelArr: [],
+      businessLevelArr: [],
+      agentParamsBtnLoading: false,
+      agentParamsForm: {},
+      agentParamsVisible: false,
     };
   },
   watch: {
@@ -504,6 +538,63 @@ export default {
     },
   },
   methods: {
+    async getAgentLevel() {
+      const res = await $api.apiGetAgentLevel({});
+      if (res) {
+        this.agentLevelArr = res.data.data.BUSINESS_INFO_AGENT_LEVEL_DICT;
+        this.businessLevelArr = res.data.data.BUSINESS_INFO_LEVEL_DICT;
+        this.curLevelArr = this.agentLevelArr.length > this.businessLevelArr.length ? this.agentLevelArr : this.businessLevelArr;
+        this.searchCofig[3].list = this.curLevelArr.map((v) => {
+          return (v = {
+            label: v + '级',
+            value: v,
+          });
+        });
+      }
+    },
+    // 参数配置确定
+    agentParamsConfirmOp() {
+      this.$refs['agentParamsForm'].validate(async (valid) => {
+        if (valid) {
+          const { commissionPercent, googleCode } = this.agentParamsForm;
+          if (this.agentParamsBtnLoading) return;
+          const params = {
+            commissionPercent: commissionPercent + '%',
+            googleCode,
+          };
+
+          this.agentParamsBtnLoading = true;
+          const res = await $api.apiSetAgentRebateConfig(params);
+          if (res) {
+            this.$message({ message: '设置成功', type: 'success' });
+            this.agentParamsVisible = false;
+            this.getList();
+          }
+          this.agentParamsBtnLoading = false;
+        }
+      });
+    },
+    async editAgentParams() {
+      this.agentParamsVisible = true;
+      const res = await $api.apiGetAgentRebateConfig({});
+      if (res) {
+        let data = res.data.data || 0;
+        this.$nextTick(() => {
+          this.$refs['agentParamsForm'].resetFields();
+          if (data) {
+            this.agentParamsForm = {
+              commissionPercent: data.paramValue.split('%')[0],
+              googleCode: '',
+            };
+          } else {
+            this.agentParamsForm = {
+              commissionPercent: 0,
+              googleCode: '',
+            };
+          }
+        });
+      }
+    },
     // 参数配置确定
     paramsConfirmOp() {
       this.$refs['paramsForm'].validate(async (valid) => {
@@ -547,6 +638,7 @@ export default {
         });
       }
     },
+
     changeDecimal(val) {
       this.releaseMoneyForm.amount = '';
       let decimal = this.coin_List.filter((v) => v['label'] == val)[0].decimalPlaces;
@@ -987,6 +1079,42 @@ export default {
     //         升级模式--代理级别不能选
     this.getList();
     this.getSymbolList();
+    this.getAgentLevel();
+
+    this.$watch(
+      function () {
+        return this.searchCofig[2].value;
+      },
+      // 合约出入金,type=1为合约出金,type=2为合约入金
+      function (newVal, oldValue) {
+        if (newVal == 31) {
+          // 商务
+          this.searchCofig[3]['value'] = '';
+          this.searchCofig[3].list = this.businessLevelArr.map((v) => {
+            return (v = {
+              label: v + '级',
+              value: v,
+            });
+          });
+        } else if (newVal == 32) {
+          this.searchCofig[3]['value'] = '';
+          this.searchCofig[3].list = this.agentLevelArr.map((v) => {
+            return (v = {
+              label: v + '级',
+              value: v,
+            });
+          });
+        } else {
+          this.searchCofig[3]['value'] = '';
+          this.searchCofig[3].list = this.curLevelArr.map((v) => {
+            return (v = {
+              label: v + '级',
+              value: v,
+            });
+          });
+        }
+      },
+    );
   },
 };
 </script>
