@@ -322,7 +322,7 @@
         </template>
       </el-table-column>
       <!-- 开关 -->
-      <el-table-column v-if="config.type === 'switch' && isOwer" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''">
+      <el-table-column v-if="config.type === 'switch' && actionShow" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''">
         <template slot-scope="scope">
           <el-switch v-model="scope.row[config.prop]" active-color="#13ce66" inactive-color="#ff4949" :disabled="scope.row['disabled'] ? scope.row['disabled'] : false" @change="doHandle($event, scope.row, config.fn)"> </el-switch>
         </template>
