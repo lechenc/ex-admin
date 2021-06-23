@@ -474,7 +474,6 @@ export default {
       agentParamsBtnLoading: false,
       agentParamsForm: {},
       agentParamsVisible: false,
-      commissionPercentLimitShow: false, //代理商等级为1时显示
     };
   },
   watch: {
@@ -885,6 +884,7 @@ export default {
             phoneEmailThird,
             selfCommission,
             commissionPercentLimit,
+            userType
           } = row;
 
           if (commissionLevel == 2) {
@@ -892,16 +892,13 @@ export default {
           } else {
             this.twoLevelModel = false;
           }
-          if (commissionLevel == 1) {
+
+          if (userType == 31) {
+            this.isBusiness = true;
             this.commissionPercentLimitShow = true;
           } else {
-            this.commissionPercentLimitShow = false;
-          }
-
-          if (row.userType == 31) {
-            this.isBusiness = true;
-          } else {
             this.isBusiness = false;
+            this.commissionPercentLimitShow = false;
           }
           this.cForm = {
             uid,
@@ -926,7 +923,7 @@ export default {
             phoneEmailThird,
             selfCommission,
             commissionPercentLimit: !commissionPercentLimit?'': commissionPercentLimit.split('%')[0] ,
-            commissionLevel,
+            userType,
           };
         });
       }
@@ -989,7 +986,7 @@ export default {
           phoneEmailSecond: '',
           phoneEmailThird: '',
           selfCommission: 0,
-          commissionLevel:1
+          userType:31
         };
         // this.rules.businessUid[0].required = true;
         // this.rules.agentMode[0].required = true;
@@ -1002,7 +999,7 @@ export default {
       this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           const userId = this.userId;
-          const { password, commissionSwitch, commissionLevel, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
+          const { password, commissionSwitch, userType, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
           const params = {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
@@ -1010,7 +1007,7 @@ export default {
             bondPercent: bondPercent + '%',
             ...repo,
           };
-          if (commissionLevel == 1) {
+          if (userType == 31) {
             params.commissionPercentLimit = commissionPercentLimit+'%';
           }
           if (!this.isBusiness) {
