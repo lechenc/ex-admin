@@ -989,6 +989,7 @@ export default {
           phoneEmailSecond: '',
           phoneEmailThird: '',
           selfCommission: 0,
+          commissionLevel:1
         };
         // this.rules.businessUid[0].required = true;
         // this.rules.agentMode[0].required = true;
