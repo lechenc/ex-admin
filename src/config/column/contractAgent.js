@@ -833,13 +833,6 @@ const agentFinancialFlowCol = [
     label: '代理UID',
     prop: 'uid',
   },
-  // {
-  //   label: '是否商务',
-  //   prop: 'amountType1',
-  //   type: 'filter',
-  //   show_type: 'text',
-  //   filters: [{ text: '是', val: 1 }, { text: '否', val: 0 }],
-  // },
 
   {
     label: '用户类型',
@@ -989,13 +982,13 @@ const agentFinancialFlowConfig = [
     value: '',
     placeHolder: '请输入',
   },
-  // {
-  //   type: 'selectChange',
-  //   label: '资金类型',
-  //   prop: 'balanceType',
-  //   value: 1,
-  //   list: [{ label: '可用余额', value: 1 }, { label: '准可用余额', value: 2 }],
-  // },
+  {
+    type: 'selectChange',
+    label: '用户类型',
+    prop: 'userType',
+    value: '',
+    list: [{ label: '商务', value: 31 }, { label: '代理', value: 32 }],
+  },
 ];
 
 const teamAssetsCol = [
