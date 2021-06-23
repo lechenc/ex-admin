@@ -22,6 +22,10 @@ const rechargeCol = [
     prop: 'coinName',
   },
   {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
     label: '到账数量',
     prop: 'amount',
   },
@@ -135,7 +139,7 @@ const rechargeConfig = [
   },
   {
     type: 'text',
-    label: 'ERC20链类别区分',
+    label: '链名称',
     prop: 'chainName',
     value: '',
   },

@@ -322,13 +322,13 @@
         </template>
       </el-table-column>
       <!-- 开关 -->
-      <el-table-column v-if="config.type === 'switch'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''">
+      <el-table-column v-if="config.type === 'switch' && isOwer" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''">
         <template slot-scope="scope">
           <el-switch v-model="scope.row[config.prop]" active-color="#13ce66" inactive-color="#ff4949" :disabled="scope.row['disabled'] ? scope.row['disabled'] : false" @change="doHandle($event, scope.row, config.fn)"> </el-switch>
         </template>
       </el-table-column>
       <!-- 操作按钮 -->
-      <el-table-column fixed="right" v-if="config.type === 'action'" :key="config.prop" :label="config.label" :width="isDeskTop ? config.width : '120px'">
+      <el-table-column fixed="right" v-if="config.type === 'action' &&  actionShow " :key="config.prop" :label="config.label" :width="isDeskTop ? config.width : '120px'">
         <template slot-scope="scope">
           <span v-for="(btn, i) in config.btnGroup" :key="i + 't`t'">
             <template v-if="btn.type == 'noVisible'"> </template>
@@ -390,6 +390,11 @@ import { number } from 'echarts/lib/export';
 export default {
   name: 'b-table',
   props: {
+    // 操作按钮是否显示
+    actionShow:{
+      type: Boolean,
+      default: true,
+    },
     listLoading: {
       type: Boolean,
       default: false,

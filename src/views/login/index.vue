@@ -149,10 +149,13 @@ export default {
           this.loginLoding = true;
           const res = !this.isNew ? await $api.login(params) : await $api.newLogin(params);
           if (res) {
-            const { list, token } = res.data.data;
+            const { list, token, isOwer } = res.data.data;
             setToken(token);
             localStorage.setItem('user_name', this.loginForm.account);
             this.$store.dispatch('app/setNavList', list);
+            if (this.isNew) {
+              this.$store.commit('app/nowsetIsOwer', isOwer);
+            }
             this.$router.push({ path: '/' });
           }
           this.loginLoding = false;

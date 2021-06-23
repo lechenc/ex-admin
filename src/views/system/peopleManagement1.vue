@@ -18,7 +18,7 @@
           <el-tree ref="sidebarTree" @node-click="sidebarTreeClick" :filter-node-method="filterNode" :default-expanded-keys="[1]" :draggable="false" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="roleId" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
-              <span v-if="isOwer" class="sac-btn">
+              <span class="sac-btn">
                 <el-dropdown trigger="click" @command="handleCommand">
                   <span class="el-dropdown-link"> <i class="el-icon-arrow-down el-icon-more"></i> </span>
                   <el-dropdown-menu slot="dropdown">
@@ -35,10 +35,10 @@
       <div v-if="contentIsShow" class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
           <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
-          <el-button v-if="isOwer" type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
+          <el-button type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
-          <Btable :actionShow='isOwer' :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+          <Btable :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
         </div>
         <div class="container-footer">
           <icon-page :total="total" :pages="pages"></icon-page>
@@ -54,7 +54,7 @@
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :data="curChildrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+          <el-tree default-expand-all :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
@@ -145,22 +145,15 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { peopleManagementCol, peopleManagementConfig } from '@/config/column/system';
+import { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig } from '@/config/column/system';
 import $api from '@/api/api';
 import mMd5 from '@/utils/module_md5';
-import { mapState } from 'vuex';
 export default {
   name: 'PeopleManagement',
   components: {
     Btable,
     Bsearch,
     iconPage,
-  },
-  computed: {
-    ...mapState({
-      // 是否为管理员
-      isOwer: (state) => state.app.isOwer,
-    }),
   },
   data() {
     const validatePassword = (rule, value, callback) => {
@@ -256,7 +249,6 @@ export default {
       },
       ruleForm: {},
       currentForm: {},
-      curChildrenMenu: [],
     };
   },
   methods: {
@@ -287,6 +279,7 @@ export default {
               this.getList(this.currentData);
             } else {
               this.getMenuList();
+              this.getList(this.currentData);
             }
           }
 
@@ -383,7 +376,7 @@ export default {
             isOwer,
             googleCode,
             adminGoogleCode,
-            status: status ? 0 : 1,
+            status: status ? 1 : 0,
             roleId,
           };
           if ((userId && password !== '******') || !userId) {
@@ -412,6 +405,22 @@ export default {
       });
     },
 
+    resetFields() {
+      this.$nextTick(() => {
+        this.sidebarForm = {
+          id: '',
+          name: '',
+          menuId: '',
+          status: false,
+          googleCode: '',
+        };
+        this.$refs.sidebarForm.resetFields();
+        setTimeout(() => {
+          this.$refs.tree.setCheckedKeys([]);
+        }, 0);
+      });
+    },
+
     // 点击弹出描述
     showDescription(describe) {
       this.$alert(describe, '描述', {
@@ -421,58 +430,23 @@ export default {
     },
     handleCommand(command) {
       let { type, node, data } = command;
-      console.log('node', node);
-      console.log('data', data);
       if (type == 'add') {
         this.sidebarDialogTitle = `创建 ${data.name} 的子菜单`;
         this.sidebarDialogVisible = true;
         this.currentNode = node;
-        let newData = JSON.parse(JSON.stringify(data));
-        this.$nextTick(() => {
-          this.sidebarForm = {
-            id: '',
-            name: '',
-            menuId: '',
-            status: false,
-            googleCode: '',
-          };
-          this.$refs.sidebarForm.resetFields();
-        });
-
-        if (node.level == 1) {
-          this.$nextTick(() => {
-            this.curChildrenMenu = newData.childrenMenu;
-            this.$refs.tree.setCheckedKeys([]);
-          });
-        } else {
-          this.$nextTick(() => {
-            this.curChildrenMenu = node.parent.data.childrenMenu;
-            this.$refs.tree.setCheckedKeys([]);
-          });
-        }
+        this.resetFields();
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? true : false;
 
-        if (node.level == 1) {
-          this.curChildrenMenu = newData.childrenMenu;
-          this.$nextTick(() => {
-            
-            this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
-          });
-        } else {
-          this.curChildrenMenu = node.parent.data.childrenMenu;
-          this.$nextTick(() => {
-            
-            
-            console.log('newData.childrenMenu',newData.childrenMenu)
-            console.log('this.currentData.childrenMenu',this.currentData.childrenMenu)
-            this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
-          });
-        }
         this.sidebarForm = newData;
+        this.$nextTick(() => {
+          console.log('this.currentData.childrenMenu',this.currentData.childrenMenu)
+          console.log('this.sidebarForm',this.sidebarForm)
+          this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
+        });
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
           this.$message.error({
@@ -593,7 +567,7 @@ export default {
         // 角色状态，0有效，1失效
         let params = {
           userId: row.userId,
-          status: row.status ? 0 : 1,
+          status: row.status ? 1 : 0,
         };
         const res = await $api.apiSwitchUserPeopleManagementList(params);
         if (res) {
@@ -621,7 +595,6 @@ export default {
           roleId,
           googleCode,
           status,
-          adminGoogleCode: '',
         };
         setTimeout(() => {
           this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
@@ -668,7 +641,7 @@ export default {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
         records.forEach((v) => {
-          v['status'] = v['status'] ? false : true;
+          v['status'] = v['status'] ? true : false;
         });
         this.list = records;
         this.total = total;
@@ -697,7 +670,9 @@ export default {
     },
   },
   mounted() {
-    this.configs = peopleManagementCol;
+    let authObj = this.$util.getAuthority('PeopleManagement', peopleManagementCol, peopleManagementColNoBtn);
+    this.configs = authObj.val;
+    this.isCURDAuth = authObj.isAdd;
 
     this.searchCofig = this.$util.clone(peopleManagementConfig);
     this.getMenuList();

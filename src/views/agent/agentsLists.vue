@@ -274,7 +274,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="允许一级商务可设置范围" prop="commissionPercent">
-              <el-input @input="paramsCheckVal('commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
+              <el-input @input="paramsCheckVal('paramsForm','commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -301,7 +301,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="允许一级代理可设置范围" prop="commissionPercent">
-              <el-input @input="paramsCheckVal('commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
+              <el-input @input="paramsCheckVal('agentParamsForm','commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -746,14 +746,14 @@ export default {
         this.cForm[val] = 0;
       }
     },
-    paramsCheckVal(val) {
-      if (this.paramsForm[val] >= 100) {
-        this.paramsForm[val] = 100;
+    paramsCheckVal(obj,val) {
+      if (this[obj][val] >= 100) {
+        this[obj][val] = 100;
       }
-      if (this.paramsForm[val] < 0) {
-        this.paramsForm[val] = 0;
+      if (this[obj][val] < 0) {
+        this[obj][val] = 0;
       }
-      this.paramsForm[val] = (this.paramsForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 2小数
+      this[obj][val] = (this[obj][val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 2小数
     },
     uploadIcon(response, file, fileList) {
       if (!response.data) {
