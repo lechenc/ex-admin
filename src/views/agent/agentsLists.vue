@@ -999,7 +999,7 @@ export default {
       this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           const userId = this.userId;
-          const { password, commissionSwitch, userType, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
+          const { password, commissionSwitch, userType,delayDay,delayUnit, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
           const params = {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
@@ -1012,6 +1012,8 @@ export default {
           }
           if (!this.isBusiness) {
             params.packPercent = packPercent + '%';
+            params.delayDay = delayDay;
+            params.delayUnit = delayUnit;
           } else {
             params.packPercent = 0 + '%';
           }
