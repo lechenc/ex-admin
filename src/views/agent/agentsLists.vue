@@ -4,7 +4,7 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-btn" v-if="btnArr.length">
-      <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级商务</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('agentParams')" @click="editAgentParams">代理返佣参数设置</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
@@ -140,6 +140,8 @@
           </el-col>
         </el-row>
 
+        
+
         <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="设置代理总盈利阀值" :label-width="formLabelWidth" prop="profitMargin">
@@ -176,6 +178,16 @@
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailThird">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailThird" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item v-if="commissionPercentLimitShow" label="允许子商务创建代理时可最大手续费比例" :label-width="formLabelWidth" prop="commissionPercentLimit">
+              <el-input type="number" v-model="cForm.commissionPercentLimit" placeholder="请输入" @input="checkVal('commissionPercentLimit', 1)">
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -274,7 +286,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="允许一级商务可设置范围" prop="commissionPercent">
-              <el-input @input="paramsCheckVal('paramsForm','commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
+              <el-input @input="paramsCheckVal('paramsForm', 'commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -301,7 +313,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="允许一级代理可设置范围" prop="commissionPercent">
-              <el-input @input="paramsCheckVal('agentParamsForm','commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
+              <el-input @input="paramsCheckVal('agentParamsForm', 'commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -424,6 +436,7 @@ export default {
         delayDay: [{ required: true, message: '必填', trigger: 'blur' }],
         feeDelayDay: [{ required: true, message: '必填', trigger: 'blur' }],
         selfCommission: [{ required: true, message: '必填', trigger: 'blur' }],
+        commissionPercentLimit: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       formName: '',
       dialogFormVisible: false,
@@ -461,6 +474,7 @@ export default {
       agentParamsBtnLoading: false,
       agentParamsForm: {},
       agentParamsVisible: false,
+      commissionPercentLimitShow: false, //代理商等级为1时显示
     };
   },
   watch: {
@@ -746,7 +760,7 @@ export default {
         this.cForm[val] = 0;
       }
     },
-    paramsCheckVal(obj,val) {
+    paramsCheckVal(obj, val) {
       if (this[obj][val] >= 100) {
         this[obj][val] = 100;
       }
@@ -852,7 +866,7 @@ export default {
             username,
             // password,
             remark,
-            userGrade,
+            commissionLevel,
             commissionPercent,
             packPercent,
             bondPercent,
@@ -870,13 +884,20 @@ export default {
             phoneEmailSecond,
             phoneEmailThird,
             selfCommission,
+            commissionPercentLimit,
           } = row;
 
-          if (userGrade == 2) {
+          if (commissionLevel == 2) {
             this.twoLevelModel = true;
           } else {
             this.twoLevelModel = false;
           }
+          if (commissionLevel == 1) {
+            this.commissionPercentLimitShow = true;
+          } else {
+            this.commissionPercentLimitShow = false;
+          }
+
           if (row.userType == 31) {
             this.isBusiness = true;
           } else {
@@ -904,16 +925,9 @@ export default {
             phoneEmailSecond,
             phoneEmailThird,
             selfCommission,
+            commissionPercentLimit: !commissionPercentLimit?'': commissionPercentLimit.split('%')[0] ,
+            commissionLevel,
           };
-          // //console.log('this.cForm', this.cForm);
-          // this.editBeforeLevelMode = levelMode;
-
-          // this.oldPwd = password;
-          // this.rules.businessUid[0].required = false;
-          // this.rules.agentMode[0].required = false;
-          // this.rules.level[0].required = false;
-          // this.rules.username[0].required = false;
-          // this.rules.password[0].required = false;
         });
       }
       //释放保证金
@@ -944,14 +958,16 @@ export default {
     //   }
     // },
     addLine() {
-      this.formName = '添加代理商';
+      this.formName = '添加商务';
       this.userId = '';
       this.dialogFormVisible = true;
+      this.commissionPercentLimitShow = true;
       this.$nextTick(() => {
         this.$refs['cForm'].resetFields();
         this.twoLevelModel = false;
-        this.isBusiness = false;
+        this.isBusiness = true;
         this.cForm = {
+          commissionPercentLimit: '',
           uid: '',
           username: '',
           remark: '',
@@ -985,7 +1001,7 @@ export default {
       this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           const userId = this.userId;
-          const { password, commissionSwitch, loginSwitch, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
+          const { password, commissionSwitch, commissionLevel, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
           const params = {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
@@ -993,6 +1009,9 @@ export default {
             bondPercent: bondPercent + '%',
             ...repo,
           };
+          if (commissionLevel == 1) {
+            params.commissionPercentLimit = commissionPercentLimit+'%';
+          }
           if (!this.isBusiness) {
             params.packPercent = packPercent + '%';
           } else {

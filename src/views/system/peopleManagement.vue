@@ -340,7 +340,7 @@ export default {
             name,
             menuId,
             googleCode,
-            status: status ? 1 : 0,
+            status: status ? 0 : 1,
             parentRoleId: this.currentData.roleId,
           };
           this.sidebarBtnLoading = true;
