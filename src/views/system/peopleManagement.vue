@@ -32,10 +32,10 @@
           </el-tree>
         </div>
       </div>
-      <div v-if="contentIsShow" class="center-content">
+      <div v-if="contentIsShow && userCreated" class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
-          <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
-          <el-button v-if="isOwer" type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
+          <span class="btn-text" v-if="userCreated"> {{ currentData.name }} ({{ total }}人) </span>
+          <el-button v-if="isOwer && userCreated" type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
           <Btable :actionShow="isOwer" :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -272,6 +272,7 @@ export default {
       currentForm: {},
       curChildrenMenu: [],
       result: [],
+      userCreated: true,
     };
   },
   methods: {
@@ -331,6 +332,13 @@ export default {
     },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
+      console.log('currentData', this.currentData);
+      if (this.currentData.level == 0) {
+        this.userCreated = false;
+        return
+      } else {
+        this.userCreated = true;
+      }
       this.filter_type_value = this.currentData.name;
       this.getList(this.currentData);
     },
@@ -675,6 +683,11 @@ export default {
         this.total = total;
         this.pages = pages;
         this.current_page = current;
+      } else {
+        this.list = [];
+        this.total = 0;
+        this.pages = 0;
+        this.current_page = 1;
       }
       this.contentIsShow = true;
       this.listLoading = false;
