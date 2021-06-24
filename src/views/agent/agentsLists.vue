@@ -474,6 +474,7 @@ export default {
       agentParamsBtnLoading: false,
       agentParamsForm: {},
       agentParamsVisible: false,
+      commissionPercentLimitShow:false
     };
   },
   watch: {
