@@ -77,23 +77,24 @@
         <el-form-item autocomplete="off" label="账号名" :label-width="formLabelWidth" prop="account">
           <el-row :span="24">
             <el-col :span="10">
-              <el-select @change="searchClick" v-model="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
+              <el-select v-if="accountType" @change="searchChange" v-model.trim="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
+              <el-input v-else type="text" v-model.trim="userForm.account" autocomplete="off"></el-input>
             </el-col>
             <el-col :span="10">
-              <el-button v-if="accountType" type="success" @click="changeAccountType">{{ accountTypeText }}</el-button>
-              <el-button v-else type="primary" @click="changeAccountType">{{ accountTypeText }}</el-button>
+              <el-button v-if="!accountType" type="primary" @click="changeAccountType"> 切换为可搜索 </el-button>
+              <el-button v-else type="success" @click="changeAccountType">切换为普通</el-button>
             </el-col>
           </el-row>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-          <el-input type="password" v-model.trim="userForm.password" autocomplete="off"></el-input>
+          <el-input :disabled="oldType" type="password" v-model.trim="userForm.password" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="所属部门" :label-width="formLabelWidth" prop="roleName">
-          <el-input type="text" disabled v-model="userForm.roleName" autocomplete="off"></el-input>
+        <el-form-item label="所属部门" :label-width="formLabelWidth">
+          <el-input type="text" disabled v-model="curRoleName" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="职务" :label-width="formLabelWidth" prop="jobName">
@@ -113,9 +114,9 @@
           <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
         </el-form-item>
 
-        <el-form-item :label="userForm.id === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
-          <el-input v-model="userForm.googleCode" autocomplete="off">
-            <div slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</div>
+        <el-form-item :label="userForm.userId === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
+          <el-input :disabled="oldType" v-model="userForm.googleCode" autocomplete="off">
+            <el-button slot="append" class="gcode" :disabled="oldType" @click.stop="getGoogleCode">获取密钥</el-button>
           </el-input>
         </el-form-item>
 
@@ -175,7 +176,7 @@ export default {
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value == '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('必填'));
       } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/g.test(value) && '******' !== value) {
         callback(new Error('请输入包含字母和数字的8-16位密码'));
       } else {
@@ -185,7 +186,7 @@ export default {
 
     const validateAccount = (rule, value, callback) => {
       if (value == '') {
-        callback(new Error('请输入账号'));
+        callback(new Error(''));
       } else if (!/^[A-Za-z]{1}[A-Za-z0-9]/.test(value)) {
         callback(new Error('只能输入字母和数字,以字母开头'));
       } else {
@@ -208,10 +209,13 @@ export default {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
         account: [
           { required: true, message: '必填', trigger: 'blur' },
-          { required: true, validator: validateAccount, trigger: 'blur' },
+          { validator: validateAccount, trigger: 'blur' },
         ],
 
-        password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
+        password: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: validatePassword, trigger: 'blur' },
+        ],
         roleName: [{ required: true, message: '必填', trigger: 'blur' }],
         jobName: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -289,6 +293,8 @@ export default {
       states: [],
       accountTypeText: '切换为可搜索',
       accountType: false,
+      oldType: false,
+      curRoleName: '',
     };
   },
   methods: {
@@ -296,16 +302,48 @@ export default {
       this.accountType = !this.accountType;
       if (this.accountType) {
         this.accountTypeText = '切换为普通';
-        this.userForm.account = ''
+        this.$nextTick(() => {
+          this.oldType = false;
+          this.userRules.password[0].required = true;
+          console.log('123');
+          this.userForm.name = '';
+          this.userForm.password = '';
+          this.userForm.account = '';
+          this.userForm.jobName = '';
+          this.userForm.isOwer = 0;
+          this.userForm.googleCode = '';
+        });
       } else {
         this.accountTypeText = '切换为可搜索';
-        this.userForm.account = ''
+        this.oldType = false;
+        this.userRules.password[0].required = true;
+        this.userForm.account = '';
+        this.$nextTick(() => {
+          this.userForm.name = '';
+          this.userForm.password = '';
+          this.userForm.account = '';
+          this.userForm.jobName = '';
+          this.userForm.isOwer = 0;
+          this.userForm.googleCode = '';
+        });
       }
     },
-    searchClick(item) {
+    searchChange(item) {
       let obj = this.options.filter((v) => {
         return v.id == item;
       })[0];
+
+      if (obj) {
+        this.oldType = true;
+        this.userRules.password[0].required = false;
+        this.$refs['userForm'].resetFields();
+        this.userForm.account = obj.account;
+        this.userForm.name = obj.label || '';
+        this.userForm.password = obj.loginPassword;
+        this.userForm.jobName = obj.jobName || '';
+        this.userForm.isOwer = obj.isOwer || 0;
+        this.userForm.googleCode = obj.googleCode;
+      }
     },
     remoteMethod(query) {
       if (query !== '') {
@@ -449,14 +487,14 @@ export default {
         if (valid) {
           let tmpCheck = this.$refs['userTree'].getCheckedKeys();
           this.userForm.menuId = tmpCheck.join(',');
-          const { userId, menuId, name, roleId, password, account, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
+          const { userId, menuId, name, roleId, password, account, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
           if (this.userBtnLoading) return;
 
           const params = {
             account,
             menuId,
             name,
-            roleName,
+            roleName: this.curRoleName,
             jobName,
             isOwer,
             googleCode,
@@ -587,6 +625,7 @@ export default {
     addpeopleManagement() {
       this.userDialogTitle = `添加成员`;
       this.userDialogVisible = true;
+      this.accountType = false;
       this.$nextTick(() => {
         this.$refs['userForm'].resetFields();
         this.userForm = {
@@ -594,7 +633,6 @@ export default {
           name: '',
           password: '',
           account: '',
-          roleName: this.currentData.name,
           jobName: '',
           menuId: '',
           isOwer: 0,
@@ -603,6 +641,7 @@ export default {
           adminGoogleCode: '',
           status: false,
         };
+        this.curRoleName = this.currentData.name;
       });
       setTimeout(() => {
         this.$refs.userTree.setCheckedKeys([]);
@@ -677,9 +716,10 @@ export default {
       // 编辑
       if (fn === 'edit') {
         this.userDialogTitle = `编辑成员`;
+        this.accountType = false;
         this.userDialogVisible = true;
-        const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
-        const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
+        const { userId, name, password, account, deptName, jobName, menuIds, isOwer, roleId, googleCode, status } = row;
+        const id_list = menuIds.indexOf(',') > -1 ? menuIds.split(',') : [menuIds];
         this.$nextTick(() => {
           this.$refs['userForm'].resetFields();
           this.userForm = {
@@ -687,7 +727,6 @@ export default {
             name,
             password,
             account,
-            roleName: deptName,
             jobName,
             menuId: '',
             isOwer,
@@ -696,6 +735,7 @@ export default {
             status,
             adminGoogleCode: '',
           };
+          this.curRoleName = deptName;
         }, 0);
         setTimeout(() => {
           this.$refs.userTree.setCheckedKeys(id_list);
