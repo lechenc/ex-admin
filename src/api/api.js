@@ -2961,6 +2961,13 @@ export default class api {
     return Fetch.post('/admin/user/contract/agent/setAgentMaxCommissionPercent', data);
   }
 
+  // 财务管理/充币记录 获取链
+  static apiGetRechargeChainName(data) {
+    return Fetch.post('/admin/account/coin/chain-list', data);
+  }
+
+  
+
   
 
 

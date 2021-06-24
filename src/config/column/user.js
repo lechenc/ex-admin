@@ -37,7 +37,7 @@ const userCol = [
       { val: 24, text: '顶级广告商' },
       { val: 25, text: '广告商代理' },
       { val: 31, text: '商务' },
-      { val: 32, text: '商务代理' },
+      { val: 32, text: '代理' },
     ],
   },
   {
@@ -240,7 +240,7 @@ const userColNoBtn = [
       { val: 24, text: '顶级广告商' },
       { val: 25, text: '广告商代理' },
       { val: 31, text: '商务' },
-      { val: 32, text: '商务代理' },
+      { val: 32, text: '代理' },
     ],
   },
   {
@@ -435,7 +435,7 @@ const userConfig = [
       { value: 24, label: '顶级广告商' },
       { value: 25, label: '广告商代理' },
       { value: 31, label: '商务' },
-      { value: 32, label: '商务代理' },
+      { value: 32, label: '代理' },
     ],
   },
   {
@@ -645,7 +645,7 @@ const validatedUserlistCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 1, text: '普通用户' }, { val: 20, text: 'TP商户账号' }, { val: 21, text: '顶级代理商账号' }, { val: 22, text: '代理商账号' }, { val: 24, text: '顶级广告商' }, { val: 25, text: '广告商代理' }, { val: 31, text: '商务端' }, { val: 32, text: '商务代理' }],
+    filters: [{ val: 1, text: '普通用户' }, { val: 20, text: 'TP商户账号' }, { val: 21, text: '顶级代理商账号' }, { val: 22, text: '代理商账号' }, { val: 24, text: '顶级广告商' }, { val: 25, text: '广告商代理' }, { val: 31, text: '商务端' }, { val: 32, text: '代理' }],
   },
   {
     label: '手机',
@@ -751,7 +751,7 @@ const validatedUserlistColNoBtn = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 1, text: '普通用户' }, { val: 20, text: 'TP商户账号' }, { val: 21, text: '顶级代理商账号' }, { val: 22, text: '代理商账号' }, { val: 24, text: '顶级广告商' }, { val: 25, text: '广告商代理' }, { val: 31, text: '商务端' }, { val: 32, text: '商务代理' }],
+    filters: [{ val: 1, text: '普通用户' }, { val: 20, text: 'TP商户账号' }, { val: 21, text: '顶级代理商账号' }, { val: 22, text: '代理商账号' }, { val: 24, text: '顶级广告商' }, { val: 25, text: '广告商代理' }, { val: 31, text: '商务端' }, { val: 32, text: '代理' }],
   },
   {
     label: '手机',
@@ -852,7 +852,7 @@ const validatedUserlistConfig = [
     label: '用户类型',
     prop: 'userType',
     value: '',
-    list: [{ label: '普通用户', value: 1 }, { value: 20, label: 'TP商户账号' }, { value: 21, label: '顶级代理商账号' }, { value: 22, label: '代理商账号' }, { value: 24, label: '顶级广告商' }, { value: 25, label: '广告商代理' }, { value: 31, label: '商务端' }, { value: 32, label: '商务代理' }],
+    list: [{ label: '普通用户', value: 1 }, { value: 20, label: 'TP商户账号' }, { value: 21, label: '顶级代理商账号' }, { value: 22, label: '代理商账号' }, { value: 24, label: '顶级广告商' }, { value: 25, label: '广告商代理' }, { value: 31, label: '商务端' }, { value: 32, label: '代理' }],
   },
 
   {

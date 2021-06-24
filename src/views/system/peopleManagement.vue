@@ -54,7 +54,7 @@
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :data="curChildrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+          <el-tree :accordion="true" :check-strictly="true" :data="curChildrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
@@ -75,11 +75,11 @@
     <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
         <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
-          <el-input type="text" v-model="userForm.account" autocomplete="off"></el-input>
+          <el-input type="text" v-model.trim="userForm.account" maxlength="20" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-          <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
+          <el-input type="password" v-model.trim="userForm.password" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="所属部门" :label-width="formLabelWidth" prop="roleName">
@@ -100,7 +100,7 @@
         </el-form-item>
 
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item :label="userForm.id === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
@@ -172,6 +172,17 @@ export default {
         callback();
       }
     };
+
+    const validateAccount = (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('请输入账号'));
+      } else if (!/^[A-Za-z]{1}[A-Za-z0-9]/.test(value)) {
+        callback(new Error('只能输入字母和数字,以字母开头'));
+      } else {
+        callback();
+      }
+    };
+
     return {
       delLabel: '',
       delDialogVisible: false,
@@ -185,7 +196,10 @@ export default {
       contentIsShow: false,
       userRules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
-        account: [{ required: true, message: '必填', trigger: 'blur' }],
+        account: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { required: true, validator: validateAccount, trigger: 'blur' },
+        ],
 
         password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
         roleName: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -257,6 +271,7 @@ export default {
       ruleForm: {},
       currentForm: {},
       curChildrenMenu: [],
+      result: [],
     };
   },
   methods: {
@@ -336,7 +351,7 @@ export default {
 
           const params = {
             name,
-            menuId:menuId+',128',
+            menuId: menuId,
             googleCode,
             status: status ? 0 : 1,
             parentRoleId: this.currentData.roleId,
@@ -443,17 +458,12 @@ export default {
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? false : true;
 
-        if (node.level == 1) {
-          this.curChildrenMenu = newData.childrenMenu;
-          this.$nextTick(() => {
-            this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
-          });
-        } else {
-          this.curChildrenMenu = node.parent.data.childrenMenu;
-          this.$nextTick(() => {
-            this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
-          });
-        }
+        this.curChildrenMenu = node.parent.data.childrenMenu;
+        this.$nextTick(() => {
+          this.find(this.currentData.childrenMenu, 'id');
+          console.log('this.result', this.result);
+          this.$refs.tree.setCheckedKeys(this.result);
+        });
         this.sidebarForm = newData;
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
@@ -475,6 +485,15 @@ export default {
           this.delLabel = '部门名称';
           this.$refs['delForm'].resetFields();
         }, 0);
+      }
+    },
+    find(arr, key) {
+      if (arr == null) return null;
+      for (let obj of arr) {
+        if (obj.hasOwnProperty(key)) {
+          this.result.push(obj[key]);
+        }
+        this.find(obj.children, key);
       }
     },
     collapse(moveNode, inNode, type) {},
@@ -590,25 +609,26 @@ export default {
         this.userDialogTitle = `编辑成员`;
         this.userDialogVisible = true;
         const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
-        this.userForm = {
-          userId,
-          name,
-          password,
-          account,
-          roleName: deptName,
-          jobName,
-          menuId,
-          isOwer,
-          roleId,
-          googleCode,
-          status,
-          adminGoogleCode: '',
-        };
+
         setTimeout(() => {
           this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
         }, 0);
         this.$nextTick(() => {
           this.$refs['userForm'].resetFields();
+          this.userForm = {
+            userId,
+            name,
+            password,
+            account,
+            roleName: deptName,
+            jobName,
+            menuId,
+            isOwer,
+            roleId,
+            googleCode,
+            status,
+            adminGoogleCode: '',
+          };
         }, 0);
       }
       // 删除

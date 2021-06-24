@@ -138,10 +138,11 @@ const rechargeConfig = [
     value: '',
   },
   {
-    type: 'text',
+    type: 'select',
     label: '链名称',
     prop: 'chainName',
     value: '',
+    list: [],
   },
 ];
 
