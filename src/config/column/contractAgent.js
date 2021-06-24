@@ -1030,10 +1030,14 @@ const teamAssetsCol = [
     label: '自身获得手续费合计',
     prop: 'myselfStat',
   },
-  // {
-  //   label: '下面整条链团队长合计',
-  //   prop: 'captainStats',
-  // },
+  {
+    label: '下面整条链贡献给平台的手续费合计',
+    prop: 'platformCommission',
+  },
+  {
+    label: '下面整条链贡献给平台的合约盈亏合计',
+    prop: 'platformProfitLoss',
+  },
   {
     label: '自身获得团队长合计',
     prop: 'captainStat',

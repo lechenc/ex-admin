@@ -75,7 +75,9 @@
     <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
         <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
-          <el-autocomplete @input="loadAll" class="inline-input" v-model.trim="userForm.account" :fetch-suggestions="querySearch" placeholder="请输入内容" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
+          <el-select v-model="userForm.account" multiple filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -273,29 +275,34 @@ export default {
       curChildrenMenu: [],
       result: [],
       userCreated: true,
-      restaurants: [],
-      state1: '',
+      options: [],
+      searchList: [],
+      loading: false,
+      states: [],
     };
   },
   methods: {
-    querySearch(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
-    createFilter(queryString) {
-      return (restaurant) => {
-        return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-      };
-    },
-    async loadAll(val) {
-      console.log('val',val)
-      const res = await $api.apiPeopleManagementSearch({
-        keyword:val
-      })
-      if(res){
-        console.log('res',res)
+    remoteMethod(query) {
+      console.log('query', query);
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(async () => {
+          this.loading = false;
+          const res = await $api.apiPeopleManagementSearch({
+            keyword: query,
+          });
+          if (res) {
+            let arr = [];
+            this.options = res.data.data.filter((item) => {
+              return item.account.toLowerCase().indexOf(query.toLowerCase()) > -1;
+            });
+            options.forEach((v)=>{
+              v.label = v.
+            })
+          }
+        }, 200);
+      } else {
+        this.options = [];
       }
     },
     handleSelect(item) {
@@ -359,6 +366,7 @@ export default {
       this.currentData = JSON.parse(JSON.stringify(data));
       if (this.currentData.level == 0) {
         this.userCreated = false;
+        this.currentData = {};
         return;
       } else {
         this.userCreated = true;
@@ -518,6 +526,7 @@ export default {
         }, 0);
       }
     },
+    // 数组深层处理
     find(arr, key) {
       if (arr == null) return null;
       for (let obj of arr) {
@@ -535,6 +544,8 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       // this.search_params_obj = data;
+      if (!this.currentData.hasOwnProperty('roleId')) return this.$message.error('请选择部门');
+
       this.getList(this.currentData);
     },
     doReset() {
@@ -542,6 +553,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
+      if (!this.currentData.hasOwnProperty('roleId')) return;
       this.getList(this.currentData);
       // this.getList();
     },
@@ -640,10 +652,7 @@ export default {
         this.userDialogTitle = `编辑成员`;
         this.userDialogVisible = true;
         const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
-
-        setTimeout(() => {
-          this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
-        }, 0);
+        const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
         this.$nextTick(() => {
           this.$refs['userForm'].resetFields();
           this.userForm = {
@@ -653,13 +662,16 @@ export default {
             account,
             roleName: deptName,
             jobName,
-            menuId,
+            menuId: '',
             isOwer,
             roleId,
             googleCode,
             status,
             adminGoogleCode: '',
           };
+        }, 0);
+        setTimeout(() => {
+          this.$refs.userTree.setCheckedKeys(id_list);
         }, 0);
       }
       // 删除

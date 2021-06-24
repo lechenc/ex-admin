@@ -168,7 +168,7 @@ export default {
         this.searchCofig[10]['list'] = arr.map((v) => {
           return {
             label: v.chainName,
-            value: v.id,
+            value: v.chainName,
           };
         });
       }

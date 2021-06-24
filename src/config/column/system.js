@@ -494,6 +494,14 @@ const peopleManagementCol = [
     prop: 'deptName',
   },
   {
+    label: '级别',
+    prop: 'isOwer',
+    type: 'filter',
+    show_type: 'textColorLine',
+    width: '120',
+    filters: [{ text: '普通成员', val: 0 }, { text: '部门负责人', val: 1 }],
+  },
+  {
     label: '备注',
     prop: 'name',
   },

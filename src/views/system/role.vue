@@ -165,7 +165,6 @@ export default {
       // 编辑
       if (fn === 'edit') {
         this.formName = '编辑';
-        console.log('row',row)
         this.roleForm.id = row.id;
         this.roleForm.name = row.name;
         const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
