@@ -22,7 +22,7 @@
       <el-form :model="cForm" ref="cForm" :rules="rules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="代理商UID" :label-width="formLabelWidth" prop="uid">
+            <el-form-item label="商务UID" :label-width="formLabelWidth" prop="uid">
               <el-input type="text" v-model.trim="cForm.uid" placeholder="请输入" :disabled="!!userId"></el-input>
             </el-form-item>
           </el-col>
@@ -184,7 +184,7 @@
 
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item v-if="commissionPercentLimitShow" label="允许子商务创建代理时可最大手续费比例" :label-width="formLabelWidth" prop="commissionPercentLimit">
+            <el-form-item v-if="commissionPercentLimitShow" label="允许商务创建代理时可最大手续费比例" :label-width="formLabelWidth" prop="commissionPercentLimit">
               <el-input type="number" v-model="cForm.commissionPercentLimit" placeholder="请输入" @input="checkVal('commissionPercentLimit', 1)">
                 <template slot="append">%</template>
               </el-input>

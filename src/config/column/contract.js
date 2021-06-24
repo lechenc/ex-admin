@@ -1391,7 +1391,7 @@ const positionContractCol = [
   {
     type: 'getTimesCol',
     label: '维持保证金率',
-    prop: 'maintenanceMargin',
+    prop: 'maintenanceMarginRatio',
     prop2: '100',
     prop3: '%',
   },

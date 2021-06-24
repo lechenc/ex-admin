@@ -336,7 +336,7 @@ export default {
 
           const params = {
             name,
-            menuId:menuId,
+            menuId:menuId+',128',
             googleCode,
             status: status ? 0 : 1,
             parentRoleId: this.currentData.roleId,
