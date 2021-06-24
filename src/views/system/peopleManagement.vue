@@ -334,7 +334,7 @@ export default {
       this.currentData = JSON.parse(JSON.stringify(data));
       if (this.currentData.level == 0) {
         this.userCreated = false;
-        this.currentData = {}
+        this.currentData = {};
         return;
       } else {
         this.userCreated = true;
@@ -522,6 +522,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
+      if (!this.currentData.hasOwnProperty('roleId')) return;
       this.getList(this.currentData);
       // this.getList();
     },
