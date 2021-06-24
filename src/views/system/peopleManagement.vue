@@ -630,7 +630,7 @@ export default {
     // 分页
     goPage(val) {
       this.current_page = val;
-      this.getList();
+      this.getList(this.currentData);
     },
     // getlist
     async getList(obj) {
