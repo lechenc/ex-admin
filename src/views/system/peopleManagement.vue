@@ -332,10 +332,10 @@ export default {
     },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
-      console.log('currentData', this.currentData);
       if (this.currentData.level == 0) {
         this.userCreated = false;
-        return
+        this.currentData = {}
+        return;
       } else {
         this.userCreated = true;
       }
@@ -469,7 +469,7 @@ export default {
         this.curChildrenMenu = node.parent.data.childrenMenu;
         this.$nextTick(() => {
           this.find(this.currentData.childrenMenu, 'id');
-          console.log('this.result', this.result);
+
           this.$refs.tree.setCheckedKeys(this.result);
         });
         this.sidebarForm = newData;
@@ -495,6 +495,7 @@ export default {
         }, 0);
       }
     },
+    // 数组深层处理
     find(arr, key) {
       if (arr == null) return null;
       for (let obj of arr) {
@@ -512,6 +513,8 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       // this.search_params_obj = data;
+      if (!this.currentData.hasOwnProperty('roleId')) return this.$message.error('请选择部门');
+
       this.getList(this.currentData);
     },
     doReset() {
@@ -617,10 +620,7 @@ export default {
         this.userDialogTitle = `编辑成员`;
         this.userDialogVisible = true;
         const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
-
-        setTimeout(() => {
-          this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
-        }, 0);
+        const id_list = row.menuId.indexOf(',') > -1 ? row.menuId.split(',') : [row.menuId];
         this.$nextTick(() => {
           this.$refs['userForm'].resetFields();
           this.userForm = {
@@ -630,13 +630,16 @@ export default {
             account,
             roleName: deptName,
             jobName,
-            menuId,
+            menuId: '',
             isOwer,
             roleId,
             googleCode,
             status,
             adminGoogleCode: '',
           };
+        }, 0);
+        setTimeout(() => {
+          this.$refs.userTree.setCheckedKeys(id_list);
         }, 0);
       }
       // 删除
