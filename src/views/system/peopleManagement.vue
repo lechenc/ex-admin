@@ -74,10 +74,18 @@
     <!-- 添加人员 -->
     <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
-        <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
-          <el-select v-model="userForm.account" multiple filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-          </el-select>
+        <el-form-item autocomplete="off" label="账号名" :label-width="formLabelWidth" prop="account">
+          <el-row :span="24">
+            <el-col :span="10">
+              <el-select @change="searchClick" v-model="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="10">
+              <el-button v-if="accountType" type="success" @click="changeAccountType">{{ accountTypeText }}</el-button>
+              <el-button v-else type="primary" @click="changeAccountType">{{ accountTypeText }}</el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -279,28 +287,47 @@ export default {
       searchList: [],
       loading: false,
       states: [],
+      accountTypeText: '切换为可搜索',
+      accountType: false,
     };
   },
   methods: {
+    changeAccountType() {
+      this.accountType = !this.accountType;
+      if (this.accountType) {
+        this.accountTypeText = '切换为普通';
+        this.userForm.account = ''
+      } else {
+        this.accountTypeText = '切换为可搜索';
+        this.userForm.account = ''
+      }
+    },
+    searchClick(item) {
+      let obj = this.options.filter((v) => {
+        return v.id == item;
+      })[0];
+    },
     remoteMethod(query) {
-      console.log('query', query);
       if (query !== '') {
         this.loading = true;
+        this.userForm.account = query;
         setTimeout(async () => {
           this.loading = false;
           const res = await $api.apiPeopleManagementSearch({
             keyword: query,
           });
+
           if (res) {
-            let arr = [];
             this.options = res.data.data.filter((item) => {
               return item.account.toLowerCase().indexOf(query.toLowerCase()) > -1;
             });
-            options.forEach((v)=>{
-              v.label = v.
-            })
+
+            this.options.forEach((v) => {
+              v.label = v.account;
+              v.value = v.id;
+            });
           }
-        }, 200);
+        }, 300);
       } else {
         this.options = [];
       }
