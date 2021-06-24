@@ -75,7 +75,7 @@
     <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
         <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
-          <el-input type="text" v-model.trim="userForm.account" maxlength="20" autocomplete="off"></el-input>
+          <el-autocomplete @input="loadAll" class="inline-input" v-model.trim="userForm.account" :fetch-suggestions="querySearch" placeholder="请输入内容" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -273,9 +273,34 @@ export default {
       curChildrenMenu: [],
       result: [],
       userCreated: true,
+      restaurants: [],
+      state1: '',
     };
   },
   methods: {
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+      };
+    },
+    async loadAll(val) {
+      console.log('val',val)
+      const res = await $api.apiPeopleManagementSearch({
+        keyword:val
+      })
+      if(res){
+        console.log('res',res)
+      }
+    },
+    handleSelect(item) {
+      console.log(item);
+    },
     delConfirmOp() {
       this.$refs['delForm'].validate(async (valid) => {
         if (valid) {
@@ -332,10 +357,9 @@ export default {
     },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
-      console.log('currentData', this.currentData);
       if (this.currentData.level == 0) {
         this.userCreated = false;
-        return
+        return;
       } else {
         this.userCreated = true;
       }
@@ -469,7 +493,6 @@ export default {
         this.curChildrenMenu = node.parent.data.childrenMenu;
         this.$nextTick(() => {
           this.find(this.currentData.childrenMenu, 'id');
-          console.log('this.result', this.result);
           this.$refs.tree.setCheckedKeys(this.result);
         });
         this.sidebarForm = newData;

@@ -2966,6 +2966,13 @@ export default class api {
     return Fetch.post('/admin/account/coin/chain-list', data);
   }
 
+  // 系统管理 人员管理 模糊搜索
+  static apiPeopleManagementSearch(data) {
+    return Fetch.post('/admin/user/keyword-search', data);
+  }
+
+
+
   
 
   
