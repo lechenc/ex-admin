@@ -1391,7 +1391,7 @@ const positionContractCol = [
   {
     type: 'getTimesCol',
     label: '维持保证金率',
-    prop: 'maintenanceMarginRatio',
+    prop: 'maintenanceMargin',
     prop2: '100',
     prop3: '%',
   },
@@ -1633,7 +1633,7 @@ const closeContractCol = [
   {
     type: 'getTimesCol',
     label: '维持保证金率',
-    prop: 'maintenanceMarginRatio',
+    prop: 'maintenanceMargin',
     prop2: '100',
     prop3: '%',
   },
@@ -2544,8 +2544,11 @@ const gearSettingCol = [
     prop: 'maxPositionAmount',
   },
   {
+    type: 'getTimesCol',
     label: '维持保证金率',
     prop: 'maintenanceMarginRatio',
+    prop2: '100',
+    prop3: '%',
   },
   {
     label: '最低初始保证金率',
