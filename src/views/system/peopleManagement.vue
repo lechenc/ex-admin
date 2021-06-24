@@ -431,8 +431,6 @@ export default {
       this.currentData = JSON.parse(JSON.stringify(data));
       if (this.currentData.level == 0) {
         this.userCreated = false;
-        this.currentData = {};
-        return;
       } else {
         this.userCreated = true;
       }
@@ -562,11 +560,20 @@ export default {
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
         newData.status = newData.status ? false : true;
+        if (this.currentData.level == 0) {
+          this.curChildrenMenu = this.currentData.childrenMenu;
+        } else {
+          this.curChildrenMenu = node.parent.data.childrenMenu;
+        }
 
-        this.curChildrenMenu = node.parent.data.childrenMenu;
         this.$nextTick(() => {
-          this.find(this.currentData.childrenMenu, 'id');
-          this.$refs.tree.setCheckedKeys(this.result);
+          if (this.currentData.level == 0) {
+            this.find(this.currentData.childrenMenu, 'id');
+            this.$refs.tree.setCheckedKeys(this.result);
+          } else {
+            this.find(this.currentData.childrenMenu, 'id');
+            this.$refs.tree.setCheckedKeys(this.result);
+          }
         });
         this.sidebarForm = newData;
       } else if (type == 'del') {
@@ -610,7 +617,7 @@ export default {
       this.current_page = 1;
       // this.search_params_obj = data;
       if (!this.currentData.hasOwnProperty('roleId')) return this.$message.error('请选择部门');
-
+      if (this.currentData.level == 0) return;
       this.getList(this.currentData);
     },
     doReset() {
@@ -619,6 +626,7 @@ export default {
         v['value'] = '';
       });
       if (!this.currentData.hasOwnProperty('roleId')) return;
+      if (this.currentData.level == 0) return;
       this.getList(this.currentData);
       // this.getList();
     },
