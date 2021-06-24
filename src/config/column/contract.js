@@ -1389,6 +1389,13 @@ const positionContractCol = [
     prop: 'marginRatio',
   },
   {
+    type: 'getTimesCol',
+    label: '维持保证金率',
+    prop: 'maintenanceMarginRatio',
+    prop2: '100',
+    prop3: '%',
+  },
+  {
     label: '盈亏率',
     prop: 'rateReturn',
   },
@@ -1622,6 +1629,13 @@ const closeContractCol = [
   {
     label: '已实现盈亏（USDT）',
     prop: 'realizedProfitLoss',
+  },
+  {
+    type: 'getTimesCol',
+    label: '维持保证金率',
+    prop: 'maintenanceMarginRatio',
+    prop2: '100',
+    prop3: '%',
   },
   {
     label: '是否体验券平仓',

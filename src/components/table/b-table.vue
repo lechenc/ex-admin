@@ -72,11 +72,21 @@
           </span>
         </template>
       </el-table-column>
+      
 
-      <!-- 相加求和  并且加一个其他值-->
-      <el-table-column v-if="config.type == 'getPlusSumCol'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
+      <!-- 加一个其他值 -->
+      <el-table-column v-if="config.type == 'plusOthersNumber'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
-          <span> {{ getPlusSum(scope.row, config.propArr, config.othersNumber) }} </span>
+          <span v-if="config.othersNumber"> {{ getPlus(scope.row[config.prop], config.othersNumber) }} </span>
+          <span v-else-if="config.prop2"> {{ getPlus(scope.row[config.prop], scope.row[config.prop2]) }} </span>
+        </template>
+      </el-table-column>
+
+      <!-- 乘一个其他值  并且再拼接一个值-->
+      <el-table-column v-if="config.type == 'getTimesCol'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
+        <template slot-scope="scope">
+          <span v-if="!scope.row[config.prop]"> {{ scope.row[config.prop] }} </span>
+          <span v-else> {{ getTimes(scope.row[config.prop], '100') + '%' }} </span>
         </template>
       </el-table-column>
 
@@ -328,7 +338,7 @@
         </template>
       </el-table-column>
       <!-- 操作按钮 -->
-      <el-table-column fixed="right" v-if="config.type === 'action' &&  actionShow " :key="config.prop" :label="config.label" :width="isDeskTop ? config.width : '120px'">
+      <el-table-column fixed="right" v-if="config.type === 'action' && actionShow" :key="config.prop" :label="config.label" :width="isDeskTop ? config.width : '120px'">
         <template slot-scope="scope">
           <span v-for="(btn, i) in config.btnGroup" :key="i + 't`t'">
             <template v-if="btn.type == 'noVisible'"> </template>
@@ -358,7 +368,7 @@
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
             <!-- // 根据一个传入的值判断是否展示 -->
-            <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value== (scope.row[btn.filter_key] + '') ">
+            <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value == scope.row[btn.filter_key] + ''">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
 
@@ -391,7 +401,7 @@ export default {
   name: 'b-table',
   props: {
     // 操作按钮是否显示
-    actionShow:{
+    actionShow: {
       type: Boolean,
       default: true,
     },
@@ -438,6 +448,12 @@ export default {
     getMinus() {
       return (n1, n2) => {
         return Precision.minus(n1, n2);
+      };
+    },
+
+    getTimes() {
+      return (n1, n2) => {
+        return Precision.times(n1, n2);
       };
     },
 

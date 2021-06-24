@@ -38,7 +38,7 @@
           <el-button v-if="isOwer" type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
-          <Btable :actionShow='isOwer' :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+          <Btable :actionShow="isOwer" :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
         </div>
         <div class="container-footer">
           <icon-page :total="total" :pages="pages"></icon-page>
@@ -159,7 +159,7 @@ export default {
   computed: {
     ...mapState({
       // 是否为管理员
-      isOwer: (state) => state.app.isOwer,
+      isOwer: (state) => (state.app.isOwer ? true : false),
     }),
   },
   data() {
@@ -307,9 +307,7 @@ export default {
         account: this.userForm.name,
       });
       if (res) {
-        console.log('res', res);
         this.userForm.googleCode = res.data.data.secretKey;
-        console.log('googleCode', this.userForm.googleCode);
         // 防止默认校验提示空，就主动校验
         this.$nextTick(() => {
           this.$refs.userForm.validateField('googleCode');
@@ -338,15 +336,13 @@ export default {
 
           const params = {
             name,
-            menuId,
+            menuId:menuId,
             googleCode,
             status: status ? 0 : 1,
             parentRoleId: this.currentData.roleId,
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
-          console.log('params', params);
-          console.log('roleId', roleId);
           const res = !roleId
             ? await $api.apiAddPeopleManagementList(params)
             : await $api.apiEditPeopleManagementList({
@@ -421,8 +417,6 @@ export default {
     },
     handleCommand(command) {
       let { type, node, data } = command;
-      console.log('node', node);
-      console.log('data', data);
       if (type == 'add') {
         this.sidebarDialogTitle = `创建 ${data.name} 的子菜单`;
         this.sidebarDialogVisible = true;
@@ -439,36 +433,24 @@ export default {
           this.$refs.sidebarForm.resetFields();
         });
 
-        if (node.level == 1) {
-          this.$nextTick(() => {
-            this.curChildrenMenu = newData.childrenMenu;
-            this.$refs.tree.setCheckedKeys([]);
-          });
-        } else {
-          this.$nextTick(() => {
-            this.curChildrenMenu = node.parent.data.childrenMenu;
-            this.$refs.tree.setCheckedKeys([]);
-          });
-        }
+        this.$nextTick(() => {
+          this.curChildrenMenu = this.currentData.childrenMenu;
+          this.$refs.tree.setCheckedKeys([]);
+        });
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
-        newData.status = newData.status ? true : false;
+        newData.status = newData.status ? false : true;
 
         if (node.level == 1) {
           this.curChildrenMenu = newData.childrenMenu;
           this.$nextTick(() => {
-            
             this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
           });
         } else {
           this.curChildrenMenu = node.parent.data.childrenMenu;
           this.$nextTick(() => {
-            
-            
-            console.log('newData.childrenMenu',newData.childrenMenu)
-            console.log('this.currentData.childrenMenu',this.currentData.childrenMenu)
             this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
           });
         }
@@ -607,7 +589,6 @@ export default {
       if (fn === 'edit') {
         this.userDialogTitle = `编辑成员`;
         this.userDialogVisible = true;
-        console.log('row', row);
         const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
         this.userForm = {
           userId,
