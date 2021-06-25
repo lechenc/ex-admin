@@ -38,7 +38,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="登录密码" :label-width="formLabelWidth" prop="password">
-              <el-input v-model.trim="cForm.password" type="password" autocomplete="off" placeholder="请输入包含字母和数字的6-16位密码">
+              <el-input v-model.trim="cForm.password" auto-complete="new-password" type="password" autocomplete="off" placeholder="请输入包含字母和数字的6-16位密码">
                 <!-- <span slot="append" class="show-pwd" @click="showPwd">
                   <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
                 </span> -->
@@ -474,6 +474,7 @@ export default {
       agentParamsBtnLoading: false,
       agentParamsForm: {},
       agentParamsVisible: false,
+      commissionPercentLimitShow:false
     };
   },
   watch: {

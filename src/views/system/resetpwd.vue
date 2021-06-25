@@ -16,13 +16,13 @@
     <div class="wrap">
       <label for="opwd" class="label">原密码：</label>
       <span class="prop">
-        <el-input :disabled="!isCURDAuth" id="opwd" type="password" size="small" placeholder="请填写原密码" v-model="opwd"></el-input>
+        <el-input :disabled="!isCURDAuth" id="opwd" type="password" auto-complete="new-password" size="small" placeholder="请填写原密码" v-model="opwd"></el-input>
       </span>
     </div>
     <div class="wrap">
       <label for="pwd" class="label">新密码：</label>
       <span class="prop">
-        <el-input :disabled="!isCURDAuth" id="pwd" :type="passwordType0" size="small" placeholder="只允许数组和英文字母，最少8位" v-model="pwd"></el-input>
+        <el-input :disabled="!isCURDAuth" id="pwd" :type="passwordType0" auto-complete="new-password" size="small" placeholder="只允许数组和英文字母，最少8位" v-model="pwd"></el-input>
       </span>
       <span class="show-pwd" @click="showPwd0">
         <svg-icon :icon-class="passwordType0 === 'password' ? 'eye' : 'eye-open'" />
