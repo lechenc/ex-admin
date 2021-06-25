@@ -90,7 +90,7 @@
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-          <el-input :disabled="oldType" type="password" v-model.trim="userForm.password" autocomplete="off"></el-input>
+          <el-input :disabled="oldType" type="password" auto-complete="new-password" v-model.trim="userForm.password" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="所属部门" :label-width="formLabelWidth">

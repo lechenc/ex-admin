@@ -38,7 +38,7 @@
 
         <el-row :span="24">
           <el-form-item class="my-form-item" label="登录密码" prop="loginPassword">
-            <el-input size="small" type="password" placeholder="请输入" v-model="form.loginPassword"> </el-input>
+            <el-input size="small" type="password" auto-complete="new-password" placeholder="请输入" v-model="form.loginPassword"> </el-input>
           </el-form-item>
         </el-row>
 
