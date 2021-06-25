@@ -80,7 +80,7 @@
               <el-select :disabled="oldType" v-if="accountType" @change="searchChange" v-model.trim="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
-              <el-input  v-else type="text" v-model.trim="userForm.account" autocomplete="off"></el-input>
+              <el-input v-else type="text" v-model.trim="userForm.account" autocomplete="off"></el-input>
             </el-col>
             <el-col :span="10">
               <el-button v-if="!accountType" type="primary" @click="changeAccountType"> 切换为可搜索 </el-button>
@@ -116,7 +116,7 @@
 
         <el-form-item :label="userForm.userId === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
           <el-input :disabled="oldType" v-model="userForm.googleCode" autocomplete="off">
-            <el-button :disabled='googleCodeDisable' slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</el-button>
+            <el-button :disabled="googleCodeDisable" slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</el-button>
           </el-input>
         </el-form-item>
 
@@ -268,14 +268,12 @@ export default {
       result: [],
       userCreated: true,
       options: [],
-      searchList: [],
       loading: false,
-      states: [],
       accountTypeText: '切换为可搜索',
       accountType: false,
       oldType: false,
       curRoleName: '',
-      googleCodeDisable:false
+      googleCodeDisable: false,
     };
   },
   methods: {
@@ -301,7 +299,7 @@ export default {
       this.accountType = !this.accountType;
       if (this.accountType) {
         this.$nextTick(() => {
-          this.googleCodeDisable = false
+          this.googleCodeDisable = false;
           this.oldType = false;
           this.userForm.name = '';
           this.userForm.password = '';
@@ -312,7 +310,7 @@ export default {
         });
       } else {
         this.$nextTick(() => {
-          this.googleCodeDisable = false
+          this.googleCodeDisable = false;
           this.oldType = false;
           this.userForm.name = '';
           this.userForm.password = '';
@@ -337,6 +335,7 @@ export default {
       let obj = this.options.filter((v) => {
         return v.id == item;
       })[0];
+      console.log('obj', obj);
 
       if (obj) {
         this.oldType = true;
@@ -349,10 +348,10 @@ export default {
         this.userForm.jobName = obj.jobName || '';
         this.userForm.isOwer = obj.isOwer || 0;
         this.userForm.googleCode = obj.googleCode;
-        if(!obj.googleCode){
-          this.googleCodeDisable = false
-        }else{
-          this.googleCodeDisable = true
+        if (!obj.googleCode) {
+          this.googleCodeDisable = false;
+        } else {
+          this.googleCodeDisable = true;
         }
       }
     },
@@ -540,6 +539,7 @@ export default {
             });
             this.userDialogVisible = false;
             this.getList(this.currentData);
+            this.options = [];
           }
           this.userBtnLoading = false;
         }
@@ -670,6 +670,16 @@ export default {
           status: false,
         };
         this.curRoleName = this.currentData.name;
+        this.userRules.password = [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: this.validatePassword, trigger: 'blur' },
+        ];
+        this.userRules.account = [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: this.validateAccount, trigger: 'blur' },
+        ];
+        this.userRules.password[0].required = true;
+        this.userRules.account[0].required = true;
       });
       setTimeout(() => {
         this.$refs.userTree.setCheckedKeys([]);

@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <el-page-header @back="goBack"> </el-page-header>
+      <!-- <el-page-header @back="goBack"> </el-page-header> -->
       <div class="title-container">
         <h3 class="title">管理后台</h3>
       </div>
@@ -99,29 +99,29 @@ export default {
     // //console.log(123)
   },
   methods: {
-    goBack() {
-      if (!this.isNew) {
-        this.isNew = true;
-        this.$nextTick(() => {
-          this.loginForm = {
-            account: '',
-            password: '',
-            googleCode: '',
-          };
-          document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '旧版登录';
-        });
-      } else {
-        this.isNew = false;
-        this.$nextTick(() => {
-          this.loginForm = {
-            account: '',
-            password: '',
-            googleCode: '',
-          };
-          document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
-        });
-      }
-    },
+    // goBack() {
+    //   if (!this.isNew) {
+    //     this.isNew = true;
+    //     this.$nextTick(() => {
+    //       this.loginForm = {
+    //         account: '',
+    //         password: '',
+    //         googleCode: '',
+    //       };
+    //       document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '旧版登录';
+    //     });
+    //   } else {
+    //     this.isNew = false;
+    //     this.$nextTick(() => {
+    //       this.loginForm = {
+    //         account: '',
+    //         password: '',
+    //         googleCode: '',
+    //       };
+    //       document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
+    //     });
+    //   }
+    // },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = '';
@@ -165,7 +165,7 @@ export default {
     },
   },
   mounted() {
-    document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
+    // document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
     this.isNew = false;
   },
 };
