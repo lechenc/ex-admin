@@ -3775,7 +3775,168 @@ const apiKeyConfigColNoBtn = [
 
 const apiKeyConfigConfig = [];
 
+const highFrequencyMonitorCol = [
+  {
+    label: '用户UID',
+    prop: 'uid',
+  },
+  {
+    label: '上级代理商UID',
+    prop: 'agentId',
+  },
+  {
+    label: '最上一级代理商UID',
+    prop: 'topAgentId',
+  },
+  {
+    label: '该用户单位时间内已实现盈亏',
+    prop: 'realizedProfitLossInATime',
+  },
+  {
+    label: '该用户累计已实现盈亏',
+    prop: 'realizedProfitLossTotal',
+  },
+  {
+    label: '单位时间内开仓次数',
+    prop: 'openPositionInATime',
+  },
+  {
+    label: '单位时间内平仓次数',
+    prop: 'closePositionInATime',
+  },
+  {
+    label: '用户累计入金金额',
+    prop: 'depositTotal',
+  },
+  {
+    label: '进入监控时间',
+    prop: 'createTime',
+  },
+  {
+    label: '移出监控时间',
+    prop: 'updateTime',
+  },
+  {
+    label: '监控状态',
+    prop: 'monitorType',
+    // 1,监控中) (2,已移出
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '监控中', val: 1 }, { text: '已移出', val: 2 }],
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 120,
+    btnGroup: [
+      {
+        label: '移出监控',
+        fn: 'remove',
+        type: 'text',
+        alias: 'remove',
+      },
+    ],
+  },
+];
+
+const highFrequencyMonitorColNoBtn = [
+  {
+    label: '用户UID',
+    prop: 'uid',
+  },
+  {
+    label: '上级代理商UID',
+    prop: 'agentId',
+  },
+  {
+    label: '最上一级代理商UID',
+    prop: 'topAgentId',
+  },
+  {
+    label: '该用户单位时间内已实现盈亏',
+    prop: 'realizedProfitLossInATime',
+  },
+  {
+    label: '该用户累计已实现盈亏',
+    prop: 'realizedProfitLossTotal',
+  },
+  {
+    label: '单位时间内开仓次数',
+    prop: 'openPositionInATime',
+  },
+  {
+    label: '单位时间内平仓次数',
+    prop: 'closePositionInATime',
+  },
+  {
+    label: '用户累计入金金额',
+    prop: 'depositTotal',
+  },
+  {
+    label: '进入监控时间',
+    prop: 'createTime',
+  },
+  {
+    label: '移出监控时间',
+    prop: 'updateTime',
+  },
+  {
+    label: '监控状态',
+    prop: 'monitorType',
+    // 1,监控中) (2,已移出
+    width: 120,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '监控中', val: 1 }, { text: '已移出', val: 2 }],
+  },
+];
+
+const highFrequencyMonitorConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '上级代理商UID',
+    prop: 'agentId',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '最上一级代理商',
+    prop: 'topAgentId',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'select',
+    label: '监控状态',
+    prop: 'monitorType',
+    // 1,监控中) (2,已移出
+    value: '',
+    list: [{ label: '监控中', value: 1 }, { label: '已移出', value: 2 }],
+  },
+];
+
 export {
+  highFrequencyMonitorConfig,
+  highFrequencyMonitorColNoBtn,
+  highFrequencyMonitorCol,
   apiKeyConfigCol,
   apiKeyConfigColNoBtn,
   apiKeyConfigConfig,

@@ -491,6 +491,7 @@ const mapComponents = {
   ContractResult: () => import('@/views/contract/risk/contractResult'),
   ContractTactics: () => import('@/views/contract/risk/contractTactics'),
   HighFrequencyConfig: () => import('@/views/contract/risk/highFrequencyConfig'),
+  HighFrequencyMonitor: () => import('@/views/contract/risk/highFrequencyMonitor'),
   //账号管理
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),
