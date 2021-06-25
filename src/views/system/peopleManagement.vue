@@ -519,7 +519,7 @@ export default {
             if (!this.accountType) {
               params.password = mMd5.hbmd5(password);
             } else {
-              params.password = password;
+              
             }
           }
           this.userBtnLoading = true;
