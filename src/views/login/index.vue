@@ -153,9 +153,7 @@ export default {
             setToken(token);
             localStorage.setItem('user_name', this.loginForm.account);
             this.$store.dispatch('app/setNavList', list);
-            if (this.isNew) {
-              this.$store.commit('app/nowsetIsOwer', isOwer);
-            }
+            this.$store.commit('app/nowsetIsOwer', !isOwer ? 0 : 1);
             this.$router.push({ path: '/' });
           }
           this.loginLoding = false;

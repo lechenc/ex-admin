@@ -77,10 +77,10 @@
         <el-form-item autocomplete="off" label="账号名" :label-width="formLabelWidth" prop="account">
           <el-row :span="24">
             <el-col :span="10">
-              <el-select v-if="accountType" @change="searchChange" v-model.trim="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
+              <el-select :disabled="oldType" v-if="accountType" @change="searchChange" v-model.trim="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
-              <el-input v-else type="text" v-model.trim="userForm.account" autocomplete="off"></el-input>
+              <el-input  v-else type="text" v-model.trim="userForm.account" autocomplete="off"></el-input>
             </el-col>
             <el-col :span="10">
               <el-button v-if="!accountType" type="primary" @click="changeAccountType"> 切换为可搜索 </el-button>
@@ -116,7 +116,7 @@
 
         <el-form-item :label="userForm.userId === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
           <el-input :disabled="oldType" v-model="userForm.googleCode" autocomplete="off">
-            <el-button slot="append" class="gcode"  @click.stop="getGoogleCode">获取密钥</el-button>
+            <el-button :disabled='googleCodeDisable' slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</el-button>
           </el-input>
         </el-form-item>
 
@@ -174,26 +174,6 @@ export default {
     }),
   },
   data() {
-    const validatePassword = (rule, value, callback) => {
-      if (value == '') {
-        callback(new Error('必填'));
-      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/g.test(value) && '******' !== value) {
-        callback(new Error('请输入包含字母和数字的8-16位密码'));
-      } else {
-        callback();
-      }
-    };
-
-    const validateAccount = (rule, value, callback) => {
-      if (value == '') {
-        callback(new Error(''));
-      } else if (!/^[A-Za-z]{1}[A-Za-z0-9]/.test(value)) {
-        callback(new Error('只能输入字母和数字,以字母开头'));
-      } else {
-        callback();
-      }
-    };
-
     return {
       delLabel: '',
       delDialogVisible: false,
@@ -209,12 +189,12 @@ export default {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
         account: [
           { required: true, message: '必填', trigger: 'blur' },
-          { validator: validateAccount, trigger: 'blur' },
+          { validator: this.validateAccount, trigger: 'blur' },
         ],
 
         password: [
           { required: true, message: '必填', trigger: 'blur' },
-          { validator: validatePassword, trigger: 'blur' },
+          { validator: this.validatePassword, trigger: 'blur' },
         ],
         roleName: [{ required: true, message: '必填', trigger: 'blur' }],
         jobName: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -295,17 +275,34 @@ export default {
       accountType: false,
       oldType: false,
       curRoleName: '',
+      googleCodeDisable:false
     };
   },
   methods: {
+    validateAccount: (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('必填'));
+      } else if (!/^[A-Za-z]{1}[A-Za-z0-9]/.test(value)) {
+        callback(new Error('只能输入字母和数字,以字母开头'));
+      } else {
+        callback();
+      }
+    },
+    validatePassword: (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('必填'));
+      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/g.test(value) && '******' !== value) {
+        callback(new Error('请输入包含字母和数字的8-16位密码'));
+      } else {
+        callback();
+      }
+    },
     changeAccountType() {
       this.accountType = !this.accountType;
       if (this.accountType) {
-        this.accountTypeText = '切换为普通';
         this.$nextTick(() => {
+          this.googleCodeDisable = false
           this.oldType = false;
-          this.userRules.password[0].required = true;
-          console.log('123');
           this.userForm.name = '';
           this.userForm.password = '';
           this.userForm.account = '';
@@ -314,17 +311,25 @@ export default {
           this.userForm.googleCode = '';
         });
       } else {
-        this.accountTypeText = '切换为可搜索';
-        this.oldType = false;
-        this.userRules.password[0].required = true;
-        this.userForm.account = '';
         this.$nextTick(() => {
+          this.googleCodeDisable = false
+          this.oldType = false;
           this.userForm.name = '';
           this.userForm.password = '';
           this.userForm.account = '';
           this.userForm.jobName = '';
           this.userForm.isOwer = 0;
           this.userForm.googleCode = '';
+          this.userRules.password = [
+            { required: true, message: '必填', trigger: 'blur' },
+            { validator: this.validatePassword, trigger: 'blur' },
+          ];
+          this.userRules.account = [
+            { required: true, message: '必填', trigger: 'blur' },
+            { validator: this.validateAccount, trigger: 'blur' },
+          ];
+          this.userRules.password[0].required = true;
+          this.userRules.account[0].required = true;
         });
       }
     },
@@ -335,14 +340,20 @@ export default {
 
       if (obj) {
         this.oldType = true;
-        this.userRules.password[0].required = false;
         this.$refs['userForm'].resetFields();
+        this.userRules.password[0].required = false;
+        this.userRules.account[0].required = false;
         this.userForm.account = obj.account;
         this.userForm.name = obj.label || '';
         this.userForm.password = obj.loginPassword;
         this.userForm.jobName = obj.jobName || '';
         this.userForm.isOwer = obj.isOwer || 0;
         this.userForm.googleCode = obj.googleCode;
+        if(!obj.googleCode){
+          this.googleCodeDisable = false
+        }else{
+          this.googleCodeDisable = true
+        }
       }
     },
     remoteMethod(query) {
@@ -409,7 +420,7 @@ export default {
     },
     // 获取一个谷歌密钥
     async getGoogleCode() {
-      if (!this.userForm.name) {
+      if (!this.userForm.account) {
         this.$message({
           message: '请先填写账号名',
           type: 'error',
@@ -417,7 +428,7 @@ export default {
         return;
       }
       const res = await $api.getGoogleCode({
-        account: this.userForm.name,
+        account: this.userForm.account,
       });
       if (res) {
         this.userForm.googleCode = res.data.data.secretKey;
@@ -482,6 +493,10 @@ export default {
       });
     },
     userConfirmOp() {
+      if (this.accountType) {
+        this.userRules.password = [];
+        this.userRules.account = [];
+      }
       this.$refs['userForm'].validate(async (valid) => {
         if (valid) {
           let tmpCheck = this.$refs['userTree'].getCheckedKeys();
@@ -502,7 +517,11 @@ export default {
             roleId,
           };
           if ((userId && password !== '******') || !userId) {
-            params.password = mMd5.hbmd5(password);
+            if (!this.accountType) {
+              params.password = mMd5.hbmd5(password);
+            } else {
+              params.password = password;
+            }
           }
           this.userBtnLoading = true;
           // 新增 编辑
