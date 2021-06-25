@@ -116,7 +116,7 @@
 
         <el-form-item :label="userForm.userId === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
           <el-input :disabled="oldType" v-model="userForm.googleCode" autocomplete="off">
-            <el-button slot="append" class="gcode" :disabled="oldType" @click.stop="getGoogleCode">获取密钥</el-button>
+            <el-button slot="append" class="gcode"  @click.stop="getGoogleCode">获取密钥</el-button>
           </el-input>
         </el-form-item>
 
