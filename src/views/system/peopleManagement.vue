@@ -435,6 +435,7 @@ export default {
         this.userCreated = true;
       }
       this.filter_type_value = this.currentData.name;
+      if (this.currentData.level == 0) return;
       this.getList(this.currentData);
     },
     checkVal(obj, key) {
