@@ -509,6 +509,13 @@ const advertiseRecordConfig = [
     value: '',
     list: [{ label: '固定定价', value: 1 }, { label: '浮动定价', value: 0 }, { label: '市场定价', value: 2 }],
   },
+  {
+    type: 'select',
+    label: '剩余数量排序',
+    prop: 'remainOrder',
+    value: '',
+    list: [{ label: '正序', value: 'ASC' }, { label: '倒序', value: 'DESC' }],
+  },
 ];
 
 const infoCol = [

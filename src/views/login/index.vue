@@ -99,29 +99,29 @@ export default {
     // //console.log(123)
   },
   methods: {
-    goBack() {
-      if (!this.isNew) {
-        this.isNew = true;
-        this.$nextTick(() => {
-          this.loginForm = {
-            account: '',
-            password: '',
-            googleCode: '',
-          };
-          document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '旧版登录';
-        });
-      } else {
-        this.isNew = false;
-        this.$nextTick(() => {
-          this.loginForm = {
-            account: '',
-            password: '',
-            googleCode: '',
-          };
-          document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
-        });
-      }
-    },
+    // goBack() {
+    //   if (!this.isNew) {
+    //     this.isNew = true;
+    //     this.$nextTick(() => {
+    //       this.loginForm = {
+    //         account: '',
+    //         password: '',
+    //         googleCode: '',
+    //       };
+    //       document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '旧版登录';
+    //     });
+    //   } else {
+    //     this.isNew = false;
+    //     this.$nextTick(() => {
+    //       this.loginForm = {
+    //         account: '',
+    //         password: '',
+    //         googleCode: '',
+    //       };
+    //       document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
+    //     });
+    //   }
+    // },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = '';
@@ -149,10 +149,11 @@ export default {
           this.loginLoding = true;
           const res = !this.isNew ? await $api.login(params) : await $api.newLogin(params);
           if (res) {
-            const { list, token } = res.data.data;
+            const { list, token, isOwer } = res.data.data;
             setToken(token);
             localStorage.setItem('user_name', this.loginForm.account);
             this.$store.dispatch('app/setNavList', list);
+            this.$store.commit('app/nowsetIsOwer', !isOwer ? 0 : 1);
             this.$router.push({ path: '/' });
           }
           this.loginLoding = false;
@@ -164,7 +165,7 @@ export default {
     },
   },
   mounted() {
-    document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
+    // document.getElementsByClassName('el-page-header__title')[0].childNodes[0].nodeValue = '新版登录';
     this.isNew = false;
   },
 };

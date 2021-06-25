@@ -8,6 +8,7 @@
         <template>
           <el-radio-group v-model="email_radio">
             <el-radio :label="1" :disabled="disabled">魔杜卡</el-radio>
+            <el-radio :label="2" :disabled="disabled">Umail</el-radio>
           </el-radio-group>
         </template>
       </el-col>

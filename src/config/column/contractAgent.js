@@ -25,7 +25,7 @@ const agentsListsCol = [
   },
   {
     label: '级别',
-    prop: 'userGrade',
+    prop: 'commissionLevel',
   },
   {
     label: '创建时间',
@@ -170,7 +170,7 @@ const agentsListsColNoBtn = [
   },
   {
     label: '级别',
-    prop: 'userGrade',
+    prop: 'commissionLevel',
   },
   {
     label: '创建时间',
@@ -290,10 +290,9 @@ const agentsListsConfig = [
   {
     type: 'select',
     label: '级别',
-    prop: 'userGrade',
+    prop: 'commissionLevel',
     value: '',
-    //  1 一级代理商， 2 二级代理商
-    list: [{ label: '一级', value: 1 }, { label: '二级', value: 2 }, { label: '三级', value: 3 }],
+    list: [],
   },
   {
     type: 'select',
@@ -834,13 +833,6 @@ const agentFinancialFlowCol = [
     label: '代理UID',
     prop: 'uid',
   },
-  // {
-  //   label: '是否商务',
-  //   prop: 'amountType1',
-  //   type: 'filter',
-  //   show_type: 'text',
-  //   filters: [{ text: '是', val: 1 }, { text: '否', val: 0 }],
-  // },
 
   {
     label: '用户类型',
@@ -897,11 +889,11 @@ const agentFinancialFlowCol = [
       { text: '合约返佣结算', val: 95 },
       { text: '普通用户手续费返佣', val: 101 },
       { text: '币币划转至合约', val: 50 },
-      { text: '合约划转至钱包', val: 51 },
+      { text: '合约划转至币币', val: 51 },
       { text: '法币划转至合约', val: 52 },
       { text: '合约划转至法币', val: 53 },
-      { text: '钱包划转至法币', val: 10 },
-      { text: '法币划转至钱包', val: 11 },
+      { text: '币币划转至法币', val: 10 },
+      { text: '法币划转至币币', val: 11 },
       { text: '发送红包', val: '106' },
       { text: '领取红包', val: '107' },
       { text: '过期红包退还', val: '108' },
@@ -971,11 +963,11 @@ const agentFinancialFlowConfig = [
       { label: '合约返佣结算', value: 95 },
       { label: '普通用户手续费返佣', value: 101 },
       { label: '币币划转至合约', value: 50 },
-      { label: '合约划转至钱包', value: 51 },
+      { label: '合约划转至币币', value: 51 },
       { label: '法币划转至合约', value: 52 },
       { label: '合约划转至法币', value: 53 },
-      { label: '钱包划转至法币', value: 10 },
-      { label: '法币划转至钱包', value: 11 },
+      { label: '币币划转至法币', value: 10 },
+      { label: '法币划转至币币', value: 11 },
       { label: '发送红包', value: '106' },
       { label: '领取红包', value: '107' },
       { label: '过期红包退还', value: '108' },
@@ -990,13 +982,13 @@ const agentFinancialFlowConfig = [
     value: '',
     placeHolder: '请输入',
   },
-  // {
-  //   type: 'selectChange',
-  //   label: '资金类型',
-  //   prop: 'balanceType',
-  //   value: 1,
-  //   list: [{ label: '可用余额', value: 1 }, { label: '准可用余额', value: 2 }],
-  // },
+  {
+    type: 'selectChange',
+    label: '用户类型',
+    prop: 'userType',
+    value: '',
+    list: [{ label: '商务', value: 31 }, { label: '代理', value: 32 }],
+  },
 ];
 
 const teamAssetsCol = [
@@ -1038,10 +1030,14 @@ const teamAssetsCol = [
     label: '自身获得手续费合计',
     prop: 'myselfStat',
   },
-  // {
-  //   label: '下面整条链团队长合计',
-  //   prop: 'captainStats',
-  // },
+  {
+    label: '下面整条链贡献给平台的手续费合计',
+    prop: 'platformCommission',
+  },
+  {
+    label: '下面整条链贡献给平台的合约盈亏合计',
+    prop: 'platformProfitLoss',
+  },
   {
     label: '自身获得团队长合计',
     prop: 'captainStat',

@@ -18,7 +18,7 @@
           <el-tree ref="sidebarTree" @node-click="sidebarTreeClick" :filter-node-method="filterNode" :default-expanded-keys="[1]" :draggable="false" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="roleId" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
-              <span class="sac-btn">
+              <span v-if="isOwer" class="sac-btn">
                 <el-dropdown trigger="click" @command="handleCommand">
                   <span class="el-dropdown-link"> <i class="el-icon-arrow-down el-icon-more"></i> </span>
                   <el-dropdown-menu slot="dropdown">
@@ -32,13 +32,13 @@
           </el-tree>
         </div>
       </div>
-      <div v-if="contentIsShow" class="center-content">
+      <div v-if="contentIsShow && userCreated" class="center-content">
         <div class="container-btn" v-if="isCURDAuth">
-          <span class="btn-text"> {{ currentData.name }} ({{ total }}人) </span>
-          <el-button type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
+          <span class="btn-text" v-if="userCreated"> {{ currentData.name }} ({{ total }}人) </span>
+          <el-button v-if="isOwer && userCreated" type="primary" size="medium" @click="addpeopleManagement">添加成员</el-button>
         </div>
         <div>
-          <Btable :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+          <Btable :actionShow="isOwer" :filter_type_value="filter_type_value" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
         </div>
         <div class="container-footer">
           <icon-page :total="total" :pages="pages"></icon-page>
@@ -54,7 +54,7 @@
           <el-input v-model="sidebarForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree default-expand-all :data="currentData.childrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
+          <el-tree :accordion="true" :check-strictly="true" :data="curChildrenMenu" show-checkbox node-key="id" ref="tree" :props="tree_props"> </el-tree>
         </el-form-item>
 
         <el-form-item label="是否可用" :label-width="formLabelWidth" prop="status">
@@ -74,16 +74,27 @@
     <!-- 添加人员 -->
     <el-dialog width="600px" :title="userDialogTitle" :visible.sync="userDialogVisible">
       <el-form :model="userForm" ref="userForm" :rules="userRules">
-        <el-form-item label="账号名" :label-width="formLabelWidth" prop="account">
-          <el-input type="text" v-model="userForm.account" autocomplete="off"></el-input>
+        <el-form-item autocomplete="off" label="账号名" :label-width="formLabelWidth" prop="account">
+          <el-row :span="24">
+            <el-col :span="10">
+              <el-select :disabled="oldType" v-if="accountType" @change="searchChange" v-model.trim="userForm.account" filterable remote reserve-keyword placeholder="请输入" :remote-method="remoteMethod" :loading="loading">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+              </el-select>
+              <el-input v-else type="text" v-model.trim="userForm.account" autocomplete="off"></el-input>
+            </el-col>
+            <el-col :span="10">
+              <el-button v-if="!accountType" type="primary" @click="changeAccountType"> 切换为可搜索 </el-button>
+              <el-button v-else type="success" @click="changeAccountType">切换为普通</el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
 
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-          <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
+          <el-input :disabled="oldType" type="password" auto-complete="new-password" v-model.trim="userForm.password" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="所属部门" :label-width="formLabelWidth" prop="roleName">
-          <el-input type="text" disabled v-model="userForm.roleName" autocomplete="off"></el-input>
+        <el-form-item label="所属部门" :label-width="formLabelWidth">
+          <el-input type="text" disabled v-model="curRoleName" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="职务" :label-width="formLabelWidth" prop="jobName">
@@ -100,12 +111,12 @@
         </el-form-item>
 
         <el-form-item label="权限" prop="menuId" :label-width="formLabelWidth" class="tree-line">
-          <el-tree :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
+          <el-tree :accordion="true" :check-strictly="true" :data="currentData.childrenMenu" show-checkbox node-key="id" ref="userTree" :props="tree_props"> </el-tree>
         </el-form-item>
 
-        <el-form-item :label="userForm.id === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
-          <el-input v-model="userForm.googleCode" autocomplete="off">
-            <div slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</div>
+        <el-form-item :label="userForm.userId === '' ? '新用户谷歌密钥' : '谷歌密钥'" :label-width="formLabelWidth" prop="googleCode">
+          <el-input :disabled="oldType" v-model="userForm.googleCode" autocomplete="off">
+            <el-button :disabled="googleCodeDisable" slot="append" class="gcode" @click.stop="getGoogleCode">获取密钥</el-button>
           </el-input>
         </el-form-item>
 
@@ -145,9 +156,10 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig } from '@/config/column/system';
+import { peopleManagementCol, peopleManagementConfig } from '@/config/column/system';
 import $api from '@/api/api';
 import mMd5 from '@/utils/module_md5';
+import { mapState } from 'vuex';
 export default {
   name: 'PeopleManagement',
   components: {
@@ -155,16 +167,13 @@ export default {
     Bsearch,
     iconPage,
   },
+  computed: {
+    ...mapState({
+      // 是否为管理员
+      isOwer: (state) => (state.app.isOwer ? true : false),
+    }),
+  },
   data() {
-    const validatePassword = (rule, value, callback) => {
-      if (value == '') {
-        callback(new Error('请输入密码'));
-      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/g.test(value) && '******' !== value) {
-        callback(new Error('请输入包含字母和数字的8-16位密码'));
-      } else {
-        callback();
-      }
-    };
     return {
       delLabel: '',
       delDialogVisible: false,
@@ -178,9 +187,15 @@ export default {
       contentIsShow: false,
       userRules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
-        account: [{ required: true, message: '必填', trigger: 'blur' }],
+        account: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: this.validateAccount, trigger: 'blur' },
+        ],
 
-        password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
+        password: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: this.validatePassword, trigger: 'blur' },
+        ],
         roleName: [{ required: true, message: '必填', trigger: 'blur' }],
         jobName: [{ required: true, message: '必填', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -249,9 +264,125 @@ export default {
       },
       ruleForm: {},
       currentForm: {},
+      curChildrenMenu: [],
+      result: [],
+      userCreated: true,
+      options: [],
+      loading: false,
+      accountTypeText: '切换为可搜索',
+      accountType: false,
+      oldType: false,
+      curRoleName: '',
+      googleCodeDisable: false,
     };
   },
   methods: {
+    validateAccount: (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('必填'));
+      } else if (!/^[A-Za-z]{1}[A-Za-z0-9]/.test(value)) {
+        callback(new Error('只能输入字母和数字,以字母开头'));
+      } else {
+        callback();
+      }
+    },
+    validatePassword: (rule, value, callback) => {
+      if (value == '') {
+        callback(new Error('必填'));
+      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/g.test(value) && '******' !== value) {
+        callback(new Error('请输入包含字母和数字的8-16位密码'));
+      } else {
+        callback();
+      }
+    },
+    changeAccountType() {
+      this.accountType = !this.accountType;
+      if (this.accountType) {
+        this.$nextTick(() => {
+          this.googleCodeDisable = false;
+          this.oldType = false;
+          this.userForm.name = '';
+          this.userForm.password = '';
+          this.userForm.account = '';
+          this.userForm.jobName = '';
+          this.userForm.isOwer = 0;
+          this.userForm.googleCode = '';
+        });
+      } else {
+        this.$nextTick(() => {
+          this.googleCodeDisable = false;
+          this.oldType = false;
+          this.userForm.name = '';
+          this.userForm.password = '';
+          this.userForm.account = '';
+          this.userForm.jobName = '';
+          this.userForm.isOwer = 0;
+          this.userForm.googleCode = '';
+          this.userRules.password = [
+            { required: true, message: '必填', trigger: 'blur' },
+            { validator: this.validatePassword, trigger: 'blur' },
+          ];
+          this.userRules.account = [
+            { required: true, message: '必填', trigger: 'blur' },
+            { validator: this.validateAccount, trigger: 'blur' },
+          ];
+          this.userRules.password[0].required = true;
+          this.userRules.account[0].required = true;
+        });
+      }
+    },
+    searchChange(item) {
+      let obj = this.options.filter((v) => {
+        return v.id == item;
+      })[0];
+      console.log('obj', obj);
+
+      if (obj) {
+        this.oldType = true;
+        this.$refs['userForm'].resetFields();
+        this.userRules.password[0].required = false;
+        this.userRules.account[0].required = false;
+        this.userForm.account = obj.account;
+        this.userForm.name = obj.label || '';
+        this.userForm.password = obj.loginPassword;
+        this.userForm.jobName = obj.jobName || '';
+        this.userForm.isOwer = obj.isOwer || 0;
+        this.userForm.googleCode = obj.googleCode;
+        if (!obj.googleCode) {
+          this.googleCodeDisable = false;
+        } else {
+          this.googleCodeDisable = true;
+        }
+      }
+    },
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        this.userForm.account = query;
+        setTimeout(async () => {
+          this.loading = false;
+          const res = await $api.apiPeopleManagementSearch({
+            keyword: query,
+          });
+
+          if (res) {
+            this.options = res.data.data.filter((item) => {
+              return item.account.toLowerCase().indexOf(query.toLowerCase()) > -1;
+            });
+
+            this.options.forEach((v) => {
+              v.label = v.account;
+              v.value = v.id;
+            });
+          }
+        }, 300);
+      } else {
+        this.options = [];
+      }
+    },
+    handleSelect(item) {
+      console.log(item);
+    },
     delConfirmOp() {
       this.$refs['delForm'].validate(async (valid) => {
         if (valid) {
@@ -279,7 +410,6 @@ export default {
               this.getList(this.currentData);
             } else {
               this.getMenuList();
-              this.getList(this.currentData);
             }
           }
 
@@ -289,7 +419,7 @@ export default {
     },
     // 获取一个谷歌密钥
     async getGoogleCode() {
-      if (!this.userForm.name) {
+      if (!this.userForm.account) {
         this.$message({
           message: '请先填写账号名',
           type: 'error',
@@ -297,12 +427,10 @@ export default {
         return;
       }
       const res = await $api.getGoogleCode({
-        account: this.userForm.name,
+        account: this.userForm.account,
       });
       if (res) {
-        console.log('res', res);
         this.userForm.googleCode = res.data.data.secretKey;
-        console.log('googleCode', this.userForm.googleCode);
         // 防止默认校验提示空，就主动校验
         this.$nextTick(() => {
           this.$refs.userForm.validateField('googleCode');
@@ -311,7 +439,13 @@ export default {
     },
     async sidebarTreeClick(data) {
       this.currentData = JSON.parse(JSON.stringify(data));
+      if (this.currentData.level == 0) {
+        this.userCreated = false;
+      } else {
+        this.userCreated = true;
+      }
       this.filter_type_value = this.currentData.name;
+      if (this.currentData.level == 0) return;
       this.getList(this.currentData);
     },
     checkVal(obj, key) {
@@ -331,15 +465,13 @@ export default {
 
           const params = {
             name,
-            menuId,
+            menuId: menuId,
             googleCode,
-            status: status ? 1 : 0,
+            status: status ? 0 : 1,
             parentRoleId: this.currentData.roleId,
           };
           this.sidebarBtnLoading = true;
           // 新增 编辑
-          console.log('params', params);
-          console.log('roleId', roleId);
           const res = !roleId
             ? await $api.apiAddPeopleManagementList(params)
             : await $api.apiEditPeopleManagementList({
@@ -360,27 +492,35 @@ export default {
       });
     },
     userConfirmOp() {
+      if (this.accountType) {
+        this.userRules.password = [];
+        this.userRules.account = [];
+      }
       this.$refs['userForm'].validate(async (valid) => {
         if (valid) {
           let tmpCheck = this.$refs['userTree'].getCheckedKeys();
           this.userForm.menuId = tmpCheck.join(',');
-          const { userId, menuId, name, roleId, password, account, roleName, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
+          const { userId, menuId, name, roleId, password, account, jobName, isOwer, googleCode, adminGoogleCode, status } = this.userForm;
           if (this.userBtnLoading) return;
 
           const params = {
             account,
             menuId,
             name,
-            roleName,
+            roleName: this.curRoleName,
             jobName,
             isOwer,
             googleCode,
             adminGoogleCode,
-            status: status ? 1 : 0,
+            status: status ? 0 : 1,
             roleId,
           };
           if ((userId && password !== '******') || !userId) {
-            params.password = mMd5.hbmd5(password);
+            if (!this.accountType) {
+              params.password = mMd5.hbmd5(password);
+            } else {
+              
+            }
           }
           this.userBtnLoading = true;
           // 新增 编辑
@@ -399,25 +539,10 @@ export default {
             });
             this.userDialogVisible = false;
             this.getList(this.currentData);
+            this.options = [];
           }
           this.userBtnLoading = false;
         }
-      });
-    },
-
-    resetFields() {
-      this.$nextTick(() => {
-        this.sidebarForm = {
-          id: '',
-          name: '',
-          menuId: '',
-          status: false,
-          googleCode: '',
-        };
-        this.$refs.sidebarForm.resetFields();
-        setTimeout(() => {
-          this.$refs.tree.setCheckedKeys([]);
-        }, 0);
       });
     },
 
@@ -434,17 +559,43 @@ export default {
         this.sidebarDialogTitle = `创建 ${data.name} 的子菜单`;
         this.sidebarDialogVisible = true;
         this.currentNode = node;
-        this.resetFields();
+        let newData = JSON.parse(JSON.stringify(data));
+        this.$nextTick(() => {
+          this.sidebarForm = {
+            id: '',
+            name: '',
+            menuId: '',
+            status: false,
+            googleCode: '',
+          };
+          this.$refs.sidebarForm.resetFields();
+        });
+
+        this.$nextTick(() => {
+          this.curChildrenMenu = this.currentData.childrenMenu;
+          this.$refs.tree.setCheckedKeys([]);
+        });
       } else if (type == 'edit') {
         this.sidebarDialogTitle = `修改 ${data.name} 菜单`;
         this.sidebarDialogVisible = true;
         let newData = JSON.parse(JSON.stringify(data));
-        newData.status = newData.status ? true : false;
+        newData.status = newData.status ? false : true;
+        if (this.currentData.level == 0) {
+          this.curChildrenMenu = this.currentData.childrenMenu;
+        } else {
+          this.curChildrenMenu = node.parent.data.childrenMenu;
+        }
 
-        this.sidebarForm = newData;
         this.$nextTick(() => {
-          this.$refs.tree.setCheckedNodes(this.currentData.childrenMenu);
+          if (this.currentData.level == 0) {
+            this.find(this.currentData.childrenMenu, 'id');
+            this.$refs.tree.setCheckedKeys(this.result);
+          } else {
+            this.find(this.currentData.childrenMenu, 'id');
+            this.$refs.tree.setCheckedKeys(this.result);
+          }
         });
+        this.sidebarForm = newData;
       } else if (type == 'del') {
         if (!!data.children && data.children.length > 0) {
           this.$message.error({
@@ -467,6 +618,16 @@ export default {
         }, 0);
       }
     },
+    // 数组深层处理
+    find(arr, key) {
+      if (arr == null) return null;
+      for (let obj of arr) {
+        if (obj.hasOwnProperty(key)) {
+          this.result.push(obj[key]);
+        }
+        this.find(obj.children, key);
+      }
+    },
     collapse(moveNode, inNode, type) {},
     sort(draggingNode, dropNode, type, event) {
       /* //console.log('排序')
@@ -475,6 +636,8 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       // this.search_params_obj = data;
+      if (!this.currentData.hasOwnProperty('roleId')) return this.$message.error('请选择部门');
+      if (this.currentData.level == 0) return;
       this.getList(this.currentData);
     },
     doReset() {
@@ -482,12 +645,15 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
+      if (!this.currentData.hasOwnProperty('roleId')) return;
+      if (this.currentData.level == 0) return;
       this.getList(this.currentData);
       // this.getList();
     },
     addpeopleManagement() {
       this.userDialogTitle = `添加成员`;
       this.userDialogVisible = true;
+      this.accountType = false;
       this.$nextTick(() => {
         this.$refs['userForm'].resetFields();
         this.userForm = {
@@ -495,7 +661,6 @@ export default {
           name: '',
           password: '',
           account: '',
-          roleName: this.currentData.name,
           jobName: '',
           menuId: '',
           isOwer: 0,
@@ -504,6 +669,17 @@ export default {
           adminGoogleCode: '',
           status: false,
         };
+        this.curRoleName = this.currentData.name;
+        this.userRules.password = [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: this.validatePassword, trigger: 'blur' },
+        ];
+        this.userRules.account = [
+          { required: true, message: '必填', trigger: 'blur' },
+          { validator: this.validateAccount, trigger: 'blur' },
+        ];
+        this.userRules.password[0].required = true;
+        this.userRules.account[0].required = true;
       });
       setTimeout(() => {
         this.$refs.userTree.setCheckedKeys([]);
@@ -565,7 +741,7 @@ export default {
         // 角色状态，0有效，1失效
         let params = {
           userId: row.userId,
-          status: row.status ? 1 : 0,
+          status: row.status ? 0 : 1,
         };
         const res = await $api.apiSwitchUserPeopleManagementList(params);
         if (res) {
@@ -578,27 +754,29 @@ export default {
       // 编辑
       if (fn === 'edit') {
         this.userDialogTitle = `编辑成员`;
+        this.accountType = false;
         this.userDialogVisible = true;
-        console.log('row', row);
-        const { userId, name, password, account, deptName, jobName, menuId, isOwer, roleId, googleCode, status } = row;
-        this.userForm = {
-          userId,
-          name,
-          password,
-          account,
-          roleName: deptName,
-          jobName,
-          menuId,
-          isOwer,
-          roleId,
-          googleCode,
-          status,
-        };
-        setTimeout(() => {
-          this.$refs.userTree.setCheckedNodes(this.currentData.childrenMenu);
-        }, 0);
+        const { userId, name, password, account, deptName, jobName, menuIds, isOwer, roleId, googleCode, status } = row;
+        const id_list = menuIds.indexOf(',') > -1 ? menuIds.split(',') : [menuIds];
         this.$nextTick(() => {
           this.$refs['userForm'].resetFields();
+          this.userForm = {
+            userId,
+            name,
+            password,
+            account,
+            jobName,
+            menuId: '',
+            isOwer,
+            roleId,
+            googleCode,
+            status,
+            adminGoogleCode: '',
+          };
+          this.curRoleName = deptName;
+        }, 0);
+        setTimeout(() => {
+          this.$refs.userTree.setCheckedKeys(id_list);
         }, 0);
       }
       // 删除
@@ -620,7 +798,7 @@ export default {
     // 分页
     goPage(val) {
       this.current_page = val;
-      this.getList();
+      this.getList(this.currentData);
     },
     // getlist
     async getList(obj) {
@@ -639,12 +817,17 @@ export default {
         const { records, total, current, pages } = res.data.data;
         // 角色状态，0有效，1失效
         records.forEach((v) => {
-          v['status'] = v['status'] ? true : false;
+          v['status'] = v['status'] ? false : true;
         });
         this.list = records;
         this.total = total;
         this.pages = pages;
         this.current_page = current;
+      } else {
+        this.list = [];
+        this.total = 0;
+        this.pages = 0;
+        this.current_page = 1;
       }
       this.contentIsShow = true;
       this.listLoading = false;
@@ -668,9 +851,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('PeopleManagement', peopleManagementCol, peopleManagementColNoBtn);
-    this.configs = authObj.val;
-    this.isCURDAuth = authObj.isAdd;
+    this.configs = peopleManagementCol;
 
     this.searchCofig = this.$util.clone(peopleManagementConfig);
     this.getMenuList();

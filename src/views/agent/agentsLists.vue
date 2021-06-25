@@ -4,8 +4,9 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-btn" v-if="btnArr.length">
-      <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级代理商</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级商务</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('agentParams')" @click="editAgentParams">代理返佣参数设置</el-button>
       <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
     </div>
     <div>
@@ -21,7 +22,7 @@
       <el-form :model="cForm" ref="cForm" :rules="rules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="代理商UID" :label-width="formLabelWidth" prop="uid">
+            <el-form-item label="商务UID" :label-width="formLabelWidth" prop="uid">
               <el-input type="text" v-model.trim="cForm.uid" placeholder="请输入" :disabled="!!userId"></el-input>
             </el-form-item>
           </el-col>
@@ -37,7 +38,7 @@
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="登录密码" :label-width="formLabelWidth" prop="password">
-              <el-input v-model.trim="cForm.password" type="password" autocomplete="off" placeholder="请输入包含字母和数字的6-16位密码">
+              <el-input v-model.trim="cForm.password" auto-complete="new-password" type="password" autocomplete="off" placeholder="请输入包含字母和数字的6-16位密码">
                 <!-- <span slot="append" class="show-pwd" @click="showPwd">
                   <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
                 </span> -->
@@ -139,6 +140,8 @@
           </el-col>
         </el-row>
 
+        
+
         <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
             <el-form-item label="设置代理总盈利阀值" :label-width="formLabelWidth" prop="profitMargin">
@@ -175,6 +178,16 @@
           <el-col :span="20">
             <el-form-item label="监控手机/邮箱" :label-width="formLabelWidth" prop="phoneEmailThird">
               <el-input class="my-mumber-input" type="text" v-model.trim="cForm.phoneEmailThird" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item v-if="commissionPercentLimitShow" label="允许商务创建代理时可最大手续费比例" :label-width="formLabelWidth" prop="commissionPercentLimit">
+              <el-input type="number" v-model="cForm.commissionPercentLimit" placeholder="请输入" @input="checkVal('commissionPercentLimit', 1)">
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -267,13 +280,13 @@
       </div>
     </el-dialog>
 
-    <!-- 参数配置 -->
+    <!-- 商务参数配置 -->
     <el-dialog title="商务返佣参数设置 " width="600px" :visible.sync="paramsVisible">
       <el-form :model="paramsForm" :label-width="formLabelWidth" ref="paramsForm" :rules="paramsRules">
         <el-row :span="24">
           <el-col :span="20">
             <el-form-item label="允许一级商务可设置范围" prop="commissionPercent">
-              <el-input @input="paramsCheckVal('commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
+              <el-input @input="paramsCheckVal('paramsForm', 'commissionPercent')" type="number" v-model.trim="paramsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -291,6 +304,33 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="paramsVisible = false">取 消</el-button>
         <el-button type="primary" @click="paramsConfirmOp" :loading="paramsBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 代理参数配置 -->
+    <el-dialog title="代理返佣参数设置 " width="600px" :visible.sync="agentParamsVisible">
+      <el-form :model="agentParamsForm" :label-width="formLabelWidth" ref="agentParamsForm" :rules="paramsRules">
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="允许一级代理可设置范围" prop="commissionPercent">
+              <el-input @input="paramsCheckVal('agentParamsForm', 'commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
+                <div slot="append">%</div>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="管理员谷歌" prop="googleCode">
+              <el-input type="text" @input="agentParamsForm.googleCode = agentParamsForm.googleCode.replace(/[^\d]/g, '')" v-model.trim="agentParamsForm.googleCode" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="agentParamsVisible = false">取 消</el-button>
+        <el-button type="primary" @click="agentParamsConfirmOp" :loading="agentParamsBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -396,6 +436,7 @@ export default {
         delayDay: [{ required: true, message: '必填', trigger: 'blur' }],
         feeDelayDay: [{ required: true, message: '必填', trigger: 'blur' }],
         selfCommission: [{ required: true, message: '必填', trigger: 'blur' }],
+        commissionPercentLimit: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       formName: '',
       dialogFormVisible: false,
@@ -427,6 +468,13 @@ export default {
       releaseMoneybtnLoading: false,
       coin_List: [],
       decimalReg: /^(\-)*(\d+)\.(\d\d\d\d).*$/,
+      curLevelArr: [],
+      agentLevelArr: [],
+      businessLevelArr: [],
+      agentParamsBtnLoading: false,
+      agentParamsForm: {},
+      agentParamsVisible: false,
+      commissionPercentLimitShow:false
     };
   },
   watch: {
@@ -504,6 +552,63 @@ export default {
     },
   },
   methods: {
+    async getAgentLevel() {
+      const res = await $api.apiGetAgentLevel({});
+      if (res) {
+        this.agentLevelArr = res.data.data.BUSINESS_INFO_AGENT_LEVEL_DICT;
+        this.businessLevelArr = res.data.data.BUSINESS_INFO_LEVEL_DICT;
+        this.curLevelArr = this.agentLevelArr.length > this.businessLevelArr.length ? this.agentLevelArr : this.businessLevelArr;
+        this.searchCofig[3].list = this.curLevelArr.map((v) => {
+          return (v = {
+            label: v + '级',
+            value: v,
+          });
+        });
+      }
+    },
+    // 参数配置确定
+    agentParamsConfirmOp() {
+      this.$refs['agentParamsForm'].validate(async (valid) => {
+        if (valid) {
+          const { commissionPercent, googleCode } = this.agentParamsForm;
+          if (this.agentParamsBtnLoading) return;
+          const params = {
+            commissionPercent: commissionPercent + '%',
+            googleCode,
+          };
+
+          this.agentParamsBtnLoading = true;
+          const res = await $api.apiSetAgentRebateConfig(params);
+          if (res) {
+            this.$message({ message: '设置成功', type: 'success' });
+            this.agentParamsVisible = false;
+            this.getList();
+          }
+          this.agentParamsBtnLoading = false;
+        }
+      });
+    },
+    async editAgentParams() {
+      this.agentParamsVisible = true;
+      const res = await $api.apiGetAgentRebateConfig({});
+      if (res) {
+        let data = res.data.data || 0;
+        this.$nextTick(() => {
+          this.$refs['agentParamsForm'].resetFields();
+          if (data) {
+            this.agentParamsForm = {
+              commissionPercent: data.paramValue.split('%')[0],
+              googleCode: '',
+            };
+          } else {
+            this.agentParamsForm = {
+              commissionPercent: 0,
+              googleCode: '',
+            };
+          }
+        });
+      }
+    },
     // 参数配置确定
     paramsConfirmOp() {
       this.$refs['paramsForm'].validate(async (valid) => {
@@ -547,6 +652,7 @@ export default {
         });
       }
     },
+
     changeDecimal(val) {
       this.releaseMoneyForm.amount = '';
       let decimal = this.coin_List.filter((v) => v['label'] == val)[0].decimalPlaces;
@@ -654,14 +760,14 @@ export default {
         this.cForm[val] = 0;
       }
     },
-    paramsCheckVal(val) {
-      if (this.paramsForm[val] >= 100) {
-        this.paramsForm[val] = 100;
+    paramsCheckVal(obj, val) {
+      if (this[obj][val] >= 100) {
+        this[obj][val] = 100;
       }
-      if (this.paramsForm[val] < 0) {
-        this.paramsForm[val] = 0;
+      if (this[obj][val] < 0) {
+        this[obj][val] = 0;
       }
-      this.paramsForm[val] = (this.paramsForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 2小数
+      this[obj][val] = (this[obj][val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 2小数
     },
     uploadIcon(response, file, fileList) {
       if (!response.data) {
@@ -760,7 +866,7 @@ export default {
             username,
             // password,
             remark,
-            userGrade,
+            commissionLevel,
             commissionPercent,
             packPercent,
             bondPercent,
@@ -778,17 +884,22 @@ export default {
             phoneEmailSecond,
             phoneEmailThird,
             selfCommission,
+            commissionPercentLimit,
+            userType
           } = row;
 
-          if (userGrade == 2) {
+          if (commissionLevel == 2) {
             this.twoLevelModel = true;
           } else {
             this.twoLevelModel = false;
           }
-          if (row.userType == 31) {
+
+          if (userType == 31) {
             this.isBusiness = true;
+            this.commissionPercentLimitShow = true;
           } else {
             this.isBusiness = false;
+            this.commissionPercentLimitShow = false;
           }
           this.cForm = {
             uid,
@@ -812,16 +923,9 @@ export default {
             phoneEmailSecond,
             phoneEmailThird,
             selfCommission,
+            commissionPercentLimit: !commissionPercentLimit?'': commissionPercentLimit.split('%')[0] ,
+            userType,
           };
-          // //console.log('this.cForm', this.cForm);
-          // this.editBeforeLevelMode = levelMode;
-
-          // this.oldPwd = password;
-          // this.rules.businessUid[0].required = false;
-          // this.rules.agentMode[0].required = false;
-          // this.rules.level[0].required = false;
-          // this.rules.username[0].required = false;
-          // this.rules.password[0].required = false;
         });
       }
       //释放保证金
@@ -852,14 +956,16 @@ export default {
     //   }
     // },
     addLine() {
-      this.formName = '添加代理商';
+      this.formName = '添加商务';
       this.userId = '';
       this.dialogFormVisible = true;
+      this.commissionPercentLimitShow = true;
       this.$nextTick(() => {
         this.$refs['cForm'].resetFields();
         this.twoLevelModel = false;
-        this.isBusiness = false;
+        this.isBusiness = true;
         this.cForm = {
+          commissionPercentLimit: '',
           uid: '',
           username: '',
           remark: '',
@@ -881,6 +987,7 @@ export default {
           phoneEmailSecond: '',
           phoneEmailThird: '',
           selfCommission: 0,
+          userType:31
         };
         // this.rules.businessUid[0].required = true;
         // this.rules.agentMode[0].required = true;
@@ -893,7 +1000,7 @@ export default {
       this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           const userId = this.userId;
-          const { password, commissionSwitch, loginSwitch, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
+          const { password, commissionSwitch, userType,delayDay,delayUnit, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
           const params = {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
@@ -901,8 +1008,13 @@ export default {
             bondPercent: bondPercent + '%',
             ...repo,
           };
+          if (userType == 31) {
+            params.commissionPercentLimit = commissionPercentLimit+'%';
+          }
           if (!this.isBusiness) {
             params.packPercent = packPercent + '%';
+            params.delayDay = delayDay;
+            params.delayUnit = delayUnit;
           } else {
             params.packPercent = 0 + '%';
           }
@@ -987,6 +1099,42 @@ export default {
     //         升级模式--代理级别不能选
     this.getList();
     this.getSymbolList();
+    this.getAgentLevel();
+
+    this.$watch(
+      function () {
+        return this.searchCofig[2].value;
+      },
+      // 合约出入金,type=1为合约出金,type=2为合约入金
+      function (newVal, oldValue) {
+        if (newVal == 31) {
+          // 商务
+          this.searchCofig[3]['value'] = '';
+          this.searchCofig[3].list = this.businessLevelArr.map((v) => {
+            return (v = {
+              label: v + '级',
+              value: v,
+            });
+          });
+        } else if (newVal == 32) {
+          this.searchCofig[3]['value'] = '';
+          this.searchCofig[3].list = this.agentLevelArr.map((v) => {
+            return (v = {
+              label: v + '级',
+              value: v,
+            });
+          });
+        } else {
+          this.searchCofig[3]['value'] = '';
+          this.searchCofig[3].list = this.curLevelArr.map((v) => {
+            return (v = {
+              label: v + '级',
+              value: v,
+            });
+          });
+        }
+      },
+    );
   },
 };
 </script>

@@ -2946,6 +2946,37 @@ export default class api {
     return Fetch.post('/admin/user/contract/agent/setMaxCommissionPercent', data);
   }
 
+   // 代理商列表  代理商级别 获取
+   static apiGetAgentLevel(data) {
+    return Fetch.post('/admin/user/contract/agent/init', data);
+  }
+
+  // 代理商列表  代理返佣参数设置 查询
+  static apiGetAgentRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/getAgentMaxCommissionPercent', data);
+  }
+
+   // 代理商列表  代理返佣参数设置 设置
+   static apiSetAgentRebateConfig(data) {
+    return Fetch.post('/admin/user/contract/agent/setAgentMaxCommissionPercent', data);
+  }
+
+  // 财务管理/充币记录 获取链
+  static apiGetRechargeChainName(data) {
+    return Fetch.post('/admin/account/coin/chain-list', data);
+  }
+
+  // 系统管理 人员管理 模糊搜索
+  static apiPeopleManagementSearch(data) {
+    return Fetch.post('/admin/user/keyword-search', data);
+  }
+
+
+
+  
+
+  
+
 
   
 

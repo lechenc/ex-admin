@@ -494,6 +494,14 @@ const peopleManagementCol = [
     prop: 'deptName',
   },
   {
+    label: '级别',
+    prop: 'isOwer',
+    type: 'filter',
+    show_type: 'textColorLine',
+    width: '120',
+    filters: [{ text: '普通成员', val: 0 }, { text: '部门负责人', val: 1 }],
+  },
+  {
     label: '备注',
     prop: 'name',
   },
@@ -525,51 +533,17 @@ const peopleManagementCol = [
       {
         label: '编辑',
         fn: 'edit',
-        // 根据一个传入的值判断是否展示
-        filter_key:'deptName',
-        filter_type: 'filter_label',
         type: 'primary',
-        alias: 'edit',
       },
       {
         label: '删除',
         fn: 'del',
         type: 'primary',
-        alias: 'del',
       },
     ],
   },
 ];
 
-const peopleManagementColNoBtn = [
-  {
-    label: '账号',
-    prop: 'account',
-  },
-  {
-    label: '职务',
-    prop: 'jobName',
-  },
-  {
-    label: '部门',
-    prop: 'deptName',
-  },
-  {
-    label: '备注',
-    prop: 'name',
-  },
-
-  {
-    label: '添加时间',
-    prop: 'createTime',
-    type: 'time',
-  },
-  {
-    label: '更新时间',
-    prop: 'updateTime',
-    type: 'time',
-  },
-];
 
 const peopleManagementConfig = [
   {
@@ -581,4 +555,4 @@ const peopleManagementConfig = [
   },
 ];
 
-export {domainNameFixedCol,domainNameFixedColNoBtn, peopleManagementCol, peopleManagementColNoBtn, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };
+export {domainNameFixedCol,domainNameFixedColNoBtn, peopleManagementCol, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };

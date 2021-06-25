@@ -149,6 +149,7 @@ export default {
           password: '',
           roleId: '',
           status: false,
+          id:''
         };
       });
     },
@@ -238,13 +239,16 @@ export default {
         this.$nextTick(() => {
           this.$refs['userForm'].resetFields();
           // this.userForm.authGoogle = row.authGoogle;// 谷歌验证码动态生成
-          this.userForm.googleCode = row.googleCode;
-          this.userForm.account = row.account;
-          this.userForm.password = row.password;
-          this.userForm.roleId = row.roleId;
-          this.userForm.status = row.status;
-          this.userForm.id = row.id;
-          this.oldPwd = row.password;
+          let { googleCode, account, password, roleId, status,id } = row;
+          this.userForm = {
+            googleCode,
+            account,
+            password,
+            roleId,
+            status,
+            id,
+          };
+          this.oldPwd = password;
         });
         return;
       }

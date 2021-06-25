@@ -33,6 +33,7 @@ const state = {
 
   // routers: [], // 本地部分固定的路由
   hybridRouters: [], // 本地路由（但导入了后台返回的路由权限数据）生成的混合数组
+  isOwer:0 // 判断人员管理页面 是否为部门负责人 0不是 1 是
 };
 
 const mutations = {
@@ -68,6 +69,10 @@ const mutations = {
   nowsetViewerVideo: (state, list) => {
     state.video = list;
   },
+  nowsetIsOwer: (state, list) => {
+    state.isOwer = list;
+  },
+  
   SET_ROUTERS: (state, routers) => {
     // state.addRouters = routers;
     // state.routers = constantRouterMap.concat(routers);
