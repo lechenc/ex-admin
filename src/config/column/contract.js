@@ -3835,7 +3835,10 @@ const highFrequencyMonitorCol = [
       {
         label: '移出监控',
         fn: 'remove',
-        type: 'text',
+        filter_type: 'array',
+        filter_key: 'monitorType',
+        filter_status: ['1'],
+        type: 'primary',
         alias: 'remove',
       },
     ],
