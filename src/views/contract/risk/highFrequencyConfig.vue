@@ -164,6 +164,8 @@ export default {
         masterSwitch: false,
       },
       rules: {
+        
+        monitorRange: [{ required: true, message: '必选', trigger: 'blur' }],
         phaseTime: [{ required: true, message: '必填', trigger: 'blur' }],
         highFrequencyOpenTimes: [{ required: true, message: '必填', trigger: 'blur' }],
         highFrequencyCloseTimes: [{ required: true, message: '必填', trigger: 'blur' }],
