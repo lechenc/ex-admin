@@ -2988,6 +2988,12 @@ export default class api {
     return Fetch.post('/user/monitorUserActions/updateStatus', data);
   }
 
+  // 币支付管理/充币记录 合计
+  static apiGetRechargePayTotal(data) {
+    return Fetch.post('/admin/account/payment/deposit/sum', data);
+  }
+  
+
 
 
   
