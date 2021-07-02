@@ -548,6 +548,10 @@ const extractForeignCol = [
     prop: 'coinName',
   },
   {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
     label: '提币数量',
     prop: 'amount',
     width: 200,
@@ -570,10 +574,6 @@ const extractForeignCol = [
     label: 'TXID',
     prop: 'txId',
     width: 200,
-  },
-  {
-    label: '链类型',
-    prop: 'chainName',
   },
   {
     label: '状态',
@@ -675,6 +675,10 @@ const extractForeignColNoBtn = [
     prop: 'coinName',
   },
   {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
     label: '提币数量',
     prop: 'amount',
     width: 200,
@@ -697,10 +701,6 @@ const extractForeignColNoBtn = [
     label: 'TXID',
     prop: 'txId',
     width: 200,
-  },
-  {
-    label: '链类型',
-    prop: 'chainName',
   },
   {
     label: '状态',
@@ -778,6 +778,13 @@ const extractForeignConfig = [
     prop: 'tradeStatus',
     value: '',
     list: [{ label: '待审核', value: 0 }, { label: '成功', value: 1 }, { label: '失败', value: 2 }, { label: '初步审核成功', value: 3 }, { label: '初步审核失败', value: 4 }],
+  },
+  {
+    type: 'select',
+    label: '链名称',
+    prop: 'chainName',
+    value: '',
+    list: [],
   },
 ];
 
