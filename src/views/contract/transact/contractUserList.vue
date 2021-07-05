@@ -8,17 +8,7 @@
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -61,7 +51,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -83,7 +73,7 @@ export default {
       if (this.listLoading) return;
       const query_data = {
         pageNum: this.current_page,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
@@ -99,22 +89,30 @@ export default {
       this.listLoading = false;
     },
     requiredParams(params) {
+      console.log('params1',params)
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        params.createEndTime = nowV.replace(/\//gi, '-');
+        params.createStartTime = befV.replace(/\//gi, '-');
         // 组件时间初始必须format格式
         this.searchCofig[0].value = [befV, nowV];
       }
       if (this.search_params_obj.startTime) {
+        let befV = this.search_params_obj.startTime.replace(/-/gi, '/');
+        let nowV  = this.search_params_obj.endTime.replace(/-/gi, '/');
+        this.searchCofig[1].value = [befV, nowV];
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
         this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      }
+      if (this.search_params_obj.createStartTime) {
+        this.search_params_obj.createEndTime = this.formatTime(this.search_params_obj.createEndTime);
+        this.search_params_obj.createStartTime = this.formatTime(this.search_params_obj.createStartTime);
       }
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
           let tmpName = '';
-          tmpName = this.symbollist.filter(v => v['value'] == this.search_params_obj.coinMarket)[0].label;
+          tmpName = this.symbollist.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0].label;
           this.search_params_obj.coinMarket = tmpName;
         }
       }

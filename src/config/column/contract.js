@@ -3980,11 +3980,15 @@ const contractUserListCol = [
     prop: 'businessUid',
   },
   
-  
+  {
+    label: '创建时间',
+    prop: 'createTime',
+  },
   {
     label: '开通合约时间',
     prop: 'usdtTradeTime',
   },
+  
   {
     label: '合约净入金',
     prop: 'inAmount',
@@ -4035,7 +4039,14 @@ const contractUserListCol = [
 const contractUserListConfig = [
   {
     type: 'date_rank',
-    label: '时间',
+    label: '创建时间',
+    prop: 'createStartTime',
+    prop2: 'createEndTime',
+    value: '',
+  },
+  {
+    type: 'date_rank',
+    label: '开通时间',
     prop: 'startTime',
     prop2: 'endTime',
     value: '',
