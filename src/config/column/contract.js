@@ -3936,7 +3936,229 @@ const highFrequencyMonitorConfig = [
   },
 ];
 
+
+const contractUserListCol = [
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '用户类型',
+    prop: 'userType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      { text: '普通用户', val: 1 },
+      { text: '系统用户', val: 100 },
+      { text: '机器人', val: 3 },
+      { text: '分析师', val: 41 },
+      { val: 2, text: '后台管理员用户' },
+      { val: 101, text: '收益账号' },
+      { val: 102, text: '成本账号' },
+      { val: 103, text: '支出账号' },
+      { val: 104, text: '支出子账号' },
+      { val: 105, text: '收入账号' },
+      { val: 106, text: '合约收益账号' },
+      { val: 20, text: 'TP商户账号' },
+      { val: 21, text: '顶级代理商账号' },
+      { val: 22, text: '代理商账号' },
+      { val: 23, text: '平台商户账号' },
+      { val: 24, text: '顶级广告商' },
+      { val: 25, text: '广告商代理' },
+      { val: 31, text: '商务' },
+      { val: 32, text: '代理' },
+      
+    ],
+  },
+  {
+    label: '代理商UID',
+    prop: 'agentUid',
+  },
+  {
+    label: '商务UID',
+    prop: 'businessUid',
+  },
+  
+  
+  {
+    label: '开通合约时间',
+    prop: 'usdtTradeTime',
+  },
+  {
+    label: '合约净入金',
+    prop: 'inAmount',
+    
+  },
+  {
+    label: '累计合约交易盈亏',
+    prop: 'profitAmount',
+  },
+  {
+    label: '累计合约交易手续费',
+    prop: 'totalFeeAmount',
+  },
+  {
+    label: '累计贡献代理返佣手续费',
+    prop: 'agentFeeAmount',
+  },
+  {
+    label: '累计贡献商务手续费',
+    prop: 'bussinessFeeAmount',
+  },
+  {
+    label: '累计贡献平台手续费',
+    prop: 'platformFeeAmount',
+  },
+  {
+    label: '累计使用APP时长',
+    prop: 'appUsedTime',
+  },
+  {
+    label: '累计邀请人数',
+    prop: 'invite',
+  },
+  {
+    label: '开仓次数',
+    prop: 'openNum',
+  },
+  {
+    label: '平仓次数',
+    prop: 'unwindNum',
+  },
+  {
+    label: '爆仓次数',
+    prop: 'blastNum',
+  },
+];
+
+const contractUserListConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '代理商UID',
+    prop: 'agentUid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'onlyNumber',
+    label: '商务UID',
+    prop: 'businessUid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'select',
+    label: '用户类型',
+    prop: 'type',
+    value: '',
+    list: [
+      { label: '普通用户', value: 1 },
+      { label: '系统用户', value: 100 },
+      { label: '机器人', value: 3 },
+      { label: '分析师', value: 41 },
+      { value: 2, label: '后台管理员用户' },
+      { value: 101, label: '收益账号' },
+      { value: 102, label: '成本账号' },
+      { value: 103, label: '支出账号' },
+      { value: 104, label: '支出子账号' },
+      { value: 105, label: '收入账号' },
+      { value: 106, label: '合约收益账号' },
+      { value: 20, label: 'TP商户账号' },
+      { value: 21, label: '顶级代理商账号' },
+      { value: 22, label: '代理商账号' },
+      { value: 23, label: '平台商户账号' },
+      { value: 24, label: '顶级广告商' },
+      { value: 25, label: '广告商代理' },
+      { value: 31, label: '商务' },
+      { value: 32, label: '代理' },
+    ],
+  },
+  {
+    type: 'select',
+    label: '合约进入金排序',
+    prop: 'inAmountSort',
+    value: '',
+    list: [
+      { label: '正序', value: 1 },
+      { label: '倒序', value: 2 },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '合约交易手续费排序',
+    prop: 'feeSort',
+    value: '',
+    list: [
+      { label: '正序', value: 1 },
+      { label: '倒序', value: 2 },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '合约交易盈亏排序',
+    prop: 'profitSort',
+    value: '',
+    list: [
+      { label: '正序', value: 1 },
+      { label: '倒序', value: 2 },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '爆仓次数排序',
+    prop: 'blastSort',
+    value: '',
+    list: [
+      { label: '正序', value: 1 },
+      { label: '倒序', value: 2 },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '平仓次数排序',
+    prop: 'unwindSort',
+    value: '',
+    list: [
+      { label: '正序', value: 1 },
+      { label: '倒序', value: 2 },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '开仓次数排序',
+    prop: 'openSort',
+    value: '',
+    list: [
+      { label: '正序', value: 1 },
+      { label: '倒序', value: 2 },
+    ],
+  },
+];
+
+
 export {
+  contractUserListConfig,
+  contractUserListCol,
   highFrequencyMonitorConfig,
   highFrequencyMonitorColNoBtn,
   highFrequencyMonitorCol,

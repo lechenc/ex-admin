@@ -432,6 +432,7 @@ const mapComponents = {
   BillContract: () => import('@/views/contract/transact/billContract'),
   TreatyAssetsContract: () => import('@/views/contract/transact/treatyAssetsContract'),
   FlowRecordContract: () => import('@/views/contract/transact/flowRecordContract'),
+  ContractUserList: () => import('@/views/contract/transact/contractUserList'),
   HistoricalContract: () => import('@/views/contract/transact/historicalContract'),
   ContractRobot: () => import('@/views/contract/transact/contractRobot'),
   ControlPanel: () => import('@/views/contract/transact/controlPanel'),

@@ -2992,6 +2992,11 @@ export default class api {
   static apiGetRechargePayTotal(data) {
     return Fetch.post('/admin/account/payment/deposit/sum', data);
   }
+
+  // 合约管理/交易管理/合约用户列表 列表
+  static getContractUserList(data) {
+    return Fetch.post('/admin/account/contract/user', data);
+  }
   
 
 
