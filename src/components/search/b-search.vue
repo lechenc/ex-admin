@@ -40,7 +40,7 @@
               <el-input class="text-input" type="number" v-model="config.value" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
             </div>
 
-            <!-- 输入框 只能输入数组 -->
+            <!-- 输入框 只能输入数字 -->
             <div  v-if="config.type === 'onlyNumber'">
               <div>{{ config.label }}</div>
               <el-input class="text-input" @input="config.value = config.value.replace(/[^\d]/g, '')" v-model="config.value" type="text" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>

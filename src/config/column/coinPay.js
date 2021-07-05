@@ -1546,6 +1546,10 @@ const rechargeCol = [
     prop: 'coinName',
   },
   {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
     label: '充币数量',
     prop: 'amount',
   },
@@ -1700,6 +1704,14 @@ const rechargeConfig = [
     label: 'TO地址',
     prop: 'toAddress',
     value: '',
+  },
+
+  {
+    type: 'select',
+    label: '链名称',
+    prop: 'chainName',
+    value: '',
+    list: [],
   },
 ];
 

@@ -86,7 +86,7 @@
               <el-button type="primary" size="medium" @click="isModify = true">编辑</el-button>
             </div>
             <div class="middle" v-if="isModify">
-              <el-button type="primary" plain size="medium" @click="isModify = false">取消</el-button>
+              <el-button type="primary" plain size="medium" @click="cancelSend">取消</el-button>
               <el-button type="primary" size="medium" @click="confirmSend" :loading="btnLoading">提交修改</el-button>
             </div>
           </div>
@@ -120,6 +120,10 @@ export default {
           label: 'APIkey用户',
           value: 4,
         },
+        // {
+        //   label: '商务端',
+        //   value: 5,
+        // },
       ],
       limitOptionsArr: [
         {
@@ -164,6 +168,8 @@ export default {
         masterSwitch: false,
       },
       rules: {
+        
+        monitorRange: [{ required: true, message: '必选', trigger: 'blur' }],
         phaseTime: [{ required: true, message: '必填', trigger: 'blur' }],
         highFrequencyOpenTimes: [{ required: true, message: '必填', trigger: 'blur' }],
         highFrequencyCloseTimes: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -173,21 +179,28 @@ export default {
     };
   },
   methods: {
+    cancelSend() {
+      this.isModify = false;
+      this.getList();
+    },
     // getlist
     async getList() {
       try {
-        return
         if (this.listLoading) return;
         const query_data = {};
         this.listLoading = true;
-        const res = await $api.apiGetRiskConfig(query_data);
+        const res = await $api.apiGetHighFrequencyConfig(query_data);
         if (res) {
-          let { registerIpLimit, loginIpLimit, registerDeviceLimit, id } = res.data.data;
+          let { monitorRange, phaseTime, highFrequencyOpenTimes, highFrequencyCloseTimes, profitLimit, limitOptions, effectiveWay, masterSwitch } = res.data.data;
           this.form = {
-            registerIpLimit,
-            loginIpLimit,
-            registerDeviceLimit,
-            id,
+            monitorRange,
+            phaseTime,
+            highFrequencyOpenTimes,
+            highFrequencyCloseTimes,
+            profitLimit,
+            limitOptions,
+            effectiveWay,
+            masterSwitch: masterSwitch == 1 ? true : false,
           };
         }
         this.listLoading = false;

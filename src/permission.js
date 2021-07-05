@@ -432,6 +432,7 @@ const mapComponents = {
   BillContract: () => import('@/views/contract/transact/billContract'),
   TreatyAssetsContract: () => import('@/views/contract/transact/treatyAssetsContract'),
   FlowRecordContract: () => import('@/views/contract/transact/flowRecordContract'),
+  ContractUserList: () => import('@/views/contract/transact/contractUserList'),
   HistoricalContract: () => import('@/views/contract/transact/historicalContract'),
   ContractRobot: () => import('@/views/contract/transact/contractRobot'),
   ControlPanel: () => import('@/views/contract/transact/controlPanel'),
@@ -491,6 +492,7 @@ const mapComponents = {
   ContractResult: () => import('@/views/contract/risk/contractResult'),
   ContractTactics: () => import('@/views/contract/risk/contractTactics'),
   HighFrequencyConfig: () => import('@/views/contract/risk/highFrequencyConfig'),
+  HighFrequencyMonitor: () => import('@/views/contract/risk/highFrequencyMonitor'),
   //账号管理
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),

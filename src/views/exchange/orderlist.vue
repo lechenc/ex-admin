@@ -15,6 +15,7 @@
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
+      <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination
         background
         @size-change="pageSizeChange"
@@ -52,6 +53,7 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import { orderCol, orderCofig, rowCol } from '@/config/column/exchange';
+import iconPage from '@/components/icon-page';
 import Precision from '@/utils/number-precision';
 import $api from '@/api/api';
 export default {
@@ -59,6 +61,7 @@ export default {
   components: {
     Btable,
     Bsearch,
+    iconPage
   },
   data() {
     return {

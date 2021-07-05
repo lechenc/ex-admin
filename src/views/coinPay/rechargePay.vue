@@ -10,31 +10,14 @@
 <template>
   <div class="rechargePay-container">
     <div class="container-top">
-      <Bsearch
-        :configs="searchCofig"
-        @do-search="doSearch"
-        @do-reset="doReset"
-        :excelLoading="excelLoading"
-        :exportExcel="true"
-        @do-exportExcel="exportExcel"
-      />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -70,6 +53,7 @@ export default {
       toDay: '',
       ago: '',
       excelTitle: '充币记录列表',
+      symbollist:[]
     };
   },
   methods: {
@@ -80,7 +64,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -101,31 +85,6 @@ export default {
     goPage(val) {
       this.current_page = val;
       this.getList();
-    },
-    // 根据查询条件进行合计弹窗展示
-    async calTotal(data) {
-      this.search_params_obj = data;
-      if (!this.search_params_obj.coinId) {
-        this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
-        return;
-      }
-      this.calLoading = true;
-      const params = {};
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getDepositeSum(params);
-      if (res) {
-        const getObj = res.data.data;
-        if (getObj) {
-          let coin = this.searchCofig[3]['list'].filter(v => v.value == this.search_params_obj.coinId)[0].label;
-          this.$alert(`<p>币种：${coin}</p><p>到账数量总计：${getObj.realAmountSum}</p>`, '统计结果', {
-            dangerouslyUseHTMLString: true,
-          }).catch(()=>{});
-        } else {
-          this.$message({ type: 'error', message: '数据列表为空!' });
-        }
-      }
-      this.calLoading = false;
     },
     // getlist
     async getList() {
@@ -175,6 +134,47 @@ export default {
         this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
       }
     },
+    async getRechargeChainName() {
+      const res = await $api.apiGetRechargeChainName({});
+      if (res) {
+        let arr = res.data.data;
+        this.searchCofig[10]['list'] = arr.map((v) => {
+          return {
+            label: v.chainName,
+            value: v.chainName,
+          };
+        });
+      }
+    },
+    async calTotal(data) {
+      this.search_params_obj = data;
+      if (this.calLoading) return;
+      this.calLoading = true;
+      const params = {
+        pageNum: this.current_page,
+        pageSize: this.pageSize,
+      };
+
+      Object.assign(params, this.search_params_obj);
+      let tmpName = '';
+      if (this.search_params_obj.coinId) {
+        tmpName = this.symbollist.filter((v) => v['value'] == this.search_params_obj.coinId)[0].label;
+      } else {
+        tmpName = '全部';
+      }
+      const res = await $api.apiGetRechargePayTotal(params);
+      if (res) {
+        const getObj = res.data.data;
+        if (getObj) {
+          this.$alert(`   <p>币种：${tmpName}</p>  <p>充币数量总计：${getObj.sum}</p>   <p>到账数量总计：${getObj.arrive}</p>`, '统计结果', {
+            dangerouslyUseHTMLString: true,
+          }).catch(() => {});
+        } else {
+          this.$message({ type: 'error', message: '数据列表为空!' });
+        }
+      }
+      this.calLoading = false;
+    },
   },
   mounted() {
     this.configs = rechargeCol;
@@ -186,7 +186,8 @@ export default {
     this.$store.dispatch('common/getCoinList').then(() => {
       let list = this.$store.state.common.coinlist;
       // this.searchCofig[3]['list'] = this.$store.state.common.coinlist;
-      this.searchCofig[3]['list'] = list.filter(f => f.label == 'USDT') || [];
+      this.searchCofig[3]['list'] = list.filter((f) => f.label == 'USDT') || [];
+      this.symbollist = list.filter((f) => f.label == 'USDT') || [];
     });
 
     let tmpId = this.$route.query.uid;
@@ -197,6 +198,7 @@ export default {
     } else {
       this.getList();
     }
+    this.getRechargeChainName();
   },
 };
 </script>

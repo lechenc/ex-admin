@@ -2925,16 +2925,7 @@ export default class api {
     return Fetch.post('/admin/account/business-coin-market-commission-total', data);
   }
 
-  // 高频配置 查询
-  static apiGetHighFrequencyConfig(data) {
-    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
-  }
-
-
-    // 高频配置 编辑
-   static apiEditHighFrequencyConfig(data) {
-    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
-  }
+  
 
   // 代理商列表  商务返佣参数设置 查询
   static apiGetRebateConfig(data) {
@@ -2970,6 +2961,47 @@ export default class api {
   static apiPeopleManagementSearch(data) {
     return Fetch.post('/admin/user/keyword-search', data);
   }
+
+  // 高频配置 查询
+  static apiGetHighFrequencyConfig(data) {
+    return Fetch.post('/user/monitorUserActions/queryRiskSet', data);
+  }
+
+
+    // 高频配置 编辑
+   static apiEditHighFrequencyConfig(data) {
+    return Fetch.post('/user/monitorUserActions/setRiskSetParam', data);
+  }
+
+  // 高频监控 列表
+  static apiGetHighFrequencyMonitorList(data) {
+    return Fetch.post('/user/monitorUserActions/queryHighFreqMonitorInfoList', data);
+  }
+
+  // 高频监控 一键移出
+  static apiHighFrequencyMonitorRemoveAll(data) {
+    return Fetch.post('/user/monitorUserActions/updateAllStatus', data);
+  }
+
+  // 高频监控 移出监控
+  static apiHighFrequencyMonitorRemove(data) {
+    return Fetch.post('/user/monitorUserActions/updateStatus', data);
+  }
+
+  // 币支付管理/充币记录 合计
+  static apiGetRechargePayTotal(data) {
+    return Fetch.post('/admin/account/payment/deposit/sum', data);
+  }
+
+  // 合约管理/交易管理/合约用户列表 列表
+  static getContractUserList(data) {
+    return Fetch.post('/admin/account/contract/user', data);
+  }
+  
+
+
+
+  
 
 
 

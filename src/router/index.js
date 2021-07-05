@@ -1451,6 +1451,12 @@ export const asyncRouterMap = [
             component: () => import('@/views/contract/transact/flowRecordContract'),
             meta: { title: '合约流水', icon: '', role: [] },
           },
+          {
+            path: 'contractUserList',
+            name: 'ContractUserList',
+            component: () => import('@/views/contract/transact/contractUserList'),
+            meta: { title: '合约用户列表', icon: '', role: [] },
+          },
           // {
           //   path: 'historicalContract',
           //   name: 'HistoricalContract',
@@ -1564,7 +1570,13 @@ export const asyncRouterMap = [
             path: 'highFrequencyConfig',
             name: 'HighFrequencyConfig',
             component: () => import('@/views/contract/risk/highFrequencyConfig'),
-            meta: { title: '高频参数管理', icon: '', role: [] },
+            meta: { title: '高频参数配置', icon: '', role: [] },
+          },
+          {
+            path: 'highFrequencyMonitor',
+            name: 'HighFrequencyMonitor',
+            component: () => import('@/views/contract/risk/highFrequencyMonitor'),
+            meta: { title: '高频监控列表', icon: '', role: [] },
           },
         ],
       },
@@ -1857,43 +1869,7 @@ export const asyncRouterMap = [
         meta: { title: '用户详情', icon: '', role: [] },
       },
 
-      //   path: 'transact',
-      //   name: 'Transact',
-      //   redirect: '/contract/transact/agentList',
-      //   meta: { title: '交易管理', icon: '', role: [] },
-      //   children: [
-      //     {
-      //       path: 'coinContract',
-      //       name: 'CoinContract',
-      //       component: () => import('@/views/contract/transact/coinContract'),
-      //       meta: { title: '合约币种', icon: '', role: [] }
-      //     },
-      //     {
-      //       path: 'gearSetting',
-      //       name: 'GearSetting',
-      //       component: () => import('@/views/contract/transact/gearSetting'),
-      //       meta: { title: '档位设置', icon: '', role: [] }
-      //     },
-      //     {
-      //       path: 'billContract',
-      //       name: 'BillContract',
-      //       component: () => import('@/views/contract/transact/billContract'),
-      //       meta: { title: '合约账单', icon: '', role: [] }
-      //     },
-      //     {
-      //       path: 'treatyAssetsContract',
-      //       name: 'TreatyAssetsContract',
-      //       component: () => import('@/views/contract/transact/treatyAssetsContract'),
-      //       meta: { title: '合约资产', icon: '', role: [] }
-      //     },
-      //     {
-      //       path: 'flowRecordContract',
-      //       name: 'FlowRecordContract',
-      //       component: () => import('@/views/contract/transact/flowRecordContract'),
-      //       meta: { title: '合约流水', icon: '', role: [] }
-      //     }
-      //   ]
-      // }
+      
     ],
   },
 

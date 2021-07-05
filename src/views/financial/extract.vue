@@ -10,34 +10,14 @@
 <template>
   <div class="extract-container">
     <div class="container-top">
-      <Bsearch
-        :configs="searchCofig"
-        @do-search="doSearch"
-        @do-reset="doReset"
-        :excelLoading="excelLoading"
-        :exportExcel="true"
-        @do-exportExcel="exportExcel"
-        :calLoading="calLoading"
-        :calTotal="true"
-        @do-calTotal="calTotal"
-      />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
 
     <!-- 审核通过弹窗 -->
@@ -75,7 +55,7 @@
           >
           <el-col :span="12">
             <el-form-item label="提币二维码" :label-width="formLabelWidth">
-              <div style="width:150px;height:150px;">
+              <div style="width: 150px; height: 150px">
                 <vue-qr :text="handleData.toAddress" :margin="0" colorDark="#000" colorLight="#fff" :size="150"></vue-qr>
               </div>
             </el-form-item>
@@ -83,9 +63,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="地址类型" :label-width="formLabelWidth">{{
-              handleData.isOwn == 1 ? '内部交易' : handleData.isOwn == 0 ? '涉外交易' : ''
-            }}</el-form-item></el-col
+            <el-form-item label="地址类型" :label-width="formLabelWidth">{{ handleData.isOwn == 1 ? '内部交易' : handleData.isOwn == 0 ? '涉外交易' : '' }}</el-form-item></el-col
           >
         </el-row>
         <el-row>
@@ -133,15 +111,8 @@
           </el-form-item>
         </template>
         -->
-        <el-form-item label="初审备注" :label-width="formLabelWidth" v-if="handleData.tradeStatus > 2 || parseInt(handleData.tradeStatus) == 1">{{
-          handleData.firstRemark
-        }}</el-form-item>
-        <el-form-item
-          label="复审备注"
-          :label-width="formLabelWidth"
-          v-if="(handleData.tradeStatus > 3 || parseInt(handleData.tradeStatus) == 1) && parseInt(handleData.tradeStatus) != 4"
-          >{{ handleData.reviewRemark }}</el-form-item
-        >
+        <el-form-item label="初审备注" :label-width="formLabelWidth" v-if="handleData.tradeStatus > 2 || parseInt(handleData.tradeStatus) == 1">{{ handleData.firstRemark }}</el-form-item>
+        <el-form-item label="复审备注" :label-width="formLabelWidth" v-if="(handleData.tradeStatus > 3 || parseInt(handleData.tradeStatus) == 1) && parseInt(handleData.tradeStatus) != 4">{{ handleData.reviewRemark }}</el-form-item>
       </el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="dialogVisible = false">取消</el-button>
@@ -152,8 +123,7 @@
     <!-- 驳回通过弹窗 -->
     <el-dialog :visible.sync="rejectVisible" width="500px" title="驳回">
       <el-form :model="rejectForm" ref="rejectForm" :rules="rejectRules">
-        <el-form-item label="驳回理由" prop="mark">
-          <el-input type="textarea" placeholder="请输入拒绝理由" v-model="rejectForm.mark"></el-input> </el-form-item
+        <el-form-item label="驳回理由" prop="mark"> <el-input type="textarea" placeholder="请输入拒绝理由" v-model="rejectForm.mark"></el-input> </el-form-item
       ></el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="rejectVisible = false">取消</el-button>
@@ -162,7 +132,7 @@
     </el-dialog>
     <!-- 验证码弹窗 -->
     <el-dialog title="验证收款码" :visible.sync="qrcodeShow" width="500px">
-      <div style="padding-left:20px;width:100%;">
+      <div style="padding-left: 20px; width: 100%">
         <vue-qr :text="analysisQrCode" :margin="0" colorDark="#000" colorLight="#fff" :size="420"></vue-qr>
       </div>
     </el-dialog>
@@ -200,7 +170,7 @@ export default {
       toDay: '',
       ago: '',
       dataList: [], // 用于导出的数据
-      coinList:[],//  币种列表
+      coinList: [], //  币种列表
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
       search_params_obj: {}, // 搜索框对象
@@ -306,7 +276,7 @@ export default {
     },
     // 驳回弹窗 点击  驳回
     async confirmReject() {
-      this.$refs['rejectForm'].validate(async valid => {
+      this.$refs['rejectForm'].validate(async (valid) => {
         if (valid) {
           let params = {
             firstOrReview: this.handleStatus === 'preReject' ? 1 : 2,
@@ -337,7 +307,7 @@ export default {
         return;
       }
       // 当时当处于 审核状态
-      this.$refs['reviewForm'].validate(async valid => {
+      this.$refs['reviewForm'].validate(async (valid) => {
         if (valid) {
           let params = {
             firstOrReview: this.handleStatus === 'preReview' ? 1 : 2,
@@ -378,7 +348,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -421,16 +391,10 @@ export default {
       if (res) {
         const getObj = res.data.data;
         if (getObj) {
-          let coin = this.searchCofig[2]['list'].filter(v => v.value == this.search_params_obj.coinId)[0].label;
-          this.$alert(
-            `<p>币种：${coin}</p><p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${
-              getObj.realAmountSum
-            }</p>`,
-            '统计结果',
-            {
-              dangerouslyUseHTMLString: true,
-            },
-          ).catch(()=>{});
+          let coin = this.searchCofig[2]['list'].filter((v) => v.value == this.search_params_obj.coinId)[0].label;
+          this.$alert(`<p>币种：${coin}</p><p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${getObj.realAmountSum}</p>`, '统计结果', {
+            dangerouslyUseHTMLString: true,
+          }).catch(() => {});
         } else {
           this.$message({ type: 'error', message: '数据列表为空!' });
         }
@@ -444,7 +408,7 @@ export default {
         pageNum: this.current_page,
         pageSize: this.pageSize,
         isOwn: 1,
-        appId:0
+        appId: 0,
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
@@ -489,9 +453,21 @@ export default {
       if (this.search_params_obj.coinName) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinName)) {
           let tmpName = '';
-          tmpName = this.coinList.filter(v => v['value'] == this.search_params_obj.coinName)[0].label;
+          tmpName = this.coinList.filter((v) => v['value'] == this.search_params_obj.coinName)[0].label;
           this.search_params_obj.coinName = tmpName;
         }
+      }
+    },
+    async getRechargeChainName() {
+      const res = await $api.apiGetRechargeChainName({});
+      if (res) {
+        let arr = res.data.data;
+        this.searchCofig[7]['list'] = arr.map((v) => {
+          return {
+            label: v.chainName,
+            value: v.chainName,
+          };
+        });
       }
     },
   },
@@ -532,13 +508,14 @@ export default {
     let coinId = this.$route.query.coinId;
     if (toAddress) {
       // 从列表页传参
-      this.searchCofig[3].value = toAddress;
+      this.searchCofig[5].value = toAddress;
       this.searchCofig[2].value = coinId;
       this.search_params_obj = { toAddress: toAddress, coinName: coinName };
       this.getList();
     } else {
       this.getList();
     }
+    this.getRechargeChainName();
   },
 };
 </script>

@@ -259,7 +259,7 @@ const extractCol = [
     width: 200,
   },
   {
-    label: 'UID',
+    label: 'from UID',
     prop: 'uid',
     width: 100,
   },
@@ -282,8 +282,18 @@ const extractCol = [
     width: 200,
   },
   {
+    label: 'from 地址',
+    prop: 'fromAddress',
+    width: 140,
+  },
+  {
     label: 'to 地址',
     prop: 'toAddress',
+    width: 140,
+  },
+  {
+    label: 'to UID',
+    prop: 'toUid',
     width: 140,
   },
   {
@@ -381,7 +391,7 @@ const extractColNoBtn = [
     width: 200,
   },
   {
-    label: 'UID',
+    label: 'from UID',
     prop: 'uid',
     width: 100,
   },
@@ -404,8 +414,18 @@ const extractColNoBtn = [
     width: 200,
   },
   {
+    label: 'from 地址',
+    prop: 'fromAddress',
+    width: 140,
+  },
+  {
     label: 'to 地址',
     prop: 'toAddress',
+    width: 140,
+  },
+  {
+    label: 'to UID',
+    prop: 'toUid',
     width: 140,
   },
   {
@@ -442,7 +462,7 @@ const extractColNoBtn = [
     label: '复审人',
     prop: 'reviewAuditUserName',
   },
-];
+]
 
 // 财务管理 -- 提币记录 搜索
 const extractConfig = [
@@ -454,12 +474,11 @@ const extractConfig = [
     value: '',
   },
   {
-    type: 'text',
-    label: 'UID',
+    type: 'onlyNumber',
+    label: 'from UID',
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
   },
   {
     type: 'select',
@@ -467,6 +486,13 @@ const extractConfig = [
     prop: 'coinId',
     value: '',
     list: [],
+  },
+  {
+    type: 'onlyNumber',
+    label: 'to UID',
+    prop: 'toUid',
+    value: '',
+    placeHolder: '请输入',
   },
   // {
   //   type: "text",
@@ -477,10 +503,17 @@ const extractConfig = [
   // },
   {
     type: 'text',
-    label: '提币地址',
+    label: 'from 地址',
+    prop: 'fromAddress',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'text',
+    label: 'to 地址',
     prop: 'toAddress',
     value: '',
-    placeHolder: '请输入提币地址',
+    placeHolder: '请输入',
   },
   {
     type: 'select',
@@ -488,6 +521,13 @@ const extractConfig = [
     prop: 'tradeStatus',
     value: '',
     list: [{ label: '待审核', value: 0 }, { label: '成功', value: 1 }, { label: '失败', value: 2 }, { label: '初步审核成功', value: 3 }, { label: '初步审核失败', value: 4 }],
+  },
+  {
+    type: 'select',
+    label: '链类型',
+    prop: 'chainName',
+    value: '',
+    list: [],
   },
 ];
 
@@ -506,6 +546,10 @@ const extractForeignCol = [
   {
     label: '币种',
     prop: 'coinName',
+  },
+  {
+    label: '链名称',
+    prop: 'chainName',
   },
   {
     label: '提币数量',
@@ -530,10 +574,6 @@ const extractForeignCol = [
     label: 'TXID',
     prop: 'txId',
     width: 200,
-  },
-  {
-    label: '链类型',
-    prop: 'chainName',
   },
   {
     label: '状态',
@@ -635,6 +675,10 @@ const extractForeignColNoBtn = [
     prop: 'coinName',
   },
   {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
     label: '提币数量',
     prop: 'amount',
     width: 200,
@@ -657,10 +701,6 @@ const extractForeignColNoBtn = [
     label: 'TXID',
     prop: 'txId',
     width: 200,
-  },
-  {
-    label: '链类型',
-    prop: 'chainName',
   },
   {
     label: '状态',
@@ -738,6 +778,13 @@ const extractForeignConfig = [
     prop: 'tradeStatus',
     value: '',
     list: [{ label: '待审核', value: 0 }, { label: '成功', value: 1 }, { label: '失败', value: 2 }, { label: '初步审核成功', value: 3 }, { label: '初步审核失败', value: 4 }],
+  },
+  {
+    type: 'select',
+    label: '链名称',
+    prop: 'chainName',
+    value: '',
+    list: [],
   },
 ];
 
