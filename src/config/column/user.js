@@ -42,13 +42,13 @@ const userCol = [
     ],
   },
   {
-    //1 ios 2安卓 3 pc 10 用户迁移
+    //1 ios 2安卓 3 pc 10 CPT
     label: '注册来源',
     prop: 'registAppId',
     type: 'filter',
     show_type: 'text',
     width: '120',
-    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc', val: 3 }, { text: '用户迁移', val: 10 }],
+    filters: [{ text: 'IOS', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }, { text: 'CPT', val: 10 }],
   },
   {
     label: '手机',
@@ -255,13 +255,13 @@ const userColNoBtn = [
     ],
   },
   {
-    //1 ios 2安卓 3 pc 10 用户迁移
+    //1 ios 2安卓 3 pc 10 CPT
     label: '注册来源',
     prop: 'registAppId',
     type: 'filter',
     show_type: 'text',
     width: '120',
-    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc', val: 3 }, { text: '用户迁移', val: 10 }],
+    filters: [{ text: 'IOS=', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }, { text: 'CPT', val: 10 }],
   },
   {
     label: '手机',
@@ -464,7 +464,7 @@ const userConfig = [
     label: '注册来源',
     prop: 'registAppId',
     value: '',
-    list: [{ label: 'ios', value: 1 }, { label: '安卓', value: 2 }, { label: 'pc', value: 3 }, { label: '用户迁移', value: 10 }],
+    list: [{ label: 'IOS', value: 1 }, { label: '安卓', value: 2 }, { label: 'PC', value: 3 }, { label: 'CPT', value: 10 }],
   },
   {
     type: 'text',
