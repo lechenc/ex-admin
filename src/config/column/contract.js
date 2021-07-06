@@ -3991,7 +3991,7 @@ const contractUserListCol = [
   
   
   {
-    label: '合约净入金',
+    label: '累计合约净入金',
     prop: 'inAmount',
     
   },
@@ -4023,19 +4023,19 @@ const contractUserListCol = [
     type: 'textColorTwo',
   },
   {
-    label: '累计邀请人数',
+    label: '累计直推邀请人数',
     prop: 'invite',
   },
   {
-    label: '开仓次数',
+    label: '累计开仓次数',
     prop: 'openNum',
   },
   {
-    label: '平仓次数',
+    label: '累计平仓次数',
     prop: 'unwindNum',
   },
   {
-    label: '爆仓次数',
+    label: '累计爆仓次数',
     prop: 'blastNum',
   },
 ];
