@@ -120,10 +120,10 @@ export default {
           label: 'APIkey用户',
           value: 4,
         },
-        // {
-        //   label: '商务端',
-        //   value: 5,
-        // },
+        {
+          label: '商务端',
+          value: 5,
+        },
       ],
       limitOptionsArr: [
         {
