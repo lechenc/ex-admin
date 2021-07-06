@@ -107,11 +107,11 @@
           </el-form>
         </template>
 
-        <el-row v-if="disabled" class="my-add" type="flex" :span="24" justify="center">
+        <el-row v-if="!isDetail" class="my-add" type="flex" :span="24" justify="center">
           <el-button :disabled='isDetail' @click="addSymbolGroups" size="small" type="primary"> +添加交易对 </el-button>
         </el-row>
 
-        <el-row v-if="disabled" :span="24">
+        <el-row v-if="!isDetail" :span="24">
           <el-col :span="23">
             <el-form-item label="谷歌验证码" prop="googleCode">
               <el-input v-model.trim="chainForm.googleCode" @input="checkVal('chainForm', 'googleCode')" autocomplete="off" type="text"></el-input>
@@ -119,7 +119,7 @@
           </el-col>
         </el-row>
       </el-form>
-      <div v-if="disabled" slot="footer" class="dialog-footer">
+      <div v-if="!isDetail" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
       </div>
@@ -377,6 +377,7 @@ export default {
     addChain() {
       this.formName = '添加板块专区管理';
       this.dialogFormVisible = true;
+      this.isDetail = false;
       this.$nextTick(() => {
         this.chainForm = {
           id: '',
