@@ -101,7 +101,6 @@ export default {
     target2: {
       get() {
         this.formR.target2 = this.date2;
-        console.log('this.date2',this.date2)
         return this.date2;
       },
       set(val) {
@@ -132,7 +131,6 @@ export default {
     },
     pickerOptionsStart(val) {
       let endDateVal = val;
-      console.log('val',val)
       return {
         disabledDate(date) {
           let overT = new Date();
