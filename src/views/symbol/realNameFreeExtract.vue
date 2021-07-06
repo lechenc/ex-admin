@@ -9,7 +9,7 @@
 
 <template>
   <div class="highFrequencyConfig-container">
-    <el-form :model="form" ref="form" :rules="rules" label-width="180px" size="medium">
+    <el-form :model="form" ref="form" :rules="rules" label-width="200px" size="medium">
       <el-card class="box-card">
         <div class="box-card-con">
           <H5>免实名提币管理</H5>
