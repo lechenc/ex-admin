@@ -23,6 +23,7 @@ const userCol = [
       { text: '系统用户', val: 100 },
       { text: '机器人', val: 3 },
       { text: '分析师', val: 41 },
+      { text: 'CPT用户', val: 4 },
       { val: 2, text: '后台管理员用户' },
       { val: 101, text: '收益账号' },
       { val: 102, text: '成本账号' },
@@ -235,6 +236,7 @@ const userColNoBtn = [
       { text: '系统用户', val: 100 },
       { text: '机器人', val: 3 },
       { text: '分析师', val: 41 },
+      { text: 'CPT用户', val: 4 },
       { val: 2, text: '后台管理员用户' },
       { val: 101, text: '收益账号' },
       { val: 102, text: '成本账号' },
@@ -251,6 +253,15 @@ const userColNoBtn = [
       { val: 31, text: '商务' },
       { val: 32, text: '代理' },
     ],
+  },
+  {
+    //1 ios 2安卓 3 pc 10 用户迁移
+    label: '注册来源',
+    prop: 'registAppId',
+    type: 'filter',
+    show_type: 'text',
+    width: '120',
+    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc', val: 3 }, { text: '用户迁移', val: 10 }],
   },
   {
     label: '手机',
@@ -430,6 +441,7 @@ const userConfig = [
       { label: '系统用户', value: 100 },
       { label: '机器人', value: 3 },
       { label: '分析师', value: 41 },
+      { label: 'CPT用户', value: 4 },
       { value: 2, label: '后台管理员用户' },
       { value: 101, label: '收益账号' },
       { value: 102, label: '成本账号' },
@@ -446,6 +458,13 @@ const userConfig = [
       { value: 31, label: '商务' },
       { value: 32, label: '代理' },
     ],
+  },
+  {
+    type: 'select',
+    label: '注册来源',
+    prop: 'registAppId',
+    value: '',
+    list: [{ label: 'ios', value: 1 }, { label: '安卓', value: 2 }, { label: 'pc', value: 3 }, { label: '用户迁移', value: 10 }],
   },
   {
     type: 'text',
