@@ -385,6 +385,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/symbol/smallAmountShow'),
         meta: { title: '小额资产展示管理', icon: '' },
       },
+      {
+        path: 'realNameFreeExtract',
+        name: 'RealNameFreeExtract',
+        component: () => import('@/views/symbol/realNameFreeExtract'),
+        meta: { title: '免实名提币管理', icon: '' },
+      },
       
     ],
   },

@@ -2998,6 +2998,16 @@ export default class api {
     return Fetch.post('/admin/account/contract/user', data);
   }
   
+  // 高频配置 币种管理/免实名提币管理 查询
+  static apiGetRealNameFreeExtract(data) {
+    return Fetch.post('/admin/user/query-withdraw-info', data);
+  }
+
+
+    // 高频配置 币种管理/免实名提币管理 编辑
+   static apiEditRealNameFreeExtract(data) {
+    return Fetch.post('/admin/user/set-withdraw', data);
+  }
 
 
 

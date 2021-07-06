@@ -287,6 +287,7 @@ const mapComponents = {
   ContractSymbolRobot: () => import('@/views/symbol/contractSymbolRobot'),
   PlateArea: () => import('@/views/symbol/plateArea'),
   SmallAmountShow: () => import('@/views/symbol/smallAmountShow'),
+  RealNameFreeExtract: () => import('@/views/symbol/realNameFreeExtract'),
   
 
   LotteryList: () => import('@/views/front/lottery/lotteryList'),

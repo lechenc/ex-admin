@@ -193,12 +193,12 @@ export default {
         if (res) {
           let { monitorRange, phaseTime, highFrequencyOpenTimes, highFrequencyCloseTimes, profitLimit, limitOptions, effectiveWay, masterSwitch } = res.data.data;
           this.form = {
-            monitorRange,
+            monitorRange:monitorRange||[],
             phaseTime,
             highFrequencyOpenTimes,
             highFrequencyCloseTimes,
             profitLimit,
-            limitOptions,
+            limitOptions:limitOptions||[],
             effectiveWay,
             masterSwitch: masterSwitch == 1 ? true : false,
           };
