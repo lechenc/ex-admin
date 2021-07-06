@@ -97,6 +97,13 @@
         </template>
       </el-table-column>
 
+      <el-table-column v-if="config.type === 'textColorTwo'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
+        <template slot-scope="scope">
+          
+          <span class="td-color" :style="{ color: '#4379FF' }">{{ (scope.row[config.prop] / 60 / 60).toFixed(2) + '小时' }}</span>
+        </template>
+      </el-table-column>
+
       <!-- 新 两个值组成 连接符为, -->
       <el-table-column v-if="config.type === 'textDouble'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">

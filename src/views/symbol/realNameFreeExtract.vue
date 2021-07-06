@@ -25,7 +25,7 @@
           <el-row :span="24">
             <el-col :span="12">
               <el-form-item label="新用户无需实名可提币额度:  " prop="withdrawQuota">
-                <el-input style="width: 55%" type="text" placeholder="请输入" v-model="form.withdrawQuota" @input="checkVal('withdrawQuota')" :disabled="!isModify"></el-input>
+                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
           </el-row>

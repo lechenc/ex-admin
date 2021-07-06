@@ -3989,6 +3989,7 @@ const contractUserListCol = [
     prop: 'usdtTradeTime',
   },
   
+  
   {
     label: '合约净入金',
     prop: 'inAmount',
@@ -4014,9 +4015,12 @@ const contractUserListCol = [
     label: '累计贡献平台手续费',
     prop: 'platformFeeAmount',
   },
+  
   {
     label: '累计使用APP时长',
     prop: 'appUsedTime',
+    width: 150,
+    type: 'textColorTwo',
   },
   {
     label: '累计邀请人数',
