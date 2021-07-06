@@ -87,7 +87,7 @@ export default {
         {label:'BTC',value:1}
       ],
       rules: {
-        withdrawQuota: [{ required: true, message: '必选', trigger: 'blur' }],
+        withdrawQuota: [{ required: true, message: '必填', trigger: 'blur' }],
         firstVerifiedSwift: [{ required: true, message: '必选', trigger: 'blur' }],
       },
     };
