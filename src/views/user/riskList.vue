@@ -152,6 +152,7 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       curId: '',
+      limitIp:false
     };
   },
   methods: {

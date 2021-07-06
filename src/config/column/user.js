@@ -41,6 +41,15 @@ const userCol = [
     ],
   },
   {
+    //1 ios 2安卓 3 pc 10 用户迁移
+    label: '注册来源',
+    prop: 'registAppId',
+    type: 'filter',
+    show_type: 'text',
+    width: '120',
+    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc', val: 3 }, { text: '用户迁移', val: 10 }],
+  },
+  {
     label: '手机',
     prop: 'phone',
     width: '150',
