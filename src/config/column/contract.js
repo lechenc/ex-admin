@@ -4105,7 +4105,7 @@ const contractUserListConfig = [
   },
   {
     type: 'select',
-    label: '累计合约进入金排序',
+    label: '累计合约净入金排序',
     prop: 'inAmountSort',
     value: '',
     list: [
