@@ -97,6 +97,7 @@ export default {
       amountObj: {},
       startTime: '',
       endTime: '',
+      curUid:''
     };
   },
   methods: {
