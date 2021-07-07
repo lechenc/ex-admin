@@ -89,7 +89,6 @@ export default {
       this.listLoading = false;
     },
     requiredParams(params) {
-      console.log('params1',params)
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
