@@ -96,8 +96,6 @@ export default {
         params.createStartTime = befV.replace(/\//gi, '-');
         // 组件时间初始必须format格式
         this.searchCofig[0].value = [befV, nowV];
-      }else{
-        
       }
       if (this.search_params_obj.startTime) {
         let befV = this.search_params_obj.startTime.replace(/-/gi, '/');
