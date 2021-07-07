@@ -331,6 +331,8 @@ export default {
       if (res) {
         this.$message({ type: 'success', message: fn === 'open' ? '开启成功' : '停止使用操作成功' });
         this.getDetail();
+      }else{
+        
       }
     },
     handleClick(tab, event) {},
