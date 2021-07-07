@@ -1,7 +1,7 @@
 <template>
   <div class="contractUserList-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" calText="合计统计" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -10,6 +10,58 @@
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
+
+    <el-dialog center class="agentRebate-dialog" title="合约统计" :visible.sync="dialogVisible" width="500px">
+      <el-row :span="24">
+        <el-col :span="6">时间:</el-col>
+        <el-col :span="8">
+          {{ startTime || '无' }}
+        </el-col>
+
+        <el-col style="text-align: center" :span="2"> - </el-col>
+
+        <el-col :span="8">
+          {{ endTime || '无' }}
+        </el-col>
+      </el-row>
+      <el-row :span="24">
+        <el-col :span="6">UID:</el-col>
+        <el-col :span="8">
+          {{ curUid || '无' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="14">累计合约交易手续费:</el-col>
+        <el-col :span="8">
+          {{ amountObj.totalFeeAmountStatis || '无' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="14">累计贡献代理返佣手续费统计:</el-col>
+        <el-col :span="8">
+          {{ amountObj.agentFeeAmountStatis || '无' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="14">累计贡献商务手续费统计:</el-col>
+        <el-col :span="8">
+          {{ amountObj.bussinessFeeAmountStatis || '无' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="14">累计贡献平台手续费统计:</el-col>
+        <el-col :span="8">
+          {{ amountObj.platformFeeAmountStatis || '无' }}
+        </el-col>
+      </el-row>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -41,9 +93,29 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
+      dialogVisible: false,
+      amountObj: {},
+      startTime: '',
+      endTime: '',
     };
   },
   methods: {
+    // 根据查询条件进行合计弹窗展示
+    async calTotal(data) {
+      if (this.calLoading) return;
+      this.search_params_obj = data;
+      this.startTime = data.createStartTime;
+      this.endTime = data.createEndTime;
+      this.curUid = data.uid;
+
+      this.calLoading = true;
+      const res = await $api.apiGetContractUserTotal(this.search_params_obj);
+      if (res) {
+        this.dialogVisible = true;
+        this.amountObj = res.data.data || {};
+      }
+      this.calLoading = false;
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
@@ -99,7 +171,7 @@ export default {
       }
       if (this.search_params_obj.startTime) {
         let befV = this.search_params_obj.startTime.replace(/-/gi, '/');
-        let nowV  = this.search_params_obj.endTime.replace(/-/gi, '/');
+        let nowV = this.search_params_obj.endTime.replace(/-/gi, '/');
         this.searchCofig[1].value = [befV, nowV];
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
         this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);

@@ -3009,6 +3009,11 @@ export default class api {
     return Fetch.post('/admin/user/set-withdraw', data);
   }
 
+  // 合约管理/交易管理/合约用户列表 合计
+  static apiGetContractUserTotal(data) {
+    return Fetch.post('/admin/account/contract/user/statis', data);
+  }
+
 
 
   
