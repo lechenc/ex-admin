@@ -185,7 +185,7 @@ const agentsListsColNoBtn = [
     label: '备注',
     prop: 'remark',
   },
-  
+
   {
     label: '手续费返佣比例',
     prop: 'commissionPercent',
@@ -275,7 +275,7 @@ const agentsListsConfig = [
   },
   {
     type: 'text',
-    label: '上级代理商UID',
+    label: '查询直属下级代理商UID',
     prop: 'upperUid',
     value: '',
     placeHolder: '请输入',
@@ -2176,7 +2176,7 @@ const businessRefundRecordConfig = [
     label: '结算状态',
     prop: 'isReward',
     value: '',
-    list: [ { label: '已结算', value: 1 }, { label: '待结算', value: 0 }],
+    list: [{ label: '已结算', value: 1 }, { label: '待结算', value: 0 }],
   },
 ];
 
