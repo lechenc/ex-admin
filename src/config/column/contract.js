@@ -4105,7 +4105,7 @@ const contractUserListConfig = [
   },
   {
     type: 'select',
-    label: '合约进入金排序',
+    label: '累计合约进入金排序',
     prop: 'inAmountSort',
     value: '',
     list: [
@@ -4116,7 +4116,7 @@ const contractUserListConfig = [
 
   {
     type: 'select',
-    label: '合约交易手续费排序',
+    label: '累计合约交易手续费排序',
     prop: 'feeSort',
     value: '',
     list: [
@@ -4127,7 +4127,7 @@ const contractUserListConfig = [
 
   {
     type: 'select',
-    label: '合约交易盈亏排序',
+    label: '累计合约交易盈亏排序',
     prop: 'profitSort',
     value: '',
     list: [
@@ -4138,7 +4138,7 @@ const contractUserListConfig = [
 
   {
     type: 'select',
-    label: '爆仓次数排序',
+    label: '累计爆仓次数排序',
     prop: 'blastSort',
     value: '',
     list: [
@@ -4149,7 +4149,7 @@ const contractUserListConfig = [
 
   {
     type: 'select',
-    label: '平仓次数排序',
+    label: '累计平仓次数排序',
     prop: 'unwindSort',
     value: '',
     list: [
@@ -4160,7 +4160,7 @@ const contractUserListConfig = [
 
   {
     type: 'select',
-    label: '开仓次数排序',
+    label: '累计开仓次数排序',
     prop: 'openSort',
     value: '',
     list: [
