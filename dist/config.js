@@ -22,6 +22,8 @@ if (/dappmi/.test(window.location.href)) {
 // https://admin.flyex.vip/
 if (/flyex/.test(window.location.href)) {
   window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
+}else{
+  
 }
 
 // window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
