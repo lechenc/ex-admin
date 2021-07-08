@@ -8,7 +8,7 @@
  */
 module.exports = {
 
-  title: 'MaxEx',
+  title: 'Alpex',
 
   /**
    * @type {boolean} true | false
