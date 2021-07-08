@@ -613,7 +613,7 @@ const businessListsConfig = [
     label: '返佣模式',
     prop: 'commissionSwitch',
     value: '',
-    list: [{ label: 'ALPEX模式', value: 1 }, { label: 'CPT模式', value: 0 }],
+    list: [{ label: 'A模式', value: 1 }, { label: 'C模式', value: 0 }],
   },
   {
     type: 'select',
