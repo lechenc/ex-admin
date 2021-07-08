@@ -165,6 +165,29 @@ const datePickerOptions = (options = { disabledDate: 'aft' }) => {
           picker.$emit('pick', [start, end]);
         },
       },
+      {
+        text: '最近一年',
+        onClick(picker) {
+          let end = +new Date();
+          let start = new Date();
+
+          start.setMonth(start.getMonth() - 12);
+          start = GMTToStrZero(start);
+          end = GMTToStr(end);
+          picker.$emit('pick', [start, end]);
+        },
+      },
+      {
+        text: '最近三年',
+        onClick(picker) {
+          let end = +new Date();
+          let start = new Date();
+          start.setMonth(start.getMonth() - 36);
+          start = GMTToStrZero(start);
+          end = GMTToStr(end);
+          picker.$emit('pick', [start, end]);
+        },
+      },
     ],
     disabledDate(date) {
       let curDate = new Date();
