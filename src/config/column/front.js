@@ -224,6 +224,13 @@ const bannerCol = [
     width: '200',
   },
   {
+    label: '代理是否可见',
+    prop: 'isProxyVisible',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '是', val: true }, { text: '否', val: false }],
+  },
+  {
     label: '中文图片',
     prop: 'imgUrl',
     type: 'img',
@@ -289,6 +296,13 @@ const bannerColNoBtn = [
     label: '名称',
     prop: 'bannerName',
     width: '200',
+  },
+  {
+    label: '代理是否可见',
+    prop: 'isProxyVisible',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '是', val: true }, { text: '否', val: false }],
   },
   {
     label: '中文图片',

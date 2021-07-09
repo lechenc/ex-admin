@@ -20,6 +20,14 @@
         <el-form-item label="名称" prop="bannerName">
           <el-input size="small" placeholder="请输入Banner名称" id="bannerName" v-model.trim="form.bannerName"></el-input>
         </el-form-item>
+
+        <el-form-item label="代理是否可见" prop="isProxyVisible">
+          
+          <el-radio-group v-model="form.isProxyVisible" >
+            <el-radio :label="true">是</el-radio>
+            <el-radio :label="false">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="中文图片" prop="imgUrl">
           <el-input size="small" v-model="form.imgUrl" placeholder="请选择上传">
             <el-upload :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :on-success="uploadZh" slot="append" :before-upload="onBeforeUpload" :on-error="uploadError" :limit="1" :on-exceed="exceed" ref="upzh">
