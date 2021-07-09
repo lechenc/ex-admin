@@ -293,6 +293,10 @@ export default {
   .container-top {
     margin: 20px 0;
   }
+  .el-dialog__title{
+    color: #000 !important;
+    font-size: 18px !important;
+  }
   .container-footer {
     display: flex;
     justify-content: space-between;
