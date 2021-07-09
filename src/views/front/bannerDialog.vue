@@ -225,16 +225,16 @@ export default {
       this.$nextTick(() => {
         this.$refs.form.resetFields();
         if (this.type === 1) {
-          const { id, bannerName, imgUrl, imgUrlEn, jumpUrl, weight, bannerStatus, deviceType, effectTime } = this.row;
+          const { id, bannerName, imgUrl, imgUrlEn,isProxyVisible, jumpUrl, weight, bannerStatus, deviceType, effectTime } = this.row;
           // const { createTime, ...prop } = this.row;
-          this.form = { id, bannerName, imgUrl, imgUrlEn, jumpUrl, weight, bannerStatus, deviceType, effectTime };
+          this.form = { id, bannerName, imgUrl, imgUrlEn,isProxyVisible, jumpUrl, weight, bannerStatus, deviceType, effectTime };
           this.title = '编辑banner';
         }
         if (this.type === 0) {
           this.title = '添加banner';
           this.form = {
             id: '',
-            
+            isProxyVisible:'',
             bannerName: '',
             imgUrl: '',
             imgUrlEn: '',

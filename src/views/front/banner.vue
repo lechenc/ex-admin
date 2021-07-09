@@ -71,7 +71,9 @@ export default {
   methods: {
     async doHandle(data) {
       const { fn, row } = data;
+      
       if (fn === 'edit') {
+        console.log('row',row)
         this.row = row;
         this.show_modal_type = 1;
         this.show_detail_modal = true;
