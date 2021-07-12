@@ -662,7 +662,7 @@ const ssoWhiteListCol = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: 'PC', val: 1 }, { text: 'IOS', val: 2 }, { text: 'Android', val: 3 }],
+    filters: [{ text: 'IOS', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }],
   },
   {
     label: '备注',
@@ -720,7 +720,7 @@ const ssoWhiteListColNoBtn = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: 'PC', val: 1 }, { text: 'IOS', val: 2 }, { text: 'Android', val: 3 }],
+    filters: [{ text: 'IOS', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }],
   },
   {
     label: '备注',

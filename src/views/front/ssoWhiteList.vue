@@ -94,15 +94,15 @@ export default {
       ssoTypenArr: [
         {
           value: 1,
-          label: 'PC',
-        },
-        {
-          value: 2,
           label: 'IOS',
         },
         {
+          value: 2,
+          label: '安卓',
+        },
+        {
           value: 3,
-          label: 'Android',
+          label: 'PC',
         },
       ],
       form: {
