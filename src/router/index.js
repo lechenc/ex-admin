@@ -794,6 +794,18 @@ export const asyncRouterMap = [
           },
         ],
       },
+
+      {
+        path: 'ssoWhiteList',
+        name: 'SsoWhiteList',
+        component: () => import('@/views/front/ssoWhiteList'),
+        meta: { title: '单点登录白名单管理', icon: '', role: [] },
+      },
+
+      
+
+
+      
     ],
   },
   // 法币管理

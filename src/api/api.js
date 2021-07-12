@@ -3014,6 +3014,26 @@ export default class api {
     return Fetch.post('/admin/account/contract/user/statis', data);
   }
 
+  // 运营管理/单点登录白名单管理 列表
+  static getSsoWhiteListList(data) {
+    return Fetch.post('/admin/user/sso_whiteList_info_page', data);
+  }
+
+  // 运营管理/单点登录白名单管理 添加
+  static addSsoWhiteList(data) {
+    return Fetch.post('/admin/user/add/sso_whiteList_info', data);
+  }
+
+  // 运营管理/单点登录白名单管理 编辑
+  static editSsoWhiteList(data) {
+    return Fetch.post('/admin/user/edit/sso_whiteList_info', data);
+  }
+
+   // 运营管理/单点登录白名单管理 删除
+   static deleteSsoWhiteList(data) {
+    return Fetch.post('/admin/user/delete/sso_whiteList_info', data);
+  }
+
 
 
   

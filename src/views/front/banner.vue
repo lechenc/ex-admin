@@ -182,5 +182,9 @@ export default {
     justify-content: flex-end;
     padding: 20px 0;
   }
+  .el-switch.is-disabled .el-switch__core,
+.el-switch.is-disabled .el-switch__label {
+  cursor: pointer !important;
+}
 }
 </style>

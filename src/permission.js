@@ -277,6 +277,7 @@ const mapComponents = {
   Key: () => import('@/views/app/key'),
   GrayScale: () => import('@/views/app/grayScale'),
   Poster: () => import('@/views/front/poster'),
+  SsoWhiteList: () => import('@/views/front/ssoWhiteList'),
   Notice: () => import('@/views/front/notice'),
   Help: () => import('@/views/front/help'),
   Column: () => import('@/views/front/column'),

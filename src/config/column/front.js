@@ -206,18 +206,17 @@ const popupNoticeConfig = [
     prop: 'title',
   },
   {
-    type: "select",
-    label: "公告类型",
-    prop: "type",
+    type: 'select',
+    label: '公告类型',
+    prop: 'type',
     value: 1,
-    list: [{ label: "普通弹窗公告", value: 1 }, { label: "维护公告", value: 2 }],
+    list: [{ label: '普通弹窗公告', value: 1 }, { label: '维护公告', value: 2 }],
     isClear: true,
   },
 ];
 
 // 前台管理 -- banner管理 -- table
 const bannerCol = [
-  
   {
     label: '名称',
     prop: 'bannerName',
@@ -291,7 +290,6 @@ const bannerCol = [
 ];
 
 const bannerColNoBtn = [
-  
   {
     label: '名称',
     prop: 'bannerName',
@@ -346,8 +344,6 @@ const bannerConfig = [
   },
 ];
 
-
-
 // 前台管理 -- 邀请海报管理 -- table
 const posterCol = [
   {
@@ -383,7 +379,7 @@ const posterCol = [
     label: '排序',
     prop: 'weight',
   },
-  
+
   {
     label: '创建时间',
     prop: 'createTime',
@@ -458,7 +454,7 @@ const posterColNoBtn = [
     label: '排序',
     prop: 'weight',
   },
-  
+
   {
     label: '创建时间',
     prop: 'createTime',
@@ -469,7 +465,6 @@ const posterColNoBtn = [
     prop: 'effectTime',
     width: '200',
   },
-  
 ];
 
 // 前台管理 -- 邀请海报管理 -- 搜索栏
@@ -480,8 +475,6 @@ const posterConfig = [
     type: 'text',
   },
 ];
-
-
 
 // 前台管理 -- 帮助中心 -- 搜索栏
 const helpConfig = [
@@ -660,7 +653,100 @@ const columnColNoBtn = [
   },
 ];
 
+// 运营管理 -- 单点登录白名单管理
+const ssoWhiteListCol = [
+  
+  {
+    label: '单点类型',
+    prop: 'ssoType',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: 'PC', val: 1 }, { text: 'IOS', val: 2 }, { text: 'Android', val: 3 }],
+  },
+  {
+    label: '备注',
+    prop: 'remark',
+  },
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type: 'time',
+  },
+
+  {
+    label: '开关',
+    prop: 'status',
+    type: 'switch',
+    fn: 'trputon',
+    alias: 'trputon',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 140,
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'danger',
+        alias: 'del',
+      },
+    ],
+  },
+];
+
+const ssoWhiteListColNoBtn = [
+  
+  {
+    label: '单点类型',
+    prop: 'ssoType',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: 'PC', val: 1 }, { text: 'IOS', val: 2 }, { text: 'Android', val: 3 }],
+  },
+  {
+    label: '备注',
+    prop: 'remark',
+  },
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type: 'time',
+  },
+
+  
+];
+
 export {
+  ssoWhiteListCol,
+  ssoWhiteListColNoBtn,
   posterCol,
   posterColNoBtn,
   posterConfig,
