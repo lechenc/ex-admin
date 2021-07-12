@@ -8,7 +8,7 @@
  -->
 <template>
   <div class="ssoWhiteList-container">
-     <!-- <div class="container-top">
+    <!-- <div class="container-top">
       <Bsearch :configs="searchConfig" @do-search="doSearch" @do-reset="doReset" />
     </div> -->
     <div class="notice-button">
@@ -55,8 +55,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
-        
 
         <el-row :span="24">
           <el-col :span="21">
@@ -105,11 +103,8 @@ export default {
           label: 'PC',
         },
       ],
-      form: {
-        
-      },
+      form: {},
       rules: {
-        
         ssoType: [{ required: true, message: '请输入', trigger: 'blur' }],
         uid: [{ required: true, message: '请输入', trigger: 'blur' }],
         authGoogle: [{ required: true, message: '请输入', trigger: 'blur' }],
@@ -135,7 +130,7 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           let { id, ...prop } = this.form;
-          const parms = {  ...prop };
+          const parms = { ...prop };
           this.btnLoading = true;
           const res = id === '' ? await $api.addSsoWhiteList({ ...parms }) : await $api.editSsoWhiteList({ id, ...parms });
           if (res) {
@@ -153,18 +148,19 @@ export default {
     async doHandle(data) {
       const { fn, row } = data;
       if (fn === 'edit') {
+        this.title = '编辑';
         this.showDialog = true;
         const { id, ssoType, remark, uid, authGoogle } = row;
-        this.$refs.form.resetFields();
-        this.form = {
-          id,
-          ssoType,
-          remark,
-          uid,
-          authGoogle,
-        };
-        
-        this.title = '编辑';
+        this.$nextTick(() => {
+          this.$refs.form.resetFields();
+          this.form = {
+            id,
+            ssoType,
+            remark,
+            uid,
+            authGoogle,
+          };
+        });
       }
       if (fn === 'del') {
         this.$confirm('是否删除?', '温馨提示', {
@@ -184,7 +180,7 @@ export default {
           .catch(() => {});
       }
       if (fn === 'trputon') {
-        const res = await $api.editSsoWhiteList({ id: row.id, status: row.status ? 1 : 0 ,});
+        const res = await $api.editSsoWhiteList({ id: row.id, status: row.status ? 1 : 0 });
         if (res) {
           this.$message({ type: 'success', message: res.data.message });
         }
@@ -226,7 +222,7 @@ export default {
     async getList() {
       if (this.listLoading) return;
       this.listLoading = true;
-      
+
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
@@ -250,14 +246,13 @@ export default {
     // 对输入值的范围进行限制
     checkVal(val) {
       this.form[val] = (this.form[val] + '').replace(/[^\d]/g, '');
-      
     },
   },
   mounted() {
     let authObj = this.$util.getAuthority('SsoWhiteList', ssoWhiteListCol, ssoWhiteListColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
-    this.searchConfig = []
+    this.searchConfig = [];
     this.getList();
   },
 };
