@@ -40,7 +40,7 @@
       <el-row :span="24">
         <el-col :span="6">已实现盈利:</el-col>
         <el-col :span="8">
-          {{ judgeAmount(amountObj.amount) }}
+          {{ amountObj.amount || '无' }}
         </el-col>
       </el-row>
       <span slot="footer" class="dialog-footer">
@@ -109,6 +109,7 @@ export default {
   },
   methods: {
     async calTotal(val) {
+      
       this.uid = val.uid;
       this.startTime = val.startTime;
       this.endTime = val.endTime;
@@ -130,7 +131,11 @@ export default {
         return this.$message.error('区间最小值不得大于最大值');
       }
       this.dialogVisible = true;
-      this.requiredParams(val);
+
+      if (val.startTime) {
+        val.endTime = this.formatTime(val.endTime);
+        val.startTime = this.formatTime(val.startTime);
+      }
       Object.assign(query_data, val);
       const res = await $api.closeContractTotal(query_data);
       this.amountObj = res.data.data;
@@ -191,10 +196,6 @@ export default {
         this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
       }
 
-      if (params.startTime) {
-        params.endTime = this.formatTime(params.endTime);
-        params.startTime = this.formatTime(params.startTime);
-      }
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
           let tmpName = '';
