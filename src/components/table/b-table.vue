@@ -55,13 +55,7 @@
         </template>
       </el-table-column>
 
-      <!-- 加一个其他值 -->
-      <el-table-column v-if="config.type == 'plusOthersNumber'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
-        <template slot-scope="scope">
-          <span v-if="config.othersNumber"> {{ getPlus(scope.row[config.prop], config.othersNumber) }} </span>
-          <span v-else-if="config.prop2"> {{ getPlus(scope.row[config.prop], scope.row[config.prop2]) }} </span>
-        </template>
-      </el-table-column>
+    
 
       <!-- 减一个其他值 -->
       <el-table-column v-if="config.type == 'minusOthersNumber'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">

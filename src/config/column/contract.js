@@ -3232,11 +3232,10 @@ const accountContractCol = [
   // },
 
   {
-    type: 'getPlusSumCol',
+    type: 'plusOthersNumber',
     label: '累计盈亏',
-    propArr: ['totalProfit', 'totalLoss'],
-    // 暂时的附加值
-    othersNumber: '146935.92538355',
+    prop:"totalProfit",
+    prop2:"totalLoss",
   },
 
   {
