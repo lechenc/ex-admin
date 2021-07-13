@@ -144,6 +144,7 @@ export default {
           this.$message.error({ title: '提示', message: '请完成表单内容填写再重试' });
         }
       });
+      
     },
     async doHandle(data) {
       const { fn, row } = data;
