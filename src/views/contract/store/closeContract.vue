@@ -119,6 +119,7 @@ export default {
         this.coinMarket = tmpName;
         val.coinMarket = tmpName;
       }
+      
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
