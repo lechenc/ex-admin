@@ -23,6 +23,29 @@
           </el-form-item>
         </el-row>
 
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="法币开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userOtcStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="划转开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userTransferStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="币币交易开关" label-width="100px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userTradeStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="提币开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userWithdrawStatus"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
             <el-col :span="6">
@@ -216,7 +239,11 @@ export default {
         phoneAreaCode: '',
         email: '',
         loginPassword: '',
-        googleCode: ''
+        googleCode: '',
+        userOtcStatus: false, // 法币开关
+        userTransferStatus: false, // 划转开关
+        userTradeStatus: false, // 币币交易开关
+        userWithdrawStatus: false, // 提币开关
       },
       batchForm: {
         loginSwitch: false,
@@ -251,7 +278,11 @@ export default {
           phoneAreaCode: '',
           email: '',
           loginPassword: '',
-          googleCode: ''
+          googleCode: '',
+          userOtcStatus: false, // 法币开关
+          userTransferStatus: false, // 划转开关
+          userTradeStatus: false, // 币币交易开关
+          userWithdrawStatus: false, // 提币开关
         };
       } else {
         this.getCode();
@@ -290,8 +321,20 @@ export default {
           // if (!this.form.phone && !this.form.email) {
           //   return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' });
           // }
-          let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid} = this.form;
-          let params = { googleCode, loginSwitch: loginSwitch ? 0 : 1 };
+          let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid,
+            userOtcStatus,
+            userTransferStatus,
+            userTradeStatus,
+            userWithdrawStatus
+          } = this.form;
+          let params = {
+            googleCode,
+            loginSwitch: loginSwitch ? 0 : 1,
+            userOtcStatus: +userOtcStatus,
+            userTransferStatus: +userTransferStatus,
+            userTradeStatus: +userTradeStatus,
+            userWithdrawStatus: +userWithdrawStatus
+          };
           // if (phone) {
           //   const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
           //   const msg = phoneReg.test(phone);
@@ -420,7 +463,7 @@ export default {
       }
       if (fn === 'edit') {
         this.title = '编辑分析师';
-        let { loginSwitch, uid, phone, email, loginPassword, googleCode, relevanceUid} = row;
+        let { loginSwitch, uid, phone, email, loginPassword, googleCode, relevanceUid, userOtcStatus,userTransferStatus,userTradeStatus,userWithdrawStatus } = row;
         this.form = {
           loginSwitch: loginSwitch ? false : true,
           uid,
@@ -429,7 +472,11 @@ export default {
           email,
           loginPassword: '********',
           googleCode,
-          relevanceUid
+          relevanceUid,
+          userOtcStatus: Boolean(userOtcStatus),
+          userTransferStatus: Boolean(userTransferStatus),
+          userTradeStatus: Boolean(userTradeStatus),
+          userWithdrawStatus: Boolean(userWithdrawStatus)
         };
         this.showDialog = true;
         this.dialogFlag = false
