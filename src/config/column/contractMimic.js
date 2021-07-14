@@ -458,7 +458,14 @@ const analystMimicListConfig = [
     value: '',
     placeHolder: '请输入',
   },
-
+  {
+    type: 'text',
+    label: '关联实盘用户UID',
+    prop: 'relevanceUid',
+    value: '',
+    placeHolder: '请输入关联实盘用户UID',
+    minWidth: '125px'
+  },
   {
     type: 'select',
     label: '限制登录开关',
@@ -481,6 +488,10 @@ const analystMimicListCol = [
   {
     label: '分析师UID',
     prop: 'uid',
+  },
+  {
+    label: '关联的实盘用户UID',
+    prop: 'relevanceUid'
   },
   {
     label: '手机号',
@@ -530,6 +541,10 @@ const analystMimicListColNoBtn = [
   {
     label: '分析师UID',
     prop: 'uid',
+  },
+  {
+    label: '关联的实盘用户UID',
+    prop: 'relevanceUid'
   },
   {
     label: '手机号',

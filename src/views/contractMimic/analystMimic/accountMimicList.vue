@@ -12,7 +12,8 @@
       <Bsearch :configs="searchConfig" @do-search="doSearch" @do-reset="doReset" calText="合约统计" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div class="notice-button">
-      <el-button type="primary" size="medium" @click="create">创建</el-button>
+      <el-button type="primary" size="medium" @click="create(false)">创建</el-button>
+      <el-button type="primary" size="medium" @click="create(true)">批量创建</el-button>
     </div>
 
     <div>
@@ -38,9 +39,21 @@
           </el-select>
         </el-form-item>
 
-        <el-row :span="24">
+        <el-row :span="24" v-if="!batchCreate">
           <el-form-item label="UID" prop="uid">
             <el-input size="small" placeholder="请输入" type="number" v-model="form.uid"></el-input>
+          </el-form-item>
+        </el-row>
+
+        <el-row v-else>
+          <el-form-item label="UID" prop="uidRange">
+            <el-col :span="11">
+              <el-input size="small" placeholder="请输入UID" type="number" v-model="form.startUid"></el-input>
+            </el-col>
+            <el-col :span="2" style="text-align: center;">-</el-col>
+            <el-col :span="11">
+              <el-input size="small" placeholder="请输入UID" type="number" v-model="form.endUid"></el-input>
+            </el-col>
           </el-form-item>
         </el-row>
 
@@ -60,6 +73,15 @@
         <el-row :span="24">
           <el-form-item label="调账原因">
             <el-input placeholder="请输入" type="textarea" v-model="form.reason"></el-input>
+          </el-form-item>
+        </el-row>
+
+        <el-row :span="24" v-if="batchCreate">
+          <el-form-item label="审核状态" prop="tradeStatus">
+            <el-select size="small" placeholder="请选择" v-model="form.tradeStatus" width="20%">
+              <el-option label="成功" value="1"></el-option>
+              <el-option label="失败" value="2"></el-option>
+            </el-select>
           </el-form-item>
         </el-row>
       </el-form>
@@ -152,6 +174,22 @@ export default {
     iconPage,
   },
   data() {
+    const validateUid = (rule, value, callback) => {
+      const min = +this.form.startUid
+      const max = +this.form.endUid
+      if (min && max) {
+        if (min > max) {
+          callback(new Error('最大值超过最小值,请重新填写'))
+        } else if (min === max) {
+          callback(new Error('最小值必须小于最大值, 请重新填写'))
+        } else {
+          callback()
+        }
+      } else {
+        callback(new Error('请输入uid'))
+      }
+    }
+
     return {
       confirmType: '',
       sureType: '',
@@ -174,6 +212,9 @@ export default {
         amount: '',
         reason: '',
         plus: '+',
+        startUid: '',
+        endUid: '',
+        tradeStatus: ''
       },
       toDay: '',
       ago: '',
@@ -183,6 +224,8 @@ export default {
         coinName: [{ required: true, message: '请输入', trigger: 'blur' }],
         uid: [{ required: true, message: '请输入', trigger: 'blur' }],
         amount: [{ required: true, message: '请输入', trigger: 'blur' }],
+        uidRange: [{ validator: validateUid, trigger: 'blur' }],
+        tradeStatus: [{ required: true, message: '请输入', trigger: 'blur' }]
       },
       createDialog: false,
       btnLoading: false, // 提交
@@ -203,6 +246,7 @@ export default {
       dataList: [],
       totalDialog: false,
       passCancelId: '',
+      batchCreate: false // 是否批量创建订单
     };
   },
   watch: {
@@ -271,7 +315,7 @@ export default {
     async queryData(params) {
       this.excelLoading = true;
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getAccountMimicList(params);
+      const res = await $api.getAccountMimicList(params) 
       this.excelLoading = false;
       return res;
     },
@@ -294,17 +338,20 @@ export default {
     async createConfirm() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          let { accountType, coinName, uid, amount, reason } = this.form;
+          let { accountType, coinName, uid, amount, reason, startUid, endUid, tradeStatus } = this.form;
           let temId = '';
           temId = this.symbollist.filter((v) => v['label'] == coinName)[0].value;
           this.search_params_obj.coinMarket = temId;
+          const sendObj = this.batchCreate ? { startUid, endUid, tradeStatus } : { uid }
+          const parms = { accountType, coinId: temId, coinName, amount, ...sendObj };
 
-          const parms = { accountType, coinId: temId, coinName, uid, amount };
+          console.log('reason: ', reason);
           if (reason) {
             parms.reason = reason;
           }
+          console.log('parms: ', parms);
           this.btnLoading = true;
-          const res = await $api.addAccountMimic(parms);
+          const res = !this.batchCreate ? await $api.addAccountMimic(parms) : await $api.batchCreateAnalystOrder(parms);
           if (res) {
             this.$message({ message: '新增成功', type: 'success' });
             this.createDialog = false;
@@ -331,7 +378,8 @@ export default {
 
       this.getList();
     },
-    create() {
+    create(flag) {
+      this.batchCreate = flag
       this.createDialog = true;
     },
     // 分页

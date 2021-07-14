@@ -30,7 +30,7 @@
             </div>
             <!-- 输入框 -->
             <div v-if="(config.type === 'text' && !config.subType) || !config.type">
-              <div>{{ config.label }}</div>
+              <div :style="{minWidth: config.minWidth || '115px'}">{{ config.label }}</div>
               <el-input class="text-input" v-model="config.value" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
             </div>
 
@@ -63,7 +63,7 @@
             </div>
 
             <div v-if="config.type === 'text' && config.subType === 'uid'">
-              <div>{{ config.label }}</div>
+              <div :style="{minWidth: config.minWidth || '115px'}">{{ config.label }}</div>
               <el-input class="text-input" v-model="config.value" :maxlength="9" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
             </div>
             <!-- 日期选择 pc端或者横屏用这个 -->
