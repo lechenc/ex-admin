@@ -173,8 +173,6 @@ export default {
       const min = +this.batchForm.mailMidStartNum
       const max = +this.batchForm.mailMidEndNum
       if (min && max) {
-        console.log('min: ', min);
-        console.log('max: ', max);
         if (min > max) {
           callback(new Error('最大值超过最小值区间,请重新填写'))
         }  else if (min === max) {
@@ -362,7 +360,7 @@ export default {
     },
     // 批量创建分析师点击确定的时候
     createBatch() {
-      this.$refs.batchForm.validate((valid) => {
+      this.$refs.batchForm.validate(async (valid) => {
         console.log(valid)
         if (valid) {
           const { 
@@ -383,14 +381,13 @@ export default {
             loginSwitch: +loginSwitch
           }
 
-          const res = $api.batchAddAnalyst(params)
-          console.log('res: ', res);
-          if (res) {
+          const batchAddAnalyst = await $api.batchAddAnalyst(params)
+          console.log('batchAddAnalyst: ', batchAddAnalyst);
+          if (batchAddAnalyst) {
             this.$message.success({ title: '提示', message: '添加成功' })
             this.dialogFlag = false
             this.getList()
           }
-          console.log('params: ', params);
         }
       })
     },
