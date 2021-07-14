@@ -4,7 +4,8 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-btn">
-      <el-button type="primary" size="medium" @click="addAnalyst">添加分析师</el-button>
+      <el-button type="primary" size="medium" @click="addAnalyst(0)">添加分析师</el-button>
+      <el-button type="primary" size="medium" @click="addAnalyst(1)">批量添加分析师</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -16,6 +17,12 @@
 
     <el-Dialog :visible.sync="showDialog" :title="title" width="700px" class="notice-dialog">
       <el-form :model="form" ref="form" label-width="160px" :rules="rules" style="width: 90%; padding-left: 15px">
+        <el-row>
+          <el-form-item label="关联的实盘用户UID" prop="relevanceUid">
+            <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="form.relevanceUid"></el-input>
+          </el-form-item>
+        </el-row>
+
         <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
             <el-col :span="6">
@@ -59,6 +66,90 @@
         <el-button type="default" size="small" @click="showDialog = false">取消</el-button>
       </div>
     </el-Dialog>
+    
+    <!-- 批量添加分析师 -->
+     <el-Dialog :visible.sync="dialogFlag" :title="title" width="700px" class="notice-dialog">
+      <el-form :model="batchForm" ref="batchForm" label-width="160px" :rules="rules" style="width: 90%; padding-left: 15px">
+        <el-row>
+          <el-form-item label="关联的实盘用户UID" prop="relevanceUid">
+            <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="batchForm.relevanceUid"></el-input>
+          </el-form-item>
+        </el-row>
+
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="法币开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userOtcStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="划转开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTransferStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="币币交易开关" label-width="100px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTradeStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="提币开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userWithdrawStatus"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-form-item label="登录手机号" prop="phone">
+            <el-col :span="6">
+              <el-select placeholder="请选择" v-model="batchForm.phoneAreaCode" width="20%">
+                <el-option v-for="(item, idx) in phoneAreaCodeList" :key="idx" :label="item.phoneAreaCode" :value="item.phoneAreaCode"></el-option>
+              </el-select>
+            </el-col>
+
+            <el-col :span="18">
+              <el-input v-model.trim="batchForm.phone" placeholder="请输入"></el-input>
+            </el-col>
+          </el-form-item>
+        </el-row>
+
+        <el-row :span="24">
+          <el-form-item class="my-form-item" label="邮箱区间" prop="emailRange">
+            <el-col :span="2">{{ batchForm.mailPrefix }}</el-col>
+            <el-col :span="6">
+              <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidStartNum"/>
+            </el-col>
+            <el-col :span="1" style="text-align: center;">-</el-col>
+            <el-col :span="6">
+              <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidEndNum"/>
+            </el-col>
+            <el-col :span="5"> {{ batchForm.mailPostfix }}</el-col>
+          </el-form-item>
+        </el-row>
+
+        <el-row :span="24">
+          <el-form-item class="my-form-item" label="登录密码" prop="loginPassword">
+            <el-input size="small" type="password" placeholder="请输入" v-model="batchForm.loginPassword"> </el-input>
+          </el-form-item>
+        </el-row>
+
+        <el-row :span="24">
+          <el-form-item label="登录开关" prop="loginSwitch">
+            <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.loginSwitch"></el-switch>
+          </el-form-item>
+        </el-row>
+        <el-row :span="24">
+          <el-form-item label="谷歌验证码" prop="googleCode">
+            <el-input size="small" placeholder="请输入" type="Number" v-model.trim="batchForm.googleCode"></el-input>
+          </el-form-item>
+        </el-row>
+      </el-form>
+
+      <div class="comfirn-btn footer">
+        <el-button type="primary" size="small" @click="createBatch" :loading="btnLoading">确定</el-button>
+        <el-button type="default" size="small" @click="dialogFlag = false">取消</el-button>
+      </div>
+    </el-Dialog>
   </div>
 </template>
 
@@ -78,6 +169,24 @@ export default {
     iconPage,
   },
   data() {
+    const emailRange = (rule, value, callback) => {
+      const min = +this.batchForm.mailMidStartNum
+      const max = +this.batchForm.mailMidEndNum
+      if (min && max) {
+        console.log('min: ', min);
+        console.log('max: ', max);
+        if (min > max) {
+          callback(new Error('最大值超过最小值区间,请重新填写'))
+        }  else if (min === max) {
+          callback(new Error('最小值必须小于最大值, 请重新填写'))
+        } else {
+          callback()
+        }
+      } else {
+        callback(new Error('请输入数字区间'))
+      }
+    }
+
     return {
       btnLoading: false,
       showDialog: false,
@@ -85,6 +194,7 @@ export default {
       rules: {
         loginPassword: [{ required: true, message: '请输入', trigger: 'blur' }],
         googleCode: [{ required: true, message: '请输入', trigger: 'blur' }],
+        emailRange: [{ validator: emailRange, trigger: 'blur'}]
       },
       phoneAreaCodeList: [{ label: 86 }],
       listLoading: false, // 表格loading
@@ -108,8 +218,26 @@ export default {
         phoneAreaCode: '',
         email: '',
         loginPassword: '',
-        googleCode: '',
+        googleCode: ''
       },
+      batchForm: {
+        loginSwitch: false,
+        phone: '',
+        phoneAreaCode: '',
+        loginPassword: '',
+        googleCode: '',
+        relevanceUid: '',
+        mailMidStartNum: '',
+        mailMidEndNum: '',
+        userOtcStatus: false, // 法币开关
+        userTransferStatus: false, // 划转开关
+        userTradeStatus: false, // 币币交易开关
+        userWithdrawStatus: false, // 提币开关
+        mailPrefix: 'alpex',
+        mailPostfix: '@gmail.com'
+      },
+      // 根据状态不同加载dialog内登录邮箱的表单的不同
+      dialogFlag: false
     };
   },
   filters: {
@@ -125,45 +253,73 @@ export default {
           phoneAreaCode: '',
           email: '',
           loginPassword: '',
-          googleCode: '',
+          googleCode: ''
         };
       } else {
         this.getCode();
       }
     },
+    dialogFlag(val) {
+      if (val) {
+        this.getCode()
+      } else {
+        this.batchForm = {
+        loginSwitch: false,
+        phone: '',
+        phoneAreaCode: '',
+        loginPassword: '',
+        googleCode: '',
+        relevanceUid: '',
+        mailMidStartNum: '',
+        mailMidEndNum: '',
+        userOtcStatus: false, // 法币开关
+        userTransferStatus: false, // 划转开关
+        userTradeStatus: false, // 币币交易开关
+        userWithdrawStatus: false, // 提币开关
+        mailPrefix: 'alpex',
+        mailPostfix: '@gmail.com'
+      }
+      }
+    } 
   },
   methods: {
     confirm() {
       this.$refs.form.validate(async (valid) => {
+        console.log('valid: ', valid);
         if (valid) {
-          if (!this.form.phone && !this.form.email) {
-            return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' });
-          }
-          let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid } = this.form;
+          // console.log(this.form)
+          
+          // if (!this.form.phone && !this.form.email) {
+          //   return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' });
+          // }
+          let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid} = this.form;
           let params = { googleCode, loginSwitch: loginSwitch ? 0 : 1 };
-          if (phone) {
-            const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
-            const msg = phoneReg.test(phone);
-            if (!msg) {
-              return this.$message.error('请输入正确手机号');
-            }
-            params.phone = phone;
-            params.phoneAreaCode = phoneAreaCode;
-          }
-          if (email) {
-            const loginEmailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
-            const msg = loginEmailReg.test(email);
-            if (!msg) {
-              return this.$message.error('请输入正确邮箱');
-            }
-            params.email = email;
-          }
-          if (uid && loginPassword === '********') {
-          } else {
-            params.loginPassword = mMd5.md5(loginPassword);
-          }
+          // if (phone) {
+          //   const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
+          //   const msg = phoneReg.test(phone);
+          //   if (!msg) {
+          //     return this.$message.error('请输入正确手机号');
+          //   }
+          //   params.phone = phone;
+          //   params.phoneAreaCode = phoneAreaCode;
+          // }
+          // if (email) {
+          //   const loginEmailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+          //   const msg = loginEmailReg.test(email);
+          //   if (!msg) {
+          //     return this.$message.error('请输入正确邮箱');
+          //   }
+          //   params.email = email;
+          // }
+          // if (uid && loginPassword === '********') {
+          // } else {
+          //   params.loginPassword = mMd5.md5(loginPassword);
+          // }
+          const sendObj = this.configValidate(this.form, params)
+          console.log(sendObj)
+          console.log(params)
 
-          const res = uid ? await $api.editAnalystMimicList({ ...params, uid }) : await $api.addAnalystMimicList({ ...params });
+          const res = uid ? await $api.editAnalystMimicList({ ...sendObj, uid }) : await $api.addAnalystMimicList({ ...sendObj });
           if (res) {
             uid ? this.$message.success({ title: '提示', message: '编辑成功' }) : this.$message.success({ title: '提示', message: '添加成功' });
             this.showDialog = false;
@@ -174,13 +330,85 @@ export default {
         }
       });
     },
+    configValidate(parms, sendObj = {}) {
+      if (!parms.phone && !parms.email) {
+        return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' })
+      }
+      if (parms.phone) {
+        const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
+        const msg = phoneReg.test(parms.phone)
+        if (!msg) {
+          return this.$message.eror('请输入正确手机号')
+        }
+        sendObj.phone = parms.phone
+        sendObj.phoneAreaCode = parms.phoneAreaCode
+      }
+      if (parms.email) {
+        const loginEmailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+        // const msg = loginEmailReg.test(parms.email)
+        if (!loginEmailReg.test(parms.email)) {
+          return this.$message.error('请输入正确邮箱')
+        }
+        sendObj.email = parms.email
+      }
+
+      if (parms.uid && parms.loginPasword === '********') {
+      } else {
+        sendObj.loginPassword = mMd5.md5(parms.loginPassword)
+      }
+      // console.log(sendObj)
+      console.log('sendObj: ', sendObj);
+      return sendObj
+    },
+    // 批量创建分析师点击确定的时候
+    createBatch() {
+      this.$refs.batchForm.validate((valid) => {
+        console.log(valid)
+        if (valid) {
+          const { 
+            userOtcStatus,
+            userTransferStatus,
+            userTradeStatus,
+            userWithdrawStatus,
+            loginSwitch
+          } = this.batchForm
+
+          const params = {
+            ...this.batchForm,
+            ...this.configValidate(this.batchForm),
+            userOtcStatus: +userOtcStatus,
+            userTransferStatus: +userTransferStatus,
+            userTradeStatus: +userTradeStatus,
+            userWithdrawStatus: +userWithdrawStatus,
+            loginSwitch: +loginSwitch
+          }
+
+          const res = $api.batchAddAnalyst(params)
+          console.log('res: ', res);
+          if (res) {
+            this.$message.success({ title: '提示', message: '添加成功' })
+            this.dialogFlag = false
+            this.getList()
+          }
+          console.log('params: ', params);
+        }
+      })
+    },
     async getCode() {
       const res = await $api.getCountryCode({});
       this.phoneAreaCodeList = res.data.data
+      console.log(this.phoneAreaCode)
     },
-    addAnalyst() {
-      this.showDialog = true;
-      this.title = '添加分析师';
+    // 根据eq不同加载不同状态
+    addAnalyst(eq) {
+      // this.showDialog = true;
+      this.title = (eq === 0 ? '' : '批量') + '添加分析师';
+      // this.dialogFlag = eq === 1
+      if (eq) {
+        this.dialogFlag = true
+      } else {
+        this.showDialog = true
+      }
     },
     doHandle(data) {
       const { fn, row } = data;
@@ -195,7 +423,7 @@ export default {
       }
       if (fn === 'edit') {
         this.title = '编辑分析师';
-        let { loginSwitch, uid, phone, email, loginPassword, googleCode } = row;
+        let { loginSwitch, uid, phone, email, loginPassword, googleCode, relevanceUid} = row;
         this.form = {
           loginSwitch: loginSwitch ? false : true,
           uid,
@@ -204,8 +432,10 @@ export default {
           email,
           loginPassword: '********',
           googleCode,
+          relevanceUid
         };
         this.showDialog = true;
+        this.dialogFlag = false
       }
     },
     doSearch(data) {
@@ -279,6 +509,8 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AnalystMimicList', analystMimicListCol, analystMimicListColNoBtn);
+    console.log('analystMimicListColNoBtn: ', analystMimicListColNoBtn);
+    console.log('analystMimicListCol: ', analystMimicListCol);
     this.configs = authObj.val;
 
     // 初始化今天，和昨天的时间
