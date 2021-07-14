@@ -244,6 +244,7 @@ export default {
         userTransferStatus: false, // 划转开关
         userTradeStatus: false, // 币币交易开关
         userWithdrawStatus: false, // 提币开关
+        relevanceUid: ''
       },
       batchForm: {
         loginSwitch: false,
@@ -325,7 +326,8 @@ export default {
             userOtcStatus,
             userTransferStatus,
             userTradeStatus,
-            userWithdrawStatus
+            userWithdrawStatus,
+            relevanceUid
           } = this.form;
           let params = {
             googleCode,
@@ -333,7 +335,8 @@ export default {
             userOtcStatus: +userOtcStatus,
             userTransferStatus: +userTransferStatus,
             userTradeStatus: +userTradeStatus,
-            userWithdrawStatus: +userWithdrawStatus
+            userWithdrawStatus: +userWithdrawStatus,
+            relevanceUid
           };
           // if (phone) {
           //   const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
