@@ -360,9 +360,6 @@ export default {
           //   params.loginPassword = mMd5.md5(loginPassword);
           // }
           const sendObj = this.configValidate(this.form, params, true)
-          console.log(sendObj)
-          console.log(params)
-
           if (sendObj) {
             const res = uid ? await $api.editAnalystMimicList({ ...sendObj, uid }) : await $api.addAnalystMimicList({ ...sendObj });
             if (res) {
@@ -405,8 +402,6 @@ export default {
       } else {
         sendObj.loginPassword = mMd5.md5(parms.loginPassword)
       }
-      // console.log(sendObj)
-      console.log('sendObj: ', sendObj);
       return sendObj
     },
     // 批量创建分析师点击确定的时候
@@ -429,9 +424,8 @@ export default {
             userTransferStatus: +userTransferStatus,
             userTradeStatus: +userTradeStatus,
             userWithdrawStatus: +userWithdrawStatus,
-            loginSwitch: +loginSwitch
+            loginSwitch: +(!loginSwitch)
           }
-
           if (param) {
             const batchAddAnalyst = await $api.batchAddAnalyst(params)
             console.log('batchAddAnalyst: ', batchAddAnalyst);
@@ -474,6 +468,7 @@ export default {
       if (fn === 'edit') {
         this.title = '编辑分析师';
         let { loginSwitch, uid, phone, email, loginPassword, googleCode, relevanceUid, userOtcStatus,userTransferStatus,userTradeStatus,userWithdrawStatus } = row;
+        console.log('loginSwitch: ', loginSwitch);
         this.form = {
           loginSwitch: loginSwitch ? false : true,
           uid,
