@@ -122,7 +122,7 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <!-- <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
             <el-col :span="6">
               <el-select placeholder="请选择" v-model="batchForm.phoneAreaCode" width="20%">
@@ -134,7 +134,7 @@
               <el-input v-model.trim="batchForm.phone" placeholder="请输入"></el-input>
             </el-col>
           </el-form-item>
-        </el-row>
+        </el-row> -->
 
         <el-row :span="24">
           <el-form-item class="my-form-item" label="邮箱区间" prop="emailRange">
@@ -385,7 +385,7 @@ export default {
         const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
         const msg = phoneReg.test(parms.phone)
         if (!msg) {
-          this.$message.eror('请输入正确手机号')
+          this.$message.error('请输入正确手机号')
           return false
         }
         sendObj.phone = parms.phone
