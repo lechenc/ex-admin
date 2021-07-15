@@ -23,6 +23,29 @@
           </el-form-item>
         </el-row>
 
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="法币开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userOtcStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="划转开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userTransferStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="币币交易开关" label-width="100px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userTradeStatus"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="提币开关" label-width="80px">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userWithdrawStatus"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
             <el-col :span="6">
@@ -99,7 +122,7 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24">
+        <!-- <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
             <el-col :span="6">
               <el-select placeholder="请选择" v-model="batchForm.phoneAreaCode" width="20%">
@@ -111,7 +134,7 @@
               <el-input v-model.trim="batchForm.phone" placeholder="请输入"></el-input>
             </el-col>
           </el-form-item>
-        </el-row>
+        </el-row> -->
 
         <el-row :span="24">
           <el-form-item class="my-form-item" label="邮箱区间" prop="emailRange">
@@ -172,7 +195,7 @@ export default {
     const emailRange = (rule, value, callback) => {
       const min = +this.batchForm.mailMidStartNum
       const max = +this.batchForm.mailMidEndNum
-      if (min && max) {
+      if (!isNaN(min) && !isNaN(max)) {
         if (min > max) {
           callback(new Error('最大值超过最小值区间,请重新填写'))
         }  else if (min === max) {
@@ -216,7 +239,12 @@ export default {
         phoneAreaCode: '',
         email: '',
         loginPassword: '',
-        googleCode: ''
+        googleCode: '',
+        userOtcStatus: false, // 法币开关
+        userTransferStatus: false, // 划转开关
+        userTradeStatus: false, // 币币交易开关
+        userWithdrawStatus: false, // 提币开关
+        relevanceUid: ''
       },
       batchForm: {
         loginSwitch: false,
@@ -251,7 +279,11 @@ export default {
           phoneAreaCode: '',
           email: '',
           loginPassword: '',
-          googleCode: ''
+          googleCode: '',
+          userOtcStatus: false, // 法币开关
+          userTransferStatus: false, // 划转开关
+          userTradeStatus: false, // 币币交易开关
+          userWithdrawStatus: false, // 提币开关
         };
       } else {
         this.getCode();
@@ -290,8 +322,22 @@ export default {
           // if (!this.form.phone && !this.form.email) {
           //   return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' });
           // }
-          let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid} = this.form;
-          let params = { googleCode, loginSwitch: loginSwitch ? 0 : 1 };
+          let { phone, phoneAreaCode, email, loginPassword, googleCode, loginSwitch, uid,
+            userOtcStatus,
+            userTransferStatus,
+            userTradeStatus,
+            userWithdrawStatus,
+            relevanceUid
+          } = this.form;
+          let params = {
+            googleCode,
+            loginSwitch: loginSwitch ? 0 : 1,
+            userOtcStatus: +userOtcStatus,
+            userTransferStatus: +userTransferStatus,
+            userTradeStatus: +userTradeStatus,
+            userWithdrawStatus: +userWithdrawStatus,
+            relevanceUid
+          };
           // if (phone) {
           //   const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
           //   const msg = phoneReg.test(phone);
@@ -313,30 +359,34 @@ export default {
           // } else {
           //   params.loginPassword = mMd5.md5(loginPassword);
           // }
-          const sendObj = this.configValidate(this.form, params)
+          const sendObj = this.configValidate(this.form, params, true)
           console.log(sendObj)
           console.log(params)
 
-          const res = uid ? await $api.editAnalystMimicList({ ...sendObj, uid }) : await $api.addAnalystMimicList({ ...sendObj });
-          if (res) {
-            uid ? this.$message.success({ title: '提示', message: '编辑成功' }) : this.$message.success({ title: '提示', message: '添加成功' });
-            this.showDialog = false;
-            this.getList();
+          if (sendObj) {
+            const res = uid ? await $api.editAnalystMimicList({ ...sendObj, uid }) : await $api.addAnalystMimicList({ ...sendObj });
+            if (res) {
+              uid ? this.$message.success({ title: '提示', message: '编辑成功' }) : this.$message.success({ title: '提示', message: '添加成功' });
+              this.showDialog = false;
+              this.getList();
+            }
           }
         } else {
           this.$message.error({ title: '提示', message: '请完成表单内容填写再重试' });
         }
       });
     },
-    configValidate(parms, sendObj = {}) {
-      if (!parms.phone && !parms.email) {
-        return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' })
+    configValidate(parms, sendObj = {}, flag = false) {
+      if (!parms.phone && !parms.email && flag) {
+        this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' })
+        return false
       }
       if (parms.phone) {
         const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
         const msg = phoneReg.test(parms.phone)
         if (!msg) {
-          return this.$message.eror('请输入正确手机号')
+          this.$message.error('请输入正确手机号')
+          return false
         }
         sendObj.phone = parms.phone
         sendObj.phoneAreaCode = parms.phoneAreaCode
@@ -345,7 +395,8 @@ export default {
         const loginEmailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
         // const msg = loginEmailReg.test(parms.email)
         if (!loginEmailReg.test(parms.email)) {
-          return this.$message.error('请输入正确邮箱')
+          this.$message.error('请输入正确邮箱')
+          return fakse
         }
         sendObj.email = parms.email
       }
@@ -370,10 +421,10 @@ export default {
             userWithdrawStatus,
             loginSwitch
           } = this.batchForm
-
+          const param = this.configValidate(this.batchForm)
           const params = {
             ...this.batchForm,
-            ...this.configValidate(this.batchForm),
+            ...param,
             userOtcStatus: +userOtcStatus,
             userTransferStatus: +userTransferStatus,
             userTradeStatus: +userTradeStatus,
@@ -381,12 +432,14 @@ export default {
             loginSwitch: +loginSwitch
           }
 
-          const batchAddAnalyst = await $api.batchAddAnalyst(params)
-          console.log('batchAddAnalyst: ', batchAddAnalyst);
-          if (batchAddAnalyst) {
-            this.$message.success({ title: '提示', message: '添加成功' })
-            this.dialogFlag = false
-            this.getList()
+          if (param) {
+            const batchAddAnalyst = await $api.batchAddAnalyst(params)
+            console.log('batchAddAnalyst: ', batchAddAnalyst);
+            if (batchAddAnalyst) {
+              this.$message.success({ title: '提示', message: '添加成功' })
+              this.dialogFlag = false
+              this.getList()
+            }
           }
         }
       })
@@ -420,7 +473,7 @@ export default {
       }
       if (fn === 'edit') {
         this.title = '编辑分析师';
-        let { loginSwitch, uid, phone, email, loginPassword, googleCode, relevanceUid} = row;
+        let { loginSwitch, uid, phone, email, loginPassword, googleCode, relevanceUid, userOtcStatus,userTransferStatus,userTradeStatus,userWithdrawStatus } = row;
         this.form = {
           loginSwitch: loginSwitch ? false : true,
           uid,
@@ -429,7 +482,11 @@ export default {
           email,
           loginPassword: '********',
           googleCode,
-          relevanceUid
+          relevanceUid,
+          userOtcStatus: Boolean(userOtcStatus),
+          userTransferStatus: Boolean(userTransferStatus),
+          userTradeStatus: Boolean(userTradeStatus),
+          userWithdrawStatus: Boolean(userWithdrawStatus)
         };
         this.showDialog = true;
         this.dialogFlag = false
