@@ -78,9 +78,9 @@
 
         <el-row :span="24" v-if="batchCreate">
           <el-form-item label="审核状态" prop="tradeStatus">
-            <el-select size="small" placeholder="请选择" v-model="form.tradeStatus" width="20%">
+            <el-select size="small" placeholder="请选择" v-model="form.tradeStatus" width="20%" disabled>
               <el-option label="成功" value="1"></el-option>
-              <el-option label="失败" value="2"></el-option>
+              <!-- <el-option label="失败" value="2"></el-option> -->
             </el-select>
           </el-form-item>
         </el-row>
@@ -214,7 +214,7 @@ export default {
         plus: '+',
         startUid: '',
         endUid: '',
-        tradeStatus: ''
+        tradeStatus: '1'
       },
       toDay: '',
       ago: '',
@@ -259,6 +259,9 @@ export default {
           amount: '',
           reason: '',
           plus: '+',
+          startUid: '',
+          endUid: '',
+          tradeStatus: '1'
         };
       }
     },
