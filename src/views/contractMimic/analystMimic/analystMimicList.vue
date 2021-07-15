@@ -195,7 +195,7 @@ export default {
     const emailRange = (rule, value, callback) => {
       const min = +this.batchForm.mailMidStartNum
       const max = +this.batchForm.mailMidEndNum
-      if (min && max) {
+      if (!isNaN(min) && !isNaN(max)) {
         if (min > max) {
           callback(new Error('最大值超过最小值区间,请重新填写'))
         }  else if (min === max) {
