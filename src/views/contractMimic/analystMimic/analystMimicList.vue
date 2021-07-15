@@ -359,30 +359,34 @@ export default {
           // } else {
           //   params.loginPassword = mMd5.md5(loginPassword);
           // }
-          const sendObj = this.configValidate(this.form, params)
+          const sendObj = this.configValidate(this.form, params, true)
           console.log(sendObj)
           console.log(params)
 
-          const res = uid ? await $api.editAnalystMimicList({ ...sendObj, uid }) : await $api.addAnalystMimicList({ ...sendObj });
-          if (res) {
-            uid ? this.$message.success({ title: '提示', message: '编辑成功' }) : this.$message.success({ title: '提示', message: '添加成功' });
-            this.showDialog = false;
-            this.getList();
+          if (sendObj) {
+            const res = uid ? await $api.editAnalystMimicList({ ...sendObj, uid }) : await $api.addAnalystMimicList({ ...sendObj });
+            if (res) {
+              uid ? this.$message.success({ title: '提示', message: '编辑成功' }) : this.$message.success({ title: '提示', message: '添加成功' });
+              this.showDialog = false;
+              this.getList();
+            }
           }
         } else {
           this.$message.error({ title: '提示', message: '请完成表单内容填写再重试' });
         }
       });
     },
-    configValidate(parms, sendObj = {}) {
-      if (!parms.phone && !parms.email) {
-        return this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' })
+    configValidate(parms, sendObj = {}, flag = false) {
+      if (!parms.phone && !parms.email && flag) {
+        this.$message.error({ title: '提示', message: '请至少填写手机号和邮箱的一种' })
+        return false
       }
       if (parms.phone) {
         const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
         const msg = phoneReg.test(parms.phone)
         if (!msg) {
-          return this.$message.eror('请输入正确手机号')
+          this.$message.eror('请输入正确手机号')
+          return false
         }
         sendObj.phone = parms.phone
         sendObj.phoneAreaCode = parms.phoneAreaCode
@@ -391,7 +395,8 @@ export default {
         const loginEmailReg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
         // const msg = loginEmailReg.test(parms.email)
         if (!loginEmailReg.test(parms.email)) {
-          return this.$message.error('请输入正确邮箱')
+          this.$message.error('请输入正确邮箱')
+          return fakse
         }
         sendObj.email = parms.email
       }
@@ -416,10 +421,10 @@ export default {
             userWithdrawStatus,
             loginSwitch
           } = this.batchForm
-
+          const param = this.configValidate(this.batchForm)
           const params = {
             ...this.batchForm,
-            ...this.configValidate(this.batchForm),
+            ...param,
             userOtcStatus: +userOtcStatus,
             userTransferStatus: +userTransferStatus,
             userTradeStatus: +userTradeStatus,
@@ -427,12 +432,14 @@ export default {
             loginSwitch: +loginSwitch
           }
 
-          const batchAddAnalyst = await $api.batchAddAnalyst(params)
-          console.log('batchAddAnalyst: ', batchAddAnalyst);
-          if (batchAddAnalyst) {
-            this.$message.success({ title: '提示', message: '添加成功' })
-            this.dialogFlag = false
-            this.getList()
+          if (param) {
+            const batchAddAnalyst = await $api.batchAddAnalyst(params)
+            console.log('batchAddAnalyst: ', batchAddAnalyst);
+            if (batchAddAnalyst) {
+              this.$message.success({ title: '提示', message: '添加成功' })
+              this.dialogFlag = false
+              this.getList()
+            }
           }
         }
       })
