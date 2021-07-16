@@ -19,7 +19,7 @@
       <el-form :model="form" ref="form" label-width="160px" :rules="rules" style="width: 90%; padding-left: 15px">
         <el-row>
           <el-form-item label="关联的实盘用户UID" prop="relevanceUid">
-            <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="form.relevanceUid"></el-input>
+            <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="form.relevanceUid" :disabled="disabledEdit"></el-input>
           </el-form-item>
         </el-row>
 
@@ -269,7 +269,9 @@ export default {
       // 创建时的loading效果
       dialogFlagLoad: false,
       // 显示关闭按钮 
-      showClose: true
+      showClose: true,
+      // 是否为编辑
+      disabledEdit: false
     };
   },
   filters: {
@@ -468,6 +470,7 @@ export default {
         this.dialogFlag = true
       } else {
         this.showDialog = true
+        this.disabledEdit = false
       }
     },
     doHandle(data) {
@@ -500,6 +503,7 @@ export default {
           userWithdrawStatus: Boolean(userWithdrawStatus)
         };
         this.showDialog = true;
+        this.disabledEdit = true
         this.dialogFlag = false
       }
     },
