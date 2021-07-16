@@ -92,85 +92,87 @@
     
     <!-- 批量添加分析师 -->
      <el-Dialog :visible.sync="dialogFlag" :title="title" width="700px" class="notice-dialog">
-      <el-form :model="batchForm" ref="batchForm" label-width="160px" :rules="rules" style="width: 90%; padding-left: 15px">
-        <el-row>
-          <el-form-item label="关联的实盘用户UID" prop="relevanceUid">
-            <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="batchForm.relevanceUid"></el-input>
-          </el-form-item>
-        </el-row>
+      <div v-loading="dialogFlagLoad">
+        <el-form :model="batchForm" ref="batchForm" label-width="160px" :rules="rules" style="width: 90%; padding-left: 15px">
+          <el-row>
+            <el-form-item label="关联的实盘用户UID" prop="relevanceUid">
+              <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="batchForm.relevanceUid"></el-input>
+            </el-form-item>
+          </el-row>
 
-        <el-row>
-          <el-col :span="6">
-            <el-form-item label="法币开关" label-width="80px">
-              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userOtcStatus"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="划转开关" label-width="80px">
-              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTransferStatus"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="币币交易开关" label-width="100px">
-              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTradeStatus"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="提币开关" label-width="80px">
-              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userWithdrawStatus"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <!-- <el-row :span="24">
-          <el-form-item label="登录手机号" prop="phone">
+          <el-row>
             <el-col :span="6">
-              <el-select placeholder="请选择" v-model="batchForm.phoneAreaCode" width="20%">
-                <el-option v-for="(item, idx) in phoneAreaCodeList" :key="idx" :label="item.phoneAreaCode" :value="item.phoneAreaCode"></el-option>
-              </el-select>
+              <el-form-item label="法币开关" label-width="80px">
+                <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userOtcStatus"/>
+              </el-form-item>
             </el-col>
-
-            <el-col :span="18">
-              <el-input v-model.trim="batchForm.phone" placeholder="请输入"></el-input>
-            </el-col>
-          </el-form-item>
-        </el-row> -->
-
-        <el-row :span="24">
-          <el-form-item class="my-form-item" label="邮箱区间" prop="emailRange">
-            <el-col :span="2">{{ batchForm.mailPrefix }}</el-col>
             <el-col :span="6">
-              <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidStartNum"/>
+              <el-form-item label="划转开关" label-width="80px">
+                <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTransferStatus"/>
+              </el-form-item>
             </el-col>
-            <el-col :span="1" style="text-align: center;">-</el-col>
             <el-col :span="6">
-              <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidEndNum"/>
+              <el-form-item label="币币交易开关" label-width="100px">
+                <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTradeStatus"/>
+              </el-form-item>
             </el-col>
-            <el-col :span="5"> {{ batchForm.mailPostfix }}</el-col>
-          </el-form-item>
-        </el-row>
+            <el-col :span="6">
+              <el-form-item label="提币开关" label-width="80px">
+                <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userWithdrawStatus"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row :span="24">
-          <el-form-item class="my-form-item" label="登录密码" prop="loginPassword">
-            <el-input size="small" type="password" placeholder="请输入" v-model="batchForm.loginPassword"> </el-input>
-          </el-form-item>
-        </el-row>
+          <!-- <el-row :span="24">
+            <el-form-item label="登录手机号" prop="phone">
+              <el-col :span="6">
+                <el-select placeholder="请选择" v-model="batchForm.phoneAreaCode" width="20%">
+                  <el-option v-for="(item, idx) in phoneAreaCodeList" :key="idx" :label="item.phoneAreaCode" :value="item.phoneAreaCode"></el-option>
+                </el-select>
+              </el-col>
 
-        <el-row :span="24">
-          <el-form-item label="登录开关" prop="loginSwitch">
-            <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.loginSwitch"></el-switch>
-          </el-form-item>
-        </el-row>
-        <el-row :span="24">
-          <el-form-item label="谷歌验证码" prop="googleCode">
-            <el-input size="small" placeholder="请输入" type="Number" v-model.trim="batchForm.googleCode"></el-input>
-          </el-form-item>
-        </el-row>
-      </el-form>
+              <el-col :span="18">
+                <el-input v-model.trim="batchForm.phone" placeholder="请输入"></el-input>
+              </el-col>
+            </el-form-item>
+          </el-row> -->
 
-      <div class="comfirn-btn footer">
-        <el-button type="primary" size="small" @click="createBatch" :loading="btnLoading">确定</el-button>
-        <el-button type="default" size="small" @click="dialogFlag = false">取消</el-button>
+          <el-row :span="24">
+            <el-form-item class="my-form-item" label="邮箱区间" prop="emailRange">
+              <el-col :span="2">{{ batchForm.mailPrefix }}</el-col>
+              <el-col :span="6">
+                <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidStartNum"/>
+              </el-col>
+              <el-col :span="1" style="text-align: center;">-</el-col>
+              <el-col :span="6">
+                <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidEndNum"/>
+              </el-col>
+              <el-col :span="5"> {{ batchForm.mailPostfix }}</el-col>
+            </el-form-item>
+          </el-row>
+
+          <el-row :span="24">
+            <el-form-item class="my-form-item" label="登录密码" prop="loginPassword">
+              <el-input size="small" type="password" placeholder="请输入" v-model="batchForm.loginPassword"> </el-input>
+            </el-form-item>
+          </el-row>
+
+          <el-row :span="24">
+            <el-form-item label="登录开关" prop="loginSwitch">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.loginSwitch"></el-switch>
+            </el-form-item>
+          </el-row>
+          <el-row :span="24">
+            <el-form-item label="谷歌验证码" prop="googleCode">
+              <el-input size="small" placeholder="请输入" type="Number" v-model.trim="batchForm.googleCode"></el-input>
+            </el-form-item>
+          </el-row>
+        </el-form>
+
+        <div class="comfirn-btn footer">
+          <el-button type="primary" size="small" @click="createBatch" :loading="btnLoading">确定</el-button>
+          <el-button type="default" size="small" @click="dialogFlag = false">取消</el-button>
+        </div>
       </div>
     </el-Dialog>
   </div>
@@ -263,7 +265,8 @@ export default {
         mailPostfix: '@gmail.com'
       },
       // 根据状态不同加载dialog内登录邮箱的表单的不同
-      dialogFlag: false
+      dialogFlag: false,
+      dialogFlagLoad: false
     };
   },
   filters: {
@@ -406,37 +409,44 @@ export default {
     },
     // 批量创建分析师点击确定的时候
     createBatch() {
-      this.$refs.batchForm.validate(async (valid) => {
-        console.log(valid)
-        if (valid) {
-          const { 
-            userOtcStatus,
-            userTransferStatus,
-            userTradeStatus,
-            userWithdrawStatus,
-            loginSwitch
-          } = this.batchForm
-          const param = this.configValidate(this.batchForm)
-          const params = {
-            ...this.batchForm,
-            ...param,
-            userOtcStatus: +userOtcStatus,
-            userTransferStatus: +userTransferStatus,
-            userTradeStatus: +userTradeStatus,
-            userWithdrawStatus: +userWithdrawStatus,
-            loginSwitch: +(!loginSwitch)
-          }
-          if (param) {
-            const batchAddAnalyst = await $api.batchAddAnalyst(params)
-            console.log('batchAddAnalyst: ', batchAddAnalyst);
-            if (batchAddAnalyst) {
-              this.$message.success({ title: '提示', message: '添加成功' })
-              this.dialogFlag = false
-              this.getList()
+      if (!this.dialogFlagLoad) {
+        this.$refs.batchForm.validate(async (valid) => {
+          console.log(valid)
+          if (valid) {
+            const { 
+              userOtcStatus,
+              userTransferStatus,
+              userTradeStatus,
+              userWithdrawStatus,
+              loginSwitch
+            } = this.batchForm
+            const param = this.configValidate(this.batchForm)
+            const params = {
+              ...this.batchForm,
+              ...param,
+              userOtcStatus: +userOtcStatus,
+              userTransferStatus: +userTransferStatus,
+              userTradeStatus: +userTradeStatus,
+              userWithdrawStatus: +userWithdrawStatus,
+              loginSwitch: +(!loginSwitch)
+            }
+            if (param) {
+              this.dialogFlagLoad = true
+              const batchAddAnalyst = await $api.batchAddAnalyst(params)
+              console.log('batchAddAnalyst: ', batchAddAnalyst);
+              if (batchAddAnalyst) {
+                this.$message.success({ title: '提示', message: '添加成功' })
+                this.dialogFlagLoad = false
+                this.dialogFlag = false
+                this.getList()
+              } else {
+                this.dialogFlagLoad = false
+              }
             }
           }
-        }
-      })
+        })
+      }
+      
     },
     async getCode() {
       const res = await $api.getCountryCode({});
