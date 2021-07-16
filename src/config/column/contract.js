@@ -97,12 +97,25 @@ const coinContractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
+    width:'300',
     btnGroup: [
       {
         label: '编辑',
         fn: 'edit',
         type: 'primary',
         alias: 'edit',
+      },
+      {
+        label: '一键撤单',
+        fn: 'allCancel',
+        type: 'primary',
+        alias: 'allCancel',
+      },
+      {
+        label: '一键平仓',
+        fn: 'allClose',
+        type: 'primary',
+        alias: 'allClose',
       },
     ],
   },
