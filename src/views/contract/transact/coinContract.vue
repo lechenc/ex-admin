@@ -10,27 +10,15 @@
   <div class="coinContract-container">
     <div class="container-btn">
       <el-button type="primary" v-if="btnArr.includes('add')" size="small" @click="addCoin">添加</el-button>
-      <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')"
-        >档位设置</el-button
-      >
-      <el-button type="primary"   v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')"
-        >资金费率设置</el-button
-      >
+      <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')">档位设置</el-button>
+      <el-button type="primary" v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')">资金费率设置</el-button>
     </div>
     <div>
       <Btable :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 添加 编辑 -->
     <el-dialog :title="formName" width="900px" :visible.sync="dialogFormVisible">
@@ -76,13 +64,7 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="委托价格浮动限制" :label-width="formLabelWidth" prop="priceFloatingLimit">
-              <el-input
-                v-model="cForm.priceFloatingLimit"
-                @input="checkVal('priceFloatingLimit')"
-                autocomplete="off"
-                placeholder=""
-                type="number"
-              >
+              <el-input v-model="cForm.priceFloatingLimit" @input="checkVal('priceFloatingLimit')" autocomplete="off" placeholder="" type="number">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -91,14 +73,7 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="价格小数位" :label-width="formLabelWidth" prop="pricePrecision">
-              <el-input
-                v-model="cForm.pricePrecision"
-                @input="checkVal('pricePrecision', 'noDot')"
-                rows="5"
-                autocomplete="off"
-                placeholder=""
-                type="number"
-              ></el-input>
+              <el-input v-model="cForm.pricePrecision" @input="checkVal('pricePrecision', 'noDot')" rows="5" autocomplete="off" placeholder="" type="number"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -215,7 +190,7 @@ export default {
         // lever: [],
         status: '',
         onDealing: '',
-        gears:""
+        gears: '',
       },
       formName: '新增币种',
       rules: {
@@ -263,13 +238,13 @@ export default {
           // lever: [],
           status: '',
           onDealing: '',
-          gears:""
+          gears: '',
         };
       });
     },
 
     async confirmOp() {
-      this.$refs['cForm'].validate(async valid => {
+      this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           let {
             id,
@@ -380,7 +355,7 @@ export default {
             // lever,
             status,
             onDealing,
-            gears
+            gears,
           } = row;
 
           this.cForm = {
@@ -401,25 +376,61 @@ export default {
             priceFloatingLimit: this.numToPercent(priceFloatingLimit),
             status,
             onDealing,
-            gears
+            gears,
           };
         });
+      }
+      // 一键撤单
+      if (fn == 'allCancel') {
+        this.$confirm(row.coinMarket + '是否一键撤单?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.coinContractAllCancel({
+              coinMarket: row.coinMarket,
+            });
+            if (res) {
+              this.$message({ type: 'success', message: res.data.message });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
+      // 一键平仓
+      if (fn == 'allClose') {
+        this.$confirm(row.coinMarket + '是否一键平仓?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.coinContractAllClose({
+              coinMarket: row.coinMarket,
+            });
+            if (res) {
+              this.$message({ type: 'success', message: res.data.message });
+              this.getList();
+            }
+          })
+          .catch(() => {});
       }
     },
     // 处理多选框的数据,勾选的数据，必须用给定的倍数数组leverList去筛选一遍成员是否存在，防止存在脏数据
     dealCheckBox(val) {
       // let tmpArr = val ? (val + '').split(',') : [];
       let putArr = [];
-      val.forEach(el => {
-        this.leverList.forEach(v=>{
-          if(Number(el) == Number(v.value)){
+      val.forEach((el) => {
+        this.leverList.forEach((v) => {
+          if (Number(el) == Number(v.value)) {
             putArr.push(Number(el));
           }
-        })
+        });
       });
-      putArr.sort((a,b)=>{
+      putArr.sort((a, b) => {
         return a - b;
-      })
+      });
       return putArr.join(',');
     },
     // 对输入值的范围进行限制
@@ -457,7 +468,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.getList();
@@ -483,7 +494,7 @@ export default {
         this.total = total;
         this.pages = pages;
         this.current_page = current;
-        records.forEach(v => {
+        records.forEach((v) => {
           v['status'] = v['status'] ? true : false;
           v['onDealing'] = v['onDealing'] ? true : false;
         });
@@ -500,7 +511,7 @@ export default {
     this.$store.dispatch('common/getCoinList').then(() => {
       this.coinList = this.$store.state.common.coinlist;
       // 基础币固定为USDT
-      this.coinList.forEach(v => {
+      this.coinList.forEach((v) => {
         if (v.label === 'USDT') {
           this.defaultCoin[0] = v;
         }
