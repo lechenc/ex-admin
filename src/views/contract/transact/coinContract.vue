@@ -13,7 +13,7 @@
       <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')">档位设置</el-button>
       <el-button type="primary" v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')">资金费率设置</el-button>
       <el-button v-if="btnArr.includes('close')" type="primary" size="small" @click="addClose('close')">创建单独平仓</el-button>
-      <el-button v-if="btnArr.includes('close')" type="primary" size="small" @click="addClose('cancel')">创建单独撤单</el-button>
+      <el-button v-if="btnArr.includes('cancel')" type="primary" size="small" @click="addClose('cancel')">创建单独撤单</el-button>
     </div>
     <div>
       <Btable :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
