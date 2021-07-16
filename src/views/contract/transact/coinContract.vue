@@ -12,7 +12,8 @@
       <el-button type="primary" v-if="btnArr.includes('add')" size="small" @click="addCoin">添加</el-button>
       <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')">档位设置</el-button>
       <el-button type="primary" v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')">资金费率设置</el-button>
-      <el-button v-if="btnArr.includes('close')" type="primary" size="small" @click="addClose">创建单独平仓</el-button>
+      <el-button v-if="btnArr.includes('close')" type="primary" size="small" @click="addClose('close')">创建单独平仓</el-button>
+      <el-button v-if="btnArr.includes('close')" type="primary" size="small" @click="addClose('cancel')">创建单独撤单</el-button>
     </div>
     <div>
       <Btable :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -120,7 +121,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="创建单独平仓" width="500px" :visible.sync="closeDialogFormVisible">
+    <el-dialog :title="closeTitle" width="500px" :visible.sync="closeDialogFormVisible">
       <el-form :model="closeForm" label-width="120px" ref="closeForm" :rules="closeRules">
         <el-row :span="24">
           <el-col :span="21">
@@ -166,7 +167,8 @@ export default {
   },
   data() {
     return {
-      contracList:[], // 合约币对
+      closeTitle: '',
+      contracList: [], // 合约币对
       closeBtnLoading: false,
       closeForm: {},
       closeRules: {
@@ -248,22 +250,28 @@ export default {
     };
   },
   methods: {
-    
     closeConfirmOp() {
       this.$refs['closeForm'].validate(async (valid) => {
         if (valid) {
-          if(this.closeBtnLoading ) return
+          if (this.closeBtnLoading) return;
           let { symbolKey, uid } = this.closeForm;
-          let params = {
-            symbolKey: symbolKey.toLowerCase(),
-            uid,
-          };
+          let params =
+            this.closeTitle == '创建单独平仓'
+              ? {
+                  symbolKey: symbolKey.toLowerCase(),
+                  uid,
+                }
+              : {
+                  symbolKey,
+                  uid,
+                };
           this.closeBtnLoading = true;
-          const res = await $api.coinContractAllClose(params);
+          const res = this.closeTitle == '创建单独平仓' ? await $api.coinContractAllClose(params) : await $api.coinContractAllCancel(params);
           if (res) {
-            this.$message({ type: 'success', message: '单独平仓成功' });
+            let msg = this.closeTitle == '创建单独平仓' ? '单独平仓成功' : '单独撤单成功';
+            this.$message({ type: 'success', message: msg });
             this.getList();
-            this.closeDialogFormVisible = false
+            this.closeDialogFormVisible = false;
           }
           this.closeBtnLoading = false;
         }
@@ -274,8 +282,9 @@ export default {
       this.closeForm[val] = (this.closeForm[val] + '').replace(/[^\d]/g, '');
     },
     // 单独平仓
-    addClose() {
+    addClose(type) {
       this.closeDialogFormVisible = true;
+      this.closeTitle = type == 'close' ? '创建单独平仓' : '创建单独撤单';
       this.$nextTick(() => {
         this.$refs['closeForm'].resetFields();
         this.closeForm = {
