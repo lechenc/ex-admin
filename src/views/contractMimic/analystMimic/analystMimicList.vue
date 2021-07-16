@@ -91,7 +91,7 @@
     </el-Dialog>
     
     <!-- 批量添加分析师 -->
-     <el-Dialog :visible.sync="dialogFlag" :title="title" width="700px" class="notice-dialog">
+     <el-Dialog :visible.sync="dialogFlag" :title="title" width="700px" class="notice-dialog" :showClose="showClose">
       <div v-loading="dialogFlagLoad">
         <el-form :model="batchForm" ref="batchForm" label-width="160px" :rules="rules" style="width: 90%; padding-left: 15px">
           <el-row>
@@ -266,7 +266,10 @@ export default {
       },
       // 根据状态不同加载dialog内登录邮箱的表单的不同
       dialogFlag: false,
-      dialogFlagLoad: false
+      // 创建时的loading效果
+      dialogFlagLoad: false,
+      // 显示关闭按钮 
+      showClose: true
     };
   },
   filters: {
@@ -432,15 +435,18 @@ export default {
             }
             if (param) {
               this.dialogFlagLoad = true
+              this.showClose = false
               const batchAddAnalyst = await $api.batchAddAnalyst(params)
               console.log('batchAddAnalyst: ', batchAddAnalyst);
               if (batchAddAnalyst) {
                 this.$message.success({ title: '提示', message: '添加成功' })
                 this.dialogFlagLoad = false
                 this.dialogFlag = false
+                this.showClose = true
                 this.getList()
               } else {
                 this.dialogFlagLoad = false
+                this.showClose = true
               }
             }
           }
