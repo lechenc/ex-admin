@@ -3056,6 +3056,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/contract/all/order', data);
   }
 
+  // 合约管理/交易管理/合约币种 单独平仓
+  static coinContractClose(data) {
+    return Fetch.post('/contract/all/order', data);
+  }
+
 
 
   

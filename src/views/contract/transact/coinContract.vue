@@ -12,6 +12,7 @@
       <el-button type="primary" v-if="btnArr.includes('add')" size="small" @click="addCoin">添加</el-button>
       <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')">档位设置</el-button>
       <el-button type="primary" v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')">资金费率设置</el-button>
+      <el-button type="primary" size="small" @click="addClose">创建单独平仓</el-button>
     </div>
     <div>
       <Btable :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -118,6 +119,32 @@
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="创建单独平仓" width="500px" :visible.sync="closeDialogFormVisible">
+      <el-form :model="closeForm" label-width="120px" ref="closeForm" :rules="closeRules">
+        <el-row :span="24">
+          <el-col :span="21">
+            <el-form-item label="币对" prop="symbolKey">
+              <el-select v-model="closeForm.symbolKey" placeholder="请选择" wdith="20%">
+                <el-option v-for="(item, idx) in contracList" :key="idx" :label="item.label" :value="item.label"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="21">
+            <el-form-item label="UID" prop="uid">
+              <el-input @input="closeCheckVal('uid')" type="text" v-model.trim="closeForm.uid" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="closeConfirmOp" :loading="btnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -139,6 +166,14 @@ export default {
   },
   data() {
     return {
+      contracList:[], // 合约币对
+      closeBtnLoading: false,
+      closeForm: {},
+      closeRules: {
+        uid: [{ required: true, message: '必填', trigger: 'blur' }],
+        symbolKey: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      closeDialogFormVisible: false,
       btnArr: [], // 权限按钮列表
       btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
@@ -213,6 +248,42 @@ export default {
     };
   },
   methods: {
+    
+    closeConfirmOp() {
+      this.$refs['closeForm'].validate(async (valid) => {
+        if (valid) {
+          if(this.closeBtnLoading ) return
+          let { symbolKey, uid } = this.closeForm;
+          let params = {
+            symbolKey: symbolKey.toLowerCase(),
+            uid,
+          };
+          this.closeBtnLoading = true;
+          const res = await $api.coinContractAllClose(params);
+          if (res) {
+            this.$message({ type: 'success', message: '单独平仓成功' });
+            this.getList();
+            this.closeDialogFormVisible = false
+          }
+          this.closeBtnLoading = false;
+        }
+      });
+    },
+    // 对输入值的范围进行限制
+    closeCheckVal(val) {
+      this.closeForm[val] = (this.closeForm[val] + '').replace(/[^\d]/g, '');
+    },
+    // 单独平仓
+    addClose() {
+      this.closeDialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs['closeForm'].resetFields();
+        this.closeForm = {
+          symbolKey: '',
+          uid: '',
+        };
+      });
+    },
     // 添加币种
     addCoin() {
       this.formName = '添加币种';
@@ -516,6 +587,10 @@ export default {
           this.defaultCoin[0] = v;
         }
       });
+    });
+
+    this.$store.dispatch('common/getSymbolListContract').then(() => {
+      this.contracList = this.$store.state.common.symbollistContract;
     });
 
     this.getList();
