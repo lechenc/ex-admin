@@ -389,7 +389,7 @@ export default {
         })
           .then(async () => {
             const res = await $api.coinContractAllCancel({
-              coinMarket: row.coinMarket,
+              coinMarket: row.coinMarket.toLowerCase(),
             });
             if (res) {
               this.$message({ type: 'success', message: res.data.message });
