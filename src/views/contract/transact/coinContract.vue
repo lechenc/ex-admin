@@ -10,27 +10,16 @@
   <div class="coinContract-container">
     <div class="container-btn">
       <el-button type="primary" v-if="btnArr.includes('add')" size="small" @click="addCoin">添加</el-button>
-      <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')"
-        >档位设置</el-button
-      >
-      <el-button type="primary"   v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')"
-        >资金费率设置</el-button
-      >
+      <el-button type="primary" v-if="btnArr.includes('gearSetting')" size="small" @click="$router.push('/contract/transact/gearSetting')">档位设置</el-button>
+      <el-button type="primary" v-if="btnArr.includes('contractAccount')" size="small" @click="$router.push('/contract/transact/contractAccount')">资金费率设置</el-button>
+      <el-button v-if="btnArr.includes('close')" type="primary" size="small" @click="addClose">创建单独平仓</el-button>
     </div>
     <div>
       <Btable :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 添加 编辑 -->
     <el-dialog :title="formName" width="900px" :visible.sync="dialogFormVisible">
@@ -76,13 +65,7 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="委托价格浮动限制" :label-width="formLabelWidth" prop="priceFloatingLimit">
-              <el-input
-                v-model="cForm.priceFloatingLimit"
-                @input="checkVal('priceFloatingLimit')"
-                autocomplete="off"
-                placeholder=""
-                type="number"
-              >
+              <el-input v-model="cForm.priceFloatingLimit" @input="checkVal('priceFloatingLimit')" autocomplete="off" placeholder="" type="number">
                 <div slot="append">%</div>
               </el-input>
             </el-form-item>
@@ -91,14 +74,7 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="价格小数位" :label-width="formLabelWidth" prop="pricePrecision">
-              <el-input
-                v-model="cForm.pricePrecision"
-                @input="checkVal('pricePrecision', 'noDot')"
-                rows="5"
-                autocomplete="off"
-                placeholder=""
-                type="number"
-              ></el-input>
+              <el-input v-model="cForm.pricePrecision" @input="checkVal('pricePrecision', 'noDot')" rows="5" autocomplete="off" placeholder="" type="number"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -143,6 +119,32 @@
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="创建单独平仓" width="500px" :visible.sync="closeDialogFormVisible">
+      <el-form :model="closeForm" label-width="120px" ref="closeForm" :rules="closeRules">
+        <el-row :span="24">
+          <el-col :span="21">
+            <el-form-item label="币对" prop="symbolKey">
+              <el-select v-model="closeForm.symbolKey" placeholder="请选择" wdith="20%">
+                <el-option v-for="(item, idx) in contracList" :key="idx" :label="item.label" :value="item.label"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="21">
+            <el-form-item label="UID" prop="uid">
+              <el-input @input="closeCheckVal('uid')" type="text" v-model.trim="closeForm.uid" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="closeConfirmOp" :loading="btnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -164,6 +166,14 @@ export default {
   },
   data() {
     return {
+      contracList:[], // 合约币对
+      closeBtnLoading: false,
+      closeForm: {},
+      closeRules: {
+        uid: [{ required: true, message: '必填', trigger: 'blur' }],
+        symbolKey: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
+      closeDialogFormVisible: false,
       btnArr: [], // 权限按钮列表
       btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
@@ -215,7 +225,7 @@ export default {
         // lever: [],
         status: '',
         onDealing: '',
-        gears:""
+        gears: '',
       },
       formName: '新增币种',
       rules: {
@@ -238,6 +248,42 @@ export default {
     };
   },
   methods: {
+    
+    closeConfirmOp() {
+      this.$refs['closeForm'].validate(async (valid) => {
+        if (valid) {
+          if(this.closeBtnLoading ) return
+          let { symbolKey, uid } = this.closeForm;
+          let params = {
+            symbolKey: symbolKey.toLowerCase(),
+            uid,
+          };
+          this.closeBtnLoading = true;
+          const res = await $api.coinContractAllClose(params);
+          if (res) {
+            this.$message({ type: 'success', message: '单独平仓成功' });
+            this.getList();
+            this.closeDialogFormVisible = false
+          }
+          this.closeBtnLoading = false;
+        }
+      });
+    },
+    // 对输入值的范围进行限制
+    closeCheckVal(val) {
+      this.closeForm[val] = (this.closeForm[val] + '').replace(/[^\d]/g, '');
+    },
+    // 单独平仓
+    addClose() {
+      this.closeDialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs['closeForm'].resetFields();
+        this.closeForm = {
+          symbolKey: '',
+          uid: '',
+        };
+      });
+    },
     // 添加币种
     addCoin() {
       this.formName = '添加币种';
@@ -263,13 +309,13 @@ export default {
           // lever: [],
           status: '',
           onDealing: '',
-          gears:""
+          gears: '',
         };
       });
     },
 
     async confirmOp() {
-      this.$refs['cForm'].validate(async valid => {
+      this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           let {
             id,
@@ -380,7 +426,7 @@ export default {
             // lever,
             status,
             onDealing,
-            gears
+            gears,
           } = row;
 
           this.cForm = {
@@ -401,25 +447,61 @@ export default {
             priceFloatingLimit: this.numToPercent(priceFloatingLimit),
             status,
             onDealing,
-            gears
+            gears,
           };
         });
+      }
+      // 一键撤单
+      if (fn == 'allCancel') {
+        this.$confirm(row.coinMarket + '是否一键撤单?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.coinContractAllCancel({
+              symbolKey: row.coinMarket,
+            });
+            if (res) {
+              this.$message({ type: 'success', message: '一键撤单成功' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
+      // 一键平仓
+      if (fn == 'allClose') {
+        this.$confirm(row.coinMarket + '是否一键平仓?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.coinContractAllClose({
+              symbolKey: row.coinMarket.toLowerCase(),
+            });
+            if (res) {
+              this.$message({ type: 'success', message: '一键平仓成功' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
       }
     },
     // 处理多选框的数据,勾选的数据，必须用给定的倍数数组leverList去筛选一遍成员是否存在，防止存在脏数据
     dealCheckBox(val) {
       // let tmpArr = val ? (val + '').split(',') : [];
       let putArr = [];
-      val.forEach(el => {
-        this.leverList.forEach(v=>{
-          if(Number(el) == Number(v.value)){
+      val.forEach((el) => {
+        this.leverList.forEach((v) => {
+          if (Number(el) == Number(v.value)) {
             putArr.push(Number(el));
           }
-        })
+        });
       });
-      putArr.sort((a,b)=>{
+      putArr.sort((a, b) => {
         return a - b;
-      })
+      });
       return putArr.join(',');
     },
     // 对输入值的范围进行限制
@@ -457,7 +539,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.getList();
@@ -483,7 +565,7 @@ export default {
         this.total = total;
         this.pages = pages;
         this.current_page = current;
-        records.forEach(v => {
+        records.forEach((v) => {
           v['status'] = v['status'] ? true : false;
           v['onDealing'] = v['onDealing'] ? true : false;
         });
@@ -500,11 +582,15 @@ export default {
     this.$store.dispatch('common/getCoinList').then(() => {
       this.coinList = this.$store.state.common.coinlist;
       // 基础币固定为USDT
-      this.coinList.forEach(v => {
+      this.coinList.forEach((v) => {
         if (v.label === 'USDT') {
           this.defaultCoin[0] = v;
         }
       });
+    });
+
+    this.$store.dispatch('common/getSymbolListContract').then(() => {
+      this.contracList = this.$store.state.common.symbollistContract;
     });
 
     this.getList();

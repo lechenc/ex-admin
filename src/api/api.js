@@ -2286,6 +2286,12 @@ export default class api {
   static getAnalystMimicList(data) {
     return Fetch.post('/admin/user/analog/get-analyst-list', data);
   }
+
+// 模拟 分析师管理 分析师列表 -> 批量添加分析师
+static batchAddAnalyst(data) {
+  return Fetch.post('/admin/user/analog/batchAddAnalyst', data);
+}
+
   // 模拟 分析师管理 添加分析师
   static addAnalystMimicList(data) {
     return Fetch.post('/admin/user/analog/add-analyst', data);
@@ -2318,6 +2324,13 @@ export default class api {
   static getAccountMimicTotal(data) {
     return Fetch.post('/admin/account/analog/get-analyst-sum', data);
   }
+
+// /admin/account/analog/batch-create-analyst-order
+  // 模拟 分析师管理 批量创建特殊调整
+  static batchCreateAnalystOrder(data) {
+    return Fetch.post('/admin/account/analog/batch-create-analyst-order', data);
+  }
+
   // 模拟 分析师管理 审核通过拒绝
   static passCancelAccountMimic(data) {
     return Fetch.post('/admin/account/analog/audit-analyst', data);
@@ -3032,6 +3045,20 @@ export default class api {
    // 运营管理/单点登录白名单管理 删除
    static deleteSsoWhiteList(data) {
     return Fetch.post('/admin/user/delete/sso_whiteList_info', data);
+  }
+
+  // 合约管理/交易管理/合约币种 一键撤单
+  static coinContractAllCancel(data) {
+    return Fetch.post('/contract/cancel/all/trust', data);
+  }
+  // 合约管理/交易管理/合约币种 一键平仓
+  static coinContractAllClose(data) {
+    return Fetch.post('/contract/all/order', data);
+  }
+
+  // 合约管理/交易管理/合约币种 单独平仓
+  static coinContractClose(data) {
+    return Fetch.post('/contract/all/order', data);
   }
 
 
