@@ -389,10 +389,10 @@ export default {
         })
           .then(async () => {
             const res = await $api.coinContractAllCancel({
-              symbolKey: row.coinMarket.toLowerCase(),
+              symbolKey: row.coinMarket,
             });
             if (res) {
-              this.$message({ type: 'success', message: res.data.message });
+              this.$message({ type: 'success', message: '一键撤单成功' });
               this.getList();
             }
           })
@@ -407,10 +407,10 @@ export default {
         })
           .then(async () => {
             const res = await $api.coinContractAllClose({
-              coinMarket: row.coinMarket,
+              symbolKey: row.coinMarket.toLowerCase(),
             });
             if (res) {
-              this.$message({ type: 'success', message: res.data.message });
+              this.$message({ type: 'success', message: '一键平仓成功' });
               this.getList();
             }
           })

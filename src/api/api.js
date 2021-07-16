@@ -3053,7 +3053,7 @@ static batchAddAnalyst(data) {
   }
   // 合约管理/交易管理/合约币种 一键平仓
   static coinContractAllClose(data) {
-    return Fetch.post('/contract/cancel/all/trust', data);
+    return Fetch.post('/contract/all/order', data);
   }
 
 
