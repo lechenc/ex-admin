@@ -35,7 +35,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="币币交易开关" label-width="100px">
+            <el-form-item label="合约交易开关" label-width="100px">
               <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userTradeStatus"/>
             </el-form-item>
           </el-col>
@@ -112,7 +112,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="币币交易开关" label-width="100px">
+              <el-form-item label="合约交易开关" label-width="100px">
                 <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userTradeStatus"/>
               </el-form-item>
             </el-col>
@@ -244,7 +244,7 @@ export default {
         googleCode: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 币币交易开关
+        userTradeStatus: false, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         relevanceUid: ''
       },
@@ -259,7 +259,7 @@ export default {
         mailMidEndNum: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 币币交易开关
+        userTradeStatus: false, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         mailPrefix: 'alpex',
         mailPostfix: '@gmail.com'
@@ -288,7 +288,7 @@ export default {
           googleCode: '',
           userOtcStatus: false, // 法币开关
           userTransferStatus: false, // 划转开关
-          userTradeStatus: false, // 币币交易开关
+          userTradeStatus: false, // 合约交易开关
           userWithdrawStatus: false, // 提币开关
         };
       } else {
@@ -310,7 +310,7 @@ export default {
         mailMidEndNum: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 币币交易开关
+        userTradeStatus: false, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         mailPrefix: 'alpex',
         mailPostfix: '@gmail.com'
