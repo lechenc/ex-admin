@@ -22,8 +22,8 @@
             <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="form.relevanceUid" :disabled="disabledEdit"></el-input>
           </el-form-item>
         </el-row>
-
-        <el-row>
+        <!-- 应产品要求, 暂时隐藏 -->
+        <!-- <el-row>
           <el-col :span="6">
             <el-form-item label="法币开关" label-width="80px">
               <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userOtcStatus"/>
@@ -44,7 +44,7 @@
               <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userWithdrawStatus"/>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
@@ -99,8 +99,8 @@
               <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="batchForm.relevanceUid"></el-input>
             </el-form-item>
           </el-row>
-
-          <el-row>
+          <!-- 应产品要求, 暂时隐藏 -->
+          <!-- <el-row>
             <el-col :span="6">
               <el-form-item label="法币开关" label-width="80px">
                 <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userOtcStatus"/>
@@ -121,7 +121,7 @@
                 <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userWithdrawStatus"/>
               </el-form-item>
             </el-col>
-          </el-row>
+          </el-row> -->
 
           <!-- <el-row :span="24">
             <el-form-item label="登录手机号" prop="phone">
@@ -244,7 +244,7 @@ export default {
         googleCode: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 合约交易开关
+        userTradeStatus: true, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         relevanceUid: ''
       },
@@ -259,7 +259,7 @@ export default {
         mailMidEndNum: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 合约交易开关
+        userTradeStatus: true, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         mailPrefix: 'alpex',
         mailPostfix: '@gmail.com'
@@ -290,7 +290,7 @@ export default {
           googleCode: '',
           userOtcStatus: false, // 法币开关
           userTransferStatus: false, // 划转开关
-          userTradeStatus: false, // 合约交易开关
+          userTradeStatus: true, // 合约交易开关
           userWithdrawStatus: false, // 提币开关
         };
       } else {
@@ -312,7 +312,7 @@ export default {
         mailMidEndNum: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 合约交易开关
+        userTradeStatus: true, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         mailPrefix: 'alpex',
         mailPostfix: '@gmail.com'
