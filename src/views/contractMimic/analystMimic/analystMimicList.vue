@@ -147,7 +147,18 @@
               <el-col :span="6">
                 <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidEndNum"/>
               </el-col>
-              <el-col :span="5"> {{ batchForm.mailPostfix }}</el-col>
+              <el-col :span="9"> 
+                <!-- {{ batchForm.mailPostfix }} -->
+                <el-select v-model="batchForm.mailPostfix" placeholder="请选择" size="small">
+                  <el-option 
+                    v-for="(item, idx) in options"
+                    :key="`option${idx}${item.label}`"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+
+              </el-col>
             </el-form-item>
           </el-row>
 
@@ -271,7 +282,21 @@ export default {
       // 显示关闭按钮 
       showClose: true,
       // 是否为编辑
-      disabledEdit: false
+      disabledEdit: false,
+      options: [
+        {
+          label: '@gmail.com',
+          value: '@gmail.com'
+        },
+        {
+          label: '@163.com',
+          value: '@163.com'
+        },
+        {
+          label: '@126.com',
+          value: '@126.com'
+        }
+      ]
     };
   },
   filters: {
@@ -439,6 +464,7 @@ export default {
               this.dialogFlagLoad = true
               this.showClose = false
               const batchAddAnalyst = await $api.batchAddAnalyst(params)
+              console.log('params: ', params);
               console.log('batchAddAnalyst: ', batchAddAnalyst);
               if (batchAddAnalyst) {
                 this.$message.success({ title: '提示', message: '添加成功' })
