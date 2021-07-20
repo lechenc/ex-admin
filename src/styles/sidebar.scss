@@ -27,7 +27,7 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
-      padding-bottom: 80px !important;
+      padding-bottom: 80px!important;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -36,6 +36,7 @@
 
     .el-scrollbar {
       height: 100%;
+      // padding-bottom: 80px;
     }
 
     // &.has-logo {

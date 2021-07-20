@@ -22,8 +22,8 @@
             <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="form.relevanceUid" :disabled="disabledEdit"></el-input>
           </el-form-item>
         </el-row>
-
-        <el-row>
+        <!-- 应产品要求, 暂时隐藏 -->
+        <!-- <el-row>
           <el-col :span="6">
             <el-form-item label="法币开关" label-width="80px">
               <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userOtcStatus"/>
@@ -44,7 +44,7 @@
               <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="form.userWithdrawStatus"/>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <el-row :span="24">
           <el-form-item label="登录手机号" prop="phone">
@@ -99,8 +99,8 @@
               <el-input size="small" placeholder="请输入关联的实盘用户UID" v-model="batchForm.relevanceUid"></el-input>
             </el-form-item>
           </el-row>
-
-          <el-row>
+          <!-- 应产品要求, 暂时隐藏 -->
+          <!-- <el-row>
             <el-col :span="6">
               <el-form-item label="法币开关" label-width="80px">
                 <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userOtcStatus"/>
@@ -121,7 +121,7 @@
                 <el-switch active-color="#13ce66" inactive-color="#ff4949" v-model.trim="batchForm.userWithdrawStatus"/>
               </el-form-item>
             </el-col>
-          </el-row>
+          </el-row> -->
 
           <!-- <el-row :span="24">
             <el-form-item label="登录手机号" prop="phone">
@@ -147,7 +147,18 @@
               <el-col :span="6">
                 <el-input size="small" placeholder="请输入" v-model="batchForm.mailMidEndNum"/>
               </el-col>
-              <el-col :span="5"> {{ batchForm.mailPostfix }}</el-col>
+              <el-col :span="9"> 
+                <!-- {{ batchForm.mailPostfix }} -->
+                <el-select v-model="batchForm.mailPostfix" placeholder="请选择" size="small">
+                  <el-option 
+                    v-for="(item, idx) in options"
+                    :key="`option${idx}${item.label}`"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+
+              </el-col>
             </el-form-item>
           </el-row>
 
@@ -244,7 +255,7 @@ export default {
         googleCode: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 合约交易开关
+        userTradeStatus: true, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         relevanceUid: ''
       },
@@ -259,7 +270,7 @@ export default {
         mailMidEndNum: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 合约交易开关
+        userTradeStatus: true, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         mailPrefix: 'alpex',
         mailPostfix: '@gmail.com'
@@ -271,7 +282,21 @@ export default {
       // 显示关闭按钮 
       showClose: true,
       // 是否为编辑
-      disabledEdit: false
+      disabledEdit: false,
+      options: [
+        {
+          label: '@gmail.com',
+          value: '@gmail.com'
+        },
+        {
+          label: '@163.com',
+          value: '@163.com'
+        },
+        {
+          label: '@126.com',
+          value: '@126.com'
+        }
+      ]
     };
   },
   filters: {
@@ -290,7 +315,7 @@ export default {
           googleCode: '',
           userOtcStatus: false, // 法币开关
           userTransferStatus: false, // 划转开关
-          userTradeStatus: false, // 合约交易开关
+          userTradeStatus: true, // 合约交易开关
           userWithdrawStatus: false, // 提币开关
         };
       } else {
@@ -312,7 +337,7 @@ export default {
         mailMidEndNum: '',
         userOtcStatus: false, // 法币开关
         userTransferStatus: false, // 划转开关
-        userTradeStatus: false, // 合约交易开关
+        userTradeStatus: true, // 合约交易开关
         userWithdrawStatus: false, // 提币开关
         mailPrefix: 'alpex',
         mailPostfix: '@gmail.com'
@@ -439,6 +464,7 @@ export default {
               this.dialogFlagLoad = true
               this.showClose = false
               const batchAddAnalyst = await $api.batchAddAnalyst(params)
+              console.log('params: ', params);
               console.log('batchAddAnalyst: ', batchAddAnalyst);
               if (batchAddAnalyst) {
                 this.$message.success({ title: '提示', message: '添加成功' })
