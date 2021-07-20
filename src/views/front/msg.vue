@@ -11,6 +11,7 @@
               <el-radio :label="1" :disabled="disabled">魔杜卡</el-radio>
               <el-radio :label="2" :disabled="disabled">Umail</el-radio>
               <el-radio :label="3" :disabled="disabled">Spread</el-radio>
+              <el-radio :label="4" :disabled="disabled">阿里云</el-radio>
             </el-radio-group>
           </template>
         </el-col>
