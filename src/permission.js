@@ -40,23 +40,25 @@ router.beforeEach(async (to, from, next) => {
         if (store.state.app.navlist && store.state.app.navlist.length > 0) {
           if (!store.state.app.hybridRouters || store.state.app.hybridRouters.length <= 0) {
             // 生成动态权限路由hybridRouters
-            store
-              .dispatch('app/GenerateRoutes', store.state.app.navlist)
-              .then(() => {
-                // 重新存一遍navlist因为GenerateRoutes方法会把navlist的meta改为本地静态的（增加了config字段）
-                store.dispatch('app/setNavList', store.state.app.navlist);
-                isRefresh = true;
-                const nowRoutes = store.state.app.hybridRouters;
-                // 如果*页不改放在这里加将会报错（坑）
-                nowRoutes.push({ path: '*', redirect: '/404', hidden: true });
-                const temp = initRouter(nowRoutes);
-                $addRoutes(temp);
-                // router.addRoutes(nowRoutes); // 动态添加可访问路由表
-                next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
-              })
-              .catch(err => {
-                //console.log(err);
-              });
+            setTimeout(() => {
+              store
+                .dispatch('app/GenerateRoutes', store.state.app.navlist)
+                .then(() => {
+                  // 重新存一遍navlist因为GenerateRoutes方法会把navlist的meta改为本地静态的（增加了config字段）
+                  store.dispatch('app/setNavList', store.state.app.navlist);
+                  isRefresh = true;
+                  const nowRoutes = store.state.app.hybridRouters;
+                  // 如果*页不改放在这里加将会报错（坑）
+                  nowRoutes.push({ path: '*', redirect: '/404', hidden: true });
+                  const temp = initRouter(nowRoutes);
+                  $addRoutes(temp);
+                  // router.addRoutes(nowRoutes); // 动态添加可访问路由表
+                  next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
+                })
+                .catch(err => {
+                  //console.log(err);
+                });
+            }, 1000);
           } else if (!isRefresh && store.state.app.hybridRouters.length > 0) {
             // 防止特殊情况：刷新后动态路由丢失，所以要重新add+route操作 store.state.app.routers.length
             isRefresh = true;
@@ -228,7 +230,6 @@ const mapComponents = {
   RiskList: () => import('@/views/user/riskList'),
   RiskConfig: () => import('@/views/user/riskConfig'),
 
-
   Examine: () => import('@/views/check/examine'),
   Advertise: () => import('@/views/check/advertise'),
   Pay: () => import('@/views/check/pay'),
@@ -289,7 +290,6 @@ const mapComponents = {
   PlateArea: () => import('@/views/symbol/plateArea'),
   SmallAmountShow: () => import('@/views/symbol/smallAmountShow'),
   RealNameFreeExtract: () => import('@/views/symbol/realNameFreeExtract'),
-  
 
   LotteryList: () => import('@/views/front/lottery/lotteryList'),
   LotteryListDetail: () => import('@/views/front/lottery/lotteryListDetail'),
@@ -308,11 +308,6 @@ const mapComponents = {
   RedPacketList: () => import('@/views/front/redPacket/redPacketList'),
   RedPacketCoin: () => import('@/views/front/redPacket/redPacketCoin'),
   RedPacketSubject: () => import('@/views/front/redPacket/redPacketSubject'),
-
-
-
-
-
 
   Search: () => import('@/views/merchant/search'),
   SearchDetail: () => import('@/views/merchant/searchDetail'),
@@ -387,8 +382,6 @@ const mapComponents = {
   RevenueAccount: () => import('@/views/assetManage/revenueAccount'),
   ManualRechargeRecord: () => import('@/views/assetManage/manualRechargeRecord'),
 
-  
-
   BuyList: () => import('@/views/customer/reportForm/buyList'),
   // BuyListDetail: () => import('@/views/customer/reportForm/buyListDetail'),
   SellList: () => import('@/views/customer/reportForm/sellList'),
@@ -407,7 +400,6 @@ const mapComponents = {
   // AuthGroup: () => import('@/views/customer/authGroup'),
   // AuthGroupDetail: () => import('@/views/customer/authGroupDetail'),
   // RateManage: () => import('@/views/customer/rateManage'),
-
 
   AgentsLists: () => import('@/views/agent/agentsLists'),
   BusinessRelationLists: () => import('@/views/agent/businessRelationLists'),
@@ -428,7 +420,6 @@ const mapComponents = {
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
 
-
   CoinContract: () => import('@/views/contract/transact/coinContract'),
   GearSetting: () => import('@/views/contract/transact/gearSetting'),
   BillContract: () => import('@/views/contract/transact/billContract'),
@@ -445,7 +436,6 @@ const mapComponents = {
   PositionContract: () => import('@/views/contract/store/positionContract'),
   CloseContract: () => import('@/views/contract/store/closeContract'),
   ApiKeyConfig: () => import('@/views/contract/apiManage/apiKeyConfig'),
-  
 
   // 模拟盘 模拟交易管理
   CoinContractMimic: () => import('@/views/contractMimic/transactMimic/coinContractMimic'),

@@ -1828,6 +1828,49 @@ const closeContractConfig = [
       },
     ],
   },
+
+  {
+    type: 'text_rank',
+    label: '已实现盈亏区间',
+    prop: 'minPositionAveragePrice',
+    prop2: 'maxPositionAveragePrice',
+    value: [],
+    placeHolder: '请输入',
+  },
+
+  {
+    type: 'select',
+    label: '是否盈利',
+    prop: 'isProfit',
+    value: '',
+    list: [
+      {
+        label: '是',
+        value: 1,
+      },
+      {
+        label: '否',
+        value: 0,
+      },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '盈亏排序',
+    prop: 'profitSort',
+    value: '',
+    list: [
+      {
+        label: '倒序',
+        value: 1,
+      },
+      {
+        label: '正序',
+        value: 0,
+      },
+    ],
+  },
 ];
 
 const serviceChargeContractCol = [
@@ -2043,6 +2086,22 @@ const treatyAssetsContractConfig = [
     prop: 'coinMarketId',
     value: '',
     list: [],
+  },
+  {
+    type: 'select',
+    label: '总资产排序',
+    prop: 'totalBalanceSort',
+    value: '',
+    list: [
+      {
+        label: '倒序',
+        value: 1,
+      },
+      {
+        label: '正序',
+        value: 0,
+      },
+    ],
   },
 ];
 
