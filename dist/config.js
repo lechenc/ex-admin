@@ -35,6 +35,12 @@ if (/linkkn/.test(window.location.href)) {
   window.SERVER_PATH = 'https://admin.linkkn.vip/api'; // 线上(内部).
 }
 
+// 预发布环境
+// https://exchange-admin-uat.alphatest.vip  
+if (/alphatest/.test(window.location.href)) {
+  window.SERVER_PATH = 'https://exchange-admin-uat.alphatest.vip/api'; // 线上(内部).
+}
+
 // console.error('强制测试服务器')
 // window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
 var urlPicTmp = /alpex|linkkn/.test(window.location.href) ? '' : '/';
