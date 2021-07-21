@@ -6,43 +6,11 @@
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\public\config.js
  */
-// window.SERVER_PATH = 'http://192.168.0.241/api'; // 开发接口地
-// window.SERVER_PATH = 'http://192.168.0.118:16442'; // 开发接口地
 
-// window.SERVER_PATH = 'http://192.168.0.245/api'; // 开发接口地2(新)
-window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
-// window.SERVER_PATH = 'https://admin.linkkn.vip/api'; // 线上(内部).
 
-// if (/192\.168\.0\.24./.test(window.location.href)) {
-//   window.SERVER_PATH = 'http://192.168.0.241/api'; // 通用接口地址/
-// }
-if (/dappmi/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
-}
-// https://admin.flyex.vip/
-if (/flyex/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.flyex.vip/api';// 测试接口地址.
-}
+window.SERVER_PATH = 'https://exchange-admin-uat.alphatest.vip/api'; 
 
-// window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
-// window.SERVER_PATH = 'http://192.168.3.45:16425'; // 通用接口地址
 
-if (/alpex/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.alpex.pro/api'; // 通用接口地址
-}
-
-if (/linkkn/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.linkkn.vip/api'; // 线上(内部).
-}
-
-// 预发布环境
-// https://exchange-admin-uat.alphatest.vip  
-if (/alphatest/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://exchange-admin-uat.alphatest.vip/api'; // 线上(内部).
-}
-
-// console.error('强制测试服务器')
-// window.SERVER_PATH = 'http://47.57.21.80/api'; // 通用接口地址/
-var urlPicTmp = /alpex|linkkn/.test(window.location.href) ? '' : '/';
+var urlPicTmp = '';
 window.SERVER_PATH_PIC = window.SERVER_PATH + '/admin/user/file/upload-file'; // 通用接口地址/
 window.SERVER_PATH_FILE = window.SERVER_PATH + '/admin/user/upload/package';
