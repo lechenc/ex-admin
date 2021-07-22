@@ -55,8 +55,6 @@
         </template>
       </el-table-column>
 
-    
-
       <!-- 减一个其他值 -->
       <el-table-column v-if="config.type == 'minusOthersNumber'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
@@ -66,7 +64,6 @@
           </span>
         </template>
       </el-table-column>
-      
 
       <!-- 加一个其他值 -->
       <el-table-column v-if="config.type == 'plusOthersNumber'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
@@ -93,7 +90,6 @@
 
       <el-table-column v-if="config.type === 'textColorTwo'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
         <template slot-scope="scope">
-          
           <span class="td-color" :style="{ color: '#4379FF' }">{{ (scope.row[config.prop] / 60 / 60).toFixed(2) + '小时' }}</span>
         </template>
       </el-table-column>
@@ -343,6 +339,11 @@
         <template slot-scope="scope">
           <span v-for="(btn, i) in config.btnGroup" :key="i + 't`t'">
             <template v-if="btn.type == 'noVisible'"> </template>
+
+            <template v-else-if="btn.filter_type == 'filter_indexOf' && indexOfFn(scope.row)">
+              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }} </el-button>
+            </template>
+
             <el-button v-else-if="!btn.filter_key && !btn.type" type="text" size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             <!--常用于得到数据后遍历后确定不可点击，并且noIsClick为false或不存在,否则就还是可以点击-->
             <el-button v-else-if="!btn.filter_key && btn.type && !btn.other_filter && !btn.out" :type="btn.type" plain size="small" :disabled="scope.row.isclick && btn.noIsClick" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
@@ -368,6 +369,7 @@
             <template v-else-if="btn.filter_type == 'arrayExcept' && !btn.filter_status.includes(scope.row[btn.filter_key] + '')">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
+
             <!-- // 根据一个传入的值判断是否展示 -->
             <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value == scope.row[btn.filter_key] + ''">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
@@ -443,6 +445,15 @@ export default {
     getPlus() {
       return (n1, n2) => {
         return Precision.plus(n1, n2);
+      };
+    },
+    indexOfFn() {
+      return (row) => {
+        if (row.coinMarket.indexOf('ALPT') >-1 ||  row.coinMarket.indexOf('CNHT') >-1) {
+          return false;
+        } else {
+          return true;
+        }
       };
     },
 

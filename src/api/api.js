@@ -3056,6 +3056,26 @@ static batchAddAnalyst(data) {
     return Fetch.post('/contract/all/order', data);
   }
 
+  // 币种管理/交易对管理 一键删除K线
+  static pairsOnekeyDelete(data) {
+    return Fetch.post('/market/delete/kLine/collect', data);
+  }
+
+  // 币种管理/交易对管理 一键拉取K线
+  static pairsOnekeyPull(data) {
+    return Fetch.post('/admin/robot/history-Lists', data);
+  }
+
+  // 币种管理/交易对管理 一键更新K线
+  static pairsOnekeyUpdate(data) {
+    return Fetch.post('/market/kLine/reload/redis', data);
+  }
+
+  // 财务管理/充币记录 通知钱包重新归集
+  static apiRechargeMessage(data) {
+    return Fetch.post('/wallet/user/recollect', data);
+  }
+
 
 
 
