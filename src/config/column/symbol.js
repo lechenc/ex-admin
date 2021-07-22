@@ -174,14 +174,14 @@ const symbolCol = [
   {
     label: '上架',
     prop: 'status',
-    type: 'switch',
+    type: 'switchIndexOf',
     fn: 'switchCoin',
     alias: 'trputon',
   },
   {
     label: '下单',
     prop: 'onDealing',
-    type: 'switch',
+    type: 'switchIndexOf',
     fn: 'switchCoinOrder',
     alias: 'trorder',
   },

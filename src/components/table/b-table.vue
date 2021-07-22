@@ -328,12 +328,21 @@
           <span v-if="config.show_type === 'filters' && config.filters === 'matchResultMap'">{{ scope.row[config.prop] | matchResultMap }}</span>
         </template>
       </el-table-column>
+
       <!-- 开关 -->
       <el-table-column v-if="config.type === 'switch' && actionShow" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''">
         <template slot-scope="scope">
           <el-switch v-model="scope.row[config.prop]" active-color="#13ce66" inactive-color="#ff4949" :disabled="scope.row['disabled'] ? scope.row['disabled'] : false" @change="doHandle($event, scope.row, config.fn)"> </el-switch>
         </template>
       </el-table-column>
+
+      <!-- 开关  特定情况下显示-->
+      <el-table-column v-if="config.type === 'switchIndexOf' && actionShow " :key="config.prop" :label="config.label" :width="config.width ? config.width : ''">
+        <template slot-scope="scope">
+          <el-switch v-if="indexOfFn(scope.row)" v-model="scope.row[config.prop]" active-color="#13ce66" inactive-color="#ff4949" :disabled="scope.row['disabled'] ? scope.row['disabled'] : false" @change="doHandle($event, scope.row, config.fn)"> </el-switch>
+        </template>
+      </el-table-column>
+
       <!-- 操作按钮 -->
       <el-table-column fixed="right" v-if="config.type === 'action' && actionShow" :key="config.prop" :label="config.label" :width="isDeskTop ? config.width : '120px'">
         <template slot-scope="scope">
@@ -456,6 +465,8 @@ export default {
         }
       };
     },
+
+    
 
     getMinus() {
       return (n1, n2) => {
