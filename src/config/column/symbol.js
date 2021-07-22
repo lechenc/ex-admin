@@ -197,7 +197,7 @@ const symbolCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:'450',
+    width: '450',
     btnGroup: [
       {
         label: '编辑',
@@ -205,33 +205,57 @@ const symbolCol = [
         type: 'primary',
         alias: 'edit',
       },
+      
+
       {
         label: '一键删除K线',
         fn: 'onekeyDelete',
-        filter_type: 'arrayExcept',
+        filter_type: 'filter_indexOf',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT/USDT','CNHT/USDT'],
+        filter_status: 1,
         type: 'primary',
         alias: 'onekeyDelete',
       },
+
       {
         label: '一键拉取K线',
         fn: 'onekeyPull',
-        filter_type: 'arrayExcept',
+        filter_type: 'filter_indexOf',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT/USDT','CNHT/USDT'],
+        filter_status: 1,
         type: 'primary',
         alias: 'onekeyPull',
       },
+
       {
         label: '一键更新K线',
         fn: 'onekeyUpdate',
-        filter_type: 'arrayExcept',
+        filter_type: 'filter_indexOf',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT/USDT','CNHT/USDT'],
+        filter_status: 1,
         type: 'primary',
         alias: 'onekeyUpdate',
       },
+
+      // {
+      //   label: '一键拉取K线',
+      //   fn: 'onekeyPull',
+      //   filter_type: 'arrayExcept',
+      //   filter_key: 'coinMarket',
+      //   filter_status: ['ALPT/USDT','CNHT/USDT'],
+      //   type: 'primary',
+      //   alias: 'onekeyPull',
+      // },
+
+      // {
+      //   label: '一键更新K线',
+      //   fn: 'onekeyUpdate',
+      //   filter_type: 'arrayExcept',
+      //   filter_key: 'coinMarket',
+      //   filter_status: ['ALPT/USDT','CNHT/USDT'],
+      //   type: 'primary',
+      //   alias: 'onekeyUpdate',
+      // },
     ],
   },
 ];
@@ -455,7 +479,7 @@ const contractSymbolRobotCol = [
     label: '模拟交易对',
     prop: 'mockCoinMarket',
   },
-  
+
   {
     label: '是否正常',
     prop: 'isFormal',
@@ -547,7 +571,7 @@ const contractSymbolRobotColNoBtn = [
     label: '模拟交易对',
     prop: 'mockCoinMarket',
   },
-  
+
   {
     label: '是否正常',
     prop: 'isFormal',

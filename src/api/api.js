@@ -3071,6 +3071,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/market/kLine/reload/redis', data);
   }
 
+  // 财务管理/充币记录 通知钱包重新归集
+  static apiRechargeMessage(data) {
+    return Fetch.post('/wallet/user/recollect', data);
+  }
+
 
 
 

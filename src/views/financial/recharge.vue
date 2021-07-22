@@ -13,7 +13,7 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
-      <Btable :listLoading="listLoading" :data="list" :configs="configs" />
+      <Btable @do-handle="doHandle" :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -25,7 +25,7 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { rechargeCol, rechargeConfig } from '@/config/column/financial';
+import { rechargeCol, rechargeColNoBtn,rechargeConfig } from '@/config/column/financial';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 
@@ -56,6 +56,27 @@ export default {
     };
   },
   methods: {
+    async doHandle(data){
+      const { fn, row } = data;
+      // 设置上架开关
+      if (fn === 'message') {
+        this.$confirm('是否通知钱包重新归集?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.apiRechargeMessage({
+              txid: row.txId,
+            });
+            if (res) {
+              this.$message({ type: 'success', message: '通知成功，请等待5-10分钟 归集程序执行，不要连续点击' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
@@ -175,7 +196,8 @@ export default {
     },
   },
   mounted() {
-    this.configs = rechargeCol;
+    let authObj = this.$util.getAuthority('Recharge', rechargeCol, rechargeColNoBtn);
+    this.configs = authObj.val;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');

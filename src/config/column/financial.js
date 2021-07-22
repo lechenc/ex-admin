@@ -67,6 +67,86 @@ const rechargeCol = [
     label: '归集时间',
     prop: 'confirmTime',
   },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '170',
+    btnGroup: [
+
+      {
+        label: '通知钱包重新归集',
+        fn: 'message',
+        filter_type: 'array',
+        filter_key: 'collectStatus',
+        filter_status: ['0'],
+        type: 'success',
+        alias: 'message',
+      },
+    ],
+  },
+];
+
+
+const rechargeColNoBtn = [
+  {
+    label: '订单号',
+    prop: 'id',
+  },
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '币种',
+    prop: 'coinName',
+  },
+  {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
+    label: '到账数量',
+    prop: 'amount',
+  },
+  {
+    label: 'FROM地址',
+    prop: 'fromAddress',
+  },
+  {
+    label: 'TO地址',
+    prop: 'toAddress',
+  },
+  {
+    label: '充币TXID',
+    prop: 'txId',
+  },
+  {
+    label: '状态',
+    prop: 'tradeStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '充币待确认', val: 6 }],
+  },
+  {
+    label: '充币时间',
+    prop: 'createTime',
+  },
+  {
+    label: '归集状态',
+    prop: 'collectStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '未归集', val: 0 }, { text: '已归集', val: 1 }, { text: '归集失败', val: 2 }],
+  },
+  {
+    label: '归集TXID',
+    prop: 'collectTxId',
+  },
+  {
+    label: '归集时间',
+    prop: 'confirmTime',
+  },
 ];
 
 // 财务管理 -- 充币记录 搜索
@@ -2031,6 +2111,7 @@ const contractTransferConfig = [
 
 export {
   rechargeCol,
+  rechargeColNoBtn,
   rechargeConfig,
   extractCol,
   extractColNoBtn,
