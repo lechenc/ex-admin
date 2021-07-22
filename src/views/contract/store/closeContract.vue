@@ -119,6 +119,7 @@ export default {
         this.coinMarket = tmpName;
         val.coinMarket = tmpName;
       }
+      
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
@@ -149,6 +150,9 @@ export default {
       this.search_params_obj = {};
       this.searchCofig.forEach((v) => {
         v['value'] = '';
+        if (v.type == 'text_rank') {
+          v['value'] = [];
+        }
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
       this.getList();

@@ -307,6 +307,62 @@ export default {
           };
         });
       }
+      //  一键删除K线
+      if (fn === 'onekeyDelete') {
+        this.$confirm(row.coinMarket + '是否一键删除K线?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.pairsOnekeyDelete({
+              coinMarket: row.coinMarket,
+              signInterface:"pp.wa1992.3$5@!!__",
+            });
+            if (res) {
+              this.$message({ type: 'success', message: '一键删除成功' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
+      // 一键拉取K线
+      if (fn === 'onekeyPull') {
+        this.$confirm(row.coinMarket + '是否一键拉取K线?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.pairsOnekeyPull({
+              symbol: row.coinMarket.split('/').join('').toLocaleLowerCase(),
+              coinMarke: row.coinMarket,
+            });
+            if (res) {
+              this.$message({ type: 'success', message: '一键拉取成功' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
+      // 一键更新K线
+      if (fn === 'onekeyUpdate') {
+        this.$confirm(row.coinMarket + '是否一键更新K线?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const res = await $api.pairsOnekeyUpdate({
+              coinMarket: row.coinMarket,
+            });
+            if (res) {
+              this.$message({ type: 'success', message: '一键更新成功' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
     },
     // 添加交易对
     addSymbol() {
