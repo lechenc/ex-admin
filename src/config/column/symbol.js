@@ -197,7 +197,7 @@ const symbolCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '450',
+    width: '520',
     btnGroup: [
       {
         label: '编辑',
@@ -205,14 +205,20 @@ const symbolCol = [
         type: 'primary',
         alias: 'edit',
       },
-      
+
+      {
+        label: '更多',
+        filter_type: 'more',
+        type: 'primary',
+        alias: 'more',
+      },
 
       {
         label: '一键删除K线',
         fn: 'onekeyDelete',
         filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT','CNHT'],
+        filter_status: ['ALPT', 'CNHT'],
         type: 'primary',
         alias: 'onekeyDelete',
       },
@@ -222,22 +228,20 @@ const symbolCol = [
         fn: 'onekeyPull',
         filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT','CNHT'],
+        filter_status: ['ALPT', 'CNHT'],
         type: 'primary',
         alias: 'onekeyPull',
       },
 
-      
       {
         label: '一键更新K线',
         fn: 'onekeyUpdate',
         filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT','CNHT'],
+        filter_status: ['ALPT', 'CNHT'],
         type: 'primary',
         alias: 'onekeyUpdate',
       },
-      
     ],
   },
 ];
