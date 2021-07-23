@@ -375,8 +375,6 @@
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
 
-            
-
             <!-- // 根据一个传入的值判断是否展示 -->
             <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value == scope.row[btn.filter_key] + ''">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
@@ -414,9 +412,11 @@
             <el-dropdown type="primary" class="more_dropdown">
               <el-button type="primary" plain> {{ actionMoreText }}<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item :divided="index != 0" v-for="(item, index) in moreArr" :key="index">
-                  <el-button plain type="primary" @click="doHandle($event, scope.row, item['fn'])">{{ item.label }}</el-button>
-                </el-dropdown-item>
+                
+                  <el-dropdown-item :divided="index != 0" v-for="(item, index) in moreArr" :key="index">
+                    <el-button v-if="indexOfExceptFn(scope.row, item)" plain type="primary" @click="doHandle($event, scope.row, item['fn'])">{{ item.label }}</el-button>
+                  </el-dropdown-item>
+               
               </el-dropdown-menu>
             </el-dropdown>
           </template>
