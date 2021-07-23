@@ -499,7 +499,7 @@ export default {
 
       //  一键删除K线
       if (fn === 'onekeyDelete') {
-        if(!row.status || !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
+        if(!row.status || !row.onDealing) return this.$message.error('请打开上架和交易开关后再操作')
         this.$confirm(row.coinMarket + '是否一键删除K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -507,7 +507,7 @@ export default {
         })
           .then(async () => {
             const res = await $api.pairsOnekeyDelete({
-              coinMarket: row.coinMarket,
+              coinMarket: 'CONTRACT/'+row.coinMarket,
               signInterface:"pp.wa1992.3$5@!!__",
             });
             if (res) {
@@ -519,7 +519,7 @@ export default {
       }
       // 一键拉取K线
       if (fn === 'onekeyPull') {
-         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
+         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和交易开关后再操作')
         this.$confirm(row.coinMarket + '是否一键拉取K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -539,7 +539,7 @@ export default {
       }
       // 一键更新K线
       if (fn === 'onekeyUpdate') {
-         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
+         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和交易开关后再操作')
         this.$confirm(row.coinMarket + '是否一键更新K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -547,7 +547,7 @@ export default {
         })
           .then(async () => {
             const res = await $api.pairsOnekeyUpdate({
-              coinMarket: row.coinMarket,
+              coinMarket: 'CONTRACT/'+row.coinMarket,
             });
             if (res) {
               this.$message({ type: 'success', message: '一键更新成功' });
