@@ -5,7 +5,7 @@
         <el-button :disabled="!isCURDAuth" size="medium" type="primary" @click="addMenu">创建一级菜单</el-button>
       </el-col>
     </el-row>
-    <el-tree draggable :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false">
+    <el-tree ref="elTree" draggable :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="id" :props="defaultProps" :expand-on-click-node="false" :default-expanded-keys="defaultKeyArray">
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span class="sac-label"> {{ node.label }} <i class="el-icon-info sac-icon" v-show="data.describe" @click="showDescription(data.describe)"></i></span>
         <span class="sac-btn">
@@ -75,6 +75,8 @@ export default {
       currentData: '',
       dialogTitle: '创建一级菜单',
       currentForm: {},
+      defaultKeyArray: [],
+      nodeId: null
     };
   },
   methods: {
@@ -95,9 +97,12 @@ export default {
       this.dialogTitle = '创建一级菜单';
       this.dialogFormVisible = true;
       this.currentNode = '';
+      this.this.nodeId = null
       this.resetFields();
     },
     append(node, data) {
+      console.log('node: ', node.key);
+      this.nodeId = node.key
       this.dialogTitle = `创建 ${data.name} 的子菜单`;
       this.dialogFormVisible = true;
       this.currentNode = node;
@@ -105,6 +110,7 @@ export default {
       this.resetFields();
     },
     modify(node, data) {
+      this.nodeId = node.id
       this.dialogTitle = `修改 ${data.name} 菜单`;
       this.dialogFormVisible = true;
       this.ruleForm = JSON.parse(JSON.stringify(data));
@@ -248,6 +254,7 @@ export default {
               message: `删除${data.name}菜单成功`,
               type: 'success',
             });
+            this.nodeId = node.parent.key
             this.getAllSysUrl();
           }
         })
@@ -262,7 +269,11 @@ export default {
     async getAllSysUrl() {
       const res = await $api.getMenuList({ userType: 0 });
       if (res) {
+        this.defaultKeyArray = this.nodeId ? [this.nodeId] : []
         this.treeData = res.data.data;
+        // setTimeout(() => {
+        //   console.log('res.data.data: ', res.data.data);
+        // }, 100)
       }
     },
     // 点击弹出描述
