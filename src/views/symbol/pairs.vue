@@ -473,19 +473,22 @@ export default {
     },
   },
   async mounted() {
+    
+    let authObj = this.$util.getAuthority('Pairs', symbolCol, symbolColNoBtn);
+
     // 把actionarr 的按钮数组放到dropdown里面
     
-    let idx = symbolCol.findIndex((v) => {
+    let idx = authObj.val.findIndex((v) => {
       return v.type == 'action';
     });
-    let arr = symbolCol[idx].btnGroup;
+    let arr = authObj.val[idx].btnGroup;
     // 第一项是编辑,编辑不要放进去
     this.moreArr = arr.filter((v, idx) => {
       return idx != 0;
     });
     // 把除了第一项删掉
-    symbolCol[idx]['btnGroup'].splice(1);
-    let authObj = this.$util.getAuthority('Pairs', symbolCol, symbolColNoBtn);
+    authObj.val[idx]['btnGroup'].splice(1);
+    console.log('authObj',authObj)
 
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;

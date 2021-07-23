@@ -646,20 +646,24 @@ export default {
     },
   },
   async mounted() {
+    
+    let authObj = this.$util.getAuthority('CoinContract', coinContractCol, coinContractColNoBtn);
+
     // 把actionarr 的按钮数组放到dropdown里面
     
-    let idx = coinContractCol.findIndex((v) => {
+    let idx = authObj.val.findIndex((v) => {
       return v.type == 'action';
     });
-    let arr = coinContractCol[idx].btnGroup;
+    let arr = authObj.val[idx].btnGroup;
     // 第一项是编辑,编辑不要放进去
     this.moreArr = arr.filter((v, idx) => {
       return idx != 0;
     });
     // 把除了第一项删掉
-    coinContractCol[idx]['btnGroup'].splice(1);
+    authObj.val[idx]['btnGroup'].splice(1);
 
-    let authObj = this.$util.getAuthority('CoinContract', coinContractCol, coinContractColNoBtn);
+
+
     this.configs = authObj.val;
     this.btnArr = authObj.btnArr || [];
 

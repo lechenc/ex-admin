@@ -375,16 +375,7 @@
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
 
-            <!-- 包含哪个值不显示 除了包含那些值的显示-->
-
-            <template v-else-if="btn.filter_type == 'filter_indexOf_Except' && indexOfExceptFn(scope.row, btn)">
-              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
-            </template>
-
-            <!-- 包含那些值的显示 -->
-            <template v-else-if="btn.filter_type == 'filter_indexOf' && indexOfFn(scope.row, btn)">
-              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
-            </template>
+            
 
             <!-- // 根据一个传入的值判断是否展示 -->
             <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value == scope.row[btn.filter_key] + ''">
@@ -401,6 +392,17 @@
               "
             >
               <el-button slot="reference" :type="btn.type" plain size="mini" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
+            </template>
+
+            <!-- 包含哪个值不显示 除了包含那些值的显示-->
+
+            <template v-else-if="btn.filter_type == 'filter_indexOf_Except' && indexOfExceptFn(scope.row, btn)">
+              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
+            </template>
+
+            <!-- 包含那些值的显示 -->
+            <template v-else-if="btn.filter_type == 'filter_indexOf' && indexOfFn(scope.row, btn)">
+              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
 
             <el-popconfirm v-else-if="btn.filter_key && scope.row[btn.filter_key] == btn.filter_status && btn.isPop && !btn.out" :title="btn['confirm_txt']" @onConfirm="doHandle($event, scope.row, btn['fn'])">
@@ -443,7 +445,9 @@ export default {
 
     moreArr: {
       type: Array,
-      default: [],
+      default: () => {
+        return [];
+      },
     },
 
     actionShow: {
@@ -618,7 +622,7 @@ export default {
         row: item,
         fn: fn,
       };
-      
+
       this.$emit('do-handle', obj);
     },
     // （"非操作列"行内）按钮操作
