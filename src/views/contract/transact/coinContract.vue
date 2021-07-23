@@ -526,7 +526,7 @@ export default {
           type: 'warning',
         })
           .then(async () => {
-            const res = await $api.pairsOnekeyPull({
+            const res = await $api.contractOnekeyPull({
               symbol: row.coinMarket.split('/').join('').toLocaleLowerCase(),
               coinMarke: row.coinMarket,
             });

@@ -349,9 +349,7 @@
           <span v-for="(btn, i) in config.btnGroup" :key="i + 't`t'">
             <template v-if="btn.type == 'noVisible'"> </template>
 
-            <template v-else-if="btn.filter_type == 'filter_indexOf' && indexOfFn(scope.row)">
-              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }} </el-button>
-            </template>
+            
 
             <el-button v-else-if="!btn.filter_key && !btn.type" type="text" size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             <!--常用于得到数据后遍历后确定不可点击，并且noIsClick为false或不存在,否则就还是可以点击-->
@@ -378,6 +376,19 @@
             <template v-else-if="btn.filter_type == 'arrayExcept' && !btn.filter_status.includes(scope.row[btn.filter_key] + '')">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
+
+            <!-- 包含哪个值不显示 除了包含那些值的显示-->
+
+            <template v-else-if="btn.filter_type == 'filter_indexOf_Except' && indexOfExceptFn(scope.row,btn)">
+              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
+            </template>
+             
+             <!-- 包含那些值的显示 -->
+            <template v-else-if="btn.filter_type == 'filter_indexOf' && indexOfFn(scope.row,btn)">
+              <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
+            </template>
+
+           
 
             <!-- // 根据一个传入的值判断是否展示 -->
             <template v-else-if="btn.filter_type == 'filter_label' && filter_type_value == scope.row[btn.filter_key] + ''">
@@ -456,15 +467,25 @@ export default {
         return Precision.plus(n1, n2);
       };
     },
-    indexOfFn() {
-      return (row) => {
-        if (row.coinMarket.indexOf('ALPT') >-1 ||  row.coinMarket.indexOf('CNHT') >-1) {
-          return false;
-        } else {
-          return true;
-        }
+    // 包含哪个值不显示 除了包含那些值的显示
+    indexOfExceptFn() {
+      return (row,btn) => {
+        return btn.filter_status.every((v)=>{
+          return row[btn.filter_key].indexOf(v) < 0
+        })
       };
     },
+
+     // 包含那些值的显示 
+    indexOfFn() {
+      return (row,btn) => {
+        return btn.filter_status.some((v)=>{
+          return row[btn.filter_key].indexOf(v) != -1
+        })
+      };
+    },
+
+    
 
     
 

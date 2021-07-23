@@ -210,9 +210,9 @@ const symbolCol = [
       {
         label: '一键删除K线',
         fn: 'onekeyDelete',
-        filter_type: 'filter_indexOf',
+        filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: 1,
+        filter_status: ['ALPT','CNHT'],
         type: 'primary',
         alias: 'onekeyDelete',
       },
@@ -220,42 +220,24 @@ const symbolCol = [
       {
         label: '一键拉取K线',
         fn: 'onekeyPull',
-        filter_type: 'filter_indexOf',
+        filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: 1,
+        filter_status: ['ALPT','CNHT'],
         type: 'primary',
         alias: 'onekeyPull',
       },
 
+      
       {
         label: '一键更新K线',
         fn: 'onekeyUpdate',
-        filter_type: 'filter_indexOf',
+        filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: 1,
+        filter_status: ['ALPT','CNHT'],
         type: 'primary',
         alias: 'onekeyUpdate',
       },
-
-      // {
-      //   label: '一键拉取K线',
-      //   fn: 'onekeyPull',
-      //   filter_type: 'arrayExcept',
-      //   filter_key: 'coinMarket',
-      //   filter_status: ['ALPT/USDT','CNHT/USDT'],
-      //   type: 'primary',
-      //   alias: 'onekeyPull',
-      // },
-
-      // {
-      //   label: '一键更新K线',
-      //   fn: 'onekeyUpdate',
-      //   filter_type: 'arrayExcept',
-      //   filter_key: 'coinMarket',
-      //   filter_status: ['ALPT/USDT','CNHT/USDT'],
-      //   type: 'primary',
-      //   alias: 'onekeyUpdate',
-      // },
+      
     ],
   },
 ];
