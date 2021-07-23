@@ -412,11 +412,9 @@
             <el-dropdown type="primary" class="more_dropdown">
               <el-button type="primary" plain> {{ actionMoreText }}<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
               <el-dropdown-menu slot="dropdown">
-                
-                  <el-dropdown-item :divided="index != 0" v-for="(item, index) in moreArr" :key="index">
-                    <el-button v-if="indexOfExceptFn(scope.row, item)" plain type="primary" @click="doHandle($event, scope.row, item['fn'])">{{ item.label }}</el-button>
-                  </el-dropdown-item>
-               
+                <el-dropdown-item :divided="index != 0" v-for="(item, index) in moreArr" :key="index">
+                  <el-button v-if=" !item.filter_type || !item.filter_status || indexOfExceptFn(scope.row, item)" plain type="primary" @click="doHandle($event, scope.row, item['fn'])">{{ item.label }}</el-button>
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>

@@ -488,7 +488,7 @@ export default {
     });
     // 把除了第一项删掉
     authObj.val[idx]['btnGroup'].splice(1);
-    console.log('this.moreArr',this.moreArr)
+    
 
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
