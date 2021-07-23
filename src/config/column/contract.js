@@ -97,7 +97,7 @@ const coinContractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:'650',
+    width:'200',
     btnGroup: [
       {
         label: '编辑',

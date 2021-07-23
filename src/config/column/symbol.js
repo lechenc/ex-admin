@@ -197,20 +197,13 @@ const symbolCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '520',
+    width: '200',
     btnGroup: [
       {
         label: '编辑',
         fn: 'edit',
         type: 'primary',
         alias: 'edit',
-      },
-
-      {
-        label: '更多',
-        filter_type: 'more',
-        type: 'primary',
-        alias: 'more',
       },
 
       {

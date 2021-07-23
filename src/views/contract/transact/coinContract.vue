@@ -16,7 +16,7 @@
       <el-button v-if="btnArr.includes('cancel')" type="primary" size="small" @click="addClose('cancel')">创建单独撤单</el-button>
     </div>
     <div>
-      <Btable :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+      <Btable  :actionMoreShow="true" actionMoreText="更多" :moreArr="moreArr" :maxHeight="'800px'" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -167,6 +167,7 @@ export default {
   },
   data() {
     return {
+      moreArr:[],
       closeTitle: '',
       contracList: [], // 合约币对
       closeBtnLoading: false,
@@ -499,7 +500,7 @@ export default {
 
       //  一键删除K线
       if (fn === 'onekeyDelete') {
-        if(!row.status || !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
+        if(!row.status || !row.onDealing) return this.$message.error('请打开上架和交易开关后再操作')
         this.$confirm(row.coinMarket + '是否一键删除K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -507,7 +508,7 @@ export default {
         })
           .then(async () => {
             const res = await $api.pairsOnekeyDelete({
-              coinMarket: row.coinMarket,
+              coinMarket: 'CONTRACT/'+row.coinMarket,
               signInterface:"pp.wa1992.3$5@!!__",
             });
             if (res) {
@@ -519,7 +520,7 @@ export default {
       }
       // 一键拉取K线
       if (fn === 'onekeyPull') {
-         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
+         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和交易开关后再操作')
         this.$confirm(row.coinMarket + '是否一键拉取K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -539,7 +540,7 @@ export default {
       }
       // 一键更新K线
       if (fn === 'onekeyUpdate') {
-         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
+         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和交易开关后再操作')
         this.$confirm(row.coinMarket + '是否一键更新K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -547,7 +548,7 @@ export default {
         })
           .then(async () => {
             const res = await $api.pairsOnekeyUpdate({
-              coinMarket: row.coinMarket,
+              coinMarket: 'CONTRACT/'+row.coinMarket,
             });
             if (res) {
               this.$message({ type: 'success', message: '一键更新成功' });
@@ -645,6 +646,19 @@ export default {
     },
   },
   async mounted() {
+    // 把actionarr 的按钮数组放到dropdown里面
+    
+    let idx = coinContractCol.findIndex((v) => {
+      return v.type == 'action';
+    });
+    let arr = coinContractCol[idx].btnGroup;
+    // 第一项是编辑,编辑不要放进去
+    this.moreArr = arr.filter((v, idx) => {
+      return idx != 0;
+    });
+    // 把除了第一项删掉
+    coinContractCol[idx]['btnGroup'].splice(1);
+
     let authObj = this.$util.getAuthority('CoinContract', coinContractCol, coinContractColNoBtn);
     this.configs = authObj.val;
     this.btnArr = authObj.btnArr || [];

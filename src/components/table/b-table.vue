@@ -351,7 +351,7 @@
 
             <el-button v-else-if="!btn.filter_key && !btn.type" type="text" size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             <!--常用于得到数据后遍历后确定不可点击，并且noIsClick为false或不存在,否则就还是可以点击-->
-            <el-button v-else-if="!btn.filter_key &&!btn.filter_type && btn.type && !btn.other_filter && !btn.out" :type="btn.type" plain size="small" :disabled="scope.row.isclick && btn.noIsClick" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
+            <el-button v-else-if="!btn.filter_key && !btn.filter_type && btn.type && !btn.other_filter && !btn.out" :type="btn.type" plain size="small" :disabled="scope.row.isclick && btn.noIsClick" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
 
             <!--常用于特定值下出现的按钮-->
             <template v-else-if="btn.filter_key && !btn.filter_type && !$util.isArray(btn.filter_key) && !btn.isPop && !btn.out && scope.row[btn.filter_key] == btn.filter_status">
@@ -373,20 +373,6 @@
 
             <template v-else-if="btn.filter_type == 'arrayExcept' && !btn.filter_status.includes(scope.row[btn.filter_key] + '')">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
-            </template>
-
-            <template v-else-if="btn.filter_type == 'more'">
-
-              <el-dropdown >
-                <el-button size="mini" type="primary"> {{btn.label}}<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
-                <el-dropdown-menu size="small" slot="dropdown">
-                  <el-dropdown-item v-for="item in myarr" :key="item.id" command="other">
-                    
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-
-              
             </template>
 
             <!-- 包含哪个值不显示 除了包含那些值的显示-->
@@ -421,6 +407,17 @@
               <el-button slot="reference" :type="btn.type" size="mini">{{ btn.label }}</el-button>
             </el-popconfirm>
           </span>
+
+          <template v-if="actionMoreShow">
+            <el-dropdown type="primary" class="more_dropdown">
+              <el-button type="primary" plain> {{ actionMoreText }}<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :divided="index != 0" v-for="(item, index) in moreArr" :key="index">
+                  <el-button plain type="primary" @click="doHandle($event, scope.row, item['fn'])">{{ item.label }}</el-button>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
         </template>
       </el-table-column>
     </template>
@@ -434,7 +431,21 @@ export default {
   name: 'b-table',
   props: {
     // 操作按钮是否显示
-    
+
+    actionMoreShow: {
+      type: Boolean,
+      default: false,
+    },
+    actionMoreText: {
+      type: String,
+      default: '更多',
+    },
+
+    moreArr: {
+      type: Array,
+      default: [],
+    },
+
     actionShow: {
       type: Boolean,
       default: true,
@@ -549,8 +560,8 @@ export default {
   },
   data() {
     return {
-      myarr:[]
-    }
+      myarr: [],
+    };
   },
   methods: {
     //是否有某些值
@@ -607,6 +618,7 @@ export default {
         row: item,
         fn: fn,
       };
+      
       this.$emit('do-handle', obj);
     },
     // （"非操作列"行内）按钮操作
@@ -641,6 +653,16 @@ export default {
       background: #ffffff !important;
       font-size: 15px;
       font-weight: 600;
+    }
+  }
+  .el-dropdown-menu {
+    justify-content: center !important;
+  }
+
+  .more_dropdown {
+    margin-left: 5px;
+    .el-button-group {
+      display: flex;
     }
   }
   .valueArr {
