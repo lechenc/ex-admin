@@ -3076,6 +3076,13 @@ static batchAddAnalyst(data) {
     return Fetch.post('/wallet/user/recollect', data);
   }
 
+  // 合约管理 交易所管理 合约币种 一键拉取K线
+  static contractOnekeyPull(data) {
+    return Fetch.post('/admin/robot/contract/history-Lists', data);
+  }
+
+ 
+
 
 
 

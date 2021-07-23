@@ -309,6 +309,7 @@ export default {
       }
       //  一键删除K线
       if (fn === 'onekeyDelete') {
+        if(!row.status || !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
         this.$confirm(row.coinMarket + '是否一键删除K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -328,6 +329,7 @@ export default {
       }
       // 一键拉取K线
       if (fn === 'onekeyPull') {
+         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
         this.$confirm(row.coinMarket + '是否一键拉取K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -347,6 +349,7 @@ export default {
       }
       // 一键更新K线
       if (fn === 'onekeyUpdate') {
+         if(!row.status ||  !row.onDealing) return this.$message.error('请打开上架和下单开关后再操作')
         this.$confirm(row.coinMarket + '是否一键更新K线?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

@@ -97,7 +97,7 @@ const coinContractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:'300',
+    width:'650',
     btnGroup: [
       {
         label: '编辑',
@@ -116,6 +116,36 @@ const coinContractCol = [
         fn: 'allClose',
         type: 'primary',
         alias: 'allClose',
+      },
+
+      {
+        label: '一键删除K线',
+        fn: 'onekeyDelete',
+        filter_type: 'filter_indexOf',
+        filter_key: 'coinMarket',
+        filter_status: 1,
+        type: 'primary',
+        alias: 'onekeyDelete',
+      },
+
+      {
+        label: '一键拉取K线',
+        fn: 'onekeyPull',
+        filter_type: 'filter_indexOf',
+        filter_key: 'coinMarket',
+        filter_status: 1,
+        type: 'primary',
+        alias: 'onekeyPull',
+      },
+
+      {
+        label: '一键更新K线',
+        fn: 'onekeyUpdate',
+        filter_type: 'filter_indexOf',
+        filter_key: 'coinMarket',
+        filter_status: 1,
+        type: 'primary',
+        alias: 'onekeyUpdate',
       },
     ],
   },
