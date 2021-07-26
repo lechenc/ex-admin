@@ -75,7 +75,7 @@ const rechargeCol = [
     btnGroup: [
 
       {
-        label: '一键手动归集',
+        label: '链上归集已失败，重新调用钱包去归集',
         fn: 'message',
         filter_type: 'array',
         filter_key: 'collectStatus',
