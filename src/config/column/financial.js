@@ -75,11 +75,11 @@ const rechargeCol = [
     btnGroup: [
 
       {
-        label: '通知钱包重新归集',
+        label: '一键手动归集',
         fn: 'message',
         filter_type: 'array',
         filter_key: 'collectStatus',
-        filter_status: ['0'],
+        filter_status: ['1'],
         type: 'success',
         alias: 'message',
       },
