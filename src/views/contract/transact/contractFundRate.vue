@@ -48,6 +48,7 @@ import $api from '@/api/api';
 import Precision from '@/utils/number-precision';
 import activePage from '@/mixin/keepPage';
 import BTwoRangeChoose from '@/components/b-two-range-choose';
+import { remRadian } from 'echarts/lib/util/number';
 
 export default {
   name: 'ContractAccount',
@@ -192,6 +193,11 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
+
       this.getList();
     },
     doReset() {
@@ -199,7 +205,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[1].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
       this.getList();
     },
     // 分页
@@ -231,7 +237,7 @@ export default {
         params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
         params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
         // 组件时间初始必须format格式
-        this.searchCofig[1].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss')];
+        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss')];
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
@@ -286,7 +292,7 @@ export default {
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.$store.dispatch('common/getSymbolListContract').then(() => {
-      this.searchCofig[0]['list'] = this.$store.state.common.symbollistContract;
+      this.searchCofig[1]['list'] = this.$store.state.common.symbollistContract;
       this.coin_List = this.$store.state.common.symbollistContract;
     });
 

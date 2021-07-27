@@ -310,6 +310,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       // this.getList('search');
       if (!this.search_params_obj.uid) {
         this.$message({ message: '必须输入UID才能定位', type: 'error' });

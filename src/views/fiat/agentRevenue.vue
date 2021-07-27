@@ -80,6 +80,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       this.getList();
     },
     doReset() {
@@ -135,6 +138,9 @@ export default {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       if (!(this.search_params_obj.startTime || this.search_params_obj.advertType)) {
         this.$message({ type: 'error', message: '时间或者订单类型至少选择选择其中一项!', duration: 2000 });
         return;

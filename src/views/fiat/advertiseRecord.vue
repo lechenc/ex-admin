@@ -81,6 +81,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       this.getList();
     },
     doReset() {
@@ -108,6 +111,9 @@ export default {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       if (!this.search_params_obj.coinName) {
         this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
         return;

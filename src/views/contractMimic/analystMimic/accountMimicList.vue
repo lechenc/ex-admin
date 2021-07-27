@@ -309,6 +309,9 @@ export default {
     async calTotal(data) {
       this.totalDialog = true;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       const res = await $api.getAccountMimicTotal(this.search_params_obj);
       this.totalObj = res.data.data;
       let temId = '';
@@ -370,6 +373,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       this.getList();
     },
     doReset() {

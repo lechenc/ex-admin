@@ -135,6 +135,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       this.getList();
     },
     doReset() {
@@ -178,6 +181,9 @@ export default {
     },
     async calTotal(data) {
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       // 输入次数和星级必填
       if (!this.search_params_obj.count || !this.search_params_obj.starLevel) {
         this.$message({ type: 'error', message: '奖励次数 和 星级查询 为必填项' });

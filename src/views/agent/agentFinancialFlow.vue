@@ -96,6 +96,9 @@ export default {
       //   };
       // }
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       this.getList();
     },
     doReset() {

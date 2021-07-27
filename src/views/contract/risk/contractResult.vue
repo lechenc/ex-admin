@@ -284,6 +284,9 @@ export default {
       }
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       if (parseFloat(data.minPositionAveragePrice) > parseFloat(data.maxPositionAveragePrice)) {
         return this.$message.error('最小值不得大于最大值');
       }

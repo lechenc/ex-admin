@@ -117,7 +117,9 @@
                       </div>
                     </div>
                   </div>
-                  <div v-else>无</div>
+                  <div v-else>
+                    <el-button @click="search(scope.row['coinName'])" plain size="medium" type="primary"> 查询 </el-button>
+                  </div>
                 </div>
               </template>
             </el-table-column>
@@ -237,6 +239,16 @@ export default {
     },
   },
   methods: {
+    // 查询用户资产的充币地址
+    search(coinName) {
+      let index = this.assetsList.findIndex((v) => {
+        return v.coinName == coinName;
+      });
+      this.assetsList[index].coinAddressList.push({
+        address: '1BJVitDfrqdQEGoEw33do5utu8h87dtK19',
+        chainName: 'omni',
+      });
+    },
     resetGoogleCode() {
       if (!this.current_row.googleVerify) {
         this.$message.error('未绑定谷歌秘钥');
@@ -331,8 +343,7 @@ export default {
       if (res) {
         this.$message({ type: 'success', message: fn === 'open' ? '开启成功' : '停止使用操作成功' });
         this.getDetail();
-      }else{
-        
+      } else {
       }
     },
     handleClick(tab, event) {},

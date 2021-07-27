@@ -636,6 +636,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       // this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       if (!this.currentData.hasOwnProperty('roleId')) return this.$message.error('请选择部门');
       if (this.currentData.level == 0) return;
       this.getList(this.currentData);

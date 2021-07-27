@@ -84,6 +84,10 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       this.getList();
     },
     doReset() {
@@ -111,6 +115,9 @@ export default {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       if (!this.search_params_obj.type) {
         this.$message({ type: 'error', message: '委托方向必须选择!', duration: 2000 });
         return;
@@ -211,6 +218,7 @@ export default {
       this.listLoading = false;
     },
     requiredParams(params) {
+      
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
         params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
@@ -219,6 +227,7 @@ export default {
           this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
           this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss'),
         ];
+        
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);

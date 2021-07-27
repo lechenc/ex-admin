@@ -2810,19 +2810,20 @@ const contractAccountCol = [
 
 const contractFundRateConfig = [
   {
-    type: 'select',
-    label: '币对',
-    prop: 'coinMarket',
-    value: '',
-    list: [],
-  },
-  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
     value: '',
   },
+  {
+    type: 'select',
+    label: '币对',
+    prop: 'coinMarket',
+    value: '',
+    list: [],
+  },
+  
 ];
 
 const contractFundRateCol = [

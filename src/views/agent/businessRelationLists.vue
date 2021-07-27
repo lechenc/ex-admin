@@ -348,6 +348,9 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        this.search_params_obj.flag = 1;
+      }
       // this.getList('search');
       if (!this.search_params_obj.businessUid && (this.search_params_obj.type == 0 || this.search_params_obj.type == 2)) {
         return this.$message.error('必须输入UID才能定位');
