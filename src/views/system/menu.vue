@@ -97,11 +97,11 @@ export default {
       this.dialogTitle = '创建一级菜单';
       this.dialogFormVisible = true;
       this.currentNode = '';
-      this.this.nodeId = null
+      this.nodeId = null
       this.resetFields();
     },
     append(node, data) {
-      console.log('node: ', node.key);
+      
       this.nodeId = node.key
       this.dialogTitle = `创建 ${data.name} 的子菜单`;
       this.dialogFormVisible = true;
