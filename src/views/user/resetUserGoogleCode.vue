@@ -97,7 +97,7 @@ export default {
       if (this.btnResetLoading) return;
       this.btnResetLoading = true;
       const params = {
-        account: this.current_row.email,
+        account: this.current_row.uid.toString(),
       };
       const res = await $api.getGoogleCode(params);
       if (res) {
