@@ -290,6 +290,8 @@ const mapComponents = {
   PlateArea: () => import('@/views/symbol/plateArea'),
   SmallAmountShow: () => import('@/views/symbol/smallAmountShow'),
   RealNameFreeExtract: () => import('@/views/symbol/realNameFreeExtract'),
+  KlineList: () => import('@/views/symbol/klineList'),
+  EditKline: () => import('@/views/symbol/editKline'),
 
   LotteryList: () => import('@/views/front/lottery/lotteryList'),
   LotteryListDetail: () => import('@/views/front/lottery/lotteryListDetail'),

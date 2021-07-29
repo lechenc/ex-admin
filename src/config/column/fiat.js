@@ -3545,7 +3545,121 @@ const levelSettingColNoBtn = [
   },
 ];
 
+const advancedCol = [
+  {
+    label: '商户名称',
+    prop: 'userName'
+  },
+  {
+    label: '商户编号',
+    prop: 'uid',
+  },
+  {
+    label: 'userId',
+    prop: 'userId',
+    type: 'myIsShow'
+  },
+  {
+    label: '充值渠道授权',
+    prop: 'despositChannel',
+    width: 200
+  },
+  {
+    label: '充值承兑商授权',
+    prop: 'despositAdvertiser',
+    width: 200
+  },
+  {
+    label: '提现渠道授权',
+    prop: 'withdrawChannel'
+  },
+  {
+    label: '提现承兑商授权',
+    prop: 'withdrawAdvertiser',
+    width: 200
+  },
+  {
+    label: '充值单笔限额',
+    type: 'limitTextDouble',
+    prop: 'chargeMinimum',
+    prop2: 'chargeMaximum',
+    width: 150
+  },
+  {
+    label: '提现单笔限额',
+    type: 'limitTextDouble',
+    prop: 'withdrawalMinimum',
+    prop2: 'withdrawalMaximum',
+    width: 150
+  },
+  
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '200',
+    btnGroup: [
+      {
+        label: '配置',
+        fn: 'configuration',
+        type: 'primary',
+        alias: 'configuration'
+      }
+    ]
+  }
+]
+
+const advancedColNoBtn = [
+  {
+    label: '商户名称',
+    prop: 'userName'
+  },
+  {
+    label: '商户编号',
+    prop: 'userId'
+  },
+  {
+    label: '充值渠道授权',
+    prop: 'despositChannel',
+    width: 200
+  },
+  {
+    label: '充值承兑商授权',
+    prop: 'despositAdvertiser',
+    width: 200
+  },
+  {
+    label: '提现渠道授权',
+    prop: 'withdrawChannel'
+  },
+  {
+    label: '提现承兑商授权',
+    prop: 'withdrawAdvertiser',
+    width: 200
+  }
+]
+
+// 商户接单配置
+const advancedConfig = [
+  {
+    label: '商户名称',
+    prop: 'userName',
+    placeHolder: '请输入商户名称'
+  },
+  {
+    label: '商户编号',
+    prop: 'userId',
+    placeHolder: '请输入商户编号'
+  }
+]
+
+
+
+
 export {
+  advancedCol,
+  advancedColNoBtn,
+  advancedConfig,
   levelSettingCol,
   levelSettingColNoBtn,
   rateManageCol,

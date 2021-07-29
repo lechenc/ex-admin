@@ -3081,6 +3081,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/robot/contract/history-Lists', data);
   }
 
+  // 币种管理/K线列表 状态审核
+  static apiCheckKlineList(data) {
+    return Fetch.post('/admin/robot/contract/history-Lists', data);
+  }
+
  
 
 

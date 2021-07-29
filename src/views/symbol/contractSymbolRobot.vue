@@ -21,6 +21,11 @@
             <el-option v-for="(item, idx) in userArr" :key="idx" :label="item.phone" :value="item.uid"></el-option>
           </el-select>
         </el-form-item>
+
+        <b-two-range-choose v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="时间变化频次" :getVal1.sync="robotForm.minProportion" :getVal2.sync="robotForm.maxProportion" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+
+        <b-two-range-choose v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+
         <el-form-item label="交易对" :label-width="formLabelWidth" prop="coinMarket">
           <el-select v-model="robotForm.coinMarket" placeholder="" wdith="20%" :disabled="!!robotForm.id">
             <el-option v-for="(item, idx) in coin_list" :key="idx" :label="item.label" :value="item.label"></el-option>
@@ -84,6 +89,7 @@ import iconPage from '@/components/icon-page';
 import Precision from '@/utils/number-precision';
 import { contractSymbolRobotCol, contractSymbolRobotColNoBtn, contractSymbolRobotConfig } from '@/config/column/symbol';
 import $api from '@/api/api';
+import BTwoRangeChoose from '@/components/b-two-range-choose';
 
 export default {
   name: 'ContractSymbolRobot',
@@ -91,6 +97,7 @@ export default {
     Btable,
     Bsearch,
     iconPage,
+    BTwoRangeChoose,
   },
   data() {
     return {
@@ -127,7 +134,7 @@ export default {
         isMock: false,
         mockCoinMarket: '',
         isFormal: '',
-        markFloatingRatio:'',
+        markFloatingRatio: '',
       },
       rules: {
         isFormal: [
@@ -160,7 +167,6 @@ export default {
         //   },
         // ],
 
-        
         minSheets: [
           {
             required: true,
@@ -219,6 +225,10 @@ export default {
     };
   },
   methods: {
+    getRangeVal(val) {
+      // val.valid
+      // val.form
+    },
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data;
@@ -243,7 +253,7 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['robotForm'].resetFields();
-          const { id, uid, coinMarket, isFormal, proportion, depthParameter, status, mockCoinMarket, isMock, googleCode, floatingRatio,markFloatingRatio, minSheets, maxSheets } = row;
+          const { id, uid, coinMarket, isFormal, minProportion, maxProportion, minChangeTime, maxChangeTime, proportion, depthParameter, status, mockCoinMarket, isMock, googleCode, floatingRatio, markFloatingRatio, minSheets, maxSheets } = row;
           this.robotForm = {
             id,
             uid,
@@ -259,6 +269,10 @@ export default {
             markFloatingRatio,
             minSheets,
             maxSheets,
+            minProportion,
+            maxProportion,
+            minChangeTime,
+            maxChangeTime,
           };
         });
       }
@@ -288,9 +302,15 @@ export default {
           status: false,
           googleCode: '',
           floatingRatio: '',
-          markFloatingRatio:'',
+          markFloatingRatio: '',
           minSheets: '',
           maxSheets: '',
+
+          minProportion:'',
+            maxProportion:'',
+            minChangeTime:'',
+            maxChangeTime:'',
+
           isMock: false,
         };
       });

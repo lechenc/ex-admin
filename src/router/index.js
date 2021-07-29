@@ -391,6 +391,20 @@ export const asyncRouterMap = [
         component: () => import('@/views/symbol/realNameFreeExtract'),
         meta: { title: '免实名提币管理', icon: '' },
       },
+
+      {
+        path: 'klineList',
+        name: 'KlineList',
+        component: () => import('@/views/symbol/klineList'),
+        meta: { title: 'K线列表', icon: '' },
+      },
+      {
+        hidden: true,
+        path: 'editKline',
+        name: 'EditKline',
+        component: () => import('@/views/symbol/editKline'),
+        meta: { title: '修改制定K线', icon: '', role: []},
+      },
       
     ],
   },

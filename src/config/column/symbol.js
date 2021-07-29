@@ -990,7 +990,200 @@ const currencyRobotConfig = [
   },
 ];
 
+const klineListCol = [
+  {
+    label: 'K线类型',
+    prop: 'fromType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+  },
+  {
+    label: '交易对品种',
+    prop: 'uid',
+  },
+  {
+    label: 'K线时间类型',
+    prop: 'coinName',
+  },
+  {
+    label: '旧高开低收',
+    prop: 'toCoinName',
+  },
+  {
+    label: '新高开低收',
+    prop: 'amount',
+  },
+  {
+    label: '备注',
+    prop: 'fee',
+  },
+  {
+    label: '创建人',
+    prop: 'dealAmount',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+
+  {
+    label: '审核人',
+    prop: 'dealAmount1',
+  },
+
+  {
+    label: '审核时间',
+    prop: 'createTime2',
+    type: 'time',
+  },
+  {
+    label: '状态',
+    prop: 'fromType2',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width:'130',
+    btnGroup: [
+      {
+        label: '审核',
+        fn: 'check',
+        type: 'primary',
+        alias: 'check',
+      },
+    ],
+  },
+];
+
+const klineListColNoBtn = [
+  {
+    label: 'K线类型',
+    prop: 'fromType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+  },
+  {
+    label: '交易对品种',
+    prop: 'uid',
+  },
+  {
+    label: 'K线时间类型',
+    prop: 'coinName',
+  },
+  {
+    label: '旧高开低收',
+    prop: 'toCoinName',
+  },
+  {
+    label: '新高开低收',
+    prop: 'amount',
+  },
+  {
+    label: '备注',
+    prop: 'fee',
+  },
+  {
+    label: '创建人',
+    prop: 'dealAmount',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+
+  {
+    label: '审核人',
+    prop: 'dealAmount1',
+  },
+
+  {
+    label: '审核时间',
+    prop: 'createTime2',
+    type: 'time',
+  },
+  {
+    label: '状态',
+    prop: 'fromType2',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+  },
+];
+
+const klineListConfig = [
+  {
+    type: 'date_rank',
+    label: '创建时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'date_rank',
+    label: '更新时间',
+    prop: 'startTime2',
+    prop2: 'endTime2',
+    value: '',
+  },
+  {
+    type: 'select',
+    label: 'K线类型',
+    prop: 'accountType',
+    value: '',
+    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+  },
+  
+  {
+    type: 'select',
+    label: 'K线时间类型',
+    prop: 'accountType2',
+    value: '',
+    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+  },
+
+
+  {
+    type: 'text',
+    label: '创建人',
+    prop: 'id',
+    value: '',
+  },
+  {
+    type: 'text',
+    label: '审核人',
+    prop: 'id2',
+    value: '',
+  },
+  {
+    type: 'select',
+    label: '交易对品种',
+    prop: 'accountType3',
+    value: '',
+    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+  },
+  {
+    type: 'select',
+    label: '状态',
+    prop: 'accountType4',
+    value: '',
+    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+  },
+  
+];
+
 export {
+  klineListCol,
+  klineListColNoBtn,
+  klineListConfig,
+  
   plateAreaColNoBtn,
   plateAreaCol,
   coinWhiteListCol,
