@@ -154,10 +154,10 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <!-- <el-card style="margin-bottom: 80px">
-      <H3>出入金统计</H3>
+    <el-card v-if="btnArr.includes('inOutGoldList')" style="margin-bottom: 40px">
+      <H3>用户出入金统计</H3>
       <Btable :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
-    </el-card> -->
+    </el-card>
     <el-card style="margin-bottom: 40px">
       <H3>法币收款方式</H3>
       <Btable :listLoading="otcListLoading" :data="otcList" :configs="otcConfigs" @do-handle="doHandle" />
@@ -170,7 +170,7 @@ import vueQr from 'vue-qr';
 import $api from '@/api/api';
 import activePage from '@/mixin/keepPage';
 import Btable from '@/components/table/b-table';
-import { userCol, userColNoBtn, userConfig, userColOtcList, userColInOutGoldList } from '@/config/column/user';
+import { userCol, userColNoBtn, userColOtcList, userColInOutGoldList } from '@/config/column/user';
 
 export default {
   components: {
@@ -194,7 +194,7 @@ export default {
       },
       listLoading: false, // 表格loading
       otcListLoading: false, // 法币收款方式loading
-      inOutGoldListLoading: false, // 法币收款方式loading
+      inOutGoldListLoading: false, // 出入金表格loading
 
       activeName: 'assets',
       otcConfigs: [], // 法币收款方式配置
@@ -405,7 +405,7 @@ export default {
           this.nowUserId = this.current_row.userId;
           this.getInviteList();
           this.getAssetsList();
-          // this.getInOutGoldListFunc(this.nowUserId);
+          this.getInOutGoldListFunc(this.nowUserId);
         }
       }
       this.listLoading = false;
@@ -427,22 +427,26 @@ export default {
       this.otcListLoading = false;
     },
 
-    // // 获取 出入金数据表格
-    // async getInOutGoldListFunc(_id) {
-    //   if (this.inOutGoldListLoading) return;
-    //   const params = {
-    //     userId: _id,
-    //   };
-    //   this.inOutGoldListLoading = true;
-    //   const res = await $api.getInOutGoldList(params);
-    //   if (res) {
-    //     const records = res.data.data;
-    //     if (records && records.length > 0) {
-    //       this.inOutGoldList = records;
-    //     }
-    //   }
-    //   this.inOutGoldListLoading = false;
-    // },
+    // 获取 出入金数据表格
+    async getInOutGoldListFunc(_id) {
+      if (this.inOutGoldListLoading) return;
+      const params = _id
+        ? {
+            userId: _id,
+          }
+        : {
+            uid: this.$route.query.id,
+          };
+      this.inOutGoldListLoading = true;
+      const res = await $api.apiGetInOutGoldList(params);
+      if (res) {
+        const records = res.data.data;
+        if (records && records.length > 0) {
+          this.inOutGoldList = records;
+        }
+      }
+      this.inOutGoldListLoading = false;
+    },
   },
   // mounted() {
   //   this.getDetail(this.$route.query.id);

@@ -2632,10 +2632,7 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/contract/in-and-out-total', data);
   }
 
-  // 用户管理 用户列表 详情 出入金列表
-  static getInOutGoldList(data) {
-    return Fetch.post('/admin/account/user/in-and-out', data);
-  }
+  
   // 用户管理 有效用户列表 列表
   static getValidatedUserList(data) {
     return Fetch.post('/admin/account/user/effective-user-account', data);
@@ -3084,6 +3081,11 @@ static batchAddAnalyst(data) {
   // 币种管理/K线列表 状态审核
   static apiCheckKlineList(data) {
     return Fetch.post('/admin/robot/contract/history-Lists', data);
+  }
+
+  // 用户管理 用户列表 详情 出入金列表
+  static apiGetInOutGoldList(data) {
+    return Fetch.post('/admin/account/query/statistics', data);
   }
 
  

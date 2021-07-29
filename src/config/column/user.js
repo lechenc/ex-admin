@@ -633,32 +633,41 @@ const userColInOutGoldList = [
     prop: 'coinName',
   },
   {
-    label: '币币入金',
-    prop: 'coinIn',
+    label: '币币累计入金',
+    prop: 'tradeIn',
   },
   {
-    label: '法币入金',
+    label: '币币累计出金',
+    prop: 'tradeOut',
+  },
+  {
+    label: '法币累计入金',
     prop: 'otcIn',
   },
+  
   {
-    label: '合约入金',
-    prop: 'contractIn',
-  },
-  {
-    label: '币币出金',
-    prop: 'coinOut',
-  },
-  {
-    label: '法币出金',
+    label: '法币累计出金',
     prop: 'otcOut',
   },
   {
-    label: '合约出金',
-    prop: 'contractOut',
+    label: '合约累计净入金',
+    prop: 'contractIn',
   },
   {
-    label: '出入金合计数量',
-    prop: 'totalInOut',
+    label: '合约累计产生手续费金额',
+    prop: 'contractFee',
+  },
+  {
+    label: '合约累计平仓盈亏',
+    prop: 'contractCloseProfit',
+  },
+  {
+    label: '合约累计获得手续费返佣',
+    prop: 'contractCommission',
+  },
+  {
+    label: '净出入金合计',
+    prop: 'total',
   },
 ];
 

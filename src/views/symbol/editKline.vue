@@ -8,34 +8,17 @@
  -->
 
 <template>
-  <div class="highFrequencyConfig-container">
+  <div class="editKline-container">
     <el-form :model="form" ref="form" :rules="rules" label-width="200px" size="medium">
       <el-card class="box-card">
         <div class="box-card-con">
           <H5>修改指定K线</H5>
           <el-row :span="24">
             <el-col :span="12">
-              <el-form-item label="免额币种类型: " prop="monitorRange">
-                <el-select :disabled="!isModify" v-model="coinId" placeholder="请选择">
-                  <el-option v-for="item in symbollist" :label="item.label" :value="item.value" :key="item.value"> </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :span="24">
-            <el-col :span="12">
-              <el-form-item label="新用户无需实名可提币额度:  " prop="withdrawQuota">
-                <el-input style="width: 55%" type="number" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row :span="24">
-            <el-col :span="12">
-              <el-form-item label="是否需要验证初级实名: " prop="firstVerifiedSwift">
-                <el-radio-group :disabled="!isModify" v-model="form.firstVerifiedSwift">
-                  <el-radio :label="1">是</el-radio>
-                  <el-radio :label="0">否</el-radio>
+              <el-form-item label="K线类型: " prop="radio">
+                <el-radio-group :disabled="!isModify" @change="radioChange" v-model="form.radio">
+                  <el-radio :label="1">币币交易对</el-radio>
+                  <el-radio :label="2">合约交易对</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
@@ -43,8 +26,102 @@
 
           <el-row :span="24">
             <el-col :span="12">
-              <el-form-item label="无需实名即可提币总开关: " prop="withdrawSwift">
-                <el-switch :disabled="!isModify" v-model="form.withdrawSwift" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+              <el-form-item label="交易对的品种: " prop="coinId">
+                <el-select :disabled="!isModify" v-model="form.coinId" placeholder="请选择">
+                  <el-option v-for="item in curList" :label="item.label" :value="item.value" :key="item.value"> </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="23">
+              <el-form-item label="K线时间类型: " prop="radio1">
+                <el-radio-group class="editKline-group" :disabled="!isModify" v-model="form.radio1">
+                  <el-radio :label="1">币币交易对</el-radio>
+                  <el-radio :label="2">合约交易对</el-radio>
+                  <el-radio :label="3">合约交易对</el-radio>
+                  <el-radio :label="4">合约交易对</el-radio>
+                  <el-radio :label="5">合约交易对</el-radio>
+                  <el-radio :label="6">合约交易对</el-radio>
+                  <el-radio :label="7">合约交易对</el-radio>
+                  <el-radio :label="8">合约交易对</el-radio>
+                  <el-radio :label="0">合约交易对</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col >
+              <b-two-date-timer ref="twoTimer" labelWidth="220px" labelWords="请选择时间:  " :date1.sync="form.startTime" :date2.sync="form.endTime" :isdisabled="!isModify"></b-two-date-timer>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="6">
+              <el-form-item label-width="200px" label="目前的值： 高:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="4">
+              <el-form-item label-width="50px" label="开:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="4">
+              <el-form-item label-width="50px" label="低:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="4">
+              <el-form-item label-width="50px" label="收:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="6">
+              <el-form-item label-width="200px" label="新的值： 高:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="4">
+              <el-form-item label-width="50px" label="开:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="4">
+              <el-form-item label-width="50px" label="低:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="4">
+              <el-form-item label-width="50px" label="收:  " prop="withdrawQuota2">
+                <el-input type="text" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="备注:  " prop="withdrawQuota">
+                <el-input maxlength="250" style="width: 95%" rows="3" type="textarea" placeholder="请输入" v-model="form.withdrawQuota" :disabled="!isModify"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :span="24">
+            <el-col :span="12">
+              <el-form-item label="谷歌验证码:  " prop="withdrawQuota2">
+                <el-input @input="checkVal('withdrawQuota2')" style="width: 95%" type="text" placeholder="请输入" v-model="form.withdrawQuota2" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -65,6 +142,7 @@
 </template>
 
 <script>
+import BTwoDateTimer from '@/components/b-two-date-timer';
 import $api from '@/api/api';
 export default {
   name: 'HighFrequencyConfig',
@@ -77,23 +155,45 @@ export default {
       labelWidth: '140px',
 
       isRegisterSwitch: false, // 是否开启
-      coinId: 1,
+
       form: {
         withdrawQuota: '',
         firstVerifiedSwift: 0,
         withdrawSwift: false,
+        coinId: '',
       },
-      symbollist: [
-        {label:'BTC',value:1}
-      ],
+      symbollist: [], // 币币交易对
+      symbollistContract: [], // 合约交易对
+
       rules: {
+        radio: [{ required: true, message: '必填', trigger: 'blur' }],
+        coinId: [{ required: true, message: '必填', trigger: 'blur' }],
+        radio1: [{ required: true, message: '必填', trigger: 'blur' }],
         withdrawQuota: [{ required: true, message: '必填', trigger: 'blur' }],
+        withdrawQuota2: [{ required: true, message: '必填', trigger: 'blur' }],
         firstVerifiedSwift: [{ required: true, message: '必选', trigger: 'blur' }],
       },
+      curList: [],
     };
   },
+  components: {
+    BTwoDateTimer,
+  },
+
   methods: {
+    
+    radioChange(val) {
+      this.form.coinId = '';
+      if (!val) {
+        this.curList = this.symbollist;
+      } else if (val == 1) {
+        this.curList = this.symbollist;
+      } else {
+        this.curList = this.symbollistContract;
+      }
+    },
     cancelSend() {
+      this.$refs['form'].resetFields();
       this.isModify = false;
       this.getList();
     },
@@ -110,6 +210,7 @@ export default {
             withdrawQuota,
             firstVerifiedSwift,
             withdrawSwift: withdrawSwift ? true : false,
+            coinId: '',
           };
         }
         this.listLoading = false;
@@ -130,8 +231,9 @@ export default {
         if (valid) {
           const { withdrawQuota, firstVerifiedSwift, withdrawSwift } = this.form;
           let params = {
-            withdrawQuota, firstVerifiedSwift, 
-            withdrawSwift:withdrawSwift?1:0
+            withdrawQuota,
+            firstVerifiedSwift,
+            withdrawSwift: withdrawSwift ? 1 : 0,
           };
           this.btnLoading = true;
           const res = await $api.apiEditRealNameFreeExtract(params);
@@ -148,33 +250,44 @@ export default {
       });
     },
     async getSymbolList() {
-      // 币种获取
-      this.$store.dispatch('common/getCoinList').then(() => {
-        let list = this.$store.state.common.coinlist;
-        this.symbollist = list.filter((v) => {
-          return v.label == 'BTC';
-        });
+      // 币币交易对获取
+      this.$store.dispatch('common/getSymbolList').then(() => {
+        this.symbollist = this.$store.state.common.symbollist;
+        this.curList = this.symbollist;
+      });
+    },
+    async getSymbolListContract() {
+      // 合约交易对获取
+      this.$store.dispatch('common/getSymbolListContract').then(() => {
+        this.symbollistContract = this.$store.state.common.symbollistContract;
       });
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('HighFrequencyConfig', [], []);
+    let authObj = this.$util.getAuthority('KlineList', [], []);
     this.btnArr = authObj.btnArr;
 
     this.getList();
     this.getSymbolList();
+    this.getSymbolListContract();
   },
 };
 </script>
 
 <style lang="scss">
-.highFrequencyConfig-container {
+.editKline-container {
   padding: 4px 10px 10px 10px;
   .sac-row {
     margin-bottom: 20px;
 
     .el-col {
       margin-top: 20px;
+    }
+  }
+  .editKline-group {
+    .el-radio {
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
   }
   h4 {

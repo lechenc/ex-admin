@@ -689,7 +689,7 @@ const extractForeignCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 270,
+    width: 420,
     btnGroup: [
       {
         label: '初审',
@@ -733,6 +733,12 @@ const extractForeignCol = [
         fn: 'detail',
         type: 'primary',
         alias: 'detail',
+      },
+      {
+        label: '查看该用户出入金明细',
+        fn: 'inOutGoldList',
+        type: 'primary',
+        alias: 'inOutGoldList',
       },
     ],
   },

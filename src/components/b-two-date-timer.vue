@@ -214,7 +214,7 @@ export default {
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     .left-p {
       text-align: right;
       vertical-align: middle;
