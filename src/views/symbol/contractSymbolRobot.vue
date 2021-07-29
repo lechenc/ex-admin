@@ -24,7 +24,7 @@
 
         <b-two-range-choose v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="时间变化频次" :getVal1.sync="robotForm.minProportion" :getVal2.sync="robotForm.maxProportion" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
 
-        <b-two-range-choose v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+        <b-two-range-choose v-if="true" ref="twoChoose2" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围(%)" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
 
         <el-form-item label="交易对" :label-width="formLabelWidth" prop="coinMarket">
           <el-select v-model="robotForm.coinMarket" placeholder="" wdith="20%" :disabled="!!robotForm.id">
@@ -290,6 +290,8 @@ export default {
       this.formName = '添加合约机器人';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
+        this.$refs['twoChoose'].resetValue();
+        this.$refs['twoChoose2'].resetValue();
         this.$refs['robotForm'].resetFields();
         this.robotForm = {
           id: '',
@@ -317,6 +319,12 @@ export default {
     },
     // 提交
     confirmOp() {
+      if (!this.$refs['twoChoose'].validateValue()) {
+        return;
+      }
+      if (!this.$refs['twoChoose2'].validateValue()) {
+        return;
+      }
       this.$refs['robotForm'].validate(async (valid) => {
         if (valid) {
           const { id, proportion, uid, status, isMock, ...prop } = this.robotForm;
