@@ -993,34 +993,40 @@ const currencyRobotConfig = [
 const klineListCol = [
   {
     label: 'K线类型',
-    prop: 'fromType',
+    prop: 'type',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+    filters: [{ text: '币币交易', val: 0 }, { text: '合约交易', val: 1 }],
   },
   {
     label: '交易对品种',
-    prop: 'uid',
+    prop: 'coinMarket',
   },
   {
     label: 'K线时间类型',
-    prop: 'coinName',
+    prop: 'type',
+    type: 'timeType',
+    show_type: 'text',
+    filters: [{ text: '1min', val: 0 }, { text: '5min', val: 1 }, { text: '15min', val: 2 }, { text: '30min', val: 3 }, { text: '1h', val: 4 }, { text: '4h', val: 5 }, { text: '1d', val: 6 }, { text: '1w', val: 7 }, { text: '1m', val: 8 }],
   },
   {
     label: '旧高开低收',
-    prop: 'toCoinName',
+    arr: ['oldHigh','oldOpen','oldLow','oldClose'],
+    type:'textArr',
   },
+  
   {
     label: '新高开低收',
-    prop: 'amount',
+    arr: ['newHigh','newOpen','newLow','newClose'],
+    type:'textArr',
   },
   {
     label: '备注',
-    prop: 'fee',
+    prop: 'remark',
   },
   {
     label: '创建人',
-    prop: 'dealAmount',
+    prop: 'userName',
   },
   {
     label: '创建时间',
@@ -1030,30 +1036,35 @@ const klineListCol = [
 
   {
     label: '审核人',
-    prop: 'dealAmount1',
+    prop: 'checkUserName',
   },
 
   {
     label: '审核时间',
-    prop: 'createTime2',
+    prop: 'updateTime',
     type: 'time',
   },
   {
     label: '状态',
-    prop: 'fromType2',
+    prop: 'status',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+    filters: [{ text: '未处理', val: 0 }, { text: '已通过', val: 1 }, { text: '已驳回', val: 2 }],
   },
   {
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:'130',
+    width: '130',
     btnGroup: [
+      
+
       {
         label: '审核',
         fn: 'check',
+        filter_type: 'array',
+        filter_key: 'status',
+        filter_status: ['0'],
         type: 'primary',
         alias: 'check',
       },
@@ -1064,34 +1075,40 @@ const klineListCol = [
 const klineListColNoBtn = [
   {
     label: 'K线类型',
-    prop: 'fromType',
+    prop: 'type',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+    filters: [{ text: '币币交易', val: 0 }, { text: '合约交易', val: 1 }],
   },
   {
     label: '交易对品种',
-    prop: 'uid',
+    prop: 'coinMarket',
   },
   {
     label: 'K线时间类型',
-    prop: 'coinName',
+    prop: 'type',
+    type: 'timeType',
+    show_type: 'text',
+    filters: [{ text: '1min', val: 0 }, { text: '5min', val: 1 }, { text: '15min', val: 2 }, { text: '30min', val: 3 }, { text: '1h', val: 4 }, { text: '4h', val: 5 }, { text: '1d', val: 6 }, { text: '1w', val: 7 }, { text: '1m', val: 8 }],
   },
   {
     label: '旧高开低收',
-    prop: 'toCoinName',
+    arr: ['oldHigh','oldOpen','oldLow','oldClose'],
+    type:'textArr',
   },
+  
   {
     label: '新高开低收',
-    prop: 'amount',
+    arr: ['newHigh','newOpen','newLow','newClose'],
+    type:'textArr',
   },
   {
     label: '备注',
-    prop: 'fee',
+    prop: 'remark',
   },
   {
     label: '创建人',
-    prop: 'dealAmount',
+    prop: 'userName',
   },
   {
     label: '创建时间',
@@ -1101,20 +1118,20 @@ const klineListColNoBtn = [
 
   {
     label: '审核人',
-    prop: 'dealAmount1',
+    prop: 'checkUserName',
   },
 
   {
     label: '审核时间',
-    prop: 'createTime2',
+    prop: 'updateTime',
     type: 'time',
   },
   {
     label: '状态',
-    prop: 'fromType2',
+    prop: 'status',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }],
+    filters: [{ text: '未处理', val: 0 }, { text: '已通过', val: 1 }, { text: '已驳回', val: 2 }],
   },
 ];
 
@@ -1122,68 +1139,68 @@ const klineListConfig = [
   {
     type: 'date_rank',
     label: '创建时间',
-    prop: 'startTime',
-    prop2: 'endTime',
+    prop: 'createTimeStart',
+    prop2: 'createTimeEnd',
     value: '',
   },
   {
     type: 'date_rank',
     label: '更新时间',
-    prop: 'startTime2',
-    prop2: 'endTime2',
+    prop: 'dealTimeStart',
+    prop2: 'dealTimeEnd',
     value: '',
   },
   {
     type: 'select',
     label: 'K线类型',
-    prop: 'accountType',
+    prop: 'type',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+    list: [{ label: '币币交易', value: 0 }, { label: '合约交易', value: 1 }],
   },
-  
+  {
+    type: 'select',
+    label: '交易对品种',
+    prop: 'coinMarket',
+    value: '',
+    list: [],
+  },
+
   {
     type: 'select',
     label: 'K线时间类型',
-    prop: 'accountType2',
+    // (0 1min,1 5min; 2 15min; 3 30min; 4 1h; 5 4h; 6 1d; 7 1w; 8 1m )
+    prop: 'timeType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+    list: [{ label: '1min', value: 0 }, { label: '5min', value: 1 }, { label: '15min', value: 2 }, { label: '30min', value: 3 }, { label: '1h', value: 4 }, { label: '4h', value: 5 }, { label: '1d', value: 6 }, { label: '1w', value: 7 }, { label: '1m', value: 8 }],
   },
-
 
   {
     type: 'text',
     label: '创建人',
-    prop: 'id',
+    prop: 'userName',
     value: '',
   },
   {
     type: 'text',
     label: '审核人',
-    prop: 'id2',
+    prop: 'checkUserName',
     value: '',
   },
-  {
-    type: 'select',
-    label: '交易对品种',
-    prop: 'accountType3',
-    value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
-  },
+
   {
     type: 'select',
     label: '状态',
-    prop: 'accountType4',
+    prop: 'status',
+    // (0 未处理 1 已通过 2 已驳回)
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }],
+    list: [{ label: '未处理', value: 0 }, { label: '已通过', value: 1 }, { label: '已驳回', value: 2 }],
   },
-  
 ];
 
 export {
   klineListCol,
   klineListColNoBtn,
   klineListConfig,
-  
   plateAreaColNoBtn,
   plateAreaCol,
   coinWhiteListCol,

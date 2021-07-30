@@ -17,7 +17,7 @@
     <!-- 审核提示-->
     <el-dialog center :visible.sync="dialogVisible" width="500px" title="审核提示">
       <div slot="footer" class="inner-footer">
-        <el-button type="danger" size="medium" @click.stop="confirmOp(0)" :loading="btnLoading">审核驳回</el-button>
+        <el-button type="danger" size="medium" @click.stop="confirmOp(2)" :loading="btnLoading">审核驳回</el-button>
         <el-button type="success" size="medium" @click.stop="confirmOp(1)" :loading="btnLoading">审核通过</el-button>
       </div>
     </el-dialog>
@@ -58,8 +58,10 @@ export default {
       excelTitle: '划转记录列表',
       // totalExFee: "", // 手续费总计
       // totalArrivalAccount: "", // 到账总计
-      curUid: '',
+      curRowObj: '',
       btnArr: [],
+      symbollist:[],
+      symbollistContract:[],
     };
   },
   methods: {
@@ -68,8 +70,9 @@ export default {
       this.$router.push('/symbol/editKline');
     },
     async confirmOp(status) {
+      const {...prop} = this.curRowObj
       const params = {
-        uid: this.curUid,
+        ...prop,
         status,
       };
       const res = await $api.apiCheckKlineList(params);
@@ -78,6 +81,7 @@ export default {
       if (res) {
         this.dialogVisible = false;
         this.$message.success('审核成功');
+        this.getList()
       }
       this.btnLoading = false;
     },
@@ -86,13 +90,13 @@ export default {
       const { fn, row } = data;
       if (fn === 'check') {
         this.dialogVisible = true;
-        this.curUid = row.uid;
+        this.curRowObj = row;
       }
     },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+      if (!this.search_params_obj.createTimeStart && !this.search_params_obj.createTimeEnd) {
         this.search_params_obj.flag = 1;
       }
       this.getList();
@@ -127,7 +131,7 @@ export default {
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getContractTransferPage(query_data);
+      const res = await $api.apiGetKlineListPages(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
@@ -148,15 +152,33 @@ export default {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        params.createTimeEnd = nowV.replace(/\//gi, '-');
+        params.createTimeStart = befV.replace(/\//gi, '-');
         // 组件时间初始必须format格式
         this.searchCofig[0].value = [befV, nowV];
       }
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      if (this.search_params_obj.createTimeStart) {
+        this.search_params_obj.createTimeEnd = this.formatTime(this.search_params_obj.createTimeEnd);
+        this.search_params_obj.createTimeStart = this.formatTime(this.search_params_obj.createTimeStart);
       }
+      if (this.search_params_obj.dealTimeStart) {
+        this.search_params_obj.dealTimeEnd = this.formatTime(this.search_params_obj.dealTimeEnd);
+        this.search_params_obj.dealTimeStart = this.formatTime(this.search_params_obj.dealTimeStart);
+      }
+    },
+
+    async getSymbolList() {
+      // 币币交易对获取
+      this.$store.dispatch('common/getSymbolList').then(() => {
+        this.symbollist = this.$store.state.common.symbollist;
+        this.searchCofig[3]['list'] = this.symbollist;
+      });
+    },
+    async getSymbolListContract() {
+      // 合约交易对获取
+      this.$store.dispatch('common/getSymbolListContract').then(() => {
+        this.symbollistContract = this.$store.state.common.symbollistContract;
+      });
     },
   },
   mounted() {
@@ -170,6 +192,24 @@ export default {
     this.ago = this.$util.diyTime('ago');
 
     this.getList();
+    this.getSymbolList();
+    this.getSymbolListContract();
+
+    this.$watch(
+      function () {
+        return this.searchCofig[2].value;
+      },
+      function (newVal, oldValue) {
+        this.searchCofig[3]['value'] = '';
+        if (!newVal) {
+          this.searchCofig[3]['list'] = this.symbollist;
+        } else if (newVal == 1) {
+          this.searchCofig[3]['list'] = this.symbollistContract;
+        } else {
+          this.searchCofig[3]['list'] = this.symbollist;
+        }
+      },
+    );
   },
 };
 </script>

@@ -3545,7 +3545,7 @@ const levelSettingColNoBtn = [
   },
 ];
 
-const advancedCol = [
+const orderConfigCol = [
   {
     label: '商户名称',
     prop: 'userName'
@@ -3609,7 +3609,7 @@ const advancedCol = [
   }
 ]
 
-const advancedColNoBtn = [
+const orderConfigColNoBtn = [
   {
     label: '商户名称',
     prop: 'userName'
@@ -3640,7 +3640,7 @@ const advancedColNoBtn = [
 ]
 
 // 商户接单配置
-const advancedConfig = [
+const orderConfigConfig = [
   {
     label: '商户名称',
     prop: 'userName',
@@ -3657,9 +3657,9 @@ const advancedConfig = [
 
 
 export {
-  advancedCol,
-  advancedColNoBtn,
-  advancedConfig,
+  orderConfigCol,
+  orderConfigColNoBtn,
+  orderConfigConfig,
   levelSettingCol,
   levelSettingColNoBtn,
   rateManageCol,

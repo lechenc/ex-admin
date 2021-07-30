@@ -1,5 +1,5 @@
 <template>
-  <div class="advanced-container">
+  <div class="orderConfig-container">
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
@@ -292,7 +292,7 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { advancedCol, advancedColNoBtn, advancedConfig } from '@/config/column/fiat';
+import { orderConfigCol, orderConfigColNoBtn, orderConfigConfig } from '@/config/column/fiat';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 
@@ -397,15 +397,998 @@ export default {
         userName: '',
         userId: '',
       },
+      withdrawAdvertiseForm: {
+        withdrawAcceptorCode: '',
+      },
+      depositAdvertiseForm: {
+        depositAcceptorCode: '',
+      },
+      rules: {},
+      limitForm: {
+        minLimit: '',
+        maxLimit: '',
+      },
     };
   },
+  watch: {
+    createVisible(value) {
+      if (value) {
+        this.ruleForm = {};
+      }
+    },
+  },
   methods: {
-      
+    depositClose(val) {
+      if (val === 1) {
+        this.depositAdvertiseForm.depositAcceptorCode = '';
+      }
+      if (val === 2) {
+        this.withdrawAdvertiseForm.withdrawAcceptorCode = '';
+      }
+    },
+
+    comfirmFalse(val) {
+      if (val === 1) {
+        this.depositAdvertiseForm.depositAcceptorCode = '';
+        this.createVisible = false;
+      }
+      if (val === 2) {
+        this.lookerPages_type = 1;
+        this.withdrawAdvertiseForm.withdrawAcceptorCode = '';
+        this.createVisible = false;
+      }
+    },
+    pageSizeChange(val) {
+      this.current_page = 1;
+      this.pageSize = val;
+      this.getList();
+    },
+    goPage(val) {
+      this.current_page = val;
+      this.getList();
+    },
+    pageSizeChange1(val) {
+      this.current_page1 = 1;
+      this.pageSize1 = val;
+      this.changeTopBtn();
+    },
+
+    goPage1(val) {
+      this.current_page1 = val;
+      this.changeTopBtn();
+    },
+
+    // 充值承兑商
+    pageSizeChange2(val) {
+      this.current_page2 = 1;
+      this.pageSize2 = val;
+      this.changeTopBtn();
+    },
+
+    goPage2(val) {
+      this.current_page2 = val;
+      this.changeTopBtn();
+    },
+
+    // 提现渠道
+    pageSizeChange3(val) {
+      this.current_page3 = 1;
+      this.pageSize3 = val;
+      this.changeBottomBtn();
+    },
+
+    goPage3(val) {
+      this.current_page3 = val;
+      this.changeBottomBtn();
+    },
+
+    // 提现承兑商
+    pageSizeChange4(val) {
+      this.current_page4 = 1;
+      this.pageSize4 = val;
+      this.changeBottomBtn();
+    },
+
+    goPage4(val) {
+      this.current_page4 = val;
+      this.changeBottomBtn();
+    },
+
+    pageSizeChange5(val) {
+      this.lookerPages_type = 2;
+      this.current_page5 = 1;
+      this.pageSize5 = val;
+      if (this.lookerPages_type !== 1) {
+        this.lookLower(2);
+      }
+    },
+
+    goPage5(val) {
+      this.lookerPages_type = 2;
+      this.current_page5 = val;
+      if (this.lookerPages_type !== 1) {
+        this.lookLower(2);
+      }
+    },
+
+    pageSizeChange6(val) {
+      this.lookerPages_type = 3;
+      this.current_page6 = 1;
+      this.pageSize6 = val;
+      if (this.lookerPages_type !== 1) {
+        this.lookLower(1);
+      }
+    },
+
+    goPage6(val) {
+      this.lookerPages_type = 3;
+      this.current_page6 = val;
+      if (this.lookerPages_type !== 1) {
+        this.lookLower(1);
+      }
+    },
+
+    // 限额配置
+    async handlerEditOrSave(val) {
+      if (val === 1) {
+        this.advertType = 2;
+        this.editOrSave = !this.editOrSave;
+      }
+      if (val === 2) {
+        let a = parseInt(this.limitForm.minLimit);
+        let b = parseInt(this.limitForm.maxLimit);
+        let c = parseInt(this.limitForm.minLimitWithdrow);
+        let d = parseInt(this.limitForm.maxLimitWithdrow);
+        console.log(111111111, a, b);
+        if (a >= b || c >= d) {
+          this.$message({
+            type: 'warning',
+            message: '限额最大值不大于最小值，请重新输入',
+          });
+          // this.limitForm.minLimit = ''
+          // this.limitForm.maxLimit = ''
+          return false;
+        } else {
+          console.log(this.limitForm.minLimit, this.limitForm.maxLimit);
+          // 调用保存接口
+          let params = {
+            // userId: this.userId,
+            userId: this.nowUid,
+            chargeMaximum: parseInt(this.limitForm.maxLimit),
+            chargeMinimum: parseInt(this.limitForm.minLimit),
+            withdrawalMinimum: parseInt(this.limitForm.minLimitWithdrow),
+            withdrawalMaximum: parseInt(this.limitForm.maxLimitWithdrow),
+          };
+          console.log(params);
+          const saveResult = await $api.getEditSave(params);
+          if (saveResult.data.code === 1) {
+            this.$message({ type: 'success', message: '保存成功' });
+            // this.toSave()
+            // 保存完变为编辑状态
+            this.advertType = 1;
+            this.editOrSave = !this.editOrSave;
+            this.dialogVisible = false;
+            this.getList();
+          } else {
+            // this.$message.error('异常');
+            return false;
+          }
+        }
+      }
+    },
+
+    handleClosed() {
+      this.advertType = 1;
+      this.editOrSave = false;
+    },
+
+    handlerVal(val, haha) {
+      // 去提交保存的时候比较val && haha
+      console.log(val, haha);
+    },
+
+    // 对输入值的范围进行限制
+    checkVal(val) {
+      this.form[val] = this.form[val] > 100 ? 100 : this.form[val];
+      this.form[val] = (this.form[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+      if (this.form[val] < 0) {
+        this.form[val] = 0;
+      }
+    },
+
+    // 充值授权配置 -是否开启
+    // 渠道
+    async changContractTypeTopAcc(row) {
+      this.$confirm('确定改变', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(async () => {
+          const statusParams = {
+            type: 1,
+            statusType: 1,
+            userId: this.nowUid,
+            list: [
+              {
+                channelAdvertiserUid: row.channelAdvertiserUid,
+                status: row.depositStatus === 1 ? 2 : 1,
+              },
+            ],
+          };
+          const statusRes = await $api.editMerchantsStatus(statusParams);
+          console.log(statusRes);
+          this.getDetailList();
+          this.$message({ type: 'success', message: '修改成功!' });
+        })
+        .catch(() => {
+          this.$message({ type: 'info', message: '已取消修改！' });
+        });
+    },
+
+    // 承兑商
+    async changContractTypeTopCheel(row) {
+      this.$confirm('确定改变', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(async () => {
+          const statusParams = {
+            type: 2,
+            statusType: 1,
+            userId: this.nowUid,
+            list: [
+              {
+                channelAdvertiserUid: row.channelAdvertiserUid,
+                status: row.depositStatus === 1 ? 2 : 1,
+              },
+            ],
+          };
+          const statusRes = await $api.editMerchantsStatus(statusParams);
+          console.log(statusRes);
+          this.getDetailList();
+          this.$message({ type: 'success', message: '修改成功!' });
+        })
+        .catch(() => {
+          this.$message({ type: 'info', message: '已取消修改！' });
+        });
+    },
+
+    // 提现授权配置 -是否开启
+    async changContractTypeAcc(row) {
+      this.$confirm('确定改变', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(async () => {
+          const statusParams = {
+            type: 1,
+            statusType: 2,
+            userId: this.nowUid,
+            list: [
+              {
+                channelAdvertiserUid: row.channelAdvertiserUid,
+                status: row.depositStatus === 1 ? 2 : 1,
+              },
+            ],
+          };
+          const statusRes = await $api.editMerchantsStatus(statusParams);
+          console.log(statusRes);
+          this.getDetailList();
+          this.$message({ type: 'success', message: '修改成功!' });
+        })
+        .catch(() => {
+          this.$message({ type: 'info', message: '已取消修改！' });
+        });
+    },
+
+    // 承兑商
+    async changContractTypeCheel(row) {
+      this.$confirm('确定改变', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(async () => {
+          const statusParams = {
+            type: 2,
+            statusType: 2,
+            userId: this.nowUid,
+            list: [
+              {
+                channelAdvertiserUid: row.channelAdvertiserUid,
+                status: row.depositStatus === 1 ? 2 : 1,
+              },
+            ],
+          };
+          const statusRes = await $api.editMerchantsStatus(statusParams);
+          console.log(statusRes);
+          this.getDetailList();
+          this.$message({ type: 'success', message: '修改成功!' });
+        })
+        .catch(() => {
+          this.$message({ type: 'info', message: '已取消修改！' });
+        });
+    },
+
+    // 添加承兑商查下级分页处理 1-充值 2-提现
+    async lookGoPage(val) {
+      if (val === 1) {
+        this.current_page5 = val;
+        this.lookLower(1);
+        return false;
+      }
+      if (val === 2) {
+        this.current_page6 = val;
+        this.lookLower(2);
+        return false;
+      }
+    },
+
+    // 添加承兑商授权查下级
+    // 1- 充值承兑商  2- 提现承兑商
+    async lookLower(val) {
+      if (val === 1) {
+        this.lookerPages_type = 3;
+        const lookParams = {
+          statusType: 1,
+          // userId: this.nowUid,
+          userId: this.userId,
+          pageNum: this.current_page6,
+          pageSize: this.pageSize6,
+          channelAdvertiserUid: this.depositAdvertiseForm.depositAcceptorCode,
+          // channelAdvertiserUid: null
+        };
+        const lookLowerRes = await $api.noAddMerchantsAdvertiser(lookParams);
+        console.log(lookLowerRes);
+        if (lookLowerRes) {
+          const { total, current, pages } = lookLowerRes.data.data;
+          this.total6 = total;
+          this.pages6 = pages;
+          this.current_page6 = current;
+          this.withdrawChannelList_Btn = lookLowerRes.data.data.records;
+          this.listLoading = false;
+        } else {
+          this.withdrawChannelList_Btn = [];
+          return false;
+        }
+        // this.depositAdvertiseForm.depositAcceptorCode = ''
+      }
+      if (val === 2) {
+        this.lookerPages_type = 2;
+        const lookParams = {
+          statusType: 2,
+          // userId: this.nowUid,
+          userId: this.userId,
+          pageNum: this.current_page5,
+          pageSize: this.pageSize5,
+          channelAdvertiserUid: this.withdrawAdvertiseForm.withdrawAcceptorCode,
+          // 添加承兑商查下级的承兑商编码
+        };
+        const lookLowerRes = await $api.noAddMerchantsAdvertiser(lookParams);
+        if (lookLowerRes) {
+          const { total, current, pages } = lookLowerRes.data.data;
+          this.total5 = total;
+          this.pages5 = pages;
+          this.current_page5 = current;
+          this.withdrawChannelList_Bottom = lookLowerRes.data.data.records;
+          this.listLoading = false;
+        } else {
+          this.withdrawChannelList_Bottom = [];
+          return false;
+        }
+        // this.withdrawAdvertiseForm.withdrawAcceptorCode = ''
+      }
+    },
+
+    // 充值导航栏
+    handleClick(tab) {
+      console.log('tab', tab);
+      console.log('activeName', this.activeName);
+    },
+
+    // 提现导航栏
+    handleClick_s(tab) {
+      console.log('tab', tab);
+      console.log('activeName_s', this.activeName_s);
+    },
+
+    // 充值承兑商单行选择
+    async handleSelectionDepositAdverTop(val) {
+      this.multipleSelection3 = val;
+    },
+
+    async handleSelectionDepositAdverBottom(val) {
+      this.multipleSelection4 = val;
+    },
+
+    // 充值渠道
+    async handleSelectionDepositChannelDeposit(val) {
+      this.multipleSelection1 = val;
+    },
+
+    // 提现渠道
+    async handleSelectionDepositChannelBottom(val) {
+      this.multipleSelection2 = val;
+    },
+
+    onCopy() {
+      this.$message.success('复制成功');
+    },
+
+    onError() {
+      this.$message.success('复制失败');
+    },
+
+    countdownBtn(value) {
+      this.disabled = value;
+    },
+
+    async codeclick() {
+      try {
+        let valid = true;
+        this.$refs['ruleForm'].validateField(['email'], (errorMessage) => {
+          if (errorMessage) {
+            valid = false;
+            return;
+          }
+        });
+        if (!valid) return;
+        if (this.disabled) {
+          return;
+        }
+        this.disabled = true;
+        let params = {
+          phoneOrEmail: this.ruleForm.email,
+          type: 1,
+          smsType: 0,
+        };
+        const res = await $api.apiSendEmail(params);
+        if (res) {
+          this.$message.success('发送成功');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // 配置操作
+    async doHandle(data) {
+      const { fn, row } = data;
+      console.log(row);
+      this.nowUid = row.uid;
+      this.userId = row.userId;
+      this.userName = row.userName;
+      this.chargeMaximum = !row.chargeMaximum ? 0 : row.chargeMaximum;
+      this.chargeMinimum = !row.chargeMinimum ? 0 : row.chargeMinimum;
+      this.withdrawalMaximum = !row.withdrawalMaximum ? 0 : row.withdrawalMaximum;
+      this.withdrawalMinimum = !row.withdrawalMinimum ? 0 : row.withdrawalMinimum;
+      if (fn === 'configuration') {
+        this.title = '商户接单配置';
+        this.isModify = true;
+        this.getDetailList();
+        this.form = {
+          uid: row.uid,
+          userName: row.userName,
+          userId: row.userId,
+        };
+        this.limitForm = {
+          minLimit: this.chargeMinimum,
+          maxLimit: this.chargeMaximum,
+          minLimitWithdrow: this.withdrawalMinimum,
+          maxLimitWithdrow: this.withdrawalMaximum,
+        };
+        this.dialogVisible = true;
+      }
+    },
+
+    doSearch(data) {
+      this.current_page = 1;
+      this.search_params_obj = data;
+      this.getList();
+    },
+
+    doReset() {
+      this.search_params_obj = {};
+      this.searchCofig.forEach((v) => {
+        v['value'] = '';
+      });
+      this.getList();
+    },
+
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+
+    // 添加渠道与承兑商确认
+    // 1- 充值渠道 2-提现渠道 3-充值承兑商 4-提现承兑商
+    async createAgent(val) {
+      let limitParams = {
+        chargeMaximum: this.chargeMaximum,
+        chargeMinimum: this.chargeMinimum,
+        withdrawalMinimum: this.withdrawalMinimum,
+        withdrawalMaximum: this.withdrawalMaximum,
+      };
+
+      if (val === 1) {
+        const arr = this.multipleSelection1.map((v) => {
+          return {
+            channelAdvertiserUid: v.id,
+            channelAdvertiserName: v.channelName,
+          };
+        });
+        console.log(this.multipleSelection1);
+        if (this.multipleSelection1.length === 0) {
+          this.$message('您没有添加任何数据');
+          return false;
+        }
+        const AddDepositParams = {
+          statusType: 1,
+          type: 1,
+          list: arr,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+        };
+        Object.assign(AddDepositParams, limitParams);
+        const AddDepositRes = await $api.addMerchants(AddDepositParams);
+        if (AddDepositRes) {
+          this.getDetailList();
+          this.createVisible = false;
+        }
+      }
+
+      if (val === 3) {
+        // this.depositAdvertiseForm.depositAcceptorCode = ''
+        const arr = this.multipleSelection3.map((v) => {
+          return {
+            channelAdvertiserUid: v.advertiserUid,
+            channelAdvertiserName: v.advertiserName,
+          };
+        });
+        if (this.multipleSelection3.length === 0) {
+          let temp = this.depositAdvertiseForm.depositAcceptorCode;
+          this.$message('您没有添加任何数据');
+          this.depositAdvertiseForm.depositAcceptorCode = temp;
+          // this.lookerPages_type = 3
+          return false;
+        }
+        const AddDepositParams = {
+          statusType: 1,
+          type: 2,
+          list: arr,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+          // userId: this.nowUid,
+        };
+        Object.assign(AddDepositParams, limitParams);
+        const AddDepositRes = await $api.addMerchants(AddDepositParams);
+        if (AddDepositRes) {
+          this.getDetailList();
+          this.createVisible = false;
+        }
+      }
+
+      if (val === 2) {
+        const arr = this.multipleSelection2.map((v) => {
+          return {
+            channelAdvertiserUid: v.id,
+            channelAdvertiserName: v.channelName,
+          };
+        });
+        if (this.multipleSelection2.length === 0) {
+          this.$message('您没有添加任何数据');
+          return false;
+        }
+        const AddDepositParams = {
+          statusType: 2,
+          list: arr,
+          type: 1,
+          // userId: this.nowUid,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+        };
+        Object.assign(AddDepositParams, limitParams);
+        const AddDepositRes = await $api.addMerchants(AddDepositParams);
+        if (AddDepositRes) {
+          this.getDetailList();
+          this.createVisible = false;
+        }
+      }
+      if (val === 4) {
+        // this.withdrawAdvertiseForm.withdrawAcceptorCode = ''
+        const arr = this.multipleSelection4.map((v) => {
+          return {
+            channelAdvertiserUid: v.advertiserUid,
+            channelAdvertiserName: v.advertiserName,
+          };
+        });
+        if (this.multipleSelection4.length === 0) {
+          let variable = this.withdrawAdvertiseForm.withdrawAcceptorCode;
+          this.$message('您没有添加任何数据');
+          this.withdrawAdvertiseForm.withdrawAcceptorCode = variable;
+          // this.lookerPages_type = 2
+          return false;
+        }
+        const AddDepositParams = {
+          statusType: 2,
+          type: 2,
+          list: arr,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+          // userId: this.nowUid,
+          // uid: this.nowUid,
+          // userName: this.userName,
+          // userId: this.userId,
+        };
+        Object.assign(AddDepositParams, limitParams);
+        const AddDepositRes = await $api.addMerchants(AddDepositParams);
+        if (AddDepositRes) {
+          this.getDetailList();
+          this.createVisible = false;
+          this.lookerPages_type = 1;
+        }
+      }
+    },
+
+    // 首页数据查询getlist
+    async getList() {
+      if (this.listLoading) return;
+      const query_data = {
+        pageNum: this.current_page,
+        pageSize: this.pageSize,
+      };
+      this.requiredParams(query_data);
+      Object.assign(query_data, this.search_params_obj);
+      this.listLoading = true;
+      const res = await $api.getMerchantsList(query_data);
+      if (res) {
+        const { records, total, current, pages } = res.data.data;
+        this.total = total;
+        this.pages = pages;
+        this.current_page = current;
+        records.forEach((v) => {
+          console.log(v.chargeMaximum, v.chargeMinimum);
+          v['isCreateAgent'] = v['isCreateAgent'] ? 1 : 0;
+        });
+        this.list = records;
+        this.dataList = records;
+        
+      }
+      this.listLoading = false;
+    },
+
+    // 配置详情页充值授权数据查询
+    async getDetailList() {
+      if (this.listLoading) return;
+      const query_data = {
+        pageNum: this.current_page,
+        pageSize: this.pageSize,
+        userId: this.nowUid,
+        statusType: 1,
+      };
+      const params = {
+        pageNum: this.current_page,
+        pageSize: this.pageSize,
+        userId: this.nowUid,
+        statusType: 2,
+      };
+      this.requiredParams(query_data);
+      Object.assign(query_data, this.search_params_obj);
+
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+
+      this.listLoading = true;
+      const res = await $api.getConfigDetail(query_data);
+
+      const resData = await $api.getConfigDetail(params);
+      if (resData) {
+        const { depositAdvertiserList, withdrawAdvertiserList } = resData.data.data;
+        this.depositAdvertiserList = depositAdvertiserList;
+        this.withdrawAdvertiserList = withdrawAdvertiserList;
+        this.listLoading = false;
+      }
+      if (res) {
+        const { depositChannelList, withdrawChannelList } = res.data.data;
+        this.depositChannelList = depositChannelList;
+        this.withdrawChannelList = withdrawChannelList;
+        this.listLoading = false;
+      }
+    },
+
+    // 充值-添加渠道或承兑商
+    async changeTopBtn() {
+      this.lookerPages_type = 1;
+      this.createVisible = true;
+      this.btn_type = 1;
+      // 充值-添加渠道
+      if (this.activeName === 'first') {
+        const query_data = {
+          statusType: 1,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+          pageNum: this.current_page1,
+          pageSize: this.pageSize1,
+        };
+        this.requiredParams(query_data);
+        // Object.assign(query_data, this.search_params_obj)
+        this.listLoading = true;
+        const res = await $api.noAddMerchantsChannel(query_data);
+        if (res) {
+          const { total, current, pages } = res.data.data;
+          this.total1 = total;
+          this.pages1 = pages;
+          this.current_page1 = current;
+          this.depositChannelList_Btn = res.data.data.records;
+          this.listLoading = false;
+        }
+        console.log(res.data.data);
+      }
+      // 充值-添加承兑商
+      if (this.activeName === 'second') {
+        const params = {
+          statusType: 1,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+          pageNum: this.current_page2,
+          pageSize: this.pageSize2,
+        };
+        this.requiredParams(params);
+        // Object.assign(query_data, this.search_params_obj)
+        this.listLoading = true;
+        const result = await $api.noAddMerchantsAdvertiser(params);
+        console.log(result.data.data);
+        if (result) {
+          const { total, current, pages } = result.data.data;
+          this.total2 = total;
+          this.pages2 = pages;
+          this.current_page2 = current;
+          this.withdrawChannelList_Btn = result.data.data.records;
+          this.listLoading = false;
+        }
+        console.log(this.withdrawChannelList_Btn);
+      }
+    },
+
+    // 提现-添加渠道或承兑商
+    async changeBottomBtn() {
+      this.createVisible = true;
+      this.btn_type = 2;
+      // 提现-添加渠道
+      if (this.activeName_s === 'three') {
+        const query_data = {
+          statusType: 2,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+          pageNum: this.current_page3,
+          pageSize: this.pageSize3,
+        };
+        this.requiredParams(query_data);
+        // Object.assign(query_data, this.search_params_obj)
+        this.listLoading = true;
+        const res = await $api.noAddMerchantsChannel(query_data);
+        if (res) {
+          const { total, current, pages } = res.data.data;
+          this.total3 = total;
+          this.pages3 = pages;
+          this.current_page3 = current;
+          this.depositChannelList_Bottom = res.data.data.records;
+          this.listLoading = false;
+        }
+      }
+      // 提现-添加承兑商
+      if (this.activeName_s === 'four') {
+        const params = {
+          statusType: 2,
+          userName: this.userName,
+          uid: this.nowUid,
+          userId: this.userId,
+          pageNum: this.current_page4,
+          pageSize: this.pageSize4,
+        };
+        this.requiredParams(params);
+        // Object.assign(query_data, this.search_params_obj)
+        this.listLoading = true;
+        const result = await $api.noAddMerchantsAdvertiser(params);
+        if (result) {
+          const { total, current, pages } = result.data.data;
+          this.total4 = total;
+          this.pages4 = pages;
+          this.current_page4 = current;
+          this.withdrawChannelList_Bottom = result.data.data.records;
+          this.listLoading = false;
+        }
+      }
+    },
+
+    // 删除渠道或者承兑商
+    deleteRowTop1(index, row) {
+      const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
+      console.log(row, channelAdvertiserName, channelAdvertiserUid, depositStatus);
+      const deleteParams = {
+        statusType: 1,
+        type: 1,
+        userId: this.nowUid,
+        list: [
+          {
+            channelAdvertiserUid: channelAdvertiserUid,
+          },
+        ],
+      };
+      if (depositStatus === 1) {
+        this.$message('开启状态下不能删除');
+      } else {
+        this.$confirm('确认删除吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const deleteRes = await $api.deleteMerchants(deleteParams);
+            console.log(deleteRes, this.depositChannelList);
+            this.depositChannelList.splice(index, 1);
+            this.getDetailList();
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消!' });
+          });
+      }
+    },
+
+    deleteRowTop2(index, row) {
+      const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
+      console.log(channelAdvertiserName, channelAdvertiserUid, depositStatus);
+      const deleteParams = {
+        statusType: 1,
+        type: 2,
+        userId: this.nowUid,
+        list: [
+          {
+            channelAdvertiserUid: channelAdvertiserUid,
+          },
+        ],
+      };
+      if (depositStatus === 1) {
+        this.$message('开启状态下不能删除');
+      } else {
+        this.$confirm('确认删除吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const deleteRes = await $api.deleteMerchants(deleteParams);
+            console.log(deleteRes, this.depositChannelList);
+            this.depositChannelList.splice(index, 1);
+            this.getDetailList();
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消!' });
+          });
+      }
+    },
+
+    deleteRowTop3(index, row) {
+      const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
+      console.log(row, channelAdvertiserName, channelAdvertiserUid, depositStatus);
+      const deleteParams = {
+        statusType: 2,
+        type: 1,
+        userId: this.nowUid,
+        list: [
+          {
+            channelAdvertiserUid: channelAdvertiserUid,
+          },
+        ],
+      };
+      if (depositStatus === 1) {
+        this.$message('开启状态下不能删除');
+      } else {
+        this.$confirm('确认删除吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const deleteRes = await $api.deleteMerchants(deleteParams);
+            console.log(deleteRes, this.depositChannelList);
+            this.depositChannelList.splice(index, 1);
+            this.getDetailList();
+          })
+          .catch(() => {
+            // this.$message({ type: 'info', message: '已取消!' })
+          });
+      }
+    },
+
+    deleteRowTop4(index, row) {
+      const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
+      console.log(row, channelAdvertiserName, channelAdvertiserUid, depositStatus);
+      const deleteParams = {
+        statusType: 2,
+        type: 2,
+        userId: this.nowUid,
+        list: [
+          {
+            channelAdvertiserUid: channelAdvertiserUid,
+          },
+        ],
+      };
+      if (depositStatus === 1) {
+        this.$message('开启状态下不能删除');
+      } else {
+        this.$confirm('确认删除吗?', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const deleteRes = await $api.deleteMerchants(deleteParams);
+            console.log(deleteRes, this.depositChannelList);
+            this.depositChannelList.splice(index, 1);
+            this.getDetailList();
+          })
+          .catch(() => {
+            // this.$message({ type: 'info', message: '已取消!' })
+          });
+      }
+    },
+
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getMerchantsList(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
+
+    formatTime(val) {
+      return ~(val + '').indexOf('-') ? val : (val + '').replace(/\//gi, '-');
+    },
+
+    requiredParams(params) {
+      // if (this.$util.isEmptyObject(this.search_params_obj)) {
+      //   let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+      //   let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      //   params.endTime = nowV.replace(/\//gi, '-')
+      //   params.startTime = befV.replace(/\//gi, '-')
+      //   // 组件时间初始必须format格式
+      //   this.searchCofig[0].value = [befV, nowV]
+      // }
+      if (this.search_params_obj.startTime) {
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      }
+    },
+  },
+  mounted() {
+    let authObj = this.$util.getAuthority('Advanced', orderConfigCol, orderConfigColNoBtn);
+    this.configs = authObj.val;
+
+    this.searchCofig = this.$util.clone(orderConfigConfig);
+    // 初始化今天，之前的时间
+    this.toDay = this.$util.diyTime('toDay');
+    this.ago = this.$util.diyTime('ago');
+    this.getList();
   },
 };
 </script>
 <style scope lang="scss">
-.advanced-container {
+.orderConfig-container {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;

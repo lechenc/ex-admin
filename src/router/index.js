@@ -944,6 +944,20 @@ export const asyncRouterMap = [
         component: () => import('@/views/fiat/levelSetting'),
         meta: { title: '等级设置', icon: '', role: [] },
       },
+      {
+        path: 'acceptanceMerchant',
+        name: 'AcceptanceMerchant',
+        redirect: '/fiat/acceptanceMerchant/orderConfig',
+        meta: { title: '承兑商与商户管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'orderConfig',
+            name: 'OrderConfig',
+            component: () => import('@/views/fiat/acceptanceMerchant/orderConfig'),
+            meta: { title: '商户接单配置', icon: '', role: [] },
+          },
+        ],
+      },
     ],
   },
   // 星球（标仓管理）

@@ -256,6 +256,8 @@ export default {
         if (records && records.length > 0) {
           this.inOutGoldList = records;
         }
+      }else{
+        this.inOutGoldList = [];
       }
       this.inOutGoldListLoading = false;
     },

@@ -351,6 +351,7 @@ const mapComponents = {
   AgentList: () => import('@/views/fiat/agentList'),
   AgentRevenue: () => import('@/views/fiat/agentRevenue'),
   LevelSetting: () => import('@/views/fiat/levelSetting'),
+  OrderConfig: () => import('@/views/fiat/acceptanceMerchant/orderConfig'),
 
   WarehouseUser: () => import('@/views/warehouse/user'),
   WarehouseUserListDetail: () => import('@/views/warehouse/userListDetail'),
