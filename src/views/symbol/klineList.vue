@@ -60,8 +60,8 @@ export default {
       // totalArrivalAccount: "", // 到账总计
       curRowObj: '',
       btnArr: [],
-      symbollist:[],
-      symbollistContract:[],
+      symbollist: [],
+      symbollistContract: [],
     };
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
       this.$router.push('/symbol/editKline');
     },
     async confirmOp(status) {
-      const {...prop} = this.curRowObj
+      const { ...prop } = this.curRowObj;
       const params = {
         ...prop,
         status,
@@ -81,7 +81,7 @@ export default {
       if (res) {
         this.dialogVisible = false;
         this.$message.success('审核成功');
-        this.getList()
+        this.getList();
       }
       this.btnLoading = false;
     },
@@ -171,6 +171,10 @@ export default {
       // 币币交易对获取
       this.$store.dispatch('common/getSymbolList').then(() => {
         this.symbollist = this.$store.state.common.symbollist;
+
+        this.symbollist.forEach((v) => {
+          v.value = v.label;
+        });
         this.searchCofig[3]['list'] = this.symbollist;
       });
     },
@@ -178,6 +182,10 @@ export default {
       // 合约交易对获取
       this.$store.dispatch('common/getSymbolListContract').then(() => {
         this.symbollistContract = this.$store.state.common.symbollistContract;
+
+        this.symbollistContract.forEach((v) => {
+          v.value = v.label;
+        });
       });
     },
   },
