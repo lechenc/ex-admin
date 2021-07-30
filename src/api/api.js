@@ -3088,6 +3088,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/query/statistics', data);
   }
 
+  // 商户接单配置(列表)
+  static apiGetMerchantsList(data) {
+    return Fetch.post('/admin/user/pay/customer/query/order-list', data)
+  }
+
   // 商户限额配置编辑保存
   static getEditSave(data) {
     return Fetch.post('/coin/pay/admin/user/pay/customer/detail/CashWithdrawalLimit', data)
@@ -3098,10 +3103,14 @@ static batchAddAnalyst(data) {
     return Fetch.post('/coin/pay/admin/user/pay/customer/change/status', data)
   }
 
-  // 商户接单配置(列表)
-  static getMerchantsList(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/query/order-list', data)
+  // 商户接单配置(配置详情页)
+  static getConfigDetail(data) {
+    return Fetch.post('/admin/customer/detail/channel-advertiser', data)
   }
+
+  
+
+  
 
   // 商户接单配置(返回当前商户未添加的所有承兑商)
   static noAddMerchantsAdvertiser(data) {
@@ -3118,10 +3127,7 @@ static batchAddAnalyst(data) {
     return Fetch.post('/coin/pay/admin/user/pay/customer/add/channel-advertiser', data)
   }
 
-  // 商户接单配置(配置详情页)
-  static getConfigDetail(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/detail/channel-advertiser', data)
-  }
+  
 
   // 商户接单配置(返回当前商户未添加的所有渠道)
   static noAddMerchantsChannel(data) {
@@ -3146,6 +3152,11 @@ static batchAddAnalyst(data) {
   // 币种管理/K线列表 状态审核
   static apiGetKlineInfo(data) {
     return Fetch.post('/market/getKLineInfo', data);
+  }
+
+  // 财务管理/热钱包提币管理 列表
+  static apiGetHotWalletExtractList(data) {
+    return Fetch.post('/account/withdrawconfig/find', data);
   }
 
  

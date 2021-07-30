@@ -1048,7 +1048,7 @@ export default {
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getMerchantsList(query_data);
+      const res = await $api.apiGetMerchantsList(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
@@ -1349,7 +1349,7 @@ export default {
       this.excelLoading = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getMerchantsList(params);
+      const res = await $api.apiGetMerchantsList(params);
       this.excelLoading = false;
       if (res) {
         return res;

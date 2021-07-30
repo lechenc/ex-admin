@@ -371,6 +371,7 @@ const mapComponents = {
   WorkOrderType: () => import('@/views/workOrder/workOrderType'),
   LoadCoin: () => import('@/views/workOrder/loadCoin'),
   SearchUserAddress: () => import('@/views/financial/searchUserAddress'),
+  HotWalletExtract: () => import('@/views/financial/hotWalletExtract'),
 
   AssetManageList: () => import('@/views/assetManage/assetManageList'),
   TransferRecord: () => import('@/views/assetManage/transferRecord'),

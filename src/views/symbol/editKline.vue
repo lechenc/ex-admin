@@ -249,11 +249,16 @@ export default {
 
       if (res) {
         this.$message.success('查询成功')
-        const { oldClose, oldHigh, oldLow, oldOpen } = res.data.data;
-        this.form.oldClose = oldClose;
-        this.form.oldHigh = oldHigh;
-        this.form.oldLow = oldLow;
-        this.form.oldOpen = oldOpen;
+        const { close, high, low, open } = res.data.data;
+        this.form.oldClose = close;
+        this.form.oldHigh = high;
+        this.form.oldLow = low;
+        this.form.oldOpen = open;
+      }else{
+        this.form.oldClose = '';
+        this.form.oldHigh = '';
+        this.form.oldLow = '';
+        this.form.oldOpen = '';
       }
       this.infoBtnLoading = false;
     },

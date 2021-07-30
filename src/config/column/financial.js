@@ -2115,7 +2115,91 @@ const contractTransferConfig = [
   },
 ];
 
+const hotWalletExtractCol = [
+  {
+    label: '链类型名称',
+    prop: 'chain',
+  },
+  {
+    label: '币种名称',
+    prop: 'coin',
+  },
+  {
+    label: '单日限额',
+    prop: 'maxAutoWithdraw',
+  },
+  {
+    label: '单日限额',
+    prop: 'maxDailyAutoWithdraw',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type: 'time',
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 360,
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '删除',
+        fn: 'delete',
+        type: 'danger',
+        alias: 'delete',
+      },
+      {
+        label: '查看余额',
+        fn: 'checkBalance',
+        type: 'primary',
+        alias: 'checkBalance',
+      },
+      {
+        label: '详情',
+        fn: 'details',
+        type: 'primary',
+        alias: 'details',
+      },
+    ],
+  },
+];
+
+const hotWalletExtractColNoBtn = [
+  {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
+    label: '相关币种',
+    prop: 'coinName',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type: 'time',
+  },
+];
+
 export {
+  hotWalletExtractCol,
+  hotWalletExtractColNoBtn,
   rechargeCol,
   rechargeColNoBtn,
   rechargeConfig,

@@ -494,6 +494,15 @@ export const asyncRouterMap = [
         component: () => import('@/views/financial/searchUserAddress'),
         meta: { title: '用户地址查询', icon: '', role: [] },
       },
+
+      {
+        path: 'hotWalletExtract',
+        name: 'HotWalletExtract',
+        component: () => import('@/views/financial/hotWalletExtract'),
+        meta: { title: '热钱包提币管理', icon: '', role: [] },
+      },
+
+      
     ],
   },
   // 系统管理
