@@ -98,25 +98,25 @@
           <el-row :span="24">
             <el-col :span="7">
               <el-form-item label-width="200px" label="新的值： 高:  " prop="newHigh">
-                <el-input type="number" placeholder="请输入" v-model="form.newHigh" :disabled="!isModify"></el-input>
+                <el-input  type="number" @input="checkVal1('newHigh')"  placeholder="请输入" v-model="form.newHigh" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :span="4">
               <el-form-item label-width="50px" label="开:  " prop="newOpen">
-                <el-input type="number" placeholder="请输入" v-model="form.newOpen" :disabled="!isModify"></el-input>
+                <el-input type="number" @input="checkVal1('newOpen')"  placeholder="请输入" v-model="form.newOpen" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :span="4">
               <el-form-item label-width="50px" label="低:  " prop="newLow">
-                <el-input type="number" placeholder="请输入" v-model="form.newLow" :disabled="!isModify"></el-input>
+                <el-input type="number" @input="checkVal1('newLow')"  placeholder="请输入" v-model="form.newLow" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :span="4">
               <el-form-item label-width="50px" label="收:  " prop="newClose">
-                <el-input type="number" placeholder="请输入" v-model="form.newClose" :disabled="!isModify"></el-input>
+                <el-input type="number" @input="checkVal1('newClose')"  placeholder="请输入" v-model="form.newClose" :disabled="!isModify"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -285,6 +285,13 @@ export default {
       this.form[val] = (this.form[val] + '').replace(/[^\d]/g, '');
       if (this.form[val] < 0) {
         this.form[val] = 0;
+      }
+    },
+
+    // 控制输入的范围 限制16长度
+    checkVal1(val) {
+      if (this.form[val].length>16) {
+        this.form[val] = (this.form[val] + '').slice(0,16);
       }
     },
     // 保存页面修改
