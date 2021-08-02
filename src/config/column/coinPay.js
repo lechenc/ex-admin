@@ -96,13 +96,7 @@ const appealCol = [
       },
     ],
   },
-  // {
-  //   label: '申诉口令',
-  //   prop: 'recdId',
-  //   type: 'textPair',
-  //   arr: ['masterCode', 'slaveCode'],
-  //   width: 160,
-  // },
+  
   {
     label: '买家口令',
     prop: 'slaveCode',
@@ -257,13 +251,7 @@ const appealColNoBtn = [
       },
     ],
   },
-  // {
-  //   label: '申诉口令',
-  //   prop: 'recdId',
-  //   type: 'textPair',
-  //   arr: ['masterCode', 'slaveCode'],
-  //   width: 160,
-  // },
+  
   {
     label: '买家口令',
     prop: 'slaveCode',
@@ -422,13 +410,7 @@ const appealDetailCol = [
       },
     ],
   },
-  // {
-  //   label: '申诉口令',
-  //   prop: 'recdId',
-  //   type: 'textPair',
-  //   arr: ['masterCode', 'slaveCode'],
-  //   width: 160,
-  // },
+  
   // {
   //   label: '申诉口令',
   //   prop: 'masterCode',

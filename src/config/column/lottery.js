@@ -7,14 +7,15 @@ const lotteryListCol = [
     label: '活动名称',
     prop: 'activityName',
   },
+
   {
     label: '活动任务有效时间',
-    prop: 'startTime',
-    prop1: 'endTime',
-    prop2: 'endTime',
-    type:'textPairTimeRange',
-    width:310,
+    width: 310,
+    arr: ['startTime', 'endTime'],
+    type: 'textArr',
+    join: '至',
   },
+
   {
     label: '抽奖机会总数',
     prop: 'totalRaffle',
@@ -26,7 +27,7 @@ const lotteryListCol = [
   {
     label: '已用机会数',
     prop: 'useRaffle',
-  }, 
+  },
   // {
   //   label: '抽奖机会发放时间',
   //   prop: 'grantRaffleTime',
@@ -48,13 +49,7 @@ const lotteryListCol = [
     type: 'filter',
     show_type: 'text',
     width: 110,
-    filters: [
-      { val: '1', text: '未开始' },
-      { val: '2', text: '进行中' },
-      { val: '3', text: '抽奖中' },
-      { val: '4', text: '待发奖' },
-      { val: '5', text: '已结束' },
-    ],
+    filters: [{ val: '1', text: '未开始' }, { val: '2', text: '进行中' }, { val: '3', text: '抽奖中' }, { val: '4', text: '待发奖' }, { val: '5', text: '已结束' }],
   },
   // {
   //   label: '剩余抽奖卷数量',
@@ -80,12 +75,12 @@ const lotteryListCol = [
     fn: 'trdraw',
     alias: 'trdraw',
   },
-    {
+  {
     label: '创建时间',
     prop: 'createTime',
     width: 160,
   },
-    {
+  {
     label: '更新时间',
     prop: 'updateTime',
     width: 160,
@@ -123,11 +118,10 @@ const lotteryListColNoBtn = [
   },
   {
     label: '活动任务有效时间',
-    prop: 'startTime',
-    prop1: 'endTime',
-    prop2: 'endTime',
-    type:'textPairTimeRange',
-    width:310,
+    width: 310,
+    arr: ['startTime', 'endTime'],
+    type: 'textArr',
+    join: '至',
   },
   {
     label: '抽奖机会总数',
@@ -140,7 +134,7 @@ const lotteryListColNoBtn = [
   {
     label: '已用机会数',
     prop: 'useRaffle',
-  }, 
+  },
   // {
   //   label: '抽奖机会发放时间',
   //   prop: 'grantRaffleTime',
@@ -162,13 +156,7 @@ const lotteryListColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 110,
-    filters: [
-      { val: '1', text: '未开始' },
-      { val: '2', text: '进行中' },
-      { val: '3', text: '抽奖中' },
-      { val: '4', text: '待发奖' },
-      { val: '5', text: '已结束' },
-    ],
+    filters: [{ val: '1', text: '未开始' }, { val: '2', text: '进行中' }, { val: '3', text: '抽奖中' }, { val: '4', text: '待发奖' }, { val: '5', text: '已结束' }],
   },
   // {
   //   label: '剩余抽奖卷数量',
@@ -180,12 +168,12 @@ const lotteryListColNoBtn = [
   //   prop: 'grantPrizeTime',
   //   width: 160,
   // },
-    {
+  {
     label: '创建时间',
     prop: 'createTime',
     width: 160,
   },
-    {
+  {
     label: '更新时间',
     prop: 'updateTime',
     width: 160,
@@ -220,7 +208,7 @@ const lotteryListConfig = [
     prop: 'playStatus',
     value: '',
     list: [{ label: '不可抽奖', value: 0 }, { label: '可抽奖', value: 1 }],
-  }
+  },
 ];
 
 const lotteryRecordCol = [
@@ -244,7 +232,7 @@ const lotteryRecordCol = [
     label: '获奖人类型',
     prop: 'userType',
     type: 'filter',
-    show_type: 'text',  
+    show_type: 'text',
     width: 150,
     filters: [{ val: '1', text: '标记用户' }, { val: '2', text: '普通用户' }],
   },
@@ -287,8 +275,7 @@ const lotteryRecordCol = [
     type: 'filter',
     show_type: 'text',
     width: 150,
-    filters: [{ val: '0', text: '未使用' }, { val: '1', text: '已使用' }, { val: '2', text: '已过期' }
-    , { val: '3', text: '使用中' }],
+    filters: [{ val: '0', text: '未使用' }, { val: '1', text: '已使用' }, { val: '2', text: '已过期' }, { val: '3', text: '使用中' }],
   },
   {
     label: '使用时间',
@@ -304,26 +291,26 @@ const lotteryRecordCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:160,
+    width: 160,
     btnGroup: [
       {
-        label: "编辑",
-        fn: "edit",
+        label: '编辑',
+        fn: 'edit',
         isPop: false,
-        filter_key: "prizeType",
+        filter_key: 'prizeType',
         filter_status: 2,
-        out:true,
-        type: "success",
-        alias:"edit"
+        out: true,
+        type: 'success',
+        alias: 'edit',
       },
       {
         label: '详情',
         fn: 'detail',
         type: 'primary',
         alias: 'detail',
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 const lotteryRecordColNoBtn = [
@@ -347,7 +334,7 @@ const lotteryRecordColNoBtn = [
     label: '获奖人类型',
     prop: 'userType',
     type: 'filter',
-    show_type: 'text',  
+    show_type: 'text',
     width: 150,
     filters: [{ val: '1', text: '标记用户' }, { val: '2', text: '普通用户' }],
   },
@@ -382,8 +369,7 @@ const lotteryRecordColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 150,
-    filters: [{ val: '0', text: '未使用' }, { val: '1', text: '已使用' }, { val: '2', text: '已过期' }
-    , { val: '3', text: '使用中' }],
+    filters: [{ val: '0', text: '未使用' }, { val: '1', text: '已使用' }, { val: '2', text: '已过期' }, { val: '3', text: '使用中' }],
   },
   {
     label: '使用时间',
@@ -419,7 +405,7 @@ const lotteryRecordConfig = [
     value: '',
     placeHolder: '请输入',
   },
-  // {     
+  // {
   //   type: 'select',
   //   label: '发奖状态',
   //   prop: 'status',
@@ -427,13 +413,12 @@ const lotteryRecordConfig = [
   //   list: [{ label: '待发放', value: 0 }, { label: '已发奖', value: 1 }],
   //   // { val: '0', text: '待发放' }, { val: '1', text: '已发放' }, { val: '2', text: '不发放' }
   // },
-  {     
+  {
     type: 'select',
     label: '使用状态',
     prop: 'useStatus',
     value: '',
-    list: [{ label: '未使用', value: 0 }, { label: '已使用', value: 1 },
-     { value: 2, label: '已过期' }, { value: 3, label: '使用中' }],
+    list: [{ label: '未使用', value: 0 }, { label: '已使用', value: 1 }, { value: 2, label: '已过期' }, { value: 3, label: '使用中' }],
   },
   {
     type: 'text',
@@ -441,7 +426,7 @@ const lotteryRecordConfig = [
     prop: 'prizeName',
     value: '',
     placeHolder: '请输入',
-  }
+  },
 ];
 
 const lotteryParamsCol = [
@@ -464,7 +449,7 @@ const lotteryParamsCol = [
   {
     label: '奖励logo',
     prop: 'prizeLogo',
-    type:'img'
+    type: 'img',
   },
   {
     label: '奖励数量',
@@ -536,7 +521,7 @@ const lotteryParamsColNoBtn = [
   {
     label: '奖励logo',
     prop: 'prizeLogo',
-    type:'img'
+    type: 'img',
   },
   {
     label: '奖励数量',
@@ -585,14 +570,4 @@ const lotteryParamsConfig = [
     placeHolder: '请输入',
   },
 ];
-export {
-  lotteryListCol,
-  lotteryListColNoBtn,
-  lotteryListConfig,
-  lotteryRecordCol,
-  lotteryRecordColNoBtn,
-  lotteryRecordConfig,
-  lotteryParamsCol,
-  lotteryParamsColNoBtn,
-  lotteryParamsConfig,
-};
+export { lotteryListCol, lotteryListColNoBtn, lotteryListConfig, lotteryRecordCol, lotteryRecordColNoBtn, lotteryRecordConfig, lotteryParamsCol, lotteryParamsColNoBtn, lotteryParamsConfig };

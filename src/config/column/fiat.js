@@ -755,9 +755,6 @@ const appealCol = [
   //   prop: 'money',
   // },
 
- 
-
-  
   {
     label: '状态',
     prop: 'appealStatus',
@@ -778,13 +775,7 @@ const appealCol = [
       },
     ],
   },
-  // {
-  //   label: '申诉口令',
-  //   prop: 'recdId',
-  //   type: 'textPair',
-  //   arr: ['masterCode', 'slaveCode'],
-  //   width: 160,
-  // },
+  
   {
     label: '买家口令',
     prop: 'slaveCode',
@@ -807,8 +798,7 @@ const appealCol = [
     prop: 'auditTime',
     type: 'time',
   },
-  
-  
+
   {
     label: '判决人',
     prop: 'auditUserName',
@@ -817,7 +807,7 @@ const appealCol = [
     label: '判决人IP',
     prop: 'auditIp',
   },
-  
+
   {
     label: '操作',
     prop: 'action',
@@ -927,13 +917,7 @@ const appealColNoBtn = [
       },
     ],
   },
-  // {
-  //   label: '申诉口令',
-  //   prop: 'recdId',
-  //   type: 'textPair',
-  //   arr: ['masterCode', 'slaveCode'],
-  //   width: 160,
-  // },
+ 
   {
     label: '买家口令',
     prop: 'slaveCode',
@@ -956,7 +940,7 @@ const appealColNoBtn = [
     prop: 'auditTime',
     type: 'time',
   },
-  
+
   {
     label: '判决人',
     prop: 'auditUserName',
@@ -1106,13 +1090,7 @@ const appealDetailCol = [
     prop: 'coinName',
   },
 
-  // {
-  //   label: '申诉口令',
-  //   prop: 'recdId',
-  //   type: 'textPair',
-  //   arr: ['masterCode', 'slaveCode'],
-  //   width: 160,
-  // },
+  
   // {
   //   label: '申诉口令',
   //   prop: 'masterCode',
@@ -1927,9 +1905,10 @@ const redeemCol = [
   },
   {
     label: '价格/数量',
-    prop: 'price',
+
     arr: ['price', 'amount'],
     type: 'textArr',
+    join: ',',
   },
   {
     label: '手续费(USDT)',
@@ -3548,7 +3527,7 @@ const levelSettingColNoBtn = [
 const orderConfigCol = [
   {
     label: '商户名称',
-    prop: 'userName'
+    prop: 'userName',
   },
   {
     label: '商户编号',
@@ -3557,42 +3536,40 @@ const orderConfigCol = [
   {
     label: 'userId',
     prop: 'userId',
-    type: 'myIsShow'
+    type: 'myIsShow',
   },
   {
     label: '充值渠道授权',
     prop: 'despositChannel',
-    width: 200
+    width: 200,
   },
   {
     label: '充值承兑商授权',
     prop: 'despositAdvertiser',
-    width: 200
+    width: 200,
   },
   {
     label: '提现渠道授权',
-    prop: 'withdrawChannel'
+    prop: 'withdrawChannel',
   },
   {
     label: '提现承兑商授权',
     prop: 'withdrawAdvertiser',
-    width: 200
+    width: 200,
   },
   {
     label: '充值单笔限额',
-    type: 'limitTextDouble',
-    prop: 'chargeMinimum',
-    prop2: 'chargeMaximum',
-    width: 150
+    arr: ['chargeMinimum', 'chargeMaximum'],
+    type: 'textArr',
+    join: '~',
   },
   {
     label: '提现单笔限额',
-    type: 'limitTextDouble',
-    prop: 'withdrawalMinimum',
-    prop2: 'withdrawalMaximum',
-    width: 150
+    arr: ['withdrawalMinimum', 'withdrawalMaximum'],
+    type: 'textArr',
+    join: '~',
   },
-  
+
   {
     label: '操作',
     prop: 'action',
@@ -3603,60 +3580,203 @@ const orderConfigCol = [
         label: '配置',
         fn: 'configuration',
         type: 'primary',
-        alias: 'configuration'
-      }
-    ]
-  }
-]
+        alias: 'configuration',
+      },
+    ],
+  },
+];
 
 const orderConfigColNoBtn = [
   {
     label: '商户名称',
-    prop: 'userName'
+    prop: 'userName',
   },
   {
     label: '商户编号',
-    prop: 'userId'
+    prop: 'uid',
+  },
+  {
+    label: 'userId',
+    prop: 'userId',
+    type: 'myIsShow',
   },
   {
     label: '充值渠道授权',
     prop: 'despositChannel',
-    width: 200
+    width: 200,
   },
   {
     label: '充值承兑商授权',
     prop: 'despositAdvertiser',
-    width: 200
+    width: 200,
   },
   {
     label: '提现渠道授权',
-    prop: 'withdrawChannel'
+    prop: 'withdrawChannel',
   },
   {
     label: '提现承兑商授权',
     prop: 'withdrawAdvertiser',
-    width: 200
-  }
-]
+    width: 200,
+  },
+  {
+    label: '充值单笔限额',
+    arr: ['chargeMinimum', 'chargeMaximum'],
+    type: 'textArr',
+    join: '~',
+  },
+  {
+    label: '提现单笔限额',
+    arr: ['withdrawalMinimum', 'withdrawalMaximum'],
+    type: 'textArr',
+    join: '~',
+  },
+];
 
 // 商户接单配置
 const orderConfigConfig = [
   {
     label: '商户名称',
     prop: 'userName',
-    placeHolder: '请输入商户名称'
+    placeHolder: '请输入商户名称',
   },
   {
     label: '商户编号',
     prop: 'userId',
-    placeHolder: '请输入商户编号'
-  }
-]
+    placeHolder: '请输入商户编号',
+  },
+];
 
+// 承兑商列表
+const acceptanceCol = [
+  {
+    label: '序号',
+    type: 'index',
+    width: '120',
+  },
+  {
+    label: '注册时间',
+    prop: 'createTime',
+    width: 150,
+  },
+  {
+    label: '上级代理商编号',
+    prop: 'upperUid',
+  },
+  {
+    label: '代理商编号',
+    prop: 'uid',
+  },
 
+  {
+    label: '手机号',
+    prop: 'phone',
+  },
+  {
+    label: '邮箱号',
+    prop: 'email',
+  },
+  {
+    label: '出售返佣费率',
+    prop: 'rewardInRate',
+  },
 
+  {
+    label: '邀请码',
+    prop: 'inviteCode',
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '250',
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '详情',
+        fn: 'detail',
+        type: 'primary',
+        alias: 'detail',
+      },
+    ],
+  },
+];
+
+const acceptanceColNoBtn = [
+  {
+    label: '注册时间',
+    prop: 'createTime',
+    width: 150,
+  },
+  {
+    label: '上级代理商编号',
+    prop: 'upperUid',
+  },
+  {
+    label: '代理商编号',
+    prop: 'uid',
+  },
+
+  {
+    label: '手机号',
+    prop: 'phone',
+  },
+  {
+    label: '邮箱号',
+    prop: 'email',
+  },
+  {
+    label: '转入返佣费率',
+    prop: 'rewardInRate',
+  },
+  {
+    label: '下级承兑商数',
+    prop: 'subsetMerchantCount',
+  },
+  {
+    label: '邀请码',
+    prop: 'inviteCode',
+  },
+];
+
+const acceptanceConfig = [
+  // {
+  //   label: '代理商名称',
+  //   prop: 'name'
+  // },
+  {
+    label: '邮箱号',
+    prop: 'email',
+  },
+  {
+    type: 'onlyNumber',
+    label: '代理商编号',
+    prop: 'uid',
+  },
+  {
+    type: 'onlyNumber',
+    label: '上级代理商编号',
+    prop: 'upperUid',
+  },
+  {
+    type: 'select',
+    label: '代理商状态',
+    prop: 'isTrade',
+    value: '',
+    list: [{ label: '已锁定', value: 0 }, { label: '正常', value: 1 }],
+  },
+];
 
 export {
+  acceptanceCol,
+  acceptanceColNoBtn,
+  acceptanceConfig,
   orderConfigCol,
   orderConfigColNoBtn,
   orderConfigConfig,

@@ -3090,22 +3090,22 @@ static batchAddAnalyst(data) {
 
   // 商户接单配置(列表)
   static apiGetMerchantsList(data) {
-    return Fetch.post('/admin/user/pay/customer/query/order-list', data)
+    return Fetch.post('/admin/user/otc/query/order-list', data)
   }
 
   // 商户限额配置编辑保存
   static getEditSave(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/detail/CashWithdrawalLimit', data)
+    return Fetch.post('/admin/user/otc/detail/CashWithdrawalLimit', data)
   } 
 
   // 商户接单配置(修改状态)
   static editMerchantsStatus(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/change/status', data)
+    return Fetch.post('/admin/user/otc/change/status', data)
   }
 
   // 商户接单配置(配置详情页)
   static getConfigDetail(data) {
-    return Fetch.post('/admin/customer/detail/channel-advertiser', data)
+    return Fetch.post('/admin/user/otc/detail/channel-advertiser', data)
   }
 
   
@@ -3114,29 +3114,26 @@ static batchAddAnalyst(data) {
 
   // 商户接单配置(返回当前商户未添加的所有承兑商)
   static noAddMerchantsAdvertiser(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/get-all-advertiser', data)
+    return Fetch.post('/admin/user/otc/get-all-advertiser', data)
   }
 
-  // 获取验证码
-  static apiSendEmail(data) {
-    return Fetch.post('/coin/pay/send/sendUpdateEmailCode', data)
-  }
+  
 
   // 商户接单配置(添加渠道或承兑商)
   static addMerchants(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/add/channel-advertiser', data)
+    return Fetch.post('/admin/user/otc/add/channel-advertiser', data)
   }
 
   
 
   // 商户接单配置(返回当前商户未添加的所有渠道)
   static noAddMerchantsChannel(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/get-all-channel', data)
+    return Fetch.post('/admin/user/otc/get-all-channel', data)
   }
 
   // 商户接单配置(删除渠道或承兑商)
   static deleteMerchants(data) {
-    return Fetch.post('/coin/pay/admin/user/pay/customer/delete/channel-advertiser', data)
+    return Fetch.post('/admin/user/otc/delete/channel-advertiser', data)
   }
   
    // 商户接单配置(删除渠道或承兑商)
@@ -3158,6 +3155,45 @@ static batchAddAnalyst(data) {
   static apiGetHotWalletExtractList(data) {
     return Fetch.post('/account/withdrawconfig/find', data);
   }
+
+  // 承兑商管理（代理商管理）---代理商创建
+  static acceptanceCreateAgent(data) {
+    return Fetch.post('/admin/user/pay/add/advertiser', data);
+  }
+
+  
+  static apiSendEmail(data) {
+    return Fetch.post('/user/pay/phone-or-email/code', data);
+  }
+
+  static editAcceptanceupdate(data) {
+    return Fetch.post('/admin/user/pay/edit/advertiser', data);
+  }
+
+  static getPayQueryInfo(data) {
+    return Fetch.post('/admin/account/pay/query/info', data);
+  }
+
+  // 承兑商管理--- 代理商列表
+  static getAcceptanceTransRecord(data) {
+    return Fetch.post('/admin/user/pay/advertiser/list', data)
+  }
+
+  // 合约管理/订单管理/普通委托账单 一键撤销
+  static apiGeneralEntrustContractOneKeyRepeal(data) {
+    return Fetch.post('admin/contract/cancel/trust-by-uids', data)
+  }
+
+  
+
+  
+
+  
+
+
+  
+
+  
 
  
 

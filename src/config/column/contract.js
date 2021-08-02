@@ -734,6 +734,215 @@ const generalEntrustContractCol = [
       },
     ],
   },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 150,
+    btnGroup: [
+      {
+        label: '一键撤销',
+        fn: 'onekeyRepeal',
+        filter_type: 'array',
+        filter_key: 'status',
+        filter_status: ['3'],
+        type: 'primary',
+        alias: 'onekeyRepeal',
+      },
+     
+    ],
+  },
+];
+
+const generalEntrustContractColNoBtn = [
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '代理商UID',
+    prop: 'agentId',
+  },
+  {
+    label: '委托单号',
+    prop: 'entrustNo',
+  },
+  {
+    label: '币对',
+    prop: 'coinMarket',
+  },
+  {
+    label: '委托方向',
+    prop: 'type',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '买',
+        val: 1,
+      },
+      {
+        text: '卖',
+        val: 2,
+      },
+    ],
+  },
+  {
+    label: '委托量（张）',
+    prop: 'entrustAmount',
+  },
+  {
+    label: '成交量（张）',
+    prop: 'dealAmount',
+  },
+  {
+    label: '委托价',
+    prop: 'entrustPrice',
+  },
+  {
+    label: '触发价',
+    prop: 'triggerPrice',
+  },
+  {
+    label: '委托保证金',
+    prop: 'entrustDeposit',
+  },
+  {
+    label: '委托状态',
+    prop: 'status',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '待交易',
+        val: 0,
+      },
+      {
+        text: '成交',
+        val: 1,
+      },
+      {
+        text: '部分成交',
+        val: 2,
+      },
+      {
+        text: '撤销中',
+        val: 3,
+      },
+      {
+        text: '已撤销',
+        val: 4,
+      },
+    ],
+  },
+  {
+    label: '委托价类型',
+    prop: 'priceType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '限价开仓',
+        val: 1,
+      },
+      {
+        text: '市价开仓',
+        val: 2,
+      },
+      {
+        text: '限价平仓',
+        val: 3,
+      },
+      {
+        text: '市价平仓',
+        val: 4,
+      },
+    ],
+  },
+  {
+    label: '杠杆倍数',
+    prop: 'leverTimes',
+  },
+  {
+    label: '平仓类型',
+    prop: 'closePositionsType',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '正常开仓单',
+        val: 0,
+      },
+      {
+        text: '系统强平',
+        val: 1,
+      },
+      {
+        text: '用戶手动限价平仓',
+        val: 2,
+      },
+      {
+        text: '用户手动市价平仓',
+        val: 3,
+      },
+      {
+        text: '系统强减',
+        val: 4,
+      },
+      {
+        text: '用户市价全平',
+        val: 5,
+      },
+    ],
+  },
+  {
+    label: '仓位',
+    prop: 'positionType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '全仓',
+        val: 0,
+      },
+      {
+        text: '逐仓',
+        val: 1,
+      },
+    ],
+  },
+  {
+    label: '体验券ID',
+    prop: 'experienceId',
+  },
+  {
+    label: '是否是体验券',
+    prop: 'isExperience',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '本金券（含券）',
+        val: 1,
+      },
+      {
+        text: '本金',
+        val: 0,
+      },
+    ],
+  },
 ];
 
 const generalEntrustContractConfig = [
@@ -2745,18 +2954,27 @@ const contractAccountCol = [
     label: '基本利率',
     prop: 'basicInterestRate',
   },
+  
+
   {
     label: '溢价利率区间',
-    type: 'textDouble',
-    prop: 'premiumRateMin',
-    prop2: 'premiumRateMax',
+    arr:['premiumRateMin','premiumRateMax'],
+    type:'textArr',
+    join:'~',
   },
+
+
+  
+
   {
     label: '资金利率区间',
-    type: 'textDouble',
-    prop: 'capitalInterestRateMin',
-    prop2: 'capitalInterestRateMax',
+    arr:['capitalInterestRateMin','capitalInterestRateMax'],
+    type:'textArr',
+    join:'~',
   },
+
+
+
   {
     label: '触发费率时间',
     prop: 'triggerRateTime',
@@ -2901,13 +3119,17 @@ const riskLevelCol = [
     label: '风险梯度等级',
     prop: 'riskGradientLevel',
   },
+  
+
   {
     label: '梯度价格区间',
     width: '150',
-    prop: 'gradientPriceStart',
-    prop2: 'gradientPriceEnd',
-    type: 'textLineDouble',
+    arr:['gradientPriceStart','gradientPriceEnd'],
+    type:'textArr',
+    join:'-',
   },
+
+
   {
     label: '平仓允许成交比例',
     prop: 'closePositionAllowRatio',
@@ -4314,6 +4536,7 @@ export {
   billContractCol,
   billContractConfig,
   generalEntrustContractCol,
+  generalEntrustContractColNoBtn,
   generalEntrustContractConfig,
   planEntrustContractCol,
   planEntrustContractConfig,

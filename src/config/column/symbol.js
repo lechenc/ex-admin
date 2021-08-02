@@ -434,6 +434,20 @@ const contractSymbolRobotCol = [
     label: '下单委托深度取值比例',
     prop: 'proportion',
   },
+
+  {
+    label: '时间变化频次',
+    arr:['minChangeTime','maxChangeTime'],
+    type:'textArr',
+    join:'~',
+  },
+  {
+    label: '下单委托深度取值比例范围',
+    arr:['minProportion','maxProportion'],
+    type:'textArr',
+    join:'~',
+  },
+
   {
     label: '深度参数',
     prop: 'depthParameter',
@@ -526,6 +540,20 @@ const contractSymbolRobotColNoBtn = [
     label: '下单委托深度取值比例',
     prop: 'proportion',
   },
+
+  {
+    label: '时间变化频次',
+    arr:['minChangeTime','maxChangeTime'],
+    type:'textArr',
+    join:'~',
+  },
+  {
+    label: '下单委托深度取值比例范围',
+    arr:['minProportion','maxProportion'],
+    type:'textArr',
+    join:'~',
+  },
+
   {
     label: '深度参数',
     prop: 'depthParameter',
@@ -1013,12 +1041,14 @@ const klineListCol = [
     label: '旧高开低收',
     arr: ['oldHigh','oldOpen','oldLow','oldClose'],
     type:'textArr',
+    join:',',
   },
   
   {
     label: '新高开低收',
     arr: ['newHigh','newOpen','newLow','newClose'],
     type:'textArr',
+    join:',',
   },
   {
     label: '备注',
@@ -1095,12 +1125,14 @@ const klineListColNoBtn = [
     label: '旧高开低收',
     arr: ['oldHigh','oldOpen','oldLow','oldClose'],
     type:'textArr',
+    join:',',
   },
   
   {
     label: '新高开低收',
     arr: ['newHigh','newOpen','newLow','newClose'],
     type:'textArr',
+    join:',',
   },
   {
     label: '备注',

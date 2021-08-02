@@ -51,14 +51,17 @@ const voucherListCol = [
     label: '资产币种',
     prop: 'marketIdmy',
   },
+ 
+
   {
     label: '有效期',
-    prop: 'effectiveStartTime',
-    prop1: 'effectiveEndTime',
-    prop2: 'effectiveDay',
-    type: 'mytextPairTimeRange',
     width: 310,
+    arr: ['effectiveStartTime', 'effectiveEndTime'],
+    type: 'textArr',
+    join: '至',
   },
+
+
   {
     label: '创建时间',
     prop: 'createTime',
@@ -95,7 +98,6 @@ const voucherListCol = [
         type: 'primary',
         alias: 'del',
       },
-      
     ],
   },
 ];
@@ -155,11 +157,10 @@ const voucherListColNoBtn = [
   },
   {
     label: '有效期',
-    prop: 'effectiveStartTime',
-    prop1: 'effectiveEndTime',
-    prop2: 'effectiveDay',
-    type: 'mytextPairTimeRange',
     width: 310,
+    arr: ['effectiveStartTime', 'effectiveEndTime'],
+    type: 'textArr',
+    join: '至',
   },
   {
     label: '创建时间',
@@ -199,7 +200,7 @@ const voucherActivityCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '注册', val: 0 }, { text: '净入金', val: 1 }, { text: '邀请', val: 2 }, { text: '抽奖', val: 3 }, { text: '实名认证', val: 4 },{ text: '净入金和开仓交易额', val: 5 },{ text: '新手操作指引', val: 6 }],
+    filters: [{ text: '注册', val: 0 }, { text: '净入金', val: 1 }, { text: '邀请', val: 2 }, { text: '抽奖', val: 3 }, { text: '实名认证', val: 4 }, { text: '净入金和开仓交易额', val: 5 }, { text: '新手操作指引', val: 6 }],
   },
   {
     label: '触发条件 - 关联送券副标题 - 送券数量',
@@ -226,17 +227,15 @@ const voucherActivityCol = [
     label: '总成本限制(USDT)',
     prop: 'amountLimit',
   },
-  // {
-  //   label: '总人数限制',
-  //   prop: 'numberLimit',
-  // },
+
   {
-    label: '活动有效时间',
-    prop: 'effectiveStartTime',
-    prop1: 'effectiveEndTime',
-    type: 'textPairTimeRange',
+    label: '活动任务有效时间',
     width: 310,
+    arr: ['effectiveStartTime', 'effectiveEndTime'],
+    type: 'textArr',
+    join: '至',
   },
+
   {
     label: '创建时间',
     prop: 'createTime',
@@ -297,7 +296,7 @@ const voucherActivityColNoBtn = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '注册', val: 0 }, { text: '净入金', val: 1 }, { text: '邀请', val: 2 }, { text: '抽奖', val: 3 }, { text: '实名认证', val: 4 },{ text: '净入金和开仓交易额', val: 5 },{ text: '新手操作指引', val: 6 }],
+    filters: [{ text: '注册', val: 0 }, { text: '净入金', val: 1 }, { text: '邀请', val: 2 }, { text: '抽奖', val: 3 }, { text: '实名认证', val: 4 }, { text: '净入金和开仓交易额', val: 5 }, { text: '新手操作指引', val: 6 }],
   },
   {
     label: '触发条件 - 关联送券副标题 - 送券数量',
@@ -324,16 +323,13 @@ const voucherActivityColNoBtn = [
     label: '总成本限制(USDT)',
     prop: 'amountLimit',
   },
-  // {
-  //   label: '总人数限制',
-  //   prop: 'numberLimit',
-  // },
+
   {
-    label: '活动有效时间',
-    prop: 'effectiveStartTime',
-    prop1: 'effectiveEndTime',
-    type: 'textPairTimeRange',
+    label: '活动任务有效时间',
     width: 310,
+    arr: ['effectiveStartTime', 'effectiveEndTime'],
+    type: 'textArr',
+    join: '至',
   },
   {
     label: '创建时间',

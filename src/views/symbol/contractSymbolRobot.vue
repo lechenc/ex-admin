@@ -22,9 +22,9 @@
           </el-select>
         </el-form-item>
 
-        <b-two-range-choose v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="时间变化频次" :getVal1.sync="robotForm.minProportion" :getVal2.sync="robotForm.maxProportion" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+        <b-two-range-choose :noMinus="true" v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="时间变化频次" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
 
-        <b-two-range-choose v-if="true" ref="twoChoose2" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围(%)" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+        <b-two-range-choose :noMinus="true" v-if="true" ref="twoChoose2" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围(%)" :getVal1.sync="robotForm.minProportion" :getVal2.sync="robotForm.maxProportion" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
 
         <el-form-item label="交易对" :label-width="formLabelWidth" prop="coinMarket">
           <el-select v-model="robotForm.coinMarket" placeholder="" wdith="20%" :disabled="!!robotForm.id">
@@ -225,10 +225,7 @@ export default {
     };
   },
   methods: {
-    getRangeVal(val) {
-      // val.valid
-      // val.form
-    },
+    getRangeVal(val) {},
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data;
@@ -259,7 +256,7 @@ export default {
             uid,
             coinMarket,
             isFormal,
-            proportion: (proportion + '').replace(/\%/g, ''),
+
             depthParameter,
             status,
             mockCoinMarket,
@@ -269,10 +266,11 @@ export default {
             markFloatingRatio,
             minSheets,
             maxSheets,
-            minProportion,
-            maxProportion,
+            minProportion: (minProportion + '').replace(/\%/g, ''),
+            maxProportion: (maxProportion + '').replace(/\%/g, ''),
             minChangeTime,
             maxChangeTime,
+            proportion: (proportion + '').replace(/\%/g, ''),
           };
         });
       }
@@ -308,10 +306,10 @@ export default {
           minSheets: '',
           maxSheets: '',
 
-          minProportion:'',
-            maxProportion:'',
-            minChangeTime:'',
-            maxChangeTime:'',
+          minProportion: '',
+          maxProportion: '',
+          minChangeTime: '',
+          maxChangeTime: '',
 
           isMock: false,
         };
@@ -327,7 +325,7 @@ export default {
       }
       this.$refs['robotForm'].validate(async (valid) => {
         if (valid) {
-          const { id, proportion, uid, status, isMock, ...prop } = this.robotForm;
+          const { id, proportion, uid, status, isMock, minProportion, maxProportion, ...prop } = this.robotForm;
           let userId = '';
           if (id !== '') {
             userId = this.robotForm.userId;
@@ -337,6 +335,8 @@ export default {
             status: status ? 2 : 1,
             isMock: isMock ? 1 : 0,
             proportion: Precision.divide(proportion, 100),
+            minProportion: Precision.divide(minProportion, 100),
+            maxProportion: Precision.divide(maxProportion, 100),
             ...prop,
           };
           id === '' ? (params.userId = (this.userArr.length && this.userArr.filter((v) => v.uid == uid) && this.userArr.filter((v) => v.uid == uid)[0].userId) || '') : userId, (this.btnLoading = true);
@@ -407,6 +407,8 @@ export default {
           // 下单状态：1-不允许下单, 2-可下单
           v['status'] = v['status'] == 2 ? true : false;
           v['proportion'] = v['proportion'] && (Precision.times(v['proportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
+          v['minProportion'] = v['minProportion'] && (Precision.times(v['minProportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
+          v['maxProportion'] = v['maxProportion'] && (Precision.times(v['maxProportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
         });
         this.list = records;
         this.listLoading = false;

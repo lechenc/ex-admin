@@ -12,7 +12,7 @@
     </div>
 
     <!-- 配置弹窗 -->
-    <el-dialog :visible.sync="dialogVisible" width="900px" :title="title" :close-on-click-modal="false" @close="handleClosed">
+    <el-dialog :visible.sync="dialogVisible" width="900px" :title="title" :close-on-click-modal="false">
       <hr />
       <el-form :model="form" ref="form" :rules="rules">
         <el-row :span="24">
@@ -33,25 +33,29 @@
             <div class="limit-box-h4">
               <h4>充值提现限额配置</h4>
             </div>
-            <!-- <el-button type="primary" size="mini" :disabled="!fastNum" @click="fastTrade">{{advertType === 2 ? '编辑' : '保存'}}</el-button> -->
-            <div class="limit-box-btn">
-              <el-button type="primary" @click="handlerEditOrSave(advertType === 1 ? 1 : 2)">{{ advertType === 1 ? '编辑' : '保存' }}</el-button>
-            </div>
+
+            <el-row class="limit-box-btn" v-if="disabled">
+              <el-button type="primary" @click="disabled = false">编辑</el-button>
+            </el-row>
+            <el-row class="limit-box-btn" v-else>
+              <el-button @click="disabled = true">取消</el-button>
+              <el-button type="primary" @click="handlerEditOrSave">保存</el-button>
+            </el-row>
           </div>
           <el-form ref="limitForm" :model="limitForm">
             <div class="main-limit">
               <div class="limit-box-recharge">
                 <el-form-item label="充值单笔限额 :" :label-width="formLabelWidth">
-                  <el-input v-model="limitForm.minLimit" style="width: 85px" placeholder="最小值" :disabled="!editOrSave" oninput="value=value.replace(/[^0-9.]/g,'')" @input="handlerVal(limitForm.minLimit, limitForm.maxLimit)"></el-input>-
-                  <el-input v-model="limitForm.maxLimit" style="width: 85px" placeholder="最大值" :disabled="!editOrSave" oninput="value=value.replace(/[^0-9.]/g,'')" @input="handlerVal(limitForm.minLimit, limitForm.maxLimit)"></el-input>
+                  <el-input v-model="limitForm.minLimit" style="width: 85px" placeholder="最小值" :disabled="disabled" oninput="value=value.replace(/[^0-9.]/g,'')" @input="handlerVal(limitForm.minLimit, limitForm.maxLimit)"></el-input>-
+                  <el-input v-model="limitForm.maxLimit" style="width: 85px" placeholder="最大值" :disabled="disabled" oninput="value=value.replace(/[^0-9.]/g,'')" @input="handlerVal(limitForm.minLimit, limitForm.maxLimit)"></el-input>
                   <span>RMB</span>
                 </el-form-item>
                 <!-- oninput ="value=value.replace(/[^0-9.]/g,'')"   @input="checkVal('minLimit')"-->
               </div>
               <div class="limit-box-withdrow">
                 <el-form-item label="提现单笔限额 :" :label-width="formLabelWidth">
-                  <el-input v-model="limitForm.minLimitWithdrow" style="width: 85px" placeholder="最小值" :disabled="!editOrSave" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>-
-                  <el-input v-model="limitForm.maxLimitWithdrow" style="width: 85px" placeholder="最大值" :disabled="!editOrSave" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
+                  <el-input v-model="limitForm.minLimitWithdrow" style="width: 85px" placeholder="最小值" :disabled="disabled" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>-
+                  <el-input v-model="limitForm.maxLimitWithdrow" style="width: 85px" placeholder="最大值" :disabled="disabled" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                   <span>RMB</span>
                 </el-form-item>
               </div>
@@ -73,9 +77,9 @@
               </el-tabs>
             </el-col>
             <!-- v-model -->
-            <el-col :span="9">
+            <el-col :span="9" :offset="5">
               <el-tabs v-model="activeName" @tab-click="handleClick">
-                <div class="btn" style="marginleft: 150px">
+                <div class="btn" style="margin-bottom: 20px">
                   <el-button type="primary" v-model="activeName" name="first" @click="changeTopBtn">
                     {{ activeName === 'first' ? '添加渠道' : '添加承兑商' }}
                   </el-button>
@@ -135,9 +139,9 @@
                 <el-tab-pane label="承兑商授权配置" name="four"> </el-tab-pane>
               </el-tabs>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="9" :offset="5">
               <el-tabs v-model="activeName_s" @tab-click="handleClick_s">
-                <div class="btn" style="marginleft: 150px">
+                <div class="btn" style="margin-bottom: 20px">
                   <el-button type="primary" v-model="activeName_s" name="three" @click="changeBottomBtn">
                     {{ activeName_s === 'three' ? '添加渠道' : '添加承兑商' }}
                   </el-button>
@@ -305,14 +309,14 @@ export default {
   },
   data() {
     return {
+      disabled: true,
       chargeMaximum: '', // 限额配置金额,,
       chargeMinimum: '',
       withdrawalMinimum: '',
       withdrawalMaximum: '',
       chargeLimit: '',
       withdrawalLimit: '',
-      editOrSave: false, // 是否禁用,
-      advertType: 1, // 1-编辑 2-保存,
+
       minLimit: '', // 最小限额,
       maxLimit: '', // 最大限额,
       lookerPages_type: 1,
@@ -329,7 +333,7 @@ export default {
       withdrawAcceptorCode: '', // 提现承兑商form,
       activeName: 'first', //,
       activeName_s: 'three',
-      disabled: false,
+
       listLoading: false, // 表格loading,
       btnLoading: false,
       createVisible: false,
@@ -529,62 +533,47 @@ export default {
     },
 
     // 限额配置
-    async handlerEditOrSave(val) {
-      if (val === 1) {
-        this.advertType = 2;
-        this.editOrSave = !this.editOrSave;
-      }
-      if (val === 2) {
-        let a = parseInt(this.limitForm.minLimit);
-        let b = parseInt(this.limitForm.maxLimit);
-        let c = parseInt(this.limitForm.minLimitWithdrow);
-        let d = parseInt(this.limitForm.maxLimitWithdrow);
-        console.log(111111111, a, b);
-        if (a >= b || c >= d) {
-          this.$message({
-            type: 'warning',
-            message: '限额最大值不大于最小值，请重新输入',
-          });
-          // this.limitForm.minLimit = ''
-          // this.limitForm.maxLimit = ''
-          return false;
+    async handlerEditOrSave() {
+      let a = parseInt(this.limitForm.minLimit);
+      let b = parseInt(this.limitForm.maxLimit);
+      let c = parseInt(this.limitForm.minLimitWithdrow);
+      let d = parseInt(this.limitForm.maxLimitWithdrow);
+
+      if (a >= b || c >= d) {
+        this.$message({
+          type: 'warning',
+          message: '限额最大值不大于最小值，请重新输入',
+        });
+        // this.limitForm.minLimit = ''
+        // this.limitForm.maxLimit = ''
+        return false;
+      } else {
+        // 调用保存接口
+        let params = {
+          // userId: this.userId,
+          userId: this.nowUid,
+          chargeMaximum: parseInt(this.limitForm.maxLimit),
+          chargeMinimum: parseInt(this.limitForm.minLimit),
+          withdrawalMinimum: parseInt(this.limitForm.minLimitWithdrow),
+          withdrawalMaximum: parseInt(this.limitForm.maxLimitWithdrow),
+        };
+
+        const saveResult = await $api.getEditSave(params);
+        if (saveResult.data.code === 1) {
+          this.$message({ type: 'success', message: '保存成功' });
+          // this.toSave()
+
+          this.dialogVisible = false;
+          this.getList();
         } else {
-          console.log(this.limitForm.minLimit, this.limitForm.maxLimit);
-          // 调用保存接口
-          let params = {
-            // userId: this.userId,
-            userId: this.nowUid,
-            chargeMaximum: parseInt(this.limitForm.maxLimit),
-            chargeMinimum: parseInt(this.limitForm.minLimit),
-            withdrawalMinimum: parseInt(this.limitForm.minLimitWithdrow),
-            withdrawalMaximum: parseInt(this.limitForm.maxLimitWithdrow),
-          };
-          console.log(params);
-          const saveResult = await $api.getEditSave(params);
-          if (saveResult.data.code === 1) {
-            this.$message({ type: 'success', message: '保存成功' });
-            // this.toSave()
-            // 保存完变为编辑状态
-            this.advertType = 1;
-            this.editOrSave = !this.editOrSave;
-            this.dialogVisible = false;
-            this.getList();
-          } else {
-            // this.$message.error('异常');
-            return false;
-          }
+          // this.$message.error('异常');
+          return false;
         }
       }
     },
 
-    handleClosed() {
-      this.advertType = 1;
-      this.editOrSave = false;
-    },
-
     handlerVal(val, haha) {
       // 去提交保存的时候比较val && haha
-      console.log(val, haha);
     },
 
     // 对输入值的范围进行限制
@@ -617,7 +606,7 @@ export default {
             ],
           };
           const statusRes = await $api.editMerchantsStatus(statusParams);
-          console.log(statusRes);
+
           this.getDetailList();
           this.$message({ type: 'success', message: '修改成功!' });
         })
@@ -646,7 +635,7 @@ export default {
             ],
           };
           const statusRes = await $api.editMerchantsStatus(statusParams);
-          console.log(statusRes);
+
           this.getDetailList();
           this.$message({ type: 'success', message: '修改成功!' });
         })
@@ -675,7 +664,7 @@ export default {
             ],
           };
           const statusRes = await $api.editMerchantsStatus(statusParams);
-          console.log(statusRes);
+
           this.getDetailList();
           this.$message({ type: 'success', message: '修改成功!' });
         })
@@ -704,7 +693,7 @@ export default {
             ],
           };
           const statusRes = await $api.editMerchantsStatus(statusParams);
-          console.log(statusRes);
+
           this.getDetailList();
           this.$message({ type: 'success', message: '修改成功!' });
         })
@@ -742,7 +731,7 @@ export default {
           // channelAdvertiserUid: null
         };
         const lookLowerRes = await $api.noAddMerchantsAdvertiser(lookParams);
-        console.log(lookLowerRes);
+
         if (lookLowerRes) {
           const { total, current, pages } = lookLowerRes.data.data;
           this.total6 = total;
@@ -784,16 +773,10 @@ export default {
     },
 
     // 充值导航栏
-    handleClick(tab) {
-      console.log('tab', tab);
-      console.log('activeName', this.activeName);
-    },
+    handleClick(tab) {},
 
     // 提现导航栏
-    handleClick_s(tab) {
-      console.log('tab', tab);
-      console.log('activeName_s', this.activeName_s);
-    },
+    handleClick_s(tab) {},
 
     // 充值承兑商单行选择
     async handleSelectionDepositAdverTop(val) {
@@ -814,50 +797,10 @@ export default {
       this.multipleSelection2 = val;
     },
 
-    onCopy() {
-      this.$message.success('复制成功');
-    },
-
-    onError() {
-      this.$message.success('复制失败');
-    },
-
-    countdownBtn(value) {
-      this.disabled = value;
-    },
-
-    async codeclick() {
-      try {
-        let valid = true;
-        this.$refs['ruleForm'].validateField(['email'], (errorMessage) => {
-          if (errorMessage) {
-            valid = false;
-            return;
-          }
-        });
-        if (!valid) return;
-        if (this.disabled) {
-          return;
-        }
-        this.disabled = true;
-        let params = {
-          phoneOrEmail: this.ruleForm.email,
-          type: 1,
-          smsType: 0,
-        };
-        const res = await $api.apiSendEmail(params);
-        if (res) {
-          this.$message.success('发送成功');
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
     // 配置操作
     async doHandle(data) {
       const { fn, row } = data;
-      console.log(row);
+
       this.nowUid = row.uid;
       this.userId = row.userId;
       this.userName = row.userName;
@@ -868,6 +811,7 @@ export default {
       if (fn === 'configuration') {
         this.title = '商户接单配置';
         this.isModify = true;
+        this.disabled = true;
         this.getDetailList();
         this.form = {
           uid: row.uid,
@@ -921,7 +865,7 @@ export default {
             channelAdvertiserName: v.channelName,
           };
         });
-        console.log(this.multipleSelection1);
+
         if (this.multipleSelection1.length === 0) {
           this.$message('您没有添加任何数据');
           return false;
@@ -1055,12 +999,10 @@ export default {
         this.pages = pages;
         this.current_page = current;
         records.forEach((v) => {
-          console.log(v.chargeMaximum, v.chargeMinimum);
           v['isCreateAgent'] = v['isCreateAgent'] ? 1 : 0;
         });
         this.list = records;
         this.dataList = records;
-        
       }
       this.listLoading = false;
     },
@@ -1131,7 +1073,6 @@ export default {
           this.depositChannelList_Btn = res.data.data.records;
           this.listLoading = false;
         }
-        console.log(res.data.data);
       }
       // 充值-添加承兑商
       if (this.activeName === 'second') {
@@ -1147,7 +1088,7 @@ export default {
         // Object.assign(query_data, this.search_params_obj)
         this.listLoading = true;
         const result = await $api.noAddMerchantsAdvertiser(params);
-        console.log(result.data.data);
+
         if (result) {
           const { total, current, pages } = result.data.data;
           this.total2 = total;
@@ -1156,7 +1097,6 @@ export default {
           this.withdrawChannelList_Btn = result.data.data.records;
           this.listLoading = false;
         }
-        console.log(this.withdrawChannelList_Btn);
       }
     },
 
@@ -1215,7 +1155,7 @@ export default {
     // 删除渠道或者承兑商
     deleteRowTop1(index, row) {
       const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
-      console.log(row, channelAdvertiserName, channelAdvertiserUid, depositStatus);
+
       const deleteParams = {
         statusType: 1,
         type: 1,
@@ -1236,9 +1176,11 @@ export default {
         })
           .then(async () => {
             const deleteRes = await $api.deleteMerchants(deleteParams);
-            console.log(deleteRes, this.depositChannelList);
-            this.depositChannelList.splice(index, 1);
-            this.getDetailList();
+            if (deleteRes) {
+              this.$message.success('删除成功');
+              this.depositChannelList.splice(index, 1);
+              this.getDetailList();
+            }
           })
           .catch(() => {
             this.$message({ type: 'info', message: '已取消!' });
@@ -1248,7 +1190,7 @@ export default {
 
     deleteRowTop2(index, row) {
       const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
-      console.log(channelAdvertiserName, channelAdvertiserUid, depositStatus);
+
       const deleteParams = {
         statusType: 1,
         type: 2,
@@ -1269,9 +1211,11 @@ export default {
         })
           .then(async () => {
             const deleteRes = await $api.deleteMerchants(deleteParams);
-            console.log(deleteRes, this.depositChannelList);
-            this.depositChannelList.splice(index, 1);
-            this.getDetailList();
+            if (deleteRes) {
+              this.$message.success('删除成功');
+              this.depositChannelList.splice(index, 1);
+              this.getDetailList();
+            }
           })
           .catch(() => {
             this.$message({ type: 'info', message: '已取消!' });
@@ -1281,7 +1225,7 @@ export default {
 
     deleteRowTop3(index, row) {
       const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
-      console.log(row, channelAdvertiserName, channelAdvertiserUid, depositStatus);
+
       const deleteParams = {
         statusType: 2,
         type: 1,
@@ -1302,9 +1246,11 @@ export default {
         })
           .then(async () => {
             const deleteRes = await $api.deleteMerchants(deleteParams);
-            console.log(deleteRes, this.depositChannelList);
-            this.depositChannelList.splice(index, 1);
-            this.getDetailList();
+            if (deleteRes) {
+              this.$message.success('删除成功');
+              this.depositChannelList.splice(index, 1);
+              this.getDetailList();
+            }
           })
           .catch(() => {
             // this.$message({ type: 'info', message: '已取消!' })
@@ -1314,7 +1260,7 @@ export default {
 
     deleteRowTop4(index, row) {
       const { channelAdvertiserName, channelAdvertiserUid, depositStatus } = row[index];
-      console.log(row, channelAdvertiserName, channelAdvertiserUid, depositStatus);
+
       const deleteParams = {
         statusType: 2,
         type: 2,
@@ -1335,9 +1281,11 @@ export default {
         })
           .then(async () => {
             const deleteRes = await $api.deleteMerchants(deleteParams);
-            console.log(deleteRes, this.depositChannelList);
-            this.depositChannelList.splice(index, 1);
-            this.getDetailList();
+            if (deleteRes) {
+              this.$message.success('删除成功');
+              this.depositChannelList.splice(index, 1);
+              this.getDetailList();
+            }
           })
           .catch(() => {
             // this.$message({ type: 'info', message: '已取消!' })
@@ -1376,7 +1324,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('Advanced', orderConfigCol, orderConfigColNoBtn);
+    let authObj = this.$util.getAuthority('OrderConfig', orderConfigCol, orderConfigColNoBtn);
     this.configs = authObj.val;
 
     this.searchCofig = this.$util.clone(orderConfigConfig);

@@ -299,12 +299,18 @@ const advertiseCol = [
     label: "姓名",
     prop: "realName",
   },
+ 
+
   {
-    label: "保证金",
-    prop: "amount",
-    type:'textArrKeyValue',
-    arr:['amount','coinName']
+    label: '保证金',
+    arr:['amount','coinName'],
+    type:'textArr',
+    join:'',
   },
+
+  
+
+
   {
     label: "申请类型",
     prop: "auditType",

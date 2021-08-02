@@ -4,7 +4,7 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
-      <Btable :listLoading="listLoading" :data="list" :configs="configs" />
+      <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -44,6 +44,29 @@ export default {
     };
   },
   methods: {
+    async doHandle(data) {
+      const { fn, row } = data;
+
+      if (fn === 'onekeyRepeal') {
+        this.$confirm('确定一键撤销吗？', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(async () => {
+            const params = {
+              uid: row.uid,
+              coinMarket: row.coinMarket,
+            };
+            const res = await $api.apiGeneralEntrustContractOneKeyRepeal(params);
+            if (res) {
+              this.$message({ type: 'success', message: '一键撤销成功!' });
+              this.getList();
+            }
+          })
+          .catch(() => {});
+      }
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;

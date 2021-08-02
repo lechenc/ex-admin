@@ -8,6 +8,7 @@
             <el-input
               type="number"
               :size="sizeDiy"
+              @input="checkVal1('target1')"
               v-model="formR.target1"
               class="box-date-picker"
               :disabled="isdisabled"
@@ -23,6 +24,7 @@
             <el-input
               type="number"
               :size="sizeDiy"
+              @input="checkVal1('target2')"
               v-model="formR.target2"
               :disabled="isdisabled"
               placeholder="最大值"
@@ -83,8 +85,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    noMinus: {
+      type: Boolean,
+      default: false,
+    },
+    
   },
   watch: {
+    
     getVal1: {
       handler(newVal, oldVal) {
         if (newVal || newVal === '' || newVal === 0) {
@@ -155,6 +163,17 @@ export default {
       // });
       // this.$emit("handler", ret);
     },
+    
+    // 不能小数
+    checkVal1(val) {
+      if (!this.noMinus) {
+        this.formR[val] = this.formR[val] + '';
+      }else{
+        if (this.formR[val] < 0) {
+          this.formR[val] = 0;
+        }
+      }
+    },
 
     checkVal(val) {
       if (this.negative) {
@@ -186,7 +205,7 @@ export default {
     validateMin(rule, value, callback) {
       const one = Number(value);
       const max = Number(this.formR.target2);
-      if (!max || one < max) {
+      if (!max || one <= max) {
         return callback();
       }
       return callback(new Error('输入值不得大于最大阈值'));
@@ -194,7 +213,7 @@ export default {
     validateMax(rule, value, callback) {
       const one = Number(value);
       const min = Number(this.formR.target1);
-      if (!min || one > min) {
+      if (!min || one >= min) {
         return callback();
       }
       return callback(new Error('输入值不得小于最小阈值'));

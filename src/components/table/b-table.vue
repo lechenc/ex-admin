@@ -94,25 +94,11 @@
         </template>
       </el-table-column>
 
-      <!-- 新 两个值组成 连接符为, -->
-      <el-table-column v-if="config.type === 'textDouble'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
-        <template slot-scope="scope">
-          <span>{{ scope.row[config.prop] }}</span>
-          <span>,</span>
-          <span>{{ scope.row[config.prop2] }}</span>
-        </template>
-      </el-table-column>
+      
 
-      <!-- 新 两个值组成 连接符为- -->
-      <el-table-column v-if="config.type === 'textLineDouble'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
-        <template slot-scope="scope">
-          <span>{{ scope.row[config.prop] }}</span>
-          <span>-</span>
-          <span>{{ scope.row[config.prop2] }}</span>
-        </template>
-      </el-table-column>
+      
 
-      <!-- 新 两个值组成 连接符为+ -->
+      
       <el-table-column v-if="config.type === 'textAndfilter'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
           <span v-if="config.show_type === 'text'">{{ scope.row[config.prop] | textFilter(config.filters) }}</span>
@@ -121,7 +107,7 @@
         </template>
       </el-table-column>
 
-      <!-- 新 结尾 % -->
+      <!--  结尾 % -->
       <el-table-column v-if="config.type === 'afterPercent'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
           <span v-if="scope.row[config.prop] == '--'">{{ scope.row[config.prop] }}</span>
@@ -151,44 +137,18 @@
       <el-table-column v-if="config.type === 'textArr'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
           <div >
-            <span v-for="(item, ixx) in config.arr" :key="ixx">{{ scope.row[item] }} <span v-if="ixx != config.arr.length - 1">,</span> </span>
+            <span v-for="(item, ixx) in config.arr" :key="ixx">{{ scope.row[item] }}  <span style="margin-right:5px" v-if="ixx != config.arr.length - 1"> {{config.join}}</span>  </span>
           </div>
         </template>
       </el-table-column>
 
-      <el-table-column v-if="config.type === 'textArrKeyValue'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="280">
-        <template slot-scope="scope">
-          <div class="rowLine">
-            <span v-for="(item, ixx) in config.arr" :key="ixx">{{ scope.row[item] }}</span>
-          </div>
-        </template>
-      </el-table-column>
+      
 
-      <el-table-column v-if="config.type === 'textPair'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
-        <template slot-scope="scope">
-          <div>
-            <span>{{ scope.row[config.arr[0]] }}</span> / <span>{{ scope.row[config.arr[1]] }}</span>
-          </div>
-        </template>
-      </el-table-column>
+      
 
-      <el-table-column v-if="config.type === 'textPairTimeRange'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
-        <template slot-scope="scope">
-          <div v-if="scope.row[config.prop]">
-            <span>{{ scope.row[config.prop] }}</span> 至 <span>{{ scope.row[config.prop1] }}</span>
-          </div>
-          <div v-else>{{ scope.row[config.prop2] }} （天）</div>
-        </template>
-      </el-table-column>
+      
 
-      <el-table-column v-if="config.type === 'mytextPairTimeRange'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
-        <template slot-scope="scope">
-          <div v-if="scope.row.timeType == 0">
-            <span>{{ scope.row[config.prop] }}</span> 至 <span>{{ scope.row[config.prop1] }}</span>
-          </div>
-          <div v-else-if="scope.row.timeType == 1">{{ scope.row[config.prop2] }} （天）</div>
-        </template>
-      </el-table-column>
+     
 
       <el-table-column v-if="config.type === 'sumPositive'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
