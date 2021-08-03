@@ -3794,7 +3794,126 @@ const agentListRelationConfig = [
   }
 ]
 
+// 承兑商设置
+const acceptanceSettingCol = [
+  {
+    label: '序号',
+    type: 'index',
+    width: '120'
+  },
+  {
+    label: '承兑商昵称',
+    prop: 'merchantName',
+    width: 150
+  },
+  {
+    label: '承兑商UID',
+    prop: 'uid'
+  },
+  {
+    label: '用户类型',
+    prop: 'userType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      { text: '普通用户', val: 0 },
+      { text: '广告商', val: 1 },
+    ]
+  },
+  {
+    label: '每日收款方式限制次数',
+    prop: 'payCount',
+    width: 200
+  },
+  {
+    label: '匹配权重值',
+    prop: 'weight'
+  },
+  
+  {
+    label: '授信额度',
+    prop: 'authorizationLimit'
+  },
+  {
+    label: '每日总额度',
+    prop: 'total'
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '150',
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      },
+      
+    ]
+  }
+]
+const acceptanceSettingColNoBtn = [
+  {
+    label: '用户名字',
+    prop: 'createTime',
+    width: 150
+  },
+  {
+    label: '用户UID',
+    prop: 'upperUid'
+  },
+  {
+    label: '用户类型',
+    prop: 'uid'
+  },
+  {
+    label: '每日收款方式限制次数',
+    prop: 'payment',
+    width: 200
+  },
+  {
+    label: '匹配权重值',
+    prop: 'email'
+  },
+  {
+    label: '会员等级',
+    prop: 'rewardInRate'
+  },
+  {
+    label: '信用额度',
+    prop: 'inviteCode'
+  },
+  {
+    label: '授信额度',
+    prop: 'lineCredit'
+  },
+  {
+    label: '每日总额度',
+    prop: 'dayAllowance'
+  }
+]
+const acceptanceSettingConfig = [
+  {
+    label: '承兑商昵称',
+    prop: 'merchantName',
+    value: '',
+    placeHolder: '承兑商昵称'
+  },
+  {
+    label: '承兑商UID',
+    type: 'onlyNumber',
+    prop: 'uid',
+    value: '',
+    placeHolder: ''
+  }
+]
+
 export {
+  acceptanceSettingCol,
+  acceptanceSettingColNoBtn,
+  acceptanceSettingConfig,
   agentListRelationConfig,
   acceptanceCol,
   acceptanceColNoBtn,

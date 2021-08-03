@@ -430,10 +430,10 @@ const contractSymbolRobotCol = [
     label: '最新成交最大张数',
     prop: 'maxSheets',
   },
-  {
-    label: '下单委托深度取值比例',
-    prop: 'proportion',
-  },
+  // {
+  //   label: '下单委托深度取值比例',
+  //   prop: 'proportion',
+  // },
 
   {
     label: '时间变化频次',
@@ -536,10 +536,10 @@ const contractSymbolRobotColNoBtn = [
     label: '最新成交最大张数',
     prop: 'maxSheets',
   },
-  {
-    label: '下单委托深度取值比例',
-    prop: 'proportion',
-  },
+  // {
+  //   label: '下单委托深度取值比例',
+  //   prop: 'proportion',
+  // },
 
   {
     label: '时间变化频次',
