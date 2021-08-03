@@ -120,7 +120,7 @@
 
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="dialogVisible = false" v-if="!isModify">取消</el-button>
-        <el-button type="primary" @click.stop="confirmOp" :loading="btnLoading">确定</el-button>
+        <el-button type="primary" @click="confirmOp" :loading="btnLoading">确定</el-button>
       </div>
     </el-dialog>
 
@@ -195,6 +195,7 @@ import { acceptanceCol, acceptanceColNoBtn, acceptanceConfig } from '@/config/co
 import $api from '@/api/api';
 import utils from '@/utils/util';
 import vueQr from 'vue-qr';
+import mMd5 from '@/utils/module_md5';
 export default {
   name: 'AcceptanceList',
   components: {
@@ -387,7 +388,7 @@ export default {
         if (valid) {
           try {
             let { email, phone, code, loginPassword } = this.ruleForm;
-            let params = { code, loginPassword: this.$md5(loginPassword) };
+            let params = { code, loginPassword: mMd5.hbmd5(loginPassword) };
 
             if (this.activeName == 'first') {
               params.phoneOrEmail = phone;
@@ -524,6 +525,7 @@ export default {
 
     // 提交
     confirmOp() {
+      console.log('this.isModify',this.isModify)
       if (this.isModify) {
         this.dialogVisible = false;
         return;
@@ -532,13 +534,13 @@ export default {
         if (valid) {
           const { merchantUid, userId, googleCode, rewardInRate, userLoginStatus } = this.form;
           const params = {
-            // merchantName,
+            // ,
             uid: merchantUid,
             userId: userId,
-            // inRate: rewardInRate ? this.numToPercent(rewardInRate) : '0%',
+            
             legalRewardInRate: rewardInRate ? this.numToPercent(rewardInRate) : '0%',
             googleCode,
-            // userLoginStatus: userLoginStatus ? 0 : 1
+            
             userLoginStatus: 0,
           };
           this.btnLoading = true;

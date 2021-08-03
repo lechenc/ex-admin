@@ -3773,7 +3773,29 @@ const acceptanceConfig = [
   },
 ];
 
+// 承兑商关系
+const agentListRelationConfig = [
+  {
+    type: 'onlyNumber',
+    label: '代理商UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'select',
+    label: '代理关系',
+    prop: 'direction',
+    value: '',
+    list: [
+      { label: '查上级', value: 1 },
+      { label: '查下级', value: 2 }
+    ]
+  }
+]
+
 export {
+  agentListRelationConfig,
   acceptanceCol,
   acceptanceColNoBtn,
   acceptanceConfig,

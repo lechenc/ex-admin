@@ -50,11 +50,13 @@ export default {
         target1: [
           { required: true, message: '必填项', trigger: 'blur' },
           // { validator: this.validateCom, trigger: 'blur' },
+          { validator: this.validateMin, trigger: 'change' },
           { validator: this.validateMin, trigger: 'blur' },
         ],
         target2: [
           { required: true, message: '必填项', trigger: 'blur' },
           // { validator: this.validateCom, trigger: 'blur' },
+          { validator: this.validateMax, trigger: 'change' },
           { validator: this.validateMax, trigger: 'blur' },
         ],
       },

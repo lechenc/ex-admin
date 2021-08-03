@@ -3181,7 +3181,24 @@ static batchAddAnalyst(data) {
 
   // 合约管理/订单管理/普通委托账单 一键撤销
   static apiGeneralEntrustContractOneKeyRepeal(data) {
-    return Fetch.post('admin/contract/cancel/trust-by-uids', data)
+    return Fetch.post('/admin/contract/cancel/trust-by-uids', data)
+  }
+   
+  // 法币管理/承兑商与商户管理/承兑商代理关系
+
+  // 承兑商管理（承兑商关系) 层级 table
+  static findAcceptanceChild(data) {
+    return Fetch.post('/admin/user/pay/get-top-advertiser', data)
+  }
+
+  // 承兑商管理-代理商关系表格展开列表
+  static getAcceptanceUserRatesOnly(data) {
+    return Fetch.post('/admin/user/pay/advertiser/get-down-user-rates', data)
+  }
+
+  // 承兑商管理 -代理商关系--修改收益(新版)
+  static updateDownAcceptanceRates(data) {
+    return Fetch.post('/admin/user/pay/rate/advertiser', data)
   }
 
   

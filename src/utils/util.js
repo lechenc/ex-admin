@@ -1016,7 +1016,18 @@ function randomRange(min, max, charStr) {
   return returnStr;
 }
 
+function cutOutNumber(num, places) {
+  //判断是否为小数
+  num = num && num.toString()
+  if (num && num.indexOf('.') == -1) {
+    return num
+  }
+  let newNum = num && num.substring(0, num && num.indexOf('.') + places+1)
+  return newNum
+}
+
 export default {
+  cutOutNumber,
   randomRange,
   add,
   accDiv,
