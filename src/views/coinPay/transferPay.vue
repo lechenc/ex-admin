@@ -130,7 +130,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '划转记录列表',
+      
       coinList: [], 
       dialogVisible: false,
       // totalExFee: "", // 手续费总计

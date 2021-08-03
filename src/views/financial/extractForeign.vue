@@ -183,7 +183,7 @@ export default {
       pageSize: this.$pageSize, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
-      excelTitle: '外部提币记录列表',
+      
       formLabelWidth: '120px',
       handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 viewDetail详情}
       handleData: {}, // 当前执行操作的数据

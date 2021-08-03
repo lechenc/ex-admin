@@ -52,7 +52,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '充币记录列表',
+      
     };
   },
   methods: {

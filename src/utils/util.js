@@ -656,7 +656,7 @@ async function exportData(type, max = 10000, loading = null) {
     const keys = [];
     const data = [];
     // const title = position(that).pos.pop();
-    const title = that.excelTitle || '币币交易后台';
+    const title = that.$route.meta.title || that.excelTitle || '币币交易后台';
     const columns = that.configs;
     columns.map((el, idx) => {
       header[idx] = el.label;
@@ -690,6 +690,7 @@ async function exportData(type, max = 10000, loading = null) {
     let loadCount = 0;
     const loadData = async (total, page = 1, per = 5000) => {
       try {
+        
         loadCount = 0;
         const allTime = Math.ceil(total / per);
         const percent = (((page - 1) * 100) / allTime).toFixed(2) + '%';

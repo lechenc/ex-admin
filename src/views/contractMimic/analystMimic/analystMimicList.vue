@@ -244,7 +244,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '用户列表',
+      
       form: {
         loginSwitch: false,
         uid: '',

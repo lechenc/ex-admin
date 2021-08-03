@@ -75,7 +75,7 @@ export default {
       btnLoading: false, // 提交loading
       calLoading: false, // 合计
       excelLoading: false, // 导出loadding
-      excelTitle: '周薪发放列表',
+      
       list: [], //委托列表
       dataList: [], // 用于导出的数据
       configs: [], // 委托列表列配置

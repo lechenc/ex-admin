@@ -76,7 +76,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '商户流水列表',
+      
       uidGet:"",// 从列表页获取的uid
     };
   },
@@ -173,7 +173,7 @@ export default {
       this.configs= [] // 委托列表列配置
       this.searchCofig= [] // 搜索框配置
       this.search_params_obj= {} // 搜索框对象
-      this.excelTitle= '商户流水列表'
+      
       this.uidGet=""// 从列表页获取的uid
 
     this.configs = customerFlowCol;

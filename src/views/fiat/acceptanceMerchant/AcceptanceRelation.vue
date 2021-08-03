@@ -464,6 +464,7 @@ export default {
 
     this.searchCofig = this.$util.clone(agentListRelationConfig)
     this.getList()
+    
   }
 };
 </script>

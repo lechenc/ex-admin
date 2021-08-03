@@ -99,7 +99,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '充币记录列表',
+      
       btnArr: [], // 配置的按钮数组
       dialogCheckVisible: false, // 是否显示迁移勾选表格
       currItem: {},

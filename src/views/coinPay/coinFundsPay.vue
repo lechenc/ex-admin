@@ -66,7 +66,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '币币资金流水列表',
+       
       coinList: [], //币种列表
       // totalExFee: "", // 手续费总计
       // totalArrivalAccount: "", // 到账总计
@@ -244,6 +244,7 @@ export default {
       } else {
         this.getList();
       }
+        
     });
   },
 };

@@ -1,24 +1,14 @@
 <template>
   <div class="dealContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset"   :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -28,8 +18,8 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { dealContractCol, dealContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
-import activePage from "@/mixin/keepPage"
-
+import activePage from '@/mixin/keepPage';
+import utils from '@/utils/util';
 export default {
   name: 'DealContract',
   components: {
@@ -37,7 +27,7 @@ export default {
     Bsearch,
     iconPage,
   },
-  mixins:[activePage],
+  mixins: [activePage],
   data() {
     return {
       listLoading: false, // 表格loading
@@ -53,10 +43,28 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
-      getId:0,
+      getId: 0,
+      excelLoading: false,
+
+      dataList: [],
     };
   },
   methods: {
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getCloseEntrustDetailPagination(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
@@ -67,7 +75,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -84,7 +92,7 @@ export default {
       this.current_page = val;
       this.getList();
     },
-        // 根据查询条件进行合计弹窗展示
+    // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
@@ -104,7 +112,7 @@ export default {
         if (getObj) {
           let tmp = '';
           if (this.search_params_obj.direction) {
-            const tm1 = this.searchCofig[7]['list'].filter(v => v.value == this.search_params_obj.direction)[0].label;
+            const tm1 = this.searchCofig[7]['list'].filter((v) => v.value == this.search_params_obj.direction)[0].label;
             tmp += `<p>成交方向：${tm1}</p>`;
           }
           if (this.search_params_obj.coinMarket) {
@@ -138,6 +146,7 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+        this.dataList = records
       }
       this.listLoading = false;
     },
@@ -146,10 +155,7 @@ export default {
         params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
         params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
         // 组件时间初始必须format格式
-        this.searchCofig[0].value = [
-          this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-          this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss'),
-        ];
+        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss')];
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
@@ -158,7 +164,7 @@ export default {
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
           let tmpName = '';
-          tmpName = this.symbollist.filter(v => v['value'] == this.search_params_obj.coinMarket)[0].label;
+          tmpName = this.symbollist.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0].label;
           this.search_params_obj.coinMarket = tmpName;
         }
       }

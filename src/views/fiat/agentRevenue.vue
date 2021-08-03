@@ -70,7 +70,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '返佣记录列表',
+      
       coinList: [], //币种列表
       amountSum: '', // 总计收益数量
       pageAmountSum: '', // 当前页面收益数量

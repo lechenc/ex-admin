@@ -412,6 +412,7 @@ export default {
         minLimit: '',
         maxLimit: '',
       },
+      
     };
   },
   watch: {
@@ -843,6 +844,7 @@ export default {
     },
 
     exportExcel(val) {
+      console.log('val',val)
       this.search_params_obj = val.query;
       const num = val.num;
       utils.exportData.apply(this, [num]);
@@ -1332,6 +1334,7 @@ export default {
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.getList();
+      
   },
 };
 </script>

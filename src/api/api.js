@@ -735,15 +735,8 @@ export default class api {
     return Fetch.post('/admin/user/otc/send-message', data);
   }
 
-  // 法币 - 匹配权重- 列表
-  static getUserGetMerchantInfo(data) {
-    return Fetch.post('/admin/user/getMerchantInfo', data);
-  }
 
-  // 法币 - 匹配权重- 修改
-  static getUserUpdateMerchantInfo(data) {
-    return Fetch.post('/admin/user/updateMerchantInfo', data);
-  }
+  
 
   // 法币 - 汇率管理 - 列表
   static getTpCoinSetPage(data) {
@@ -3156,10 +3149,7 @@ static batchAddAnalyst(data) {
     return Fetch.post('/account/withdrawconfig/find', data);
   }
 
-  // 承兑商管理（代理商管理）---代理商创建
-  static acceptanceCreateAgent(data) {
-    return Fetch.post('/admin/user/pay/add/advertiser', data);
-  }
+  
 
   
   static apiSendEmail(data) {
@@ -3170,9 +3160,7 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/user/pay/edit/advertiser', data);
   }
 
-  static getPayQueryInfo(data) {
-    return Fetch.post('/admin/account/pay/query/info', data);
-  }
+  
 
   // 承兑商管理--- 代理商列表
   static getAcceptanceTransRecord(data) {
@@ -3200,6 +3188,44 @@ static batchAddAnalyst(data) {
   static updateDownAcceptanceRates(data) {
     return Fetch.post('/admin/user/pay/rate/advertiser', data)
   }
+
+  // 法币管理/承兑商与商户管理/承兑商设置 
+
+  // 法币 - 匹配权重- 列表
+  static getUserGetMerchantInfo(data) {
+    return Fetch.post('/admin/user/getMerchantInfo', data);
+  }
+
+  // 承兑商管理（代理商管理）---代理商创建
+  static acceptanceCreateAgent(data) {
+    return Fetch.post('/admin/user/pay/add/advertiser', data);
+  }
+
+  // 承兑商管理---是否允许开设代理
+  static activeAcceptanceSwitchMerchant(data) {
+    return Fetch.post('/coin/pay/admin/user/pay/create/advertiser/switch', data)
+  }
+
+  // 法币 - 匹配权重- 修改
+  static getUserUpdateMerchantInfo(data) {
+    return Fetch.post('/admin/user/updateMerchantInfo', data);
+  }
+
+  static getPayQueryInfo(data) {
+    return Fetch.post('/admin/account/pay/query/info', data);
+  }
+
+  //法币管理/承兑商与商户管理/渠道管理  // 创建渠道
+  static createAcceptanceChannel(data) {
+    return Fetch.post('/admin/user/pay/create/channel', data)
+  }
+
+  //法币管理/承兑商与商户管理/渠道管理  // 列表
+  static getAcceptanceChannelList(data) {
+    return Fetch.post('/admin/user/pay/query/channel-list', data)
+  }
+
+  
 
   
 

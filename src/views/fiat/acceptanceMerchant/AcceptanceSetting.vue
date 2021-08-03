@@ -17,99 +17,19 @@
         <el-row :span="36">
           <el-col :span="36">
             <el-form-item label="权重值" :label-width="formLabelWidth" prop="weight">
-              <el-input v-model="form.weight" autocomplete="off" placeholder="请输入" :disabled="isModify"></el-input>
+              <el-input v-model="form.weight" type="number" autocomplete="off" placeholder="请输入" :disabled="isModify"></el-input>
             </el-form-item>
             <el-form-item label="授信额度" :label-width="formLabelWidth" prop="authorizationLimit">
-              <el-input v-model="form.authorizationLimit" autocomplete="off" placeholder="" :disabled="isModify"></el-input>
+              <el-input  type="number" v-model="form.authorizationLimit" autocomplete="off" placeholder="" :disabled="isModify"></el-input>
             </el-form-item>
             <el-form-item label="收款方式限制次数" :label-width="formLabelWidth" prop="payCount">
-              <el-input v-model="form.payCount" autocomplete="off" placeholder="" :disabled="isModify"></el-input>
+              <el-input  type="number" v-model="form.payCount" autocomplete="off" placeholder="" :disabled="isModify"></el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
-            <el-form-item label="授信额度" :label-width="formLabelWidth">
-              <el-input v-model="form.phone" autocomplete="off" placeholder="" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="收款方式限制次数" :label-width="formLabelWidth">
-              <el-input v-model="form.email" autocomplete="off" placeholder="" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col> -->
+          
         </el-row>
 
-        <!-- <el-row>
-          <el-table class="agent-table" :data="assetsList" style="width: 100%; text-align: center; margin-bottom: 30px" border>
-            <el-table-column prop="coinName" label="币种" />
-            <el-table-column label="持币量">
-              <template slot-scope="scope">
-                {{ parseFloat(scope.row['payAmount']) + parseFloat(scope.row['pyaFrozenAmount']) || '' }}
-              </template>
-            </el-table-column>
-            <el-table-column prop="payAmount" label="可用资产">
-              <template slot-scope="scope">
-                {{ parseFloat(scope.row['payAmount']) || '' }}
-              </template>
-            </el-table-column>
-            <el-table-column prop="pyaFrozenAmount" label="冻结资产">
-              <template slot-scope="scope">
-                {{ parseFloat(scope.row['pyaFrozenAmount']) || '' }}
-              </template>
-            </el-table-column>
-            <el-table-column label="充币地址" width="470px" prop="coinAddressList">
-              <template slot-scope="scope">
-                <div class="qrimg-wraper">
-                  <div v-if="scope.row['coinAddressList'].length">
-                    <div class="colline">
-                      <div v-for="(item, ixx) in scope.row['coinAddressList']" :key="ixx">
-                        <span class="label">{{ item.chainName }}：&nbsp;</span>
-                        <el-popover placement="top-start" width="200" trigger="hover">
-                          <div style="width: 150px; height: 150px">
-                            <vue-qr :text="item.address" :margin="0" colorDark="#000" colorLight="#fff" :size="150"></vue-qr>
-                          </div>
-                          <el-button size="small" slot="reference" style="margin-right: 8px"
-                            ><span>{{ item.address }}</span></el-button
-                          >
-                        </el-popover>
-                        <el-button plain size="small" v-clipboard:copy="item.address" v-clipboard:success="onCopy" v-clipboard:error="onError"
-                          >复制</el-button
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else>无</div>
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-row> -->
-
-        <!-- <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="转入费率" :label-width="formLabelWidth" prop="rewardInRate">
-              <el-input type="number" @input="checkVal('rewardInRate')" v-model="form.rewardInRate" autocomplete="off" placeholder="请输入" :disabled="isModify">
-                <div slot="append">%</div>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row> -->
-
-        <!-- <el-row :span="24">
-          <el-col :span="12">
-            <el-input v-model="form.iii" autocomplete="off" placeholder="请输入"></el-input>
-            <el-form-item label="是否允许登录" :label-width="formLabelWidth" prop="userLoginStatus">
-              <el-switch v-model="form.userLoginStatus" active-color="#13ce66" inactive-color="#ff4949" :disabled="isModify"> </el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row> -->
-
-        <!-- <el-row :span="24" v-if="!isModify">
-          <el-col :span="24">
-            <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-              <el-input v-model="form.googleCode" autocomplete="off" placeholder="请输入" :disabled="isModify"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row> -->
+        
       </el-form>
 
       <div slot="footer" class="inner-footer">
@@ -118,50 +38,9 @@
       </div>
     </el-dialog>
 
-    <!-- <el-dialog :close-on-click-modal="false" title="创建代理商" :visible.sync="createVisible" width="550px">
-      <div>
-        <el-form :model="ruleForm" :rules="formRules" ref="ruleForm" label-width="140px">
-          <el-row type="flex" :span="24">
-            <el-col :span="2"></el-col>
-            <el-col :span="9">
-              <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="手机注册" name="first"> </el-tab-pane>
+    
 
-                <el-tab-pane label="邮箱注册" name="second"> </el-tab-pane>
-              </el-tabs>
-            </el-col>
-          </el-row>
-
-          <el-form-item v-if="activeName == 'first'" label="代理商账户" prop="phone">
-            <el-input autocomplete="off" v-model="ruleForm.phone" placeholder="请输入手机号"></el-input>
-          </el-form-item>
-
-          <el-form-item v-else-if="activeName == 'second'" label="代理商账户" prop="email">
-            <el-input autocomplete="off" v-model="ruleForm.email" placeholder="请输入邮箱"></el-input>
-          </el-form-item>
-
-          <el-form-item label="获取验证码" prop="code">
-            <el-input autocomplete="off" v-model="ruleForm.code" placeholder="请输入验证码">
-              <span @click="codeclick" slot="suffix">
-                <CountdownBtn @countdownBtn="countdownBtn" :disabled="disabled"></CountdownBtn>
-              </span>
-
-              ></el-input
-            >
-          </el-form-item>
-
-          <el-form-item class="myLine" label="登录密码" prop="loginPassword">
-            <el-input show-password autocomplete="off" type="password" v-model="ruleForm.loginPassword" placeholder="请输入设置密码"></el-input>
-          </el-form-item>
-
-          <div style="textalign: center; margintop: 50px">创建成功后承兑商代理可用此账号登录alpex交易所</div>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="createVisible = false">取 消</el-button>
-        <el-button type="primary" @click="createAgent">确 定</el-button>
-      </span>
-    </el-dialog> -->
+          
   </div>
 </template>
 <script >
@@ -227,7 +106,7 @@ export default {
       calLoading: false,
       disabled: false,
       createVisible: false,
-      excelTitle: '代理商列表',
+      
       activeName: 'first',
       excelLoading: false,
       list: [],
@@ -444,15 +323,10 @@ export default {
       const { fn, row } = data;
       this.nowUserId = row.userId;
 
-      if (fn === 'edit' || fn === 'detail') {
-        if (fn === 'edit') {
-          this.isModify = false;
-          this.title = '会员设置';
-        } else {
-          this.title = '代理商信息详情';
-          this.isModify = true;
-        }
-        this.getAssetsList();
+      if (fn === 'edit') {
+        this.isModify = false;
+        this.title = '会员设置';
+        // this.getAssetsList();
         this.dialogVisible = true;
         const { uid, phone, email, rewardInRate, userLoginStatus, authorizationLimit, payCount, weight } = row;
         this.form = {
@@ -467,29 +341,6 @@ export default {
           payCount: payCount,
           googleCode: '',
         };
-      }
-      if (fn === 'trstart') {
-        this.$confirm('是否切换允许开设代理的状态？', '温馨提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        })
-          .then(async () => {
-            const res = await $api.activeAcceptanceSwitchMerchant({
-              uid: row.uid,
-              status: row.isCreateAgent ? 1 : 0,
-            });
-            if (res) {
-              // const txt = row.isCreateAgent ? '成功锁定该商户' : '成功激活该商户'
-              this.$message({ type: 'success', message: '切换状态成功' });
-              this.getList();
-            } else {
-              this.getList();
-            }
-          })
-          .catch(() => {
-            this.getList();
-          });
       }
     },
 
@@ -618,7 +469,7 @@ export default {
       const res = await $api.getUserGetMerchantInfo(params);
       this.excelLoading = false;
       if (res) {
-        return res.data;
+        return res;
       }
     },
 
@@ -648,24 +499,18 @@ export default {
       return val + '%';
     },
 
-    // 对输入值的范围进行限制
-    checkVal(val) {
-      this.form[val] = this.form[val] > 100 ? 100 : this.form[val];
-      this.form[val] = (this.form[val] + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-      if (this.form[val] < 0) {
-        this.form[val] = 0;
-      }
-    },
+    
   },
   mounted() {
-    let authObj = this.$util.getAuthority('AcceptanceSetting', acceptanceSettingCol, acceptanceSettingColNoBtn)
-    this.configs = authObj.val
-    this.searchCofig = this.$util.clone(acceptanceSettingConfig)
+    let authObj = this.$util.getAuthority('AcceptanceSetting', acceptanceSettingCol, acceptanceSettingColNoBtn);
+    this.configs = authObj.val;
+    this.searchCofig = this.$util.clone(acceptanceSettingConfig);
     // 初始化今天，之前的时间
-    this.toDay = this.$util.diyTime('toDay')
-    this.ago = this.$util.diyTime('ago')
-    this.getList()
-  }
+    this.toDay = this.$util.diyTime('toDay');
+    this.ago = this.$util.diyTime('ago');
+    this.getList();
+      
+  },
 };
 </script>
 <style scope lang="scss">

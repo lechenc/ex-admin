@@ -55,7 +55,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '划转记录列表',
+      
       // totalExFee: "", // 手续费总计
       // totalArrivalAccount: "", // 到账总计
       curRowObj: '',

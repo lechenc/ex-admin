@@ -1,7 +1,7 @@
 <template>
   <div class="closeContract-container">
     <div class="container-top">
-      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -57,7 +57,7 @@ import { closeContractCol, closeContractConfig } from '@/config/column/contract'
 import $api from '@/api/api';
 import activePage from '@/mixin/keepPage';
 import Precision from '@/utils/number-precision';
-
+import utils from '@/utils/util';
 export default {
   name: 'CloseContract',
   components: {
@@ -88,6 +88,9 @@ export default {
       startTime: '',
       endTime: '',
       amountObj: {},
+      excelLoading: false,
+
+      dataList: [],
     };
   },
   computed: {
@@ -108,8 +111,22 @@ export default {
     },
   },
   methods: {
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getCloseEntrustDetailPagination(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
     async calTotal(val) {
-      
       this.uid = val.uid;
       this.startTime = val.startTime;
       this.endTime = val.endTime;
@@ -119,7 +136,7 @@ export default {
         this.coinMarket = tmpName;
         val.coinMarket = tmpName;
       }
-      
+
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
@@ -188,6 +205,7 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+        this.dataList = records;
       }
       this.listLoading = false;
     },

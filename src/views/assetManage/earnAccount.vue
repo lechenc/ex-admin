@@ -60,7 +60,7 @@ export default {
       btnLoading: false,
       excelLoading: false, // 导出loading
       list: [], //委托列表
-      excelTitle: '分红发放列表',
+      
       dataList: [], // 用于导出的数据
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
@@ -280,6 +280,7 @@ export default {
     this.pages = 0; // 总页数
 
     this.initFunc();
+    
   },
 };
 </script>

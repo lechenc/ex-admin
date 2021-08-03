@@ -3910,7 +3910,76 @@ const acceptanceSettingConfig = [
   }
 ]
 
+// 渠道列表
+const acceptanceChannelListCol = [
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    width: 150
+  },
+  {
+    label: '渠道名称',
+    prop: 'channelName',
+    width: 150
+  },
+  {
+    label: '渠道编号',
+    prop: 'id'
+  },
+  {
+    label: '承兑商UID',
+    prop: 'advertiserUid',
+    width: 200
+  },
+  {
+    label: '承兑商数量',
+    prop: 'advertiserCount',
+    width: 200
+  },
+  {
+    label: '购买市价上架广告数量',
+    prop: 'buyMarketPriceCount',
+    width: 200
+  },
+  {
+    label: '出售市价上架广告数量',
+    prop: 'sellMarketPriceCount',
+    width: 200
+  },
+  {
+    label: '购买市价广告挂单额度',
+    prop: 'buyMarketPriceAmount',
+    width: 200
+  },
+  {
+    label: '出售市价广告挂单额度',
+    prop: 'sellMarketPriceAmount',
+    width: 200
+  },
+  {
+    label: '今日购买市价交易额度',
+    prop: 'todayBuyTradeAmount',
+    width: 200
+  },
+  {
+    label: '今日出售市价交易额度',
+    prop: 'todaySellTradeAmount',
+    width: 200
+  }
+]
+
+const acceptanceChannelListConfig = [
+  {
+    label: '渠道名称',
+    prop: 'channelName',
+    value: '',
+    placeHolder: ''
+  }
+]
+
 export {
+  acceptanceChannelListCol,
+  acceptanceChannelListConfig,
   acceptanceSettingCol,
   acceptanceSettingColNoBtn,
   acceptanceSettingConfig,

@@ -194,7 +194,7 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       headBtnArr:[], // 后台节点树配置的按钮数组
-      excelTitle: '特殊调账列表',
+      
       coinList: [], // 币种
       formLabelWidth: '120px',
       // totalExFee: "", // 手续费总计

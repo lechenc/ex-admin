@@ -1,7 +1,7 @@
 <template>
   <div class="generalEntrustContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -18,7 +18,7 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { generalEntrustContractCol, generalEntrustContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
-
+import utils from '@/utils/util';
 export default {
   name: 'GeneralEntrustContract',
   components: {
@@ -41,9 +41,28 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
+      excelLoading: false,
+       
+      dataList:[],
     };
   },
   methods: {
+    exportExcel(val) {
+      
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getContractEntrustPagination(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
     async doHandle(data) {
       const { fn, row } = data;
 
@@ -152,6 +171,7 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+         this.dataList = records;
       }
       this.listLoading = false;
     },
@@ -193,6 +213,7 @@ export default {
     this.ago = this.$util.diyTime('ago');
     this.getList();
     this.getSymbolList();
+      
   },
 };
 </script>

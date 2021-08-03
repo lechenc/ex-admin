@@ -122,7 +122,7 @@ export default {
       dataList: [], // 用于导出的数据
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
-      excelTitle: '解冻记录列表',
+      
       search_params_obj: {}, // 搜索框对象
       current_page: 1, // 当前页码
       pageSize: 10, // 当前每页显示页码数

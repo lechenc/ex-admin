@@ -221,7 +221,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      excelTitle: '锁仓管理列表',
+     
       coinList: [], // 币种
       formLabelWidth: '150px',
       isBatchImport: false, // 是否是批量导入状态

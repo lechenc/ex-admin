@@ -110,9 +110,9 @@
         </el-row>
 
         <el-row :span="24" v-if="!isModify">
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-              <el-input v-model="form.googleCode" autocomplete="off" placeholder="请输入" :disabled="isModify"></el-input>
+              <el-input @input="checkVal1('form','googleCode')" v-model="form.googleCode" autocomplete="off" placeholder="请输入" :disabled="isModify"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -138,19 +138,8 @@
           </el-row>
 
           <el-form-item v-if="activeName === 'first'" label="代理商账户" prop="phone">
-            <!-- <el-form-item label="链名称" :label-width="formLabelWidth" prop="chainName">
-              <el-select v-model="coinForm.chainName">
-                <el-option label="ERC20" value="ERC20"></el-option>
-                <el-option label="TRC20" value="TRC20"></el-option>
-              </el-select>
-            </el-form-item> -->
-            <!-- <el-input autocomplete="off" v-model="ruleForm.phone" placeholder="请输入手机号">
-              <el-select size="mini" style="width:80px">
-                <el-option label="+86"></el-option>
-                <el-option label="TRC20"></el-option>
-              </el-select>
-            </el-input> -->
-            <el-input autocomplete="off" v-model="ruleForm.phone" placeholder="请输入手机号">
+            
+            <el-input autocomplete="off" v-model="ruleForm.phone" @input="checkVal1('ruleForm','phone')" placeholder="请输入手机号">
               <template slot="prepend">+86</template>
             </el-input>
           </el-form-item>
@@ -160,7 +149,7 @@
           </el-form-item>
 
           <el-form-item label="获取验证码" prop="code">
-            <el-input autocomplete="off" v-model="ruleForm.code" placeholder="请输入验证码">
+            <el-input @input="checkVal1('ruleForm','code')" autocomplete="off" v-model="ruleForm.code" placeholder="请输入验证码">
               <span @click="codeclick" slot="suffix">
                 <CountdownBtn @countdownBtn="countdownBtn" :disabled="disabled"></CountdownBtn>
               </span>
@@ -171,9 +160,7 @@
             <el-input show-password autocomplete="off" type="password" v-model="ruleForm.loginPassword" placeholder="请输入设置密码"></el-input>
           </el-form-item>
 
-          <!-- <el-form-item class="invitationCode" label="邀请码" prop="invitationCode" v-if="activeName === 'second'">
-            <el-input show-password autocomplete="off" type="text" v-model="ruleForm.invitationCode" placeholder="邀请码"></el-input>
-          </el-form-item> -->
+         
 
           <div>创建成功后承兑商代理可用此账号登录alpex交易所</div>
         </el-form>
@@ -245,7 +232,7 @@ export default {
       calLoading: false,
       disabled: false,
       createVisible: false,
-      excelTitle: '代理商列表',
+       
       activeName: 'first',
       excelLoading: false,
       list: [],
@@ -619,7 +606,7 @@ export default {
       const res = await $api.getAcceptanceTransRecord(params);
       this.excelLoading = false;
       if (res) {
-        return res.data;
+        return res;
       }
     },
 
@@ -657,6 +644,13 @@ export default {
         this.form[val] = 0;
       }
     },
+
+     // 对输入值的范围进行限制
+    checkVal1(obj,key) {
+      this[obj][key] = (this[obj][key] + '').replace(/[^\d]/g, '');
+    },
+
+    
   },
   mounted() {
     let authObj = this.$util.getAuthority('AcceptanceList', acceptanceCol, acceptanceColNoBtn);
@@ -667,6 +661,7 @@ export default {
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.getList();
+      
   },
 };
 </script>

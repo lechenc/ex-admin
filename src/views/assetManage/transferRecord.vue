@@ -114,7 +114,7 @@ export default {
       listLoading: false, // 表格loading
       btnLoading: false, // 提交loading
       excelLoading: false, // 导出loadding
-      excelTitle: '划转记录列表',
+       
       coinList: [],
       list: [], //委托列表
       dataList: [], // 用于导出的数据
@@ -263,6 +263,7 @@ export default {
     this.total = 0; // 总条数
     this.pages = 0; // 总页数
     this.initFunc();
+      
   },
   created() {
     if (this.$route.query.topBtn) {
