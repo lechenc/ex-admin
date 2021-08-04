@@ -497,7 +497,7 @@ const mapComponents = {
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),
   EarningsRecord: () => import('@/views/contract/accountManagement/earningsRecord'),
-  EarningsFlow: () => import('@/views/contract/accountManagement/earningsFlow'),
+  // EarningsFlow: () => import('@/views/contract/accountManagement/earningsFlow'),
   // RefundRecordNew: () => import('@/views/contract/transact/refundRecordNew'),
   // API管理
   ApiKey: () => import('@/views/contract/apiConfig/apiKey'),

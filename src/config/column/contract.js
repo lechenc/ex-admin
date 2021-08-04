@@ -3547,38 +3547,14 @@ const accountContractCol = [
   {
     label: '当前可用',
     prop: 'balance',
-    type: 'plusOthersNumber',
-    othersNumber: '70000',
   },
   {
-    label: '累计划入',
-    prop: 'totalTransferIn',
+    label: '平台累计盈亏',
+    prop: 'sumProfitLoss',
   },
-  // {
-  //   label: '累计盈利',
-  //   prop: 'totalProfit',
-  // },
-
   {
-    type: 'plusOthersNumber',
-    label: '累计盈亏',
-    prop:"totalProfit",
-    prop2:"totalLoss",
-  },
-
-  {
-    label: '累计手续费返佣',
-    type: 'minusOthersNumber',
+    label: '平台累计手续费返佣',
     prop: 'totalCommission',
-    othersNumber: '70000',
-  },
-  // {
-  //   label: '累计亏损',
-  //   prop: 'totalLoss',
-  // },
-  {
-    label: '累计销账',
-    prop: 'totalWriteOff',
   },
   {
     label: '操作',
@@ -3593,7 +3569,7 @@ const accountContractCol = [
         alias: 'destroy',
       },
       {
-        label: '收益记录',
+        label: '每日收益',
         fn: 'earningsRecord',
         type: 'primary',
         alias: 'earningsRecord',
@@ -3610,12 +3586,12 @@ const accountContractCol = [
         type: 'primary',
         alias: 'destroyBill',
       },
-      {
-        label: '收益流水',
-        fn: 'earningsFlow',
-        type: 'primary',
-        alias: 'earningsFlow',
-      },
+      // {
+      //   label: '收益流水',
+      //   fn: 'earningsFlow',
+      //   type: 'primary',
+      //   alias: 'earningsFlow',
+      // },
     ],
   },
 ];
@@ -3672,13 +3648,7 @@ const destroyBillCol = [
 ];
 
 const earningsRecordConfig = [
-  {
-    type: 'select',
-    label: '币对',
-    prop: 'coinMarket',
-    value: '',
-    list: [],
-  },
+  
   {
     type: 'date_rank',
     label: '时间',
@@ -3690,49 +3660,32 @@ const earningsRecordConfig = [
 
 const earningsRecordCol = [
   {
-    label: '币对',
-    prop: 'coinMarket',
+    label: '时间',
+    prop: 'createTime',
   },
   {
-    label: '开仓手续费',
-    prop: 'openFee',
+    label: '平台合约平仓盈亏',
+    prop: 'profitLoss',
   },
   {
-    label: '平仓手续费',
-    prop: 'closeFee',
-  },
-  {
-    label: '爆仓平多',
-    prop: 'explosiveWarehousesLong',
-  },
-  {
-    label: '爆仓平空',
-    prop: 'explosiveWarehousesShort',
-  },
-  {
-    label: '平多',
-    prop: 'closeLong',
-  },
-  {
-    label: '平空',
-    prop: 'closeShort',
-  },
-  {
-    label: '返佣',
+    label: '平台手续费返佣',
     prop: 'commission',
   },
   {
-    label: '资金费用',
-    prop: 'assetFee',
+    label: '变动资产金额',
+    type:'plusOthersNumber',
+    prop: 'profitLoss',
+    prop2: 'commission',
   },
   {
-    label: '盈亏合计',
-    prop: 'total',
+    label: '变动前可用金额',
+    prop: 'balanceBefore',
   },
   {
-    label: '创建时间',
-    prop: 'createTime',
+    label: '变动后可用金额',
+    prop: 'balanceAfter',
   },
+  
 ];
 const earningsFlowCol = [
   {

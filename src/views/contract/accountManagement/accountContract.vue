@@ -13,7 +13,11 @@
         <el-button size="medium" type="primary" plain @click="$router.go(-1)">返回</el-button>
       </el-col>
     </el-row>
-    <div class="contractAccount-top"></div>
+    
+
+    <div class="container-top">
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+    </div>
 
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -208,7 +212,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[5].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      
       this.getList();
     },
     async doHandle(data) {
@@ -226,7 +230,7 @@ export default {
         };
         return;
       }
-      // 收益记录
+      // 每日收益
       if (fn == 'earningsRecord') {
         this.$router.push({
           path: '/contract/accountManagement/earningsRecord',
