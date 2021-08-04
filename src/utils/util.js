@@ -129,6 +129,7 @@ const datePickerOptions = (options = { disabledDate: 'aft' }) => {
           start = start - 3600 * 1000 * 24 * 7 * desc;
           start = GMTToStrZero(start);
           end = GMTToStr(end);
+          return console.log('start',start)
           picker.$emit('pick', [start, end]);
         },
       },
@@ -1028,6 +1029,8 @@ function cutOutNumber(num, places) {
 }
 
 export default {
+  GMTToStrZero,
+  GMTToStr,
   cutOutNumber,
   randomRange,
   add,

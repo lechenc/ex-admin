@@ -35,7 +35,7 @@ import $api from '@/api/api';
 import Precision from '@/utils/number-precision';
 import activePage from '@/mixin/keepPage';
 import BTwoRangeChoose from '@/components/b-two-range-choose';
-
+import utils from '@/utils/util';
 export default {
   name: 'EarningsRecord',
   components: {
@@ -112,7 +112,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      this.searchCofig[0].value = [this.toDay,this.ago ];;
       this.getList();
     },
     // 分页
@@ -137,11 +137,11 @@ export default {
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        this.searchCofig[0].value = [befV, nowV];
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        // let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
+        // let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
+        this.searchCofig[0].value = [this.toDay,this.ago ];
+        params.endTime = this.ago.replace(/\//gi, '-');
+        params.startTime = this.toDay.replace(/\//gi, '-');
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
@@ -179,8 +179,16 @@ export default {
   async mounted() {
     this.configs = earningsRecordCol;
     this.searchCofig = this.$util.clone(earningsRecordConfig);
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
+    // this.toDay = this.$util.diyTime('toDay');
+    // this.ago = this.$util.diyTime('ago');
+
+    this.toDay = new Date().getTime();
+    this.ago = new Date().getTime();
+    this.toDay = this.toDay - 3600 * 1000 * 24 * 7 
+    this.toDay =  utils.GMTToStrZero(this.toDay)
+    this.ago =  utils.GMTToStr(this.ago);
+    console.log('ago',this.ago)
+    console.log('toDay',this.toDay)
     this.getList();
   },
 };
