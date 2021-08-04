@@ -4,7 +4,7 @@
     <template v-if="selection"> <el-table-column type="selection" width="55"> </el-table-column></template>
     <template v-for="config in configs">
       <!-- 普通文字渲染 -->
-      <el-table-column v-if="!config.type" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120"> </el-table-column>
+      <el-table-column aaa="1231" v-if="!config.type" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120"> </el-table-column>
 
       <!-- 特殊情况,其他列某些值的,此值隐藏为-符号   -->
       <el-table-column v-if="config.type === 'myShowHide'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
@@ -94,11 +94,6 @@
         </template>
       </el-table-column>
 
-      
-
-      
-
-      
       <el-table-column v-if="config.type === 'textAndfilter'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
           <span v-if="config.show_type === 'text'">{{ scope.row[config.prop] | textFilter(config.filters) }}</span>
@@ -136,19 +131,13 @@
 
       <el-table-column v-if="config.type === 'textArr'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
-          <div >
-            <span v-for="(item, ixx) in config.arr" :key="ixx">{{ scope.row[item] }}  <span style="margin-right:5px" v-if="ixx != config.arr.length - 1"> {{config.join}}</span>  </span>
+          <div>
+            <span v-for="(item, ixx) in config.arr" :key="ixx"
+              >{{ scope.row[item] }} <span style="margin-right: 5px" v-if="ixx != config.arr.length - 1"> {{ config.join }}</span>
+            </span>
           </div>
         </template>
       </el-table-column>
-
-      
-
-      
-
-      
-
-     
 
       <el-table-column v-if="config.type === 'sumPositive'" :key="config.prop" :prop="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
@@ -445,6 +434,11 @@ export default {
       type: String,
       default: '530px',
     },
+    // 表单头部颜色
+    headColor: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     isDeskTop() {
@@ -596,7 +590,28 @@ export default {
       };
       this.$emit('do-handle', obj);
     },
-    headClass() {
+    headClass({ row, column, rowIndex, columnIndex }) {
+      if (this.headColor) {
+        if ([1, 2, 3, 4, 5].includes(columnIndex)) {
+          return 'color: red';
+        } else if ([6, 7, 8, 9, 10].includes(columnIndex)) {
+          return 'color: blue';
+        } else if ([11, 12, 13, 14, 15,16].includes(columnIndex)) {
+          return 'color: green';
+        }
+
+        // let cbk = this.configs.map((v, idx) => {
+        //   // console.log('v',v)
+        //   if (v.headColor) {
+        //     return v.headColor;
+        //   }
+        // });
+
+        
+        // console.log('cbk',cbk)
+
+        // return cbk;
+      }
       return 'background: #f5f7fa';
     },
     // 勾选条目

@@ -641,69 +641,89 @@ const userColInOutGoldList = [
   },
 
   {
-    label: '币币当前余额【冻结+可用】',
-    type: 'textArr',
-    join: ',',
-    arr: ['tradeFrozenAmount', 'tradeAmount'],
+    label: '币币当前余额可用',
+    prop:'tradeAmount',
+    headColor:'red',
+  },
+  {
+    label: '币币当前余额冻结',
+    prop:'tradeFrozenAmount',
+    headColor:'red',
   },
   {
     label: '币币累计入金',
     prop: 'tradeIn',
+    headColor:'red',
   },
   {
     label: '币币累计出金',
     prop: 'tradeOut',
+    headColor:'red',
   },
   {
     label: '币币累计交易手续费',
     prop: 'tradeFeeAmount',
+    headColor:'red',
   },
   {
-    label: '法币当前余额【冻结+可用】',
-    type: 'textArr',
-    join: ',',
-    arr: ['otcFrozenAmount', 'otcAmount'],
+    label: '法币当前余额可用',
+    prop: 'otcAmount',
+    headColor:'blue',
+  },
+  {
+    label: '法币当前余额冻结',
+    prop: 'otcFrozenAmount',
+    headColor:'blue',
   },
 
   {
     label: '法币累计入金',
     prop: 'otcIn',
+    headColor:'blue',
   },
   {
     label: '法币累计出金',
     prop: 'otcOut',
+    headColor:'blue',
   },
   {
     label: '法币累计交易手续费',
     prop: 'otcFeeAmount',
+    headColor:'blue',
   },
   {
     label: '合约账户当前总余额',
     prop: 'contractTotalBalance',
+    headColor:'green',
   },
   {
     label: '合约累计净入金',
     prop: 'contractIn',
+    headColor:'green',
   },
   {
     label: '合约累计产生手续费金额',
     prop: 'contractFee',
+    headColor:'green',
   },
   
 
   {
     label: '合约累计交易产生盈亏',
     prop: 'contractCloseProfit',
+    headColor:'green',
   },
 
   {
     label: '合约累计获得手续费返佣',
     prop: 'contractCommission',
+    headColor:'green',
   },
 
   {
     label: '合约累计获得团队长返佣',
     prop: 'contractTeamCommission',
+    headColor:'green',
   },
 
   {
