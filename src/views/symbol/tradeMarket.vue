@@ -202,7 +202,8 @@ export default {
       this.getQueryList()
     },
     async doCalTotal(val) {
-      const res = await $api.getTotalStatistics(val)
+      this.
+      const res = await $api.getTotalStatistics(this.requiredParams(params))
       const { turnoverLower, turnoverUpper } = res.data.data
       const flag = true
       this.total = { turnoverLower, turnoverUpper, flag }
