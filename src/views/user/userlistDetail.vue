@@ -156,7 +156,7 @@
     </el-tabs>
     <el-card v-if="btnArr.includes('inOutGoldList')" style="margin-bottom: 40px">
       <H3>用户出入金统计</H3>
-      <Btable :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
+      <Btable :headColor='true' :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
     </el-card>
     <el-card style="margin-bottom: 40px">
       <H3>法币收款方式</H3>

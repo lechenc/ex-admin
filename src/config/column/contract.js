@@ -3560,32 +3560,32 @@ const accountContractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 450,
+    width: 120,
     btnGroup: [
-      {
-        label: '销账',
-        fn: 'destroy',
-        type: 'primary',
-        alias: 'destroy',
-      },
+      // {
+      //   label: '销账',
+      //   fn: 'destroy',
+      //   type: 'primary',
+      //   alias: 'destroy',
+      // },
       {
         label: '每日收益',
         fn: 'earningsRecord',
         type: 'primary',
         alias: 'earningsRecord',
       },
-      {
-        label: '划转记录',
-        fn: 'transferRecord',
-        type: 'primary',
-        alias: 'transferRecord',
-      },
-      {
-        label: '销账记录',
-        fn: 'destroyBill',
-        type: 'primary',
-        alias: 'destroyBill',
-      },
+      // {
+      //   label: '划转记录',
+      //   fn: 'transferRecord',
+      //   type: 'primary',
+      //   alias: 'transferRecord',
+      // },
+      // {
+      //   label: '销账记录',
+      //   fn: 'destroyBill',
+      //   type: 'primary',
+      //   alias: 'destroyBill',
+      // },
       // {
       //   label: '收益流水',
       //   fn: 'earningsFlow',
@@ -3661,7 +3661,7 @@ const earningsRecordConfig = [
 const earningsRecordCol = [
   {
     label: '时间',
-    prop: 'createTime',
+    prop: 'dataTime',
   },
   {
     label: '平台合约平仓盈亏',
