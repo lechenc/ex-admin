@@ -592,25 +592,8 @@ export default {
     },
     headClass({ row, column, rowIndex, columnIndex }) {
       if (this.headColor) {
-        if ([1, 2, 3, 4, 5].includes(columnIndex)) {
-          return 'color: red';
-        } else if ([6, 7, 8, 9, 10].includes(columnIndex)) {
-          return 'color: blue';
-        } else if ([11, 12, 13, 14, 15,16].includes(columnIndex)) {
-          return 'color: green';
-        }
-
-        // let cbk = this.configs.map((v, idx) => {
-        //   // console.log('v',v)
-        //   if (v.headColor) {
-        //     return v.headColor;
-        //   }
-        // });
-
-        
-        // console.log('cbk',cbk)
-
-        // return cbk;
+        let color = this.configs[columnIndex].headColor;
+        return `color :${color}`;
       }
       return 'background: #f5f7fa';
     },

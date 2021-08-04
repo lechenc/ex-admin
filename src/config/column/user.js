@@ -643,27 +643,27 @@ const userColInOutGoldList = [
   {
     label: '币币当前余额可用',
     prop:'tradeAmount',
-    headColor:'red',
+    headColor:'orange',
   },
   {
     label: '币币当前余额冻结',
     prop:'tradeFrozenAmount',
-    headColor:'red',
+    headColor:'orange',
   },
   {
     label: '币币累计入金',
     prop: 'tradeIn',
-    headColor:'red',
+    headColor:'orange',
   },
   {
     label: '币币累计出金',
     prop: 'tradeOut',
-    headColor:'red',
+    headColor:'orange',
   },
   {
     label: '币币累计交易手续费',
     prop: 'tradeFeeAmount',
-    headColor:'red',
+    headColor:'orange',
   },
   {
     label: '法币当前余额可用',

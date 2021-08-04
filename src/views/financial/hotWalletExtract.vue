@@ -152,7 +152,7 @@ export default {
   },
   computed: {
     coinList() {
-      if (!this.chainForm.chain) {
+      if (!this.chainForm.chain || !this.chainCoinObj[this.chainForm.chain] ) {
         return [];
       } else {
         let arr = this.chainCoinObj[this.chainForm.chain].map((v) => {
@@ -214,6 +214,7 @@ export default {
       if (fn === 'edit') {
         this.formName = '编辑';
         this.dialogFormVisible = true;
+        this.getChainCoin();
         this.$nextTick(() => {
           this.$refs['chainForm'].resetFields();
           const { id, coin, chain, maxAutoWithdraw, maxDailyAutoWithdraw, status } = row;
@@ -274,6 +275,7 @@ export default {
     addChain() {
       this.formName = '添加';
       this.dialogFormVisible = true;
+      this.getChainCoin();
       this.$nextTick(() => {
         this.$refs['chainForm'].resetFields();
         this.chainForm = {
@@ -371,7 +373,7 @@ export default {
     this.isCURDAuth = authObj.isAdd;
     this.setConfigs = hotWalletExtractSetCol;
     this.getList();
-    this.getChainCoin();
+    
   },
 };
 </script>
