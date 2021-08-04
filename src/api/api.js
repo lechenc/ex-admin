@@ -1696,6 +1696,26 @@ export default class api {
     return Fetch.post('/admin/account/delete/chain', data);
   }
 
+  // 币种-交易对行情接口管理-查询列表
+  static getQueryList(data) {
+    return Fetch.post('/market/turnover/query', data);
+  }
+
+  // 币种-交易对行情接口管理-统计
+  static getTotalStatistics(data) {
+    return Fetch.post('/market/turnover/statistics', data);
+  }
+
+  // 币种-交易对行情接口管理-添加
+  static setTurnoverAdd(data) {
+    return Fetch.post('/market/turnover/add', data);
+  }
+
+  // 币种-交易对行情接口管理-修改
+  static setTurnoverUpdate(data) {
+    return Fetch.post('/market/turnover/update', data);
+  }
+
   // 币种-提币白名单 - 列表
   static getCoinWhiteList(data) {
     return Fetch.post('/admin/account/query/withdraw-whitelist', data);

@@ -1229,6 +1229,77 @@ const klineListConfig = [
   },
 ];
 
+const tradeMarketCol = [
+  {
+    type: 'date_rank_s',
+    label: '更新时间',
+    prop: 'updateTimeStart',
+    prop2: 'updateTimeEnd'
+  },
+  {
+    type: 'select',
+    label: '交易类型',
+    prop: 'coinType',
+    value: '',
+    list: []
+  },
+  {
+    type: 'select',
+    prop: 'coinMarket',
+    label: '交易对',
+    value: '',
+    list: []
+  }
+]
+
+const tradeMarketColTable = [
+  {
+    label: '序号',
+    prop: 'id'
+  },
+  {
+    label: '交易对类型',
+    prop: 'coinType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{val: 0, text: '合约'}, {val: 1, text: '币币'}]
+  },
+  {
+    label: '交易对',
+    prop: 'coinMarket',
+  },
+  {
+    label: '24h成交额下限',
+    prop: 'turnoverLower'
+  },
+  {
+    label: '24h成交额上线限',
+    prop: 'turnoverUpper'
+  },
+  {
+    label: '占比(%)',
+    prop: 'proportion'
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime'
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+    ],
+  },
+]
+
+const tradeMarketColNoBtn = tradeMarketCol
 export {
   klineListCol,
   klineListColNoBtn,
@@ -1257,4 +1328,7 @@ export {
   currencyRobotCol,
   currencyRobotColNoBtn,
   currencyRobotConfig,
+  tradeMarketCol,
+  tradeMarketColNoBtn,
+  tradeMarketColTable
 };
