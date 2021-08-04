@@ -14,7 +14,7 @@
       </el-col>
     </el-row>
     <div class="container-top">
-      <Bsearch :calLoading="calLoading" :calTotal="true" calText="统计" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch  :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
     <div>
