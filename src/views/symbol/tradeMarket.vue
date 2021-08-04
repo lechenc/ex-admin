@@ -5,7 +5,7 @@
       <el-button type="primary" @click="add">添加交易对</el-button>
     </el-row>
     <b-table :configs="tableConfig" :data="tableData" :listLoading="loading" @do-handle="doHandle"/>
-    <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="pageSize.currentPage" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize.pageSize" :total="totals"> </el-pagination>
+    <el-pagination style="margin-top: 20px; text-align: right;" background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="pageSize.currentPage" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize.pageSize" :total="totals"> </el-pagination>
 
     <el-dialog :visible.sync="flag" title="添加交易对">
       <el-form :model="addForm" label-width="120px" :rules="rules" ref="addForm">
@@ -262,8 +262,13 @@ export default {
       this.getQueryList()
     },
     reset() {
-      // for (let i in )
       this.param = {}
+      this.formConfig.forEach(item => {
+        item.value = ''
+        if (item.label === '交易对') {
+          item.list = []
+        }
+      })
       this.pageSize.currentPage = 1
       this.pageSize.pageSize = 10
     }
@@ -286,7 +291,9 @@ export default {
         return this.formConfig[1].value
       },
       function(newVal, oldValue) {
-        if (newVal === 1) {
+        if (!newVal && newVal !== 0) {
+          this.formConfig[2].list = []
+        } else if (newVal === 1) {
           this.formConfig[2].list = this.coin[0]
         } else {
           this.formConfig[2].list = this.coin[1]
