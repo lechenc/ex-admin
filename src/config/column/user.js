@@ -565,6 +565,13 @@ const userConfig = [
     value: '',
     list: [{ label: '正常', value: 1 }, { label: '失效', value: 0 }],
   },
+  {
+    type: 'onlyNumber',
+    label: '邀请人UID',
+    prop: 'upperUid',
+    value: '',
+    placeHolder: '请输入',
+  },
 ];
 
 const userColOtcList = [
@@ -632,6 +639,13 @@ const userColInOutGoldList = [
     label: '币种',
     prop: 'coinName',
   },
+
+  {
+    label: '币币当前余额【冻结+可用】',
+    type: 'textArr',
+    join: ',',
+    arr: ['tradeFrozenAmount', 'tradeAmount'],
+  },
   {
     label: '币币累计入金',
     prop: 'tradeIn',
@@ -641,13 +655,31 @@ const userColInOutGoldList = [
     prop: 'tradeOut',
   },
   {
+    label: '币币累计交易手续费',
+    prop: 'tradeFeeAmount',
+  },
+  {
+    label: '法币当前余额【冻结+可用】',
+    type: 'textArr',
+    join: ',',
+    arr: ['otcFrozenAmount', 'otcAmount'],
+  },
+
+  {
     label: '法币累计入金',
     prop: 'otcIn',
   },
-  
   {
     label: '法币累计出金',
     prop: 'otcOut',
+  },
+  {
+    label: '法币累计交易手续费',
+    prop: 'otcFeeAmount',
+  },
+  {
+    label: '合约账户当前总余额',
+    prop: 'contractTotalBalance',
   },
   {
     label: '合约累计净入金',
@@ -657,18 +689,28 @@ const userColInOutGoldList = [
     label: '合约累计产生手续费金额',
     prop: 'contractFee',
   },
+  
+
   {
-    label: '合约累计平仓盈亏',
+    label: '合约累计交易产生盈亏',
     prop: 'contractCloseProfit',
   },
+
   {
     label: '合约累计获得手续费返佣',
     prop: 'contractCommission',
   },
+
   {
-    label: '净出入金合计',
+    label: '合约累计获得团队长返佣',
+    prop: 'contractTeamCommission',
+  },
+
+  {
+    label: '币币与法币净出入金合计',
     prop: 'total',
   },
+  
 ];
 
 const validatedUserlistCol = [

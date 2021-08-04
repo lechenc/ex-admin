@@ -1385,6 +1385,7 @@ const coinFundsCol = [
       { text: '过期红包退还', val: '108' },
       { text: '补充保证金', val: '109' },
       { text: '释放保证金', val: '110' },
+      { text: '内部充币', val: '111' },
     ],
   },
   {
@@ -1542,6 +1543,7 @@ const coinFundsConfig = [
       { label: '过期红包退还', value: '108' },
       { label: '补充保证金', value: '109' },
       { label: '释放保证金', value: '110' },
+      { label: '内部充币', value: '111' },
     ],
   },
 ];
@@ -2146,7 +2148,7 @@ const hotWalletExtractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 360,
+    width: 180,
     btnGroup: [
       {
         label: '编辑',
@@ -2154,23 +2156,12 @@ const hotWalletExtractCol = [
         type: 'primary',
         alias: 'edit',
       },
-      {
-        label: '删除',
-        fn: 'delete',
-        type: 'danger',
-        alias: 'delete',
-      },
+      
       {
         label: '查看余额',
         fn: 'checkBalance',
         type: 'primary',
         alias: 'checkBalance',
-      },
-      {
-        label: '详情',
-        fn: 'details',
-        type: 'primary',
-        alias: 'details',
       },
     ],
   },
@@ -2197,7 +2188,38 @@ const hotWalletExtractColNoBtn = [
   },
 ];
 
+const hotWalletExtractSetCol = [
+  {
+    label: '链类型名称',
+    prop: 'chain',
+  },
+  {
+    label: '币种名称',
+    prop: 'coin',
+  },
+  {
+    label: '单日限额',
+    prop: 'maxAutoWithdraw',
+  },
+  {
+    label: '单日限额',
+    prop: 'maxDailyAutoWithdraw',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+  {
+    label: '更新时间',
+    prop: 'updateTime',
+    type: 'time',
+  },
+  
+];
+
 export {
+  hotWalletExtractSetCol,
   hotWalletExtractCol,
   hotWalletExtractColNoBtn,
   rechargeCol,

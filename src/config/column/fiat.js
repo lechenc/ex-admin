@@ -3769,7 +3769,7 @@ const acceptanceConfig = [
     label: '代理商状态',
     prop: 'isTrade',
     value: '',
-    list: [{ label: '已锁定', value: 0 }, { label: '正常', value: 1 }],
+    list: [{ label: '已锁定', value: 1 }, { label: '正常', value: 0 }],
   },
 ];
 

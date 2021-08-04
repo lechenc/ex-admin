@@ -3144,10 +3144,7 @@ static batchAddAnalyst(data) {
     return Fetch.post('/market/getKLineInfo', data);
   }
 
-  // 财务管理/热钱包提币管理 列表
-  static apiGetHotWalletExtractList(data) {
-    return Fetch.post('/account/withdrawconfig/find', data);
-  }
+  
 
   
 
@@ -3224,6 +3221,40 @@ static batchAddAnalyst(data) {
   static getAcceptanceChannelList(data) {
     return Fetch.post('/admin/user/pay/query/channel-list', data)
   }
+
+  // // 财务管理/热钱包提币管理 删除
+  // static apiDelHotWalletExtract(data) {
+  //   return Fetch.post('/account/withdrawconfig/del', data)
+  // }
+
+  // 财务管理/热钱包提币管理 列表
+  static apiGetHotWalletExtractList(data) {
+    return Fetch.post('/account/withdrawconfig/find', data);
+  }
+
+  // 财务管理/热钱包提币管理 添加
+  static apiAddHotWalletExtract(data) {
+    return Fetch.post('/account/withdrawconfig/add', data);
+  }
+
+  // 财务管理/热钱包提币管理 编辑
+  static apiEditHotWalletExtract(data) {
+    return Fetch.post('/account/withdrawconfig/edit', data);
+  }
+
+  // 财务管理/热钱包提币管理 查看余额
+  static apiHotWalletExtractCheckChain(data) {
+    return Fetch.post('/wallet/user/gethot', data);
+  }
+
+  // 财务管理/热钱包提币管理 查看余额
+  static apiHotWalletExtractCheckDetail(data) {
+    return Fetch.post('/wallet/user/gethotdetail', data);
+  }
+
+  
+
+  
 
   
 
