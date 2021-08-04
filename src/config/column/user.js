@@ -660,11 +660,11 @@ const userColInOutGoldList = [
     prop: 'tradeOut',
     headColor:'orange',
   },
-  {
-    label: '币币累计交易手续费',
-    prop: 'tradeFeeAmount',
-    headColor:'orange',
-  },
+  // {
+  //   label: '币币累计交易手续费',
+  //   prop: 'tradeFeeAmount',
+  //   headColor:'orange',
+  // },
   {
     label: '法币当前余额可用',
     prop: 'otcAmount',
