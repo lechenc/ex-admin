@@ -1681,14 +1681,14 @@ export const asyncRouterMap = [
             path: 'earningsRecord',
             name: 'EarningsRecord',
             component: () => import('@/views/contract/accountManagement/earningsRecord'),
-            meta: { title: '收益记录', icon: '', role: [] },
+            meta: { title: '每日收益', icon: '', role: [] },
           },
-          {
-            path: 'earningsFlow',
-            name: 'EarningsFlow',
-            component: () => import('@/views/contract/accountManagement/earningsFlow'),
-            meta: { title: '收益流水', icon: '', role: [] },
-          },
+          // {
+          //   path: 'earningsFlow',
+          //   name: 'EarningsFlow',
+          //   component: () => import('@/views/contract/accountManagement/earningsFlow'),
+          //   meta: { title: '收益流水', icon: '', role: [] },
+          // },
         ],
       },
 
