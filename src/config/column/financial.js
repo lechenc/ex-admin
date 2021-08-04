@@ -2127,7 +2127,7 @@ const hotWalletExtractCol = [
     prop: 'coin',
   },
   {
-    label: '单日限额',
+    label: '单笔限额',
     prop: 'maxAutoWithdraw',
   },
   {
@@ -2169,12 +2169,20 @@ const hotWalletExtractCol = [
 
 const hotWalletExtractColNoBtn = [
   {
-    label: '链名称',
-    prop: 'chainName',
+    label: '链类型名称',
+    prop: 'chain',
   },
   {
-    label: '相关币种',
-    prop: 'coinName',
+    label: '币种名称',
+    prop: 'coin',
+  },
+  {
+    label: '单笔限额',
+    prop: 'maxAutoWithdraw',
+  },
+  {
+    label: '单日限额',
+    prop: 'maxDailyAutoWithdraw',
   },
   {
     label: '创建时间',
@@ -2198,7 +2206,7 @@ const hotWalletExtractSetCol = [
     prop: 'coin',
   },
   {
-    label: '单日限额',
+    label: '单笔限额',
     prop: 'maxAutoWithdraw',
   },
   {

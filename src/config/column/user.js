@@ -568,7 +568,7 @@ const userConfig = [
   {
     type: 'onlyNumber',
     label: '邀请人UID',
-    prop: 'upperUid',
+    prop: 'inviterUid',
     value: '',
     placeHolder: '请输入',
   },
