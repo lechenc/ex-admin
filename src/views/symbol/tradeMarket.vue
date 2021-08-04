@@ -212,13 +212,23 @@ export default {
     },
     async getQueryList() {
       const params = {...this.params, ...this.pageSize}
-      const res = await $api.getQueryList(params)
+      const res = await $api.getQueryList(this.requiredParams(params))
       if (res) {
         const { records, total, currentPage, size } = res.data.data
         this.pageSize = { currentPage, pageSize: size }
         this.total = total
         this.tableData = records
       }
+    },
+    requiredParams(params) {
+      if (params.updateTimeStart) {
+        params.updateTimeEnd = this.formatTime(params.updateTimeEnd);
+        params.updateTimeStart = this.formatTime(params.updateTimeStart );
+      }
+      return params
+    },
+    formatTime(val) {
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
     },
     enterEdit() {
       this.$refs.edit.validate(async (valid) => {
@@ -277,11 +287,21 @@ export default {
     const authObj = this.$util.getAuthority('TradeMarket',tradeMarketCol ,tradeMarketColNoBtn)
     this.formConfig = authObj.val
     this.$store.dispatch('common/getSymbolList').then(() => {
-      const coin1 = this.$store.state.common.symbollist.map(item => ({...item, value: item.label}))
+      const coin1 = this.$store.state.common.symbollist.map(item => {
+        if (item.status) {
+          return {...item, value: item.label}
+        }
+      }).filter(item => item)
+      console.log(coin1, 'coin1')
       this.coin[1] = coin1
     });
     this.$store.dispatch('common/getSymbolListContract').then(() => {
-      const coin2 = this.$store.state.common.symbollistContract.map(item => ({...item, value: item.label}))
+      const coin2 = this.$store.state.common.symbollistContract.map(item => {
+        if (item.status) {
+          return {...item, value: item.label}
+        }
+      }).filter(item => item)
+      console.log('coin2: ', coin2);
       this.coin[0] = coin2
     })
     this.formConfig[1]['list'] = this.coinTypeArr;

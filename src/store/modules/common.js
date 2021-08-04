@@ -98,6 +98,7 @@ const actions = {
             return {
               label: v['coinMarket'],
               value: v['coinMarketId'],
+              status: v['status']
             };
           });
           commit('SET_SYMBOLLIST', list);
@@ -142,7 +143,7 @@ const actions = {
         .getContractcoinSymbolList({})
         .then(res => {
           const list = res.data.data.map(v => {
-            return { label: v['coinMarket'], value: v['coinId'], marketCoinName: v['marketCoinName'], marketId: v['marketId'] };
+            return { label: v['coinMarket'], value: v['coinId'], marketCoinName: v['marketCoinName'], marketId: v['marketId'], status: v.status };
           });
           commit('SET_SYMBOLLISTCONTRACT', list);
           resolve();
