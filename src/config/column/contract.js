@@ -3661,7 +3661,7 @@ const earningsRecordConfig = [
 const earningsRecordCol = [
   {
     label: '时间',
-    prop: 'createTime',
+    prop: 'dataTime',
   },
   {
     label: '平台合约平仓盈亏',
