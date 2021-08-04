@@ -3252,6 +3252,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/wallet/user/gethotdetail', data);
   }
 
+  // 财务管理/热钱包提币管理 获取链和币
+  static apiGetChainCoinList(data) {
+    return Fetch.post('/account/withdrawconfig/getchaincoin', data);
+  }
+
   
 
   

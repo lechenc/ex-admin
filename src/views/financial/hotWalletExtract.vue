@@ -14,8 +14,8 @@
     <el-dialog :title="formName" width="500px" :visible.sync="dialogFormVisible">
       <el-form :model="chainForm" ref="chainForm" :rules="rules">
         <el-form-item label="链名称" :label-width="formLabelWidth" prop="chain">
-          <el-select v-model="chainForm.chain" placeholder="请选择">
-            <el-option v-for="(item, idx) in coinList" :key="idx" :label="item.label" :value="item.label"></el-option>
+          <el-select @change="chainChange" v-model="chainForm.chain" placeholder="请选择">
+            <el-option v-for="(item, idx) in chainList" :key="idx" :label="item.label" :value="item.label"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="币种" :label-width="formLabelWidth" prop="coin">
@@ -44,18 +44,16 @@
 
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogSetVisible" width="650px" title="查看余额">
-      <el-row style="margin-bottom: 22px;">
+      <el-row style="margin-bottom: 22px">
         <el-col :span="6">
-          链类型名称: <span style="color: #4390ff;">{{protocol}}</span>
+          链类型名称: <span style="color: #4390ff">{{ protocol }}</span>
         </el-col>
         <el-col :span="6">
-          币种名称: <span style="color: #4390ff;">{{coinKey}}</span>
+          币种名称: <span style="color: #4390ff">{{ coinKey }}</span>
         </el-col>
       </el-row>
       <Btable :listLoading="setListLoading" :data="setlist" :configs="setConfigs" />
     </el-dialog>
-
-
   </div>
 </template>
 
@@ -63,7 +61,7 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { hotWalletExtractCol, hotWalletExtractColNoBtn,hotWalletExtractSetCol } from '@/config/column/financial';
+import { hotWalletExtractCol, hotWalletExtractColNoBtn, hotWalletExtractSetCol } from '@/config/column/financial';
 import { parseTime } from '@/utils/index';
 import $api from '@/api/api';
 
@@ -137,20 +135,35 @@ export default {
           },
         ],
       },
-      
+
       formName: '',
       formLabelWidth: '125px',
       labelWidth: '125px',
-      
-      coinList: [],
       decimalReg: /^(\-)*(\d+)\.(\d\d\d\d\d\d).*$/,
-      dialogSetVisible:false,
-      setListLoading:false,
-      setConfigs:[],
-      setlist:[],
+      dialogSetVisible: false,
+      setListLoading: false,
+      setConfigs: [],
+      setlist: [],
       coinKey: '',
-      protocol: ''
+      protocol: '',
+      chainList: [],
+      chainCoinObj: {},
     };
+  },
+  computed: {
+    coinList() {
+      if (!this.chainForm.chain) {
+        return [];
+      } else {
+        let arr = this.chainCoinObj[this.chainForm.chain].map((v) => {
+          return {
+            label: v.coinName,
+            value: v.coinId,
+          };
+        });
+        return arr;
+      }
+    },
   },
 
   filters: {
@@ -160,9 +173,10 @@ export default {
     },
   },
   methods: {
-    confirmSet(){
-
+    chainChange(val) {
+      this.chainForm.coin = '';
     },
+
     checkVal3(obj, val) {
       this[obj][val] = (this[obj][val] + '').replace(/[^\d]/g, '');
     },
@@ -209,33 +223,33 @@ export default {
             chain,
             maxAutoWithdraw,
             maxDailyAutoWithdraw,
-            status:status?true:false,
+            status: status ? true : false,
             googleCode: '',
           };
         });
       }
       if (fn == 'checkBalance') {
-        const { chain: protocol, coin: coinKey } = row
-        this.dialogSetVisible = true
+        const { chain: protocol, coin: coinKey } = row;
+        this.dialogSetVisible = true;
         const firstRequest = $api.apiHotWalletExtractCheckChain({
           protocol: row.chain,
         });
-        this.setlist = []
-        this.protocol = protocol
-        this.coinKey = coinKey
-        const request = $api.apiHotWalletExtractCheckDetail
-        firstRequest.then(res => {
-          const { data } = res.data
+        this.setlist = [];
+        this.protocol = protocol;
+        this.coinKey = coinKey;
+        const request = $api.apiHotWalletExtractCheckDetail;
+        firstRequest.then((res) => {
+          const { data } = res.data;
           if (data instanceof Array) {
             data.forEach((address, idx) => {
-              this.setlist.push({address})
-              request({protocol,coinKey, address}).then(responent => {
-                const item = responent.data.data
-                this.$set(this.setlist, idx, {...this.setlist[idx], ...item} )
-              })
-            })
+              this.setlist.push({ address });
+              request({ protocol, coinKey, address }).then((responent) => {
+                const item = responent.data.data;
+                this.$set(this.setlist, idx, { ...this.setlist[idx], ...item });
+              });
+            });
           }
-        })
+        });
       }
       // if (fn === 'delete') {
       //   this.$confirm('确定删除？', '温馨提示', {
@@ -336,13 +350,28 @@ export default {
         this.listLoading = false;
       }
     },
+
+    async getChainCoin() {
+      const res = await $api.apiGetChainCoinList({});
+      if (res) {
+        this.chainCoinObj = res.data.data;
+        this.chainCoinObj = res.data.data;
+        for (const key in this.chainCoinObj) {
+          this.chainList.push({
+            label: key,
+            value: key,
+          });
+        }
+      }
+    },
   },
   async mounted() {
     let authObj = this.$util.getAuthority('HotWalletExtract', hotWalletExtractCol, hotWalletExtractColNoBtn);
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
-    this.setConfigs = hotWalletExtractSetCol
+    this.setConfigs = hotWalletExtractSetCol;
     this.getList();
+    this.getChainCoin();
   },
 };
 </script>
