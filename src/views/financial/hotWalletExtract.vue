@@ -44,6 +44,14 @@
 
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogSetVisible" width="650px" title="查看余额">
+      <el-row style="margin-bottom: 22px;">
+        <el-col :span="6">
+          链类型名称: <span style="color: #4390ff;">{{protocol}}</span>
+        </el-col>
+        <el-col :span="6">
+          币种名称: <span style="color: #4390ff;">{{coinKey}}</span>
+        </el-col>
+      </el-row>
       <Btable :listLoading="setListLoading" :data="setlist" :configs="setConfigs" />
     </el-dialog>
 
@@ -139,7 +147,9 @@ export default {
       dialogSetVisible:false,
       setListLoading:false,
       setConfigs:[],
-      setlist:[]
+      setlist:[],
+      coinKey: '',
+      protocol: ''
     };
   },
 
@@ -205,20 +215,27 @@ export default {
         });
       }
       if (fn == 'checkBalance') {
+        const { chain: protocol, coin: coinKey } = row
         this.dialogSetVisible = true
-        const res = $api.apiHotWalletExtractCheckChain({
+        const firstRequest = $api.apiHotWalletExtractCheckChain({
           protocol: row.chain,
         });
-        if (res) {
-        }
-
-        const res2 = $api.apiHotWalletExtractCheckDetail({
-          protocol: row.chain,
-          coinKey: row.coin,
-          address: '0xe74ef34a9a840a1a92ad8ba97247a0fa47ed0633',
-        });
-        if (res2) {
-        }
+        this.setlist = []
+        this.protocol = protocol
+        this.coinKey = coinKey
+        const request = $api.apiHotWalletExtractCheckDetail
+        firstRequest.then(res => {
+          const { data } = res.data
+          if (data instanceof Array) {
+            data.forEach((address, idx) => {
+              this.setlist.push({address})
+              request({protocol,coinKey, address}).then(responent => {
+                const item = responent.data.data
+                this.$set(this.setlist, idx, {...this.setlist[idx], ...item} )
+              })
+            })
+          }
+        })
       }
       // if (fn === 'delete') {
       //   this.$confirm('确定删除？', '温馨提示', {

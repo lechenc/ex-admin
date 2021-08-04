@@ -2198,32 +2198,17 @@ const hotWalletExtractColNoBtn = [
 
 const hotWalletExtractSetCol = [
   {
-    label: '链类型名称',
-    prop: 'chain',
+    label: '热钱包地址',
+    prop: 'address',
   },
   {
-    label: '币种名称',
-    prop: 'coin',
+    label: '当前余额',
+    prop: 'amount',
   },
   {
-    label: '单笔限额',
-    prop: 'maxAutoWithdraw',
-  },
-  {
-    label: '单日限额',
-    prop: 'maxDailyAutoWithdraw',
-  },
-  {
-    label: '创建时间',
-    prop: 'createTime',
-    type: 'time',
-  },
-  {
-    label: '更新时间',
-    prop: 'updateTime',
-    type: 'time',
-  },
-  
+    label: '累计热提币',
+    prop: 'totalWithdraw',
+  }
 ];
 
 export {
