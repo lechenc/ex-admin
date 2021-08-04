@@ -405,7 +405,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/symbol/editKline'),
         meta: { title: '修改制定K线', icon: '', role: []},
       },
-      
+      {
+        path: 'tradeMarket',
+        name: 'TradeMarket',
+        component: () => import('@/views/symbol/tradeMarket'),
+        meta: { title: '交易对行情接口管理', icon: '', role: []},
+      }
     ],
   },
   // 财务管理

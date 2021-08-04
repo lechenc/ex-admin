@@ -237,6 +237,8 @@ const mapComponents = {
   ChainType: () => import('@/views/symbol/chainType'),
   CoinWhiteList: () => import('@/views/symbol/coinWhiteList'),
   CertificationConfig: () => import('@/views/check/certificationConfig'),
+  TradeMarket: () => import('@/views/symbol/tradeMarket'),
+
 
   MerchantCheck: () => import('@/views/check/merchantCheck'),
   Orderlist: () => import('@/views/exchange/orderlist'),
