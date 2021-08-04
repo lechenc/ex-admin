@@ -357,7 +357,6 @@ export default {
       const res = await $api.apiGetChainCoinList({});
       if (res) {
         this.chainCoinObj = res.data.data;
-        this.chainCoinObj = res.data.data;
         for (const key in this.chainCoinObj) {
           this.chainList.push({
             label: key,
