@@ -2135,6 +2135,13 @@ const hotWalletExtractCol = [
     prop: 'maxDailyAutoWithdraw',
   },
   {
+    type: 'switch',
+    prop: 'isStatus',
+    label:'热钱包启用开关',
+    alias: 'trswitch',
+    disabled: true,
+  },
+  {
     label: '创建时间',
     prop: 'createTime',
     type: 'time',

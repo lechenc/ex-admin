@@ -346,7 +346,10 @@ export default {
       const res = await $api.apiGetHotWalletExtractList(query_data);
       //console.log('res', res);
       if (res) {
-        this.list = res.data.data;
+        this.list = res.data.data.map((item) => {
+          console.log(item)
+          return {...item, isStatus: Boolean(item.status)}
+        });
         this.listLoading = false;
       } else {
         this.listLoading = false;
@@ -368,6 +371,9 @@ export default {
   },
   async mounted() {
     let authObj = this.$util.getAuthority('HotWalletExtract', hotWalletExtractCol, hotWalletExtractColNoBtn);
+      console.log(authObj, ':::authObj')
+      console.log(hotWalletExtractCol, ':::hotWalletExtractCol')
+      console.log(hotWalletExtractColNoBtn, ':::hotWalletExtractColNoBtn')
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
     this.setConfigs = hotWalletExtractSetCol;

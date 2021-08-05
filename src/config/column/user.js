@@ -640,16 +640,16 @@ const userColInOutGoldList = [
     prop: 'coinName',
   },
 
-  // {
-  //   label: '币币当前余额可用',
-  //   prop:'tradeAmount',
-  //   headColor:'orange',
-  // },
-  // {
-  //   label: '币币当前余额冻结',
-  //   prop:'tradeFrozenAmount',
-  //   headColor:'orange',
-  // },
+  {
+    label: '币币当前余额可用',
+    prop:'tradeAmount',
+    // headColor:'orange',
+  },
+  {
+    label: '币币当前余额冻结',
+    prop:'tradeFrozenAmount',
+    // headColor:'orange',
+  },
   {
     label: '币币累计入金',
     prop: 'tradeIn',
@@ -660,21 +660,21 @@ const userColInOutGoldList = [
     prop: 'tradeOut',
     // headColor:'orange',
   },
-  // {
-  //   label: '币币累计交易手续费',
-  //   prop: 'tradeFeeAmount',
-  //   headColor:'orange',
-  // },
-  // {
-  //   label: '法币当前余额可用',
-  //   prop: 'otcAmount',
-  //   headColor:'blue',
-  // },
-  // {
-  //   label: '法币当前余额冻结',
-  //   prop: 'otcFrozenAmount',
-  //   headColor:'blue',
-  // },
+  {
+    label: '币币累计交易手续费',
+    prop: 'tradeFeeAmount',
+    // headColor:'orange',
+  },
+  {
+    label: '法币当前余额可用',
+    prop: 'otcAmount',
+    // headColor:'blue',
+  },
+  {
+    label: '法币当前余额冻结',
+    prop: 'otcFrozenAmount',
+    // headColor:'blue',
+  },
 
   {
     label: '法币累计入金',
@@ -686,16 +686,16 @@ const userColInOutGoldList = [
     prop: 'otcOut',
     // headColor:'blue',
   },
-  // {
-  //   label: '法币累计交易手续费',
-  //   prop: 'otcFeeAmount',
-  //   headColor:'blue',
-  // },
-  // {
-  //   label: '合约账户当前总余额',
-  //   prop: 'contractTotalBalance',
-  //   headColor:'green',
-  // },
+  {
+    label: '法币累计交易手续费',
+    prop: 'otcFeeAmount',
+    // headColor:'blue',
+  },
+  {
+    label: '合约账户当前总余额',
+    prop: 'contractTotalBalance',
+    // headColor:'green',
+  },
   {
     label: '合约累计净入金',
     prop: 'contractIn',
@@ -720,11 +720,11 @@ const userColInOutGoldList = [
     // headColor:'green',
   },
 
-  // {
-  //   label: '合约累计获得团队长返佣',
-  //   prop: 'contractTeamCommission',
-  //   headColor:'green',
-  // },
+  {
+    label: '合约累计获得团队长返佣',
+    prop: 'contractTeamCommission',
+    // headColor:'green',
+  },
 
   {
     label: '币币与法币净出入金合计',
