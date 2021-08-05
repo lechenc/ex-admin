@@ -2042,14 +2042,26 @@ export default class api {
   }
 
   // 合约 - 账号资产页面 -列表
+  // new
+  // static getAccountContractList(data) {
+  //   return Fetch.post('/admin/account/contract/profit/detailNew', data);
+  // }
+  // old
   static getAccountContractList(data) {
-    return Fetch.post('/admin/account/contract/profit/detailNew', data);
+    return Fetch.post('/admin/account/contract/profit/detail', data);
   }
 
+
   // 合约 - 账号收益记录 -列表
+  // new
+  // static getEarningsRecordList(data) {
+  //   return Fetch.post('/admin/account/contract/profit/dayDetailNew', data);
+  // }
+  // old
   static getEarningsRecordList(data) {
-    return Fetch.post('/admin/account/contract/profit/dayDetailNew', data);
+    return Fetch.post('/admin/account/query/contract-profit-record', data);
   }
+
 
   // 合约 - 账号合约账号 -销账
   static apiDestroyBill(data) {
