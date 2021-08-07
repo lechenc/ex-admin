@@ -267,13 +267,17 @@ export default {
       const { fn, row } = data;
       this.handleStatus = fn;
       this.handleData = row;
+      console.log(123123123)
       if (fn === 'preReview' || fn === 'nextReview') {
+        console.log(fn)
         this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审';
         this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过';
         if (fn === 'preReview') {
           const { chainName, coinName, amount } = row
           const request = await $api.checkAmountWithHot({chainName, coinName, amount })
+          console.log(request)
           this.dialogUser = Boolean(request)
+          console.log(this.dialogUser)
           this.openReviewDialog()
           this.buttonDisabled = false
         } else {
@@ -376,7 +380,7 @@ export default {
           }
         });
       }
-      if (this.dialogUser) {
+      if (!this.dialogUser) {
         this.$confirm('当前热钱包余额不足是否启用旧方式进行审核', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
