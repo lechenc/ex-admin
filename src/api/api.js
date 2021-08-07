@@ -3113,6 +3113,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/query/statistics', data);
   }
 
+  // 用户管理 检测初审通过
+  static checkAmountWithHot(data) {
+    return Fetch.post('/admin/account/checkAmountWithHot', data)
+  }
+
   // 商户接单配置(列表)
   static apiGetMerchantsList(data) {
     return Fetch.post('/admin/user/otc/query/order-list', data)

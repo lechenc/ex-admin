@@ -115,7 +115,7 @@
       </el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click.stop="confirmReview" :loading="btnLoading">{{ confirmText }}</el-button>
+        <el-button type="primary" @click.stop="confirmReview" :loading="btnLoading" :disabled="buttonDisabled">{{ confirmText }}</el-button>
       </div>
     </el-dialog>
 
@@ -206,6 +206,8 @@ export default {
       },
       analysisQrCode: '', // 验证码信息
       qrcodeShow: false, // 是否显示验证码
+      buttonDisabled: true,
+      dialogUser: false // 是否触发小弹窗
     };
   },
   filters: {
@@ -268,7 +270,16 @@ export default {
       if (fn === 'preReview' || fn === 'nextReview') {
         this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审';
         this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过';
-        this.openReviewDialog();
+        if (fn === 'preReview') {
+          const { chainName, coinName, amount } = row
+          const request = await $api.checkAmountWithHot({chainName, coinName, amount })
+          this.dialogUser = Boolean(request)
+          this.openReviewDialog()
+          this.buttonDisabled = false
+        } else {
+          this.buttonDisabled = false
+          this.openReviewDialog();
+        }
       } else if (fn === 'preReject' || fn === 'nextReject') {
         this.openRejectDialog();
       } else if (fn === 'detail') {
@@ -307,6 +318,7 @@ export default {
     },
     // 驳回弹窗 点击  驳回
     async confirmReject() {
+      if (this.buttonDisabled) return;
       this.$refs['rejectForm'].validate(async (valid) => {
         if (valid) {
           let params = {
@@ -338,30 +350,45 @@ export default {
         return;
       }
       // 当时当处于 审核状态
-      this.$refs['reviewForm'].validate(async (valid) => {
-        if (valid) {
-          let params = {
-            firstOrReview: this.handleStatus === 'preReview' ? 1 : 2,
-            auditStatus: 1,
-            auditOpinion: '审核通过',
-            id: this.handleData.id,
-          };
-          if (this.handleStatus === 'nextReview') {
-            params.txId = this.reviewForm.txId;
+      const fn = () => {
+        this.$refs['reviewForm'].validate(async (valid) => {
+          if (valid) {
+            let params = {
+              firstOrReview: this.handleStatus === 'preReview' ? 1 : 2,
+              auditStatus: 1,
+              auditOpinion: '审核通过',
+              id: this.handleData.id,
+            };
+            if (this.handleStatus === 'nextReview') {
+              params.txId = this.reviewForm.txId;
+            }
+            this.btnLoading = true;
+            const res = await $api.auditWithdraw(params);
+            if (res) {
+              this.$message({
+                message: this.handleStatus === 'preReview' ? '初审成功' : '复审成功',
+                type: 'success',
+              });
+              this.dialogVisible = false;
+              this.getList();
+            }
+            this.btnLoading = false;
           }
-          this.btnLoading = true;
-          const res = await $api.auditWithdraw(params);
-          if (res) {
-            this.$message({
-              message: this.handleStatus === 'preReview' ? '初审成功' : '复审成功',
-              type: 'success',
-            });
-            this.dialogVisible = false;
-            this.getList();
-          }
-          this.btnLoading = false;
-        }
-      });
+        });
+      }
+      if (this.dialogUser) {
+        this.$confirm('当前热钱包余额不足是否启用旧方式进行审核', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          fn()
+        }).catch(() => {
+          this.dialogVisible = false
+        });
+      } else {
+        fn()
+      }
     },
     // 列表中弹窗生成二维码
     verify(data) {
