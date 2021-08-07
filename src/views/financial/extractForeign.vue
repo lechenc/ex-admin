@@ -381,7 +381,7 @@ export default {
         });
       }
       if (!this.dialogUser) {
-        this.$confirm('当前热钱包余额不足是否启用旧方式进行审核', '提示', {
+        this.$confirm('当前热钱包余额不足,是否继续审核通过,通过后该笔提币将进入热钱包处理队列,当余额补足后,热钱包将自动打币【注：请及时联系财务协助处理】', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
