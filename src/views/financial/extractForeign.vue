@@ -207,7 +207,8 @@ export default {
       analysisQrCode: '', // 验证码信息
       qrcodeShow: false, // 是否显示验证码
       buttonDisabled: true,
-      dialogUser: false // 是否触发小弹窗
+      dialogUser: false, // 是否触发小弹窗
+      nowName: ''
     };
   },
   filters: {
@@ -267,17 +268,15 @@ export default {
       const { fn, row } = data;
       this.handleStatus = fn;
       this.handleData = row;
-      console.log(123123123)
       if (fn === 'preReview' || fn === 'nextReview') {
         console.log(fn)
         this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审';
         this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过';
+        this.nowName = fn
         if (fn === 'preReview') {
           const { chainName, coinName, amount } = row
           const request = await $api.checkAmountWithHot({chainName, coinName, amount })
-          console.log(request)
           this.dialogUser = Boolean(request)
-          console.log(this.dialogUser)
           this.openReviewDialog()
           this.buttonDisabled = false
         } else {
@@ -380,7 +379,7 @@ export default {
           }
         });
       }
-      if (!this.dialogUser) {
+      if (!this.dialogUser && this.nowName === 'preReview') {
         this.$confirm('当前热钱包余额不足,是否继续审核通过,通过后该笔提币将进入热钱包处理队列,当余额补足后,热钱包将自动打币【注：请及时联系财务协助处理】', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
