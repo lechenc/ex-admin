@@ -2043,13 +2043,10 @@ export default class api {
 
   // 合约 - 账号资产页面 -列表
   // new
-  // static getAccountContractList(data) {
-  //   return Fetch.post('/admin/account/contract/profit/detailNew', data);
-  // }
-  // old
   static getAccountContractList(data) {
-    return Fetch.post('/admin/account/contract/profit/detail', data);
+    return Fetch.post('/admin/account/contract/profit/detailNew', data);
   }
+  
 
 
   // 合约 - 账号收益记录 -列表

@@ -3535,67 +3535,6 @@ const contractTacticsCol = [
   },
 ];
 
-// const accountContractCol = [
-//   {
-//     label: 'UID',
-//     prop: 'uid',
-//   },
-//   {
-//     label: '币种',
-//     prop: 'coinName',
-//   },
-//   {
-//     label: '当前可用',
-//     prop: 'balance',
-//   },
-//   {
-//     label: '平台累计盈亏',
-//     prop: 'sumProfitLoss',
-//   },
-//   {
-//     label: '平台累计手续费返佣',
-//     prop: 'totalCommission',
-//   },
-//   {
-//     label: '操作',
-//     prop: 'action',
-//     type: 'action',
-//     width: 120,
-//     btnGroup: [
-//       // {
-//       //   label: '销账',
-//       //   fn: 'destroy',
-//       //   type: 'primary',
-//       //   alias: 'destroy',
-//       // },
-//       {
-//         label: '每日收益',
-//         fn: 'earningsRecord',
-//         type: 'primary',
-//         alias: 'earningsRecord',
-//       },
-//       // {
-//       //   label: '划转记录',
-//       //   fn: 'transferRecord',
-//       //   type: 'primary',
-//       //   alias: 'transferRecord',
-//       // },
-//       // {
-//       //   label: '销账记录',
-//       //   fn: 'destroyBill',
-//       //   type: 'primary',
-//       //   alias: 'destroyBill',
-//       // },
-//       // {
-//       //   label: '收益流水',
-//       //   fn: 'earningsFlow',
-//       //   type: 'primary',
-//       //   alias: 'earningsFlow',
-//       // },
-//     ],
-//   },
-// ];
-
 const accountContractCol = [
   {
     label: 'UID',
@@ -3608,78 +3547,56 @@ const accountContractCol = [
   {
     label: '当前可用',
     prop: 'balance',
-    type: 'plusOthersNumber',
-    othersNumber: '70000',
   },
   {
-    label: '累计划入',
-    prop: 'totalTransferIn',
+    label: '平台累计盈亏',
+    prop: 'sumProfitLoss',
   },
-  // {
-  //   label: '累计盈利',
-  //   prop: 'totalProfit',
-  // },
-
   {
-    type: 'plusOthersNumber',
-    label: '累计盈亏',
-    prop:"totalProfit",
-    prop2:"totalLoss",
-  },
-
-  {
-    label: '累计手续费返佣',
-    type: 'minusOthersNumber',
+    label: '平台累计手续费返佣',
     prop: 'totalCommission',
-    othersNumber: '70000',
-  },
-  // {
-  //   label: '累计亏损',
-  //   prop: 'totalLoss',
-  // },
-  {
-    label: '累计销账',
-    prop: 'totalWriteOff',
   },
   {
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 450,
+    width: 120,
     btnGroup: [
+      // {
+      //   label: '销账',
+      //   fn: 'destroy',
+      //   type: 'primary',
+      //   alias: 'destroy',
+      // },
       {
-        label: '销账',
-        fn: 'destroy',
-        type: 'primary',
-        alias: 'destroy',
-      },
-      {
-        label: '收益记录',
+        label: '每日收益',
         fn: 'earningsRecord',
         type: 'primary',
         alias: 'earningsRecord',
       },
-      {
-        label: '划转记录',
-        fn: 'transferRecord',
-        type: 'primary',
-        alias: 'transferRecord',
-      },
-      {
-        label: '销账记录',
-        fn: 'destroyBill',
-        type: 'primary',
-        alias: 'destroyBill',
-      },
-      {
-        label: '收益流水',
-        fn: 'earningsFlow',
-        type: 'primary',
-        alias: 'earningsFlow',
-      },
+      // {
+      //   label: '划转记录',
+      //   fn: 'transferRecord',
+      //   type: 'primary',
+      //   alias: 'transferRecord',
+      // },
+      // {
+      //   label: '销账记录',
+      //   fn: 'destroyBill',
+      //   type: 'primary',
+      //   alias: 'destroyBill',
+      // },
+      // {
+      //   label: '收益流水',
+      //   fn: 'earningsFlow',
+      //   type: 'primary',
+      //   alias: 'earningsFlow',
+      // },
     ],
   },
 ];
+
+
 
 
 const destroyBillConfig = [
