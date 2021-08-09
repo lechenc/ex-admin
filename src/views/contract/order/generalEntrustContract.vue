@@ -16,7 +16,7 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { generalEntrustContractCol, generalEntrustContractConfig } from '@/config/column/contract';
+import { generalEntrustContractCol,generalEntrustContractColNoBtn, generalEntrustContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 export default {
@@ -206,7 +206,8 @@ export default {
     },
   },
   mounted() {
-    this.configs = generalEntrustContractCol;
+    let authObj = this.$util.getAuthority('GeneralEntrustContract', generalEntrustContractCol, generalEntrustContractColNoBtn);
+    this.configs = authObj.val;
     this.searchCofig = this.$util.clone(generalEntrustContractConfig);
     // 初始化今天，和前天的时间
     this.toDay = this.$util.diyTime('toDay');
