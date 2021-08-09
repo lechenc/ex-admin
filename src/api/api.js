@@ -2051,13 +2051,10 @@ export default class api {
 
   // 合约 - 账号收益记录 -列表
   // new
-  // static getEarningsRecordList(data) {
-  //   return Fetch.post('/admin/account/contract/profit/dayDetailNew', data);
-  // }
-  // old
   static getEarningsRecordList(data) {
-    return Fetch.post('/admin/account/query/contract-profit-record', data);
+    return Fetch.post('/admin/account/contract/profit/dayDetailNew', data);
   }
+  
 
 
   // 合约 - 账号合约账号 -销账

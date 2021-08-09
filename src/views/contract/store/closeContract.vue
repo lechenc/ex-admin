@@ -120,7 +120,7 @@ export default {
       this.excelLoading = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getCloseEntrustDetailPagination(params);
+      const res = await $api.getClosePositionEntrustPagination(params);
       this.excelLoading = false;
       if (res) {
         return res;
