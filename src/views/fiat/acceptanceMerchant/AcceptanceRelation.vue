@@ -12,7 +12,7 @@
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
-   
+
     <div class="container-middle">
       <el-table :data="list" height="100%" style="width: 100%; height: 100%" row-key="uid" border lazy :load="load" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" size="mini" class="new-table" ref="tablenow" :indent="45">
         <el-table-column prop="uid" label="编号" width="auto" min-width="290"></el-table-column>
@@ -97,7 +97,7 @@ import Precision from '@/utils/number-precision';
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 
-import { agentListRelationConfig } from '@/config/column/fiat'
+import { agentListRelationConfig } from '@/config/column/fiat';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 
@@ -194,8 +194,6 @@ export default {
       });
     },
 
-    
-
     changeIndexData() {
       const firstRow = (this.list && this.list[0]) || [];
       if (!firstRow || firstRow.length == 0) {
@@ -282,7 +280,7 @@ export default {
 
     async getData(id) {
       let list = [];
-      const res = await $api.findAcceptanceChild({ uid: id, direction: 2, pageNum: this.current_page, pageSize: this.pageSize });
+      const res = await $api.findAcceptanceChild({ uid: id, direction: 2, pageNum: this.current_page, pageSize: this.pageSize, userType: 28 });
       if (res) {
         list = this.dealChildren(res.data.data || []);
       } else {
@@ -394,6 +392,7 @@ export default {
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        userType: 28
       };
 
       this.listLoading = true;
@@ -458,14 +457,12 @@ export default {
   },
 
   mounted() {
-    let authObj = this.$util.getAuthority('AcceptanceRelation', [], [])
-    this.btnArr = authObj.btnArr || []
-    
+    let authObj = this.$util.getAuthority('AcceptanceRelation', [], []);
+    this.btnArr = authObj.btnArr || [];
 
-    this.searchCofig = this.$util.clone(agentListRelationConfig)
-    this.getList()
-    
-  }
+    this.searchCofig = this.$util.clone(agentListRelationConfig);
+    this.getList();
+  },
 };
 </script>
 <style scope lang="scss">
@@ -497,10 +494,8 @@ export default {
     font-size: 14px;
     // font-family: ;
     .currentTotal-class {
-
     }
     .total-class {
-
     }
     span {
       margin: 30px 30px 30px 0;
