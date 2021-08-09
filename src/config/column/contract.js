@@ -3661,81 +3661,36 @@ const earningsRecordConfig = [
   },
 ];
 
-// const earningsRecordCol = [
-//   {
-//     label: '时间',
-//     prop: 'dataTime',
-//   },
-//   {
-//     label: '平台合约平仓盈亏',
-//     prop: 'profitLoss',
-//   },
-//   {
-//     label: '平台手续费返佣',
-//     prop: 'commission',
-//   },
-//   {
-//     label: '变动资产金额',
-//     type:'plusOthersNumber',
-//     prop: 'profitLoss',
-//     prop2: 'commission',
-//   },
-//   {
-//     label: '变动前可用金额',
-//     prop: 'balanceBefore',
-//   },
-//   {
-//     label: '变动后可用金额',
-//     prop: 'balanceAfter',
-//   },
-  
-// ];
 const earningsRecordCol = [
   {
-    label: '币对',
-    prop: 'coinMarket',
+    label: '时间',
+    prop: 'dataTime',
   },
   {
-    label: '开仓手续费',
-    prop: 'openFee',
+    label: '平台合约平仓盈亏',
+    prop: 'profitLoss',
   },
   {
-    label: '平仓手续费',
-    prop: 'closeFee',
-  },
-  {
-    label: '爆仓平多',
-    prop: 'explosiveWarehousesLong',
-  },
-  {
-    label: '爆仓平空',
-    prop: 'explosiveWarehousesShort',
-  },
-  {
-    label: '平多',
-    prop: 'closeLong',
-  },
-  {
-    label: '平空',
-    prop: 'closeShort',
-  },
-  {
-    label: '返佣',
+    label: '平台手续费返佣',
     prop: 'commission',
   },
   {
-    label: '资金费用',
-    prop: 'assetFee',
+    label: '变动资产金额',
+    type:'plusOthersNumber',
+    prop: 'profitLoss',
+    prop2: 'commission',
   },
   {
-    label: '盈亏合计',
-    prop: 'total',
+    label: '变动前可用金额',
+    prop: 'balanceBefore',
   },
   {
-    label: '创建时间',
-    prop: 'createTime',
+    label: '变动后可用金额',
+    prop: 'balanceAfter',
   },
+  
 ];
+
 
 
 const earningsFlowCol = [
