@@ -322,7 +322,7 @@ export default {
     },
     // 驳回弹窗 点击  驳回
     async confirmReject() {
-      if (this.buttonDisabled) return;
+      // if (this.buttonDisabled) return;
       this.$refs['rejectForm'].validate(async (valid) => {
         if (valid) {
           let params = {
