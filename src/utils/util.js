@@ -630,7 +630,7 @@ const clone = target => {
  */
 let exporting = false;
 let stack = []; // 任务队列
-async function exportData(type, max = 5000, loading = null) {
+async function exportData(type, max = 500, loading = null) {
   let that = this;
   if (exporting) {
     try {
