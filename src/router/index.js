@@ -851,6 +851,7 @@ export const asyncRouterMap = [
         meta: { title: '商户账号管理', icon: '', role: [] },
       },
       {
+        hidden: true,
         path: 'customerFlow',
         name: 'CustomerFlow',
         component: () => import('@/views/fiat/customerFlow'),
@@ -993,6 +994,19 @@ export const asyncRouterMap = [
             name: 'AcceptanceChannelList',
             component: () => import('@/views/fiat/acceptanceMerchant/acceptanceChannelList'),
             meta: { title: '渠道列表', icon: '', role: [] },
+          },
+          {
+            path: 'commissionContract',
+            name: 'CommissionContract',
+            component: () => import('@/views/fiat/acceptanceMerchant/commissionContract'),
+            meta: { title: '返佣账号管理', icon: '', role: [] },
+          },
+          {
+            hidden: true,
+            path: 'commissionContractFlow',
+            name: 'CommissionContractFlow',
+            component: () => import('@/views/fiat/acceptanceMerchant/commissionContractFlow'),
+            meta: { title: '返佣账号流水', icon: '', role: [] },
           },
         ],
       },

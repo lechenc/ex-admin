@@ -8,7 +8,7 @@
  -->
 
 <template>
-  <div class="customerAccount-container">
+  <div class="commissionContract-container">
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
@@ -31,11 +31,11 @@
 <script>
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { customerAccountCol, customerAccountColNoBtn } from '@/config/column/fiat';
+import { commissionContractCol, commissionContractColNoBtn } from '@/config/column/fiat';
 import $api from '@/api/api';
 
 export default {
-  name: 'CustomerAccount',
+  name: 'CommissionContract',
   components: {
     Btable,
     iconPage,
@@ -139,15 +139,15 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('CustomerAccount', customerAccountCol, customerAccountColNoBtn);
+    let authObj = this.$util.getAuthority('CommissionContract', commissionContractCol, commissionContractColNoBtn);
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || [] ;
+    this.btnArr = authObj.btnArr || [];
     this.getList();
   },
 };
 </script>
 <style scope lang="scss">
-.customerAccount-container {
+.commissionContract-container {
   padding: 4px 10px 10px 10px;
   .container-btn {
     margin: 20px;

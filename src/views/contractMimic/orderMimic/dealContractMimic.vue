@@ -28,7 +28,7 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { dealContractCol, dealContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
-import activePage from "@/mixin/keepPage"
+// import activePage from "@/mixin/keepPage"
 
 export default {
   name: 'DealContract',
@@ -37,7 +37,7 @@ export default {
     Bsearch,
     iconPage,
   },
-  mixins:[activePage],
+  // mixins:[activePage],
   data() {
     return {
       listLoading: false, // 表格loading
@@ -192,33 +192,7 @@ export default {
       this.getSymbolList();
     }
   },
-  activated() {
-    if (this.isInTags()) {
-      return;
-    }
-
-    this.list = [];
-    this.configs = [];
-    this.searchCofig = [];
-    this.search_params_obj = {};
-
-    this.configs = dealContractCol;
-    this.searchCofig = this.$util.clone(dealContractConfig);
-    // 初始化今天，和前天的时间
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
-
-    this.getId = this.$route.query.uid;
-    if (this.getId) {
-      this.searchCofig[1].value = this.getId;
-      this.search_params_obj = { uid: this.getId };
-      this.getList();
-      this.getSymbolList();
-    } else {
-      this.getList();
-      this.getSymbolList();
-    }
-  },
+  
 };
 </script>
 <style scope lang="scss">

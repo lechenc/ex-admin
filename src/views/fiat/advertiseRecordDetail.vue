@@ -50,14 +50,14 @@
 import Btable from '@/components/table/b-table';
 import { infoCol, dealCol } from '@/config/column/fiat';
 import $api from '@/api/api';
-import activePage from "@/mixin/keepPage"
+// import activePage from "@/mixin/keepPage"
 
 export default {
   name: 'AdvertiseRecordDetail',
   components: {
     Btable,
   },
-  mixins:[activePage],
+  // mixins:[activePage],
   data() {
     return {
       advId: 0, // 列表页传入的id
@@ -129,22 +129,9 @@ export default {
       return ~(val + '').indexOf('-') ? val : this.$util.dateFormat(val, 'YYYY-MM-DD hh:mm:ss');
     },
   },
-  // mounted() {
-  //   this.infoConfigs = infoCol;
-  //   this.dealConfigs = dealCol;
-  //   const rowData = this.$route.query.row;
-  //   const tmp = JSON.parse(JSON.stringify(rowData));
-  //   if (tmp) {
-  //     this.infoList.push(tmp);
-  //     this.infoLoading = false;
-  //   }
-  //   this.advId = this.$route.query.id;
-  //   this.getDealDetail();
-  // },
-  activated(){
-      if(this.isInTags()){
-        return;
-      }
+  
+  mounted(){
+      
       this.infoList = []; //基本列表
       this.dealList= []; // 成交列表
 
@@ -167,9 +154,6 @@ export default {
     this.advId = this.$route.query.id;
     this.getDealDetail();
   },
-  deactivated(){
-    localStorage.removeItem('advertiseRecord')
-  }
 };
 </script>
 <style lang="scss">

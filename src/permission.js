@@ -358,6 +358,8 @@ const mapComponents = {
   AcceptanceRelation: () => import('@/views/fiat/acceptanceMerchant/acceptanceRelation'),
   AcceptanceSetting: () => import('@/views/fiat/acceptanceMerchant/acceptanceSetting'),
   AcceptanceChannelList: () => import('@/views/fiat/acceptanceMerchant/acceptanceChannelList'),
+  CommissionContract: () => import('@/views/fiat/acceptanceMerchant/commissionContract'),
+  CommissionContractFlow: () => import('@/views/fiat/acceptanceMerchant/commissionContractFlow'),
 
   WarehouseUser: () => import('@/views/warehouse/user'),
   WarehouseUserListDetail: () => import('@/views/warehouse/userListDetail'),
