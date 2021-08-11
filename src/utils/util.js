@@ -689,7 +689,7 @@ async function exportData(type, max = 5000, loading = null) {
     // 导出当前条件
     let dataCache = [];
     let loadCount = 0;
-    const loadData = async (total, page = 1, per = 5000) => {
+    const loadData = async (total, page = 1, per = 500) => {
       try {
         
         loadCount = 0;
