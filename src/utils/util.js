@@ -630,7 +630,7 @@ const clone = target => {
  */
 let exporting = false;
 let stack = []; // 任务队列
-async function exportData(type, max = 500, loading = null) {
+async function exportData(type, max = 10000, loading = null) {
   let that = this;
   if (exporting) {
     try {
@@ -689,7 +689,7 @@ async function exportData(type, max = 500, loading = null) {
     // 导出当前条件
     let dataCache = [];
     let loadCount = 0;
-    const loadData = async (total, page = 1, per = 500) => {
+    const loadData = async (total, page = 1, per = 100) => {
       try {
         
         loadCount = 0;
@@ -756,7 +756,7 @@ async function exportData(type, max = 500, loading = null) {
       let exportnumber = +getRes.data.data.total || 0;
       if (exportnumber > max) {
         loading.setText('导出确认');
-        const confirm = await that.$confirm(`当前条件总数据${exportnumber}, 是否仅导出前${max}条?`, '导出信息确认', {
+        const confirm = await that.$confirm(`当前条件总数据${exportnumber}, 是否仅导出前${max}条? 若导出，请耐心等待进度条即可，请尽量不要中途关闭退出。`, '导出信息确认', {
           confirmButtonText: '导出',
           cancelButtonText: '取消',
           type: 'warning',
