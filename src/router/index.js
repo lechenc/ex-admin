@@ -176,7 +176,7 @@ export const asyncRouterMap = [
         path: 'validatedUserlistDetail',
         name: 'ValidatedUserlistDetail',
         component: () => import('@/views/user/validatedUserlistDetail'),
-        meta: { title: '有效用户详情', icon: '', role: []},
+        meta: { title: '有效用户详情', icon: '', role: [] },
       },
       {
         hidden: true,
@@ -219,8 +219,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/user/riskConfig'),
         meta: { title: '风控参数配置', icon: '', role: [] },
       },
-      
-      
     ],
   },
   // 审核管理
@@ -342,7 +340,6 @@ export const asyncRouterMap = [
         meta: { title: '提币白名单管理', icon: '', role: [] },
       },
 
-
       {
         path: 'setting',
         name: 'Setting',
@@ -403,14 +400,14 @@ export const asyncRouterMap = [
         path: 'editKline',
         name: 'EditKline',
         component: () => import('@/views/symbol/editKline'),
-        meta: { title: '修改制定K线', icon: '', role: []},
+        meta: { title: '修改制定K线', icon: '', role: [] },
       },
       {
         path: 'tradeMarket',
         name: 'TradeMarket',
         component: () => import('@/views/symbol/tradeMarket'),
-        meta: { title: '交易对行情接口管理', icon: '', role: []},
-      }
+        meta: { title: '交易对行情接口管理', icon: '', role: [] },
+      },
     ],
   },
   // 财务管理
@@ -506,8 +503,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/financial/hotWalletExtract'),
         meta: { title: '热钱包提币管理', icon: '', role: [] },
       },
-
-      
     ],
   },
   // 系统管理
@@ -605,7 +600,6 @@ export const asyncRouterMap = [
         meta: { title: '人员管理', icon: '', role: [] },
       },
 
-      
       {
         path: 'structureTree',
         name: 'StructureTree',
@@ -763,21 +757,21 @@ export const asyncRouterMap = [
             path: 'voucherParameters',
             name: 'VoucherParameters',
             component: () => import('@/views/front/voucher/voucherParameters'),
-            meta: { title: '条件参数设置', icon: '', role: [] }
+            meta: { title: '条件参数设置', icon: '', role: [] },
           },
 
           {
             path: 'voucherVipUserList',
             name: 'VoucherVipUserList',
             component: () => import('@/views/front/voucher/voucherVipUserList'),
-            meta: { title: '尊贵会员名额管理', icon: '', role: [] }
+            meta: { title: '尊贵会员名额管理', icon: '', role: [] },
           },
 
           {
             path: 'voucherVipUserDetails',
             name: 'VoucherVipUserDetails',
             component: () => import('@/views/front/voucher/voucherVipUserDetails'),
-            meta: { title: '名额详情', icon: '', role: [] }
+            meta: { title: '名额详情', icon: '', role: [] },
           },
 
           {
@@ -829,11 +823,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/front/ssoWhiteList'),
         meta: { title: '单点登录白名单管理', icon: '', role: [] },
       },
-
-      
-
-
-      
     ],
   },
   // 法币管理
@@ -1446,7 +1435,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/apportionRecord'),
         meta: { title: '代理团队长返佣记录', icon: '', role: [] },
       },
-     
+
       {
         path: 'agentFinancialFlow',
         name: 'AgentFinancialFlow',
@@ -1473,7 +1462,6 @@ export const asyncRouterMap = [
         meta: { title: '保证金流水', icon: '', role: [] },
       },
 
-      
       {
         path: 'businessRefundRecord',
         name: 'BusinessRefundRecord',
@@ -1482,7 +1470,6 @@ export const asyncRouterMap = [
       },
     ],
   },
-
 
   // 合约模块
   {
@@ -1627,7 +1614,7 @@ export const asyncRouterMap = [
           },
         ],
       },
-     
+
       {
         path: 'risk',
         name: 'Risk',
@@ -1691,12 +1678,14 @@ export const asyncRouterMap = [
             meta: { title: '合约账户', icon: '', role: [] },
           },
           {
+            hidden: true,
             path: 'destroyBill',
             name: 'DestroyBill',
             component: () => import('@/views/contract/accountManagement/destroyBill'),
             meta: { title: '销账记录', icon: '', role: [] },
           },
           {
+            hidden: true,
             path: 'earningsRecord',
             name: 'EarningsRecord',
             component: () => import('@/views/contract/accountManagement/earningsRecord'),
@@ -1966,8 +1955,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/coinPay/userlistDetailPay'),
         meta: { title: '用户详情', icon: '', role: [] },
       },
-
-      
     ],
   },
 
@@ -2000,7 +1987,6 @@ export const asyncRouterMap = [
     ],
   },
 
-
   // 商户管理
   {
     path: '/merchant',
@@ -2009,7 +1995,6 @@ export const asyncRouterMap = [
     name: 'Merchant',
     meta: { title: '商户管理', icon: 'front', role: [] },
     children: [
-      
       {
         path: 'groupAuth',
         name: 'GroupAuth',
@@ -2022,7 +2007,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/merchant/groupAuthDetail'),
         meta: { title: '商户分组授权详情', icon: '', role: [] },
       },
-      
     ],
   },
 
@@ -2034,7 +2018,6 @@ export const asyncRouterMap = [
     name: 'InOutGold',
     meta: { title: '出入金管理', icon: 'front', role: [] },
     children: [
-      
       {
         path: 'inOutGoldInfo',
         name: 'InOutGoldInfo',

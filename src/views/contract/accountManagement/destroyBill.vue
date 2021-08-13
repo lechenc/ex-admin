@@ -7,7 +7,7 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\symbol\setting.vue
  -->
 <template>
-  <div class="coinContract-container">
+  <div class="destroyBill-container">
     <el-row class="sac-row">
       <el-col :span="4">
         <el-button size="medium" type="primary" plain @click="$router.go(-1)">返回</el-button>
@@ -16,6 +16,7 @@
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
+    
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
@@ -32,40 +33,44 @@
       </el-pagination>
     </div>
     <!-- 添加 编辑 -->
-    <el-dialog title="销账详情" width="670px" :visible.sync="dialogFormVisible">
+    <el-dialog title="销账详情" width="600px" :visible.sync="dialogFormVisible">
       <el-form :model="dForm" ref="dForm">
+        <!-- coinName,
+            orderNo,
+            amount,
+            createTime, -->
         <el-row :span="24">
           <el-col :span="18">
-            <el-form-item label="订单号" :label-width="formLabelWidth" prop="id">
-              <el-input disabled type="text" v-model="dForm.id" autocomplete="off" placeholder=""></el-input>
+            <el-form-item label="订单号" :label-width="formLabelWidth" prop="orderNo">
+              <el-input disabled type="text" v-model="dForm.orderNo" autocomplete="off" placeholder=""></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="24">
           <el-col :span="18">
-            <el-form-item label="币种" :label-width="formLabelWidth" prop="coinMarket">
-              <el-input disabled type="text" v-model="dForm.coinMarket" autocomplete="off" placeholder=""></el-input>
+            <el-form-item label="币种" :label-width="formLabelWidth" prop="coinName">
+              <el-input disabled type="text" v-model="dForm.coinName" autocomplete="off" placeholder=""></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="24">
           <el-col :span="18">
-            <el-form-item label="销账数量" :label-width="formLabelWidth" prop="estimatedCapitalRate">
-              <el-input disabled type="text" v-model="dForm.estimatedCapitalRate" autocomplete="off" placeholder=""></el-input>
+            <el-form-item label="销账数量" :label-width="formLabelWidth" prop="amount">
+              <el-input disabled type="text" v-model="dForm.amount" autocomplete="off" placeholder=""></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="24">
           <el-col :span="18">
-            <el-form-item label="销账时间" :label-width="formLabelWidth" prop="estimatedCapitalRate">
-              <el-input disabled type="text" v-model="dForm.estimatedCapitalRate" autocomplete="off" placeholder=""></el-input>
+            <el-form-item label="销账时间" :label-width="formLabelWidth" prop="createTime">
+              <el-input disabled type="text" v-model="dForm.createTime" autocomplete="off" placeholder=""></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="24">
           <el-col :span="18">
-            <el-form-item label="备注" :label-width="formLabelWidth" prop="estimatedCapitalRate">
-              <el-input autosize disabled type="textarea" v-model="dForm.estimatedCapitalRate" autocomplete="off" placeholder=""></el-input>
+            <el-form-item label="备注" :label-width="formLabelWidth" prop="remark">
+              <el-input rows="3"  disabled type="textarea" v-model="dForm.remark" autocomplete="off" placeholder=""></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -83,8 +88,7 @@ import iconPage from '@/components/icon-page';
 import { destroyBillCol, destroyBillConfig } from '@/config/column/contract';
 import $api from '@/api/api';
 import Precision from '@/utils/number-precision';
-import activePage from '@/mixin/keepPage';
-import BTwoRangeChoose from '@/components/b-two-range-choose';
+
 
 export default {
   name: 'ContractAccount',
@@ -92,7 +96,6 @@ export default {
     Btable,
     Bsearch,
     iconPage,
-    BTwoRangeChoose,
   },
   data() {
     return {
@@ -109,8 +112,8 @@ export default {
       pages: 0, // 总页数
       chainArr: [], // 链列表
       coin_List: [], // 交易对列表
-      formLabelWidth: '150px',
-      dialogFormVisible: true, // 编辑添加币种弹窗
+      formLabelWidth: '140px',
+      dialogFormVisible: false, // 编辑添加币种弹窗
       dForm: {
         coinMarket: '',
         estimatedCapitalRate: '',
@@ -118,84 +121,30 @@ export default {
       toDay: '',
       ago: '',
       formName: '编辑费率',
-      drules: {
-        coinMarket: [{ required: true, message: '必填', trigger: 'blur' }],
-        estimatedCapitalRate: [{ required: true, message: '必填', trigger: 'blur' }],
-      },
+     
     };
   },
+  
   methods: {
-    // 添加币种
-    addGear() {
-      this.formName = '添加费率';
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        this.$refs['twoChoose'].resetValue();
-        this.$refs['dForm'].resetFields();
-        this.dForm = {
-          id: '',
-          coinMarket: '',
-          basicInterestRate: '',
-          premiumRateMin: '',
-          premiumRateMax: '',
-          capitalInterestRateMin: '',
-          capitalInterestRateMax: '',
-          modeOfCost: '',
-          triggerRateTime: '',
-        };
-      });
-    },
-
-    async confirmOp() {
-      this.$refs['dForm'].validate(async (valid) => {
-        if (valid) {
-          let { id, estimatedCapitalRate } = this.dForm;
-          let params = {
-            id,
-            estimatedCapitalRate,
-          };
-          this.btnLoading = true;
-          const res = await $api.editContractFundRate(params);
-          if (res) {
-            this.$message({ message: res.data.message, type: 'success' });
-            this.dialogFormVisible = false;
-            this.getList();
-          }
-          this.btnLoading = false;
-        }
-      });
-    },
     async doHandle(data) {
       const { fn, row } = data;
       // 编辑档位
       if (fn === 'details') {
-        return;
-      }
-      if (fn === 'edit') {
-        this.formName = '编辑费率';
+        this.formName = '销账详情';
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
-          let { id, coinMarket, estimatedCapitalRate } = row;
+          let { orderNo, coinName, amount ,createTime ,remark} = row;
+          
           this.dForm = {
-            coinMarket,
-            id,
-            estimatedCapitalRate,
+            coinName,
+            orderNo,
+            amount,
+            createTime,
+            remark
           };
         });
-      }
-      if (fn === 'trstart') {
-        let params = {
-          id: row.id,
-          coinMarket: row.coinMarket,
-        };
-        const res = await $api.editContractPositionGear(params);
-        if (res) {
-          this.$message({ message: '切换成功', type: 'success' });
-          this.getList();
-        } else {
-          this.getList();
-        }
+        
       }
     },
     // 对输入值的范围进行限制
@@ -224,7 +173,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[1].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
       this.getList();
     },
     // 分页
@@ -249,28 +198,24 @@ export default {
       // val.form
     },
     formatTime(val) {
-      return !~(val + '').indexOf('/') ? val : parseInt(new Date(val).getTime() / 1000);
+      return ~(val + "").indexOf("-") ? val : val.replace(/\//gi, "-");
     },
+    // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
-        params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
-        // 组件时间初始必须format格式
-        this.searchCofig[1].value = [
-          this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-          this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss'),
-        ];
+        let befV = this.$util.dateFormat(this.ago, "YYYY/MM/DD HH:mm:ss");
+        let nowV = this.$util.dateFormat(this.toDay, "YYYY/MM/DD HH:mm:ss");
+        this.searchCofig[0].value = [befV, nowV];
+        params.endTime = nowV.replace(/\//gi, "-");
+        params.startTime = befV.replace(/\//gi, "-");
       }
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
-      }
-      if (this.search_params_obj.coinMarket) {
-        if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
-          let tmpName = '';
-          tmpName = this.coin_List.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0].label;
-          this.search_params_obj.coinMarket = tmpName;
-        }
+        this.search_params_obj.endTime = this.formatTime(
+          this.search_params_obj.endTime
+        );
+        this.search_params_obj.startTime = this.formatTime(
+          this.search_params_obj.startTime
+        );
       }
     },
     // getlist
@@ -286,7 +231,7 @@ export default {
       this.requiredParams(this.search_params_obj);
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getContractFundRateList(query_data);
+      const res = await $api.specialReconciliation(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
@@ -304,14 +249,14 @@ export default {
     this.ago = this.$util.diyTime('ago');
     this.$store.dispatch('common/getCoinList').then(() => {
       this.coin_List = this.$store.state.common.coinlist;
-      this.searchCofig[0]['list'] = this.$store.state.common.coinlist;
+      this.searchCofig[1]['list'] = this.$store.state.common.coinlist;
     });
     this.getList();
   },
 };
 </script>
 <style lang="scss">
-.coinContract-container {
+.destroyBill-container {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;
@@ -330,6 +275,8 @@ export default {
       line-height: 28px;
     }
   }
+
+  
 
   .sac-row {
     margin-bottom: 20px;

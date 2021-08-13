@@ -606,6 +606,9 @@ export default {
       this.$message.success('复制成功');
     },
   },
+  created(){
+    console.log('123',Precision.plus('113791.6288', '23948.4439'))
+  }
 };
 </script>
 <style lang="scss">

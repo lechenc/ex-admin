@@ -2059,7 +2059,7 @@ export default class api {
 
   // 合约 - 账号合约账号 -销账
   static apiDestroyBill(data) {
-    return Fetch.post('/admin/account/write-off-contract', data);
+    return Fetch.post('/admin/account/contract/profit/destroy', data);
   }
 
   // 合约 - 账号收益记录 -统计

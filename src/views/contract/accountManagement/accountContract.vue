@@ -13,7 +13,6 @@
         <el-button size="medium" type="primary" plain @click="$router.go(-1)">返回</el-button>
       </el-col>
     </el-row>
-    
 
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
@@ -25,25 +24,20 @@
 
     <el-dialog title="销账" :visible.sync="dialogFormVisible">
       <el-form :model="dForm" ref="dForm" :rules="drules">
-        <el-form-item label="币种" :label-width="formLabelWidth" prop="coinName">
-          <el-select disabled v-model="dForm.coinName" placeholder="" width="20%">
-            <el-option v-for="(item, idx) in coin_List" :key="idx" :label="item.label" :value="item.label"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="当前可用" prop="balance" :label-width="formLabelWidth">
-          <el-input disabled type="number" v-model="dForm.balance" autocomplete="off" placeholder=""></el-input>
+        <el-form-item label="当前可用" prop="balanceCur" :label-width="formLabelWidth">
+          <el-input disabled type="text" v-model="dForm.balanceCur" autocomplete="off" placeholder=""></el-input>
         </el-form-item>
 
-        <el-form-item label="销账数量" prop="amount" :label-width="formLabelWidth">
-          <el-input type="number" v-model="dForm.amount" autocomplete="off" placeholder=""></el-input>
+        <el-form-item label="销账数量" prop="balance" :label-width="formLabelWidth">
+          <el-input type="number" @input="checkVal('balance')" v-model="dForm.balance" autocomplete="off" placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="remark" :label-width="formLabelWidth">
-          <el-input type="textarea" autosize placeholder="请输入内容" v-model="dForm.remark"> </el-input>
+          <el-input rows="3" type="textarea" placeholder="请输入内容" v-model="dForm.remark"> </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmOp">确定</el-button>
+        <el-button :loading="btnLoading" type="primary" @click="confirmOp">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -114,85 +108,50 @@ export default {
         amount: '',
         remark: '',
       },
-      rowObj: {
-        userId: '',
-        coinName: '',
-      },
+
       jform: {},
       formName: '新增币种',
       drules: {
-        coinMarket: [{ required: true, message: '必填', trigger: 'blur' }],
-        amount: [
-          { required: true, message: '必填', trigger: 'blur' },
-          {
-            validator: checkNumberPwd,
-            message: '请输入最多最多8位小数的数字',
-            trigger: 'blur',
-          },
-        ],
         balance: [{ required: true, message: '必填', trigger: 'blur' }],
+        balanceCur: [{ required: true, message: '必填', trigger: 'blur' }],
         remark: [
           { required: true, message: '必填', trigger: 'blur' },
-          { min: 5, max: 100, message: '长度在 5 到 100 个字符之间', trigger: 'blur' },
+          // { min: 5, max: 100, message: '长度在 5 到 100 个字符之间', trigger: 'blur' },
         ],
       },
     };
   },
   methods: {
-    estimate(val) {
-      this.dialogFormVisible = true;
-    },
-    // 添加币种
-    addGear() {
-      this.formName = '添加档位';
-      this.dialogFormVisible = true;
-      this.$nextTick(() => {
-        this.$refs['twoChoose'].resetValue();
-        this.$refs['dForm'].resetFields();
-        this.dForm = {
-          id: '',
-          coinMarket: '',
-          basicInterestRate: '',
-          premiumRateMin: '',
-          premiumRateMax: '',
-          capitalInterestRateMin: '',
-          capitalInterestRateMax: '',
-          modeOfCost: '',
-        };
-      });
-    },
     async confirmOp() {
       this.$refs['dForm'].validate(async (valid) => {
         if (valid) {
-          if (parseFloat(this.dForm.amount) > parseFloat(this.dForm.balance)) {
+          if (this.btnLoading) return;
+          let { uid, userId, remark, balance, balanceCur } = this.dForm;
+          if (parseFloat(balance) > parseFloat(balanceCur)) {
             return this.$message.error('销账数量不足');
           }
-          let { amount, remark } = this.dForm;
+          this.btnLoading = true;
           const query_data = {
-            fromUserId: this.rowObj.userId,
-            amount,
+            uid,
+            userId,
             remark,
+            balance,
           };
-          let tmpName = '';
-          tmpName = this.coin_List.filter((v) => v['label'] == this.rowObj.coinName)[0].value;
-          query_data.coinId = tmpName;
           const res = await $api.apiDestroyBill(query_data);
+
           if (res) {
             this.$message.success('销账成功');
             this.getList();
+            this.dialogFormVisible = false;
           }
-          this.dialogFormVisible = false;
+          this.btnLoading = false;
         }
       });
     },
 
     // 对输入值的范围进行限制
-    checkVal(val, nodot) {
-      if (val === 'minimumInitialMargin' || val === 'maintenanceMarginRatio') {
-        this.dForm[val] = (this.dForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d).*$/, '$1$2.$3');
-      }
-      // 有第二个参数则是禁止小数位，必须整数
-      if (nodot) {
+    checkVal(val, not) {
+      if (not) {
         this.dForm[val] = this.dForm[val].replace(/[^\d]/g, '');
       }
       if (this.dForm[val] < 0) {
@@ -212,23 +171,23 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      
+
       this.getList();
     },
     async doHandle(data) {
       const { fn, row } = data;
-      if (fn === 'destroy') {
+      if (fn == 'destroy') {
         this.dialogFormVisible = true;
-        let { coinName, balance, userId } = row;
-        this.rowObj = {
-          userId,
-          coinName,
-        };
-        this.dForm = {
-          coinName,
-          balance,
-        };
-        return;
+        this.$nextTick(() => {
+          this.$refs['dForm'].resetFields();
+          const { uid, userId, balance } = row;
+          this.dForm = {
+            uid,
+            userId,
+            balanceCur: balance,
+            remark: '',
+          };
+        });
       }
       // 每日收益
       if (fn == 'earningsRecord') {
@@ -240,7 +199,7 @@ export default {
       //销账记录
       if (fn == 'destroyBill') {
         this.$router.push({
-          path: '/assetManage/writeoffRecord',
+          path: '/contract/accountManagement/destroyBill',
           query: {
             uid: row.uid,
             userId: row.userId,
@@ -250,30 +209,30 @@ export default {
         return;
       }
 
-      //划转记录
-      if (fn == 'transferRecord') {
-        this.$router.push({
-          path: '/assetManage/transferRecord',
-          query: {
-            topBtn: true,
-            uid: row.uid,
-          },
-        });
-        return;
-      }
+      // //划转记录
+      // if (fn == 'transferRecord') {
+      //   this.$router.push({
+      //     path: '/assetManage/transferRecord',
+      //     query: {
+      //       topBtn: true,
+      //       uid: row.uid,
+      //     },
+      //   });
+      //   return;
+      // }
 
-      //收益流水
-      if (fn == 'earningsFlow') {
-        this.$router.push({
-          path: '/contract/accountManagement/earningsFlow',
-          query: {
-            topBtn: true,
-            uid: row.uid,
-            userId: row.userId,
-          },
-        });
-        return;
-      }
+      // //收益流水
+      // if (fn == 'earningsFlow') {
+      //   this.$router.push({
+      //     path: '/contract/accountManagement/earningsFlow',
+      //     query: {
+      //       topBtn: true,
+      //       uid: row.uid,
+      //       userId: row.userId,
+      //     },
+      //   });
+      //   return;
+      // }
     },
     // 分页
     goPage(val) {
@@ -321,7 +280,23 @@ export default {
       this.listLoading = true;
       const res = await $api.getAccountContractList(query_data);
       if (res) {
-        this.list = res.data.data;
+        let list = res.data.data;
+        // 当前可用  =   【累计平台盈亏 + 累计平台手续费返佣】 减去 【补发金额+团队长返佣金额+累计销账金额】
+        // abnormalReissueAmount  累计异常补发金额  固定 113791.6288
+        // leaderCommissionAmount  leaderCommissionAmount  固定 23948.4439
+        if (list.length) {
+          list.forEach((v) => {
+            v.abnormalReissueAmount = '113791.6288';
+            v.leaderCommissionAmount = '23948.4439';
+            v.balance = [v.sumProfitLoss, v.totalCommission].reduce((prev, cur) => {
+              return Precision.plus(prev, cur);
+            }, 0);
+            v.balance = [v.abnormalReissueAmount, v.leaderCommissionAmount, v.destroyAmount].reduce((prev, cur) => {
+              return Precision.minus(prev, cur);
+            }, v.balance);
+          });
+        }
+        this.list = list;
       }
       this.listLoading = false;
     },
@@ -332,7 +307,9 @@ export default {
     }
   },
   async mounted() {
-    this.configs = accountContractCol;
+    let authObj = this.$util.getAuthority('AccountContract', accountContractCol, []);
+    this.configs = authObj.val;
+    this.btnArr = authObj.btnArr || [];
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.$store.dispatch('common/getCoinList').then(() => {
