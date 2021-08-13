@@ -88,7 +88,7 @@ import iconPage from '@/components/icon-page';
 import { destroyBillCol, destroyBillConfig } from '@/config/column/contract';
 import $api from '@/api/api';
 import Precision from '@/utils/number-precision';
-
+import { parseTime } from '@/utils/index';
 
 export default {
   name: 'ContractAccount',
@@ -140,7 +140,7 @@ export default {
             coinName,
             orderNo,
             amount,
-            createTime,
+            createTime:parseTime(createTime),
             remark
           };
         });
