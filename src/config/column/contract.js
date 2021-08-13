@@ -3579,7 +3579,7 @@ const accountContractCol = [
       {
         label: '销账',
         fn: 'destroy',
-        type: 'danger',
+        type: 'success',
         alias: 'destroy',
       },
       {
@@ -3621,13 +3621,6 @@ const destroyBillConfig = [
     prop: 'startTime',
     prop2: 'endTime',
     value: '',
-  },
-  {
-    type: 'select',
-    label: '币种类型',
-    prop: 'coinId',
-    value: '',
-    list: [],
   },
   
 ];

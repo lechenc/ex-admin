@@ -247,10 +247,6 @@ export default {
     this.searchCofig = this.$util.clone(destroyBillConfig);
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
-    this.$store.dispatch('common/getCoinList').then(() => {
-      this.coin_List = this.$store.state.common.coinlist;
-      this.searchCofig[1]['list'] = this.$store.state.common.coinlist;
-    });
     this.getList();
   },
 };

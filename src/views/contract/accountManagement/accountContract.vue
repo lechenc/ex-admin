@@ -29,10 +29,10 @@
         </el-form-item>
 
         <el-form-item label="销账数量" prop="balance" :label-width="formLabelWidth">
-          <el-input type="number" @input="checkVal('balance')" v-model="dForm.balance" autocomplete="off" placeholder=""></el-input>
+          <el-input type="number" @input="checkVal('balance','not')" v-model="dForm.balance" autocomplete="off" placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="remark" :label-width="formLabelWidth">
-          <el-input rows="3" type="textarea" placeholder="请输入内容" v-model="dForm.remark"> </el-input>
+          <el-input rows="3" maxlength="512" type="textarea" placeholder="请输入内容" v-model="dForm.remark"> </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -152,11 +152,12 @@ export default {
     // 对输入值的范围进行限制
     checkVal(val, not) {
       if (not) {
-        this.dForm[val] = this.dForm[val].replace(/[^\d]/g, '');
+        this.dForm[val] = (this.dForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3'); // 四个小数
       }
       if (this.dForm[val] < 0) {
         this.dForm[val] = 0;
       }
+      
     },
     doSearch(data) {
       this.current_page = 1;
