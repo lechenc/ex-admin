@@ -287,7 +287,7 @@ export default {
         // leaderCommissionAmount  leaderCommissionAmount  固定 23948.4439
         if (list.length) {
           list.forEach((v) => {
-            v.abnormalReissueAmount = '113791.6288';
+            v.abnormalReissueAmount = '500';
             v.leaderCommissionAmount = '23948.4439';
             v.balance = [v.sumProfitLoss, v.totalCommission].reduce((prev, cur) => {
               return Precision.plus(prev, cur);
