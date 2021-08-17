@@ -380,6 +380,7 @@ const mapComponents = {
   LoadCoin: () => import('@/views/workOrder/loadCoin'),
   SearchUserAddress: () => import('@/views/financial/searchUserAddress'),
   HotWalletExtract: () => import('@/views/financial/hotWalletExtract'),
+  FinancialStatistics: () => import('@/views/financial/financialStatistics'),
 
   AssetManageList: () => import('@/views/assetManage/assetManageList'),
   TransferRecord: () => import('@/views/assetManage/transferRecord'),

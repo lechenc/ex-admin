@@ -2059,7 +2059,7 @@ export default class api {
 
   // 合约 - 账号合约账号 -销账
   static apiDestroyBill(data) {
-    return Fetch.post('/admin/account/write-off-contract', data);
+    return Fetch.post('/admin/account/contract/profit/destroy', data);
   }
 
   // 合约 - 账号收益记录 -统计
@@ -3286,6 +3286,16 @@ static batchAddAnalyst(data) {
   // 财务管理/热钱包提币管理 获取链和币
   static apiGetChainCoinList(data) {
     return Fetch.post('/account/withdrawconfig/getchaincoin', data);
+  }
+
+   // 财务管理/财务数据统计列表
+   static getFinancialStatisticsList(data) {
+    return Fetch.post('/admin/account/pay/deposit/query/recharge/statistics', data);
+  }
+
+  // 合约管理/交易管理/合约账单 导出excel
+  static apiBillContractListExport(data) {
+    return Fetch.post('/admin/account/contract-user-bill-export', data);
   }
 
   

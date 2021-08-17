@@ -11,6 +11,7 @@ import $api from '@/api/api';
 const getDefaultState = () => {
   return {
     coinlist: [],
+    coinlistLabel:[],
     fiatcoinlist: [],
     symbollist: [],
     symbolListSupportContract:[],
@@ -27,6 +28,9 @@ const state = getDefaultState();
 const mutations = {
   SET_COINLIST: (state, list) => {
     state.coinlist = list;
+  },
+  SET_COINLIST_LABEL: (state, list) => {
+    state.coinlistLabel = list;
   },
   SET_SYMBOLLIST: (state, list) => {
     state.symbollist = list;
@@ -55,7 +59,7 @@ const mutations = {
 };
 
 const actions = {
-  // get coinlist
+  // get coinlist(value)
   getCoinList({ commit, state }) {
     return new Promise((resolve, reject) => {
       $api
@@ -65,6 +69,23 @@ const actions = {
             return { label: v['coinName'], value: v['coinId'], decimalPlaces: v['decimalPlaces'] };
           });
           commit('SET_COINLIST', list);
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  // get coinlist(label)
+  getCoinListLabel({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      $api
+        .getCoinList({ pageNum: 1, pageSize: 100 })
+        .then(res => {
+          const list = res.data.data.map(v => {
+            return { label: v['coinName'], value: v['coinName'], decimalPlaces: v['decimalPlaces'] };
+          });
+          commit('SET_COINLIST_LABEL', list);
           resolve();
         })
         .catch(error => {

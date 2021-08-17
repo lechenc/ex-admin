@@ -3556,23 +3556,43 @@ const accountContractCol = [
     label: '平台累计手续费返佣',
     prop: 'totalCommission',
   },
+
+  {
+    label: '累计异常补发金额',
+    prop: 'abnormalReissueAmount',
+  },
+  {
+    label: '团队长返佣金额',
+    prop: 'leaderCommissionAmount',
+  },
+  {
+    label: '累计销账金额',
+    prop: 'destroyAmount',
+  },
+
   {
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 120,
+    width: 320,
     btnGroup: [
-      // {
-      //   label: '销账',
-      //   fn: 'destroy',
-      //   type: 'primary',
-      //   alias: 'destroy',
-      // },
+      {
+        label: '销账',
+        fn: 'destroy',
+        type: 'success',
+        alias: 'destroy',
+      },
       {
         label: '每日收益',
         fn: 'earningsRecord',
         type: 'primary',
         alias: 'earningsRecord',
+      },
+      {
+        label: '销账记录',
+        fn: 'destroyBill',
+        type: 'primary',
+        alias: 'destroyBill',
       },
       // {
       //   label: '划转记录',
@@ -3580,12 +3600,7 @@ const accountContractCol = [
       //   type: 'primary',
       //   alias: 'transferRecord',
       // },
-      // {
-      //   label: '销账记录',
-      //   fn: 'destroyBill',
-      //   type: 'primary',
-      //   alias: 'destroyBill',
-      // },
+      
       // {
       //   label: '收益流水',
       //   fn: 'earningsFlow',
@@ -3601,37 +3616,31 @@ const accountContractCol = [
 
 const destroyBillConfig = [
   {
-    type: 'select',
-    label: '币种类型',
-    prop: 'coinMarket',
-    value: '',
-    list: [],
-  },
-  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
     value: '',
   },
+  
 ];
 
 const destroyBillCol = [
   {
     label: '订单号',
-    prop: 'id',
+    prop: 'orderNo',
   },
   {
     label: '币种',
-    prop: 'coinMarket',
+    prop: 'coinName',
   },
   {
-    label: '数量',
-    prop: 'longPositionOpenPositionPoint',
+    label: '销账数量',
+    prop: 'amount',
   },
   {
     label: '时间',
-    prop: 'shortPositionOpenPositionPoint',
+    prop: 'createTime',
     type: 'time',
   },
   {
@@ -3644,7 +3653,6 @@ const destroyBillCol = [
         label: '查看详情',
         fn: 'details',
         type: 'primary',
-        alias: 'details',
       },
     ],
   },

@@ -25,12 +25,16 @@ const examineCol = [
     label: "姓名",
     prop: "realName",
   },
+  // {
+  //   label: "证件类型",
+  //   prop: "certificateType",
+  //   type: "filter",
+  //   show_type: "text",
+  //   filters: [{ text: "身份证", val: 1 }, { text: "护照", val: 2 }],
+  // },
   {
     label: "证件类型",
-    prop: "certificateType",
-    type: "filter",
-    show_type: "text",
-    filters: [{ text: "身份证", val: 1 }, { text: "护照", val: 2 }],
+    prop: "certificateName",
   },
   {
     label: "证件号码",
@@ -153,12 +157,16 @@ const examineColNoBtn = [
     label: "姓名",
     prop: "realName",
   },
+  // {
+  //   label: "证件类型",
+  //   prop: "certificateType",
+  //   type: "filter",
+  //   show_type: "text",
+  //   filters: [{ text: "身份证", val: 1 }, { text: "护照", val: 2 }],
+  // },
   {
     label: "证件类型",
-    prop: "certificateType",
-    type: "filter",
-    show_type: "text",
-    filters: [{ text: "身份证", val: 1 }, { text: "护照", val: 2 }],
+    prop: "certificateName",
   },
   {
     label: "证件号码",
