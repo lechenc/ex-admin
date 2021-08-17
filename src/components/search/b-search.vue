@@ -152,6 +152,7 @@
         </div>
         <div class="search-footer">
           <el-button plain @click="doCalTotal" :size="sizeDiy" :loading="calLoading" v-if="calTotal">{{ calText }}</el-button>
+          <el-button plain @click="doCalTotalExcel" :size="sizeDiy" :loading="calLoadingExcel" v-if="calTotalExcel">{{ calTextExcel }}</el-button>
           <!-- 预估统计 -->
           <el-button plain @click="doEstimate" :size="sizeDiy" :loading="calLoading" v-if="estimate">预估统计</el-button>
           <el-button plain @click="doEstimate" :size="sizeDiy" :loading="calLoading" v-if="statistics">统计</el-button>
@@ -206,6 +207,26 @@ export default {
       type: Boolean,
       default: false,
     },
+    calText: {
+      type: String,
+      default: '合计数量',
+    },
+    calLoading: {
+      type: Boolean,
+      default: false,
+    },
+    calTotalExcel: {
+      type: Boolean,
+      default: false,
+    },
+    calTextExcel: {
+      type: String,
+      default: '导出excel',
+    },
+    calLoadingExcel: {
+      type: Boolean,
+      default: false,
+    },
     statistics: {
       type: Boolean,
       default: false,
@@ -215,14 +236,7 @@ export default {
       default: false,
     },
 
-    calText: {
-      type: String,
-      default: '合计数量',
-    },
-    calLoading: {
-      type: Boolean,
-      default: false,
-    },
+    
     excelLoading: {
       type: Boolean,
       default: false,
@@ -420,6 +434,10 @@ export default {
     doCalTotal() {
       let query = this.getQuery();
       this.$emit('do-calTotal', query);
+    },
+    doCalTotalExcel() {
+      let query = this.getQuery();
+      this.$emit('do-calTotal-excel', query);
     },
     doEstimate() {
       let query = this.getQuery();

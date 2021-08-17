@@ -3295,7 +3295,12 @@ static batchAddAnalyst(data) {
 
   // 合约管理/交易管理/合约账单 导出excel
   static apiBillContractListExport(data) {
-    return Fetch.post('/admin/account/contract-user-bill-export', data);
+    return Fetch.postExcel('/admin/account/contract-user-bill-export', data);
+  }
+
+  // 合约管理/仓位管理/平仓记录 导出excel
+  static apiCloseContractListExport(data) {
+    return Fetch.postExcel('/admin/account/close-position-entrust-export', data);
   }
 
   

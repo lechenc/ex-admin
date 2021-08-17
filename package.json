@@ -25,6 +25,7 @@
     "fs": "^0.0.1-security",
     "fuse.js": "^6.4.2",
     "js-cookie": "2.2.0",
+    "js-file-download": "^0.4.12",
     "lodash": "^4.17.20",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",

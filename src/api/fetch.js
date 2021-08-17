@@ -7,10 +7,7 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-app-h5\src\fetch\fetch.js
  */
 
-
-
 import axios from './axios.js';
-
 
 // import { addSearch } from '../utils/operLocation.js';
 import { Message } from 'element-ui';
@@ -98,11 +95,14 @@ export class Fetch {
     return Fetch.dealRespones(axios.post(url, data, global.URLCONFIGJSONNEW));
   }
 
-   static async dealRespones(promise) {
+  static async dealRespones(promise) {
     return promise
       .then(res => {
+        
         // //console.log(res);|| res.status === 200
-        if (res.data.code === 1 || res.data.code === 200 ) {
+        if (res.data.code === 1 || res.data.code === 200) {
+          return res;
+        } else if (res.config.responseType == 'arraybuffer') {
           return res;
         } else {
           // 对于权限失效在axios中特殊提示，这里就不弹出提示了
@@ -116,20 +116,20 @@ export class Fetch {
         //console.log(err);
         Message.error('服务器请求错误');
       });
-      // try{
-      //   let res = await promise
-      //   if (res.data.code === 1 || res.data.code === 200 ) {
-      //     return res;
-      //   } else {
-      //     // 对于权限失效在axios中特殊提示，这里就不弹出提示了
-      //     if (res.data.code === 50) {
-      //     } else {
-      //       Message.error(res.data.msg || res.data.message);
-      //     }
-      //   }
-      // }catch(err){
-      //   //console.log(err);
-      //   Message.error('服务器请求错误');
-      // }
+    // try{
+    //   let res = await promise
+    //   if (res.data.code === 1 || res.data.code === 200 ) {
+    //     return res;
+    //   } else {
+    //     // 对于权限失效在axios中特殊提示，这里就不弹出提示了
+    //     if (res.data.code === 50) {
+    //     } else {
+    //       Message.error(res.data.msg || res.data.message);
+    //     }
+    //   }
+    // }catch(err){
+    //   //console.log(err);
+    //   Message.error('服务器请求错误');
+    // }
   }
 }
