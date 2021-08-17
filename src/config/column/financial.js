@@ -71,11 +71,10 @@ const rechargeCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '300',
+    width: '200',
     btnGroup: [
-
       {
-        label: '链上归集已失败，重新调用钱包去归集',
+        label: '重新调用钱包去归集',
         fn: 'message',
         filter_type: 'array',
         filter_key: 'collectStatus',
@@ -86,7 +85,6 @@ const rechargeCol = [
     ],
   },
 ];
-
 
 const rechargeColNoBtn = [
   {
@@ -542,7 +540,7 @@ const extractColNoBtn = [
     label: '复审人',
     prop: 'reviewAuditUserName',
   },
-]
+];
 
 // 财务管理 -- 提币记录 搜索
 const extractConfig = [
@@ -2137,7 +2135,7 @@ const hotWalletExtractCol = [
   {
     type: 'switch',
     prop: 'isStatus',
-    label:'热钱包启用开关',
+    label: '热钱包启用开关',
     alias: 'trswitch',
     disabled: true,
   },
@@ -2163,7 +2161,7 @@ const hotWalletExtractCol = [
         type: 'primary',
         alias: 'edit',
       },
-      
+
       {
         label: '查看余额',
         fn: 'checkBalance',
@@ -2215,10 +2213,105 @@ const hotWalletExtractSetCol = [
   {
     label: '累计热提币',
     prop: 'totalWithdraw',
-  }
+  },
+];
+
+// 财务管理 -- 财务数据统计列表
+const financialStatisticsCol = [
+  {
+    label: '时间',
+    prop: 'timeStr',
+  },
+  {
+    label: '币种',
+    prop: 'coinName',
+  },
+  {
+    label: '链名称',
+    prop: 'chainName',
+  },
+  {
+    label: '充币数量',
+    prop: 'depositAmount',
+  },
+  {
+    label: '冷钱包提币数量',
+    prop: 'coldWithdrawAmount',
+  },
+  {
+    label: '热钱包提币数量',
+    prop: 'hotWithdrawAmount',
+  },
+  
+  {
+    label: '净充币数量',
+    prop: 'pureDepositAmount',
+  },
+  {
+    label: '总提币数量',
+    prop: 'totalWithdrawAmount',
+  },
+
+  {
+    label: '归集消耗手续费',
+    prop: 'collectCostFeeAmount',
+  },
+  {
+    label: '归集冷钱包数量',
+    prop: 'confirmTime',
+  },
+  {
+    label: '待归集数量',
+    prop: 'waitCollectAmount',
+  },
+  {
+    label: '总待归集数量',
+    prop: 'totalWaitCollectAmount',
+  },
+];
+
+// 财务管理 -- 财务数据统计列表 搜索
+const financialStatisticsConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  
+  {
+    type: 'date_month',
+    label: '月份',
+    prop: 'month',
+    value: '',
+  },
+  {
+    type: 'select',
+    label: '时间周期',
+    prop: 'searchType',
+    value: 1,
+    list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
+  },
+  {
+    type: 'select',
+    label: '链名称',
+    prop: 'chainName',
+    value: '',
+    list: [],
+  },
+  {
+    type: 'select',
+    label: '币种',
+    prop: 'coinName',
+    value: '',
+    list: [],
+  },
 ];
 
 export {
+  financialStatisticsCol,
+  financialStatisticsConfig,
   hotWalletExtractSetCol,
   hotWalletExtractCol,
   hotWalletExtractColNoBtn,

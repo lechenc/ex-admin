@@ -21,7 +21,7 @@
               </el-select>
             </div>
 
-            <!-- 选择框 label加粗 --> 
+            <!-- 选择框 label加粗 -->
             <div v-if="config.type === 'select_labelBold'">
               <div class="label_bold">{{ config.label }}</div>
               <el-select class="text-input" v-model="config.value" :clearable="!config.isClear" :placeholder="config.placeHolder" :size="sizeDiy">
@@ -30,7 +30,7 @@
             </div>
             <!-- 输入框 -->
             <div v-if="(config.type === 'text' && !config.subType) || !config.type">
-              <div :style="{minWidth: config.minWidth || '115px'}">{{ config.label }}</div>
+              <div :style="{ minWidth: config.minWidth || '115px' }">{{ config.label }}</div>
               <el-input class="text-input" v-model="config.value" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
             </div>
 
@@ -41,7 +41,7 @@
             </div>
 
             <!-- 输入框 只能输入数字 -->
-            <div  v-if="config.type === 'onlyNumber'">
+            <div v-if="config.type === 'onlyNumber'">
               <div>{{ config.label }}</div>
               <el-input class="text-input" @input="config.value = config.value.replace(/[^\d]/g, '')" v-model="config.value" type="text" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
             </div>
@@ -59,11 +59,11 @@
               <div>{{ config.label }}</div>
               <el-input type="text" @input="config.value[0] = config.value[0].replace(/[^\d]/g, '')" class="text-input" v-model="config.value[0]" :placeholder="config.placeholder || '请输入最小值'" :size="sizeDiy" @change="handleMinChange(config.value[0], config.value[1])"></el-input>
               <span style="line-height: 30px">&nbsp;~&nbsp;</span>
-              <el-input type="text" @input="config.value[1] = config.value[1].replace(/[^\d]/g, '')"  class="text-input" v-model="config.value[1]" :placeholder="config.placeholder || '请输入最大值'" :size="sizeDiy" @change="handleMaxChange(config.value[0], config.value[1])"></el-input>
+              <el-input type="text" @input="config.value[1] = config.value[1].replace(/[^\d]/g, '')" class="text-input" v-model="config.value[1]" :placeholder="config.placeholder || '请输入最大值'" :size="sizeDiy" @change="handleMaxChange(config.value[0], config.value[1])"></el-input>
             </div>
 
             <div v-if="config.type === 'text' && config.subType === 'uid'">
-              <div :style="{minWidth: config.minWidth || '115px'}">{{ config.label }}</div>
+              <div :style="{ minWidth: config.minWidth || '115px' }">{{ config.label }}</div>
               <el-input class="text-input" v-model="config.value" :maxlength="9" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
             </div>
             <!-- 日期选择 pc端或者横屏用这个 -->
@@ -73,6 +73,7 @@
                 <div class="block">
                   <!-- <span class="demonstration">默认</span> -->
                   <el-date-picker
+                    :disabled='dateRankDisabled'
                     :size="sizeDiy"
                     v-model="config.value"
                     type="daterange"
@@ -92,8 +93,18 @@
               <div>{{ config.label }}</div>
               <template>
                 <div class="time-panel">
-                  <el-date-picker type="date" :size="sizeDiy" v-model="config.value[0]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="开始日期" :picker-options="pickerOptionsStart(config.value)" class="box-date-picker" @focus="forbid"> </el-date-picker>
-                  <el-date-picker type="date" :size="sizeDiy" v-model="config.value[1]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="结束日期" :picker-options="pickerOptionsEnd(config.value)" class="box-date-picker" @focus="forbid"></el-date-picker>
+                  <el-date-picker :disabled='dateRankDisabled' type="date" :size="sizeDiy" v-model="config.value[0]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="开始日期" :picker-options="pickerOptionsStart(config.value)" class="box-date-picker" @focus="forbid"> </el-date-picker>
+                  <el-date-picker :disabled='dateRankDisabled' type="date" :size="sizeDiy" v-model="config.value[1]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="结束日期" :picker-options="pickerOptionsEnd(config.value)" class="box-date-picker" @focus="forbid"></el-date-picker>
+                </div>
+              </template>
+            </div>
+
+            <!-- 日期选择 月份选择器 -->
+            <div v-if="config.type === 'date_month'">
+              <div>{{ config.label }}   </div>
+              <template>
+                <div class="block">
+                  <el-date-picker value-format="yyyy-MM" :disabled='dateMonthDisabled' :size="sizeDiy" v-model="config.value" type="month" placeholder="选择月"> </el-date-picker>
                 </div>
               </template>
             </div>
@@ -213,6 +224,16 @@ export default {
       default: false,
     },
     excelLoading: {
+      type: Boolean,
+      default: false,
+    },
+    // 日期 时间选择器禁用状态
+    dateRankDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    // 月份 时间选择器禁用状态
+    dateMonthDisabled: {
       type: Boolean,
       default: false,
     },
@@ -474,7 +495,7 @@ export default {
       }
     }
   }
-  .label_bold{
+  .label_bold {
     font-weight: 900;
   }
   .el-dropdown {

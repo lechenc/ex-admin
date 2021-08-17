@@ -3288,6 +3288,16 @@ static batchAddAnalyst(data) {
     return Fetch.post('/account/withdrawconfig/getchaincoin', data);
   }
 
+   // 财务管理/财务数据统计列表
+   static getFinancialStatisticsList(data) {
+    return Fetch.post('/admin/account/pay/deposit/query/recharge/statistics', data);
+  }
+
+  // 合约管理/交易管理/合约账单 导出excel
+  static apiBillContractListExport(data) {
+    return Fetch.post('/admin/account/contract-user-bill-export', data);
+  }
+
   
 
   
