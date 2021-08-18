@@ -22,20 +22,20 @@
           </el-select>
         </el-form-item>
 
-        <b-two-range-choose :noMinus="true" v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="时间变化频次" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+        <!-- <b-two-range-choose :noMinus="true" v-if="true" ref="twoChoose" :labelWidth="formLabelWidth" labelWords="时间变化频次" :getVal1.sync="robotForm.minChangeTime" :getVal2.sync="robotForm.maxChangeTime" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
 
-        <b-two-range-choose :noMinus="true" v-if="true" ref="twoChoose2" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围(%)" :getVal1.sync="robotForm.minProportion" :getVal2.sync="robotForm.maxProportion" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+        <b-two-range-choose :noMinus="true" v-if="true" ref="twoChoose2" :labelWidth="formLabelWidth" labelWords="下单委托深度取值比例范围(%)" :getVal1.sync="robotForm.minProportion" :getVal2.sync="robotForm.maxProportion" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose> -->
 
         <el-form-item label="交易对" :label-width="formLabelWidth" prop="coinMarket">
           <el-select v-model="robotForm.coinMarket" placeholder="" wdith="20%" :disabled="!!robotForm.id">
             <el-option v-for="(item, idx) in coin_list" :key="idx" :label="item.label" :value="item.label"></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item label="下单委托深度取值比例" :label-width="formLabelWidth" prop="proportion">
+        <el-form-item label="下单委托深度取值比例" :label-width="formLabelWidth" prop="proportion">
           <el-input type="number" v-model="robotForm.proportion" autocomplete="off" @input="checkVal('proportion')">
             <div slot="append">%</div>
           </el-input>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="深度参数" :label-width="formLabelWidth" prop="depthParameter">
           <el-input v-model="robotForm.depthParameter" autocomplete="off" type="number"></el-input>
         </el-form-item>
@@ -121,20 +121,6 @@ export default {
       pages: 0, // 总页数
       dialogFormVisible: false,
       robotForm: {
-        id: '',
-        uid: '',
-        coinMarket: '',
-        // proportion: '',
-        depthParameter: '',
-        status: false,
-        googleCode: '',
-        floatingRatio: '',
-        minSheets: '',
-        maxSheets: '',
-        isMock: false,
-        mockCoinMarket: '',
-        isFormal: '',
-        markFloatingRatio: '',
       },
       rules: {
         isFormal: [
@@ -196,13 +182,13 @@ export default {
             trigger: 'change',
           },
         ],
-        // proportion: [
-        //   {
-        //     required: true,
-        //     message: '必填',
-        //     trigger: 'blur',
-        //   },
-        // ],
+        proportion: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur',
+          },
+        ],
         depthParameter: [
           {
             required: true,
@@ -250,7 +236,7 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['robotForm'].resetFields();
-          const { id, uid, coinMarket, isFormal, minProportion, maxProportion, minChangeTime, maxChangeTime, depthParameter, status, mockCoinMarket, isMock, googleCode, floatingRatio, markFloatingRatio, minSheets, maxSheets } = row;
+          const { id, uid, coinMarket, isFormal, minProportion, maxProportion, minChangeTime, maxChangeTime, depthParameter, status, mockCoinMarket, isMock, googleCode, floatingRatio, markFloatingRatio, minSheets, maxSheets ,proportion } = row;
           this.robotForm = {
             id,
             uid,
@@ -266,11 +252,11 @@ export default {
             markFloatingRatio,
             minSheets,
             maxSheets,
-            minProportion: (minProportion + '').replace(/\%/g, ''),
-            maxProportion: (maxProportion + '').replace(/\%/g, ''),
-            minChangeTime,
-            maxChangeTime,
-            // proportion: (proportion + '').replace(/\%/g, ''),
+            // minProportion: (minProportion + '').replace(/\%/g, ''),
+            // maxProportion: (maxProportion + '').replace(/\%/g, ''),
+            // minChangeTime,
+            // maxChangeTime,
+            proportion: (proportion + '').replace(/\%/g, ''),
           };
         });
       }
@@ -297,7 +283,7 @@ export default {
           mockCoinMarket: '',
           coinMarket: '',
           isFormal: '',
-          // proportion: '',
+          proportion: '',
           depthParameter: '',
           status: false,
           googleCode: '',
@@ -306,10 +292,10 @@ export default {
           minSheets: '',
           maxSheets: '',
 
-          minProportion: '',
-          maxProportion: '',
-          minChangeTime: '',
-          maxChangeTime: '',
+          // minProportion: '',
+          // maxProportion: '',
+          // minChangeTime: '',
+          // maxChangeTime: '',
 
           isMock: false,
         };
@@ -334,9 +320,9 @@ export default {
             uid: uid,
             status: status ? 2 : 1,
             isMock: isMock ? 1 : 0,
-            // proportion: Precision.divide(proportion, 100),
-            minProportion: Precision.divide(minProportion, 100),
-            maxProportion: Precision.divide(maxProportion, 100),
+            proportion: Precision.divide(proportion, 100),
+            // minProportion: Precision.divide(minProportion, 100),
+            // maxProportion: Precision.divide(maxProportion, 100),
             ...prop,
           };
           id === '' ? (params.userId = (this.userArr.length && this.userArr.filter((v) => v.uid == uid) && this.userArr.filter((v) => v.uid == uid)[0].userId) || '') : userId, (this.btnLoading = true);
@@ -406,9 +392,9 @@ export default {
           v['statusText'] = v['status'];
           // 下单状态：1-不允许下单, 2-可下单
           v['status'] = v['status'] == 2 ? true : false;
-          // v['proportion'] = v['proportion'] && (Precision.times(v['proportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
-          v['minProportion'] = v['minProportion'] && (Precision.times(v['minProportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
-          v['maxProportion'] = v['maxProportion'] && (Precision.times(v['maxProportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
+           v['proportion'] = v['proportion'] && (Precision.times(v['proportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
+          // v['minProportion'] = v['minProportion'] && (Precision.times(v['minProportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
+          // v['maxProportion'] = v['maxProportion'] && (Precision.times(v['maxProportion'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
         });
         this.list = records;
         this.listLoading = false;

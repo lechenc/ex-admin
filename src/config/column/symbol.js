@@ -430,23 +430,23 @@ const contractSymbolRobotCol = [
     label: '最新成交最大张数',
     prop: 'maxSheets',
   },
-  // {
-  //   label: '下单委托深度取值比例',
-  //   prop: 'proportion',
-  // },
+  {
+    label: '下单委托深度取值比例',
+    prop: 'proportion',
+  },
 
-  {
-    label: '时间变化频次',
-    arr:['minChangeTime','maxChangeTime'],
-    type:'textArr',
-    join:'~',
-  },
-  {
-    label: '下单委托深度取值比例范围',
-    arr:['minProportion','maxProportion'],
-    type:'textArr',
-    join:'~',
-  },
+  // {
+  //   label: '时间变化频次',
+  //   arr:['minChangeTime','maxChangeTime'],
+  //   type:'textArr',
+  //   join:'~',
+  // },
+  // {
+  //   label: '下单委托深度取值比例范围',
+  //   arr:['minProportion','maxProportion'],
+  //   type:'textArr',
+  //   join:'~',
+  // },
 
   {
     label: '深度参数',
@@ -536,23 +536,23 @@ const contractSymbolRobotColNoBtn = [
     label: '最新成交最大张数',
     prop: 'maxSheets',
   },
-  // {
-  //   label: '下单委托深度取值比例',
-  //   prop: 'proportion',
-  // },
+  {
+    label: '下单委托深度取值比例',
+    prop: 'proportion',
+  },
 
-  {
-    label: '时间变化频次',
-    arr:['minChangeTime','maxChangeTime'],
-    type:'textArr',
-    join:'~',
-  },
-  {
-    label: '下单委托深度取值比例范围',
-    arr:['minProportion','maxProportion'],
-    type:'textArr',
-    join:'~',
-  },
+  // {
+  //   label: '时间变化频次',
+  //   arr:['minChangeTime','maxChangeTime'],
+  //   type:'textArr',
+  //   join:'~',
+  // },
+  // {
+  //   label: '下单委托深度取值比例范围',
+  //   arr:['minProportion','maxProportion'],
+  //   type:'textArr',
+  //   join:'~',
+  // },
 
   {
     label: '深度参数',
