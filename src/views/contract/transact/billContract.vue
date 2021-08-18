@@ -61,8 +61,8 @@ export default {
       $api
         .apiBillContractListExport(params)
         .then((res) => {
-          fileDownload(res.data, '合约账单.xlsx');
           this.calLoadingExcel = false;
+          fileDownload(res.data, '合约账单.xlsx');
         })
         .catch(() => {
           this.calLoadingExcel = false;

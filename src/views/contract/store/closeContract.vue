@@ -1,7 +1,21 @@
 <template>
   <div class="closeContract-container">
     <div class="container-top">
-      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" :calLoadingExcel="calLoadingExcel" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel"   />
+      <Bsearch
+        :calTotal="true"
+        @do-calTotal="calTotal"
+        :configs="searchCofig"
+        @do-search="doSearch"
+        @do-reset="doReset"
+        :calLoading="calLoading"
+        calTextExcel="导出excel"
+        :calTotalExcel="btnArr.includes('excel')"
+        :calLoadingExcel="calLoadingExcel"
+        @do-calTotal-excel="calTotalExcel"
+        :excelLoading="excelLoading"
+        :exportExcel="true"
+        @do-exportExcel="exportExcel"
+      />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -58,7 +72,7 @@ import $api from '@/api/api';
 import activePage from '@/mixin/keepPage';
 import Precision from '@/utils/number-precision';
 import utils from '@/utils/util';
-import fileDownload from 'js-file-download'
+import fileDownload from 'js-file-download';
 export default {
   name: 'CloseContract',
   components: {
@@ -69,7 +83,6 @@ export default {
   mixins: [activePage],
   data() {
     return {
-      
       dialogVisible: false,
       list: [], //委托列表
       configs: [], // 委托列表列配置
@@ -91,8 +104,8 @@ export default {
       excelLoading: false,
 
       dataList: [],
-      btnArr:[],
-      calLoadingExcel:false,
+      btnArr: [],
+      calLoadingExcel: false,
       listLoading: false, // 表格loading
       calLoading: false,
     };
@@ -120,14 +133,18 @@ export default {
       this.search_params_obj = data;
       const params = {};
 
-      if (this.calLoadingExcel) return;
       this.calLoadingExcel = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
-      $api.apiCloseContractListExport(params).then((res) => {
-        fileDownload(res.data, '平仓记录.xlsx')
-      });
-      this.calLoadingExcel = false;
+      $api
+        .apiCloseContractListExport(params)
+        .then((res) => {
+          this.calLoadingExcel = false;
+          fileDownload(res.data, '平仓记录.xlsx');
+        })
+        .catch(() => {
+          this.calLoadingExcel = false;
+        });
     },
     exportExcel(val) {
       this.search_params_obj = val.query;
@@ -278,7 +295,6 @@ export default {
       this.getSymbolList();
     }
   },
-  
 };
 </script>
 <style scope lang="scss">
