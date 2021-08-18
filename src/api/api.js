@@ -3328,6 +3328,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/user/contract/agent/setDirectAgentMaxCommissionPercent', data);
   }
 
+  // 财务管理/财务数据统计列表 合计
+  static apiGetFinancialStatisticsSum(data) {
+    return Fetch.post('/admin/account/pay/deposit/query/recharge/statistics/sum', data);
+  }
+
   
 
   

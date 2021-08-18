@@ -1,7 +1,7 @@
 <template>
   <div class="billContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel"  />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -18,8 +18,9 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { billContractCol, billContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
-import fileDownload from 'js-file-download'
+import fileDownload from 'js-file-download';
 import utils from '@/utils/util';
+
 export default {
   name: 'BillContract',
   components: {
@@ -44,10 +45,29 @@ export default {
       ago: '',
       btnArr: [],
       excelLoading: false,
-      dataList:[]
+      dataList: [],
     };
   },
   methods: {
+    // 导出excel
+    calTotalExcel(data) {
+      this.search_params_obj = data;
+      const params = {};
+
+      
+      this.calLoadingExcel = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      $api
+        .apiBillContractListExport(params)
+        .then((res) => {
+          fileDownload(res.data, '合约账单.xlsx');
+          this.calLoadingExcel = false;
+        })
+        .catch(() => {
+          this.calLoadingExcel = false;
+        });
+    },
     exportExcel(val) {
       this.search_params_obj = val.query;
       const num = val.num;
@@ -110,20 +130,6 @@ export default {
         this.dataList = records;
       }
       this.listLoading = false;
-    },
-    // 导出excel
-    calTotalExcel(data) {
-      this.search_params_obj = data;
-      const params = {};
-
-      if (this.calLoadingExcel) return;
-      this.calLoadingExcel = true;
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      $api.apiBillContractListExport(params).then((res) => {
-        fileDownload(res.data, '合约账单.xlsx')
-      });
-      this.calLoadingExcel = false;
     },
 
     requiredParams(params) {

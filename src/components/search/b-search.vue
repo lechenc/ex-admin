@@ -152,7 +152,7 @@
         </div>
         <div class="search-footer">
           <el-button plain @click="doCalTotal" :size="sizeDiy" :loading="calLoading" v-if="calTotal">{{ calText }}</el-button>
-          <el-button plain @click="doCalTotalExcel" :size="sizeDiy" :loading="calLoadingExcel" v-if="calTotalExcel">{{ calTextExcel }}</el-button>
+          <el-button plain @click="doCalTotalExcel" :size="sizeDiy" v-loading.fullscreen.lock="calLoadingExcel"  element-loading-text="拉取中" v-if="calTotalExcel">{{ calTextExcel }}</el-button>
           <!-- 预估统计 -->
           <el-button plain @click="doEstimate" :size="sizeDiy" :loading="calLoading" v-if="estimate">预估统计</el-button>
           <el-button plain @click="doEstimate" :size="sizeDiy" :loading="calLoading" v-if="statistics">统计</el-button>
