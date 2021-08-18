@@ -291,10 +291,14 @@ const billContractCol = [
   {
     label: '金额',
     prop: 'amount',
-    type: 'myShowHide',
-    filters: 'type',
-    filtersValue: [18, 19],
   },
+  // {
+  //   label: '金额',
+  //   prop: 'amount',
+  //   type: 'myShowHide',
+  //   filters: 'type',
+  //   filtersValue: [18, 19],
+  // },
   {
     label: '类型',
     prop: 'type',
