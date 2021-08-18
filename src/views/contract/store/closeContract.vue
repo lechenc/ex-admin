@@ -1,7 +1,7 @@
 <template>
   <div class="closeContract-container">
     <div class="container-top">
-      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" :calLoadingExcel="calLoadingExcel" @do-calTotal-excel="calTotalExcel"  />
+      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" :calLoadingExcel="calLoadingExcel" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel"   />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />

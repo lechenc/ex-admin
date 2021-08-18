@@ -2191,7 +2191,7 @@ const agentPlacesConfigsCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '手动发放', val: 0 }, { text: '自动发放', val: 1 }],
+    filters: [{ text: '手动发放', val: 1 }, { text: '自动发放', val: 2 }],
   },
   {
     label: '发放名额数量',

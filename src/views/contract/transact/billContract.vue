@@ -1,7 +1,7 @@
 <template>
   <div class="billContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel"  />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -42,9 +42,26 @@ export default {
       toDay: '',
       ago: '',
       btnArr: [],
+      excelLoading: false,
+      dataList:[]
     };
   },
   methods: {
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getUserBillPagination(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
@@ -89,6 +106,7 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+        this.dataList = records;
       }
       this.listLoading = false;
     },
