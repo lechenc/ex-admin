@@ -307,18 +307,18 @@ export default {
 
     this.$watch(
       function () {
-        return this.searchCofig[2].value;
+        return this.searchCofig[1].value;
       },
       // 合约出入金,type=1为合约出金,type=2为合约入金
       function (newVal, oldValue) {
         if (newVal == 1) {
           this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-          this.searchCofig[1].value = '';
+          this.searchCofig[2].value = '';
           this.dateMonthDisabled = true;
           this.dateRankDisabled = false;
         } else if (newVal == 2) {
           this.searchCofig[0].value = '';
-          this.searchCofig[1].value = '';
+          this.searchCofig[2].value = '';
           this.dateRankDisabled = true;
           this.dateMonthDisabled = false;
         }

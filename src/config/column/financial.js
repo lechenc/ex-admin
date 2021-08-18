@@ -2301,13 +2301,6 @@ const financialStatisticsConfig = [
     prop2: 'endTime',
     value: '',
   },
-  
-  {
-    type: 'date_month',
-    label: '月份',
-    prop: 'searchMonth',
-    value: '',
-  },
   {
     type: 'select',
     label: '时间周期',
@@ -2315,6 +2308,14 @@ const financialStatisticsConfig = [
     value: 1,
     list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
   },
+  
+  {
+    type: 'date_month',
+    label: '月份',
+    prop: 'searchMonth',
+    value: '',
+  },
+  
   {
     type: 'select',
     label: '链名称',
