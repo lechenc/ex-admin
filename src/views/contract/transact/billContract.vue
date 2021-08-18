@@ -19,6 +19,7 @@ import iconPage from '@/components/icon-page';
 import { billContractCol, billContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
 import fileDownload from 'js-file-download'
+import utils from '@/utils/util';
 export default {
   name: 'BillContract',
   components: {
