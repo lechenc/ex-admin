@@ -1475,6 +1475,14 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/businessRefundRecord'),
         meta: { title: '商务手续费返佣记录', icon: '', role: [] },
       },
+
+      {
+        hidden: true,
+        path: 'agentPlacesConfigs',
+        name: 'AgentPlacesConfigs',
+        component: () => import('@/views/agent/agentPlacesConfigs'),
+        meta: { title: '手动发放代理名额设置', icon: '', role: [] },
+      },
     ],
   },
 

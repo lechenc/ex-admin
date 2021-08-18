@@ -3303,6 +3303,33 @@ static batchAddAnalyst(data) {
     return Fetch.postExcel('/admin/account/close-position-entrust-export', data);
   }
 
+  // 代理管理/手动发放代理名额设置 列表
+  static apiGetAgentPlacesConfigsList(data) {
+    return Fetch.post('/user/grant/agent/quota/page', data);
+  }
+
+  // 代理管理/手动发放代理名额设置 列表
+  static apiAddAgentPlacesConfigsList(data) {
+    return Fetch.post('/user/issuingAgentQuota', data);
+  }
+
+  // 代理管理/手动发放代理名额设置 详情
+  static apiGetAgentPlacesConfigsDetalsById(data) {
+    return Fetch.post('/user/grant/agent/quota/list', data);
+  }
+
+  // 代理与商务可直接设置返佣比例参数设置 获取
+  static apiGetBusinessAgentParams(data) {
+    return Fetch.post('/admin/user/contract/agent/getDirectAgentMaxCommissionPercent', data);
+  }
+
+  // 代理与商务可直接设置返佣比例参数设置 获取
+  static apiSetBusinessAgentParams(data) {
+    return Fetch.post('/admin/user/contract/agent/setDirectAgentMaxCommissionPercent', data);
+  }
+
+  
+
   
 
   
