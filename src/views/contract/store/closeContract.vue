@@ -8,7 +8,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :calLoading="calLoading"
-        calTextExcel="导出excel"
+        calTextExcel="快速导出excel"
         :calTotalExcel="btnArr.includes('excel')"
         :calLoadingExcel="calLoadingExcel"
         @do-calTotal-excel="calTotalExcel"
