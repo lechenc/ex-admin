@@ -31,6 +31,87 @@
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
+
+    <!-- 详情 -->
+    <el-dialog class="agentRebate-dialog" title="详情" width="600px" :visible.sync="dialogDetailVisible">
+      <el-row :span="24">
+        <el-col :span="6">时间:</el-col>
+        <el-col :span="8">
+          {{ curRow.startTime || '无' }}
+        </el-col>
+
+        <el-col style="text-align: center" :span="2"> - </el-col>
+
+        <el-col :span="8">
+          {{ curRow.endTime || '无' }}
+        </el-col>
+      </el-row>
+      <el-row :span="24">
+        <el-col :span="6">链类型:</el-col>
+        <el-col :span="8">
+          {{ curRow.chainName || '无' }}
+        </el-col>
+      </el-row>
+      <el-row :span="24">
+        <el-col :span="6">币种:</el-col>
+        <el-col :span="8">
+          {{ curRow.coinName || '无' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">充币数量:</el-col>
+        <el-col :span="8">
+          {{ curRow.depositAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">冷钱包提币数量:</el-col>
+        <el-col :span="8">
+          {{ curRow.coldWithdrawAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">热钱包提币数量:</el-col>
+        <el-col :span="8">
+          {{ curRow.hotWithdrawAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">总提币数量:</el-col>
+        <el-col :span="8">
+          {{ curRow.totalWithdrawAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">净充币数量:</el-col>
+        <el-col :span="8">
+          {{ curRow.pureDepositAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">归集消耗手续费:</el-col>
+        <el-col :span="8">
+          {{ curRow.collectCostFeeAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <el-row :span="24">
+        <el-col :span="6">归集冷钱包数量:</el-col>
+        <el-col :span="8">
+          {{ curRow.coldCollectAmount || '0' }}
+        </el-col>
+      </el-row>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogDetailVisible = false" type="primary">我知道了</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -66,9 +147,29 @@ export default {
       ago: '',
       dateMonthDisabled: false,
       dateRankDisabled: false,
+      dialogDetailVisible: false,
+      curRow: {},
     };
   },
   methods: {
+    // 根据查询条件进行合计弹窗展示
+    async calTotal(data) {
+      this.search_params_obj = data;
+      if (this.search_params_obj.searchMonth) {
+        this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00';
+      }
+      this.curRow = {}
+      this.calLoading = true;
+      const params = {};
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      this.dialogDetailVisible = true;
+      const res = await $api.apiGetFinancialStatisticsSum(params);
+      if (res) {
+        this.curRow = res.data.data
+      }
+      this.calLoading = false;
+    },
     async doHandle(data) {
       const { fn, row } = data;
       // 设置上架开关
@@ -91,7 +192,6 @@ export default {
       }
     },
     doSearch(data) {
-      console.log('data', data);
       this.current_page = 1;
       this.search_params_obj = data;
       // if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
@@ -125,34 +225,7 @@ export default {
       this.current_page = val;
       this.getList();
     },
-    // 根据查询条件进行合计弹窗展示
-    async calTotal(data) {
-      this.search_params_obj = data;
-      // if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-      //   this.search_params_obj.flag = 1;
-      // }
-      if (!this.search_params_obj.coinId) {
-        this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
-        return;
-      }
-      this.calLoading = true;
-      const params = {};
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getDepositeSum(params);
-      if (res) {
-        const getObj = res.data.data;
-        if (getObj) {
-          let coin = this.searchCofig[3]['list'].filter((v) => v.value == this.search_params_obj.coinId)[0].label;
-          this.$alert(`<p>币种：${coin}</p><p>到账数量总计：${getObj.realAmountSum}</p>`, '统计结果', {
-            dangerouslyUseHTMLString: true,
-          }).catch(() => {});
-        } else {
-          this.$message({ type: 'error', message: '数据列表为空!' });
-        }
-      }
-      this.calLoading = false;
-    },
+
     // getlist
     async getList() {
       if (this.listLoading) return;
@@ -161,6 +234,9 @@ export default {
         pageSize: this.pageSize,
       };
       this.requiredParams(query_data);
+      if (this.search_params_obj.searchMonth) {
+        this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00';
+      }
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
       const res = await $api.getFinancialStatisticsList(query_data);
@@ -178,7 +254,7 @@ export default {
       this.excelLoading = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getDepositList(params);
+      const res = await $api.getFinancialStatisticsList(params);
       this.excelLoading = false;
       if (res) {
         return res;
@@ -231,18 +307,18 @@ export default {
 
     this.$watch(
       function () {
-        return this.searchCofig[2].value;
+        return this.searchCofig[1].value;
       },
       // 合约出入金,type=1为合约出金,type=2为合约入金
       function (newVal, oldValue) {
         if (newVal == 1) {
           this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-          this.searchCofig[1].value = '';
+          this.searchCofig[2].value = '';
           this.dateMonthDisabled = true;
           this.dateRankDisabled = false;
         } else if (newVal == 2) {
           this.searchCofig[0].value = '';
-          this.searchCofig[1].value = '';
+          this.searchCofig[2].value = '';
           this.dateRankDisabled = true;
           this.dateMonthDisabled = false;
         }

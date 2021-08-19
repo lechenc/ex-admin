@@ -1,7 +1,7 @@
 <template>
   <div class="billContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" calText="导出excel" :calTotal="btnArr.includes('excel')" @do-calTotal="calTotal" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -18,6 +18,8 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { billContractCol, billContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
+import fileDownload from 'js-file-download';
+import utils from '@/utils/util';
 
 export default {
   name: 'BillContract',
@@ -29,7 +31,7 @@ export default {
   data() {
     return {
       listLoading: false, // 表格loading
-      calLoading: false,
+      calLoadingExcel: false,
       list: [], //委托列表
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
@@ -42,9 +44,45 @@ export default {
       toDay: '',
       ago: '',
       btnArr: [],
+      excelLoading: false,
+      dataList: [],
     };
   },
   methods: {
+    // 导出excel
+    calTotalExcel(data) {
+      this.search_params_obj = data;
+      const params = {};
+
+      
+      this.calLoadingExcel = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      $api
+        .apiBillContractListExport(params)
+        .then((res) => {
+          this.calLoadingExcel = false;
+          fileDownload(res.data, '合约账单.xlsx');
+        })
+        .catch(() => {
+          this.calLoadingExcel = false;
+        });
+    },
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getUserBillPagination(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
@@ -89,40 +127,9 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+        this.dataList = records;
       }
       this.listLoading = false;
-    },
-    // 导出excel
-    // async calTotal(data) {
-    //   this.search_params_obj = data;
-    //   const params = {};
-
-    //   if (this.calLoading) return;
-    //   this.calLoading = true;
-    //   this.requiredParams(params);
-    //   Object.assign(params, this.search_params_obj);
-    //   const res = await $api.apiBillContractListExport(params);
-    //   if (res) {
-    //     fileDownload(res.data.data, 'aaa')
-    //     this.$message.success('导出成功');
-    //   }
-    //   this.calLoading = false;
-    // },
-
-    // 导出excel
-    calTotal(data) {
-      return
-      this.search_params_obj = data;
-      const params = {};
-
-      if (this.calLoading) return;
-      this.calLoading = true;
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      axios.get(`/admin/account/contract-user-bill-export`, params).then((res) => {
-        fileDownload(res.data, 'aaa');
-      });
-      this.calLoading = false;
     },
 
     requiredParams(params) {

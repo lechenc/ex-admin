@@ -660,6 +660,14 @@ const extractForeignCol = [
     show_type: 'text',
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '初步审核成功', val: 3 }, { text: '初步审核失败', val: 4 }],
   },
+  // { label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 }
+  {
+    label: '提币类型',
+    prop: 'isAuto',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '无类型', val: 0 },{ text: '热钱包类型', val: 1 },{ text: '冷钱包类型', val: 2 }],
+  },
   {
     label: '提币时间',
     prop: 'createTime',
@@ -794,6 +802,13 @@ const extractForeignColNoBtn = [
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '初步审核成功', val: 3 }, { text: '初步审核失败', val: 4 }],
   },
   {
+    label: '提币类型',
+    prop: 'isAuto',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '无类型', val: 0 },{ text: '热钱包类型', val: 1 },{ text: '冷钱包类型', val: 2 }],
+  },
+  {
     label: '提币时间',
     prop: 'createTime',
     width: 200,
@@ -869,6 +884,13 @@ const extractForeignConfig = [
     prop: 'chainName',
     value: '',
     list: [],
+  },
+  {
+    type: 'select',
+    label: '提币类型',
+    prop: 'isAuto',
+    value: '',
+    list: [{ label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 } ],
   },
 ];
 
@@ -2258,7 +2280,7 @@ const financialStatisticsCol = [
   },
   {
     label: '归集冷钱包数量',
-    prop: 'confirmTime',
+    prop: 'coldCollectAmount',
   },
   {
     label: '待归集数量',
@@ -2279,13 +2301,6 @@ const financialStatisticsConfig = [
     prop2: 'endTime',
     value: '',
   },
-  
-  {
-    type: 'date_month',
-    label: '月份',
-    prop: 'month',
-    value: '',
-  },
   {
     type: 'select',
     label: '时间周期',
@@ -2293,6 +2308,14 @@ const financialStatisticsConfig = [
     value: 1,
     list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
   },
+  
+  {
+    type: 'date_month',
+    label: '月份',
+    prop: 'searchMonth',
+    value: '',
+  },
+  
   {
     type: 'select',
     label: '链名称',

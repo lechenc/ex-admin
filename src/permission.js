@@ -432,6 +432,7 @@ const mapComponents = {
   UserMonitor: () => import('@/views/agent/userMonitor'),
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
+  AgentPlacesConfigs: () => import('@/views/agent/agentPlacesConfigs'),
 
   CoinContract: () => import('@/views/contract/transact/coinContract'),
   GearSetting: () => import('@/views/contract/transact/gearSetting'),

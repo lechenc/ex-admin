@@ -2180,7 +2180,96 @@ const businessRefundRecordConfig = [
   },
 ];
 
+const agentPlacesConfigsCol = [
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '发放类型',
+    prop: 'grantType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '手动发放', val: 1 }, { text: '自动发放', val: 2 }],
+  },
+  {
+    label: '发放名额数量',
+    prop: 'quotaCount',
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    type: 'time',
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 160,
+    btnGroup: [
+      {
+        label: '详情',
+        fn: 'details',
+        type: 'primary',
+      },
+    ],
+  },
+];
+
+const agentPlacesConfigsConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
+    type: 'select',
+    label: '发放类型',
+    prop: 'grantType',
+    value: '',
+    list: [
+      {
+        label: '手动发放',
+        value: 1,
+      },
+      {
+        label: '自动发放',
+        value: 2,
+      },
+    ],
+  },
+];
+
+const agentPlacesConfigsDetailCol = [
+  {
+    label: '使用时间',
+    prop: 'useTime',
+  },
+  {
+    label: '使用UID',
+    prop: 'useUid',
+  },
+  {
+    label: '使用比例',
+    prop: 'commissionPercent',
+  },
+];
+
 export {
+  agentPlacesConfigsDetailCol,
+  agentPlacesConfigsCol,
+  agentPlacesConfigsConfig,
   businessRefundRecordConfig,
   businessRefundRecordCol,
   businessRelationListsConfig,

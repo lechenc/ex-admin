@@ -5,9 +5,10 @@
     </div>
     <div class="container-btn" v-if="btnArr.length">
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级商务</el-button>
-      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editParams">商务返佣参数设置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editBusinessParams">商务返佣参数设置</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('agentParams')" @click="editAgentParams">代理返佣参数设置</el-button>
-      <!-- <el-button type="primary" size="medium" v-if="btnArr.includes('config')" @click="$router.push('/contract/agent/agentsListsConfig')">代理商等级配置</el-button> -->
+      <el-button type="primary" size="medium" v-if="btnArr.includes('agentPlacesConfigs')" @click="$router.push('/agent/agentPlacesConfigs')">手动发放代理名额设置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('businessAgentParams')" @click="editBusinessAgentParams">代理与商务可直接设置返佣比例参数设置</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -139,8 +140,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
-        
 
         <el-row v-if="twoLevelModel && !isBusiness" :span="24">
           <el-col :span="20">
@@ -333,6 +332,41 @@
         <el-button type="primary" @click="agentParamsConfirmOp" :loading="agentParamsBtnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 代理与商务可直接设置返佣比例参数设置 -->
+    <el-dialog title="代理与商务可直接设置返佣比例参数设置 " width="600px" :visible.sync="businessAgentParamsVisible">
+      <el-form :model="businessAgentParamsForm" :label-width="formLabelWidth" ref="businessAgentParamsForm" :rules="businessAgentParamsRules">
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item class="center-item" label="代理与商务可直接设置返佣比例参数设置" prop="commissionPercent">
+              <el-input @input="paramsCheckVal('businessAgentParamsForm', 'commissionPercent')" type="number" v-model.trim="businessAgentParamsForm.commissionPercent" placeholder="请输入">
+                <div slot="append">%</div>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="启用开关">
+              <el-switch v-model="businessAgentParamsForm.status" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item label="管理员谷歌" prop="googleCode">
+              <el-input type="text" @input="businessAgentParamsForm.googleCode = businessAgentParamsForm.googleCode.replace(/[^\d]/g, '')" v-model.trim="businessAgentParamsForm.googleCode" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="businessAgentParamsVisible = false">取 消</el-button>
+        <el-button type="primary" @click="businessAgentParamsConfirmOp" :loading="businessAgentParamsBtnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -471,10 +505,17 @@ export default {
       curLevelArr: [],
       agentLevelArr: [],
       businessLevelArr: [],
-      agentParamsBtnLoading: false,
       agentParamsForm: {},
+      agentParamsBtnLoading: false,
       agentParamsVisible: false,
-      commissionPercentLimitShow:false
+      commissionPercentLimitShow: false,
+      businessAgentParamsForm: {},
+      businessAgentParamsBtnLoading: false,
+      businessAgentParamsVisible: false,
+      businessAgentParamsRules: {
+        commissionPercent: [{ required: true, message: '必填', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+      },
     };
   },
   watch: {
@@ -552,6 +593,43 @@ export default {
     },
   },
   methods: {
+    async editBusinessAgentParams() {
+      
+      this.$nextTick(()=>{
+        this.$refs['businessAgentParamsForm'].resetFields();
+      })
+      const res = await $api.apiGetBusinessAgentParams({});
+      if (res) {
+        this.businessAgentParamsVisible = true;
+        const { paramValue, status } = res.data.data;
+        this.businessAgentParamsForm = {
+          googleCode: '',
+          commissionPercent: paramValue.replace('%', ''),
+          status,
+        };
+      }
+    },
+    businessAgentParamsConfirmOp() {
+      this.$refs['businessAgentParamsForm'].validate(async (valid) => {
+        if (valid) {
+          const { commissionPercent, googleCode,status } = this.businessAgentParamsForm;
+          if (this.businessAgentParamsBtnLoading) return;
+          const params = {
+            commissionPercent: commissionPercent + '%',
+            googleCode,
+            status
+          };
+
+          this.businessAgentParamsBtnLoading = true;
+          const res = await $api.apiSetBusinessAgentParams(params);
+          if (res) {
+            this.$message({ message: '设置成功', type: 'success' });
+            this.businessAgentParamsVisible = false;
+          }
+          this.businessAgentParamsBtnLoading = false;
+        }
+      });
+    },
     async getAgentLevel() {
       const res = await $api.apiGetAgentLevel({});
       if (res) {
@@ -631,7 +709,7 @@ export default {
         }
       });
     },
-    async editParams() {
+    async editBusinessParams() {
       this.paramsVisible = true;
       const res = await $api.apiGetRebateConfig({});
       if (res) {
@@ -888,7 +966,7 @@ export default {
             phoneEmailThird,
             selfCommission,
             commissionPercentLimit,
-            userType
+            userType,
           } = row;
 
           if (commissionLevel == 2) {
@@ -926,7 +1004,7 @@ export default {
             phoneEmailSecond,
             phoneEmailThird,
             selfCommission,
-            commissionPercentLimit: !commissionPercentLimit?'': commissionPercentLimit.split('%')[0] ,
+            commissionPercentLimit: !commissionPercentLimit ? '' : commissionPercentLimit.split('%')[0],
             userType,
           };
         });
@@ -990,7 +1068,7 @@ export default {
           phoneEmailSecond: '',
           phoneEmailThird: '',
           selfCommission: 0,
-          userType:31
+          userType: 31,
         };
         // this.rules.businessUid[0].required = true;
         // this.rules.agentMode[0].required = true;
@@ -1003,7 +1081,7 @@ export default {
       this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
           const userId = this.userId;
-          const { password, commissionSwitch, userType,delayDay,delayUnit, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
+          const { password, commissionSwitch, userType, delayDay, delayUnit, loginSwitch, commissionPercentLimit, commissionPercent, packPercent, bondPercent, ...repo } = this.cForm;
           const params = {
             loginSwitch: loginSwitch ? 1 : 0,
             commissionSwitch: commissionSwitch ? 1 : 0,
@@ -1012,7 +1090,7 @@ export default {
             ...repo,
           };
           if (userType == 31) {
-            params.commissionPercentLimit = commissionPercentLimit+'%';
+            params.commissionPercentLimit = commissionPercentLimit + '%';
           }
           if (!this.isBusiness) {
             params.packPercent = packPercent + '%';
@@ -1148,7 +1226,18 @@ export default {
     margin: 10px 0;
   }
   .container-btn {
-    margin: 20px 0;
+    .el-button {
+      display: inline-block;
+      margin: 20px 5px;
+    }
+  }
+  .center-item {
+    display: flex;
+    align-items: center;
+    .el-form-item__content {
+      flex: 1;
+      margin-left: 0 !important;
+    }
   }
   .gcode {
     border-right: 1px solid #ccc !important;
@@ -1164,6 +1253,18 @@ export default {
       color: #606266;
       height: 28px;
       line-height: 28px;
+    }
+  }
+}
+
+@media screen and(max-width: 750px) {
+  .agentsLists-container {
+    .container-btn {
+      margin: 20px 0;
+      .el-button {
+        display: block;
+        margin: 10px;
+      }
     }
   }
 }
