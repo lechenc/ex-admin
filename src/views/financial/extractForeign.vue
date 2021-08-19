@@ -458,7 +458,7 @@ export default {
         const getObj = res.data.data;
         if (getObj) {
           let coin = this.searchCofig[2]['list'].filter((v) => v.value == this.search_params_obj.coinId)[0].label;
-          this.$alert(`<p>币种：${coin}</p>  <p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${getObj.realAmountSum}</p><p>热提：${getObj.realAmountSum}</p><p>冷提：${getObj.realAmountSum}</p>`, '统计结果', {
+          this.$alert(`<p>币种：${coin}</p>  <p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${getObj.realAmountSum}</p><p>热提：${getObj.hotWithdrawSum}</p><p>冷提：${getObj.coldWithdrawSum}</p>`, '统计结果', {
             dangerouslyUseHTMLString: true,
           }).catch(() => {});
         } else {
