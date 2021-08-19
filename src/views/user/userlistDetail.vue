@@ -53,6 +53,14 @@
               <el-switch v-model="is_advertise" disabled active-color="#13ce66" inactive-color="#ff4949" @click.native="handleUpdate('is_advertise')"></el-switch>
             </span>
           </div>
+
+          <div>
+            语言状态：<span>
+              <el-radio-group v-model="language" @change="languageChange">
+                <el-radio :label="item.value" v-for="(item, index) in languageList" :key="index">{{ item.label }}</el-radio>
+              </el-radio-group>
+            </span>
+          </div>
         </div>
         <div v-else>
           <div>
@@ -69,6 +77,10 @@
           </div>
           <div>
             广告状态：<span>{{ is_advertise | boolDiy }}</span>
+          </div>
+
+          <div>
+            语言状态：<span>{{ language }}</span>
           </div>
         </div>
       </div>
@@ -156,7 +168,7 @@
     </el-tabs>
     <el-card v-if="btnArr.includes('inOutGoldList')" style="margin-bottom: 40px">
       <H3>用户出入金统计</H3>
-      <Btable :headColor='true' :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
+      <Btable :headColor="true" :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
     </el-card>
     <el-card style="margin-bottom: 40px">
       <H3>法币收款方式</H3>
@@ -226,6 +238,8 @@ export default {
       invite_curr_page: 0, //  邀请明细页码
       invite_total: 0, //邀请明细总数
       btnArr: [],
+      language: '', // 语言状态
+      languageList: [],
     };
   },
   filters: {
@@ -282,6 +296,35 @@ export default {
     onError() {
       this.$message.success('复制失败');
     },
+    languageChange(val) {
+      this.$confirm(`确认更改语言状态?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      })
+        .then(async () => {
+          let parmas = {
+            userId: this.nowUserId,
+            language: val,
+          };
+          const res = await $api.apiUpdateLanguage(parmas);
+          if (res) {
+            this.$message({
+              message: '更新成功',
+              type: 'success',
+            });
+            this.getDetail(this.$route.query.id);
+          } else {
+            this.$message({
+              message: '更新失败',
+              type: 'danger',
+            });
+            this.getDetail(this.$route.query.id);
+          }
+        })
+        .catch(() => {
+          this.getDetail(this.$route.query.id);
+        });
+    },
     handleUpdate(type) {
       const beforeStatus = this[type];
       this.$confirm(`确认更改状态?`, '提示', {
@@ -311,7 +354,6 @@ export default {
               type: 'success',
             });
             this[type] = !beforeStatus;
-            this.getList();
           } else {
             this.$message({
               message: '更新失败',
@@ -403,6 +445,7 @@ export default {
           this.is_draw = !!this.current_row.userWithdrawStatus; // 提币状态
           this.is_advertise = !!this.current_row.isPublishAdv; // 广告状态
           this.nowUserId = this.current_row.userId;
+          this.language = this.current_row.language; // 语言状态
           this.getInviteList();
           this.getAssetsList();
           this.getInOutGoldListFunc(this.nowUserId);
@@ -447,6 +490,19 @@ export default {
       }
       this.inOutGoldListLoading = false;
     },
+
+    async getLanguageList() {
+      const res = await $api.apiGetLanguageList({});
+      if (res) {
+        let list = res.data.data;
+        this.languageList = list.map((v) => {
+          return {
+            value: v.code,
+            label: v.label,
+          };
+        });
+      }
+    },
   },
   // mounted() {
   //   this.getDetail(this.$route.query.id);
@@ -482,6 +538,7 @@ export default {
     this.inOutGoldConfigs = userColInOutGoldList;
     this.getDetail(this.$route.query.id);
     this.getOtcBindListFunc(this.$route.query.id);
+    this.getLanguageList();
   },
 };
 </script>
