@@ -25,6 +25,10 @@
         <div class="subTitle">{{ curRow.workOrder }}</div>
         <div class="title"><img src="/img/h4.png" alt="" />工单待处理</div>
       </li>
+      <li>
+        <div class="subTitle">{{ curRow.payTypeNumber }}</div>
+        <div class="title"><img src="/img/h4.png" alt="" />支付方式待审核</div>
+      </li>
     </ul>
 
     <div class="inner-con">
@@ -461,8 +465,8 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 19%;
-      min-width: 140px;
+      width: 15%;
+      min-width: 120px;
       height: 180px;
       overflow: hidden;
       margin: 0 5px 10px 0;
