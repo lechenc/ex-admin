@@ -32,9 +32,9 @@
           <el-col :span="24"><el-input @input="checkVal('quotaCount', 'noDot')" type="text" placeholder="请输入" v-model="cForm.quotaCount"></el-input> </el-col>
         </el-form-item>
 
-        <el-form-item label="谷歌验证码" prop="googleCode" :label-width="labelWidth">
+        <!-- <el-form-item label="谷歌验证码" prop="googleCode" :label-width="labelWidth">
           <el-col :span="24"><el-input @input="checkVal('googleCode', 'noDot')" type="text" placeholder="请输入" v-model="cForm.googleCode"></el-input> </el-col>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -98,7 +98,7 @@ export default {
       rules: {
         quotaCount: [{ required: true, message: '必填', trigger: 'blur' }],
         uidList: [{ required: true, message: '必填', trigger: 'blur' }],
-        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
+        // googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       detaiLlistLoading: false,
       detailList: [],
@@ -129,7 +129,7 @@ export default {
         this.cForm = {
           quotaCount: '',
           uidList: '',
-          googleCode: '',
+          // googleCode: '',
         };
       });
     },
@@ -140,7 +140,7 @@ export default {
           let params = {
             quotaCount,
             uidList: uidList.split(','),
-            googleCode,
+            // googleCode,
           };
           this.btnLoading = true;
           const res = await $api.apiAddAgentPlacesConfigsList(params);
