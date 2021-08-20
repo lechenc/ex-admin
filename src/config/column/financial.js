@@ -853,7 +853,7 @@ const extractForeignConfig = [
   {
     type: 'select',
     label: '币种',
-    prop: 'coinId',
+    prop: 'coinName',
     value: '',
     list: [],
   },
