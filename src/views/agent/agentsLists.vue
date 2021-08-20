@@ -7,7 +7,7 @@
       <el-button type="primary" size="medium" v-if="btnArr.includes('add')" @click="addLine">添加一级商务</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('params')" @click="editBusinessParams">商务返佣参数设置</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('agentParams')" @click="editAgentParams">代理返佣参数设置</el-button>
-      <el-button type="primary" size="medium" v-if="btnArr.includes('agentPlacesConfigs')" @click="$router.push('/agent/agentPlacesConfigs')">手动发放代理名额设置</el-button>
+      <el-button type="primary" size="medium" v-if="btnArr.includes('agentPlacesConfigs')" @click="$router.push('/agent/agentPlacesConfigs')">发放返佣名额记录</el-button>
       <el-button type="primary" size="medium" v-if="btnArr.includes('businessAgentParams')" @click="editBusinessAgentParams">代理与商务可直接设置返佣比例参数设置</el-button>
     </div>
     <div>

@@ -1,6 +1,6 @@
 
 <template>
-  <el-table v-loading="listLoading" :data="data" element-loading-text="Loading" border fit highlight-current-row :max-height="maxHeight" :header-cell-style="headClass" size="medium" @selection-change="selectRow" class="new-table" v-bind="$attrs">
+  <el-table :row-class-name="tableRowClassName" v-loading="listLoading" :data="data" element-loading-text="Loading" border fit highlight-current-row :max-height="maxHeight" :header-cell-style="headClass" size="medium" @selection-change="selectRow" class="new-table" v-bind="$attrs">
     <template v-if="selection"> <el-table-column type="selection" width="55"> </el-table-column></template>
     <template v-for="config in configs">
       <!-- 普通文字渲染 -->
@@ -439,6 +439,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 表格颜色
+    needColorFont: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     isDeskTop() {
@@ -524,6 +529,24 @@ export default {
     };
   },
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      // 如果行内时间是今天此行字体颜色为金色
+      if (this.needColorFont) {
+        // 得到今天的时间
+        var day = new Date();
+
+        day.setTime(day.getTime());
+        var s = day.getFullYear() + '-' + '0' + (+day.getMonth() + 1) + '-' + day.getDate();
+        var m = day.getFullYear() + '-' + '0' + (+day.getMonth() + 1);
+
+        if (row.timeStr == s || row.timeStr == m) {
+          return 'blue-row';
+        } else {
+          return 'default-row';
+        }
+      }
+      return 'default-row';
+    },
     //是否有某些值
     getHave(val, typeValue) {
       let msg = val.some((v) => {
@@ -619,6 +642,7 @@ export default {
       font-weight: 600;
     }
   }
+
   .el-dropdown-menu {
     justify-content: center !important;
   }
@@ -645,7 +669,6 @@ export default {
   }
   .el-table__row {
     td {
-      color: #000;
       font-weight: 500;
       font-size: 14px;
       button {
@@ -653,6 +676,13 @@ export default {
       }
     }
   }
+  .blue-row {
+    color: #409eff !important;
+  }
+  .default-row {
+    color: #000 !important;
+  }
+
   .cell {
     text-align: center;
     display: flex;

@@ -10,9 +10,9 @@
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" />
     </div>
-    <div class="container-btn" v-if="btnArr.includes('agentPlacesConfigs')">
+    <!-- <div class="container-btn" v-if="btnArr.includes('agentPlacesConfigs')">
       <el-button type="primary" size="medium" @click="addVip">立即发放代理名额</el-button>
-    </div>
+    </div> -->
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
@@ -194,6 +194,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        grantSource:1,
       };
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);

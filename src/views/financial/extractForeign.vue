@@ -270,7 +270,7 @@ export default {
       this.handleStatus = fn;
       this.handleData = row;
       if (fn === 'preReview' || fn === 'nextReview') {
-        console.log(fn);
+        
         this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审';
         this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过';
         this.nowName = fn;
@@ -447,10 +447,7 @@ export default {
         this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
         return;
       }
-      if (!this.search_params_obj.chainName) {
-        this.$message({ type: 'error', message: '链名称必须选择!', duration: 2000 });
-        return;
-      }
+      
       this.calLoading = true;
       let coinId = this.coinList.filter((v) => v.label == this.search_params_obj.coinName)[0].value;
       const params = { isOwn: 0, coinId };
