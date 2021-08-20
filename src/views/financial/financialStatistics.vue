@@ -97,7 +97,7 @@
       <el-row :span="24">
         <el-col :span="6">归集消耗手续费:</el-col>
         <el-col :span="8">
-          {{ curRow.collectCostFeeAmount || '0' }}
+          {{ curRow.collectCostFeeAmountStr || '0' }}
         </el-col>
       </el-row>
 

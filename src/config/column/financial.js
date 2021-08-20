@@ -2276,7 +2276,7 @@ const financialStatisticsCol = [
 
   {
     label: '归集消耗手续费',
-    prop: 'collectCostFeeAmount',
+    prop: 'collectCostFeeAmountStr',
   },
   {
     label: '归集冷钱包数量',

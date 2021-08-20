@@ -311,7 +311,7 @@
       <el-form :model="agentParamsForm" :label-width="formLabelWidth" ref="agentParamsForm" :rules="paramsRules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item label="允许一级代理可设置范围" prop="commissionPercent">
+            <el-form-item label="代理最高返佣比例值限制" prop="commissionPercent">
               <el-input @input="paramsCheckVal('agentParamsForm', 'commissionPercent')" type="number" v-model.trim="agentParamsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>
@@ -334,11 +334,11 @@
     </el-dialog>
 
     <!-- 代理与商务可直接设置返佣比例参数设置 -->
-    <el-dialog title="代理与商务可直接设置返佣比例参数设置 " width="600px" :visible.sync="businessAgentParamsVisible">
-      <el-form :model="businessAgentParamsForm" :label-width="formLabelWidth" ref="businessAgentParamsForm" :rules="businessAgentParamsRules">
+    <el-dialog title="代理与商务创建代理时可直接设置返佣比例参数设置 " width="600px" :visible.sync="businessAgentParamsVisible">
+      <el-form :model="businessAgentParamsForm" label-width="190px" ref="businessAgentParamsForm" :rules="businessAgentParamsRules">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item class="center-item" label="代理与商务可直接设置返佣比例参数设置" prop="commissionPercent">
+            <el-form-item class="center-item" label="代理与商务创建代理时可直接设置返佣比例参数设置" prop="commissionPercent">
               <el-input @input="paramsCheckVal('businessAgentParamsForm', 'commissionPercent')" type="number" v-model.trim="businessAgentParamsForm.commissionPercent" placeholder="请输入">
                 <div slot="append">%</div>
               </el-input>

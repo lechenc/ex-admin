@@ -21,6 +21,8 @@
           <div>设置保证金额度：{{ current_row.bondLimit }}</div>
           <div>手续费返佣结算时间：{{ delayUnitobj[current_row.feeDelayUnit] }} + {{ current_row.feeDelayDay }}</div>
           <div>团队长返佣结算时间：{{ delayUnitobj[current_row.delayUnit] }} + {{ current_row.delayDay }}</div>
+          <div>创建高返佣机会总次数：{{ current_row.quotaCount }}</div>
+          <div>创建高返佣机会剩余次数：{{ current_row.remainingQuotaCount }}</div>
           <div v-if="modeIsShow">代理总盈亏阀值：{{ current_row.profitMargin || '无' }}</div>
           <div v-if="modeIsShow">用户盈亏阀值：{{ current_row.userProfitMargin || '无' }}</div>
           <div v-if="modeIsShow">监控手机/邮箱：{{ current_row.phoneEmailFirst || '无' }}</div>
