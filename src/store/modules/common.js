@@ -28,6 +28,7 @@ const mutations = {
   SET_COINLIST: (state, list) => {
     state.coinlist = list;
   },
+  
   SET_SYMBOLLIST: (state, list) => {
     state.symbollist = list;
   },
@@ -55,7 +56,7 @@ const mutations = {
 };
 
 const actions = {
-  // get coinlist
+  // get coinlist(value)
   getCoinList({ commit, state }) {
     return new Promise((resolve, reject) => {
       $api
@@ -72,6 +73,7 @@ const actions = {
         });
     });
   },
+  
   getFiatCoinList({ commit, state }) {
     return new Promise((resolve, reject) => {
       $api

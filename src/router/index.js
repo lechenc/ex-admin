@@ -503,6 +503,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/financial/hotWalletExtract'),
         meta: { title: '热钱包提币管理', icon: '', role: [] },
       },
+
+      {
+        path: 'financialStatistics',
+        name: 'FinancialStatistics',
+        component: () => import('@/views/financial/financialStatistics'),
+        meta: { title: '财务数据统计列表', icon: '', role: [] },
+      },
     ],
   },
   // 系统管理
@@ -1467,6 +1474,14 @@ export const asyncRouterMap = [
         name: 'BusinessRefundRecord',
         component: () => import('@/views/agent/businessRefundRecord'),
         meta: { title: '商务手续费返佣记录', icon: '', role: [] },
+      },
+
+      {
+        hidden: true,
+        path: 'agentPlacesConfigs',
+        name: 'AgentPlacesConfigs',
+        component: () => import('@/views/agent/agentPlacesConfigs'),
+        meta: { title: '手动发放代理名额设置', icon: '', role: [] },
       },
     ],
   },

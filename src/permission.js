@@ -380,6 +380,7 @@ const mapComponents = {
   LoadCoin: () => import('@/views/workOrder/loadCoin'),
   SearchUserAddress: () => import('@/views/financial/searchUserAddress'),
   HotWalletExtract: () => import('@/views/financial/hotWalletExtract'),
+  FinancialStatistics: () => import('@/views/financial/financialStatistics'),
 
   AssetManageList: () => import('@/views/assetManage/assetManageList'),
   TransferRecord: () => import('@/views/assetManage/transferRecord'),
@@ -431,6 +432,7 @@ const mapComponents = {
   UserMonitor: () => import('@/views/agent/userMonitor'),
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
+  AgentPlacesConfigs: () => import('@/views/agent/agentPlacesConfigs'),
 
   CoinContract: () => import('@/views/contract/transact/coinContract'),
   GearSetting: () => import('@/views/contract/transact/gearSetting'),

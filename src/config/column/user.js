@@ -154,6 +154,10 @@ const userCol = [
     filters: [{ text: '平台', val: 1 }, { text: '阿里', val: 2 }],
   },
   {
+    label: '语言状态',
+    prop: 'language',
+  },
+  {
     label: '实名审核状态',
     prop: 'userVerifiedStatus',
     type: 'filter',
@@ -261,7 +265,7 @@ const userColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: '120',
-    filters: [{ text: 'IOS=', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }, { text: 'CPT', val: 10 }],
+    filters: [{ text: 'IOS', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }, { text: 'CPT', val: 10 }],
   },
   {
     label: '手机',
@@ -358,16 +362,18 @@ const userColNoBtn = [
     width: 150,
     type: 'textColor',
   },
-
   {
     label: '实名认证来源',
     prop: 'verifiedSource',
-    type: 'filter',
-    show_type: 'text',
-    width: '120',
+    type: 'filter_myShowHide',
+    filtersProp: 'userVerifiedStatus',
+    filtersValue: [0, 1, 3],
     filters: [{ text: '平台', val: 1 }, { text: '阿里', val: 2 }],
   },
-
+  {
+    label: '语言状态',
+    prop: 'language',
+  },
   {
     label: '实名审核状态',
     prop: 'userVerifiedStatus',
@@ -458,6 +464,13 @@ const userConfig = [
       { value: 31, label: '商务' },
       { value: 32, label: '代理' },
     ],
+  },
+  {
+    type: 'select',
+    label: '语言状态',
+    prop: 'language',
+    value: '',
+    list: [],
   },
   {
     type: 'select',

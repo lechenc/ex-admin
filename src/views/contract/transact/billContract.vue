@@ -1,24 +1,14 @@
 <template>
   <div class="billContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="快速导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -28,6 +18,8 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { billContractCol, billContractConfig } from '@/config/column/contract';
 import $api from '@/api/api';
+import fileDownload from 'js-file-download';
+import utils from '@/utils/util';
 
 export default {
   name: 'BillContract',
@@ -39,7 +31,7 @@ export default {
   data() {
     return {
       listLoading: false, // 表格loading
-      calLoading: false,
+      calLoadingExcel: false,
       list: [], //委托列表
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
@@ -51,9 +43,46 @@ export default {
       symbollist: [],
       toDay: '',
       ago: '',
+      btnArr: [],
+      excelLoading: false,
+      dataList: [],
     };
   },
   methods: {
+    // 导出excel
+    calTotalExcel(data) {
+      this.search_params_obj = data;
+      const params = {};
+
+      
+      this.calLoadingExcel = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      $api
+        .apiBillContractListExport(params)
+        .then((res) => {
+          this.calLoadingExcel = false;
+          fileDownload(res.data, '合约账单.xlsx');
+        })
+        .catch(() => {
+          this.calLoadingExcel = false;
+        });
+    },
+    exportExcel(val) {
+      this.search_params_obj = val.query;
+      const num = val.num;
+      utils.exportData.apply(this, [num]);
+    },
+    async queryData(params) {
+      this.excelLoading = true;
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      const res = await $api.getUserBillPagination(params);
+      this.excelLoading = false;
+      if (res) {
+        return res;
+      }
+    },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
@@ -64,7 +93,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -86,7 +115,7 @@ export default {
       if (this.listLoading) return;
       const query_data = {
         pageNum: this.current_page,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
@@ -98,18 +127,17 @@ export default {
         this.pages = pages;
         this.current_page = current;
         this.list = records;
+        this.dataList = records;
       }
       this.listLoading = false;
     },
+
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
         params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
         // 组件时间初始必须format格式
-        this.searchCofig[0].value = [
-          this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-          this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss'),
-        ];
+        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss')];
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
@@ -118,7 +146,7 @@ export default {
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
           let tmpName = '';
-          tmpName = this.symbollist.filter(v => v['value'] == this.search_params_obj.coinMarket)[0].label;
+          tmpName = this.symbollist.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0].label;
           this.search_params_obj.coinMarket = tmpName;
         }
       }
@@ -135,6 +163,9 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('BillContract', billContractCol, []);
+    // //console.log('authObj', authObj);
+    this.btnArr = authObj.btnArr || [];
     this.configs = billContractCol;
     this.searchCofig = this.$util.clone(billContractConfig);
     // 初始化今天，和前天的时间

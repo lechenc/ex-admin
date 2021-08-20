@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\main.js
  */
-//
+
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 
