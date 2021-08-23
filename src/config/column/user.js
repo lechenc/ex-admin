@@ -155,7 +155,7 @@ const userCol = [
   },
   {
     label: '语言状态',
-    prop: 'loginIp1',
+    prop: 'language',
   },
   {
     label: '实名审核状态',
@@ -372,7 +372,7 @@ const userColNoBtn = [
   },
   {
     label: '语言状态',
-    prop: 'loginIp1',
+    prop: 'language',
   },
   {
     label: '实名审核状态',
@@ -468,7 +468,7 @@ const userConfig = [
   {
     type: 'select',
     label: '语言状态',
-    prop: 'registAppId1',
+    prop: 'language',
     value: '',
     list: [],
   },

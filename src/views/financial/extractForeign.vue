@@ -183,7 +183,7 @@ export default {
       pageSize: this.$pageSize, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
-      
+
       formLabelWidth: '120px',
       handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 viewDetail详情}
       handleData: {}, // 当前执行操作的数据
@@ -208,7 +208,8 @@ export default {
       qrcodeShow: false, // 是否显示验证码
       buttonDisabled: true,
       dialogUser: false, // 是否触发小弹窗
-      nowName: ''
+      nowName: '',
+      coinList:[]
     };
   },
   filters: {
@@ -259,7 +260,7 @@ export default {
         if (records && records.length > 0) {
           this.inOutGoldList = records;
         }
-      }else{
+      } else {
         this.inOutGoldList = [];
       }
       this.inOutGoldListLoading = false;
@@ -269,18 +270,18 @@ export default {
       this.handleStatus = fn;
       this.handleData = row;
       if (fn === 'preReview' || fn === 'nextReview') {
-        console.log(fn)
+        
         this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审';
         this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过';
-        this.nowName = fn
+        this.nowName = fn;
         if (fn === 'preReview') {
-          const { chainName, coinName, amount } = row
-          const request = await $api.checkAmountWithHot({chainName, coinName, amount })
-          this.dialogUser = Boolean(request)
-          this.openReviewDialog()
-          this.buttonDisabled = false
+          const { chainName, coinName, amount } = row;
+          const request = await $api.checkAmountWithHot({ chainName, coinName, amount });
+          this.dialogUser = Boolean(request);
+          this.openReviewDialog();
+          this.buttonDisabled = false;
         } else {
-          this.buttonDisabled = false
+          this.buttonDisabled = false;
           this.openReviewDialog();
         }
       } else if (fn === 'preReject' || fn === 'nextReject') {
@@ -378,19 +379,21 @@ export default {
             this.btnLoading = false;
           }
         });
-      }
+      };
       if (!this.dialogUser && this.nowName === 'preReview') {
         this.$confirm('当前热钱包余额不足,是否继续审核通过,通过后该笔提币将进入热钱包处理队列,当余额补足后,热钱包将自动打币【注：请及时联系财务协助处理】', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          fn()
-        }).catch(() => {
-          this.dialogVisible = false
-        });
+          type: 'warning',
+        })
+          .then(() => {
+            fn();
+          })
+          .catch(() => {
+            this.dialogVisible = false;
+          });
       } else {
-        fn()
+        fn();
       }
     },
     // 列表中弹窗生成二维码
@@ -440,16 +443,14 @@ export default {
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
         this.search_params_obj.flag = 1;
       }
-      if (!this.search_params_obj.coinId) {
+      if (!this.search_params_obj.coinName) {
         this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
         return;
       }
-      if (!this.search_params_obj.chainName) {
-        this.$message({ type: 'error', message: '链名称必须选择!', duration: 2000 });
-        return;
-      }
+      
       this.calLoading = true;
-      const params = { isOwn: 0 };
+      let coinId = this.coinList.filter((v) => v.label == this.search_params_obj.coinName)[0].value;
+      const params = { isOwn: 0, coinId };
       this.requiredParams(params);
       params.appId = 0;
       Object.assign(params, this.search_params_obj);
@@ -457,8 +458,7 @@ export default {
       if (res) {
         const getObj = res.data.data;
         if (getObj) {
-          let coin = this.searchCofig[2]['list'].filter((v) => v.value == this.search_params_obj.coinId)[0].label;
-          this.$alert(`<p>币种：${coin}</p>  <p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${getObj.realAmountSum}</p><p>热提：${getObj.hotWithdrawSum}</p><p>冷提：${getObj.coldWithdrawSum}</p>`, '统计结果', {
+          this.$alert(`<p>币种：${this.search_params_obj.coinName}</p>  <p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${getObj.realAmountSum}</p><p>热提：${getObj.hotWithdrawSum}</p><p>冷提：${getObj.coldWithdrawSum}</p>`, '统计结果', {
             dangerouslyUseHTMLString: true,
           }).catch(() => {});
         } else {
@@ -541,7 +541,13 @@ export default {
 
     this.searchCofig = this.$util.clone(extractForeignConfig);
     this.$store.dispatch('common/getCoinList').then(() => {
-      this.searchCofig[2]['list'] = this.$store.state.common.coinlist;
+      this.coinList = this.$store.state.common.coinlist
+      this.searchCofig[2]['list'] = this.$store.state.common.coinlist.map((v)=>{
+        return {
+          label:v.label,
+          value:v.label,
+        }
+      });
     });
     this.getList();
     this.getRechargeChainName();

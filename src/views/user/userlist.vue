@@ -1,28 +1,14 @@
 <template>
   <div class="user-container">
     <div class="container-top">
-      <Bsearch
-        :configs="searchCofig"
-        @do-search="doSearch"
-        @do-reset="doReset"
-        :excelLoading="excelLoading"
-        :exportExcel="true"
-        @do-exportExcel="exportExcel"
-      />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      ></el-pagination>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"></el-pagination>
     </div>
   </div>
 </template>
@@ -56,7 +42,6 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      
     };
   },
   filters: {
@@ -84,7 +69,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -106,7 +91,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        appId:0,
+        appId: 0,
       };
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
@@ -125,7 +110,7 @@ export default {
     async queryData(params) {
       this.excelLoading = true;
       this.requiredParams(params);
-      params.appId = 0
+      params.appId = 0;
       Object.assign(params, this.search_params_obj);
       const res = await $api.getUserList(params);
       this.excelLoading = false;
@@ -147,6 +132,18 @@ export default {
     formatTime(val) {
       return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
     },
+    async getLanguageList() {
+      const res = await $api.apiGetLanguageList({});
+      if (res) {
+        let list = res.data.data
+         this.searchCofig[3]['list']  = list.map((v)=>{
+          return {
+            value:v.code,
+            label:v.label,
+          }
+        });
+      }
+    },
   },
   mounted() {
     let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
@@ -158,6 +155,7 @@ export default {
 
     this.searchCofig = this.$util.clone(userConfig);
     this.getList();
+    this.getLanguageList();
   },
 };
 </script>

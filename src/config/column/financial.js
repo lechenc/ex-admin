@@ -853,7 +853,7 @@ const extractForeignConfig = [
   {
     type: 'select',
     label: '币种',
-    prop: 'coinId',
+    prop: 'coinName',
     value: '',
     list: [],
   },
@@ -2276,7 +2276,7 @@ const financialStatisticsCol = [
 
   {
     label: '归集消耗手续费',
-    prop: 'collectCostFeeAmount',
+    prop: 'collectCostFeeAmountStr',
   },
   {
     label: '归集冷钱包数量',

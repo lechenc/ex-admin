@@ -3333,6 +3333,16 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/pay/deposit/query/recharge/statistics/sum', data);
   }
 
+  // 用户管理/用户列表 语言列表
+  static apiGetLanguageList(data) {
+    return Fetch.post('/admin/user/language/list', data);
+  }
+
+   // 用户管理/用户列表详情 语言列表  修改
+   static apiUpdateLanguage(data) {
+    return Fetch.post('/admin/user/update/language', data);
+  }
+
   
 
   

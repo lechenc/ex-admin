@@ -25,7 +25,7 @@
       />
     </div>
     <div>
-      <Btable @do-handle="doHandle" :listLoading="listLoading" :data="list" :configs="configs" />
+      <Btable :needColorFont="true" @do-handle="doHandle" :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -97,7 +97,7 @@
       <el-row :span="24">
         <el-col :span="6">归集消耗手续费:</el-col>
         <el-col :span="8">
-          {{ curRow.collectCostFeeAmount || '0' }}
+          {{ curRow.collectCostFeeAmountStr || '0' }}
         </el-col>
       </el-row>
 
@@ -155,10 +155,18 @@ export default {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
+      if (!this.search_params_obj.coinName) {
+        this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
+        return;
+      }
+      if (!this.search_params_obj.chainName) {
+        this.$message({ type: 'error', message: '链名称必须选择!', duration: 2000 });
+        return;
+      }
       if (this.search_params_obj.searchMonth) {
         this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00';
       }
-      this.curRow = {}
+      this.curRow = {};
       this.calLoading = true;
       const params = {};
       this.requiredParams(params);
@@ -166,7 +174,7 @@ export default {
       this.dialogDetailVisible = true;
       const res = await $api.apiGetFinancialStatisticsSum(params);
       if (res) {
-        this.curRow = res.data.data
+        this.curRow = res.data.data;
       }
       this.calLoading = false;
     },
@@ -204,7 +212,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[2].value = 1;
+      this.searchCofig[1].value = 1;
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
 
       this.getList();
@@ -229,9 +237,11 @@ export default {
     // getlist
     async getList() {
       if (this.listLoading) return;
+     
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        searchType: this.searchCofig[1]['value'],
       };
       this.requiredParams(query_data);
       if (this.search_params_obj.searchMonth) {
@@ -271,7 +281,6 @@ export default {
         params.startTime = befV.replace(/\//gi, '-');
         // 组件时间初始必须format格式
         this.searchCofig[0].value = [befV, nowV];
-        this.search_params_obj.searchType = 1;
       }
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
@@ -298,8 +307,13 @@ export default {
     this.ago = this.$util.diyTime('ago');
 
     this.searchCofig = this.$util.clone(financialStatisticsConfig);
-    this.$store.dispatch('common/getCoinListLabel').then(() => {
-      this.searchCofig[4]['list'] = this.$store.state.common.coinlistLabel;
+    this.$store.dispatch('common/getCoinList').then(() => {
+      this.searchCofig[4]['list'] = this.$store.state.common.coinlist.map((v) => {
+        return {
+          label: v.label,
+          value: v.label,
+        };
+      });
     });
     this.dateMonthDisabled = true;
     this.getList();
