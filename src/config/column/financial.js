@@ -666,7 +666,7 @@ const extractForeignCol = [
     prop: 'isAuto',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '无类型', val: 0 },{ text: '热钱包类型', val: 1 },{ text: '冷钱包类型', val: 2 }],
+    filters: [{ text: '无类型', val: 0 }, { text: '热钱包类型', val: 1 }, { text: '冷钱包类型', val: 2 }],
   },
   {
     label: '提币时间',
@@ -806,7 +806,7 @@ const extractForeignColNoBtn = [
     prop: 'isAuto',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '无类型', val: 0 },{ text: '热钱包类型', val: 1 },{ text: '冷钱包类型', val: 2 }],
+    filters: [{ text: '无类型', val: 0 }, { text: '热钱包类型', val: 1 }, { text: '冷钱包类型', val: 2 }],
   },
   {
     label: '提币时间',
@@ -890,7 +890,7 @@ const extractForeignConfig = [
     label: '提币类型',
     prop: 'isAuto',
     value: '',
-    list: [{ label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 } ],
+    list: [{ label: '无类型', value: 0 }, { label: '热钱包类型', value: 1 }, { label: '冷钱包类型', value: 2 }],
   },
 ];
 
@@ -1015,6 +1015,14 @@ const spreconCol = [
     filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
   },
   {
+    label: '调账类型',
+    prop: 'accountType1',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+  },
+  {
     label: '币种',
     prop: 'coinName',
   },
@@ -1028,6 +1036,10 @@ const spreconCol = [
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
+  },
+  {
+    label: '驳回原因',
+    prop: 'remark',
   },
   {
     label: '申请时间',
@@ -1099,6 +1111,14 @@ const spreconColNoBtn = [
     filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
   },
   {
+    label: '调账类型',
+    prop: 'accountType1',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+  },
+  {
     label: '币种',
     prop: 'coinName',
   },
@@ -1112,6 +1132,10 @@ const spreconColNoBtn = [
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
+  },
+  {
+    label: '驳回原因',
+    prop: 'remark',
   },
   {
     label: '申请时间',
@@ -1169,6 +1193,56 @@ const spreconConfig = [
     prop: 'accountType',
     value: '',
     list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+  },
+  {
+    type: 'select',
+    label: '调账类型',
+    prop: 'accountType111',
+    value: '',
+    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+  },
+];
+
+// 财务管理 -- 特殊调账管理 批量导入草屋列表
+const spreconErrorCol = [
+  {
+    label: 'UID',
+    prop: 'uid',
+  },
+  {
+    label: '增/减',
+    prop: 'status',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
+  },
+  {
+    label: '账户类型',
+    prop: 'accountType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+  },
+  {
+    label: '币种',
+    prop: 'coinName',
+  },
+  {
+    label: '数量',
+    prop: 'amount',
+  },
+  {
+    label: '调账类型',
+    prop: 'accountType1',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+  },
+  {
+    label: '调账原因',
+    prop: 'coinName1',
   },
 ];
 
@@ -2264,7 +2338,7 @@ const financialStatisticsCol = [
     label: '热钱包提币数量',
     prop: 'hotWithdrawAmount',
   },
-  
+
   {
     label: '净充币数量',
     prop: 'pureDepositAmount',
@@ -2308,14 +2382,14 @@ const financialStatisticsConfig = [
     value: 1,
     list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
   },
-  
+
   {
     type: 'date_month',
     label: '月份',
     prop: 'searchMonth',
     value: '',
   },
-  
+
   {
     type: 'select',
     label: '链名称',
@@ -2349,6 +2423,7 @@ export {
   spreconCol,
   spreconColNoBtn,
   spreconConfig,
+  spreconErrorCol,
   collectionCol,
   collectionColNoBtn,
   collectionDetailCol,
