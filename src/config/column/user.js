@@ -752,7 +752,7 @@ const userColInOutGoldList = [
   },
 
   {
-    label: '补发金额',
+    label: '补发红包金额',
     prop: 'abnormalReissueAmount',
     headColor:'red',
   },
