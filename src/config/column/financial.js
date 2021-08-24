@@ -683,6 +683,10 @@ const extractForeignCol = [
     prop: 'firstAuditUserName',
   },
   {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
+  {
     label: '复审时间',
     prop: 'reviewAuditTime',
     width: 200,
@@ -690,6 +694,10 @@ const extractForeignCol = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
   {
     label: '操作',
@@ -822,6 +830,11 @@ const extractForeignColNoBtn = [
     label: '初审人',
     prop: 'firstAuditUserName',
   },
+
+  {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
   {
     label: '复审时间',
     prop: 'reviewAuditTime',
@@ -830,6 +843,10 @@ const extractForeignColNoBtn = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
 ];
 

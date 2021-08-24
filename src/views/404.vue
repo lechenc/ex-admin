@@ -9,11 +9,11 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">抱歉!</div>
-        <div class="bullshit__info">未能找到该页面
+        <div class="bullshit__info">未能找到该页面,或者您无此权限请联系管理员
         </div>
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">请检查您输入的url地址是否正确</div>
-        <div class="bullshit__info">或者尝试重新登录</div>
+        <div class="bullshit__info">请检查您输入的url地址是否正确,或者尝试重新登录</div>
+        <!-- <div class="bullshit__info">或者尝试重新登录</div> -->
       </div>
     </div>
   </div>

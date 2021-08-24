@@ -95,6 +95,10 @@ const examineCol = [
     ],
   },
   {
+    label: "驳回原因",
+    prop: "auditRemark",
+  },
+  {
     label: "操作",
     prop: "action",
     type: "action",
@@ -226,7 +230,11 @@ const examineColNoBtn = [
       { text: "审核通过", val: 1, type: "success" },
       { text: "审核不通过", val: 2, type: "warning" },
     ],
-  }
+  },
+  {
+    label: "驳回原因",
+    prop: "auditRemark",
+  },
 ];
 
 //  实名审核 搜索
@@ -594,6 +602,10 @@ const payCol = [
     filters: [{ text: "待审核", val: 0 }, { text: "审核成功", val: 1 }, { text: "审核失败", val: 2 }],
   },
   {
+    label: "驳回原因",
+    prop: "auditComment",
+  },
+  {
     label: "操作",
     prop: "action",
     type: "action",
@@ -689,6 +701,10 @@ const payColNoBtn = [
     show_type: "text",
     width:130,
     filters: [{ text: "待审核", val: 0 }, { text: "审核成功", val: 1 }, { text: "审核失败", val: 2 }],
+  },
+  {
+    label: "驳回原因",
+    prop: "auditComment",
   },
 ];
 

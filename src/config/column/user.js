@@ -722,6 +722,12 @@ const userColInOutGoldList = [
   
 
   {
+    label: '合约资金费用',
+    prop: 'contractFeeRate',
+    headColor:'red',
+  },
+
+  {
     label: '合约累计交易产生盈亏',
     prop: 'contractCloseProfit',
     headColor:'red',
