@@ -47,3 +47,4 @@ if (/alphatest/.test(window.location.href)) {
 var urlPicTmp = /alpex|linkkn/.test(window.location.href) ? '' : '/';
 window.SERVER_PATH_PIC = window.SERVER_PATH + '/admin/user/file/upload-file'; // 通用接口地址/
 window.SERVER_PATH_FILE = window.SERVER_PATH + '/admin/user/upload/package';
+window.SERVER_PATH_SPECIAL_FILE = window.SERVER_PATH + '/admin/account/file/special-reconciliation-excel'; // 财务管理/特殊调账管理上传

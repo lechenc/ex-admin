@@ -1033,11 +1033,11 @@ const spreconCol = [
   },
   {
     label: '调账类型',
-    prop: 'accountType1',
+    prop: 'reconciliationType',
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
   },
   {
     label: '币种',
@@ -1129,11 +1129,11 @@ const spreconColNoBtn = [
   },
   {
     label: '调账类型',
-    prop: 'accountType1',
+    prop: 'reconciliationType',
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
   },
   {
     label: '币种',
@@ -1214,9 +1214,9 @@ const spreconConfig = [
   {
     type: 'select',
     label: '调账类型',
-    prop: 'accountType111',
+    prop: 'reconciliationType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+    list: [{ label: '异常补发', value: 1 }, { label: '财务特殊充币', value: 2 }],
   },
 ];
 
@@ -1224,18 +1224,18 @@ const spreconConfig = [
 const spreconErrorCol = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'UID',
   },
   {
     label: '增/减',
-    prop: 'status',
+    prop: '增/减(1代表增、2代表减）',
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
   },
   {
     label: '账户类型',
-    prop: 'accountType',
+    prop: '账户类型',
     width: 100,
     type: 'filter',
     show_type: 'text',
@@ -1243,23 +1243,23 @@ const spreconErrorCol = [
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: '币种',
   },
   {
     label: '数量',
-    prop: 'amount',
+    prop: '数量',
   },
   {
     label: '调账类型',
-    prop: 'accountType1',
+    prop: '调账类型',
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 },],
   },
   {
     label: '调账原因',
-    prop: 'coinName1',
+    prop: '调账原因',
   },
 ];
 

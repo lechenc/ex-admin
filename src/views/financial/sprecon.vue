@@ -55,16 +55,27 @@
           <el-input type="textarea" placeholder="请输入描述" v-model="orderForm.remark"></el-input>
         </el-form-item>
 
-        <el-form-item label="资金输出账户:" :label-width="formLabelWidth" prop="accountType">
+        <!-- <el-form-item label="资金输出账户:" :label-width="formLabelWidth" prop="accountType">
           <el-select v-model="orderForm.accountType" size="small">
             <el-option v-for="(item, idx) in accountList" :key="idx" :label="item.label" :value="item.value"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
+
+        <el-row :span="24">
+          <el-col>
+            <el-form-item :label-width="formLabelWidth" label="调账类型:" prop="reconciliationType">
+              <el-radio-group v-model="orderForm.reconciliationType">
+                <el-radio :label="1">异常补发</el-radio>
+                <el-radio :label="2">财务特殊充币</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
         <el-row :span="24">
           <el-col :span="12">
-            <el-form-item label="账户余额:" :label-width="formLabelWidth" >
-              <el-input readonly v-model="orderForm.amount"> </el-input>
+            <el-form-item label="账户余额:" :label-width="formLabelWidth">
+              <el-input readonly v-model="curTotalAmount"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -77,8 +88,8 @@
 
     <!-- 创建批量导入 -->
     <el-dialog title="创建特殊调账" :visible.sync="groupOrderDialog" width="850px">
-      <el-form :model="groupOrderForm" label-width="150px" :rules="groupRules" ref="groupOrderForm">
-        <el-row :span="24">
+      <el-form label-width="150px">
+        <!-- <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="资金输出账户:" prop="coinId">
               <el-radio-group v-model="groupOrderForm.radio">
@@ -87,11 +98,11 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="账户余额:">
-              <el-input readonly v-model="groupOrderForm.amount"> </el-input>
+              <el-input readonly v-model="curTotalAmount"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -99,7 +110,7 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="获取表格:">
-              <el-button type="text"> 下载初始表格</el-button>
+              <el-button type="text" @click="downLoadDefaultExcel"> 下载初始表格</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -114,7 +125,7 @@
           <el-col :span="24">
             <el-form-item label="上传表格:">
               <el-upload
-                :action="$file_api"
+                :action="$special_file_api"
                 :headers="importHeaders"
                 multiple
                 name="file"
@@ -134,9 +145,9 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <div class="dialog-footer">
+        <!-- <div class="dialog-footer">
           <el-button type="primary" @click="confirmGroupOrder" size="medium" :loading="groupLoading">确定上传</el-button>
-        </div>
+        </div> -->
       </el-form>
       <h3>错误列表</h3>
       <Btable :listLoading="errorListLoading" :data="errorList" :configs="errorConfigs" />
@@ -204,7 +215,7 @@
       ></el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="rejectVisible = false">取消</el-button>
-        <el-button type="primary" @click.stop="confirmReject" :loading="rejLoading">驳回</el-button>
+        <el-button type="primary" @click.stop="confirmReject">驳回</el-button>
       </div>
     </el-dialog>
   </div>
@@ -217,7 +228,7 @@ import { spreconCol, spreconColNoBtn, spreconConfig, spreconErrorCol } from '@/c
 import $api from '@/api/api';
 import utils from '@/utils/util';
 import { parseTime } from '@/utils/index';
-
+import fileDownload from 'js-file-download';
 export default {
   name: 'Sprecon',
   components: {
@@ -272,6 +283,7 @@ export default {
         amountSymbol: '+',
         amount: 0,
         remark: '',
+        reconciliationType: '',
       },
       rules: {
         accountType: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -279,6 +291,7 @@ export default {
         uid: [{ required: true, message: '必填', trigger: 'blur' }],
         amount: [{ required: true, message: '必填', trigger: 'blur' }],
         remark: [{ required: true, message: '必填', trigger: 'blur' }],
+        reconciliationType: [{ required: true, message: '必填', trigger: 'change' }],
       },
       groupOrderForm: {
         coinId: '',
@@ -291,7 +304,7 @@ export default {
         uidString: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       isTableSelect: false, // 是否可以勾选表格条目（状态切换待审核时可以勾选）
-      allAuditArr: '', // 勾选批量审核的条目
+      allAuditArr: [], // 勾选批量审核的条目
       rejectVisible: false,
       rejectForm: {},
       rejectRules: {
@@ -300,11 +313,12 @@ export default {
           { min: 1, max: 20, message: '不能超过20字符', trigger: 'blur' },
         ],
       },
-      rejLoading: false,
+
       importHeaders: { token: window.localStorage.getItem('admin_token') },
       errorListLoading: false,
       errorList: [],
       errorConfigs: [],
+      curTotalAmount: '',
     };
   },
   watch: {
@@ -313,7 +327,7 @@ export default {
       if (newVal === 0) {
         this.isTableSelect = true;
       } else {
-        this.isTableSelect = true;
+        this.isTableSelect = false;
       }
     },
   },
@@ -351,70 +365,9 @@ export default {
     },
   },
   methods: {
-    batchRemove() {
-      this.batchListAll = [];
-    },
-    exceed(file, fileList) {
-      this.$message.error('单次只能选择一个文件进行上传！');
-    },
-    uploadCompressError() {
-      this.$message.error('文件上传失败');
-    },
-    batchUpload(response, file, fileList) {},
-    // 文件限制
-    batchBeforeUpload(file) {
-      const testmsg = file.name.substring(file.name.lastIndexOf('.') + 1);
-      const extension = testmsg === 'xls';
-      const extension2 = testmsg === 'xlsx';
-      const isLt2M = file.size / 1024 / 1024 < 8;
-      if (!extension && !extension2) {
-        this.$message({
-          message: '上传文件只能是 xls、xlsx格式!',
-          type: 'error',
-        });
-      }
-      if (!isLt2M) {
-        this.$message({
-          message: '上传文件大小不能超过 8MB!',
-          type: 'error',
-        });
-      }
-      return (extension && isLt2M) || (extension2 && isLt2M);
-    },
-    // 驳回确定
-    confirmReject() {
-      this.$refs['rejectForm'].validate(async (valid) => {
-        if (valid) {
-          let params = {};
-          this.rejLoading = true;
-          return;
-          const res = await $api.auditWithdraw(params);
-          if (res) {
-            this.$message({
-              message: this.handleStatus === 'preReject' ? '初审驳回成功' : '复审驳回成功',
-              type: 'success',
-            });
-            this.rejectVisible = false;
-            this.getList();
-          }
-          this.rejLoading = false;
-        }
-      });
-    },
-    // 勾选
-    getSelectRow(val) {
-      // if (val && val.length > 0) {
-      let tmp = [];
-      val.forEach((v) => {
-        tmp.push(v.id);
-      });
-      this.allAuditArr = tmp.join(',');
-      // }
-    },
-
     // 批量审核
     passBatch() {
-      if (!this.allAuditArr) {
+      if (!this.allAuditArr.length) {
         this.$message({ type: 'error', message: '尚未勾选条目!' });
         return;
       }
@@ -431,7 +384,9 @@ export default {
             type: 'warning',
             center: true,
           })
-            .then(() => {})
+            .then(() => {
+              this.confirmPassBatch(1);
+            })
             .catch(() => {});
         })
         .catch((action) => {
@@ -448,6 +403,112 @@ export default {
           }
         });
     },
+    // 确定批量审核
+    async confirmPassBatch(type) {
+      let parmas =
+        type == 1
+          ? {
+              idSet: this.allAuditArr,
+              type,
+            }
+          : {
+              idSet: this.allAuditArr,
+              type,
+              rejectionReason: this.rejectForm.mark,
+            };
+
+      const res = await $api.apiSpreconBatchCheck(parmas);
+      if (res) {
+        this.$message({ message: res.data.message, type: 'success' });
+        this.getList();
+        if (type == 2) {
+          this.rejectVisible = false;
+        }
+      }
+    },
+    // 驳回确定
+    confirmReject() {
+      this.$refs['rejectForm'].validate((valid) => {
+        if (valid) {
+          this.confirmPassBatch(2);
+        }
+      });
+    },
+    batchRemove() {
+      this.errorList = [];
+    },
+    // 勾选
+    getSelectRow(val) {
+      // if (val && val.length > 0) {
+      let tmp = [];
+      val.forEach((v) => {
+        tmp.push(v.id);
+      });
+      this.allAuditArr = tmp;
+      // }
+    },
+    async spreconGetAccount() {
+      const res = await $api.apiSpreconGetAccount({});
+      if (res) {
+        const { totalAmount } = res.data.data;
+        this.curTotalAmount = totalAmount;
+      }
+    },
+    // 创建批量导入
+    async addGroupOrder() {
+      this.groupOrderDialog = true;
+      this.spreconGetAccount();
+      this.$nextTick(() => {
+        this.errorList = [];
+        this.$refs.batchUploads.clearFiles();
+      });
+    },
+    downLoadDefaultExcel() {
+      $api
+        .apiSpreconDownLoadDefaultExcel({})
+        .then((res) => {
+          console.log('res', res);
+          fileDownload(res.data, '特殊调账模板.xlsx');
+        })
+        .catch(() => {});
+      // window.open(window.SERVER_PATH + '/admin/account/special-reconciliation-excel/download')
+    },
+
+    exceed(file, fileList) {
+      this.$message.error('单次只能选择一个文件进行上传！');
+    },
+    uploadCompressError() {
+      this.$message.error('文件上传失败');
+    },
+    batchUpload(response, file, fileList) {
+      console.log('response', response);
+      if (response.code == 1) {
+      } else if (response.code == -2) {
+        this.errorList = response.data;
+      }
+    },
+    // 文件限制
+    batchBeforeUpload(file) {
+      const testmsg = file.name.substring(file.name.lastIndexOf('.') + 1);
+      const extension = testmsg === 'xls';
+      const extension2 = testmsg === 'xlsx';
+      const isLt2M = true;
+      // const isLt2M = file.size / 1024 / 1024 < 8;
+      if (!extension && !extension2) {
+        this.$message({
+          message: '上传文件只能是 xls、xlsx格式!',
+          type: 'error',
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: '上传文件大小不能超过 8MB!',
+          type: 'error',
+        });
+      }
+      return (extension && isLt2M) || (extension2 && isLt2M);
+    },
+
     async doHandle(data) {
       const { fn, row } = data;
       this.curRow = row;
@@ -484,6 +545,7 @@ export default {
           amountSymbol: '+',
           amount: 0,
           remark: '',
+          reconciliationType: '',
         };
       });
     },
@@ -539,27 +601,18 @@ export default {
           amountSymbol: symbolNow,
           amount: '',
           remark: '',
+          reconciliationType: '',
         };
         this.$refs['orderForm'].resetFields();
       });
+      this.spreconGetAccount();
     },
-    // 创建批量导入
-    addGroupOrder() {
-      this.groupOrderDialog = true;
-      this.$nextTick(() => {
-        this.groupOrderForm = {
-          coinId: '',
-          amount: '',
-          uidString: '',
-        };
-        this.$refs['groupOrderForm'].resetFields();
-      });
-    },
+
     // 新建调账
     confirmAddOrder() {
       this.$refs['orderForm'].validate(async (valid) => {
         if (valid) {
-          const { accountType, amountSymbol, amount, coinId, uid, remark } = this.orderForm;
+          const { accountType, amountSymbol, amount, coinId, uid, remark, reconciliationType } = this.orderForm;
           let vm = this;
           let params = {
             accountType: accountType,
@@ -569,6 +622,7 @@ export default {
             coinName: vm.coinList.filter((v) => v.value == coinId)[0].label || '',
             amount: amountSymbol == '+' ? amount + '' : amountSymbol == '-' ? amountSymbol + amount + '' : amount + '',
             remark: remark,
+            reconciliationType,
           };
           this.btnLoading = true;
           const res = await $api.addReconciliation(params);
@@ -712,6 +766,7 @@ export default {
       this.coinList = this.$store.state.common.coinlist;
       this.getList();
     });
+    console.log('$special_file_api', this.$special_file_api);
   },
 };
 </script>
