@@ -117,7 +117,8 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label-width="75px"> 格式列说明：[black_type(黑名单类型) 100 = 手机，101 = 邮箱，102 = 证件号] [black_value = 值] [reason_remark = 备注] 请勿修改参数列名 </el-form-item>
+            <!-- { text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 } -->
+            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币，2 = 法币，3 = 理财，4 = 币汇，5 = 合约] &nbsp; &nbsp;   [(调账类型) 1 = 异常补发，2 = 财务特殊充币]  </el-form-item>
           </el-col>
         </el-row>
 
@@ -481,10 +482,15 @@ export default {
       this.$message.error('文件上传失败');
     },
     batchUpload(response, file, fileList) {
-      console.log('response', response);
       if (response.code == 1) {
+        this.groupOrderDialog = false;
+        this.$message.success(response.message);
+        this.getList();
       } else if (response.code == -2) {
         this.errorList = response.data;
+        this.$message.error(response.message);
+      } else {
+        this.$message.error(response.message);
       }
     },
     // 文件限制
@@ -578,7 +584,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[2]['value'] = this.coinList[0].value;
+      // this.searchCofig[2]['value'] = this.coinList[0].value;
       this.getList();
     },
     exportExcel(val) {
@@ -748,8 +754,8 @@ export default {
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        this.searchCofig[2]['value'] = this.coinList[0].value;
-        params.coinId = this.coinList[0].value;
+        // this.searchCofig[2]['value'] = this.coinList[0].value;
+        // params.coinId = this.coinList[0].value;
       }
     },
   },

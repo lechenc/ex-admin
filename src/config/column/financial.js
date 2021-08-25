@@ -1231,7 +1231,7 @@ const spreconErrorCol = [
     prop: '增/减(1代表增、2代表减）',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
+    filters: [ { text: '增', val: 1 }, { text: '减', val: 2 }],
   },
   {
     label: '账户类型',
