@@ -10,10 +10,9 @@
       <el-button v-if="~headBtnArr.indexOf('adjustAccountReduce')" type="primary" size="medium" @click="addOrder('')">创建调账（减）</el-button>
       <el-button v-if="~headBtnArr.indexOf('adjustAccountBatch')" type="primary" size="medium" @click="addGroupOrder">批量创建</el-button>
     </div>
-    
 
     <div>
-      <Btable @select="getSelectRow" :selection="isTableSelect" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+      <Btable :spreconCheckBtnIsShow='checkBtnIsShow' @select="getSelectRow" :selection="isTableSelect" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -105,7 +104,7 @@
         <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="账户余额:">
-              {{curTotalAmount}}
+              {{ curTotalAmount }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -374,8 +373,7 @@ export default {
     async spreconCheckBtnIsShow() {
       const res = await $api.apiSpreconCheckBtnIsShow({});
       if (res) {
-        this.checkBtnIsShow  = res.data.data.reconciliationSwitch
-        this.$store.commit('app/nowSpreconCheckBtnIsShow', this.checkBtnIsShow);
+        this.checkBtnIsShow = res.data.data.reconciliationSwitch;
       }
     },
     // 批量审核
@@ -782,6 +780,7 @@ export default {
       }
     },
   },
+
   mounted() {
     let authObj = this.$util.getAuthority('Sprecon', spreconCol, spreconColNoBtn);
     this.configs = authObj.val;
@@ -794,8 +793,8 @@ export default {
       this.searchCofig[2]['list'] = this.$store.state.common.coinlist;
       this.coinList = this.$store.state.common.coinlist;
     });
-    this.getList();
     this.spreconCheckBtnIsShow();
+    this.getList();
   },
 };
 </script>

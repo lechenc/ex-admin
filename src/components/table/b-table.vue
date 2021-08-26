@@ -318,7 +318,7 @@
 
             <!-- 根据table列表某些字段的值显示 -->
 
-            <template v-else-if="btn.filter_type == 'array' && btn.filter_status.includes(scope.row[btn.filter_key] + '')">
+            <template v-else-if="btn.filter_type == 'array' && btn.filter_status.includes(scope.row[btn.filter_key] + '') && spreconCheckBtnIsShow">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
 
@@ -443,6 +443,10 @@ export default {
     needColorFont: {
       type: Boolean,
       default: false,
+    },
+    spreconCheckBtnIsShow: {
+      type: Boolean,
+      default: true,
     },
   },
   computed: {

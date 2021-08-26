@@ -1549,7 +1549,8 @@ const coinFundsCol = [
       { text: '释放保证金', val: '110' },
       { text: '内部充币', val: '111' },
       { text: '异常补发', val: '112' },
-      { text: '财务特殊充币', val: '113' },
+      { text: '财务工资', val: '113' },
+      { text: '运营活动奖励', val: '114' },
     ],
   },
   {
@@ -1709,7 +1710,8 @@ const coinFundsConfig = [
       { label: '释放保证金', value: '110' },
       { label: '内部充币', value: '111' },
       { label: '异常补发', value: '112' },
-      { label: '财务特殊充币', value: '113' },
+      { label: '财务工资', value: '113' },
+      { label: '运营活动奖励', value: '114' },
     ],
   },
 ];
