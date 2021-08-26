@@ -400,6 +400,11 @@ const extractCol = [
     prop: 'firstAuditUserName',
   },
   {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
+  
+  {
     label: '复审时间',
     prop: 'reviewAuditTime',
     width: 200,
@@ -407,6 +412,10 @@ const extractCol = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
   {
     label: '操作',
@@ -532,6 +541,11 @@ const extractColNoBtn = [
     prop: 'firstAuditUserName',
   },
   {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
+  
+  {
     label: '复审时间',
     prop: 'reviewAuditTime',
     width: 200,
@@ -539,6 +553,10 @@ const extractColNoBtn = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
 ];
 
@@ -666,7 +684,7 @@ const extractForeignCol = [
     prop: 'isAuto',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '无类型', val: 0 },{ text: '热钱包类型', val: 1 },{ text: '冷钱包类型', val: 2 }],
+    filters: [{ text: '无类型', val: 0 }, { text: '热钱包类型', val: 1 }, { text: '冷钱包类型', val: 2 }],
   },
   {
     label: '提币时间',
@@ -683,6 +701,10 @@ const extractForeignCol = [
     prop: 'firstAuditUserName',
   },
   {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
+  {
     label: '复审时间',
     prop: 'reviewAuditTime',
     width: 200,
@@ -690,6 +712,10 @@ const extractForeignCol = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
   {
     label: '操作',
@@ -806,7 +832,7 @@ const extractForeignColNoBtn = [
     prop: 'isAuto',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '无类型', val: 0 },{ text: '热钱包类型', val: 1 },{ text: '冷钱包类型', val: 2 }],
+    filters: [{ text: '无类型', val: 0 }, { text: '热钱包类型', val: 1 }, { text: '冷钱包类型', val: 2 }],
   },
   {
     label: '提币时间',
@@ -822,6 +848,11 @@ const extractForeignColNoBtn = [
     label: '初审人',
     prop: 'firstAuditUserName',
   },
+
+  {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
   {
     label: '复审时间',
     prop: 'reviewAuditTime',
@@ -830,6 +861,10 @@ const extractForeignColNoBtn = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
 ];
 
@@ -890,7 +925,7 @@ const extractForeignConfig = [
     label: '提币类型',
     prop: 'isAuto',
     value: '',
-    list: [{ label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 } ],
+    list: [{ label: '无类型', value: 0 }, { label: '热钱包类型', value: 1 }, { label: '冷钱包类型', value: 2 }],
   },
 ];
 
@@ -1015,6 +1050,19 @@ const spreconCol = [
     filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
   },
   {
+    label: '调账类型',
+    prop: 'reconciliationType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
+  },
+  {
+    label: '调账原因',
+    prop: 'remark',
+  },
+  
+  {
     label: '币种',
     prop: 'coinName',
   },
@@ -1028,6 +1076,10 @@ const spreconCol = [
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
+  },
+  {
+    label: '驳回原因',
+    prop: 'rejectionReason',
   },
   {
     label: '申请时间',
@@ -1053,24 +1105,46 @@ const spreconCol = [
     type: 'action',
     width: '240',
     btnGroup: [
+      // {
+      //   label: '审核通过',
+      //   fn: 'checkPass',
+      //   filter_key: 'status',
+      //   filter_status: 0,
+      //   isPop: false,
+      //   type: 'success',
+      //   alias: 'pass',
+      // },
+
       {
         label: '审核通过',
         fn: 'checkPass',
+        filter_type: 'array',
         filter_key: 'status',
-        filter_status: 0,
-        isPop: false,
+        filter_status: Store.state.app.spreconCheckBtnIsShow? ['0'] : [],
         type: 'success',
         alias: 'pass',
       },
+      // {
+      //   label: '驳回',
+      //   fn: 'checkOut',
+      //   filter_key: 'status',
+      //   filter_status: 0,
+      //   isPop: false,
+      //   type: 'danger',
+      //   alias: 'refuse',
+      // },
+
       {
         label: '驳回',
         fn: 'checkOut',
+        filter_type: 'array',
         filter_key: 'status',
-        filter_status: 0,
-        isPop: false,
+        filter_status: Store.state.app.spreconCheckBtnIsShow? ['0'] : [],
         type: 'danger',
         alias: 'refuse',
       },
+
+
       {
         label: '详情',
         fn: 'viewDetail',
@@ -1099,6 +1173,19 @@ const spreconColNoBtn = [
     filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
   },
   {
+    label: '调账类型',
+    prop: 'reconciliationType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
+  },
+  {
+    label: '调账原因',
+    prop: 'remark',
+  },
+  
+  {
     label: '币种',
     prop: 'coinName',
   },
@@ -1112,6 +1199,10 @@ const spreconColNoBtn = [
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '驳回', val: 2 }],
+  },
+  {
+    label: '驳回原因',
+    prop: 'rejectionReason',
   },
   {
     label: '申请时间',
@@ -1168,7 +1259,58 @@ const spreconConfig = [
     label: '资金账户类型',
     prop: 'accountType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+    // list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+    list: [{ label: '币币', value: 1 }],
+  },
+  {
+    type: 'select',
+    label: '调账类型',
+    prop: 'reconciliationType',
+    value: '',
+    list: [{ label: '异常补发', value: 1 }, { label: '财务特殊充币', value: 2 }],
+  },
+];
+
+// 财务管理 -- 特殊调账管理 批量导入草屋列表
+const spreconErrorCol = [
+  {
+    label: 'UID',
+    prop: 'UID',
+  },
+  {
+    label: '增/减',
+    prop: '增/减(1代表增、2代表减）',
+    type: 'filter',
+    show_type: 'text',
+    filters: [ { text: '增', val: 1 }, { text: '减', val: 2 }],
+  },
+  {
+    label: '账户类型',
+    prop: '账户类型',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '币币', val: 1 }],
+  },
+  {
+    label: '币种',
+    prop: '币种',
+  },
+  {
+    label: '数量',
+    prop: '数量',
+  },
+  {
+    label: '调账类型',
+    prop: '调账类型',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 },],
+  },
+  {
+    label: '调账原因',
+    prop: '调账原因',
   },
 ];
 
@@ -1406,6 +1548,8 @@ const coinFundsCol = [
       { text: '补充保证金', val: '109' },
       { text: '释放保证金', val: '110' },
       { text: '内部充币', val: '111' },
+      { text: '异常补发', val: '112' },
+      { text: '财务特殊充币', val: '113' },
     ],
   },
   {
@@ -1564,6 +1708,8 @@ const coinFundsConfig = [
       { label: '补充保证金', value: '109' },
       { label: '释放保证金', value: '110' },
       { label: '内部充币', value: '111' },
+      { label: '异常补发', value: '112' },
+      { label: '财务特殊充币', value: '113' },
     ],
   },
 ];
@@ -2264,7 +2410,7 @@ const financialStatisticsCol = [
     label: '热钱包提币数量',
     prop: 'hotWithdrawAmount',
   },
-  
+
   {
     label: '净充币数量',
     prop: 'pureDepositAmount',
@@ -2308,14 +2454,14 @@ const financialStatisticsConfig = [
     value: 1,
     list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
   },
-  
+
   {
     type: 'date_month',
     label: '月份',
     prop: 'searchMonth',
     value: '',
   },
-  
+
   {
     type: 'select',
     label: '链名称',
@@ -2349,6 +2495,7 @@ export {
   spreconCol,
   spreconColNoBtn,
   spreconConfig,
+  spreconErrorCol,
   collectionCol,
   collectionColNoBtn,
   collectionDetailCol,

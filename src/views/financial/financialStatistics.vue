@@ -155,6 +155,7 @@ export default {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
       this.search_params_obj = data;
+
       if (!this.search_params_obj.coinName) {
         this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
         return;
@@ -165,6 +166,10 @@ export default {
       }
       if (this.search_params_obj.searchMonth) {
         this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00';
+      }
+      if (!this.search_params_obj.searchMonth && !this.search_params_obj.startTime) {
+        this.$message({ type: 'error', message: '请选择时间!', duration: 2000 });
+        return;
       }
       this.curRow = {};
       this.calLoading = true;

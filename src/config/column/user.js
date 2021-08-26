@@ -717,31 +717,50 @@ const userColInOutGoldList = [
   {
     label: '合约累计产生手续费金额',
     prop: 'contractFee',
-    // headColor:'green',
+    headColor:'red',
   },
   
 
   {
+    label: '合约资金费用',
+    prop: 'contractFeeRate',
+    headColor:'red',
+  },
+
+  {
     label: '合约累计交易产生盈亏',
     prop: 'contractCloseProfit',
-    // headColor:'green',
+    headColor:'red',
   },
 
   {
     label: '合约累计获得手续费返佣',
     prop: 'contractCommission',
-    // headColor:'green',
+    headColor:'red',
   },
 
   {
     label: '合约累计获得团队长返佣',
     prop: 'contractTeamCommission',
-    // headColor:'green',
+    headColor:'red',
   },
 
   {
     label: '币币与法币净出入金合计',
     prop: 'total',
+    headColor:'red',
+  },
+
+  {
+    label: '补发红包金额',
+    prop: 'abnormalReissueAmount',
+    headColor:'red',
+  },
+
+  {
+    label: '小计',
+    prop: 'subtotalAmount',
+    headColor:'red',
   },
   
 ];

@@ -5,25 +5,33 @@
     </div>
     <h3>待处理事件</h3>
     <ul class="inner-top">
-      <li>
+      <li @click="$router.push('/check/examine')">
         <div class="subTitle">{{ curRow.real_name }}</div>
         <div class="title"><img src="/img/h0.png" alt="" /> 实名待处理</div>
       </li>
-      <li>
+      <li @click="$router.push('/financial/extractForeign')">
         <div class="subTitle">{{ curRow.propose }}</div>
-        <div class="title"><img src="/img/h1.png" alt="" />提币待处理</div>
+        <div class="title"><img src="/img/h1.png" alt="" />外部提币待处理</div>
       </li>
-      <li>
+       <li @click="$router.push('/financial/extract')">
+        <div class="subTitle">{{ curRow.ownPropose }}</div>
+        <div class="title"><img src="/img/h1.png" alt="" />内部提币待处理</div>
+      </li>
+      <li @click="$router.push('/fiat/appeal')">
         <div class="subTitle">{{ curRow.representation }}</div>
         <div class="title"><img src="/img/h2.png" alt="" />申诉待处理</div>
       </li>
-      <li>
+      <li @click="$router.push('/check/advertise')">
         <div class="subTitle">{{ curRow.advertiser }}</div>
-        <div class="title"><img src="/img/h3.png" alt="" />广告商待审核</div>
+        <div class="title"><img src="/img/h3.png" alt="" />广告商取消认证待审核</div>
       </li>
-      <li>
+      <!-- <li>
         <div class="subTitle">{{ curRow.workOrder }}</div>
         <div class="title"><img src="/img/h4.png" alt="" />工单待处理</div>
+      </li> -->
+      <li @click="$router.push('/check/pay')">
+        <div class="subTitle">{{ curRow.payTypeNumber }}</div>
+        <div class="title"><img src="/img/h4.png" alt="" />支付方式待审核</div>
       </li>
     </ul>
 
@@ -461,8 +469,9 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 19%;
-      min-width: 140px;
+      cursor: pointer;
+      width: 16%;
+      min-width: 120px;
       height: 180px;
       overflow: hidden;
       margin: 0 5px 10px 0;

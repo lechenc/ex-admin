@@ -3343,6 +3343,28 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/user/update/language', data);
   }
 
+  // 财务管理/特殊调账管理 批量上传特殊调账模板下载
+  static apiSpreconDownLoadDefaultExcel(data) {
+    return Fetch.postExcel('/admin/account/special-reconciliation-excel/download', data);
+  }
+
+  // 财务管理/特殊调账管理 查询资产
+  static apiSpreconGetAccount(data) {
+    return Fetch.post('/admin/account/user-account-count', data);
+  }
+
+  //财务管理/特殊调账管理 批量审核
+  static apiSpreconBatchCheck(data) {
+    return Fetch.post('/admin/account/audit/special-reconciliation-batch', data);
+  }
+
+  //财务管理/特殊调账管理 审核按钮是否隐藏
+  static apiSpreconCheckBtnIsShow(data) {
+    return Fetch.post('/admin/account/special-reconciliation/switch', data);
+  }
+
+  
+
   
 
   
