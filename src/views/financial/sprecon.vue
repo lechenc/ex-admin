@@ -10,6 +10,7 @@
       <el-button v-if="~headBtnArr.indexOf('adjustAccountReduce')" type="primary" size="medium" @click="addOrder('')">创建调账（减）</el-button>
       <el-button v-if="~headBtnArr.indexOf('adjustAccountBatch')" type="primary" size="medium" @click="addGroupOrder">批量创建</el-button>
     </div>
+    
 
     <div>
       <Btable @select="getSelectRow" :selection="isTableSelect" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -397,6 +398,7 @@ export default {
             center: true,
           })
             .then(() => {
+              this.isBranchPass = true;
               this.confirmPassBatch(1);
             })
             .catch(() => {});
