@@ -5,7 +5,7 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div class="sprecon-button">
-      <el-button :disabled="!isTableSelect" v-if="~headBtnArr.indexOf('passBatch')" type="primary" size="medium" @click="passBatch">批量审核</el-button>
+      <el-button :disabled="!isTableSelect" v-if="~headBtnArr.indexOf('passBatch') && checkBtnIsShow" type="primary" size="medium" @click="passBatch">批量审核</el-button>
       <el-button v-if="~headBtnArr.indexOf('adjustAccountAdd')" type="primary" size="medium" @click="addOrder('add')">创建调账（增）</el-button>
       <el-button v-if="~headBtnArr.indexOf('adjustAccountReduce')" type="primary" size="medium" @click="addOrder('')">创建调账（减）</el-button>
       <el-button v-if="~headBtnArr.indexOf('adjustAccountBatch')" type="primary" size="medium" @click="addGroupOrder">批量创建</el-button>
@@ -76,7 +76,7 @@
         <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="账户余额:" :label-width="formLabelWidth">
-              <el-input readonly v-model="curTotalAmount"> </el-input>
+              <el-input disabled v-model="curTotalAmount"> </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -92,7 +92,7 @@
       <el-form label-width="150px">
         <el-row :span="24">
           <el-col :span="12">
-            <el-form-item label="资金输出账户:" >
+            <el-form-item label="资金输出账户:">
               <!-- <el-radio-group v-model="groupOrderForm.radio">
                 <el-radio :label="1">资金输出账户</el-radio>
                 <el-radio :label="2">财务佣金</el-radio>
@@ -104,7 +104,7 @@
         <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="账户余额:">
-              <el-input readonly v-model="curTotalAmount"> </el-input>
+              {{curTotalAmount}}
             </el-form-item>
           </el-col>
         </el-row>
@@ -322,6 +322,7 @@ export default {
       errorConfigs: [],
       curTotalAmount: '',
       isBranchPass: false,
+      checkBtnIsShow: false,
     };
   },
   watch: {
@@ -368,6 +369,14 @@ export default {
     },
   },
   methods: {
+    // 审核按钮是否隐藏
+    async spreconCheckBtnIsShow() {
+      const res = await $api.apiSpreconCheckBtnIsShow({});
+      if (res) {
+        this.checkBtnIsShow  = res.data.data.reconciliationSwitch
+        this.$store.commit('app/nowSpreconCheckBtnIsShow', this.checkBtnIsShow);
+      }
+    },
     // 批量审核
     passBatch() {
       if (!this.allAuditArr.length) {
@@ -782,9 +791,9 @@ export default {
     this.$store.dispatch('common/getCoinList').then(() => {
       this.searchCofig[2]['list'] = this.$store.state.common.coinlist;
       this.coinList = this.$store.state.common.coinlist;
-      this.getList();
     });
-    console.log('$special_file_api', this.$special_file_api);
+    this.getList();
+    this.spreconCheckBtnIsShow();
   },
 };
 </script>

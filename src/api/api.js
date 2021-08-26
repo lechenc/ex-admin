@@ -3358,6 +3358,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/audit/special-reconciliation-batch', data);
   }
 
+  //财务管理/特殊调账管理 审核按钮是否隐藏
+  static apiSpreconCheckBtnIsShow(data) {
+    return Fetch.post('/admin/account/special-reconciliation/switch', data);
+  }
+
   
 
   

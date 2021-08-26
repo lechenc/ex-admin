@@ -1105,24 +1105,46 @@ const spreconCol = [
     type: 'action',
     width: '240',
     btnGroup: [
+      // {
+      //   label: '审核通过',
+      //   fn: 'checkPass',
+      //   filter_key: 'status',
+      //   filter_status: 0,
+      //   isPop: false,
+      //   type: 'success',
+      //   alias: 'pass',
+      // },
+
       {
         label: '审核通过',
         fn: 'checkPass',
+        filter_type: 'array',
         filter_key: 'status',
-        filter_status: 0,
-        isPop: false,
+        filter_status: Store.state.app.spreconCheckBtnIsShow? ['0'] : [],
         type: 'success',
         alias: 'pass',
       },
+      // {
+      //   label: '驳回',
+      //   fn: 'checkOut',
+      //   filter_key: 'status',
+      //   filter_status: 0,
+      //   isPop: false,
+      //   type: 'danger',
+      //   alias: 'refuse',
+      // },
+
       {
         label: '驳回',
         fn: 'checkOut',
+        filter_type: 'array',
         filter_key: 'status',
-        filter_status: 0,
-        isPop: false,
+        filter_status: Store.state.app.spreconCheckBtnIsShow? ['0'] : [],
         type: 'danger',
         alias: 'refuse',
       },
+
+
       {
         label: '详情',
         fn: 'viewDetail',
@@ -1268,7 +1290,7 @@ const spreconErrorCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }],
+    filters: [{ text: '币币', val: 1 }],
   },
   {
     label: '币种',
