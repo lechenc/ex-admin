@@ -400,6 +400,11 @@ const extractCol = [
     prop: 'firstAuditUserName',
   },
   {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
+  
+  {
     label: '复审时间',
     prop: 'reviewAuditTime',
     width: 200,
@@ -407,6 +412,10 @@ const extractCol = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
   {
     label: '操作',
@@ -532,6 +541,11 @@ const extractColNoBtn = [
     prop: 'firstAuditUserName',
   },
   {
+    label: '初审备注',
+    prop: 'firstRemark',
+  },
+  
+  {
     label: '复审时间',
     prop: 'reviewAuditTime',
     width: 200,
@@ -539,6 +553,10 @@ const extractColNoBtn = [
   {
     label: '复审人',
     prop: 'reviewAuditUserName',
+  },
+  {
+    label: '复审备注',
+    prop: 'reviewRemark',
   },
 ];
 
@@ -1040,6 +1058,11 @@ const spreconCol = [
     filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
   },
   {
+    label: '调账原因',
+    prop: 'remark',
+  },
+  
+  {
     label: '币种',
     prop: 'coinName',
   },
@@ -1056,7 +1079,7 @@ const spreconCol = [
   },
   {
     label: '驳回原因',
-    prop: 'remark',
+    prop: 'rejectionReason',
   },
   {
     label: '申请时间',
@@ -1136,6 +1159,11 @@ const spreconColNoBtn = [
     filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
   },
   {
+    label: '调账原因',
+    prop: 'remark',
+  },
+  
+  {
     label: '币种',
     prop: 'coinName',
   },
@@ -1152,7 +1180,7 @@ const spreconColNoBtn = [
   },
   {
     label: '驳回原因',
-    prop: 'remark',
+    prop: 'rejectionReason',
   },
   {
     label: '申请时间',
@@ -1209,7 +1237,8 @@ const spreconConfig = [
     label: '资金账户类型',
     prop: 'accountType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+    // list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
+    list: [{ label: '币币', value: 1 }],
   },
   {
     type: 'select',
@@ -1497,6 +1526,8 @@ const coinFundsCol = [
       { text: '补充保证金', val: '109' },
       { text: '释放保证金', val: '110' },
       { text: '内部充币', val: '111' },
+      { text: '异常补发', val: '112' },
+      { text: '财务特殊充币', val: '113' },
     ],
   },
   {
@@ -1655,6 +1686,8 @@ const coinFundsConfig = [
       { label: '补充保证金', value: '109' },
       { label: '释放保证金', value: '110' },
       { label: '内部充币', value: '111' },
+      { label: '异常补发', value: '112' },
+      { label: '财务特殊充币', value: '113' },
     ],
   },
 ];

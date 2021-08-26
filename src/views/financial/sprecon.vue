@@ -55,11 +55,12 @@
           <el-input type="textarea" placeholder="请输入描述" v-model="orderForm.remark"></el-input>
         </el-form-item>
 
-        <!-- <el-form-item label="资金输出账户:" :label-width="formLabelWidth" prop="accountType">
-          <el-select v-model="orderForm.accountType" size="small">
+        <el-form-item label="资金输出账户:" :label-width="formLabelWidth">
+          <!-- <el-select v-model="orderForm.accountType" size="small">
             <el-option v-for="(item, idx) in accountList" :key="idx" :label="item.label" :value="item.value"></el-option>
-          </el-select>
-        </el-form-item> -->
+          </el-select> -->
+          财务
+        </el-form-item>
 
         <el-row :span="24">
           <el-col>
@@ -89,16 +90,17 @@
     <!-- 创建批量导入 -->
     <el-dialog title="创建特殊调账" :visible.sync="groupOrderDialog" width="850px">
       <el-form label-width="150px">
-        <!-- <el-row :span="24">
+        <el-row :span="24">
           <el-col :span="12">
-            <el-form-item label="资金输出账户:" prop="coinId">
-              <el-radio-group v-model="groupOrderForm.radio">
+            <el-form-item label="资金输出账户:" >
+              <!-- <el-radio-group v-model="groupOrderForm.radio">
                 <el-radio :label="1">资金输出账户</el-radio>
                 <el-radio :label="2">财务佣金</el-radio>
-              </el-radio-group>
+              </el-radio-group> -->
+              财务
             </el-form-item>
           </el-col>
-        </el-row> -->
+        </el-row>
         <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="账户余额:">
@@ -117,8 +119,7 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <!-- { text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 } -->
-            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币，2 = 法币，3 = 理财，4 = 币汇，5 = 合约] &nbsp; &nbsp;   [(调账类型) 1 = 异常补发，2 = 财务特殊充币]  </el-form-item>
+            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = 财务特殊充币] </el-form-item>
           </el-col>
         </el-row>
 
@@ -268,10 +269,10 @@ export default {
 
       accountList: [
         { label: '币币', value: 1 },
-        { label: '法币', value: 2 },
-        { label: '理财', value: 3 },
-        { label: '币汇', value: 4 },
-        { label: '合约', value: 5 },
+        // { label: '法币', value: 2 },
+        // { label: '理财', value: 3 },
+        // { label: '币汇', value: 4 },
+        // { label: '合约', value: 5 },
       ],
       addOrderTitle: '创建调账（增）',
       addOrderDialog: false, // 创建弹出窗
@@ -320,6 +321,7 @@ export default {
       errorList: [],
       errorConfigs: [],
       curTotalAmount: '',
+      isBranchPass: false,
     };
   },
   watch: {
@@ -395,9 +397,9 @@ export default {
             this.rejectVisible = true;
             this.$nextTick(() => {
               this.rejectForm = {
-                txId: '',
                 mark: '',
               };
+              this.isBranchPass = true;
               this.$refs['rejectForm'].resetFields();
             });
           } else if (action == 'close') {
@@ -406,17 +408,27 @@ export default {
     },
     // 确定批量审核
     async confirmPassBatch(type) {
-      let parmas =
-        type == 1
-          ? {
-              idSet: this.allAuditArr,
-              type,
-            }
-          : {
-              idSet: this.allAuditArr,
-              type,
-              rejectionReason: this.rejectForm.mark,
-            };
+      let parmas;
+      if (this.isBranchPass) {
+        parmas =
+          type == 1
+            ? {
+                idSet: this.allAuditArr,
+                type,
+              }
+            : {
+                idSet: this.allAuditArr,
+                type,
+                rejectionReason: this.rejectForm.mark,
+              };
+      } else {
+        const { mark } = this.rejectForm;
+        parmas = {
+          idSet: [this.curRow.id],
+          rejectionReason: mark,
+          type,
+        };
+      }
 
       const res = await $api.apiSpreconBatchCheck(parmas);
       if (res) {
@@ -525,9 +537,9 @@ export default {
         this.rejectVisible = true;
         this.$nextTick(() => {
           this.rejectForm = {
-            txId: '',
             mark: '',
           };
+          this.isBranchPass = false;
           this.$refs['rejectForm'].resetFields();
         });
 

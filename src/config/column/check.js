@@ -366,7 +366,7 @@ const advertiseCol = [
     ],
   },
   {
-    label: "原因",
+    label: "驳回原因",
     prop: "auditComment",
     width:'160'
   },
@@ -464,7 +464,7 @@ const advertiseColNoBtn = [
     ],
   },
   {
-    label: "原因",
+    label: "驳回原因",
     prop: "auditComment",
     width:'160'
   }
