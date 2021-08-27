@@ -163,12 +163,11 @@ const rechargeConfig = [
     value: '',
   },
   {
-    type: 'text',
+    type: 'onlyNumber',
     label: 'UID',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
-    subType: 'uid',
+    placeholder: '请输入',
   },
   {
     type: 'select',
@@ -1055,7 +1054,7 @@ const spreconCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务工资', val: 2 }, { text: '运营活动奖励', val: 3 }],
   },
   {
     label: '调账原因',
@@ -1120,7 +1119,7 @@ const spreconCol = [
         fn: 'checkPass',
         filter_type: 'array',
         filter_key: 'status',
-        filter_status: Store.state.app.spreconCheckBtnIsShow? ['0'] : [],
+        filter_status: ['0'],
         type: 'success',
         alias: 'pass',
       },
@@ -1139,7 +1138,7 @@ const spreconCol = [
         fn: 'checkOut',
         filter_type: 'array',
         filter_key: 'status',
-        filter_status: Store.state.app.spreconCheckBtnIsShow? ['0'] : [],
+        filter_status: ['0'] ,
         type: 'danger',
         alias: 'refuse',
       },
@@ -1178,7 +1177,7 @@ const spreconColNoBtn = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 }],
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务工资', val: 2 }, { text: '运营活动奖励', val: 3 }],
   },
   {
     label: '调账原因',
@@ -1267,7 +1266,8 @@ const spreconConfig = [
     label: '调账类型',
     prop: 'reconciliationType',
     value: '',
-    list: [{ label: '异常补发', value: 1 }, { label: '财务特殊充币', value: 2 }],
+    list: [{ label: '异常补发', value: 1 }, { label: '财务工资', value: 2 }, { label: '运营活动奖励', value: 3 }],
+    
   },
 ];
 
@@ -1306,7 +1306,8 @@ const spreconErrorCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '异常补发', val: 1 }, { text: '财务特殊充币', val: 2 },],
+    filters: [{ text: '异常补发', val: 1 }, { text: '财务工资', val: 2 }, { text: '运营活动奖励', val: 3 }],
+    
   },
   {
     label: '调账原因',

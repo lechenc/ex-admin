@@ -67,7 +67,8 @@
             <el-form-item :label-width="formLabelWidth" label="调账类型:" prop="reconciliationType">
               <el-radio-group v-model="orderForm.reconciliationType">
                 <el-radio :label="1">异常补发</el-radio>
-                <el-radio :label="2">财务特殊充币</el-radio>
+                <el-radio :label="2">财务工资</el-radio>
+                <el-radio :label="3">运营活动奖励</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -119,7 +120,7 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = 财务特殊充币] </el-form-item>
+            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = 财务工资，3 = 运营活动奖励] </el-form-item>
           </el-col>
         </el-row>
 
