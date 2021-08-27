@@ -744,7 +744,132 @@ const ssoWhiteListColNoBtn = [
   
 ];
 
+// 运营管理/短信发送记录
+const msgSendRecordCol = [
+  {
+    label: '发送类型',
+    prop: 'messageType',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: '短信', val: 1 }, { text: '邮箱', val: 2 }],
+  },
+  
+  {
+    label: '短信发送平台',
+    prop: 'platform',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: '摩杜云', val: 1 }, { text: '美联软通', val: 2 }, { text: '网易网盾', val: 3 }],
+  },
+  // {
+  //   label: '邮件发送平台',
+  //   prop: 'platform',
+  //   type: 'filter',
+  //   show_type: 'text',
+  //   // 1.PC 2.IOS 3.Android
+  //   filters: [{ text: '摩杜云', val: 1 }, { text: 'Umail', val: 2 }, { text: 'Spread', val: 3 }, { text: '阿里云', val: 4 }],
+  // },
+  
+ 
+  {
+    label: '用户UID',
+    prop: 'uid',
+  },
+  {
+    label: '发送号码',
+    prop: 'phone',
+  },
+  // {
+  //   label: '数量',
+  //   prop: 'phone',
+  // },
+
+  {
+    label: '发送时间',
+    prop: 'createTime',
+  },
+  {
+    label: '回执时间',
+    prop: 'syncTime',
+  },
+  {
+    label: '回执状态',
+    prop: 'syncResult',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: '摩杜云', val: true }, { text: 'Umail', val: false }],
+  },
+  
+
+  
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 140,
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'danger',
+        alias: 'del',
+      },
+    ],
+  },
+];
+
+// 运营管理/短信发送记录
+const msgSendRecordConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
+  {
+    type: 'select',
+    label: '时间周期',
+    prop: 'searchType',
+    value: 1,
+    list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
+  },
+
+  {
+    type: 'date_month',
+    label: '月份',
+    prop: 'searchMonth',
+    value: '',
+  },
+
+  {
+    type: 'select',
+    label: '链名称',
+    prop: 'chainName',
+    value: '',
+    list: [],
+  },
+  {
+    type: 'select',
+    label: '币种',
+    prop: 'coinName',
+    value: '',
+    list: [],
+  },
+];
+
 export {
+  msgSendRecordCol,
+  msgSendRecordConfig,
   ssoWhiteListCol,
   ssoWhiteListColNoBtn,
   posterCol,

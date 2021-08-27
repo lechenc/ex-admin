@@ -287,6 +287,7 @@ const mapComponents = {
   Banner: () => import('@/views/front/banner'),
   PopupNotice: () => import('@/views/front/popupNotice'),
   Msg: () => import('@/views/front/msg'),
+  MsgSendRecord: () => import('@/views/front/msgSendRecord'),
   CurrencyRobot: () => import('@/views/symbol/currencyRobot'),
   ContractSymbolRobot: () => import('@/views/symbol/contractSymbolRobot'),
   PlateArea: () => import('@/views/symbol/plateArea'),

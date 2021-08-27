@@ -693,6 +693,15 @@ export const asyncRouterMap = [
         component: () => import('@/views/front/msg'),
         meta: { title: '短信管理', icon: '', role: [] },
       },
+
+      {
+        path: 'msgSendRecord',
+        name: 'MsgSendRecord',
+        component: () => import('@/views/front/msgSendRecord'),
+        meta: { title: '短信发送记录', icon: '', role: [] },
+      },
+
+      
       {
         path: 'poster',
         name: 'Poster',

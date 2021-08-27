@@ -73,6 +73,13 @@
         </template>
       </el-table-column>
 
+      <!-- 几个数相加 -->
+      <el-table-column v-if="config.type == 'plusPropArr'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
+        <template slot-scope="scope">
+          <span>{{ getPlusSum(scope.row, config.propArr) }}</span>
+        </template>
+      </el-table-column>
+
       <!-- 乘一个其他值  并且再拼接一个值-->
       <el-table-column v-if="config.type == 'getTimesCol'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
@@ -489,14 +496,11 @@ export default {
     },
 
     getPlusSum() {
-      return (row, arr, others) => {
+      return (row, arr) => {
         if (!arr) return '无';
         var sum = arr.reduce((prev, cur) => {
-          return Precision.plus(prev, row[cur]);
+          return Precision.plus(prev, row[cur]|| 0);
         }, 0);
-        if (others) {
-          sum = Precision.plus(sum, others);
-        }
         return sum;
       };
     },
