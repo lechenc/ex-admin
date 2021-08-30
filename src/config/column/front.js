@@ -655,7 +655,6 @@ const columnColNoBtn = [
 
 // 运营管理 -- 单点登录白名单管理
 const ssoWhiteListCol = [
-  
   {
     label: '单点类型',
     prop: 'ssoType',
@@ -713,7 +712,6 @@ const ssoWhiteListCol = [
 ];
 
 const ssoWhiteListColNoBtn = [
-  
   {
     label: '单点类型',
     prop: 'ssoType',
@@ -740,51 +738,47 @@ const ssoWhiteListColNoBtn = [
     prop: 'updateTime',
     type: 'time',
   },
-
-  
 ];
 
 // 运营管理/短信发送记录
 const msgSendRecordCol = [
+  {
+    label: '发送平台',
+    prop: 'platformName',
+  },
+
   {
     label: '发送类型',
     prop: 'messageType',
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: '短信', val: 1 }, { text: '邮箱', val: 2 }],
+    filters: [{ text: '短信', val: 1 }, { text: '邮件', val: 2 }],
   },
-  
-  {
-    label: '短信发送平台',
-    prop: 'platform',
-    type: 'filter',
-    show_type: 'text',
-    // 1.PC 2.IOS 3.Android
-    filters: [{ text: '摩杜云', val: 1 }, { text: '美联软通', val: 2 }, { text: '网易网盾', val: 3 }],
-  },
-  // {
-  //   label: '邮件发送平台',
-  //   prop: 'platform',
-  //   type: 'filter',
-  //   show_type: 'text',
-  //   // 1.PC 2.IOS 3.Android
-  //   filters: [{ text: '摩杜云', val: 1 }, { text: 'Umail', val: 2 }, { text: 'Spread', val: 3 }, { text: '阿里云', val: 4 }],
-  // },
-  
- 
+
   {
     label: '用户UID',
     prop: 'uid',
   },
+
   {
-    label: '发送号码',
-    prop: 'phone',
+    label: '区号',
+    prop: 'phoneAreaCode',
+    type: 'noneShowValue',
+    showValue: '无',
   },
-  // {
-  //   label: '数量',
-  //   prop: 'phone',
-  // },
+  {
+    label: '手机号码',
+    prop: 'phone',
+    type: 'noneShowValue',
+    showValue: '无',
+  },
+  {
+    label: '邮箱号码',
+    prop: 'email',
+    type: 'noneShowValue',
+    showValue: '无',
+  },
 
   {
     label: '发送时间',
@@ -800,30 +794,13 @@ const msgSendRecordCol = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: '摩杜云', val: true }, { text: 'Umail', val: false }],
+    filters: [{ text: '成功', val: true }, { text: '失败', val: false }],
   },
-  
-
-  
   {
-    label: '操作',
-    prop: 'action',
-    type: 'action',
-    width: 140,
-    btnGroup: [
-      {
-        label: '编辑',
-        fn: 'edit',
-        type: 'primary',
-        alias: 'edit',
-      },
-      {
-        label: '删除',
-        fn: 'del',
-        type: 'danger',
-        alias: 'del',
-      },
-    ],
+    label: '发送内容',
+    prop: 'content',
+    type: 'textType',
+    width: '450',
   },
 ];
 
@@ -837,33 +814,41 @@ const msgSendRecordConfig = [
     value: '',
   },
   {
+    type: 'onlyNumber',
+    label: '用户UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入',
+  },
+  {
     type: 'select',
-    label: '时间周期',
-    prop: 'searchType',
+    label: '发送类型',
+    prop: 'messageType',
     value: 1,
-    list: [{ label: '日', value: 1 }, { label: '月', value: 2 }],
+    // ： 1短信 2邮件
+    list: [{ label: '短信', value: 1 }, { label: '邮件', value: 2 }],
   },
-
   {
-    type: 'date_month',
-    label: '月份',
-    prop: 'searchMonth',
+    type: 'text',
+    label: '发送号码',
+    prop: 'keyWord',
     value: '',
-  },
-
-  {
-    type: 'select',
-    label: '链名称',
-    prop: 'chainName',
-    value: '',
-    list: [],
+    placeHolder: '请输入手机号或邮箱号码',
   },
   {
     type: 'select',
-    label: '币种',
-    prop: 'coinName',
+    label: '回执状态',
+    prop: 'syncResult',
     value: '',
-    list: [],
+    // ： 1短信 2邮件
+    list: [{ label: '成功', value: true }, { label: '失败', value: false }],
+  },
+  {
+    type: 'select',
+    label: '发送平台',
+    prop: 'platform',
+    value: '',
+    list: [{ label: '摩杜云', value: '1' }, { label: '美联软通', value: '2' }, { label: '网易网盾', value: '3' }],
   },
 ];
 

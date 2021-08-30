@@ -17,12 +17,23 @@
       <!-- 序号 -->
       <el-table-column v-if="config.type == 'index'" type="index" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120"> </el-table-column>
 
-      <!-- 没有值显示- -->
+      <!-- 没有值显示 -->
 
-      <el-table-column v-if="config.type === 'noneShowLine'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
+      <el-table-column v-if="config.type === 'noneShowValue'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
         <template slot-scope="scope">
-          <span v-if="!scope.row[config.prop]">-</span>
+          <span v-if="!scope.row[config.prop]">
+            {{config.showValue}}
+          </span>
           <span v-else>{{ scope.row[config.prop] }}</span>
+        </template>
+      </el-table-column>
+
+      <!-- 文本类型 -->
+      <el-table-column v-if="config.type === 'textType'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
+        <template slot-scope="scope">
+          <span v-html="scope.row[config.prop]" >
+            
+          </span>
         </template>
       </el-table-column>
 

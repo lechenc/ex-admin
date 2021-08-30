@@ -1,7 +1,7 @@
 <template>
   <div class="msgSendRecord-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel"   />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -16,10 +16,9 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { coinFundsCol, coinFundsConfig } from '@/config/column/financial';
+import { msgSendRecordCol, msgSendRecordConfig } from '@/config/column/front';
 import $api from '@/api/api';
 import utils from '@/utils/util';
-import activePage from '@/mixin/keepPage';
 
 export default {
   name: 'MsgSendRecord',
@@ -28,7 +27,6 @@ export default {
     Bsearch,
     iconPage,
   },
-  mixins: [activePage],
   data() {
     return {
       listLoading: false, // 表格loading
@@ -44,10 +42,8 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      
+
       coinList: [], //币种列表
-      // totalExFee: "", // 手续费总计
-      // totalArrivalAccount: "", // 到账总计
     };
   },
   methods: {
@@ -55,7 +51,7 @@ export default {
       this.excelLoading = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getCPDepositQueryList(params);
+      const res = await $api.apiGetMsgSendRecordList(params);
       this.excelLoading = false;
       if (res) {
         return res;
@@ -72,6 +68,9 @@ export default {
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
         this.search_params_obj.flag = 1;
       }
+      if (!this.search_params_obj.messageType) {
+        return this.$message.error('请选择发送类型');
+      }
       this.getList();
     },
     doReset() {
@@ -80,9 +79,10 @@ export default {
         v['value'] = '';
       });
       this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+      this.searchCofig[2].value = 1;
       this.getList();
     },
-    
+
     // 页容变化
     pageSizeChange(val) {
       this.current_page = 1;
@@ -94,45 +94,33 @@ export default {
       this.current_page = val;
       this.getList();
     },
-    
+
     // getlist
     async getList() {
       if (this.listLoading) return;
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        messageType: this.searchCofig[2]['value'],
       };
       this.requiredParams(query_data);
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.queryCoinChange(query_data);
+      const res = await $api.apiGetMsgSendRecordList(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
         this.pages = pages;
         this.current_page = current;
-        records.forEach((v) => {
-          v.coinName = this.coinList.filter((f) => f.value == v.coinId)[0].label;
-        });
-        // this.totalExFee = totalExFee;
-        // this.totalArrivalAccount = totalArrivalAccount;
-        // 暂时过滤掉 optType  { label: '合约返佣', value: '88' }, { label: '合约收益账户销账', value: '89' },
-        // 暂时过滤掉 optType  { label: '资金费用', value: '94'}, { label: '合约手续费',value: '96'},
-        let arr = [];
-        records.forEach((v) => {
-          if (v.optType != '88' || v.optType != '89' || v.optType != '94' || v.optType != '96') {
-            arr.push(v);
-          }
-        });
-        this.list = arr;
-        this.dataList = arr;
+        this.list = records;
+        this.dataList = records;
       }
       this.listLoading = false;
     },
     formatTime(val) {
       return !~(val + '').indexOf('/') ? val : val.replace(/\//gi, '-');
     },
-    
+
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
@@ -155,45 +143,47 @@ export default {
       }
     },
   },
-  // mounted() {},
-  activated() {
-    window.a = this;
-    if (this.isInTags()) {
-      return;
-    }
 
-    this.list = []; //委托列表
-    this.dataList = []; // 用于导出的数据
-    this.configs = []; // 委托列表列配置
-    this.searchCofig = []; // 搜索框配置
-    this.search_params_obj = {}; // 搜索框对象
-    this.current_page = 1; // 当前页码
-    this.pageSize = 10; // 当前每页显示页码数
-    this.total = 0; // 总条数
-    this.pages = 0; // 总页数
-
-    this.configs = coinFundsCol;
-    this.searchCofig = this.$util.clone(coinFundsConfig);
+  mounted() {
+    this.configs = msgSendRecordCol;
+    this.searchCofig = this.$util.clone(msgSendRecordConfig);
 
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
-    this.$store.dispatch('common/getCoinList').then(() => {
-      this.searchCofig[2]['list'] = this.$store.state.common.coinlist;
-      this.coinList = this.$store.state.common.coinlist;
+    this.getList();
 
-      const uid = this.$route.query.uid;
-      const coinId = this.$route.query.coinId;
-      if (uid) {
-        // 从列表页传参
-        this.searchCofig[1].value = uid;
-        this.searchCofig[2].value = coinId;
-        this.search_params_obj = { uid: uid, coinName: coinId };
-        this.getList();
-      } else {
-        this.getList();
-      }
-    });
+    this.$watch(
+      function () {
+        return this.searchCofig[2].value;
+      },
+      // 合约出入金,type=1为合约出金,type=2为合约入金
+      function (newVal, oldValue) {
+        if (newVal == 1) {
+          this.searchCofig[5]['value'] = '';
+          this.searchCofig[5]['list'] = [
+            { label: '摩杜云', value: '1' },
+            { label: '美联软通', value: '2' },
+            { label: '网易网盾', value: '3' },
+          ];
+        } else if (newVal == 2) {
+          this.searchCofig[5]['value'] = '';
+          this.searchCofig[5]['list'] = [
+            { label: '摩杜云', value: '1' },
+            { label: 'Umail ', value: '2' },
+            { label: 'Spread', value: '3' },
+            { label: '阿里云', value: '4' },
+          ];
+        } else {
+          this.searchCofig[5]['value'] = '';
+          this.searchCofig[5]['list'] = [
+            { label: '摩杜云', value: '1' },
+            { label: '美联软通', value: '2' },
+            { label: '网易网盾', value: '3' },
+          ];
+        }
+      },
+    );
   },
 };
 </script>

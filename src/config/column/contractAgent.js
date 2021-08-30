@@ -89,12 +89,14 @@ const agentsListsCol = [
   {
     label: '代理总盈利阀值',
     prop: 'profitMargin',
-    type: 'noneShowLine',
+    type: 'noneShowValue',
+    showValue:'-'
   },
   {
     label: '用户可盈利阈值',
     prop: 'userProfitMargin',
-    type: 'noneShowLine',
+    type: 'noneShowValue',
+    showValue:'-'
   },
 
   {
@@ -234,12 +236,14 @@ const agentsListsColNoBtn = [
   {
     label: '代理总盈利阀值',
     prop: 'profitMargin',
-    type: 'noneShowLine',
+    type: 'noneShowValue',
+    showValue:'-'
   },
   {
     label: '用户可盈利阈值',
     prop: 'userProfitMargin',
-    type: 'noneShowLine',
+    type: 'noneShowValue',
+    showValue:'-'
   },
 
   {

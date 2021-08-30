@@ -3363,6 +3363,11 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/special-reconciliation/switch', data);
   }
 
+  //运营管理/短信发送记录 列表
+  static apiGetMsgSendRecordList(data) {
+    return Fetch.post('/admin/user/message/record/list', data);
+  }
+
   
 
   
