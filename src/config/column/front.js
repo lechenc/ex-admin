@@ -772,12 +772,14 @@ const msgSendRecordCol = [
     prop: 'phone',
     type: 'noneShowValue',
     showValue: '无',
+    width: '120',
   },
   {
     label: '邮箱号码',
     prop: 'email',
     type: 'noneShowValue',
     showValue: '无',
+    width: '150',
   },
 
   {

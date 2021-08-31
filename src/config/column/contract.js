@@ -4469,7 +4469,58 @@ const contractUserListConfig = [
 ];
 
 
+
+const agentPermissionConfigsCol = [
+  {
+    type: 'select',
+    label: '身份类型',
+    prop: 'type',
+    value: '',
+    list: [{ label: '商务', value: '1' }, { label: '代理', value: '2' }],
+  },
+  {
+    label: '级别',
+    prop: 'coinMarket',
+  },
+  {
+    label: '代理端可查看用户列表字段权限',
+    prop: 'longPositionOpenPositionPoint',
+  },
+  {
+    label: '可查看的层级权限',
+    prop: 'shortPositionOpenPositionPoint',
+  },
+  
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 160,
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'primary',
+        alias: 'del',
+      },
+    ],
+  },
+];
+
+const agentPermissionConfigsConfig = [
+  
+];
+
+
 export {
+  agentPermissionConfigsCol,
+  agentPermissionConfigsConfig,
   contractUserListConfig,
   contractUserListCol,
   highFrequencyMonitorConfig,

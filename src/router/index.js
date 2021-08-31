@@ -1492,6 +1492,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/agent/agentPlacesConfigs'),
         meta: { title: '手动发放代理名额设置', icon: '', role: [] },
       },
+
+      {
+        path: 'agentPermissionConfigs',
+        name: 'AgentPermissionConfigs',
+        component: () => import('@/views/agent/agentPermissionConfigs'),
+        meta: { title: '代理端权限管理', icon: '', role: [] },
+      },
     ],
   },
 
