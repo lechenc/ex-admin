@@ -28,7 +28,7 @@ if (/alpex/.test(window.location.href)) {
 
 // 测试
 if (/test.alphatest/.test(window.location.href)) {
-  window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
+  window.SERVER_PATH = 'https://exchange-admin-test.alphatest.vip/api'; // 测试接口地址.
 }
 
 // 线上
