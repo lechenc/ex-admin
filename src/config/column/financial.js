@@ -420,7 +420,7 @@ const extractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 270,
+    width: 450,
     btnGroup: [
       {
         label: '初审',
@@ -464,6 +464,12 @@ const extractCol = [
         fn: 'detail',
         type: 'primary',
         alias: 'detail',
+      },
+      {
+        label: '查看该用户出入金明细',
+        fn: 'inOutGoldList',
+        type: 'primary',
+        alias: 'inOutGoldList',
       },
     ],
   },
