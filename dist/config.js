@@ -27,7 +27,7 @@ if (/alpex/.test(window.location.href)) {
 }
 
 // 测试
-if (/test.alphatest/.test(window.location.href)) {
+if (/exchange-admin-test/.test(window.location.href)) {
   window.SERVER_PATH = 'https://exchange-admin-test.alphatest.vip/api'; // 测试接口地址.
 }
 
@@ -37,7 +37,7 @@ if (/linkkn/.test(window.location.href)) {
 }
 
 // 预发布
-if (/uat.alphatest/.test(window.location.href)) {
+if (/exchange-admin-uat/.test(window.location.href)) {
   window.SERVER_PATH = 'https://exchange-admin-uat.alphatest.vip/api'; 
 }
 
