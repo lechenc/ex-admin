@@ -41,6 +41,11 @@ if (/exchange-admin-uat/.test(window.location.href)) {
   window.SERVER_PATH = 'https://exchange-admin-uat.alphatest.vip/api'; 
 }
 
+// 老测试
+if (/dappmi/.test(window.location.href)) {
+  window.SERVER_PATH = 'https://admin.dappmi.com/api'; // 测试接口地址.
+}
+
 
 
 // console.error('强制测试服务器')
