@@ -12,55 +12,69 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div class="container-btn">
-      <el-button type="primary" size="small" @click="addGear">添加策略点 </el-button>
+      <el-button type="primary" size="medium" @click="addGear">添加</el-button>
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 添加 编辑 -->
     <el-dialog :title="formName" width="670px" :visible.sync="dialogFormVisible">
       <el-form :model="dForm" ref="dForm" :rules="drules">
         <el-row :span="24">
-          <el-form-item label="币对" :label-width="formLabelWidth" prop="coinMarket">
-            <el-select v-model="dForm.coinMarket" placeholder="" width="20%">
-              <el-option v-for="(item, idx) in coin_List" :key="idx" :label="item.label" :value="item.label"></el-option>
-            </el-select>
-          </el-form-item>
+          <el-col :span="13">
+            <el-form-item label="请选择身份: " :label-width="formLabelWidth" prop="coinMarket">
+              <el-select v-model="dForm.coinMarket" placeholder="" width="20%">
+                <el-option v-for="(item, idx) in coin_List" :key="idx" :label="item.label" :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row :span="24">
-          <el-form-item class="myItem-contractTactics" label="多仓开仓点数" :label-width="formLabelWidth" prop="longPositionOpenPositionPoint">
-            <el-input type="text" v-model="dForm.longPositionOpenPositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+          <el-col :span="13">
+            <el-form-item label="请输入级别: " :label-width="formLabelWidth" prop="longPositionOpenPositionPoint">
+              <el-input @input="checkVal('longPositionOpenPositionPoint', 'nodot')" type="text" v-model="dForm.longPositionOpenPositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-form-item class="center-item" label="代理端可查看用户列表字段权限: " :label-width="formLabelWidth" prop="shortPositionOpenPositionPoint">
+            <el-checkbox-group v-model="dForm.checkList">
+              <el-checkbox label="手机"></el-checkbox>
+              <el-checkbox label="邮箱"></el-checkbox>
+              <el-checkbox label="姓名"></el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
         </el-row>
 
         <el-row :span="24">
-          <el-form-item class="myItem-contractTactics" label="空仓开仓点数" :label-width="formLabelWidth" prop="shortPositionOpenPositionPoint">
-            <el-input type="text" v-model="dForm.shortPositionOpenPositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+          <el-form-item class="center-item" label="可查看层级的权限: " :label-width="formLabelWidth" prop="shortPositionOpenPositionPoint">
+            <el-row :span="24">
+              <el-radio-group v-model="dForm.radio" @change="radioChange">
+                <el-radio :label="1">直推用户</el-radio>
+                <el-radio :label="2">间接推用户</el-radio>
+                <el-radio :label="3">无限层级</el-radio>
+                <el-radio :label="4">自定义层级</el-radio>
+              </el-radio-group>
+            </el-row>
+            <el-row :span="24">
+              <el-col :span="11">
+                <el-input :disabled='!isDiy' type="text" v-model="dForm.shortPositionClosePositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+              </el-col>
+            </el-row>
           </el-form-item>
         </el-row>
 
         <el-row :span="24">
-          <el-form-item class="myItem-contractTactics" label="多仓平仓点数" :label-width="formLabelWidth" prop="longPositionClosePositionPoint">
-            <el-input type="text" v-model="dForm.longPositionClosePositionPoint" autocomplete="off" placeholder="请输入"></el-input>
-          </el-form-item>
-        </el-row>
-
-        <el-row :span="24">
-          <el-form-item class="myItem-contractTactics" label="空仓平仓点数" :label-width="formLabelWidth" prop="shortPositionClosePositionPoint">
-            <el-input type="text" v-model="dForm.shortPositionClosePositionPoint" autocomplete="off" placeholder="请输入"></el-input>
-          </el-form-item>
+          <el-col :span="13">
+            <el-form-item label="谷歌验证码: " :label-width="formLabelWidth" prop="shortPositionClosePositionPoint">
+              <el-input  @input="checkVal('shortPositionClosePositionPoint', 'nodot')" type="text" v-model="dForm.shortPositionClosePositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -78,7 +92,6 @@ import { agentPermissionConfigsCol, agentPermissionConfigsConfig } from '@/confi
 import $api from '@/api/api';
 import Precision from '@/utils/number-precision';
 
-
 export default {
   name: 'AgentPermissionConfigs',
   components: {
@@ -87,22 +100,7 @@ export default {
     iconPage,
   },
   data() {
-    
     return {
-      modeOfCostOptions: [
-        {
-          value: '1',
-          label: '正常开启',
-        },
-        {
-          value: '0',
-          label: '关闭',
-        },
-        {
-          value: '2',
-          label: '多空均收',
-        },
-      ],
       btnArr: [], // 权限按钮列表
       btnLoading: false, // 提交loading
       listLoading: false, // 表格loading
@@ -115,38 +113,46 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       chainArr: [], // 链列表
-      coin_List: [], // 交易对列表
+      coin_List: [
+        {
+          label: '商务',
+          value: 1,
+        },
+        {
+          label: '代理',
+          value: 2,
+        },
+      ], // 身份类型
       formLabelWidth: '150px',
       dialogFormVisible: false, // 编辑添加币种弹窗
       dForm: {
-        id: '',
-        coinMarket: '',
-        longPositionOpenPositionPoint: '',
-        shortPositionOpenPositionPoint: '',
-        longPositionClosePositionPoint: '',
-        shortPositionClosePositionPoint: '',
+        checkList: [],
       },
-      formName: '添加策略点',
+      formName: '',
       drules: {
         coinMarket: [{ required: true, message: '必填', trigger: 'blur' }],
-        
       },
+      isDiy: false,
     };
   },
   methods: {
+    radioChange(val) {
+      if (val == 4) {
+        this.isDiy = true;
+      }else{
+        this.isDiy = false;
+      }
+    },
     // 添加币种
     addGear() {
-      this.formName = '添加策略点';
+      this.formName = '添加代理端权限';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['dForm'].resetFields();
         this.dForm = {
           id: '',
           coinMarket: '',
-          longPositionOpenPositionPoint: '',
-          shortPositionOpenPositionPoint: '',
-          longPositionClosePositionPoint: '',
-          shortPositionClosePositionPoint: '',
+          checkList: [],
         };
       });
     },
@@ -154,25 +160,14 @@ export default {
     async confirmOp() {
       this.$refs['dForm'].validate(async (valid) => {
         if (valid) {
-          let {
-            id,
-            coinMarket,
-            longPositionOpenPositionPoint,
-            shortPositionOpenPositionPoint,
-            longPositionClosePositionPoint,
-            shortPositionClosePositionPoint,
-          } = this.dForm;
+          let { id, coinMarket } = this.dForm;
           let params = {
             coinMarket,
-            longPositionOpenPositionPoint: longPositionOpenPositionPoint.toString().replace('+', ''),
-            shortPositionOpenPositionPoint: shortPositionOpenPositionPoint.toString().replace('+', ''),
-            longPositionClosePositionPoint: longPositionClosePositionPoint.toString().replace('+', ''),
-            shortPositionClosePositionPoint: shortPositionClosePositionPoint.toString().replace('+', ''),
           };
-          params.coinId = this.coin_List.filter((v) => v['label'] == this.dForm.coinMarket)[0].value;
-          id === '' ? params : Object.assign(params, { id });
+
+          !id ? params : Object.assign(params, { id });
           this.btnLoading = true;
-          const res = id === '' || id === undefined ? await $api.addContractTactics(params) : await $api.editContractTactics(params);
+          const res = !id ? await $api.addContractTactics(params) : await $api.editContractTactics(params);
           if (res) {
             this.$message({ message: res.data.message, type: 'success' });
             this.dialogFormVisible = false;
@@ -186,51 +181,21 @@ export default {
       const { fn, row } = data;
       // 编辑档位
       if (fn === 'edit') {
-        this.formName = '编辑策略点';
+        this.formName = '编辑代理端权限';
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
-          let {
-            id,
-            coinMarket,
-            longPositionOpenPositionPoint,
-            shortPositionOpenPositionPoint,
-            longPositionClosePositionPoint,
-            shortPositionClosePositionPoint,
-          } = row;
+          let { id, coinMarket } = row;
 
           this.dForm = {
             id,
             coinMarket,
-            longPositionOpenPositionPoint: longPositionOpenPositionPoint > 0 ? '+' + longPositionOpenPositionPoint : longPositionOpenPositionPoint,
-            shortPositionOpenPositionPoint:
-              shortPositionOpenPositionPoint > 0 ? '+' + shortPositionOpenPositionPoint : shortPositionOpenPositionPoint,
-            longPositionClosePositionPoint:
-              longPositionClosePositionPoint > 0 ? '+' + longPositionClosePositionPoint : longPositionClosePositionPoint,
-            shortPositionClosePositionPoint:
-              shortPositionClosePositionPoint > 0 ? '+' + shortPositionClosePositionPoint : shortPositionClosePositionPoint,
           };
         });
-      }
-      if (fn === 'trstart') {
-        let params = {
-          id: row.id,
-          coinMarket: row.coinMarket,
-        };
-        const res = await $api.editContractPositionGear(params);
-        if (res) {
-          this.$message({ message: '切换成功', type: 'success' });
-          this.getList();
-        } else {
-          this.getList();
-        }
       }
     },
     // 对输入值的范围进行限制
     checkVal(val, nodot) {
-      if (val === 'minimumInitialMargin' || val === 'maintenanceMarginRatio') {
-        this.dForm[val] = (this.dForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d).*$/, '$1$2.$3');
-      }
       // 有第二个参数则是禁止小数位，必须整数
       if (nodot) {
         this.dForm[val] = this.dForm[val].replace(/[^\d]/g, '');
@@ -260,29 +225,18 @@ export default {
       this.current_page = val;
       this.getList();
     },
-    // 百分比转为数值
-    percentToNum(val) {
-      if ((val + '').indexOf('%') !== -1) {
-        val = val.replace(/\%/, '');
-      } else {
-      }
-      return Precision.divide(val, 100);
-    },
-    // 数字转为百分比
-    numToPercent(val) {
-      return Precision.times(val, 100);
-    },
-    getRangeVal(val) {
-      // val.valid
-      // val.form
-    },
+
     requiredParams(params) {
-      if (this.search_params_obj.coinMarket) {
-        if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
-          let tmpName = '';
-          tmpName = this.coin_List.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0].label;
-          this.search_params_obj.coinMarket = tmpName;
-        }
+      return;
+      if (this.$util.isEmptyObject(this.search_params_obj)) {
+        params.endTime = parseInt(new Date(this.toDay).getTime() / 1000);
+        params.startTime = parseInt(new Date(this.ago).getTime() / 1000);
+        // 组件时间初始必须format格式
+        this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.today, 'YYYY/MM/DD HH:mm:ss')];
+      }
+      if (this.search_params_obj.startTime) {
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
       }
     },
     // getlist
@@ -309,10 +263,6 @@ export default {
   async mounted() {
     this.configs = agentPermissionConfigsCol;
     this.searchCofig = this.$util.clone(agentPermissionConfigsConfig);
-    this.$store.dispatch('common/getSymbolListContract').then(() => {
-      this.searchCofig[0]['list'] = this.$store.state.common.symbollistContract;
-      this.coin_List = this.$store.state.common.symbollistContract;
-    });
 
     this.getList();
   },
@@ -321,6 +271,15 @@ export default {
 <style lang="scss">
 .agentPermissionConfigs-container {
   padding: 4px 10px 10px 10px;
+
+  .center-item {
+    display: flex;
+    align-items: center;
+    .el-form-item__content {
+      flex: 1;
+      margin-left: 0 !important;
+    }
+  }
 
   .container-top {
     margin: 10px 0;
