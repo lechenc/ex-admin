@@ -206,7 +206,7 @@
         <el-button type="primary" @click="dialogVisible = false" size="medium">确 定</el-button>
       </div>
       <div slot="footer" class="dialog-footer" v-else>
-        <el-button type="primary" @click="dialogVisible = false" size="medium">取消</el-button>
+        <el-button  @click="dialogVisible = false" size="medium">取消</el-button>
         <el-button type="primary" @click="confirmReview(true)" size="medium" :loading="conLoading">审核通过</el-button>
       </div>
     </el-dialog>
