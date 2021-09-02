@@ -97,7 +97,7 @@ const coinContractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width:'200',
+    width: '200',
     btnGroup: [
       {
         label: '编辑',
@@ -123,7 +123,7 @@ const coinContractCol = [
         fn: 'onekeyDelete',
         filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT','CNHT'],
+        filter_status: ['ALPT', 'CNHT'],
         type: 'primary',
         alias: 'onekeyDelete',
       },
@@ -133,23 +133,20 @@ const coinContractCol = [
         fn: 'onekeyPull',
         filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT','CNHT'],
+        filter_status: ['ALPT', 'CNHT'],
         type: 'primary',
         alias: 'onekeyPull',
       },
 
-      
       {
         label: '一键更新K线',
         fn: 'onekeyUpdate',
         filter_type: 'filter_indexOf_Except',
         filter_key: 'coinMarket',
-        filter_status: ['ALPT','CNHT'],
+        filter_status: ['ALPT', 'CNHT'],
         type: 'primary',
         alias: 'onekeyUpdate',
       },
-
-      
     ],
   },
 ];
@@ -754,7 +751,6 @@ const generalEntrustContractCol = [
         type: 'primary',
         alias: 'onekeyRepeal',
       },
-     
     ],
   },
 ];
@@ -2958,26 +2954,20 @@ const contractAccountCol = [
     label: '基本利率',
     prop: 'basicInterestRate',
   },
-  
 
   {
     label: '溢价利率区间',
-    arr:['premiumRateMin','premiumRateMax'],
-    type:'textArr',
-    join:'~',
+    arr: ['premiumRateMin', 'premiumRateMax'],
+    type: 'textArr',
+    join: '~',
   },
-
-
-  
 
   {
     label: '资金利率区间',
-    arr:['capitalInterestRateMin','capitalInterestRateMax'],
-    type:'textArr',
-    join:'~',
+    arr: ['capitalInterestRateMin', 'capitalInterestRateMax'],
+    type: 'textArr',
+    join: '~',
   },
-
-
 
   {
     label: '触发费率时间',
@@ -3045,7 +3035,6 @@ const contractFundRateConfig = [
     value: '',
     list: [],
   },
-  
 ];
 
 const contractFundRateCol = [
@@ -3123,16 +3112,14 @@ const riskLevelCol = [
     label: '风险梯度等级',
     prop: 'riskGradientLevel',
   },
-  
 
   {
     label: '梯度价格区间',
     width: '150',
-    arr:['gradientPriceStart','gradientPriceEnd'],
-    type:'textArr',
-    join:'-',
+    arr: ['gradientPriceStart', 'gradientPriceEnd'],
+    type: 'textArr',
+    join: '-',
   },
-
 
   {
     label: '平仓允许成交比例',
@@ -3604,7 +3591,7 @@ const accountContractCol = [
       //   type: 'primary',
       //   alias: 'transferRecord',
       // },
-      
+
       // {
       //   label: '收益流水',
       //   fn: 'earningsFlow',
@@ -3615,9 +3602,6 @@ const accountContractCol = [
   },
 ];
 
-
-
-
 const destroyBillConfig = [
   {
     type: 'date_rank',
@@ -3626,7 +3610,6 @@ const destroyBillConfig = [
     prop2: 'endTime',
     value: '',
   },
-  
 ];
 
 const destroyBillCol = [
@@ -3663,7 +3646,6 @@ const destroyBillCol = [
 ];
 
 const earningsRecordConfig = [
-  
   {
     type: 'date_rank',
     label: '时间',
@@ -3688,7 +3670,7 @@ const earningsRecordCol = [
   },
   {
     label: '变动资产金额',
-    type:'plusOthersNumber',
+    type: 'plusOthersNumber',
     prop: 'profitLoss',
     prop2: 'commission',
   },
@@ -3700,10 +3682,7 @@ const earningsRecordCol = [
     label: '变动后可用金额',
     prop: 'balanceAfter',
   },
-  
 ];
-
-
 
 const earningsFlowCol = [
   {
@@ -4234,7 +4213,6 @@ const highFrequencyMonitorConfig = [
   },
 ];
 
-
 const contractUserListCol = [
   {
     label: 'UID',
@@ -4266,7 +4244,6 @@ const contractUserListCol = [
       { val: 25, text: '广告商代理' },
       { val: 31, text: '商务' },
       { val: 32, text: '代理' },
-      
     ],
   },
   {
@@ -4277,7 +4254,7 @@ const contractUserListCol = [
     label: '商务UID',
     prop: 'businessUid',
   },
-  
+
   {
     label: '创建时间',
     prop: 'createTime',
@@ -4286,12 +4263,10 @@ const contractUserListCol = [
     label: '开通合约时间',
     prop: 'usdtTradeTime',
   },
-  
-  
+
   {
     label: '累计合约净入金',
     prop: 'inAmount',
-    
   },
   {
     label: '累计合约交易盈亏',
@@ -4313,7 +4288,7 @@ const contractUserListCol = [
     label: '累计贡献平台手续费',
     prop: 'platformFeeAmount',
   },
-  
+
   {
     label: '累计使用APP时长',
     prop: 'appUsedTime',
@@ -4406,10 +4381,7 @@ const contractUserListConfig = [
     label: '累计合约净入金排序 ',
     prop: 'inAmountSort',
     value: '',
-    list: [
-      { label: '正序', value: 1 },
-      { label: '倒序', value: 2 },
-    ],
+    list: [{ label: '正序', value: 1 }, { label: '倒序', value: 2 }],
   },
 
   {
@@ -4417,10 +4389,7 @@ const contractUserListConfig = [
     label: '累计合约交易手续费排序',
     prop: 'feeSort',
     value: '',
-    list: [
-      { label: '正序', value: 1 },
-      { label: '倒序', value: 2 },
-    ],
+    list: [{ label: '正序', value: 1 }, { label: '倒序', value: 2 }],
   },
 
   {
@@ -4428,10 +4397,7 @@ const contractUserListConfig = [
     label: '累计合约交易盈亏排序',
     prop: 'profitSort',
     value: '',
-    list: [
-      { label: '正序', value: 1 },
-      { label: '倒序', value: 2 },
-    ],
+    list: [{ label: '正序', value: 1 }, { label: '倒序', value: 2 }],
   },
 
   {
@@ -4439,10 +4405,7 @@ const contractUserListConfig = [
     label: '累计爆仓次数排序',
     prop: 'blastSort',
     value: '',
-    list: [
-      { label: '正序', value: 1 },
-      { label: '倒序', value: 2 },
-    ],
+    list: [{ label: '正序', value: 1 }, { label: '倒序', value: 2 }],
   },
 
   {
@@ -4450,10 +4413,7 @@ const contractUserListConfig = [
     label: '累计平仓次数排序',
     prop: 'unwindSort',
     value: '',
-    list: [
-      { label: '正序', value: 1 },
-      { label: '倒序', value: 2 },
-    ],
+    list: [{ label: '正序', value: 1 }, { label: '倒序', value: 2 }],
   },
 
   {
@@ -4461,36 +4421,39 @@ const contractUserListConfig = [
     label: '累计开仓次数排序',
     prop: 'openSort',
     value: '',
-    list: [
-      { label: '正序', value: 1 },
-      { label: '倒序', value: 2 },
-    ],
+    list: [{ label: '正序', value: 1 }, { label: '倒序', value: 2 }],
   },
 ];
 
-
-
 const agentPermissionConfigsCol = [
   {
-    type: 'select',
     label: '身份类型',
-    prop: 'type',
-    value: '',
-    list: [{ label: '商务', value: '1' }, { label: '代理', value: '2' }],
+    prop: 'userType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '商务', val: 1 }, { text: '代理', val: 2 }],
   },
   {
     label: '级别',
-    prop: 'coinMarket',
+    prop: 'userLevel',
   },
   {
-    label: '代理端可查看用户列表字段权限',
-    prop: 'longPositionOpenPositionPoint',
+    label: '代理端是否可查看用户列表字段权限',
+    type: 'moreLabel', //  多级表头 
+    arr: [{ label: '手机号', prop: 'authorityPhone' },{ label: '邮箱', prop: 'authorityEmail' }, { label: '姓名', prop: 'authorityName' }],
   },
   {
     label: '可查看的层级权限',
-    prop: 'shortPositionOpenPositionPoint',
+    prop: 'viewType',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '直推用户', val: 1 }, { text: '间接推用户', val: 2 }, { text: '无限层级', val: 3 }, { text: '自定义层级', val: 4 }],
   },
-  
+  {
+    label: '自定义层级数量',
+    prop: 'viewLevel',
+  },
+
   {
     label: '操作',
     prop: 'action',
@@ -4513,10 +4476,7 @@ const agentPermissionConfigsCol = [
   },
 ];
 
-const agentPermissionConfigsConfig = [
-  
-];
-
+const agentPermissionConfigsConfig = [];
 
 export {
   agentPermissionConfigsCol,

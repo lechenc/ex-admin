@@ -3373,6 +3373,26 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/contract-user-bill-total', data);
   }
 
+  //代理管理/代理端权限管理 列表
+  static apiGetAgentPermissionConfigsList(data) {
+    return Fetch.post('/admin/user/proxyAuthority/page', data);
+  }
+
+   //代理管理/代理端权限管理 添加
+   static apiAddAgentPermissionConfigs(data) {
+    return Fetch.post('/admin/user/proxyAuthority/add', data);
+  }
+
+   //代理管理/代理端权限管理 编辑
+   static apiEditAgentPermissionConfigs(data) {
+    return Fetch.post('/admin/user/proxyAuthority/update', data);
+  }
+
+  //代理管理/代理端权限管理 删除
+  static apiDelAgentPermissionConfigs(data) {
+    return Fetch.post('/admin/user/proxyAuthority/delete', data);
+  }
+
   
 
   

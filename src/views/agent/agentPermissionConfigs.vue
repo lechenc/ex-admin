@@ -26,35 +26,33 @@
       <el-form :model="dForm" ref="dForm" :rules="drules">
         <el-row :span="24">
           <el-col :span="13">
-            <el-form-item label="请选择身份: " :label-width="formLabelWidth" prop="coinMarket">
-              <el-select v-model="dForm.coinMarket" placeholder="" width="20%">
-                <el-option v-for="(item, idx) in coin_List" :key="idx" :label="item.label" :value="item.value"></el-option>
+            <el-form-item label="请选择身份: " :label-width="formLabelWidth" prop="userType">
+              <el-select :disabled='isEdit' v-model="dForm.userType" placeholder="" width="20%">
+                <el-option v-for="(item, idx) in userType_List" :key="idx" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="24">
           <el-col :span="13">
-            <el-form-item label="请输入级别: " :label-width="formLabelWidth" prop="longPositionOpenPositionPoint">
-              <el-input @input="checkVal('longPositionOpenPositionPoint', 'nodot')" type="text" v-model="dForm.longPositionOpenPositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+            <el-form-item label="请输入级别: " :label-width="formLabelWidth" prop="userLevel">
+              <el-input :disabled='isEdit' @input="checkVal('userLevel', 'nodot')" type="text" v-model="dForm.userLevel" autocomplete="off" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :span="24">
-          <el-form-item class="center-item" label="代理端可查看用户列表字段权限: " :label-width="formLabelWidth" prop="shortPositionOpenPositionPoint">
-            <el-checkbox-group v-model="dForm.checkList">
-              <el-checkbox label="手机"></el-checkbox>
-              <el-checkbox label="邮箱"></el-checkbox>
-              <el-checkbox label="姓名"></el-checkbox>
-            </el-checkbox-group>
+          <el-form-item class="center-item" label="代理端可查看用户列表字段权限: " :label-width="formLabelWidth">
+            <el-checkbox v-model="dForm.authorityPhone">手机号</el-checkbox>
+            <el-checkbox v-model="dForm.authorityEmail">邮箱</el-checkbox>
+            <el-checkbox v-model="dForm.authorityName">姓名</el-checkbox>
           </el-form-item>
         </el-row>
 
         <el-row :span="24">
-          <el-form-item class="center-item" label="可查看层级的权限: " :label-width="formLabelWidth" prop="shortPositionOpenPositionPoint">
+          <el-form-item class="center-item" label="可查看层级的权限: " :label-width="formLabelWidth" prop="viewType">
             <el-row :span="24">
-              <el-radio-group v-model="dForm.radio" @change="radioChange">
+              <el-radio-group v-model="dForm.viewType" @change="viewTypeChange">
                 <el-radio :label="1">直推用户</el-radio>
                 <el-radio :label="2">间接推用户</el-radio>
                 <el-radio :label="3">无限层级</el-radio>
@@ -63,7 +61,7 @@
             </el-row>
             <el-row :span="24">
               <el-col :span="11">
-                <el-input :disabled='!isDiy' type="text" v-model="dForm.shortPositionClosePositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+                <el-input @input="checkVal('viewLevel', 'nodot')" :disabled="dForm.viewType != 4" type="text" v-model="dForm.viewLevel" autocomplete="off" placeholder="请输入"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
@@ -71,8 +69,8 @@
 
         <el-row :span="24">
           <el-col :span="13">
-            <el-form-item label="谷歌验证码: " :label-width="formLabelWidth" prop="shortPositionClosePositionPoint">
-              <el-input  @input="checkVal('shortPositionClosePositionPoint', 'nodot')" type="text" v-model="dForm.shortPositionClosePositionPoint" autocomplete="off" placeholder="请输入"></el-input>
+            <el-form-item label="谷歌验证码: " :label-width="formLabelWidth" prop="googleCode">
+              <el-input @input="checkVal('googleCode', 'nodot')" type="text" v-model="dForm.googleCode" autocomplete="off" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -113,7 +111,7 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       chainArr: [], // 链列表
-      coin_List: [
+      userType_List: [
         {
           label: '商务',
           value: 1,
@@ -125,34 +123,38 @@ export default {
       ], // 身份类型
       formLabelWidth: '150px',
       dialogFormVisible: false, // 编辑添加币种弹窗
-      dForm: {
-        checkList: [],
-      },
+      dForm: {},
       formName: '',
       drules: {
-        coinMarket: [{ required: true, message: '必填', trigger: 'blur' }],
+        userType: [{ required: true, message: '必选', trigger: 'blur' }],
+        userLevel: [{ required: true, message: '必填', trigger: 'blur' }],
+        viewType: [{ required: true, message: '必选', trigger: 'blur' }],
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      isDiy: false,
+      isEdit: false,
     };
   },
   methods: {
-    radioChange(val) {
-      if (val == 4) {
-        this.isDiy = true;
-      }else{
-        this.isDiy = false;
-      }
+    viewTypeChange(val) {
+      this.dForm.viewLevel = '';
     },
     // 添加币种
     addGear() {
       this.formName = '添加代理端权限';
       this.dialogFormVisible = true;
+      this.isEdit = false;
       this.$nextTick(() => {
         this.$refs['dForm'].resetFields();
         this.dForm = {
           id: '',
-          coinMarket: '',
-          checkList: [],
+          userType: '',
+          userLevel: '',
+          viewType: '',
+          viewLevel: '',
+          googleCode: '',
+          authorityPhone: false,
+          authorityEmail: false,
+          authorityName: false,
         };
       });
     },
@@ -160,14 +162,27 @@ export default {
     async confirmOp() {
       this.$refs['dForm'].validate(async (valid) => {
         if (valid) {
-          let { id, coinMarket } = this.dForm;
+          let { id, userType, userLevel, viewType, viewLevel, googleCode, authorityPhone, authorityEmail, authorityName } = this.dForm;
           let params = {
-            coinMarket,
+            userType,
+            userLevel,
+            viewType,
+            googleCode,
+            authorityPhone,
+            authorityEmail,
+            authorityName,
           };
 
           !id ? params : Object.assign(params, { id });
+          if (viewType == 4) {
+            params.viewLevel = viewLevel;
+            if (!viewLevel) {
+              return this.$message.error('请填写等级');
+            }
+          }
+
           this.btnLoading = true;
-          const res = !id ? await $api.addContractTactics(params) : await $api.editContractTactics(params);
+          const res = !id ? await $api.apiAddAgentPermissionConfigs(params) : await $api.apiEditAgentPermissionConfigs(params);
           if (res) {
             this.$message({ message: res.data.message, type: 'success' });
             this.dialogFormVisible = false;
@@ -179,19 +194,45 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data;
+
       // 编辑档位
       if (fn === 'edit') {
         this.formName = '编辑代理端权限';
+        this.isEdit = true;
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
-          let { id, coinMarket } = row;
+          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityNamet, viewLevel } = row;
 
           this.dForm = {
             id,
-            coinMarket,
+            userType,
+            userLevel,
+            viewType,
+            googleCode,
+            authorityPhone: authorityPhone == '是' ? true : false,
+            authorityEmail: authorityEmail == '是' ? true : false,
+            authorityNamet: authorityNamet == '是' ? true : false,
+            viewLevel,
           };
         });
+      }
+
+      if (fn === 'del') {
+        this.$confirm('确定删除？', '温馨提示', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' })
+          .then(async () => {
+            let params = {
+              id: row.id,
+            };
+            const res = await $api.apiDelAgentPermissionConfigs(params);
+            if (res) {
+              this.$message({ message: '删除成功', type: 'success' });
+              this.getList();
+            }
+          })
+          .catch(() => {
+            //console.log('cancel');
+          });
       }
     },
     // 对输入值的范围进行限制
@@ -249,12 +290,17 @@ export default {
       this.requiredParams(this.search_params_obj);
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
-      const res = await $api.getContractTacticsList(query_data);
+      const res = await $api.apiGetAgentPermissionConfigsList(query_data);
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
         this.pages = pages;
         this.current_page = current;
+        records.forEach((v) => {
+          v.authorityEmail = v.authorityEmail ? '是' : '否';
+          v.authorityName = v.authorityName ? '是' : '否';
+          v.authorityPhone = v.authorityPhone ? '是' : '否';
+        });
         this.list = records;
       }
       this.listLoading = false;

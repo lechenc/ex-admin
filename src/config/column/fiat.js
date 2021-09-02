@@ -1187,6 +1187,11 @@ const otcOrderCol = [
     filters: [{ val: '1', text: '银行卡' }, { val: '2', text: '支付宝' }, { val: '3', text: '微信' }],
   },
   {
+    label: '支付凭证',
+    prop: 'paymentUrl',
+    type: 'imgArr',
+  },
+  {
     label: '订单状态',
     prop: 'tradeStatus',
     type: 'filter',
@@ -1333,6 +1338,11 @@ const otcOrderColNoBtn = [
     show_type: 'text',
     width: 90,
     filters: [{ val: '1', text: '银行卡' }, { val: '2', text: '支付宝' }, { val: '3', text: '微信' }],
+  },
+  {
+    label: '支付凭证',
+    prop: 'paymentUrl',
+    type: 'imgArr',
   },
   {
     label: '订单状态',
