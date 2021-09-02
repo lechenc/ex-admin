@@ -22,7 +22,7 @@
       <el-table-column v-if="config.type === 'noneShowValue'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
         <template slot-scope="scope">
           <span v-if="!scope.row[config.prop]">
-            {{config.showValue}}
+            {{ config.showValue }}
           </span>
           <span v-else>{{ scope.row[config.prop] }}</span>
         </template>
@@ -31,9 +31,7 @@
       <!-- 文本类型 -->
       <el-table-column v-if="config.type === 'textType'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
         <template slot-scope="scope">
-          <span v-html="scope.row[config.prop]" >
-            
-          </span>
+          <span v-html="scope.row[config.prop]"> </span>
         </template>
       </el-table-column>
 
@@ -74,6 +72,16 @@
             {{ getMinus(scope.row[config.prop], scope.row[config.prop2]) }}
           </span>
         </template>
+      </el-table-column>
+
+      <!-- 多级表头-->
+      <el-table-column v-if="config.type === 'moreLabel'" :key="config.type" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
+        
+        <el-table-column v-for="(item, ixx) in config.arr" :key="ixx"  :label="item.label" :width="config.width ? config.width : ''" :minWidth="90" >
+          <template slot-scope="scope">
+            <span>{{ scope.row[item.prop] }} </span>
+          </template>
+        </el-table-column>
       </el-table-column>
 
       <!-- 加一个其他值 -->
@@ -510,7 +518,7 @@ export default {
       return (row, arr) => {
         if (!arr) return '无';
         var sum = arr.reduce((prev, cur) => {
-          return Precision.plus(prev, row[cur]|| 0);
+          return Precision.plus(prev, row[cur] || 0);
         }, 0);
         return sum;
       };
