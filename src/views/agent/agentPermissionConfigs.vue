@@ -27,7 +27,7 @@
         <el-row :span="24">
           <el-col :span="13">
             <el-form-item label="请选择身份: " :label-width="formLabelWidth" prop="userType">
-              <el-select v-model="dForm.userType" placeholder="" width="20%">
+              <el-select :disabled='isEdit' v-model="dForm.userType" placeholder="" width="20%">
                 <el-option v-for="(item, idx) in userType_List" :key="idx" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
@@ -36,7 +36,7 @@
         <el-row :span="24">
           <el-col :span="13">
             <el-form-item label="请输入级别: " :label-width="formLabelWidth" prop="userLevel">
-              <el-input @input="checkVal('userLevel', 'nodot')" type="text" v-model="dForm.userLevel" autocomplete="off" placeholder="请输入"></el-input>
+              <el-input :disabled='isEdit' @input="checkVal('userLevel', 'nodot')" type="text" v-model="dForm.userLevel" autocomplete="off" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -61,7 +61,7 @@
             </el-row>
             <el-row :span="24">
               <el-col :span="11">
-                <el-input @input="checkVal('viewLevel', 'nodot')" :disabled="!isDiy" type="text" v-model="dForm.viewLevel" autocomplete="off" placeholder="请输入"></el-input>
+                <el-input @input="checkVal('viewLevel', 'nodot')" :disabled="dForm.viewType != 4" type="text" v-model="dForm.viewLevel" autocomplete="off" placeholder="请输入"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
@@ -131,22 +131,18 @@ export default {
         viewType: [{ required: true, message: '必选', trigger: 'blur' }],
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }],
       },
-      isDiy: false,
+      isEdit: false,
     };
   },
   methods: {
     viewTypeChange(val) {
-      if (val == 4) {
-        this.isDiy = true;
-      } else {
-        this.isDiy = false;
-        this.dForm.viewLevel = '';
-      }
+      this.dForm.viewLevel = '';
     },
     // 添加币种
     addGear() {
       this.formName = '添加代理端权限';
       this.dialogFormVisible = true;
+      this.isEdit = false;
       this.$nextTick(() => {
         this.$refs['dForm'].resetFields();
         this.dForm = {
@@ -186,7 +182,7 @@ export default {
           }
 
           this.btnLoading = true;
-          const res = !id ? await $api.apiAddAgentPermissionConfigsList(params) : await $api.apiEditAgentPermissionConfigsList(params);
+          const res = !id ? await $api.apiAddAgentPermissionConfigs(params) : await $api.apiEditAgentPermissionConfigs(params);
           if (res) {
             this.$message({ message: res.data.message, type: 'success' });
             this.dialogFormVisible = false;
@@ -198,15 +194,16 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data;
-      console.log('row', row);
+
       // 编辑档位
       if (fn === 'edit') {
         this.formName = '编辑代理端权限';
+        this.isEdit = true;
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
           let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityNamet, viewLevel } = row;
-          viewType == 4 ? (this.isDiy = true) : (this.isDiy = false);
+
           this.dForm = {
             id,
             userType,
@@ -219,6 +216,23 @@ export default {
             viewLevel,
           };
         });
+      }
+
+      if (fn === 'del') {
+        this.$confirm('确定删除？', '温馨提示', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' })
+          .then(async () => {
+            let params = {
+              id: row.id,
+            };
+            const res = await $api.apiDelAgentPermissionConfigs(params);
+            if (res) {
+              this.$message({ message: '删除成功', type: 'success' });
+              this.getList();
+            }
+          })
+          .catch(() => {
+            //console.log('cancel');
+          });
       }
     },
     // 对输入值的范围进行限制

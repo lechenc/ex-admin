@@ -3379,13 +3379,18 @@ static batchAddAnalyst(data) {
   }
 
    //代理管理/代理端权限管理 添加
-   static apiAddAgentPermissionConfigsList(data) {
+   static apiAddAgentPermissionConfigs(data) {
     return Fetch.post('/admin/user/proxyAuthority/add', data);
   }
 
    //代理管理/代理端权限管理 编辑
-   static apiEditAgentPermissionConfigsList(data) {
+   static apiEditAgentPermissionConfigs(data) {
     return Fetch.post('/admin/user/proxyAuthority/update', data);
+  }
+
+  //代理管理/代理端权限管理 删除
+  static apiDelAgentPermissionConfigs(data) {
+    return Fetch.post('/admin/user/proxyAuthority/delete', data);
   }
 
   
