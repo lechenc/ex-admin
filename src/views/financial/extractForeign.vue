@@ -131,7 +131,7 @@
     </el-dialog>
 
     <el-dialog width="1000px" :visible.sync="dialogTableVisible" title="用户出入金统计">
-      <Btable :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
+      <Btable :headColor="true" :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
     </el-dialog>
 
     <!-- 验证码弹窗 -->
