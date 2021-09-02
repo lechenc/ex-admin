@@ -5,9 +5,9 @@
     </div>
     <div>
       <el-table :data="list" style="width: 100%;text-align:center;" border class="now-table">
-        <el-table-column prop="phone" label="账号" />
-        <el-table-column prop="uid" label="UID" />
-        <el-table-column label="资产列表" prop="coinAccountList" width="540px">
+        <el-table-column prop="phone" label="账号"  width="240px"/>
+        <el-table-column prop="uid" label="UID"   width="240px"/>
+        <el-table-column label="资产列表" prop="coinAccountList" >
           <template slot-scope="scope">
             <div class="colline">
               <div v-for="(item, idx) in scope.row['coinAccountList']" :key="idx" class="line-col">

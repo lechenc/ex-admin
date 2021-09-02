@@ -287,6 +287,7 @@ const mapComponents = {
   Banner: () => import('@/views/front/banner'),
   PopupNotice: () => import('@/views/front/popupNotice'),
   Msg: () => import('@/views/front/msg'),
+  MsgSendRecord: () => import('@/views/front/msgSendRecord'),
   CurrencyRobot: () => import('@/views/symbol/currencyRobot'),
   ContractSymbolRobot: () => import('@/views/symbol/contractSymbolRobot'),
   PlateArea: () => import('@/views/symbol/plateArea'),
@@ -431,6 +432,7 @@ const mapComponents = {
   AgentFinancialFlow: () => import('@/views/agent/agentFinancialFlow'),
   UserMonitor: () => import('@/views/agent/userMonitor'),
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
+  AgentPermissionConfigs: () => import('@/views/agent/agentPermissionConfigs'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
   AgentPlacesConfigs: () => import('@/views/agent/agentPlacesConfigs'),
 

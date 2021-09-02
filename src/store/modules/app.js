@@ -34,7 +34,7 @@ const state = {
   // routers: [], // 本地部分固定的路由
   hybridRouters: [], // 本地路由（但导入了后台返回的路由权限数据）生成的混合数组
   isOwer:0 ,// 判断人员管理页面 是否为部门负责人 0不是 1 是
-  spreconCheckBtnIsShow:false, // // 财务管理/特殊调账管理 审核按钮是否隐藏
+  
 };
 
 const mutations = {
@@ -74,9 +74,7 @@ const mutations = {
     state.isOwer = list;
   },
 
-  nowSpreconCheckBtnIsShow: (state, list) => {
-    state.spreconCheckBtnIsShow = list;
-  },
+  
 
 
   
@@ -122,6 +120,7 @@ const actions = {
   setViewerVideo({ commit }, device) {
     commit('nowsetViewerVideo', device);
   },
+  
   
   // 对比生成动态权限路由hybridRouters
   GenerateRoutes({ commit }, data) {

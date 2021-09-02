@@ -1,7 +1,22 @@
 <template>
   <div class="billContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="快速导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch
+        :configs="searchCofig"
+        @do-search="doSearch"
+        @do-reset="doReset"
+        :calLoadingExcel="calLoadingExcel"
+        calTextExcel="快速导出excel"
+        :calTotalExcel="btnArr.includes('excel')"
+        @do-calTotal-excel="calTotalExcel"
+        :excelLoading="excelLoading"
+        :exportExcel="true"
+        @do-exportExcel="exportExcel"
+        :calLoading="calLoading"
+        :calTotal="true"
+        @do-calTotal="calTotal"
+        calText="合约账单统计"
+      />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -46,15 +61,80 @@ export default {
       btnArr: [],
       excelLoading: false,
       dataList: [],
+      calLoading: false,
+      typeObj: {
+        1: '爆仓平空',
+
+        2: '爆仓平多',
+
+        3: '平空',
+
+        4: '平多',
+
+        5: '开空手续费',
+
+        6: '开多手续费',
+
+        7: '币币转入合约',
+
+        8: '合约转出币币',
+
+        9: '资金费用',
+
+        10: '开仓手续费',
+
+        11: '平仓手续费',
+
+        12: '法币转入合约',
+
+        13: '合约转出法币',
+
+        15: '合约划转',
+
+        18: '开多',
+
+        19: '开空',
+      },
     };
   },
   methods: {
+    // 根据查询条件进行合计弹窗展示
+    async calTotal(data) {
+      this.search_params_obj = data;
+      if (!this.search_params_obj.type) {
+        return this.$message.error('请选择类型');
+      }
+      this.calLoading = true;
+      const params = {
+        pageNum: this.current_page,
+        pageSize: this.pageSize,
+      };
+      this.requiredParams(params);
+      Object.assign(params, this.search_params_obj);
+      let tmpName = '';
+      if (this.search_params_obj.coinId) {
+        tmpName = this.symbollist.filter((v) => v['value'] == this.search_params_obj.coinId)[0].label;
+      } else {
+        tmpName = '全部';
+      }
+      const res = await $api.getBillContractTotal(params);
+      if (res) {
+        const getObj = res.data.data;
+        if (getObj) {
+          this.$alert(`<p>类型：  ${this.typeObj[params.type] || '全部'}</p>  <p>币对：${tmpName}</p> <p>金额：${getObj.amount}</p>  `, '统计结果', {
+            dangerouslyUseHTMLString: true,
+          }).catch(() => {});
+        } else {
+          this.$message({ type: 'error', message: '数据列表为空!' });
+        }
+      }
+      this.calLoading = false;
+    },
     // 导出excel
     calTotalExcel(data) {
       this.search_params_obj = data;
       const params = {};
 
-      
       this.calLoadingExcel = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);

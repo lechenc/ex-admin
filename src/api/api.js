@@ -3363,6 +3363,18 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/account/special-reconciliation/switch', data);
   }
 
+  //运营管理/短信发送记录 列表
+  static apiGetMsgSendRecordList(data) {
+    return Fetch.post('/admin/user/message/record/list', data);
+  }
+
+  //合约管理/交易管理/合约账单 合约账单统计
+  static getBillContractTotal(data) {
+    return Fetch.post('/admin/account/contract-user-bill-total', data);
+  }
+
+  
+
   
 
   

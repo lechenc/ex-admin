@@ -693,6 +693,15 @@ export const asyncRouterMap = [
         component: () => import('@/views/front/msg'),
         meta: { title: '短信管理', icon: '', role: [] },
       },
+
+      {
+        path: 'msgSendRecord',
+        name: 'MsgSendRecord',
+        component: () => import('@/views/front/msgSendRecord'),
+        meta: { title: '短信发送记录', icon: '', role: [] },
+      },
+
+      
       {
         path: 'poster',
         name: 'Poster',
@@ -1482,6 +1491,13 @@ export const asyncRouterMap = [
         name: 'AgentPlacesConfigs',
         component: () => import('@/views/agent/agentPlacesConfigs'),
         meta: { title: '手动发放代理名额设置', icon: '', role: [] },
+      },
+
+      {
+        path: 'agentPermissionConfigs',
+        name: 'AgentPermissionConfigs',
+        component: () => import('@/views/agent/agentPermissionConfigs'),
+        meta: { title: '代理端权限管理', icon: '', role: [] },
       },
     ],
   },

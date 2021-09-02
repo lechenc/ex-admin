@@ -17,12 +17,23 @@
       <!-- 序号 -->
       <el-table-column v-if="config.type == 'index'" type="index" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120"> </el-table-column>
 
-      <!-- 没有值显示- -->
+      <!-- 没有值显示 -->
 
-      <el-table-column v-if="config.type === 'noneShowLine'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
+      <el-table-column v-if="config.type === 'noneShowValue'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
         <template slot-scope="scope">
-          <span v-if="!scope.row[config.prop]">-</span>
+          <span v-if="!scope.row[config.prop]">
+            {{config.showValue}}
+          </span>
           <span v-else>{{ scope.row[config.prop] }}</span>
+        </template>
+      </el-table-column>
+
+      <!-- 文本类型 -->
+      <el-table-column v-if="config.type === 'textType'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="90">
+        <template slot-scope="scope">
+          <span v-html="scope.row[config.prop]" >
+            
+          </span>
         </template>
       </el-table-column>
 
@@ -70,6 +81,13 @@
         <template slot-scope="scope">
           <span v-if="config.othersNumber"> {{ getPlus(scope.row[config.prop], config.othersNumber) }} </span>
           <span v-else-if="config.prop2"> {{ getPlus(scope.row[config.prop], scope.row[config.prop2]) }} </span>
+        </template>
+      </el-table-column>
+
+      <!-- 几个数相加 -->
+      <el-table-column v-if="config.type == 'plusPropArr'" :key="config.label" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
+        <template slot-scope="scope">
+          <span>{{ getPlusSum(scope.row, config.propArr) }}</span>
         </template>
       </el-table-column>
 
@@ -318,7 +336,7 @@
 
             <!-- 根据table列表某些字段的值显示 -->
 
-            <template v-else-if="btn.filter_type == 'array' && btn.filter_status.includes(scope.row[btn.filter_key] + '')">
+            <template v-else-if="btn.filter_type == 'array' && btn.filter_status.includes(scope.row[btn.filter_key] + '') && spreconCheckBtnIsShow">
               <el-button slot="reference" :type="btn.type" plain size="small" @click="doHandle($event, scope.row, btn['fn'])">{{ btn.label }}</el-button>
             </template>
 
@@ -444,6 +462,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    spreconCheckBtnIsShow: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     isDeskTop() {
@@ -485,14 +507,11 @@ export default {
     },
 
     getPlusSum() {
-      return (row, arr, others) => {
+      return (row, arr) => {
         if (!arr) return '无';
         var sum = arr.reduce((prev, cur) => {
-          return Precision.plus(prev, row[cur]);
+          return Precision.plus(prev, row[cur]|| 0);
         }, 0);
-        if (others) {
-          sum = Precision.plus(sum, others);
-        }
         return sum;
       };
     },

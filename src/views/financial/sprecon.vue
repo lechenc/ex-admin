@@ -12,7 +12,7 @@
     </div>
 
     <div>
-      <Btable @select="getSelectRow" :selection="isTableSelect" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+      <Btable :spreconCheckBtnIsShow='checkBtnIsShow' @select="getSelectRow" :selection="isTableSelect" :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -67,7 +67,8 @@
             <el-form-item :label-width="formLabelWidth" label="调账类型:" prop="reconciliationType">
               <el-radio-group v-model="orderForm.reconciliationType">
                 <el-radio :label="1">异常补发</el-radio>
-                <el-radio :label="2">财务特殊充币</el-radio>
+                <el-radio :label="2">财务工资</el-radio>
+                <el-radio :label="3">运营活动奖励</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -104,7 +105,7 @@
         <el-row :span="24">
           <el-col :span="12">
             <el-form-item label="账户余额:">
-              {{curTotalAmount}}
+              {{ curTotalAmount }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -119,7 +120,7 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = 财务特殊充币] </el-form-item>
+            <el-form-item label-width="75px"> 格式列说明：[(账户类型) 1 = 币币] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = 财务工资，3 = 运营活动奖励] </el-form-item>
           </el-col>
         </el-row>
 
@@ -373,8 +374,7 @@ export default {
     async spreconCheckBtnIsShow() {
       const res = await $api.apiSpreconCheckBtnIsShow({});
       if (res) {
-        this.checkBtnIsShow  = res.data.data.reconciliationSwitch
-        this.$store.commit('app/nowSpreconCheckBtnIsShow', this.checkBtnIsShow);
+        this.checkBtnIsShow = res.data.data.reconciliationSwitch;
       }
     },
     // 批量审核
@@ -397,6 +397,7 @@ export default {
             center: true,
           })
             .then(() => {
+              this.isBranchPass = true;
               this.confirmPassBatch(1);
             })
             .catch(() => {});
@@ -780,6 +781,7 @@ export default {
       }
     },
   },
+
   mounted() {
     let authObj = this.$util.getAuthority('Sprecon', spreconCol, spreconColNoBtn);
     this.configs = authObj.val;
@@ -792,8 +794,8 @@ export default {
       this.searchCofig[2]['list'] = this.$store.state.common.coinlist;
       this.coinList = this.$store.state.common.coinlist;
     });
-    this.getList();
     this.spreconCheckBtnIsShow();
+    this.getList();
   },
 };
 </script>

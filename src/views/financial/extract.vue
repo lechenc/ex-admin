@@ -136,6 +136,10 @@
         <vue-qr :text="analysisQrCode" :margin="0" colorDark="#000" colorLight="#fff" :size="420"></vue-qr>
       </div>
     </el-dialog>
+
+    <el-dialog width="1000px" :visible.sync="dialogTableVisible" title="用户出入金统计">
+      <Btable :listLoading="inOutGoldListLoading" :data="inOutGoldList" :configs="inOutGoldConfigs" />
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -144,6 +148,7 @@ import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { extractCol, extractColNoBtn, extractConfig } from '@/config/column/financial';
+import { userColInOutGoldList } from '@/config/column/user';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 import activePage from '@/mixin/keepPage';
@@ -159,6 +164,10 @@ export default {
   mixins: [activePage],
   data() {
     return {
+      dialogTableVisible:false,
+      inOutGoldConfigs: [], // 出入金配置
+      inOutGoldListLoading:false,
+      inOutGoldList: [],
       listLoading: false, // 表格loading
       btnLoading: false, // 提交loading
       rejLoading: false, // 驳回loading
@@ -234,6 +243,28 @@ export default {
     },
   },
   methods: {
+    // 获取 出入金数据表格
+    async getInOutGoldListFunc(userId, _uid) {
+      if (this.inOutGoldListLoading) return;
+      const params = userId
+        ? {
+            userId: userId,
+          }
+        : {
+            uid: _uid,
+          };
+      this.inOutGoldListLoading = true;
+      const res = await $api.apiGetInOutGoldList(params);
+      if (res) {
+        const records = res.data.data;
+        if (records && records.length > 0) {
+          this.inOutGoldList = records;
+        }
+      } else {
+        this.inOutGoldList = [];
+      }
+      this.inOutGoldListLoading = false;
+    },
     async doHandle(data) {
       const { fn, row } = data;
       this.handleStatus = fn;
@@ -251,6 +282,10 @@ export default {
       } else if (fn === 'showqr') {
         // 查看二维码
         this.verify(row);
+      }else if (fn === 'inOutGoldList') {
+        this.dialogTableVisible = true;
+        const { userId, uid } = row;
+        this.getInOutGoldListFunc(userId, uid);
       }
     },
     // 打开详情弹窗(弹框里面部分内容显示还是隐藏由html部分v-if控制)
@@ -503,7 +538,7 @@ export default {
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
-
+    this.inOutGoldConfigs = userColInOutGoldList;
     this.searchCofig = this.$util.clone(extractConfig);
     this.$store.dispatch('common/getCoinList').then(() => {
       this.coinList = this.$store.state.common.coinlist;
