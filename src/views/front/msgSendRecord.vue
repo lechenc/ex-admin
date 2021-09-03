@@ -16,7 +16,7 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { msgSendRecordCol, msgSendRecordConfig } from '@/config/column/front';
+import { msgSendRecordCol,msgSendRecordColNoBtn, msgSendRecordConfig } from '@/config/column/front';
 import $api from '@/api/api';
 import utils from '@/utils/util';
 
@@ -145,7 +145,9 @@ export default {
   },
 
   mounted() {
-    this.configs = msgSendRecordCol;
+    let authObj = this.$util.getAuthority('MsgSendRecord', msgSendRecordCol, msgSendRecordColNoBtn);
+    this.configs = authObj.val;
+
     this.searchCofig = this.$util.clone(msgSendRecordConfig);
 
     // 初始化今天，之前的时间
