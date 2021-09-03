@@ -362,6 +362,12 @@ const mapComponents = {
   CommissionContract: () => import('@/views/fiat/acceptanceMerchant/commissionContract'),
   CommissionContractFlow: () => import('@/views/fiat/acceptanceMerchant/commissionContractFlow'),
 
+  // 币汇管理
+  CoinForexPairsConfigs: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
+  CoinForexOutGold: () => import('@/views/coinForex/coinForexfinance/coinForexOutGold'),
+  CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
+  CoinForexDealList: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
+
   WarehouseUser: () => import('@/views/warehouse/user'),
   WarehouseUserListDetail: () => import('@/views/warehouse/userListDetail'),
   WarehouseStatistics: () => import('@/views/warehouse/statistics'),

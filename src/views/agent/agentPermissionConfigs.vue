@@ -54,7 +54,7 @@
             <el-row :span="24">
               <el-radio-group v-model="dForm.viewType" @change="viewTypeChange">
                 <el-radio :label="1">直推用户</el-radio>
-                <el-radio :label="2">间接推用户</el-radio>
+                <!-- <el-radio :label="2">间接推用户</el-radio> -->
                 <el-radio :label="3">无限层级</el-radio>
                 <el-radio :label="4">自定义层级</el-radio>
               </el-radio-group>

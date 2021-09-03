@@ -803,6 +803,7 @@ const msgSendRecordCol = [
     prop: 'content',
     type: 'textType',
     width: '450',
+    alias:'content'
   },
 ];
 
