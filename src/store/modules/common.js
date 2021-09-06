@@ -13,12 +13,13 @@ const getDefaultState = () => {
     coinlist: [],
     fiatcoinlist: [],
     symbollist: [],
-    symbolListSupportContract:[],
+    symbolListSupportContract: [],
     symbollistContract: [],
     workorderlist: [],
     symbolMimiclistContract: [],
     symbolMimicListAnalyst: [],
     symbolMimicListAnalystAll: [],
+    coinForexList: [], // 币汇
   };
 };
 
@@ -28,7 +29,7 @@ const mutations = {
   SET_COINLIST: (state, list) => {
     state.coinlist = list;
   },
-  
+
   SET_SYMBOLLIST: (state, list) => {
     state.symbollist = list;
   },
@@ -38,6 +39,10 @@ const mutations = {
   SET_SYMBOLLISTCONTRACT: (state, list) => {
     state.symbollistContract = list;
   },
+  SET_GETCOINFOREXLIST: (state, list) => {
+    state.coinForexList = list;
+  },
+
   SET_FIATCOINLIST: (state, list) => {
     state.fiatcoinlist = list;
   },
@@ -73,7 +78,7 @@ const actions = {
         });
     });
   },
-  
+
   getFiatCoinList({ commit, state }) {
     return new Promise((resolve, reject) => {
       $api
@@ -100,10 +105,28 @@ const actions = {
             return {
               label: v['coinMarket'],
               value: v['coinMarketId'],
-              status: v['status']
+              status: v['status'],
             };
           });
           commit('SET_SYMBOLLIST', list);
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  // get 币汇
+  getCoinForexList({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      $api
+        .apiGetCoinForexList({})
+        .then(res => {
+          const list = res.data.data.map(v => {
+            return { label: v['coinName'], value: v['coinId'] };
+          });
+          commit('SET_GETCOINFOREXLIST', list);
           resolve();
         })
         .catch(error => {
@@ -116,9 +139,9 @@ const actions = {
   getSymbolListSupportContract({ commit, state }) {
     return new Promise((resolve, reject) => {
       $api
-        .getSymbolListSupportContract({  })
+        .getSymbolListSupportContract({})
         .then(res => {
-          console.log('res',res)
+          console.log('res', res);
           const list = res.data.data.map(v => {
             return {
               label: v['coinMarket'],

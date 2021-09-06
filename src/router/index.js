@@ -1017,6 +1017,98 @@ export const asyncRouterMap = [
       },
     ],
   },
+  // 币汇管理
+  {
+    path: '/coinForex',
+    component: Layout,
+    redirect: '/coinForex/coinForexPairs',
+    name: 'CoinForex',
+    meta: { title: '币汇管理', icon: 'front', role: [] },
+    children: [
+      
+
+      
+
+      // 币汇交易对设置管理
+      {
+        path: 'coinForexPairs',
+        name: 'CoinForexPairs',
+        redirect: '/coinForex/coinForexPairs/coinForexPairsConfigs',
+        meta: { title: '币汇交易对设置管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'coinForexPairsConfigs',
+            name: 'CoinForexPairsConfigs',
+            component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
+            meta: { title: '币汇交易对设置', icon: '', role: [] },
+          },
+        ],
+      },
+
+      // 币汇财务管理
+      {
+        path: 'coinForexfinance',
+        name: 'CoinForexfinance',
+        redirect: '/coinForex/coinForexfinance/coinForexOutGold',
+        meta: { title: '币汇财务管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'coinForexOutGold',
+            name: 'CoinForexOutGold',
+            component: () => import('@/views/coinForex/coinForexfinance/coinForexOutGold'),
+            meta: { title: '出金管理', icon: '', role: [] },
+          },
+        ],
+      },
+
+      // 币汇用户管理
+      {
+        path: 'coinForexUser',
+        name: 'CoinForexUser',
+        redirect: '/coinForex/coinForexUser/coinForexUserList',
+        meta: { title: '币汇用户管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'coinForexUserList',
+            name: 'CoinForexUserList',
+            component: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
+            meta: { title: '客户列表', icon: '', role: [] },
+          },
+        ],
+      },
+
+      
+
+      // 币汇交易管理
+      {
+        path: 'coinForexDeal',
+        name: 'CoinForexDeal',
+        redirect: '/coinForex/coinForexDeal/coinForexDealList',
+        meta: { title: '币汇交易管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'coinForexDealList',
+            name: 'CoinForexDealList',
+            component: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
+            meta: { title: '交易报表', icon: '', role: [] },
+          },
+
+          {
+            path: 'coinForexEntrustList',
+            name: 'CoinForexEntrustList',
+            component: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
+            meta: { title: '委托报表', icon: '', role: [] },
+          },
+        ],
+      },
+
+
+
+      
+
+      
+    ],
+  },
   // 星球（标仓管理）
   {
     path: '/warehouse',

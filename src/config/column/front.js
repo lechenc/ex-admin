@@ -803,6 +803,67 @@ const msgSendRecordCol = [
     prop: 'content',
     type: 'textType',
     width: '450',
+    alias:'content'
+  },
+];
+
+// 运营管理/短信发送记录
+const msgSendRecordColNoBtn = [
+  {
+    label: '发送平台',
+    prop: 'platformName',
+  },
+
+  {
+    label: '发送类型',
+    prop: 'messageType',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: '短信', val: 1 }, { text: '邮件', val: 2 }],
+  },
+
+  {
+    label: '用户UID',
+    prop: 'uid',
+  },
+
+  {
+    label: '区号',
+    prop: 'phoneAreaCode',
+    type: 'noneShowValue',
+    showValue: '无',
+  },
+  {
+    label: '手机号码',
+    prop: 'phone',
+    type: 'noneShowValue',
+    showValue: '无',
+    width: '120',
+  },
+  {
+    label: '邮箱号码',
+    prop: 'email',
+    type: 'noneShowValue',
+    showValue: '无',
+    width: '150',
+  },
+
+  {
+    label: '发送时间',
+    prop: 'createTime',
+  },
+  {
+    label: '回执时间',
+    prop: 'syncTime',
+  },
+  {
+    label: '回执状态',
+    prop: 'syncResult',
+    type: 'filter',
+    show_type: 'text',
+    // 1.PC 2.IOS 3.Android
+    filters: [{ text: '成功', val: true }, { text: '失败', val: false }],
   },
 ];
 
@@ -856,6 +917,7 @@ const msgSendRecordConfig = [
 
 export {
   msgSendRecordCol,
+  msgSendRecordColNoBtn,
   msgSendRecordConfig,
   ssoWhiteListCol,
   ssoWhiteListColNoBtn,

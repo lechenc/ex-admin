@@ -3393,6 +3393,38 @@ static batchAddAnalyst(data) {
     return Fetch.post('/admin/user/proxyAuthority/delete', data);
   }
 
+  // 币汇 币种
+  static apiGetCoinForexList(data) {
+    return Fetch.post('/admin/account/coin/query/simple', data);
+  }
+
+  //币汇管理/币汇交易管理/交易报表 列表
+  static getCoinForexDealListList(data) {
+    return Fetch.post('/forex/background/queryLiquidateBackground', data);
+  }
+
+   //币汇管理/币汇交易管理/交易报表 快速导出excel
+   static getCoinForexDealListExport(data) {
+    return Fetch.postExcel('/forex/background/downloadLiquidateBackground', data);
+  }
+
+  //币汇管理/币汇交易管理/交易报表 列表
+  static getCoinForexEntrustListList(data) {
+    return Fetch.post('/forex/background/queryOrderBackground', data);
+  }
+
+   //币汇管理/币汇交易管理/交易报表 快速导出excel
+   static getCoinForexEntrustListExport(data) {
+    return Fetch.postExcel('/forex/background/downloadOrderBackground', data);
+  }
+
+  
+
+   
+
+
+  
+
   
 
   

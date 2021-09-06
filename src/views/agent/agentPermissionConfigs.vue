@@ -54,7 +54,7 @@
             <el-row :span="24">
               <el-radio-group v-model="dForm.viewType" @change="viewTypeChange">
                 <el-radio :label="1">直推用户</el-radio>
-                <el-radio :label="2">间接推用户</el-radio>
+                <!-- <el-radio :label="2">间接推用户</el-radio> -->
                 <el-radio :label="3">无限层级</el-radio>
                 <el-radio :label="4">自定义层级</el-radio>
               </el-radio-group>
@@ -202,7 +202,7 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
-          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityNamet, viewLevel } = row;
+          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityName, viewLevel } = row;
 
           this.dForm = {
             id,
@@ -212,7 +212,7 @@ export default {
             googleCode,
             authorityPhone: authorityPhone == '是' ? true : false,
             authorityEmail: authorityEmail == '是' ? true : false,
-            authorityNamet: authorityNamet == '是' ? true : false,
+            authorityName: authorityName == '是' ? true : false,
             viewLevel,
           };
         });
