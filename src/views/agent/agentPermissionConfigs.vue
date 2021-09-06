@@ -202,7 +202,7 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
-          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityNamet, viewLevel } = row;
+          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityName, viewLevel } = row;
 
           this.dForm = {
             id,
@@ -212,7 +212,7 @@ export default {
             googleCode,
             authorityPhone: authorityPhone == '是' ? true : false,
             authorityEmail: authorityEmail == '是' ? true : false,
-            authorityNamet: authorityNamet == '是' ? true : false,
+            authorityName: authorityName == '是' ? true : false,
             viewLevel,
           };
         });

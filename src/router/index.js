@@ -1092,6 +1092,13 @@ export const asyncRouterMap = [
             component: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
             meta: { title: '交易报表', icon: '', role: [] },
           },
+
+          {
+            path: 'coinForexEntrustList',
+            name: 'CoinForexEntrustList',
+            component: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
+            meta: { title: '委托报表', icon: '', role: [] },
+          },
         ],
       },
 
