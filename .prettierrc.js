@@ -7,20 +7,22 @@
  * @FilePath: \alphawallet-bg\.prettierrc.js
  */
 module.exports = {
+  singleQuote: true,
   bracketSpacing: true,
   jsxBracketSameLine: false,
   printWidth: 300,
-  semi: true,
+  semi: false,
   tabWidth: 2,
   useTabs: false,
-  singleQuote: true,
-  trailingComma: "all",
-  proseWrap: "never",
+  trailingComma: 'none',
+  proseWrap: 'never',
   formatOnSave: false,
-  overrides: [{
-    files: ".prettierrc",
-    options: {
-      parser: "json"
-    },
-  }, ],
+  overrides: [
+    {
+      files: '.prettierrc',
+      options: {
+        parser: 'json'
+      }
+    }
+  ]
 };
