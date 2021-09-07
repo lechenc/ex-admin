@@ -122,6 +122,7 @@ export default {
       pages: 0, // 总页数
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
+       coinForexList:[]
     };
   },
 

@@ -121,10 +121,13 @@ const actions = {
   getCoinForexList({ commit, state }) {
     return new Promise((resolve, reject) => {
       $api
-        .apiGetCoinForexList({})
+        .apiGetCoinForexList({
+          pageNum: 1,
+          pageSize: 1000,
+        })
         .then(res => {
-          const list = res.data.data.map(v => {
-            return { label: v['coinName'], value: v['coinId'] };
+          const list = res.data.data.records.map(v => {
+            return { label: v['symbol'], value: v['id'] };
           });
           commit('SET_GETCOINFOREXLIST', list);
           resolve();
