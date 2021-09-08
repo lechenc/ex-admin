@@ -9,14 +9,15 @@
 module.exports = {
   singleQuote: true,
   bracketSpacing: true,
-  jsxBracketSameLine: false,
-  printWidth: 300,
+  jsxBracketSameLine: false, //使多行JSX元素最后一行末尾的 > 单独一行
+  printWidth: 100,
   semi: false,
   tabWidth: 2,
   useTabs: false,
   trailingComma: 'none',
   proseWrap: 'never',
   formatOnSave: false,
+  eslintIntegration: false,
   overrides: [
     {
       files: '.prettierrc',
@@ -25,4 +26,4 @@ module.exports = {
       }
     }
   ]
-};
+}

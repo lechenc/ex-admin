@@ -50,7 +50,12 @@ const rechargeCol = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '充币待确认', val: 6 }]
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '充币待确认', val: 6 }
+    ]
   },
   {
     label: '充币时间',
@@ -128,7 +133,12 @@ const rechargeColNoBtn = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '充币待确认', val: 6 }]
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '充币待确认', val: 6 }
+    ]
   },
   {
     label: '充币时间',
@@ -185,7 +195,12 @@ const rechargeConfig = [
     label: '充币状态',
     prop: 'tradeStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '成功', value: 1 }, { label: '失败', value: 2 }, { label: '充币待确认', value: 6 }]
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '成功', value: 1 },
+      { label: '失败', value: 2 },
+      { label: '充币待确认', value: 6 }
+    ]
   },
   {
     type: 'text',
@@ -198,7 +213,11 @@ const rechargeConfig = [
     label: '归集状态',
     prop: 'collectStatus',
     value: '',
-    list: [{ label: '未归集', value: 0 }, { label: '已归集', value: 1 }, { label: '归集失败', value: 2 }]
+    list: [
+      { label: '未归集', value: 0 },
+      { label: '已归集', value: 1 },
+      { label: '归集失败', value: 2 }
+    ]
   },
   {
     type: 'text',
@@ -352,6 +371,11 @@ const extractCol = [
     width: 100
   },
   {
+    label: '上级UID',
+    prop: 'topUid',
+    width: 100
+  },
+  {
     label: '币种',
     prop: 'coinName'
   },
@@ -393,7 +417,13 @@ const extractCol = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '初步审核成功', val: 3 }, { text: '初步审核失败', val: 4 }]
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '初步审核成功', val: 3 },
+      { text: '初步审核失败', val: 4 }
+    ]
   },
   {
     label: '提币时间',
@@ -540,7 +570,13 @@ const extractColNoBtn = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '初步审核成功', val: 3 }, { text: '初步审核失败', val: 4 }]
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '初步审核成功', val: 3 },
+      { text: '初步审核失败', val: 4 }
+    ]
   },
   {
     label: '提币时间',
@@ -632,7 +668,13 @@ const extractConfig = [
     label: '状态',
     prop: 'tradeStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '成功', value: 1 }, { label: '失败', value: 2 }, { label: '初步审核成功', value: 3 }, { label: '初步审核失败', value: 4 }]
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '成功', value: 1 },
+      { label: '失败', value: 2 },
+      { label: '初步审核成功', value: 3 },
+      { label: '初步审核失败', value: 4 }
+    ]
   },
   {
     type: 'select',
@@ -692,7 +734,13 @@ const extractForeignCol = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '初步审核成功', val: 3 }, { text: '初步审核失败', val: 4 }]
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '初步审核成功', val: 3 },
+      { text: '初步审核失败', val: 4 }
+    ]
   },
   // { label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 }
   {
@@ -700,7 +748,11 @@ const extractForeignCol = [
     prop: 'isAuto',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '无类型', val: 0 }, { text: '热钱包类型', val: 1 }, { text: '冷钱包类型', val: 2 }]
+    filters: [
+      { text: '无类型', val: 0 },
+      { text: '热钱包类型', val: 1 },
+      { text: '冷钱包类型', val: 2 }
+    ]
   },
   {
     label: '提币时间',
@@ -841,14 +893,24 @@ const extractForeignColNoBtn = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '成功', val: 1 }, { text: '失败', val: 2 }, { text: '初步审核成功', val: 3 }, { text: '初步审核失败', val: 4 }]
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '初步审核成功', val: 3 },
+      { text: '初步审核失败', val: 4 }
+    ]
   },
   {
     label: '提币类型',
     prop: 'isAuto',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '无类型', val: 0 }, { text: '热钱包类型', val: 1 }, { text: '冷钱包类型', val: 2 }]
+    filters: [
+      { text: '无类型', val: 0 },
+      { text: '热钱包类型', val: 1 },
+      { text: '冷钱包类型', val: 2 }
+    ]
   },
   {
     label: '提币时间',
@@ -927,7 +989,13 @@ const extractForeignConfig = [
     label: '状态',
     prop: 'tradeStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '成功', value: 1 }, { label: '失败', value: 2 }, { label: '初步审核成功', value: 3 }, { label: '初步审核失败', value: 4 }]
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '成功', value: 1 },
+      { label: '失败', value: 2 },
+      { label: '初步审核成功', value: 3 },
+      { label: '初步审核失败', value: 4 }
+    ]
   },
   {
     type: 'select',
@@ -941,7 +1009,11 @@ const extractForeignConfig = [
     label: '提币类型',
     prop: 'isAuto',
     value: '',
-    list: [{ label: '无类型', value: 0 }, { label: '热钱包类型', value: 1 }, { label: '冷钱包类型', value: 2 }]
+    list: [
+      { label: '无类型', value: 0 },
+      { label: '热钱包类型', value: 1 },
+      { label: '冷钱包类型', value: 2 }
+    ]
   }
 ]
 
@@ -978,21 +1050,40 @@ const transferCol = [
     prop: 'fromType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }]
+    filters: [
+      { text: '币币', val: 1 },
+      { text: '法币', val: 2 },
+      { text: '理财', val: 3 },
+      { text: '币汇', val: 4 },
+      { text: '合约', val: 5 }
+    ]
   },
   {
     label: 'TO账户',
     prop: 'toType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }]
+    filters: [
+      { text: '币币', val: 1 },
+      { text: '法币', val: 2 },
+      { text: '理财', val: 3 },
+      { text: '币汇', val: 4 },
+      { text: '合约', val: 5 }
+    ]
   },
   {
     label: '状态',
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0, type: 'info' }, { text: '成功', val: 1, type: 'success' }, { text: '失败', val: 2, type: 'warning' }, { text: '初步审核成功', val: 3, type: 'success' }, { text: '初步审核失败', val: 4, type: 'warning' }, { text: '划转待确认', val: 5, type: 'warning' }]
+    filters: [
+      { text: '待审核', val: 0, type: 'info' },
+      { text: '成功', val: 1, type: 'success' },
+      { text: '失败', val: 2, type: 'warning' },
+      { text: '初步审核成功', val: 3, type: 'success' },
+      { text: '初步审核失败', val: 4, type: 'warning' },
+      { text: '划转待确认', val: 5, type: 'warning' }
+    ]
   },
   {
     label: '时间',
@@ -1036,14 +1127,26 @@ const transferConfig = [
     label: 'FROM账号',
     prop: 'fromType',
     value: '',
-    list: [{ label: '币币', value: '1' }, { label: '法币', value: '2' }, { label: '理财', value: '3' }, { label: '币汇', value: '4' }, { label: '合约', value: '5' }]
+    list: [
+      { label: '币币', value: '1' },
+      { label: '法币', value: '2' },
+      { label: '理财', value: '3' },
+      { label: '币汇', value: '4' },
+      { label: '合约', value: '5' }
+    ]
   },
   {
     type: 'select',
     label: 'TO账号',
     prop: 'toType',
     value: '',
-    list: [{ label: '币币', value: '1' }, { label: '法币', value: '2' }, { label: '理财', value: '3' }, { label: '币汇', value: '4' }, { label: '合约', value: '5' }]
+    list: [
+      { label: '币币', value: '1' },
+      { label: '法币', value: '2' },
+      { label: '理财', value: '3' },
+      { label: '币汇', value: '4' },
+      { label: '合约', value: '5' }
+    ]
   }
 ]
 
@@ -1063,7 +1166,13 @@ const spreconCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }]
+    filters: [
+      { text: '币币', val: 1 },
+      { text: '法币', val: 2 },
+      { text: '理财', val: 3 },
+      { text: '币汇', val: 4 },
+      { text: '合约', val: 5 }
+    ]
   },
   {
     label: '调账类型',
@@ -1071,7 +1180,11 @@ const spreconCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '异常补发', val: 1 }, { text: '财务工资', val: 2 }, { text: '运营活动奖励', val: 3 }]
+    filters: [
+      { text: '异常补发', val: 1 },
+      { text: '财务工资', val: 2 },
+      { text: '运营活动奖励', val: 3 }
+    ]
   },
   {
     label: '调账原因',
@@ -1185,7 +1298,13 @@ const spreconColNoBtn = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '理财', val: 3 }, { text: '币汇', val: 4 }, { text: '合约', val: 5 }]
+    filters: [
+      { text: '币币', val: 1 },
+      { text: '法币', val: 2 },
+      { text: '理财', val: 3 },
+      { text: '币汇', val: 4 },
+      { text: '合约', val: 5 }
+    ]
   },
   {
     label: '调账类型',
@@ -1193,7 +1312,11 @@ const spreconColNoBtn = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '异常补发', val: 1 }, { text: '财务工资', val: 2 }, { text: '运营活动奖励', val: 3 }]
+    filters: [
+      { text: '异常补发', val: 1 },
+      { text: '财务工资', val: 2 },
+      { text: '运营活动奖励', val: 3 }
+    ]
   },
   {
     label: '调账原因',
@@ -1282,7 +1405,11 @@ const spreconConfig = [
     label: '调账类型',
     prop: 'reconciliationType',
     value: '',
-    list: [{ label: '异常补发', value: 1 }, { label: '财务工资', value: 2 }, { label: '运营活动奖励', value: 3 }]
+    list: [
+      { label: '异常补发', value: 1 },
+      { label: '财务工资', value: 2 },
+      { label: '运营活动奖励', value: 3 }
+    ]
   }
 ]
 
@@ -1321,7 +1448,11 @@ const spreconErrorCol = [
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '异常补发', val: 1 }, { text: '财务工资', val: 2 }, { text: '运营活动奖励', val: 3 }]
+    filters: [
+      { text: '异常补发', val: 1 },
+      { text: '财务工资', val: 2 },
+      { text: '运营活动奖励', val: 3 }
+    ]
   },
   {
     label: '调账原因',
@@ -1759,7 +1890,11 @@ const lockManageCol = [
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '星球算力冻结', val: '1' }, { text: '原始合伙人冻结', val: '2' }, { text: '私募冻结', val: '3' }]
+    filters: [
+      { text: '星球算力冻结', val: '1' },
+      { text: '原始合伙人冻结', val: '2' },
+      { text: '私募冻结', val: '3' }
+    ]
   },
   {
     label: '锁仓时间类型',
@@ -1859,7 +1994,11 @@ const lockManageColNoBtn = [
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '星球算力冻结', val: '1' }, { text: '原始合伙人冻结', val: '2' }, { text: '私募冻结', val: '3' }]
+    filters: [
+      { text: '星球算力冻结', val: '1' },
+      { text: '原始合伙人冻结', val: '2' },
+      { text: '私募冻结', val: '3' }
+    ]
   },
   {
     label: '锁仓时间类型',
@@ -1947,7 +2086,11 @@ const lockManageConfig = [
     label: '锁仓类型',
     prop: 'orderType',
     value: '',
-    list: [{ label: '星球算力冻结', value: 1 }, { label: '原始合伙人冻结', value: 2 }, { label: '私募冻结', value: 3 }]
+    list: [
+      { label: '星球算力冻结', value: 1 },
+      { label: '原始合伙人冻结', value: 2 },
+      { label: '私募冻结', value: 3 }
+    ]
   }
   // (目前只有币币)
   // {
@@ -1998,7 +2141,11 @@ const unfreezeManageCol = [
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '星球算力冻结', val: '1' }, { text: '原始合伙人冻结', val: '2' }, { text: '私募冻结', val: '3' }]
+    filters: [
+      { text: '星球算力冻结', val: '1' },
+      { text: '原始合伙人冻结', val: '2' },
+      { text: '私募冻结', val: '3' }
+    ]
   },
   {
     label: '锁仓时间类型',
@@ -2086,7 +2233,11 @@ const unfreezeManageColNoBtn = [
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '星球算力冻结', val: '1' }, { text: '原始合伙人冻结', val: '2' }, { text: '私募冻结', val: '3' }]
+    filters: [
+      { text: '星球算力冻结', val: '1' },
+      { text: '原始合伙人冻结', val: '2' },
+      { text: '私募冻结', val: '3' }
+    ]
   },
   {
     label: '锁仓时间类型',
@@ -2180,7 +2331,11 @@ const unfreezeManageConfig = [
     label: '锁仓类型',
     prop: 'orderType',
     value: '',
-    list: [{ label: '星球算力冻结', value: 1 }, { label: '原始合伙人冻结', value: 2 }, { label: '私募冻结', value: 3 }]
+    list: [
+      { label: '星球算力冻结', value: 1 },
+      { label: '原始合伙人冻结', value: 2 },
+      { label: '私募冻结', value: 3 }
+    ]
   }
   // (目前只有币币)
   // {
@@ -2394,6 +2549,14 @@ const hotWalletExtractSetCol = [
   {
     label: '当前余额',
     prop: 'amount'
+  },
+  {
+    label: '余额提醒',
+    prop: 'amountTip'
+  },
+  {
+    label: '累计充入该地址数量',
+    prop: 'totalAddress'
   },
   {
     label: '累计热提币',

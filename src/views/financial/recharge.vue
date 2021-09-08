@@ -10,14 +10,34 @@
 <template>
   <div class="recharge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" :excel-loading="excelLoading" :export-excel="true" :cal-loading="calLoading" :cal-total="true" @do-search="doSearch" @do-reset="doReset" @do-exportExcel="exportExcel" @do-calTotal="calTotal" />
+      <Bsearch
+        cal-text="合计统计"
+        :configs="searchCofig"
+        :excel-loading="excelLoading"
+        :export-excel="true"
+        :cal-loading="calLoading"
+        :cal-total="true"
+        @do-search="doSearch"
+        @do-reset="doReset"
+        @do-exportExcel="exportExcel"
+        @do-calTotal="calTotal"
+      />
     </div>
     <div>
       <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages" />
-      <el-pagination background layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total" @size-change="pageSizeChange" @current-change="goPage" />
+      <el-pagination
+        background
+        layout="total,sizes, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-sizes="[10, 50, 100, 200]"
+        :page-size="pageSize"
+        :total="total"
+        @size-change="pageSizeChange"
+        @current-change="goPage"
+      />
     </div>
   </div>
 </template>
@@ -91,7 +111,10 @@ export default {
               txid: row.txId
             })
             if (res) {
-              this.$message({ type: 'success', message: '通知成功，请等待5-10分钟 归集程序执行，不要连续点击' })
+              this.$message({
+                type: 'success',
+                message: '通知成功，请等待5-10分钟 归集程序执行，不要连续点击'
+              })
               this.getList()
             }
           })
@@ -111,7 +134,10 @@ export default {
       this.searchCofig.forEach(v => {
         v['value'] = ''
       })
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')]
+      this.searchCofig[0].value = [
+        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      ]
       this.getList()
     },
     exportExcel(val) {
@@ -149,10 +175,16 @@ export default {
       if (res) {
         const getObj = res.data.data
         if (getObj) {
-          const coin = this.searchCofig[3]['list'].filter(v => v.value == this.search_params_obj.coinId)[0].label
-          this.$alert(`<p>币种：${coin}</p><p>到账数量总计：${getObj.realAmountSum}</p>`, '统计结果', {
-            dangerouslyUseHTMLString: true
-          }).catch(() => {})
+          const coin = this.searchCofig[3]['list'].filter(
+            v => v.value == this.search_params_obj.coinId
+          )[0].label
+          this.$alert(
+            `<p>币种：${coin}</p><p>到账数量总计：${getObj.realAmountSum}</p>`,
+            '统计结果',
+            {
+              dangerouslyUseHTMLString: true
+            }
+          ).catch(() => {})
         } else {
           this.$message({ type: 'error', message: '数据列表为空!' })
         }
@@ -176,7 +208,9 @@ export default {
         this.total = total
         this.pages = pages
         this.current_page = current
-        this.list = records
+        this.list = records.map(item => {
+          return { ...item, parentUid: '待添加字段' }
+        })
         this.dataList = records
       }
       this.listLoading = false
