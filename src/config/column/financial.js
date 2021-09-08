@@ -711,6 +711,11 @@ const extractForeignCol = [
     width: 200
   },
   {
+    label: '风控用户',
+    prop: 'isWindControl',
+    width: 200
+  },
+  {
     label: 'UID',
     prop: 'uid',
     width: 100
@@ -1032,6 +1037,13 @@ const extractForeignConfig = [
       { label: '热钱包类型', value: 1 },
       { label: '冷钱包类型', value: 2 }
     ]
+  },
+  {
+    type: 'select',
+    label: '风控用户',
+    prop: 'windControlUser',
+    value: '',
+    list: [{ label: '全部', value: 0 }, { label: '是', value: 1 }, { label: '否', value: 2 }]
   }
 ]
 

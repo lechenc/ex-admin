@@ -287,6 +287,9 @@
           </div>
         </div>
         <div class="search-footer">
+          <el-button v-if="setWindControl" type="primary" :size="sizeDiy" @click="doWindControl">
+            {{ windControlText }}
+          </el-button>
           <el-button
             v-if="calTotal"
             plain
@@ -383,6 +386,14 @@ export default {
     calTotal: {
       type: Boolean,
       default: false
+    },
+    setWindControl: {
+      type: Boolean,
+      default: false
+    },
+    windControlText: {
+      type: String,
+      default: '提币风控参数设置'
     },
     calText: {
       type: String,
@@ -611,6 +622,10 @@ export default {
     toParent() {
       const query = this.getQuery()
       this.$emit('do-parent', query)
+    },
+    doWindControl() {
+      const query = this.getQuery()
+      this.$emit('do-wind-control', query)
     },
     doCalTotal() {
       const query = this.getQuery()
