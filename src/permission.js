@@ -1,41 +1,41 @@
-import router, { createRouter, $addRoutes } from './router/index';
+import router, { createRouter, $addRoutes } from './router/index'
 // import router from "./router/index";
-import store from './store/index';
-import { Message } from 'element-ui';
-import NProgress from 'nprogress'; // progress bar
-import 'nprogress/nprogress.css'; // progress bar style
-import { getToken, removeToken } from '@/utils/auth'; // get token from cookie
-import getPageTitle from '@/utils/get-page-title';
-import Cookies from 'js-cookie';
+import store from './store/index'
+import { Message } from 'element-ui'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+import { getToken, removeToken } from '@/utils/auth' // get token from cookie
+import getPageTitle from '@/utils/get-page-title'
+import Cookies from 'js-cookie'
 
-NProgress.configure({ showSpinner: false }); // NProgress Configuration
+NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login']; // no redirect whitelist
-let isRefresh = false;
+const whiteList = ['/login'] // no redirect whitelist
+let isRefresh = false
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar
-  NProgress.start();
+  NProgress.start()
   // set page title
-  document.title = getPageTitle(to.meta.title);
+  document.title = getPageTitle(to.meta.title)
   // determine whether the user has logged in
-  const hasToken = getToken();
+  const hasToken = getToken()
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       // next({ path: "/" });
-      NProgress.done();
-      localStorage.removeItem('vuex');
-      localStorage.clear();
-      removeToken();
-      localStorage.removeItem('user_name');
+      NProgress.done()
+      localStorage.removeItem('vuex')
+      localStorage.clear()
+      removeToken()
+      localStorage.removeItem('user_name')
       // sessionStorage.clear();
-      window.location.reload();
-      next();
+      window.location.reload()
+      next()
       // NProgress.done();
     } else {
       if (window.isStaticOrDynamic === 'static') {
-        next();
+        next()
       } else {
         if (store.state.app.navlist && store.state.app.navlist.length > 0) {
           if (!store.state.app.hybridRouters || store.state.app.hybridRouters.length <= 0) {
@@ -45,36 +45,36 @@ router.beforeEach(async (to, from, next) => {
                 .dispatch('app/GenerateRoutes', store.state.app.navlist)
                 .then(() => {
                   // 重新存一遍navlist因为GenerateRoutes方法会把navlist的meta改为本地静态的（增加了config字段）
-                  store.dispatch('app/setNavList', store.state.app.navlist);
-                  isRefresh = true;
-                  const nowRoutes = store.state.app.hybridRouters;
+                  store.dispatch('app/setNavList', store.state.app.navlist)
+                  isRefresh = true
+                  const nowRoutes = store.state.app.hybridRouters
                   // 如果*页不改放在这里加将会报错（坑）
-                  nowRoutes.push({ path: '*', redirect: '/404', hidden: true });
-                  const temp = initRouter(nowRoutes);
-                  $addRoutes(temp);
+                  nowRoutes.push({ path: '*', redirect: '/404', hidden: true })
+                  const temp = initRouter(nowRoutes)
+                  $addRoutes(temp)
                   // router.addRoutes(nowRoutes); // 动态添加可访问路由表
-                  next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
+                  next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
                 })
                 .catch(err => {
-                  //console.log(err);
-                });
-            }, 1000);
+                  // console.log(err);
+                })
+            }, 1000)
           } else if (!isRefresh && store.state.app.hybridRouters.length > 0) {
             // 防止特殊情况：刷新后动态路由丢失，所以要重新add+route操作 store.state.app.routers.length
-            isRefresh = true;
-            const nowRoutes = store.state.app.hybridRouters;
-            nowRoutes.push({ path: '*', redirect: '/404', hidden: true });
-            const temp = initRouter(nowRoutes);
-            $addRoutes(temp);
-            next({ ...to, replace: true });
+            isRefresh = true
+            const nowRoutes = store.state.app.hybridRouters
+            nowRoutes.push({ path: '*', redirect: '/404', hidden: true })
+            const temp = initRouter(nowRoutes)
+            $addRoutes(temp)
+            next({ ...to, replace: true })
           } else {
-            next();
+            next()
           }
         } else {
-          localStorage.clear();
-          removeToken();
-          localStorage.removeItem('user_name');
-          next(`/login?redirect=${to.path}`);
+          localStorage.clear()
+          removeToken()
+          localStorage.removeItem('user_name')
+          next(`/login?redirect=${to.path}`)
         }
       }
     }
@@ -83,126 +83,126 @@ router.beforeEach(async (to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       // next(`/login`);
-      next();
+      next()
       // NProgress.done();
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`);
+      next(`/login?redirect=${to.path}`)
       // next(); // 这里虽然具有强制更新动态路由的功能，但是对于页面输入非法路径会出现空白页
-      NProgress.done();
+      NProgress.done()
     }
   }
-});
+})
 
 router.afterEach(() => {
   // finish progress bar
-  NProgress.done();
-});
+  NProgress.done()
+})
 
 // 替换字符串状态的路由
 function initRouter111(arr, router) {
-  var arr2 = router || [];
+  var arr2 = router || []
   for (const i in arr) {
-    const c1 = {};
-    const a1 = arr[i];
-    c1.meta = a1.meta;
-    c1.name = a1.name;
-    c1.path = a1.path;
-    c1.redirect = a1.redirect;
+    const c1 = {}
+    const a1 = arr[i]
+    c1.meta = a1.meta
+    c1.name = a1.name
+    c1.path = a1.path
+    c1.redirect = a1.redirect
     if (a1.path == '/login') {
-      c1.component = mapComponents['login'];
+      c1.component = mapComponents['login']
     } else if (a1.path == '/') {
-      c1.component = mapComponents['Layout'];
+      c1.component = mapComponents['Layout']
     } else if (a1.path == '*') {
-      c1.component = mapComponents['Layout'];
+      c1.component = mapComponents['Layout']
     } else if (a1.path == '/404') {
-      c1.component = mapComponents['notfind'];
+      c1.component = mapComponents['notfind']
     } else {
-      c1.component = mapComponents['Layout'];
+      c1.component = mapComponents['Layout']
     }
-    c1.children = [];
+    c1.children = []
     if (a1.children && a1.children.length && a1.children.length > 0) {
       for (const n in a1.children) {
-        const a2 = a1.children[n];
-        const c2 = {};
-        c2.meta = a2.meta;
-        c2.path = a2.path;
-        c2.name = a2.name;
-        c2.component = mapComponents[a2.name];
-        c2.hidden = a2.hidden || false;
-        c1.children.push(c2);
+        const a2 = a1.children[n]
+        const c2 = {}
+        c2.meta = a2.meta
+        c2.path = a2.path
+        c2.name = a2.name
+        c2.component = mapComponents[a2.name]
+        c2.hidden = a2.hidden || false
+        c1.children.push(c2)
 
         if (a2.children && a2.children.length && a2.children.length > 0) {
-          c1.children[n] = [];
+          c1.children[n] = []
           for (const j in a2.children) {
-            const a3 = a2.children[j];
-            const c3 = {};
-            c3.meta = a3.meta;
-            c3.path = a3.path;
-            c3.name = a3.name;
-            c3.component = mapComponents[a3.name];
-            c3.hidden = a3.hidden || false;
-            c1.children[n].push(c3);
+            const a3 = a2.children[j]
+            const c3 = {}
+            c3.meta = a3.meta
+            c3.path = a3.path
+            c3.name = a3.name
+            c3.component = mapComponents[a3.name]
+            c3.hidden = a3.hidden || false
+            c1.children[n].push(c3)
           }
         }
         // arr2.push(c1);
       }
     }
-    arr2.push(c1);
+    arr2.push(c1)
   }
-  return arr2;
+  return arr2
 }
 
 // 将hybridRouters数组的component替换为真模块（原先仅是字符串）
 function initRouter(router) {
   // arrVal是一个状如[{name:"",children:[{},{}]},{}] 的数组
-  var arrVal = router || [];
+  var arrVal = router || []
   // 返回的数组
-  const rArr = [];
+  const rArr = []
   // 遍历层数
-  let floor = 0;
+  let floor = 0
   function loadRouterInfo(val, objGet) {
-    objGet.meta = val.meta || {};
-    objGet.name = val.name || val.path.replace(/\//gi, '');
-    objGet.path = val.path;
+    objGet.meta = val.meta || {}
+    objGet.name = val.name || val.path.replace(/\//gi, '')
+    objGet.path = val.path
     if (val.redirect) {
-      objGet.redirect = val.redirect || '';
+      objGet.redirect = val.redirect || ''
     }
     if (floor == 0) {
       if (val.path == '/login') {
-        objGet.component = mapComponents['login'];
+        objGet.component = mapComponents['login']
       } else if (val.path == '/') {
-        objGet.component = mapComponents['Layout'];
+        objGet.component = mapComponents['Layout']
       } else if (val.path == '*') {
-        objGet.component = mapComponents['Layout'];
+        objGet.component = mapComponents['Layout']
       } else if (val.path == '/404') {
-        objGet.component = mapComponents['notfind'];
+        objGet.component = mapComponents['notfind']
       } else {
-        objGet.component = mapComponents['Layout'];
+        objGet.component = mapComponents['Layout']
       }
     } else {
       // 三级的父级（二级）是没有componnet的，要替换为() => import('@/views/RouterView'),
       if (mapComponents[val.name]) {
-        objGet.component = mapComponents[val.name];
+        objGet.component = mapComponents[val.name]
       } else {
-        objGet.component = mapComponents['RouterView'];
+        objGet.component = mapComponents['RouterView']
       }
     }
-    floor++;
+    floor++
     if (val.children && val.children.length) {
-      objGet.children = [];
+      objGet.children = []
       for (const v in val.children) {
-        objGet.children[v] = {};
-        loadRouterInfo(val.children[v], objGet.children[v]);
+        objGet.children[v] = {}
+        loadRouterInfo(val.children[v], objGet.children[v])
       }
     }
   }
   for (const v in arrVal) {
-    floor = 0;
-    rArr[v] = {};
-    loadRouterInfo(arrVal[v], rArr[v]);
+    floor = 0
+    rArr[v] = {}
+    loadRouterInfo(arrVal[v], rArr[v])
   }
-  return rArr;
+  return rArr
 }
 
 // 路由映射
@@ -220,7 +220,7 @@ const mapComponents = {
   ChartStatistic: () => import('@/views/dashboard/chartStatistic'),
   RegisterStatistic: () => import('@/views/dashboard/registerStatistic'),
   UserList: () => import('@/views/user/userlist'),
-  ValidatedUserlist: () => import('@/views/user/validatedUserlist'), //有效用户
+  ValidatedUserlist: () => import('@/views/user/validatedUserlist'), // 有效用户
   UserlistDetail: () => import('@/views/user/userlistDetail'),
   ValidatedUserlistDetail: () => import('@/views/user/validatedUserlistDetail'),
   ResetUserGoogleCode: () => import('@/views/user/resetUserGoogleCode'),
@@ -238,7 +238,6 @@ const mapComponents = {
   CoinWhiteList: () => import('@/views/symbol/coinWhiteList'),
   CertificationConfig: () => import('@/views/check/certificationConfig'),
   TradeMarket: () => import('@/views/symbol/tradeMarket'),
-
 
   MerchantCheck: () => import('@/views/check/merchantCheck'),
   Orderlist: () => import('@/views/exchange/orderlist'),
@@ -355,10 +354,10 @@ const mapComponents = {
   AgentRevenue: () => import('@/views/fiat/agentRevenue'),
   LevelSetting: () => import('@/views/fiat/levelSetting'),
   OrderConfig: () => import('@/views/fiat/acceptanceMerchant/orderConfig'),
-  AcceptanceList: () => import('@/views/fiat/acceptanceMerchant/acceptanceList'),
-  AcceptanceRelation: () => import('@/views/fiat/acceptanceMerchant/acceptanceRelation'),
-  AcceptanceSetting: () => import('@/views/fiat/acceptanceMerchant/acceptanceSetting'),
-  AcceptanceChannelList: () => import('@/views/fiat/acceptanceMerchant/acceptanceChannelList'),
+  AcceptanceList: () => import('@/views/fiat/acceptanceMerchant/AcceptanceList'),
+  AcceptanceRelation: () => import('@/views/fiat/acceptanceMerchant/AcceptanceRelation'),
+  AcceptanceSetting: () => import('@/views/fiat/acceptanceMerchant/AcceptanceSetting'),
+  AcceptanceChannelList: () => import('@/views/fiat/acceptanceMerchant/AcceptanceChannelList'),
   CommissionContract: () => import('@/views/fiat/acceptanceMerchant/commissionContract'),
   CommissionContractFlow: () => import('@/views/fiat/acceptanceMerchant/commissionContractFlow'),
 
@@ -466,12 +465,16 @@ const mapComponents = {
   ContractMimicAccount: () => import('@/views/contractMimic/transactMimic/contractMimicAccount'),
   ContractMimicFundRate: () => import('@/views/contractMimic/transactMimic/contractMimicFundRate'),
   BillContractMimic: () => import('@/views/contractMimic/transactMimic/billContractMimic'),
-  TreatyAssetsContractMimic: () => import('@/views/contractMimic/transactMimic/treatyAssetsContractMimic'),
-  FlowRecordContractMimic: () => import('@/views/contractMimic/transactMimic/flowRecordContractMimic'),
+  TreatyAssetsContractMimic: () =>
+    import('@/views/contractMimic/transactMimic/treatyAssetsContractMimic'),
+  FlowRecordContractMimic: () =>
+    import('@/views/contractMimic/transactMimic/flowRecordContractMimic'),
   // ContractSymbolRobotMimic: () => import('@/views/contractMimic/transactMimic/contractSymbolRobotMimic'),
   // 模拟盘 模拟订单管理
-  GeneralEntrustContractMimic: () => import('@/views/contractMimic/orderMimic/generalEntrustContractMimic'),
-  PlanEntrustContractMimic: () => import('@/views/contractMimic/orderMimic/planEntrustContractMimic'),
+  GeneralEntrustContractMimic: () =>
+    import('@/views/contractMimic/orderMimic/generalEntrustContractMimic'),
+  PlanEntrustContractMimic: () =>
+    import('@/views/contractMimic/orderMimic/planEntrustContractMimic'),
   DealContractMimic: () => import('@/views/contractMimic/orderMimic/dealContractMimic'),
   // 模拟盘 模拟仓位管理
   PositionContractMimic: () => import('@/views/contractMimic/storeMimic/positionContractMimic'),
@@ -508,7 +511,7 @@ const mapComponents = {
   ContractTactics: () => import('@/views/contract/risk/contractTactics'),
   HighFrequencyConfig: () => import('@/views/contract/risk/highFrequencyConfig'),
   HighFrequencyMonitor: () => import('@/views/contract/risk/highFrequencyMonitor'),
-  //账号管理
+  // 账号管理
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),
   EarningsRecord: () => import('@/views/contract/accountManagement/earningsRecord'),
@@ -525,5 +528,5 @@ const mapComponents = {
   InOutGoldInfo: () => import('@/views/inOutGold/inOutGoldInfo'),
   CoinInOutGold: () => import('@/views/inOutGold/coinInOutGold'),
   FiatCoinInOutGold: () => import('@/views/inOutGold/fiatCoinInOutGold'),
-  ContractInOutGold: () => import('@/views/inOutGold/contractInOutGold'),
-};
+  ContractInOutGold: () => import('@/views/inOutGold/contractInOutGold')
+}

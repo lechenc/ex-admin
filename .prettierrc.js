@@ -7,20 +7,23 @@
  * @FilePath: \alphawallet-bg\.prettierrc.js
  */
 module.exports = {
+  singleQuote: true,
   bracketSpacing: true,
-  jsxBracketSameLine: false,
-  printWidth: 300,
-  semi: true,
+  jsxBracketSameLine: false, //使多行JSX元素最后一行末尾的 > 单独一行
+  printWidth: 100,
+  semi: false,
   tabWidth: 2,
   useTabs: false,
-  singleQuote: true,
-  trailingComma: "all",
-  proseWrap: "never",
+  trailingComma: 'none',
+  proseWrap: 'never',
   formatOnSave: false,
-  overrides: [{
-    files: ".prettierrc",
-    options: {
-      parser: "json"
+  eslintIntegration: false,
+  overrides: [
+    {
+      files: '.prettierrc',
+      options: {
+        parser: 'json',
+      },
     },
-  }, ],
+  ],
 };
