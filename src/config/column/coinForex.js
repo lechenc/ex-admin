@@ -398,7 +398,7 @@ const coinForexRateCol = [
     label: '入金汇率',
     prop: 'rateIn',
   },
-  
+
   {
     label: '出金汇率',
     prop: 'rateOut',
@@ -413,7 +413,7 @@ const coinForexRateCol = [
     label: '更新时间',
     prop: 'updated',
   },
-  
+
   {
     label: '手动配置开关',
     prop: 'enable',
@@ -446,7 +446,7 @@ const coinForexRateColNoBtn = [
     label: '入金汇率',
     prop: 'rateIn',
   },
-  
+
   {
     label: '出金汇率',
     prop: 'rateOut',
@@ -464,7 +464,6 @@ const coinForexRateColNoBtn = [
 ];
 
 const coinForexRateConfig = [
-  
   {
     type: 'text',
     label: '资产',
@@ -473,7 +472,161 @@ const coinForexRateConfig = [
   },
 ];
 
+// 币汇管理/交易对设置管理/币汇交易对设置
+const coinForexPairsConfigsCol = [
+  {
+    label: 'ID',
+    prop: 'id',
+  },
+
+  {
+    label: 'icon',
+    prop: 'iconUrl',
+    type: 'img',
+  },
+  {
+    label: '交易品种',
+    prop: 'symbol',
+  },
+
+  {
+    label: '每手合约交易大小',
+    prop: 'minVol',
+  },
+
+  {
+    label: '建议点差',
+    prop: 'priceDiff',
+  },
+
+  {
+    label: '持仓手数数范围区间',
+    prop: 'priceDiff1',
+  },
+  {
+    label: '杠杆倍数',
+    prop: 'multiple',
+  },
+
+  {
+    label: '挂单距离限制',
+    prop: 'orderQtyStep',
+  },
+  {
+    label: '百分比强平率',
+    prop: 'orderQtyStep1',
+  },
+
+  {
+    label: '价格小数位',
+    prop: 'decimalVol',
+  },
+
+  {
+    label: '排序',
+    prop: 'rank',
+  },
+
+  {
+    label: '上架',
+    prop: 'headblock',
+    width: '120',
+    type: 'switch',
+    fn: 'trHeadblockSwitch',
+    alias: 'trHeadblockSwitch',
+  },
+
+  {
+    label: '交易',
+    prop: 'trade',
+    width: '120',
+    type: 'switch',
+    fn: 'trTradeSwitch',
+    alias: 'trTradeSwitch',
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width:'130',
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+      },
+    ],
+  },
+];
+
+const coinForexPairsConfigsColNoBtn = [
+  {
+    label: '资产',
+    prop: 'name',
+  },
+  {
+    label: '入金汇率',
+    prop: 'rateIn',
+  },
+
+  {
+    label: '出金汇率',
+    prop: 'rateOut',
+  },
+
+  {
+    label: '创建时间',
+    prop: 'created',
+  },
+
+  {
+    label: '更新时间',
+    prop: 'updated',
+  },
+];
+
+const coinForexPairsConfigsConfig = [
+  {
+    type: 'select',
+    label: '是否上架',
+    prop: 'headblock',
+    value: '',
+    list: [
+      {
+        label: '是',
+        value: 'y',
+      },
+      {
+        label: '否',
+        value: 'n',
+      },
+    ],
+  },
+
+  {
+    type: 'select',
+    label: '是否开启交易',
+    prop: 'trade',
+    value: '',
+    list: [
+      {
+        label: '是',
+        value: 'y',
+      },
+      {
+        label: '否',
+        value: 'n',
+      },
+    ],
+  },
+];
+
 export {
+  coinForexPairsConfigsCol,
+  coinForexPairsConfigsColNoBtn,
+  coinForexPairsConfigsConfig,
   coinForexRateCol,
   coinForexRateColNoBtn,
   coinForexRateConfig,
@@ -486,5 +639,4 @@ export {
   coinForexRobotListConfig,
   coinForexRobotListColNoBtn,
   coinForexRobotListCol,
-  
 };

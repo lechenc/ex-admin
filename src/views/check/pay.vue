@@ -8,21 +8,12 @@
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
     <!-- 驳回通过弹窗 -->
     <el-dialog :visible.sync="rejectVisible" width="500px" title="驳回">
       <el-form :model="rejectForm" ref="rejectForm" :rules="rejectRules">
-        <el-form-item label="驳回理由" prop="auditComment">
-          <el-input type="textarea" rows="5" placeholder="请输入驳回理由" v-model="rejectForm.auditComment"></el-input> </el-form-item
+        <el-form-item label="驳回理由" prop="auditComment"> <el-input type="textarea" rows="5" placeholder="请输入驳回理由" v-model="rejectForm.auditComment"></el-input> </el-form-item
       ></el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="rejectVisible = false">取消</el-button>
@@ -39,7 +30,7 @@
     </el-dialog>
     <!-- 验证码弹窗 -->
     <el-dialog title="验证收款码" :visible.sync="qrcodeShow" width="500px">
-      <div style="padding-left:20px;width:100%;">
+      <div style="padding-left: 20px; width: 100%">
         <vue-qr :text="analysisQrCode" :margin="0" colorDark="#000" colorLight="#fff" :size="420"></vue-qr>
       </div>
     </el-dialog>
@@ -198,18 +189,28 @@ export default {
     },
     // 对于审核表格的数据项进行通过或驳回操作
     async updateAuditPayStatus(data, state) {
-      if(state != 1 && !this.rejectForm.auditComment){
+      if (state != 1 && !this.rejectForm.auditComment) {
         this.$message({ type: 'error', message: '驳回原因必填' });
-        return
+        return;
       }
-      const params = {
-        // userId: data.userId,
-        // recdId: data.recdId,
-        // payId: data.payId,
-        id: data.id,
-        auditComment: this.rejectForm.auditComment,
-        auditStatus: state,
-      };
+      const params =
+        state === 1
+          ? {
+              // userId: data.userId,
+              // recdId: data.recdId,
+              // payId: data.payId,
+              id: data.id,
+              auditStatus: state,
+            }
+          : {
+              // userId: data.userId,
+              // recdId: data.recdId,
+              // payId: data.payId,
+
+              id: data.id,
+              auditComment: this.rejectForm.auditComment,
+              auditStatus: state,
+            };
       this.btnLoading = true;
       const res = await $api.updateAuditPayStatusNew(params);
       if (res) {
@@ -235,7 +236,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
       this.getList();

@@ -3448,6 +3448,13 @@ static batchAddAnalyst(data) {
     return Fetch.post('/forex/background/saveForexDealCoinBackground', data);
   }
 
+  //币汇管理/交易对设置管理/币汇交易对设置 列表
+  static getCoinForexPairsConfigsList(data) {
+    return Fetch.post('/forex/background/queryForexCoinList', data);
+  }
+
+  
+
   
 
   

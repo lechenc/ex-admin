@@ -200,6 +200,23 @@ export default {
           };
         });
       }
+      if (fn === 'trswitch') {
+        const { id, name, rateIn, rateOut, enable } = row;
+        let params = {
+          id,
+          name,
+          rateIn,
+          rateOut,
+          enable: enable ? 1 : 0,
+        };
+        const res = await $api.apiSaveCoinForexRate(params);
+        if (res) {
+          this.$message({ message: '切换成功', type: 'success' });
+          this.getList();
+        } else {
+          this.getList();
+        }
+      }
     },
 
     doSearch(data) {
