@@ -457,6 +457,17 @@ const extractCol = [
     label: '复审备注',
     prop: 'reviewRemark'
   },
+
+  {
+    label: '终审时间',
+    prop: 'ultimatelyTime',
+    width: 200
+  },
+  {
+    label: '终审人',
+    prop: 'ultimatelyUserName'
+  },
+
   {
     label: '操作',
     prop: 'action',
@@ -682,6 +693,13 @@ const extractConfig = [
     prop: 'chainName',
     value: '',
     list: []
+  },
+  {
+    type: 'onlyNumber',
+    label: '上级UID',
+    prop: 'topUid',
+    value: '',
+    placeHolder: '请输入'
   }
 ]
 

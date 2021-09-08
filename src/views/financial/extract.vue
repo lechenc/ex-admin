@@ -602,7 +602,12 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records.map(item => {
-          return { ...item, topUid: '待添加字段' }
+          return {
+            ...item,
+            topUid: '待添加字段',
+            ultimatelyTime: '待添加字段',
+            ultimatelyUserName: '待添加字段'
+          }
         })
         this.dataList = records
       }
