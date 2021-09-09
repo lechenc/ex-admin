@@ -71,7 +71,7 @@ export default {
         .getCoinForexNotCloseListExport(params)
         .then((res) => {
           this.calLoadingExcel = false;
-          fileDownload(res.data, '交易报表.xlsx');
+          fileDownload(res.data, '未平仓报表.xlsx');
         })
         .catch(() => {
           this.calLoadingExcel = false;

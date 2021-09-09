@@ -3395,92 +3395,92 @@ static batchAddAnalyst(data) {
 
   // 币汇 币种
   static apiGetCoinForexList(data) {
-    return Fetch.post('/forex/background/queryForexCoinList', data);
+    return Fetch.post('/forex/admin/queryForexCoinList', data);
   }
 
   //币汇管理/币汇交易管理/交易报表 列表
   static getCoinForexDealListList(data) {
-    return Fetch.post('/forex/background/queryLiquidateBackground', data);
+    return Fetch.post('/forex/admin/queryLiquidateBackground', data);
   }
 
    //币汇管理/币汇交易管理/交易报表 快速导出excel
    static getCoinForexDealListExport(data) {
-    return Fetch.postExcel('/forex/background/downloadLiquidateBackground', data);
+    return Fetch.postExcel('/forex/admin/downloadLiquidateBackground', data);
   }
 
   //币汇管理/币汇交易管理/交易报表 列表
   static getCoinForexEntrustListList(data) {
-    return Fetch.post('/forex/background/queryOrderBackground', data);
+    return Fetch.post('/forex/admin/queryOrderBackground', data);
   }
 
    //币汇管理/币汇交易管理/交易报表 快速导出excel
    static getCoinForexEntrustListExport(data) {
-    return Fetch.postExcel('/forex/background/downloadOrderBackground', data);
+    return Fetch.postExcel('/forex/admin/downloadOrderBackground', data);
   }
 
    //币汇管理/币汇交易管理/未平仓报表 列表
    static getCoinForexNotCloseListList(data) {
-    return Fetch.post('/forex/background/queryNoLiquidateBackground', data);
+    return Fetch.post('/forex/admin/queryNoLiquidateBackground', data);
   }
 
    //币汇管理/币汇交易管理/未平仓报表 快速导出excel
    static getCoinForexNotCloseListExport(data) {
-    return Fetch.postExcel('/forex/background/downloadNoLiquidateBackground', data);
+    return Fetch.postExcel('/forex/admin/downloadNoLiquidateBackground', data);
   }
 
   //币汇管理/机器人管理/币汇机器人 列表
   static getCoinForexRobotListList(data) {
-    return Fetch.post('/forex/background/queryRobotBackground', data);
+    return Fetch.post('/forex/admin/queryRobotBackground', data);
   }
 
    //币汇管理/机器人管理/币汇机器人 保存
    static apiSaveCoinForexRobotList(data) {
-    return Fetch.post('/forex/background/saveRobotBackground', data);
+    return Fetch.post('/forex/admin/saveRobotBackground', data);
   }
 
   //币汇管理/财务管理/汇率查询 列表
   static getCoinForexRateList(data) {
-    return Fetch.post('/forex/background/selectForexDealCoinBackground', data);
+    return Fetch.post('/forex/admin/selectForexDealCoinBackground', data);
   }
 
    //币汇管理/财务管理/汇率查询 保存
    static apiSaveCoinForexRate(data) {
-    return Fetch.post('/forex/background/saveForexDealCoinBackground', data);
+    return Fetch.post('/forex/admin/saveForexDealCoinBackground', data);
   }
 
   //币汇管理/交易对设置管理/币汇交易对设置 列表
   static getCoinForexPairsConfigsList(data) {
-    return Fetch.post('/forex/background/queryForexCoinList', data);
+    return Fetch.post('/forex/admin/queryForexCoinList', data);
   }
 
   //币汇管理/财务管理/汇率查询 保存
   static apiEditCoinForexPairsConfigs(data) {
-    return Fetch.post('/forex/background/updateForexCoin', data);
+    return Fetch.post('/forex/admin/updateForexCoin', data);
   }
 
    //币汇管理/财务管理/汇率查询 保存
    static apiCoinForexPairsConfigsSwitch(data) {
-    return Fetch.post('/forex/background/updateTradeAndHeadBlock', data);
+    return Fetch.post('/forex/admin/updateTradeAndHeadBlock', data);
   }
 
   //币汇管理/财务管理/币汇流水 列表
   static getCoinForexAccountList(data) {
-    return Fetch.post('/forex/background/queryForexFlowList', data);
+    return Fetch.post('/forex/admin/queryForexFlowList', data);
   }
 
   //币汇管理/交易管理/净值监控 列表
   static getCoinForexNetWorthList(data) {
-    return Fetch.post('/forex/background/queryNetWorthBackground', data);
+    return Fetch.post('/forex/admin/queryNetWorthBackground', data);
   }
 
   //币汇管理/交易品种设置/隔夜费设置 列表
   static getCoinForexPairsNightFeeList(data) {
-    return Fetch.post('/forex/background/queryForexCoinRateList', data);
+    return Fetch.post('/forex/admin/queryForexCoinRateList', data);
   }
 
   //币汇管理/交易品种设置/隔夜费设置 添加/编辑
   static apiEditCoinForexPairsNightFee(data) {
-    return Fetch.post('/forex/background/updateForexCoinRateBatch', data);
+    return Fetch.post('/forex/admin/updateForexCoinRateBatch', data);
   }
 
   

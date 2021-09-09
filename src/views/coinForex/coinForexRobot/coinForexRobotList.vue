@@ -35,10 +35,10 @@
         </el-form-item>
 
         <el-form-item label="下单最小范围值" :label-width="formLabelWidth" prop="minVol">
-          <el-input v-model="robotForm.minVol" autocomplete="off" type="number"></el-input>
+          <el-input @input="checkVal('minVol')" v-model="robotForm.minVol" autocomplete="off" type="number"></el-input>
         </el-form-item>
         <el-form-item label="下单最大范围值" :label-width="formLabelWidth" prop="maxVol">
-          <el-input v-model="robotForm.maxVol" autocomplete="off" type="number"></el-input>
+          <el-input @input="checkVal('maxVol')" v-model="robotForm.maxVol" autocomplete="off" type="number"></el-input>
         </el-form-item>
 
         <el-form-item label="启动开关" :label-width="formLabelWidth" prop="enable">
@@ -122,6 +122,13 @@ export default {
   },
 
   methods: {
+     // 对输入值的范围进行限制
+    checkVal(val) {
+      // this.robotForm[val] = (this.robotForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3'); // 4小数
+      if (this.robotForm[val] < 0) {
+        this.robotForm[val] = 0;
+      }
+    },
     getRangeVal(val) {},
     // 添加交易对
     addRobot() {

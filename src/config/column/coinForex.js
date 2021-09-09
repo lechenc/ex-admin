@@ -9,7 +9,7 @@ const coinForexDealListCol = [
     prop: 'uid',
   },
   {
-    label: '产品',
+    label: '交易产品',
     prop: 'symbolKey',
   },
   {
@@ -18,7 +18,7 @@ const coinForexDealListCol = [
   },
   {
     label: '交易量',
-    prop: 'profitLossString',
+    prop: 'numberString',
   },
   {
     label: '手续费',
@@ -260,11 +260,6 @@ const coinForexNotCloseListCol = [
     label: '开仓时间',
     prop: 'openTime',
   },
-  {
-    label: '开仓价格',
-    prop: 'openPriceString',
-  },
-
   {
     label: '开仓价格',
     prop: 'openPriceString',

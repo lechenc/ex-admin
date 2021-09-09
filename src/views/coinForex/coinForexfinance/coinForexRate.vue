@@ -128,10 +128,7 @@ export default {
   methods: {
     // 对输入值的范围进行限制
     checkVal(val) {
-      if (this.robotForm[val] >= 100) {
-        this.robotForm[val] = 100;
-      }
-      this.robotForm[val] = (this.robotForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3'); // 4小数
+      // this.robotForm[val] = (this.robotForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3'); // 4小数
       if (this.robotForm[val] < 0) {
         this.robotForm[val] = 0;
       }
@@ -295,7 +292,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('CoinForexRate', coinForexRateCol, coinForexRateColNoBtn);
-    console.log('authObj', authObj);
+    
     this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
     this.searchCofig = coinForexRateConfig;
