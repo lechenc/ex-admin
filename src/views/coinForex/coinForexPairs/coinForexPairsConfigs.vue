@@ -12,9 +12,9 @@
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
-    <div class="container-btn" v-if="btnArr.includes('add')">
+    <!-- <div class="container-btn" v-if="btnArr.includes('add')">
       <el-button type="primary" size="medium" @click="addRobot">添加</el-button>
-    </div>
+    </div> -->
 
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -28,26 +28,108 @@
     <!-- 添加 编辑 -->
     <el-dialog width="600px" :title="formName" :visible.sync="dialogFormVisible">
       <el-form :model="robotForm" ref="robotForm" :rules="rules">
-        <el-form-item label="交易产品" :label-width="formLabelWidth" prop="foreignId">
-          <el-select v-model="robotForm.foreignId" placeholder="" wdith="20%" :disabled="!!robotForm.id">
+        <el-form-item label="交易品种" :label-width="formLabelWidth" prop="symbol">
+          <el-select v-model="robotForm.symbol" placeholder="" wdith="20%" :disabled="!!robotForm.id">
             <el-option v-for="(item, idx) in coinForexList" :key="idx" :label="item.label" :value="item.label"></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="最新成交最小张数" :label-width="formLabelWidth" prop="minVol">
-          <el-input v-model="robotForm.minVol" autocomplete="off" type="number"></el-input>
-        </el-form-item>
-        <el-form-item label="最新成交最大张数" :label-width="formLabelWidth" prop="maxVol">
-          <el-input v-model="robotForm.maxVol" autocomplete="off" type="number"></el-input>
-        </el-form-item>
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="icon" :label-width="formLabelWidth" prop="iconUrl">
+              <el-input size="small" v-model="robotForm.iconUrl" placeholder="只能上传jpg/png文件，且不超过2m">
+                <el-upload :before-upload="beforeUpload" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="true" :on-success="upload" :on-error="uploadError" slot="append" :limit="1" :on-exceed="exceed" accept=".png,.jpg" ref="coinel">
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="启动开关" :label-width="formLabelWidth" prop="enable">
-          <el-switch v-model="robotForm.enable" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
-        </el-form-item>
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="中文名称" :label-width="formLabelWidth" prop="chineseName">
+              <el-input v-model="robotForm.chineseName" autocomplete="off" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <!-- <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-          <el-input v-model="robotForm.googleCode" autocomplete="off" type="number"></el-input>
-        </el-form-item> -->
+        <el-row :span="24">
+          <el-col :span="24">
+            <b-two-range-choose ref="twoChoose" :labelWidth="formLabelWidth" labelWords="持仓手数数范围区间" :getVal1.sync="robotForm.orderCounterQtyStep" :getVal2.sync="robotForm.maxVol" :isdisabled="false" @handler="getRangeVal"></b-two-range-choose>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="建议点差" :label-width="formLabelWidth" prop="priceDiff">
+              <el-input v-model="robotForm.priceDiff" autocomplete="off" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="每手合约交易大小" :label-width="formLabelWidth" prop="minVol">
+              <el-input v-model="robotForm.minVol" autocomplete="off" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="挂单距离限制" :label-width="formLabelWidth" prop="dealDistance">
+              <el-input v-model="robotForm.dealDistance" autocomplete="off" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="价格小数位" :label-width="formLabelWidth" prop="decimalVol">
+              <el-input v-model="robotForm.decimalVol" autocomplete="off" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="排序" :label-width="formLabelWidth" prop="rank">
+              <el-input v-model="robotForm.rank" autocomplete="off" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="杠杆倍数" :label-width="formLabelWidth" prop="multiple">
+              <el-input v-model="robotForm.multiple" autocomplete="off" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="强平保证金率" :label-width="formLabelWidth" prop="closeRate">
+              <el-input v-model="robotForm.closeRate" autocomplete="off" type="number">
+                <template slot="append">%</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :span="24">
+          <el-col :span="8">
+            <el-form-item label="是否上架" :label-width="formLabelWidth" prop="headblock">
+              <el-switch v-model="robotForm.headblock" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="10">
+            <el-form-item label="是否交易" :label-width="formLabelWidth" prop="trade">
+              <el-switch v-model="robotForm.trade" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -62,13 +144,14 @@ import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
 import { coinForexPairsConfigsCol, coinForexPairsConfigsColNoBtn, coinForexPairsConfigsConfig } from '@/config/column/coinForex';
 import $api from '@/api/api';
-
+import BTwoRangeChoose from '@/components/b-two-range-choose';
 export default {
   name: 'CoinForexPairsConfigs',
   components: {
     Btable,
     Bsearch,
     iconPage,
+    BTwoRangeChoose,
   },
   data() {
     return {
@@ -90,11 +173,35 @@ export default {
       formName: '',
       robotForm: {},
       rules: {
-        foreignId: [
+        symbol: [
+          {
+            required: true,
+            message: '必选',
+            trigger: 'blur',
+          },
+        ],
+
+        iconUrl: [
           {
             required: true,
             message: '必填',
-            trigger: 'blur',
+            trigger: 'change',
+          },
+        ],
+
+        chineseName: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'change',
+          },
+        ],
+
+        priceDiff: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'change',
           },
         ],
 
@@ -106,7 +213,39 @@ export default {
           },
         ],
 
-        maxVol: [
+        dealDistance: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'change',
+          },
+        ],
+
+        decimalVol: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'change',
+          },
+        ],
+
+        rank: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'change',
+          },
+        ],
+
+        multiple: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'change',
+          },
+        ],
+
+        closeRate: [
           {
             required: true,
             message: '必填',
@@ -114,7 +253,7 @@ export default {
           },
         ],
       },
-      formLabelWidth: '195px',
+      formLabelWidth: '170px',
       userArr: [], // 主流币机器人列表
       coinForexList: [],
       dialogFormVisible: false,
@@ -122,41 +261,92 @@ export default {
   },
 
   methods: {
-    getRangeVal(val) {},
+    beforeUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1);
+      const extension = testmsg === 'jpg' || testmsg === 'png';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!extension) {
+        this.$message({
+          message: '上传文件只能是 jpg、png格式!',
+          type: 'error',
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: '上传文件大小不能超过 2MB!',
+          type: 'error',
+        });
+      }
+      return extension && isLt2M;
+    },
+    getRangeVal(val) {
+      // val.valid
+      // val.form
+      //console.log('asd');
+    },
+    upload(response, file, fileList) {
+      if (!response.data) {
+        this.$message.error('图片上传失败');
+        this.$refs.coinel.clearFiles();
+        return;
+      }
+      this.robotForm.iconUrl = response.data[0].url;
+      this.$refs.coinel.handleRemove(file);
+      this.$refs.coinel.clearFiles();
+      // this.coinForm.iconUrl = response.result.urls[0];
+    },
+
+    uploadError() {
+      this.$message.error('图片上传失败');
+    },
+    exceed(file, fileList) {
+      this.$message.error('单次只能选择一张图片进行上传！');
+    },
+
     // 添加交易对
     addRobot() {
-      this.formName = '添加币汇机器人';
+      this.formName = '添加币汇交易对';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['robotForm'].resetFields();
         this.robotForm = {
           id: '',
-          foreignId: '',
-          minVol: '',
+          symbol: '',
+          iconUrl: '',
+          chineseName: '',
+          orderCounterQtyStep: '',
           maxVol: '',
-          enable: false,
+          priceDiff: '',
+          minVol: '',
+          dealDistance: '',
+          decimalVol: '',
+          rank: '',
+          multiple: '',
+          closeRate: '',
+          headblock: '',
+          trade: '',
         };
       });
     },
     // 提交
     confirmOp() {
+      if (!this.$refs['twoChoose'].validateValue()) {
+        return;
+      }
       this.$refs['robotForm'].validate(async (valid) => {
         if (valid) {
-          const { id, foreignId, enable, ...prop } = this.robotForm;
-          let userId = '';
-          if (id !== '') {
-            userId = this.robotForm.userId;
-          }
+          const { id, headblock, trade, ...prop } = this.robotForm;
+
           const params = {
-            foreignId,
-            enable: enable ? 1 : 0,
+            headblock: headblock ? 'Y' : 'N',
+            trade: trade ? 'Y' : 'N',
             ...prop,
           };
 
           // 新增 编辑
           const res = !id
-            ? await $api.apiSaveCoinForexPairsConfigs(params)
-            : await $api.apiSaveCoinForexPairsConfigs({
+            ? await $api.apiEditCoinForexPairsConfigs(params)
+            : await $api.apiEditCoinForexPairsConfigs({
                 id,
                 ...params,
               });
@@ -177,37 +367,49 @@ export default {
       const { fn, row } = data;
       if (fn === 'edit') {
         // this.getRobotUserArr();
-        this.formName = '编辑币汇机器人';
+        this.formName = '编辑币汇交易对';
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['robotForm'].resetFields();
-          const { id, foreignId, minVol, maxVol, enable } = row;
+          const { id, symbol, iconUrl, chineseName, orderCounterQtyStep, maxVol, priceDiff, minVol, dealDistance, decimalVol, rank, multiple, closeRate, headblock, trade } = row;
+          console.log('trade', trade);
           this.robotForm = {
             id,
-            foreignId,
-            minVol,
+            symbol,
+            iconUrl,
+            chineseName,
+            orderCounterQtyStep,
             maxVol,
-            enable: enable == 1 ? true : false,
+            priceDiff,
+            minVol,
+            dealDistance,
+            decimalVol,
+            rank,
+            multiple,
+            closeRate,
+            headblock,
+            trade,
           };
         });
       }
 
-      if (fn === 'trswitch') {
-        const { id, foreignId, minVol, maxVol, enable } = row;
+      if (fn === 'trHeadblockSwitch' || fn === 'trTradeSwitch') {
+        const { headblock, trade, id, symbol } = row;
         let params = {
+          headblock: headblock ? 'Y' : 'N',
+          trade: trade ? 'Y' : 'N',
           id,
-          foreignId,
-          minVol,
-          maxVol,
-          enable: enable ? 1 : 0,
+          symbol,
         };
-        const res = await $api.apiSaveCoinForexPairsConfigs(params);
+        this.listLoading = true;
+        const res = await $api.apiCoinForexPairsConfigsSwitch(params);
         if (res) {
           this.$message({ message: '切换成功', type: 'success' });
           this.getList();
         } else {
           this.getList();
         }
+        this.listLoading = false;
       }
     },
     doSearch(data) {
@@ -252,8 +454,8 @@ export default {
         this.list = records;
         records.forEach((v) => {
           // y 是 n 否
-          v['headblock'] = v['headblock'] === 'y' ? true : false;
-          v['trade'] = v['trade'] === 'y' ? true : false;
+          v['headblock'] = v['headblock'] === 'Y' ? true : false;
+          v['trade'] = v['trade'] === 'Y' ? true : false;
         });
         this.list = records;
       }

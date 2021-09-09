@@ -3453,6 +3453,41 @@ static batchAddAnalyst(data) {
     return Fetch.post('/forex/background/queryForexCoinList', data);
   }
 
+  //币汇管理/财务管理/汇率查询 保存
+  static apiEditCoinForexPairsConfigs(data) {
+    return Fetch.post('/forex/background/updateForexCoin', data);
+  }
+
+   //币汇管理/财务管理/汇率查询 保存
+   static apiCoinForexPairsConfigsSwitch(data) {
+    return Fetch.post('/forex/background/updateTradeAndHeadBlock', data);
+  }
+
+  //币汇管理/财务管理/币汇流水 列表
+  static getCoinForexAccountList(data) {
+    return Fetch.post('/forex/background/queryForexFlowList', data);
+  }
+
+  //币汇管理/交易管理/净值监控 列表
+  static getCoinForexNetWorthList(data) {
+    return Fetch.post('/forex/background/queryNetWorthBackground', data);
+  }
+
+  //币汇管理/交易品种设置/隔夜费设置 列表
+  static getCoinForexPairsNightFeeList(data) {
+    return Fetch.post('/forex/background/queryForexCoinRateList', data);
+  }
+
+  //币汇管理/交易品种设置/隔夜费设置 添加/编辑
+  static apiEditCoinForexPairsNightFee(data) {
+    return Fetch.post('/forex/background/updateForexCoinRateBatch', data);
+  }
+
+  
+
+  
+
+  
   
 
   

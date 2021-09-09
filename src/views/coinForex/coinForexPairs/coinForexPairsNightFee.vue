@@ -7,13 +7,13 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\financial\assets.vue
  -->
 <template>
-  <div class="coinForexRobotList-container">
+  <div class="coinForexPairsNightFee-container">
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
     <div class="container-btn" v-if="btnArr.includes('add')">
-      <el-button type="primary" size="medium" @click="addRobot">添加</el-button>
+      <el-button type="primary" size="medium" @click="addRobot">添加隔夜费率</el-button>
     </div>
 
     <div>
@@ -28,26 +28,26 @@
     <!-- 添加 编辑 -->
     <el-dialog width="600px" :title="formName" :visible.sync="dialogFormVisible">
       <el-form :model="robotForm" ref="robotForm" :rules="rules">
-        <el-form-item label="交易产品" :label-width="formLabelWidth" prop="foreignId">
-          <el-select v-model="robotForm.foreignId" placeholder="" wdith="20%" :disabled="!!robotForm.id">
+        <el-form-item label="交易产品" :label-width="formLabelWidth" prop="symbol">
+          <el-select v-model="robotForm.symbol" placeholder="" wdith="20%" :disabled="!!robotForm.id">
             <el-option v-for="(item, idx) in coinForexList" :key="idx" :label="item.label" :value="item.label"></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="下单最小范围值" :label-width="formLabelWidth" prop="minVol">
-          <el-input v-model="robotForm.minVol" autocomplete="off" type="number"></el-input>
+        <el-form-item label="多头隔夜费率" :label-width="formLabelWidth" prop="doServiceCharge">
+          <el-input v-model="robotForm.doServiceCharge" autocomplete="off" type="number">
+            <template slot="append">%</template>
+          </el-input>
         </el-form-item>
-        <el-form-item label="下单最大范围值" :label-width="formLabelWidth" prop="maxVol">
-          <el-input v-model="robotForm.maxVol" autocomplete="off" type="number"></el-input>
+        <el-form-item label="空头隔夜费率" :label-width="formLabelWidth" prop="koServiceCharge">
+          <el-input v-model="robotForm.koServiceCharge" autocomplete="off" type="number">
+            <template slot="append">%</template>
+          </el-input>
         </el-form-item>
 
-        <el-form-item label="启动开关" :label-width="formLabelWidth" prop="enable">
-          <el-switch v-model="robotForm.enable" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+        <el-form-item label="是否开启" :label-width="formLabelWidth" prop="costType">
+          <el-switch v-model="robotForm.costType" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
         </el-form-item>
-
-        <!-- <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
-          <el-input v-model="robotForm.googleCode" autocomplete="off" type="number"></el-input>
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -60,11 +60,11 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { coinForexRobotListCol, coinForexRobotListColNoBtn, coinForexRobotListConfig } from '@/config/column/coinForex';
+import { coinForexPairsNightFeeCol, coinForexPairsNightFeeColNoBtn, coinForexPairsNightFeeConfig } from '@/config/column/coinForex';
 import $api from '@/api/api';
 
 export default {
-  name: 'CoinForexRobotList',
+  name: 'CoinForexPairsNightFee',
   components: {
     Btable,
     Bsearch,
@@ -90,15 +90,15 @@ export default {
       formName: '',
       robotForm: {},
       rules: {
-        foreignId: [
+        symbol: [
           {
             required: true,
-            message: '必填',
+            message: '必选',
             trigger: 'blur',
           },
         ],
 
-        minVol: [
+        doServiceCharge: [
           {
             required: true,
             message: '必填',
@@ -106,7 +106,7 @@ export default {
           },
         ],
 
-        maxVol: [
+        koServiceCharge: [
           {
             required: true,
             message: '必填',
@@ -125,16 +125,16 @@ export default {
     getRangeVal(val) {},
     // 添加交易对
     addRobot() {
-      this.formName = '添加币汇机器人';
+      this.formName = '添加隔夜费率';
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['robotForm'].resetFields();
         this.robotForm = {
           id: '',
-          foreignId: '',
-          minVol: '',
-          maxVol: '',
-          enable: false,
+          doServiceCharge: '',
+          koServiceCharge: '',
+          symbol: '',
+          costType: false,
         };
       });
     },
@@ -142,28 +142,30 @@ export default {
     confirmOp() {
       this.$refs['robotForm'].validate(async (valid) => {
         if (valid) {
-          const { id, foreignId, enable, ...prop } = this.robotForm;
-          let userId = '';
-          if (id !== '') {
-            userId = this.robotForm.userId;
-          }
+          const { id, symbol, costType, ...prop } = this.robotForm;
+
+          let forexCoinId = this.coinForexList.filter((v) => {
+            return v.label == symbol;
+          })[0].value;
+
           const params = {
-            foreignId,
-            enable: enable ? 1 : 0,
+            costType: costType ? 1 : 0,
+            symbol,
+            forexCoinId,
             ...prop,
           };
 
           // 新增 编辑
           const res = !id
-            ? await $api.apiSaveCoinForexRobotList(params)
-            : await $api.apiSaveCoinForexRobotList({
+            ? await $api.apiEditCoinForexPairsNightFee(params)
+            : await $api.apiEditCoinForexPairsNightFee({
                 id,
                 ...params,
               });
           if (res) {
             let txt = !id ? '添加成功' : '编辑成功';
             this.$message({
-              message: res.data.message,
+              message: txt,
               type: 'success',
             });
             this.dialogFormVisible = false;
@@ -177,39 +179,20 @@ export default {
       const { fn, row } = data;
       if (fn === 'edit') {
         // this.getRobotUserArr();
-        this.formName = '编辑币汇机器人';
+        this.formName = '编辑隔夜费率';
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['robotForm'].resetFields();
-          const { id, foreignId, minVol, maxVol, enable } = row;
+
+          const { id, doServiceCharge, koServiceCharge, symbol, costType } = row;
           this.robotForm = {
             id,
-            foreignId,
-            minVol,
-            maxVol,
-            enable: enable == 1 ? true : false,
+            doServiceCharge,
+            koServiceCharge,
+            symbol,
+            costType: costType == 1 ? true : false,
           };
         });
-      }
-
-      if (fn === 'trswitch') {
-        const { id, foreignId, minVol, maxVol, enable } = row;
-        let params = {
-          id,
-          foreignId,
-          minVol,
-          maxVol,
-          enable: enable ? 1 : 0,
-        };
-        this.listLoading = true;
-        const res = await $api.apiSaveCoinForexRobotList(params);
-        if (res) {
-          this.$message({ message: '切换成功', type: 'success' });
-          this.getList();
-        } else {
-          this.getList();
-        }
-        this.listLoading = false;
       }
     },
     doSearch(data) {
@@ -245,7 +228,7 @@ export default {
       };
       this.requiredParams(this.search_params_obj);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getCoinForexRobotListList(params);
+      const res = await $api.getCoinForexPairsNightFeeList(params);
       if (res) {
         const { records, current, total, pages } = res.data.data;
         this.total = total;
@@ -287,11 +270,11 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('CoinForexRobotList', coinForexRobotListCol, coinForexRobotListColNoBtn);
-    
+    let authObj = this.$util.getAuthority('CoinForexPairsNightFee', coinForexPairsNightFeeCol, coinForexPairsNightFeeColNoBtn);
+    console.log('authObj1231', authObj);
     this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
-    this.searchCofig = coinForexRobotListConfig;
+    this.searchCofig = coinForexPairsNightFeeConfig;
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.getCoinForexList();
@@ -300,7 +283,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.coinForexRobotList-container {
+.coinForexPairsNightFee-container {
   .el-form-item__content {
     margin-left: 0;
   }

@@ -128,11 +128,12 @@
         </template>
       </el-table-column>
 
-      <!--  结尾 % -->
-      <el-table-column v-if="config.type === 'afterPercent'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
+      <!--  结尾拼接一个  -->
+      <el-table-column v-if="config.type === 'afterJoin'" :key="config.prop" :label="config.label" :width="config.width ? config.width : ''" :minWidth="120">
         <template slot-scope="scope">
-          <span v-if="scope.row[config.prop] == '--'">{{ scope.row[config.prop] }}</span>
-          <span v-else>{{ scope.row[config.prop] }}%</span>
+          <!-- 没有值时显示 -->
+          <span v-if="!scope.row[config.prop]">{{config.nothingValue}}</span>
+          <span v-else>{{ scope.row[config.prop] }}{{config.join}}</span>
         </template>
       </el-table-column>
 

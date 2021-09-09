@@ -267,6 +267,7 @@ export default {
       font-weight: 700px;
       color: #606266;
       line-height: 40px;
+      font-weight: 700;
       padding: 0 12px 0 0;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;

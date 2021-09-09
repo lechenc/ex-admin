@@ -239,7 +239,6 @@ const mapComponents = {
   CertificationConfig: () => import('@/views/check/certificationConfig'),
   TradeMarket: () => import('@/views/symbol/tradeMarket'),
 
-
   MerchantCheck: () => import('@/views/check/merchantCheck'),
   Orderlist: () => import('@/views/exchange/orderlist'),
   OrderListSpecial: () => import('@/views/exchange/orderListSpecial'),
@@ -363,14 +362,17 @@ const mapComponents = {
   CommissionContractFlow: () => import('@/views/fiat/acceptanceMerchant/commissionContractFlow'),
 
   // 币汇管理
-  CoinForexPairsConfigs: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
-  CoinForexOutGold: () => import('@/views/coinForex/coinForexfinance/coinForexOutGold'),
-  CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
+
+  // CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
+  CoinForexAccount: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
   CoinForexDealList: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
   CoinForexEntrustList: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
   CoinForexNotCloseList: () => import('@/views/coinForex/coinForexDeal/coinForexNotCloseList'),
   CoinForexRobotList: () => import('@/views/coinForex/coinForexRobot/coinForexRobotList'),
   CoinForexRate: () => import('@/views/coinForex/coinForexfinance/coinForexRate'),
+  CoinForexPairsConfigs: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
+  CoinForexPairsNightFee: () => import('@/views/coinForex/coinForexPairs/coinForexPairsNightFee'),
+  CoinForexNetWorth: () => import('@/views/coinForex/coinForexDeal/coinForexNetWorth'),
 
   WarehouseUser: () => import('@/views/warehouse/user'),
   WarehouseUserListDetail: () => import('@/views/warehouse/userListDetail'),
