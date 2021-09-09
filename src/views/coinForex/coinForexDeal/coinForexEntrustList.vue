@@ -7,7 +7,7 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\financial\assets.vue
  -->
 <template>
-  <div class="coinForexDealList-container">
+  <div class="coinForexEntrustList-container">
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="快速导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" />
     </div>
@@ -26,12 +26,12 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { coinForexDealListCol, coinForexDealListConfig } from '@/config/column/coinForex';
+import { coinForexEntrustListCol, coinForexEntrustListConfig } from '@/config/column/coinForex';
 import $api from '@/api/api';
-import axios from "axios";
+
 import fileDownload from 'js-file-download';
 export default {
-  name: 'CoinForexDealList',
+  name: 'coinForexEntrustList',
   components: {
     Btable,
     Bsearch,
@@ -68,10 +68,10 @@ export default {
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
       $api
-        .getCoinForexDealListExport(params)
+        .getCoinForexEntrustListExport(params)
         .then((res) => {
           this.calLoadingExcel = false;
-          fileDownload(res.data, '交易报表.xlsx');
+          fileDownload(res.data, '委托报表.xlsx');
         })
         .catch(() => {
           this.calLoadingExcel = false;
@@ -84,7 +84,7 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
-      if (!this.search_params_obj.closeStartTime && !this.search_params_obj.closeEndTime) {
+      if (!this.search_params_obj.orderStartTime && !this.search_params_obj.orderEndTime) {
         this.search_params_obj.flag = 1;
       }
       this.getList();
@@ -114,8 +114,7 @@ export default {
       };
       this.requiredParams(this.search_params_obj);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getCoinForexDealListList(params);
-      
+      const res = await $api.getCoinForexEntrustListList(params);
       if (res) {
         const { records, current, total, pages } = res.data.data;
         this.total = total;
@@ -138,12 +137,12 @@ export default {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
         this.searchCofig[0].value = [befV, nowV];
-        params.closeEndTime = nowV.replace(/\//gi, '-');
-        params.closeStartTime = befV.replace(/\//gi, '-');
+        params.orderEndTime = nowV.replace(/\//gi, '-');
+        params.orderStartTime = befV.replace(/\//gi, '-');
       }
-      if (this.search_params_obj.closeStartTime) {
-        this.search_params_obj.closeEndTime = this.formatTime(this.search_params_obj.closeEndTime);
-        this.search_params_obj.closeStartTime = this.formatTime(this.search_params_obj.closeStartTime);
+      if (this.search_params_obj.orderStartTime) {
+        this.search_params_obj.orderEndTime = this.formatTime(this.search_params_obj.orderEndTime);
+        this.search_params_obj.orderStartTime = this.formatTime(this.search_params_obj.orderStartTime);
       }
     },
 
@@ -151,15 +150,15 @@ export default {
     async getCoinForexList() {
       this.$store.dispatch('common/getCoinForexList').then(() => {
         this.coinForexList = this.$store.state.common.coinForexList;
-        this.searchCofig[3]['list'] = this.coinForexList;
+        this.searchCofig[2]['list'] = this.coinForexList;
       });
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('CoinForexDealList', coinForexDealListCol, []);
+    let authObj = this.$util.getAuthority('coinForexEntrustList', coinForexEntrustListCol, []);
     this.btnArr = authObj.btnArr || [];
-    this.configs = coinForexDealListCol;
-    this.searchCofig = coinForexDealListConfig;
+    this.configs = coinForexEntrustListCol;
+    this.searchCofig = coinForexEntrustListConfig;
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.getCoinForexList();
@@ -168,7 +167,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.coinForexDealList-container {
+.coinForexEntrustList-container {
   .el-form-item__content {
     margin-left: 0;
   }

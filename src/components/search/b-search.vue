@@ -16,55 +16,129 @@
             <!-- 选择框 -->
             <div v-if="config.type === 'select'">
               <div>{{ config.label }}</div>
-              <el-select class="text-input" v-model="config.value" :clearable="!config.isClear" :placeholder="config.placeHolder" :size="sizeDiy">
-                <el-option v-for="(item, i) in config.list" :key="i" :label="item.label" :value="item.value"> </el-option>
+              <el-select
+                v-model="config.value"
+                class="text-input"
+                :clearable="!config.isClear"
+                :placeholder="config.placeHolder"
+                :size="sizeDiy"
+              >
+                <el-option
+                  v-for="(item, i) in config.list"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </div>
 
             <!-- 选择框 label加粗 -->
             <div v-if="config.type === 'select_labelBold'">
               <div class="label_bold">{{ config.label }}</div>
-              <el-select class="text-input" v-model="config.value" :clearable="!config.isClear" :placeholder="config.placeHolder" :size="sizeDiy">
-                <el-option v-for="(item, i) in config.list" :key="i" :label="item.label" :value="item.value"> </el-option>
+              <el-select
+                v-model="config.value"
+                class="text-input"
+                :clearable="!config.isClear"
+                :placeholder="config.placeHolder"
+                :size="sizeDiy"
+              >
+                <el-option
+                  v-for="(item, i) in config.list"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </div>
             <!-- 输入框 -->
             <div v-if="(config.type === 'text' && !config.subType) || !config.type">
               <div :style="{ minWidth: config.minWidth || '115px' }">{{ config.label }}</div>
-              <el-input class="text-input" v-model="config.value" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
+              <el-input
+                v-model="config.value"
+                class="text-input"
+                :placeholder="config.placeholder || '请输入内容'"
+                :size="sizeDiy"
+              />
             </div>
 
             <!-- 输入框number -->
             <div v-if="config.type == 'number'">
               <div>{{ config.label }}</div>
-              <el-input class="text-input" type="number" v-model="config.value" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
+              <el-input
+                v-model="config.value"
+                class="text-input"
+                type="number"
+                :placeholder="config.placeholder || '请输入内容'"
+                :size="sizeDiy"
+              />
             </div>
 
             <!-- 输入框 只能输入数字 -->
             <div v-if="config.type === 'onlyNumber'">
               <div>{{ config.label }}</div>
-              <el-input class="text-input" @input="config.value = config.value.replace(/[^\d]/g, '')" v-model="config.value" type="text" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
+              <el-input
+                v-model="config.value"
+                class="text-input"
+                type="text"
+                :placeholder="config.placeholder || '请输入内容'"
+                :size="sizeDiy"
+                @input="config.value = config.value.replace(/[^\d]/g, '')"
+              />
             </div>
 
             <!-- 输入框 区间 -->
             <div v-if="config.type === 'text_rank'">
               <div>{{ config.label }}</div>
-              <el-input class="text-input" v-model="config.value[0]" :placeholder="config.placeholder || '请输入最小值'" :size="sizeDiy" @change="handleMinChange(config.value[0], config.value[1])"></el-input>
+              <el-input
+                v-model="config.value[0]"
+                class="text-input"
+                :placeholder="config.placeholder || '请输入最小值'"
+                :size="sizeDiy"
+                @change="handleMinChange(config.value[0], config.value[1])"
+              />
               <span style="line-height: 30px">&nbsp;~&nbsp;</span>
-              <el-input class="text-input" v-model="config.value[1]" :placeholder="config.placeholder || '请输入最大值'" :size="sizeDiy" @change="handleMaxChange(config.value[0], config.value[1])"></el-input>
+              <el-input
+                v-model="config.value[1]"
+                class="text-input"
+                :placeholder="config.placeholder || '请输入最大值'"
+                :size="sizeDiy"
+                @change="handleMaxChange(config.value[0], config.value[1])"
+              />
             </div>
 
             <!-- 输入框 区间 只能数字 -->
             <div v-if="config.type === 'text_rank_number'">
               <div>{{ config.label }}</div>
-              <el-input type="text" @input="config.value[0] = config.value[0].replace(/[^\d]/g, '')" class="text-input" v-model="config.value[0]" :placeholder="config.placeholder || '请输入最小值'" :size="sizeDiy" @change="handleMinChange(config.value[0], config.value[1])"></el-input>
+              <el-input
+                v-model="config.value[0]"
+                type="text"
+                class="text-input"
+                :placeholder="config.placeholder || '请输入最小值'"
+                :size="sizeDiy"
+                @input="config.value[0] = config.value[0].replace(/[^\d]/g, '')"
+                @change="handleMinChange(config.value[0], config.value[1])"
+              />
               <span style="line-height: 30px">&nbsp;~&nbsp;</span>
-              <el-input type="text" @input="config.value[1] = config.value[1].replace(/[^\d]/g, '')" class="text-input" v-model="config.value[1]" :placeholder="config.placeholder || '请输入最大值'" :size="sizeDiy" @change="handleMaxChange(config.value[0], config.value[1])"></el-input>
+              <el-input
+                v-model="config.value[1]"
+                type="text"
+                class="text-input"
+                :placeholder="config.placeholder || '请输入最大值'"
+                :size="sizeDiy"
+                @input="config.value[1] = config.value[1].replace(/[^\d]/g, '')"
+                @change="handleMaxChange(config.value[0], config.value[1])"
+              />
             </div>
 
             <div v-if="config.type === 'text' && config.subType === 'uid'">
               <div :style="{ minWidth: config.minWidth || '115px' }">{{ config.label }}</div>
-              <el-input class="text-input" v-model="config.value" :maxlength="9" :placeholder="config.placeholder || '请输入内容'" :size="sizeDiy"></el-input>
+              <el-input
+                v-model="config.value"
+                class="text-input"
+                :maxlength="9"
+                :placeholder="config.placeholder || '请输入内容'"
+                :size="sizeDiy"
+              />
             </div>
             <!-- 日期选择 pc端或者横屏用这个 -->
             <div v-if="config.type === 'date_rank' && (isDeskTop || (!isDeskTop && isOrientation))">
@@ -73,9 +147,9 @@
                 <div class="block">
                   <!-- <span class="demonstration">默认</span> -->
                   <el-date-picker
-                    :disabled='dateRankDisabled'
-                    :size="sizeDiy"
                     v-model="config.value"
+                    :disabled="dateRankDisabled"
+                    :size="sizeDiy"
                     type="daterange"
                     range-separator="至"
                     start-placeholder="开始日期"
@@ -83,41 +157,72 @@
                     value-format="yyyy/MM/dd HH:mm:ss"
                     :picker-options="$util.datePickerOptions({ disabledDate: 'all' })"
                     :default-time="['00:00:00', '23:59:59']"
-                  >
-                  </el-date-picker>
+                  />
                 </div>
               </template>
             </div>
             <!-- 日期选择 移动端并且竖屏用这个 -->
-            <div v-if="config.type === 'date_rank' && !isDeskTop && !isOrientation" class="mobile-time">
+            <div
+              v-if="config.type === 'date_rank' && !isDeskTop && !isOrientation"
+              class="mobile-time"
+            >
               <div>{{ config.label }}</div>
               <template>
                 <div class="time-panel">
-                  <el-date-picker :disabled='dateRankDisabled' type="date" :size="sizeDiy" v-model="config.value[0]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="开始日期" :picker-options="pickerOptionsStart(config.value)" class="box-date-picker" @focus="forbid"> </el-date-picker>
-                  <el-date-picker :disabled='dateRankDisabled' type="date" :size="sizeDiy" v-model="config.value[1]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="结束日期" :picker-options="pickerOptionsEnd(config.value)" class="box-date-picker" @focus="forbid"></el-date-picker>
+                  <el-date-picker
+                    v-model="config.value[0]"
+                    :disabled="dateRankDisabled"
+                    type="date"
+                    :size="sizeDiy"
+                    value-format="yyyy/MM/dd HH:mm:ss"
+                    placeholder="开始日期"
+                    :picker-options="pickerOptionsStart(config.value)"
+                    class="box-date-picker"
+                    @focus="forbid"
+                  />
+                  <el-date-picker
+                    v-model="config.value[1]"
+                    :disabled="dateRankDisabled"
+                    type="date"
+                    :size="sizeDiy"
+                    value-format="yyyy/MM/dd HH:mm:ss"
+                    placeholder="结束日期"
+                    :picker-options="pickerOptionsEnd(config.value)"
+                    class="box-date-picker"
+                    @focus="forbid"
+                  />
                 </div>
               </template>
             </div>
 
             <!-- 日期选择 月份选择器 -->
             <div v-if="config.type === 'date_month'">
-              <div>{{ config.label }}   </div>
+              <div>{{ config.label }}</div>
               <template>
                 <div class="block">
-                  <el-date-picker value-format="yyyy-MM" :disabled='dateMonthDisabled' :size="sizeDiy" v-model="config.value" type="month" placeholder="选择月"> </el-date-picker>
+                  <el-date-picker
+                    v-model="config.value"
+                    value-format="yyyy-MM"
+                    :disabled="dateMonthDisabled"
+                    :size="sizeDiy"
+                    type="month"
+                    placeholder="选择月"
+                  />
                 </div>
               </template>
             </div>
 
             <!-- 特殊情况下的  日期选择 最多选到2020年7月1日  pc端或者横屏用这个 -->
-            <div v-if="config.type === 'date_rank_s' && (isDeskTop || (!isDeskTop && isOrientation))">
+            <div
+              v-if="config.type === 'date_rank_s' && (isDeskTop || (!isDeskTop && isOrientation))"
+            >
               <div>{{ config.label }}</div>
               <template>
                 <div class="block">
                   <!-- <span class="demonstration">默认</span> -->
                   <el-date-picker
-                    :size="sizeDiy"
                     v-model="config.value"
+                    :size="sizeDiy"
                     type="daterange"
                     range-separator="至"
                     start-placeholder="开始日期"
@@ -125,18 +230,38 @@
                     value-format="yyyy/MM/dd HH:mm:ss"
                     :picker-options="$util.datePickerOptions_s({ disabledDate: 'all' })"
                     :default-time="['00:00:00', '23:59:59']"
-                  >
-                  </el-date-picker>
+                  />
                 </div>
               </template>
             </div>
             <!-- 特殊情况下的  日期选择 最多选到2020年7月1日  移动端并且竖屏用这个 -->
-            <div v-if="config.type === 'date_rank_s' && !isDeskTop && !isOrientation" class="mobile-time">
+            <div
+              v-if="config.type === 'date_rank_s' && !isDeskTop && !isOrientation"
+              class="mobile-time"
+            >
               <div>{{ config.label }}</div>
               <template>
                 <div class="time-panel">
-                  <el-date-picker type="date" :size="sizeDiy" v-model="config.value[0]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="开始日期" :picker-options="pickerOptionsStart_s(config.value)" class="box-date-picker" @focus="forbid"> </el-date-picker>
-                  <el-date-picker type="date" :size="sizeDiy" v-model="config.value[1]" value-format="yyyy/MM/dd HH:mm:ss" placeholder="结束日期" :picker-options="pickerOptionsEnd(config.value)" class="box-date-picker" @focus="forbid"></el-date-picker>
+                  <el-date-picker
+                    v-model="config.value[0]"
+                    type="date"
+                    :size="sizeDiy"
+                    value-format="yyyy/MM/dd HH:mm:ss"
+                    placeholder="开始日期"
+                    :picker-options="pickerOptionsStart_s(config.value)"
+                    class="box-date-picker"
+                    @focus="forbid"
+                  />
+                  <el-date-picker
+                    v-model="config.value[1]"
+                    type="date"
+                    :size="sizeDiy"
+                    value-format="yyyy/MM/dd HH:mm:ss"
+                    placeholder="结束日期"
+                    :picker-options="pickerOptionsEnd(config.value)"
+                    class="box-date-picker"
+                    @focus="forbid"
+                  />
                 </div>
               </template>
             </div>
@@ -144,33 +269,79 @@
             <!-- 选择框 -->
             <div v-if="config.type === 'selectChange'">
               <div>{{ config.label }}</div>
-              <el-select @change="selectChange" class="text-input" v-model="config.value" :placeholder="config.placeHolder" :size="sizeDiy">
-                <el-option v-for="(item, i) in config.list" :key="i" :label="item.label" :value="item.value"> </el-option>
+              <el-select
+                v-model="config.value"
+                class="text-input"
+                :placeholder="config.placeHolder"
+                :size="sizeDiy"
+                @change="selectChange"
+              >
+                <el-option
+                  v-for="(item, i) in config.list"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </div>
           </div>
         </div>
         <div class="search-footer">
-          <el-button plain @click="doCalTotal" :size="sizeDiy" :loading="calLoading" v-if="calTotal">{{ calText }}</el-button>
-          <el-button plain @click="doCalTotalExcel" :size="sizeDiy" v-loading.fullscreen.lock="calLoadingExcel"  element-loading-text="拉取中" v-if="calTotalExcel">{{ calTextExcel }}</el-button>
+          <el-button
+            v-if="calTotal"
+            plain
+            :size="sizeDiy"
+            :loading="calLoading"
+            @click="doCalTotal"
+            >{{ calText }}</el-button
+          >
+          <el-button
+            v-if="calTotalExcel"
+            v-loading.fullscreen.lock="calLoadingExcel"
+            plain
+            :size="sizeDiy"
+            element-loading-text="拉取中"
+            @click="doCalTotalExcel"
+            >{{ calTextExcel }}</el-button
+          >
           <!-- 预估统计 -->
-          <el-button plain @click="doEstimate" :size="sizeDiy" :loading="calLoading" v-if="estimate">预估统计</el-button>
-          <el-button plain @click="doEstimate" :size="sizeDiy" :loading="calLoading" v-if="statistics">统计</el-button>
+          <el-button v-if="estimate" plain :size="sizeDiy" :loading="calLoading" @click="doEstimate"
+            >预估统计</el-button
+          >
+          <el-button
+            v-if="statistics"
+            plain
+            :size="sizeDiy"
+            :loading="calLoading"
+            @click="doEstimate"
+            >统计</el-button
+          >
 
-          <el-button type="primary" @click="doSearch" :size="sizeDiy">查询</el-button>
-          <el-button @click="reset" :size="sizeDiy" v-if="!noReset">重置</el-button>
+          <el-button type="primary" :size="sizeDiy" @click="doSearch">查询</el-button>
+          <el-button v-if="!noReset" :size="sizeDiy" @click="reset">重置</el-button>
           <!--  <el-button :size="sizeDiy" style="margin: 0 10px"  @click="doExportExcel" v-if="exportExcel">
             导出Excel
           </el-button>  -->
-          <el-dropdown v-if="exportExcel" :size="sizeDiy" ref="export2excel" @click.native.stop trigger="click" class="export2excel">
-            <el-button plain :loading="excelLoading"> 导出Excel<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
+          <el-dropdown
+            v-if="exportExcel"
+            ref="export2excel"
+            :size="sizeDiy"
+            trigger="click"
+            class="export2excel"
+            @click.native.stop
+          >
+            <el-button plain :loading="excelLoading">
+              导出Excel<i class="el-icon-arrow-down el-icon--right" />
+            </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native.stop="doExportExcel(0)">当前页</el-dropdown-item>
-              <el-dropdown-item @click.native.stop="doExportExcel(1)">当前查询条件</el-dropdown-item>
+              <el-dropdown-item @click.native.stop="doExportExcel(1)"
+                >当前查询条件</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
 
-          <el-button @click="toParent" :size="sizeDiy" v-if="isParent">定位（查父级）</el-button>
+          <el-button v-if="isParent" :size="sizeDiy" @click="toParent">定位（查父级）</el-button>
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -178,307 +349,306 @@
 </template>
 
 <script>
-import utils from '@/utils/util';
+import utils from '@/utils/util'
 export default {
-  name: 'b-search',
-  data() {
-    return {
-      isOrientation: false,
-    };
-  },
+  name: 'BSearch',
   props: {
     configs: {
       type: Array,
-      default: [],
+      default: []
     },
     exportExcel: {
       type: Boolean,
-      default: false,
+      default: false
     },
     isParent: {
       type: Boolean,
-      default: false,
+      default: false
     },
     noReset: {
       type: Boolean,
-      default: false,
+      default: false
     },
     calTotal: {
       type: Boolean,
-      default: false,
+      default: false
     },
     calText: {
       type: String,
-      default: '合计数量',
+      default: '合计数量'
     },
     calLoading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     calTotalExcel: {
       type: Boolean,
-      default: false,
+      default: false
     },
     calTextExcel: {
       type: String,
-      default: '导出excel',
+      default: '导出excel'
     },
     calLoadingExcel: {
       type: Boolean,
-      default: false,
+      default: false
     },
     statistics: {
       type: Boolean,
-      default: false,
+      default: false
     },
     estimate: {
       type: Boolean,
-      default: false,
+      default: false
     },
 
-    
     excelLoading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 日期 时间选择器禁用状态
     dateRankDisabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     // 月份 时间选择器禁用状态
     dateMonthDisabled: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
+  },
+  data() {
+    return {
+      isOrientation: false
+    }
   },
   computed: {
     sizeDiy() {
-      return this.$store.state.app.device === 'mobile' ? 'mini' : 'small';
+      return this.$store.state.app.device === 'mobile' ? 'mini' : 'small'
     },
     isDeskTop() {
-      return this.$store.state.app.device !== 'mobile';
-    },
+      return this.$store.state.app.device !== 'mobile'
+    }
   },
   mounted() {
-    window.addEventListener('resize', this.renderResize, false);
+    window.addEventListener('resize', this.renderResize, false)
   },
   destroyed() {
-    window.removeEventListener('resize', this.renderResize, false);
+    window.removeEventListener('resize', this.renderResize, false)
   },
   methods: {
     selectChange(val) {
-      this.$emit('selectChange', val);
+      this.$emit('selectChange', val)
     },
     checkSearchVal(val) {
-      val = (val + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d\d\d).*$/, '$1$2.$3');
+      val = (val + '').replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d\d\d\d\d).*$/, '$1$2.$3')
     },
     renderResize() {
       // 判断横竖屏
-      let width = document.documentElement.clientWidth;
-      let height = document.documentElement.clientHeight;
+      const width = document.documentElement.clientWidth
+      const height = document.documentElement.clientHeight
       if (width > height) {
-        this.isOrientation = true;
+        this.isOrientation = true
       } else {
-        this.isOrientation = false;
+        this.isOrientation = false
       }
     },
     forbid() {
-      document.activeElement.blur();
+      document.activeElement.blur()
       this.$nextTick(() => {
-        let inputTime = document.querySelectorAll('.el-date-editor .el-range-input');
-        inputTime.forEach((item) => {
+        const inputTime = document.querySelectorAll('.el-date-editor .el-range-input')
+        inputTime.forEach(item => {
           item.addEventListener('focus', () => {
-            document.activeElement.blur();
-          });
-        });
-      });
+            document.activeElement.blur()
+          })
+        })
+      })
     },
 
     pickerOptionsStart_s(val) {
-      let endDateVal = val[1];
+      const endDateVal = val[1]
       return {
         disabledDate(date) {
           if (endDateVal) {
-            let timeNow = new Date(val[1]).getTime();
-            return date.getTime() > timeNow;
+            const timeNow = new Date(val[1]).getTime()
+            return date.getTime() > timeNow
           }
-          let curDate = new Date();
+          const curDate = new Date()
           // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
-          let overT = new Date();
-          overT.setHours(23);
-          overT.setMinutes(59);
-          overT.setSeconds(59);
-          return +date > +overT;
+          const overT = new Date()
+          overT.setHours(23)
+          overT.setMinutes(59)
+          overT.setSeconds(59)
+          return +date > +overT
         },
         disabledDate(date) {
-          let seven = 1593532800000; // 2020年7月1日的时间戳
-          return date < seven;
-        },
-      };
+          const seven = 1593532800000 // 2020年7月1日的时间戳
+          return date < seven
+        }
+      }
     },
 
     pickerOptionsStart(val) {
-      let endDateVal = val[1];
+      const endDateVal = val[1]
       return {
         disabledDate(date) {
           if (endDateVal) {
-            let timeNow = new Date(val[1]).getTime();
-            return date.getTime() > timeNow;
+            const timeNow = new Date(val[1]).getTime()
+            return date.getTime() > timeNow
           }
-          let curDate = new Date();
+          const curDate = new Date()
           // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
-          let overT = new Date();
-          overT.setHours(23);
-          overT.setMinutes(59);
-          overT.setSeconds(59);
-          return +date > +overT;
-        },
-      };
+          const overT = new Date()
+          overT.setHours(23)
+          overT.setMinutes(59)
+          overT.setSeconds(59)
+          return +date > +overT
+        }
+      }
     },
     pickerOptionsEnd(val) {
-      let beginDateVal = val[0];
+      const beginDateVal = val[0]
       return {
         disabledDate(date) {
           if (beginDateVal) {
-            let curDate = new Date();
+            const curDate = new Date()
             // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
-            let overT = new Date();
-            overT.setHours(23);
-            overT.setMinutes(59);
-            overT.setSeconds(59);
+            const overT = new Date()
+            overT.setHours(23)
+            overT.setMinutes(59)
+            overT.setSeconds(59)
 
-            let timeNow = new Date(val[0]).getTime();
-            return date.getTime() < timeNow || +date > +overT;
+            const timeNow = new Date(val[0]).getTime()
+            return date.getTime() < timeNow || +date > +overT
           }
-          let curDate = new Date();
+          const curDate = new Date()
           // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
-          let overT = new Date();
-          overT.setHours(23);
-          overT.setMinutes(59);
-          overT.setSeconds(59);
-          return +date > +overT;
-        },
-      };
+          const overT = new Date()
+          overT.setHours(23)
+          overT.setMinutes(59)
+          overT.setSeconds(59)
+          return +date > +overT
+        }
+      }
     },
     doSearch() {
-      let query = this.getQuery();
-      this.$emit('do-search', query);
+      const query = this.getQuery()
+      this.$emit('do-search', query)
     },
     getQuery() {
-      let query = {};
-      let config = this.configs;
-      for (let item of config) {
+      const query = {}
+      const config = this.configs
+      for (const item of config) {
         if (item && item.value != null && item.value === item.value && item.value !== '') {
           if (item.type === 'date_rank') {
             // pc和移动端的时间区间双框
-            query[item.prop] = item.value[0];
+            query[item.prop] = item.value[0]
             if (!this.isDeskTop) {
-              let overT = new Date(item.value[1]) || '';
+              let overT = new Date(item.value[1]) || ''
               if (overT) {
-                overT.setHours(23);
-                overT.setMinutes(59);
-                overT.setSeconds(59);
-                overT = this.$util.dateFormat(overT, 'YYYY/MM/DD HH:mm:ss');
+                overT.setHours(23)
+                overT.setMinutes(59)
+                overT.setSeconds(59)
+                overT = this.$util.dateFormat(overT, 'YYYY/MM/DD HH:mm:ss')
               }
-              query[item.prop2] = overT || item.value[1];
+              query[item.prop2] = overT || item.value[1]
             } else {
-              let overT = new Date(item.value[1]) || '';
+              let overT = new Date(item.value[1]) || ''
               if (overT) {
-                overT.setHours(23);
-                overT.setMinutes(59);
-                overT.setSeconds(59);
-                overT = this.$util.dateFormat(overT, 'YYYY/MM/DD HH:mm:ss');
+                overT.setHours(23)
+                overT.setMinutes(59)
+                overT.setSeconds(59)
+                overT = this.$util.dateFormat(overT, 'YYYY/MM/DD HH:mm:ss')
               }
-              query[item.prop2] = overT || item.value[1];
+              query[item.prop2] = overT || item.value[1]
             }
           } else if (item.type === 'date_rank_s') {
             // 区间双框
             if (item.value[0] !== '') {
-              query[item.prop] = item.value[0];
+              query[item.prop] = item.value[0]
             }
             if (item.value[1] !== '') {
-              query[item.prop2] = item.value[1];
+              query[item.prop2] = item.value[1]
             }
           } else if (item.type === 'text_rank' || item.type === 'text_rank_number') {
             // 区间双框
             if (item.value[0] !== '') {
-              query[item.prop] = item.value[0];
+              query[item.prop] = item.value[0]
             }
             if (item.value[1] !== '') {
-              query[item.prop2] = item.value[1];
+              query[item.prop2] = item.value[1]
             }
             // query[item.prop] = item.value[0];
             // query[item.prop2] = item.value[1];
           } else {
             // 非空字符值
             if (item.value !== '') {
-              query[item.prop] = item.value;
+              query[item.prop] = item.value
             }
           }
         }
       }
-      return query;
+      return query
     },
     reset() {
-      this.$emit('do-reset');
+      this.$emit('do-reset')
     },
     doExportExcel(val) {
-      let query = this.getQuery();
-      this.$emit('do-exportExcel', { num: val, query: query });
+      const query = this.getQuery()
+      this.$emit('do-exportExcel', { num: val, query: query })
     },
     toParent() {
-      let query = this.getQuery();
-      this.$emit('do-parent', query);
+      const query = this.getQuery()
+      this.$emit('do-parent', query)
     },
     doCalTotal() {
-      let query = this.getQuery();
-      this.$emit('do-calTotal', query);
+      const query = this.getQuery()
+      this.$emit('do-calTotal', query)
     },
     doCalTotalExcel() {
-      let query = this.getQuery();
-      this.$emit('do-calTotal-excel', query);
+      const query = this.getQuery()
+      this.$emit('do-calTotal-excel', query)
     },
     doEstimate() {
-      let query = this.getQuery();
-      this.$emit('do-estimate', query);
+      const query = this.getQuery()
+      this.$emit('do-estimate', query)
     },
     validateCom(value) {
-      const one = Number(value);
+      const one = Number(value)
       if (one < -1000000) {
-        this.$message.error(`输入值必须大于${-1000000}`);
+        this.$message.error(`输入值必须大于${-1000000}`)
       } else if (one > 1000000000000000000) {
-        this.$message.error(`输入值必须小于${1000000000000000000}`);
+        this.$message.error(`输入值必须小于${1000000000000000000}`)
       }
     },
     validateMin(val1, val2) {
-      if (!val1 || !val2) return;
-      const one = Number(val1);
-      const max = Number(val2);
+      if (!val1 || !val2) return
+      const one = Number(val1)
+      const max = Number(val2)
       if (one <= max) {
       } else {
-        this.$message.error('输入值不得大于最大值');
+        this.$message.error('输入值不得大于最大值')
       }
     },
     validateMax(val1, val2) {
-      if (!val1 || !val2) return;
-      const one = Number(val2);
-      const min = Number(val1);
+      if (!val1 || !val2) return
+      const one = Number(val2)
+      const min = Number(val1)
       if (one >= min) {
       } else {
-        this.$message.error('输入值不得小于最小值');
+        this.$message.error('输入值不得小于最小值')
       }
     },
     handleMinChange(val1, val2) {
-      this.validateCom(val1);
-      this.validateMax(val1, val2);
+      this.validateCom(val1)
+      this.validateMax(val1, val2)
     },
     handleMaxChange(val1, val2) {
-      this.validateCom(val2);
-      this.validateMax(val1, val2);
-    },
-  },
-};
+      this.validateCom(val2)
+      this.validateMax(val1, val2)
+    }
+  }
+}
 </script>
 <style lang="scss">
 .search-container {
@@ -508,6 +678,7 @@ export default {
             line-height: 32px;
             padding-right: 10px;
             box-sizing: border-box;
+            white-space: nowrap;
           }
         }
       }

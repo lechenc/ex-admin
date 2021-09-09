@@ -18,9 +18,8 @@ import store from '@/store';
 
 axios.defaults.baseURL = window.SERVER_PATH
 
-// axios.defaults.baseURL = "http://47.57.21.80/api"; // 测试
-// axios.defaults.baseURL = "http://47.57.8.70:16422"; // 开发
-// axios.defaults.baseURL = process.env.VUE_APP_BASE_API; // 配置环境
+
+// axios.defaults.baseURL = "http://192.168.0.220/api"; // 开发
 
 
 // request 拦截器

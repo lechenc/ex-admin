@@ -27,16 +27,17 @@
         <el-row :span="24">
           <el-col :span="13">
             <el-form-item label="请选择身份: " :label-width="formLabelWidth" prop="userType">
-              <el-select :disabled='isEdit' v-model="dForm.userType" placeholder="" width="20%">
+              <el-select :disabled="isEdit" v-model="dForm.userType" placeholder="" width="20%">
                 <el-option v-for="(item, idx) in userType_List" :key="idx" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row :span="24">
-          <el-col :span="13">
+          <el-col :span="16">
             <el-form-item label="请输入级别: " :label-width="formLabelWidth" prop="userLevel">
-              <el-input :disabled='isEdit' @input="checkVal('userLevel', 'nodot')" type="text" v-model="dForm.userLevel" autocomplete="off" placeholder="请输入"></el-input>
+              <el-input :disabled="isEdit" @input="checkVal('userLevel', 'nodot')" type="text" v-model="dForm.userLevel" autocomplete="off" placeholder="身份为代理时,请输入大于1的级别"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -68,7 +69,7 @@
         </el-row>
 
         <el-row :span="24">
-          <el-col :span="13">
+          <el-col :span="16">
             <el-form-item label="谷歌验证码: " :label-width="formLabelWidth" prop="googleCode">
               <el-input @input="checkVal('googleCode', 'nodot')" type="text" v-model="dForm.googleCode" autocomplete="off" placeholder="请输入"></el-input>
             </el-form-item>
@@ -163,6 +164,7 @@ export default {
       this.$refs['dForm'].validate(async (valid) => {
         if (valid) {
           let { id, userType, userLevel, viewType, viewLevel, googleCode, authorityPhone, authorityEmail, authorityName } = this.dForm;
+
           let params = {
             userType,
             userLevel,
@@ -202,7 +204,7 @@ export default {
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs['dForm'].resetFields();
-          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityNamet, viewLevel } = row;
+          let { id, userType, userLevel, viewType, googleCode, authorityPhone, authorityEmail, authorityName, viewLevel } = row;
 
           this.dForm = {
             id,
@@ -212,7 +214,7 @@ export default {
             googleCode,
             authorityPhone: authorityPhone == '是' ? true : false,
             authorityEmail: authorityEmail == '是' ? true : false,
-            authorityNamet: authorityNamet == '是' ? true : false,
+            authorityName: authorityName == '是' ? true : false,
             viewLevel,
           };
         });
