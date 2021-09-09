@@ -54,6 +54,7 @@ export default {
       ago: '',
       calLoadingExcel: false,
       btnArr: [],
+      coinForexList:[]
     };
   },
 
@@ -70,7 +71,7 @@ export default {
         .getCoinForexEntrustListExport(params)
         .then((res) => {
           this.calLoadingExcel = false;
-          fileDownload(res.data, '交易报表.xlsx');
+          fileDownload(res.data, '委托报表.xlsx');
         })
         .catch(() => {
           this.calLoadingExcel = false;
@@ -83,7 +84,7 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+      if (!this.search_params_obj.orderStartTime && !this.search_params_obj.orderEndTime) {
         this.search_params_obj.flag = 1;
       }
       this.getList();
@@ -136,12 +137,12 @@ export default {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
         this.searchCofig[0].value = [befV, nowV];
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        params.orderEndTime = nowV.replace(/\//gi, '-');
+        params.orderStartTime = befV.replace(/\//gi, '-');
       }
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+      if (this.search_params_obj.orderStartTime) {
+        this.search_params_obj.orderEndTime = this.formatTime(this.search_params_obj.orderEndTime);
+        this.search_params_obj.orderStartTime = this.formatTime(this.search_params_obj.orderStartTime);
       }
     },
 

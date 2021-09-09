@@ -31,15 +31,7 @@
         </div>
         <div>
           <div class="container-footer">
-            <el-pagination
-              background
-              @current-change="goPageDeal"
-              layout="total, prev, pager, next, jumper"
-              :current-page="current_page"
-              :page-size="pageSize"
-              :total="total"
-            >
-            </el-pagination>
+            <el-pagination background @current-change="goPageDeal" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
           </div>
         </div>
       </div>
@@ -81,7 +73,7 @@ export default {
       this.row = row;
       // 设置上架
       if (fn === 'switchAd') {
-       let params = {
+        let params = {
           isOnshelf: row.isOnshelf ? 1 : 0,
           id: row.id,
         };
@@ -109,7 +101,7 @@ export default {
     async getDealDetail() {
       if (this.dealLoading) return;
       const query_data = {
-        id:this.advId,
+        id: this.advId,
         pageNum: this.current_page,
         pageSize: this.pageSize,
         // advId: this.advId,
@@ -129,19 +121,18 @@ export default {
       return ~(val + '').indexOf('-') ? val : this.$util.dateFormat(val, 'YYYY-MM-DD hh:mm:ss');
     },
   },
-  
-  mounted(){
-      
-      this.infoList = []; //基本列表
-      this.dealList= []; // 成交列表
 
-      this.infoConfigs= []; // 基本列表列配置
-      this.dealConfigs= []; // 成交列表配置
+  activated() {
+    this.infoList = []; //基本列表
+    this.dealList = []; // 成交列表
 
-      this.current_page= 1; // 当前页码
-      this.pageSize= 10; // 当前每页显示页码数
-      this.total= 0; // 总条数
-      this.pages= 0; // 总页数
+    this.infoConfigs = []; // 基本列表列配置
+    this.dealConfigs = []; // 成交列表配置
+
+    this.current_page = 1; // 当前页码
+    this.pageSize = 10; // 当前每页显示页码数
+    this.total = 0; // 总条数
+    this.pages = 0; // 总页数
 
     this.infoConfigs = infoCol;
     this.dealConfigs = dealCol;

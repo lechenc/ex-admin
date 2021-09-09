@@ -7,9 +7,9 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\financial\assets.vue
  -->
 <template>
-  <div class="coinForexDealList-container">
+  <div class="coinForexNetWorth-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoadingExcel="calLoadingExcel" calTextExcel="快速导出excel" :calTotalExcel="btnArr.includes('excel')" @do-calTotal-excel="calTotalExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
     <div>
@@ -26,12 +26,12 @@
 import Bsearch from '@/components/search/b-search';
 import Btable from '@/components/table/b-table';
 import iconPage from '@/components/icon-page';
-import { coinForexDealListCol, coinForexDealListConfig } from '@/config/column/coinForex';
+import { coinForexNetWorthCol, coinForexNetWorthConfig } from '@/config/column/coinForex';
 import $api from '@/api/api';
-import axios from "axios";
-import fileDownload from 'js-file-download';
+
+
 export default {
-  name: 'CoinForexDealList',
+  name: 'CoinForexNetWorth',
   components: {
     Btable,
     Bsearch,
@@ -59,24 +59,7 @@ export default {
   },
 
   methods: {
-    // 导出excel
-    calTotalExcel(data) {
-      this.search_params_obj = data;
-      const params = {};
-
-      this.calLoadingExcel = true;
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      $api
-        .getCoinForexDealListExport(params)
-        .then((res) => {
-          this.calLoadingExcel = false;
-          fileDownload(res.data, '交易报表.xlsx');
-        })
-        .catch(() => {
-          this.calLoadingExcel = false;
-        });
-    },
+    
     async doHandle(data) {
       const { fn, row } = data;
 
@@ -84,7 +67,7 @@ export default {
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
-      if (!this.search_params_obj.closeStartTime && !this.search_params_obj.closeEndTime) {
+      if (!this.search_params_obj.openStartTime && !this.search_params_obj.openEndTime) {
         this.search_params_obj.flag = 1;
       }
       this.getList();
@@ -94,7 +77,7 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = '';
       });
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+     //  this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
       this.getList();
     },
 
@@ -114,8 +97,7 @@ export default {
       };
       this.requiredParams(this.search_params_obj);
       Object.assign(params, this.search_params_obj);
-      const res = await $api.getCoinForexDealListList(params);
-      
+      const res = await $api.getCoinForexNetWorthList(params);
       if (res) {
         const { records, current, total, pages } = res.data.data;
         this.total = total;
@@ -134,16 +116,17 @@ export default {
     },
     // 时间格式 YYYY-MM-DD
     requiredParams(params) {
+      return
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
         this.searchCofig[0].value = [befV, nowV];
-        params.closeEndTime = nowV.replace(/\//gi, '-');
-        params.closeStartTime = befV.replace(/\//gi, '-');
+        params.openEndTime = nowV.replace(/\//gi, '-');
+        params.openStartTime = befV.replace(/\//gi, '-');
       }
-      if (this.search_params_obj.closeStartTime) {
-        this.search_params_obj.closeEndTime = this.formatTime(this.search_params_obj.closeEndTime);
-        this.search_params_obj.closeStartTime = this.formatTime(this.search_params_obj.closeStartTime);
+      if (this.search_params_obj.openStartTime) {
+        this.search_params_obj.openEndTime = this.formatTime(this.search_params_obj.openEndTime);
+        this.search_params_obj.openStartTime = this.formatTime(this.search_params_obj.openStartTime);
       }
     },
 
@@ -151,24 +134,22 @@ export default {
     async getCoinForexList() {
       this.$store.dispatch('common/getCoinForexList').then(() => {
         this.coinForexList = this.$store.state.common.coinForexList;
-        this.searchCofig[3]['list'] = this.coinForexList;
+        this.searchCofig[2]['list'] = this.coinForexList;
       });
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('CoinForexDealList', coinForexDealListCol, []);
-    this.btnArr = authObj.btnArr || [];
-    this.configs = coinForexDealListCol;
-    this.searchCofig = coinForexDealListConfig;
+    this.configs = coinForexNetWorthCol;
+    this.searchCofig = coinForexNetWorthConfig;
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
-    this.getCoinForexList();
+    // this.getCoinForexList();
     this.getList();
   },
 };
 </script>
 <style lang="scss">
-.coinForexDealList-container {
+.coinForexNetWorth-container {
   .el-form-item__content {
     margin-left: 0;
   }
