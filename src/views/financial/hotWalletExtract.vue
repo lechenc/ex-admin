@@ -52,11 +52,14 @@
             @input="checkVal('maxDailyAutoWithdraw')"
           />
         </el-form-item>
-
         <el-form-item label="热钱包启用开关" :label-width="formLabelWidth">
-          <el-switch v-model="chainForm.status" active-color="#13ce66" inactive-color="#ff4949" />
+          <el-switch
+            v-model="chainForm.status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="changeStauus"
+          />
         </el-form-item>
-
         <el-form-item label="白天热钱包启用时间" :label-width="formLabelWidth" prop="dayTime">
           <el-time-picker
             v-model="chainForm.dayTime"
@@ -169,7 +172,6 @@
         <el-button type="primary" :loading="btnLoading" @click="confirmOp">确 定</el-button>
       </div>
     </el-dialog>
-
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogSetVisible" width="650px" title="查看余额">
       <el-row style="margin-bottom: 22px">
@@ -273,100 +275,29 @@ export default {
       }
     },
     rules() {
-      const flag = this.chainForm.status
-      return {
-        chain: [
+      const changeKeys = [
+        'dayTime',
+        'nightTime',
+        'userNightWithdrawTimes',
+        'userNightWithdrawAmount',
+        'userNightWithdrawAmountTotal',
+        'alarmBalance',
+        'alarmPhone',
+        'alarmEmail'
+      ]
+      const status = this.chainForm.status
+      const keys = Object.keys(this.chainForm)
+      const rules = {}
+      keys.forEach(key => {
+        rules[key] = [
           {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        coin: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        maxAutoWithdraw: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        maxDailyAutoWithdraw: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        googleCode: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        dayTime: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        nightTime: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        userNightWithdrawTimes: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        userNightWithdrawAmount: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        userNightWithdrawAmountTotal: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        alarmPhone: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        alarmEmail: [
-          {
-            required: flag,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        alarmBalance: [
-          {
-            required: flag,
+            required: changeKeys.includes(key) ? status : true,
             message: '必填',
             trigger: 'blur'
           }
         ]
-      }
+      })
+      return rules
     }
   },
   async mounted() {
@@ -381,6 +312,9 @@ export default {
     this.getList()
   },
   methods: {
+    changeStauus() {
+      this.$refs.chainForm.clearValidate()
+    },
     chainChange(val) {
       this.chainForm.coin = ''
     },
