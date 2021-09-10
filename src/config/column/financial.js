@@ -19,7 +19,7 @@ const rechargeCol = [
   },
   {
     label: '上级UID',
-    prop: 'parentUid'
+    prop: 'proxyUid'
   },
   {
     label: '币种',
@@ -103,6 +103,10 @@ const rechargeColNoBtn = [
   {
     label: 'UID',
     prop: 'uid'
+  },
+  {
+    label: '上级UID',
+    prop: 'proxyUid'
   },
   {
     label: '币种',
@@ -247,7 +251,7 @@ const rechargeConfig = [
   {
     type: 'onlyNumber',
     label: '上级UID',
-    prop: 'parentUid',
+    prop: 'upperUid',
     value: '',
     placeholder: '请输入'
   }
@@ -833,6 +837,15 @@ const extractForeignCol = [
         alias: 'nextReview'
       },
       {
+        label: '终审',
+        fn: 'finalReview',
+        isPop: false,
+        filter_key: 'tradeStatus',
+        filter_status: 13,
+        type: 'success',
+        alias: 'finalReview'
+      },
+      {
         label: '初审驳回',
         fn: 'preReject',
         isPop: false,
@@ -850,6 +863,15 @@ const extractForeignCol = [
         filter_status: 3,
         type: 'danger',
         alias: 'nextReject'
+      },
+      {
+        label: '终审驳回',
+        fn: 'finalReject',
+        isPop: false,
+        filter_key: 'tradeStatus',
+        filter_status: 13,
+        type: 'danger',
+        alias: 'finalReject'
       },
       {
         label: '详情',

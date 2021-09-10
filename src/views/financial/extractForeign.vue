@@ -153,15 +153,20 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="parseInt(handleData.tradeStatus) !== 4">
+        <el-row
+          v-if="
+            (parseInt(handleData.tradeStatus) > 13 || parseInt(handleData.tradeStatus) == 1) &&
+              parseInt(handleData.tradeStatus) != 4
+          "
+        >
           <el-col :span="12">
             <el-form-item label="终审时间" :label-width="formLabelWidth">
-              待添加字段
+              {{ handleData.lastAuditTime }}
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="终审人" :label-width="formLabelWidth">
-              待添加字段
+              {{ handleData.lastAuditUserName }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -170,7 +175,7 @@
         <!--	<el-form-item v-if="handleStatus === 'preReview'" label="备注" prop="mark" :label-width="formLabelWidth">
 					<el-input v-model="reviewForm.mark"></el-input>
 				</el-form-item> -->
-        <template v-if="handleStatus === 'nextReview'">
+        <template v-if="handleStatus === 'finalReview'">
           <el-form-item label="txId" prop="txId" :label-width="formLabelWidth">
             <el-input v-model="reviewForm.txId" size="medium" />
           </el-form-item>
@@ -204,6 +209,16 @@
           :label-width="formLabelWidth"
         >
           {{ handleData.reviewRemark }}
+        </el-form-item>
+        <el-form-item
+          v-if="
+            (handleData.tradeStatus > 13 || parseInt(handleData.tradeStatus) == 1) &&
+              parseInt(handleData.tradeStatus) != 4
+          "
+          label="终审备注"
+          :label-width="formLabelWidth"
+        >
+          {{ handleData.lastRemark }}
         </el-form-item>
       </el-form>
       <div slot="footer" class="inner-footer">
@@ -255,7 +270,13 @@
     </el-dialog>
 
     <!-- 提币风控 -->
-    <el-dialog title="提币风控参数设置" :visible.sync="windControlShow" width="700px">
+    <el-dialog
+      :destroy-on-close="true"
+      class="wind-control-dialog"
+      title="提币风控参数设置"
+      :visible.sync="windControlShow"
+      width="700px"
+    >
       <div style="padding-left: 20px; width: 100%">
         <el-form
           ref="windControlForm"
@@ -264,37 +285,50 @@
           label-width="150px"
           class="demo-ruleForm"
         >
+          <el-form-item label="监控范围">
+            <el-checkbox-group v-model="windControlForm.monitoringRange">
+              <el-checkbox :label="1" disabled>所有用户</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
           <el-row>
-            <el-col :span="12"><div class="grid-content bg-purple">时间周期</div></el-col>
-            <el-col :span="12"><div class="grid-content bg-purple">参数值</div></el-col>
+            <el-col :span="10"><div class="text">时间周期</div></el-col>
+            <el-col :span="10" :offset="3"><div class="text">参数值</div></el-col>
           </el-row>
           <el-row>
             <el-col :span="10">
-              <el-form-item label="单位时间内（天）" prop="profitDya">
-                <el-input v-model="windControlForm.profitDya" type="number" placeholder="请输入" />
+              <el-form-item label="单位时间内（天）" prop="contractProfitReachedTime">
+                <el-input
+                  v-model="windControlForm.contractProfitReachedTime"
+                  type="number"
+                  placeholder="请输入"
+                />
               </el-form-item>
             </el-col>
             <el-col :span="10" :offset="3">
-              <el-form-item label="合约盈利达到（U）" prop="profit">
-                <el-input v-model="windControlForm.profit" type="number" placeholder="请输入" />
+              <el-form-item label="合约盈利达到（U）" prop="contractProfitReached">
+                <el-input
+                  v-model="windControlForm.contractProfitReached"
+                  type="number"
+                  placeholder="请输入"
+                />
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="10">
-              <el-form-item label="单位时间内（天）" prop="profitPercentDya">
+              <el-form-item label="单位时间内（天）" prop="contractProfitRatioTime">
                 <el-input
-                  v-model="windControlForm.profitPercentDya"
+                  v-model="windControlForm.contractProfitRatioTime"
                   type="number"
                   placeholder="请输入"
                 />
               </el-form-item>
             </el-col>
             <el-col :span="10" :offset="3">
-              <el-form-item label="合约盈利比例（%）" prop="profitPercent">
+              <el-form-item label="合约盈利比例（%）" prop="contractProfitRatio">
                 <el-input
-                  v-model="windControlForm.profitPercent"
+                  v-model="windControlForm.contractProfitRatio"
                   type="number"
                   placeholder="请输入"
                 />
@@ -303,29 +337,49 @@
           </el-row>
           <el-row>
             <el-col :span="10">
-              <el-form-item label="单位时间内（天）" prop="businessDay">
+              <el-form-item label="单位时间内（天）" prop="contractTransactionVolumeTime">
                 <el-input
-                  v-model="windControlForm.businessDay"
+                  v-model="windControlForm.contractTransactionVolumeTime"
                   type="number"
                   placeholder="请输入"
                 />
               </el-form-item>
             </el-col>
             <el-col :span="10" :offset="3">
-              <el-form-item label="合约交易量（张）" prop="businessNum">
+              <el-form-item label="合约交易量（张）" prop="contractTransactionVolume">
                 <el-input
-                  v-model="windControlForm.businessNum"
+                  v-model="windControlForm.contractTransactionVolume"
                   type="number"
                   placeholder="请输入"
                 />
               </el-form-item>
             </el-col>
           </el-row>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('windControlForm')">立即创建</el-button>
-            <el-button @click="resetForm('windControlForm')">重置</el-button>
+          <el-form-item label-width="100px" label="生效方式" prop="effectiveType">
+            <el-radio-group v-model="windControlForm.effectiveType">
+              <el-radio :label="1">满足以上选中的任一项即可生效</el-radio>
+              <el-radio :label="2">同时满足选中项才可生效</el-radio>
+            </el-radio-group>
           </el-form-item>
+          <el-form-item label-width="100px" label="总开关">
+            <el-switch
+              v-model="windControlForm.enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            />
+          </el-form-item>
+          <!-- <el-form-item class="wind-control-btn">
+            <el-button type="primary" @click="submitWindControlForm('windControlForm')">
+              确定
+            </el-button>
+          </el-form-item> -->
         </el-form>
+      </div>
+      <div slot="footer" class="wind-control-btn">
+        <el-button @click.stop="windControlShow = false">取消</el-button>
+        <el-button type="primary" @click.stop="submitWindControlForm">
+          确定
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -436,20 +490,26 @@ export default {
       checked1: true,
       radio: '1',
       windControlForm: {
-        profitDya: '',
-        profit: '',
-        profitPercentDya: '',
-        profitPercent: '',
-        businessDay: '',
-        businessNum: ''
+        contractProfitReached: '', // 合约盈利达到
+        contractProfitReachedTime: '', // 合约盈利达到--->单位时间内(天)
+        contractProfitRatio: '', // 合约盈利比例
+        contractProfitRatioTime: '', // 合约盈利比例--->单位时间内(天)
+        contractTransactionVolume: '', // 合约交易量
+        contractTransactionVolumeTime: '', // 合约交易量--->单位时间内(天)
+        effectiveType: 0, // 生效方式 1.满足以上选中的任一项即可生效 2.同时满足选中项才可生效
+        enable: '', // 是否启用  true 启用  false 不启用
+        monitoringRange: [1] // 监控范围 1.所有范围
       },
       windControlRules: {
-        profitDya: [{ required: true, message: '必填', trigger: 'blur' }],
-        profit: [{ required: true, message: '必填', trigger: 'blur' }],
-        profitPercentDya: [{ required: true, message: '必填', trigger: 'blur' }],
-        profitPercent: [{ required: true, message: '必填', trigger: 'blur' }],
-        businessDay: [{ required: true, message: '必填', trigger: 'blur' }],
-        businessNum: [{ required: true, message: '必填', trigger: 'blur' }]
+        contractProfitReached: [{ required: true, message: '必填', trigger: 'blur' }],
+        contractProfitReachedTime: [{ required: true, message: '必填', trigger: 'blur' }],
+        contractProfitRatio: [{ required: true, message: '必填', trigger: 'blur' }],
+        contractProfitRatioTime: [{ required: true, message: '必填', trigger: 'blur' }],
+        contractTransactionVolume: [{ required: true, message: '必填', trigger: 'blur' }],
+        contractTransactionVolumeTime: [{ required: true, message: '必填', trigger: 'blur' }],
+        effectiveType: [{ required: true, message: '必填', trigger: 'blur' }],
+        enable: [{ required: true, message: '必填', trigger: 'blur' }],
+        monitoringRange: [{ required: true, message: '必填', trigger: 'blur' }]
       }
     }
   },
@@ -478,8 +538,40 @@ export default {
     })
     this.getList()
     this.getRechargeChainName()
+    this.getWindControl()
   },
   methods: {
+    // 获取风控参数
+    async getWindControl() {
+      const res = await $api.getWindControl()
+      if (res.data.code === 1) {
+        const data = res.data.data
+        this.windControlForm = { ...data, monitoringRange: [data.monitoringRange] }
+      } else {
+        this.$message.error('风控参数获取失败')
+      }
+    },
+    // 提交风控参数
+    async submitWindControlForm() {
+      this.$refs['windControlForm'].validate(async valid => {
+        if (valid) {
+          const params = {}
+          const keys = Object.keys(this.windControlForm)
+          keys.forEach(element => {
+            params[element] =
+              element === 'enable'
+                ? this.windControlForm[element]
+                : Number(this.windControlForm[element])
+          })
+          const res = await $api.setWindControl(params)
+          if (res.data.code === 1) {
+            this.windControlShow = false
+          } else {
+            this.$message.error('风控参数保存失败')
+          }
+        }
+      })
+    },
     // 获取 出入金数据表格
     async getInOutGoldListFunc(userId, _uid) {
       if (this.inOutGoldListLoading) return
@@ -500,9 +592,21 @@ export default {
       const { fn, row } = data
       this.handleStatus = fn
       this.handleData = row
-      if (fn === 'preReview' || fn === 'nextReview') {
-        this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审'
-        this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过'
+      if (fn === 'preReview' || fn === 'nextReview' || fn === 'finalReview') {
+        const reviewObj = {
+          preReview: '提币初审',
+          nextReview: '提币复审',
+          finalReview: '提币终审'
+        }
+        const confirmObj = {
+          preReview: '初审通过',
+          nextReview: '复审通过',
+          finalReview: '终审通过'
+        }
+        this.reviewTitle = reviewObj[fn]
+        // this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审'
+        this.confirmText = confirmObj[fn]
+        // this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过'
         this.nowName = fn
         if (fn === 'preReview') {
           const { chainName, coinName, amount } = row
@@ -514,7 +618,7 @@ export default {
           this.buttonDisabled = false
           this.openReviewDialog()
         }
-      } else if (fn === 'preReject' || fn === 'nextReject') {
+      } else if (fn === 'preReject' || fn === 'nextReject' || fn === 'finalReject') {
         this.openRejectDialog()
       } else if (fn === 'detail') {
         this.reviewTitle = '提币详情'
@@ -555,8 +659,14 @@ export default {
       if (this.buttonDisabled && this.nowName === 'preReview') return
       this.$refs['rejectForm'].validate(async valid => {
         if (valid) {
+          const firstOrReviewObj = {
+            preReject: 1,
+            nextReject: 2,
+            finalReject: 3
+          }
           const params = {
-            firstOrReview: this.handleStatus === 'preReject' ? 1 : 2,
+            firstOrReview: firstOrReviewObj[this.handleStatus],
+            // firstOrReview: this.handleStatus === 'preReject' ? 1 : 2,
             auditStatus: 2,
             auditOpinion: this.rejectForm.mark,
             id: this.handleData.id,
@@ -675,9 +785,12 @@ export default {
       this.getList()
     },
     // 设置风控参数
-    windControl() {
+    async windControl() {
+      await this.getWindControl()
       this.windControlShow = true
-      console.log('here')
+      this.$nextTick(() => {
+        // this.$refs['windControlForm'].resetFields()
+      })
     },
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
@@ -805,6 +918,21 @@ export default {
     display: flex;
     justify-content: center;
     padding: 20px 0;
+  }
+  .wind-control-dialog {
+    .el-form-item__label {
+      text-align: left;
+    }
+    .text {
+      margin-left: 20px;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .wind-control-btn {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 </style>
