@@ -376,7 +376,7 @@ const extractCol = [
   },
   {
     label: '上级UID',
-    prop: 'topUid',
+    prop: 'proxyUid',
     width: 100
   },
   {
@@ -464,12 +464,12 @@ const extractCol = [
 
   {
     label: '终审时间',
-    prop: 'ultimatelyTime',
+    prop: 'lastAuditTime',
     width: 200
   },
   {
     label: '终审人',
-    prop: 'ultimatelyUserName'
+    prop: 'lastAuditUserName'
   },
 
   {
@@ -701,7 +701,7 @@ const extractConfig = [
   {
     type: 'onlyNumber',
     label: '上级UID',
-    prop: 'topUid',
+    prop: 'upperUid',
     value: '',
     placeHolder: '请输入'
   }

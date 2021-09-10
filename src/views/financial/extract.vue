@@ -601,14 +601,7 @@ export default {
         this.total = total
         this.pages = pages
         this.current_page = current
-        this.list = records.map(item => {
-          return {
-            ...item,
-            topUid: '待添加字段',
-            ultimatelyTime: '待添加字段',
-            ultimatelyUserName: '待添加字段'
-          }
-        })
+        this.list = records
         this.dataList = records
       }
       this.listLoading = false
