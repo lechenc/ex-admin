@@ -12,12 +12,8 @@
 
     <!-- 添加 编辑 -->
     <el-dialog :title="formName" width="500px" :visible.sync="dialogFormVisible">
-      <el-form
-        ref="chainForm"
-        :model="chainForm"
-        :rules="chainForm.status ? rules : rules1"
-        :validate-on-rule-change="false"
-      >
+      <!-- :rules="chainForm.status ? rules : rules1" -->
+      <el-form ref="chainForm" :model="chainForm" :rules="rules" :validate-on-rule-change="false">
         <el-form-item label="链名称" :label-width="formLabelWidth" prop="chain">
           <el-select v-model="chainForm.chain" placeholder="请选择" @change="chainChange">
             <el-option
@@ -90,40 +86,70 @@
         <el-form-item
           label="每个用户夜间可使用提币次数"
           :label-width="formLabelWidth"
-          prop="nightNumber"
+          prop="userNightWithdrawTimes"
         >
           <el-input
-            v-model="chainForm.nightNumber"
+            v-model="chainForm.userNightWithdrawTimes"
             placeholder="请输入"
             autocomplete="off"
             type="number"
-            @input="checkVal('nightNumber')"
+            @input="checkVal('userNightWithdrawTimes')"
           />
         </el-form-item>
         <el-form-item
           label="每个用户夜间单次可提币限额"
           :label-width="formLabelWidth"
-          prop="nightSingleLimit"
+          prop="userNightWithdrawAmount"
         >
           <el-input
-            v-model="chainForm.nightSingleLimit"
+            v-model="chainForm.userNightWithdrawAmount"
             placeholder="请输入"
             autocomplete="off"
             type="number"
-            @input="checkVal('nightSingleLimit')"
+            @input="checkVal('userNightWithdrawAmount')"
           />
         </el-form-item>
         <el-form-item
           label="每个用户夜间可使用提币总额"
           :label-width="formLabelWidth"
-          prop="nightSum"
+          prop="userNightWithdrawAmountTotal"
         >
           <el-input
-            v-model="chainForm.nightSum"
+            v-model="chainForm.userNightWithdrawAmountTotal"
             placeholder="请输入"
             autocomplete="off"
             type="number"
-            @input="checkVal('nightSum')"
+            @input="checkVal('userNightWithdrawAmountTotal')"
+          />
+        </el-form-item>
+        <el-form-item label="余额不足提醒手机号" :label-width="formLabelWidth" prop="alarmPhone">
+          <el-input
+            v-model="chainForm.alarmPhone"
+            placeholder="请输入"
+            autocomplete="off"
+            type="number"
+            @input="checkVal('alarmPhone')"
+          />
+        </el-form-item>
+        <el-form-item label="余额不足提醒邮箱" :label-width="formLabelWidth" prop="alarmEmail">
+          <el-input
+            v-model="chainForm.alarmEmail"
+            placeholder="请输入"
+            autocomplete="off"
+            type="email"
+          />
+        </el-form-item>
+        <el-form-item
+          label="钱包余额低于该参数值提醒值"
+          :label-width="formLabelWidth"
+          prop="alarmBalance"
+        >
+          <el-input
+            v-model="chainForm.alarmBalance"
+            placeholder="请输入"
+            autocomplete="off"
+            type="number"
+            @input="checkVal('alarmBalance')"
           />
         </el-form-item>
 
@@ -210,155 +236,14 @@ export default {
         googleCode: '',
         dayTime: '', // 白天热钱包启用时间
         nightTime: '', // 夜间热钱包启用时间
-        nightNumber: '', // 每个用户夜间可使用提币次数
-        nightSingleLimit: '', // 每个用户夜间单次可提币限额
-        nightSum: '' // 每个用户夜间可使用提币总额
+        userNightWithdrawTimes: '', // 每个用户夜间可使用提币次数
+        userNightWithdrawAmount: '', // 每个用户夜间单次可提币限额
+        userNightWithdrawAmountTotal: '', // 每个用户夜间可使用提币总额
+        alarmBalance: '', // 钱包余额低于该参数值提醒值
+        alarmPhone: '', // 余额不足提醒手机
+        alarmEmail: '' // 余额不足提醒邮箱
       },
 
-      rules: {
-        chain: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        coin: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        maxAutoWithdraw: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        maxDailyAutoWithdraw: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        googleCode: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        dayTime: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 白天热钱包启用时间
-        nightTime: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 夜间热钱包启用时间
-        nightNumber: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 每个用户夜间可使用提币次数
-        nightSingleLimit: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 每个用户夜间单次可提币限额
-        nightSum: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ]
-      },
-      rules1: {
-        chain: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        coin: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        maxAutoWithdraw: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        maxDailyAutoWithdraw: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        googleCode: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ],
-        dayTime: [
-          {
-            required: false,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 白天热钱包启用时间
-        nightTime: [
-          {
-            required: false,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 夜间热钱包启用时间
-        nightNumber: [
-          {
-            required: false,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 每个用户夜间可使用提币次数
-        nightSingleLimit: [
-          {
-            required: false,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ], // 每个用户夜间单次可提币限额
-        nightSum: [
-          {
-            required: false,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ]
-      },
       formName: '',
       formLabelWidth: '125px',
       labelWidth: '125px',
@@ -385,6 +270,102 @@ export default {
           }
         })
         return arr
+      }
+    },
+    rules() {
+      const flag = this.chainForm.status
+      return {
+        chain: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        coin: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        maxAutoWithdraw: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        maxDailyAutoWithdraw: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        googleCode: [
+          {
+            required: true,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        dayTime: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        nightTime: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        userNightWithdrawTimes: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        userNightWithdrawAmount: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        userNightWithdrawAmountTotal: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        alarmPhone: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        alarmEmail: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ],
+        alarmBalance: [
+          {
+            required: flag,
+            message: '必填',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
@@ -444,16 +425,19 @@ export default {
         this.getChainCoin()
         this.$nextTick(() => {
           this.$refs['chainForm'].resetFields()
-          const { id, coin, chain, maxAutoWithdraw, maxDailyAutoWithdraw, status } = row
-          this.chainForm = {
-            id,
-            coin,
-            chain,
-            maxAutoWithdraw,
-            maxDailyAutoWithdraw,
-            status: !!status,
-            googleCode: ''
-          }
+          const Keys = Object.keys(this.chainForm)
+          Keys.forEach(key => {
+            this.chainForm[key] = row[key]
+          })
+          this.chainForm.status = !!row['status']
+          this.chainForm.googleCode = ''
+          // 拼接时间组件所需数据
+          this.chainForm.dayTime = row['dayEnableTimeStart']
+            ? [row['dayEnableTimeStart'], row['dayEnableTimeEnd']]
+            : ''
+          this.chainForm.nightTime = row['nightEnableTimeStart']
+            ? [row['nightEnableTimeStart'], row['nightEnableTimeEnd']]
+            : ''
         })
       }
       if (fn === 'checkBalance') {
@@ -510,56 +494,42 @@ export default {
       this.getChainCoin()
       this.$nextTick(() => {
         this.$refs['chainForm'].resetFields()
-        this.chainForm = {
-          id: '',
-          coin: '',
-          chain: '',
-          maxAutoWithdraw: '',
-          maxDailyAutoWithdraw: '',
-          status: false,
-          googleCode: ''
-        }
+        const chainKeys = Object.keys(this.chainForm)
+        chainKeys.forEach(key => {
+          this.chainForm[key] = ''
+        })
+        this.chainForm['status'] = false
       })
     },
     // 提交
     confirmOp() {
       this.$refs['chainForm'].validate(async valid => {
         if (valid) {
-          const {
-            id,
-            coin,
-            chain,
-            maxAutoWithdraw,
-            maxDailyAutoWithdraw,
-            status,
-            googleCode,
-            dayTime,
-            nightTime,
-            nightNumber,
-            nightSingleLimit,
-            nightSum
-          } = this.chainForm
+          const { id, status, dayTime, nightTime } = this.chainForm
           if (status) {
-            const dayEnd = dayTime[1].split(':')[0]
-            const nightSt = nightTime[0].split(':')[0]
-            if (dayEnd > nightSt) {
+            const dayEndH = dayTime[1].split(':')[0]
+            const dayEndM = dayTime[1].split(':')[1]
+            const nightStH = nightTime[0].split(':')[0]
+            const nightStM = nightTime[0].split(':')[1]
+            if (dayEndH > nightStH || (dayEndH === nightStH && dayEndM > nightStM)) {
               this.$message.error('白天热钱包启用时间和夜间启用时间不得重复交叉')
               return
             }
           }
+          const dayEnableTimeStart = dayTime ? dayTime[0] : ''
+          const dayEnableTimeEnd = dayTime ? dayTime[1] : ''
+          const nightEnableTimeStart = nightTime ? nightTime[0] : ''
+          const nightEnableTimeEnd = nightTime ? nightTime[1] : ''
           const params = {
-            coin,
-            chain,
-            maxAutoWithdraw,
-            maxDailyAutoWithdraw,
+            ...this.chainForm,
             status: status ? 1 : 0,
-            googleCode,
-            dayTime,
-            nightTime,
-            nightNumber,
-            nightSingleLimit,
-            nightSum
+            dayEnableTimeStart,
+            dayEnableTimeEnd,
+            nightEnableTimeStart,
+            nightEnableTimeEnd
           }
+          delete params['dayTime']
+          delete params['nightTime']
 
           this.btnLoading = true
           // 新增 编辑
