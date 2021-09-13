@@ -1,7 +1,7 @@
 <template>
   <div class="user-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')"  @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -42,6 +42,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
+      btnArr:[]
       
     };
   },
@@ -150,7 +151,8 @@ export default {
     },
   },
   mounted() {
-    // let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
+    let authObj = this.$util.getAuthority('UserlistMimic', userlistMimicCol, []);
+    this.btnArr = authObj.btnArr || []
     this.configs = userlistMimicCol;
 
     // 初始化今天，和昨天的时间
