@@ -15,7 +15,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')" 
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -237,7 +237,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('WithdrawCustom', withdrawCustomCol, withdrawCustomColNoBtn);
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || [] || [];
+    this.btnArr = authObj.btnArr || [];
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');

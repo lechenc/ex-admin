@@ -15,7 +15,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')" 
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -231,6 +231,7 @@ export default {
         b: [{ required: true, message: '必填' }],
         c: [{ required: true, message: '必填' }],
       },
+      btnArr:[]
     };
   },
   methods: {
@@ -376,6 +377,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('MerchantList', merchantListCol, merchantListColNoBtn);
+    this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
 
     this.configs = rechargeCol;
