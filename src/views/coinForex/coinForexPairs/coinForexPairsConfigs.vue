@@ -375,7 +375,7 @@ export default {
       return extension && isLt2M
     },
     getRangeVal(val) {
-      console.log('val',val)
+      console.log('val', val)
       // val.valid
       // val.form
       //console.log('asd');
@@ -507,6 +507,11 @@ export default {
 
       if (fn === 'trHeadblockSwitch' || fn === 'trTradeSwitch') {
         const { headblock, trade, id, symbol } = row
+        if (fn === 'trHeadblockSwitch' && !!trade && !headblock) {
+          this.$message.error('下架前请先关闭交易!')
+          this.getList()
+          return
+        }
         let params = {
           headblock: headblock ? 'Y' : 'N',
           trade: trade ? 'Y' : 'N',

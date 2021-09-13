@@ -32,6 +32,26 @@
               </el-select>
             </div>
 
+            <!-- 选择框 带搜索功能 -->
+            <div v-if="config.type === 'select_search'">
+              <div>{{ config.label }}</div>
+              <el-select
+                v-model="config.value"
+                class="text-input"
+                filterable
+                :clearable="!config.isClear"
+                :placeholder="config.placeHolder"
+                :size="sizeDiy"
+              >
+                <el-option
+                  v-for="(item, i) in config.list"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+
             <!-- 选择框 label加粗 -->
             <div v-if="config.type === 'select_labelBold'">
               <div class="label_bold">{{ config.label }}</div>

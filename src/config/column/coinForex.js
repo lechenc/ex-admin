@@ -80,7 +80,7 @@ const coinForexDealListConfig = [
     value: '',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易产品',
     prop: 'foreignId',
     value: '',
@@ -170,7 +170,7 @@ const coinForexEntrustListConfig = [
     value: '',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易产品',
     prop: 'foreignId',
     value: '',
@@ -304,7 +304,7 @@ const coinForexNotCloseListConfig = [
     value: '',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易产品',
     prop: 'foreignId',
     value: '',
@@ -413,7 +413,7 @@ const coinForexRobotListColNoBtn = [
 
 const coinForexRobotListConfig = [
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易产品',
     prop: 'foreignId',
     value: '',
@@ -736,7 +736,7 @@ const coinForexAccountCol = [
   },
 
   {
-    label: '变动前账户余额',
+    label: '变动后账户余额',
     prop: 'afterPrice',
   },
 
@@ -763,7 +763,7 @@ const coinForexAccountConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易产品',
     prop: 'forexId',
     value: '',
@@ -797,8 +797,8 @@ const coinForexNetWorthCol = [
   },
 
   {
-    label: '变动金额',
-    prop: 'field',
+    label: '净值',
+    prop: 'total',
   },
 
   {
@@ -942,7 +942,7 @@ const coinForexPairsNightFeeColNoBtn = [
 
 const coinForexPairsNightFeeConfig = [
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易产品',
     prop: 'forexId',
     value: '',
