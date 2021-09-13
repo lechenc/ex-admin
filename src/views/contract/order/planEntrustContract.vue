@@ -1,7 +1,7 @@
 <template>
   <div class="planEntrustContract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -44,6 +44,7 @@ export default {
       excelLoading: false,
 
       dataList: [],
+      btnArr:[]
     };
   },
   methods: {
@@ -182,6 +183,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('PlanEntrustContract', planEntrustContractCol, []);
+    this.btnArr = authObj.btnArr || []
     this.configs = planEntrustContractCol;
     this.searchCofig = this.$util.clone(planEntrustContractConfig);
     // 初始化今天，和前天的时间

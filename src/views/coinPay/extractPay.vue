@@ -506,7 +506,7 @@ export default {
     this.total = 0; // 总条数
     this.pages = 0; // 总页数
 
-    let authObj = this.$util.getAuthority('Extract', extractCol, extractColNoBtn);
+    let authObj = this.$util.getAuthority('ExtractPay', extractCol, extractColNoBtn);
     this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
     // 初始化今天，之前的时间

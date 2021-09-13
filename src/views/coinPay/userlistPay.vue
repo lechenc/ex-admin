@@ -150,7 +150,7 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
+    let authObj = this.$util.getAuthority('UserlistPay', userCol, userColNoBtn);
     this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
 

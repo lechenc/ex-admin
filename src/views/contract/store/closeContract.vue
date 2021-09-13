@@ -13,7 +13,7 @@
         :calLoadingExcel="calLoadingExcel"
         @do-calTotal-excel="calTotalExcel"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
     </div>
