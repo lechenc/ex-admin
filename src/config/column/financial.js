@@ -471,6 +471,10 @@ const extractCol = [
     label: '终审人',
     prop: 'lastAuditUserName'
   },
+  {
+    label: '终审备注',
+    prop: 'lastRemark'
+  },
 
   {
     label: '操作',
@@ -716,8 +720,9 @@ const extractForeignCol = [
   },
   {
     label: '风控用户',
-    prop: 'isWindControl',
-    width: 200
+    prop: 'riskControlUserFlag',
+    width: 200,
+    filters: [{ text: '是', val: true }, { text: '否', val: false }]
   },
   {
     label: 'UID',
@@ -1063,9 +1068,13 @@ const extractForeignConfig = [
   {
     type: 'select',
     label: '风控用户',
-    prop: 'windControlUser',
+    prop: 'riskControlUserFlag',
     value: '',
-    list: [{ label: '全部', value: 0 }, { label: '是', value: 1 }, { label: '否', value: 2 }]
+    list: [
+      { label: '全部', value: '' },
+      { label: '是', value: true },
+      { label: '否', value: false }
+    ]
   }
 ]
 
@@ -2532,6 +2541,47 @@ const hotWalletExtractCol = [
     disabled: true
   },
   {
+    label: '白天热钱包启用时间开始',
+    prop: 'dayEnableTimeStart'
+  },
+  {
+    label: '白天热钱包启用时间结束',
+    prop: 'dayEnableTimeEnd'
+  },
+  {
+    label: '夜间热钱包启用时间开始',
+    prop: 'nightEnableTimeStart'
+  },
+  {
+    label: '夜间热钱包启用时间结束',
+    prop: 'nightEnableTimeEnd'
+  },
+  {
+    label: '每个用户夜间可使用提币次数',
+    prop: 'userNightWithdrawTimes'
+  },
+  {
+    label: '每个用户夜间单次可提币限额',
+    prop: 'userNightWithdrawAmount'
+  },
+  {
+    label: '每个用户夜间可使用提币总额',
+    prop: 'userNightWithdrawAmountTotal'
+  },
+  {
+    label: '余额不足提醒手机号',
+    prop: 'alarmPhone'
+  },
+  {
+    label: '余额不足提醒邮箱',
+    prop: 'alarmEmail'
+  },
+  {
+    label: '钱包余额低于该参数值提醒值',
+    prop: 'alarmBalance'
+  },
+
+  {
     label: '创建时间',
     prop: 'createTime',
     type: 'time'
@@ -2603,12 +2653,8 @@ const hotWalletExtractSetCol = [
     prop: 'amount'
   },
   {
-    label: '余额提醒',
-    prop: 'amountTip'
-  },
-  {
     label: '累计充入该地址数量',
-    prop: 'totalAddress'
+    prop: 'totalDeposit'
   },
   {
     label: '累计热提币',

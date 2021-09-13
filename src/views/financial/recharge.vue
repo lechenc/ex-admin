@@ -208,9 +208,7 @@ export default {
         this.total = total
         this.pages = pages
         this.current_page = current
-        this.list = records.map(item => {
-          return { ...item, parentUid: '待添加字段' }
-        })
+        this.list = records
         this.dataList = records
       }
       this.listLoading = false

@@ -25,7 +25,13 @@
       />
     </div>
     <div>
-      <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+      <Btable
+        :cell-class-name="cellClassName"
+        :list-loading="listLoading"
+        :data="list"
+        :configs="configs"
+        @do-handle="doHandle"
+      />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages" />
@@ -541,12 +547,17 @@ export default {
     this.getWindControl()
   },
   methods: {
+    cellClassName({ row, column, rowIndex, columnIndex }) {
+      return row.riskControlUserFlag === '是' && column.label === '风控用户'
+        ? 'is-risk-control'
+        : ''
+    },
     // 获取风控参数
     async getWindControl() {
       const res = await $api.getWindControl()
       if (res.data.code === 1) {
         const data = res.data.data
-        this.windControlForm = { ...data, monitoringRange: [data.monitoringRange] }
+        this.windControlForm = { ...data, monitoringRange: [data.monitoringRange || 1] }
       } else {
         this.$message.error('风控参数获取失败')
       }
@@ -750,6 +761,7 @@ export default {
       this.qrcodeShow = true
     },
     doSearch(data) {
+      console.log('>>>>>>>>>')
       this.current_page = 1
       this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
@@ -840,6 +852,7 @@ export default {
         appId: 0
       }
       this.requiredParams(query_data)
+      console.log(this.search_params_obj, 'search_params_obj')
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
       const res = await $api.getWithdrawList(query_data)
@@ -849,7 +862,7 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records.map(item => {
-          return { ...item, isWindControl: '待添加字段' }
+          return { ...item, riskControlUserFlag: item.riskControlUserFlag ? '是' : '否' }
         })
         this.dataList = records
       }

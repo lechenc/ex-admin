@@ -145,12 +145,6 @@ export default {
       if (res) {
         const tmp = res.data.data
         tmp.forEach(v => {
-          v.contractAmount = '待添加字段'
-          v.allAmount = '待添加字段'
-          v.comparison = '待添加字段'
-          v.entrustGuarantee = '待添加字段'
-          v.LongPositionsGuarantee = '待添加字段'
-          v.emptyPositionsGuarantee = '待添加字段'
           v.sumAmount = this.formatFloat(v.sumAmount)
           v.amount = this.formatFloat(v.amount)
           v.frozenAmount = this.formatFloat(v.frozenAmount)
@@ -176,12 +170,6 @@ export default {
       if (res) {
         const { records, total, current, pages } = res.data.data
         records.forEach(v => {
-          v.contractAmount = '待添加字段'
-          v.allAmount = '待添加字段'
-          v.comparison = '待添加字段'
-          v.entrustGuarantee = '待添加字段'
-          v.LongPositionsGuarantee = '待添加字段'
-          v.emptyPositionsGuarantee = '待添加字段'
           v.beforeAmount = this.formatFloat(v.beforeAmount)
           v.amount = this.formatFloat(v.amount)
           v.afterAmount = this.formatFloat(v.afterAmount)

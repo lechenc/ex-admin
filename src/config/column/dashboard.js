@@ -132,32 +132,32 @@ const assetsCol1 = [
   {
     label: '法币冻结资产',
     prop: 'otcFrozenAmount'
-  },
-  {
-    label: '总资产',
-    prop: 'allAmount'
-  },
-  {
-    label: '币对',
-    prop: 'comparison'
-  },
-  {
-    label: '合约总资产',
-    prop: 'contractAmount'
-  },
-  {
-    label: '委托占用保证金金额（USDT）',
-    prop: 'entrustGuarantee'
-    // width: 130
-  },
-  {
-    label: '多仓占用保证金金额（USDT）',
-    prop: 'LongPositionsGuarantee'
-  },
-  {
-    label: '空仓占用保证金金额（USDT）',
-    prop: 'emptyPositionsGuarantee'
   }
+  // {
+  //   label: '总资产',
+  //   prop: 'allAmount'
+  // },
+  // {
+  //   label: '币对',
+  //   prop: 'comparison'
+  // },
+  // {
+  //   label: '合约总资产',
+  //   prop: 'contractAmount'
+  // },
+  // {
+  //   label: '委托占用保证金金额（USDT）',
+  //   prop: 'entrustGuarantee'
+  //   // width: 130
+  // },
+  // {
+  //   label: '多仓占用保证金金额（USDT）',
+  //   prop: 'LongPositionsGuarantee'
+  // },
+  // {
+  //   label: '空仓占用保证金金额（USDT）',
+  //   prop: 'emptyPositionsGuarantee'
+  // }
 ]
 
 const assetsCol2 = [
@@ -180,31 +180,31 @@ const assetsCol2 = [
   {
     label: '创建日期',
     prop: 'createTime'
-  },
-  {
-    label: '总资产',
-    prop: 'allAmount'
-  },
-  {
-    label: '币对',
-    prop: 'comparison'
-  },
-  {
-    label: '合约总资产',
-    prop: 'contractAmount'
-  },
-  {
-    label: '委托占用保证金金额（USDT）',
-    prop: 'entrustGuarantee'
-  },
-  {
-    label: '多仓占用保证金金额（USDT）',
-    prop: 'LongPositionsGuarantee'
-  },
-  {
-    label: '空仓占用保证金金额（USDT）',
-    prop: 'emptyPositionsGuarantee'
   }
+  // {
+  //   label: '总资产',
+  //   prop: 'allAmount'
+  // },
+  // {
+  //   label: '币对',
+  //   prop: 'comparison'
+  // },
+  // {
+  //   label: '合约总资产',
+  //   prop: 'contractAmount'
+  // },
+  // {
+  //   label: '委托占用保证金金额（USDT）',
+  //   prop: 'entrustGuarantee'
+  // },
+  // {
+  //   label: '多仓占用保证金金额（USDT）',
+  //   prop: 'LongPositionsGuarantee'
+  // },
+  // {
+  //   label: '空仓占用保证金金额（USDT）',
+  //   prop: 'emptyPositionsGuarantee'
+  // }
 ]
 
 const assetsColNoBtn = []

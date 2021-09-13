@@ -151,6 +151,23 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row
+          v-if="
+            (parseInt(handleData.tradeStatus) > 13 || parseInt(handleData.tradeStatus) == 1) &&
+              parseInt(handleData.tradeStatus) != 4
+          "
+        >
+          <el-col :span="12">
+            <el-form-item label="终审时间" :label-width="formLabelWidth">
+              {{ handleData.lastAuditTime }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="终审人" :label-width="formLabelWidth">
+              {{ handleData.lastAuditUserName }}
+            </el-form-item>
+          </el-col>
+        </el-row>
 
         <el-row />
         <!--	<el-form-item v-if="handleStatus === 'preReview'" label="备注" prop="mark" :label-width="formLabelWidth">
@@ -187,6 +204,16 @@
           :label-width="formLabelWidth"
         >
           {{ handleData.reviewRemark }}
+        </el-form-item>
+        <el-form-item
+          v-if="
+            (handleData.tradeStatus > 13 || parseInt(handleData.tradeStatus) == 1) &&
+              parseInt(handleData.tradeStatus) != 4
+          "
+          label="终审备注"
+          :label-width="formLabelWidth"
+        >
+          {{ handleData.lastRemark }}
         </el-form-item>
       </el-form>
       <div slot="footer" class="inner-footer">

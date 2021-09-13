@@ -393,9 +393,7 @@ export default {
                 const item = responent.data.data
                 this.$set(this.setlist, idx, {
                   ...this.setlist[idx],
-                  ...item,
-                  amountTip: '待添加字段',
-                  totalAddress: '待添加字段'
+                  ...item
                 })
               })
             })
