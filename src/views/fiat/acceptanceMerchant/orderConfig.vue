@@ -1,7 +1,7 @@
 <template>
   <div class="orderConfig-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -412,6 +412,7 @@ export default {
         minLimit: '',
         maxLimit: '',
       },
+      btnArr: []
       
     };
   },
@@ -844,7 +845,7 @@ export default {
     },
 
     exportExcel(val) {
-      console.log('val',val)
+      
       this.search_params_obj = val.query;
       const num = val.num;
       utils.exportData.apply(this, [num]);
@@ -1327,6 +1328,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('OrderConfig', orderConfigCol, orderConfigColNoBtn);
+    this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
 
     this.searchCofig = this.$util.clone(orderConfigConfig);

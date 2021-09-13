@@ -377,7 +377,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('MerchantList', merchantListCol, merchantListColNoBtn);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = authObj.val;
 
     this.configs = rechargeCol;

@@ -83,7 +83,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('RiskList', [], []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
 
     this.getList();
   },

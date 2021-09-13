@@ -10,7 +10,13 @@
 <template>
   <div class="turnover-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch
+        :configs="searchCofig"
+        @do-search="doSearch"
+        @do-reset="doReset"
+        :exportExcel="btnArr.includes('excel')"
+        @do-exportExcel="exportExcel"
+      />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -32,12 +38,12 @@
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { turnoverCol, turnoverConfig } from '@/config/column/financial';
-import $api from '@/api/api';
-import utils from '@/utils/util';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { turnoverCol, turnoverConfig } from '@/config/column/financial'
+import $api from '@/api/api'
+import utils from '@/utils/util'
 
 export default {
   components: {
@@ -57,78 +63,81 @@ export default {
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
-    };
+      btnArr: []
+    }
   },
   methods: {
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
-        v['value'] = '';
-      });
-      this.getList();
+      this.search_params_obj = {}
+      this.searchCofig.forEach((v) => {
+        v['value'] = ''
+      })
+      this.getList()
     },
     exportExcel(val) {
-      this.search_params_obj = val.query;
-      const num = val.num;
-      utils.exportData.apply(this, [num]);
+      this.search_params_obj = val.query
+      const num = val.num
+      utils.exportData.apply(this, [num])
     },
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     // getlist
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       // const end = +new Date();
       // let start = +new Date();
       // start = start - 3600 * 1000 * 24 * 2;
       const query_data = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
         // userType: 1,
-      };
-      Object.assign(query_data, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getDepositList(query_data);
-      if (res) {
-        const { records, total, current, pages } = res.data.data;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
-        this.list = records;
-        this.dataList = records;
       }
-      this.listLoading = false;
-    },
+      Object.assign(query_data, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getDepositList(query_data)
+      if (res) {
+        const { records, total, current, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
+        this.list = records
+        this.dataList = records
+      }
+      this.listLoading = false
+    }
   },
   mounted() {
-    this.configs = turnoverCol;
-    this.searchCofig = this.$util.clone(turnoverConfig);
+    let authObj = this.$util.getAuthority('Turnover', turnoverCol, [])
+    this.btnArr = authObj.btnArr || []
+    this.configs = turnoverCol
+    this.searchCofig = this.$util.clone(turnoverConfig)
     this.$store.dispatch('common/getCoinList').then(() => {
-      this.searchCofig[4]['list'] = this.$store.state.common.coinlist;
-    });
+      this.searchCofig[4]['list'] = this.$store.state.common.coinlist
+    })
     // this.searchCofig[0].value = [
     //   this.$util.dateFormat(new Date() - 3600 * 1000 * 24 * 2, "YYYY-MM-DD"),
     //   this.$util.dateFormat(new Date(), "YYYY-MM-DD"),
     // ];
-    this.getList();
-  },
-};
+    this.getList()
+  }
+}
 </script>
 <style scope lang="scss">
 .turnover-container {

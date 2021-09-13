@@ -14,7 +14,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -137,6 +137,7 @@ export default {
       formName: '添加账号',
       formLabelWidth: '140px',
       dataForm: [],
+      btnArr:[]
     };
   },
   filters: {
@@ -275,6 +276,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('UnfreezeManage', unfreezeManageCol, unfreezeManageColNoBtn);
+    this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
     // 初始化今天，之前的时间

@@ -152,7 +152,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('UserlistMimic', userlistMimicCol, []);
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = userlistMimicCol;
 
     // 初始化今天，和昨天的时间

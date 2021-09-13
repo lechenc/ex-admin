@@ -183,7 +183,7 @@ export default {
   },
   mounted() {
      let authObj = this.$util.getAuthority('DealContract', dealContractCol, [])
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = dealContractCol;
     this.searchCofig = this.$util.clone(dealContractConfig);
     // 初始化今天，和前天的时间

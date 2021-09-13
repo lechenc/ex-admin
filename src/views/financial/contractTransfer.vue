@@ -6,7 +6,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -30,19 +30,19 @@
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { contractTransferCol, contractTransferConfig } from '@/config/column/financial';
-import $api from '@/api/api';
-import utils from '@/utils/util';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { contractTransferCol, contractTransferConfig } from '@/config/column/financial'
+import $api from '@/api/api'
+import utils from '@/utils/util'
 
 export default {
   name: 'ContractTransfer',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
   data() {
     return {
@@ -59,106 +59,112 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      
+      btnArr: []
+
       // totalExFee: "", // 手续费总计
       // totalArrivalAccount: "", // 到账总计
-    };
+    }
   },
   methods: {
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
-        v['value'] = '';
-      });
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-      this.getList();
+      this.search_params_obj = {}
+      this.searchCofig.forEach((v) => {
+        v['value'] = ''
+      })
+      this.searchCofig[0].value = [
+        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      ]
+      this.getList()
     },
     exportExcel(val) {
-      this.search_params_obj = val.query;
-      const num = val.num;
-      utils.exportData.apply(this, [num]);
+      this.search_params_obj = val.query
+      const num = val.num
+      utils.exportData.apply(this, [num])
     },
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     // getlist
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const query_data = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
-      };
-      this.requiredParams(query_data);
-      Object.assign(query_data, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getContractTransferPage(query_data);
+        pageSize: this.pageSize
+      }
+      this.requiredParams(query_data)
+      Object.assign(query_data, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getContractTransferPage(query_data)
       if (res) {
-        const { records, total, current, pages } = res.data.data;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
+        const { records, total, current, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
         // this.totalExFee = totalExFee;
         // this.totalArrivalAccount = totalArrivalAccount;
-        this.list = records;
-        this.dataList = records;
+        this.list = records
+        this.dataList = records
       }
-      this.listLoading = false;
+      this.listLoading = false
     },
     formatTime(val) {
-      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
     async queryData(params) {
-      this.excelLoading = true;
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getContractTransferPage(params);
-      this.excelLoading = false;
-      return res;
+      this.excelLoading = true
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.getContractTransferPage(params)
+      this.excelLoading = false
+      return res
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+        params.endTime = nowV.replace(/\//gi, '-')
+        params.startTime = befV.replace(/\//gi, '-')
         // 组件时间初始必须format格式
-        this.searchCofig[0].value = [befV, nowV];
+        this.searchCofig[0].value = [befV, nowV]
       }
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
-    },
+    }
   },
   mounted() {
-    this.configs = contractTransferCol;
-    this.searchCofig = this.$util.clone(contractTransferConfig);
+    let authObj = this.$util.getAuthority('ContractTransfer', contractTransferCol, [])
+    this.btnArr = authObj.btnArr || []
+    this.configs = contractTransferCol
+    this.searchCofig = this.$util.clone(contractTransferConfig)
     this.$store.dispatch('common/getSymbolListContract').then(() => {
-      this.searchCofig[3]['list'] = this.$store.state.common.symbollistContract;
-    });
+      this.searchCofig[3]['list'] = this.$store.state.common.symbollistContract
+    })
     // 初始化今天，之前的时间
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
 
-    this.getList();
-  },
-};
+    this.getList()
+  }
+}
 </script>
 <style scope lang="scss">
 .contractTransfer-container {

@@ -451,7 +451,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AccountMimicList', accountMimicListCol, []);
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = accountMimicListCol;
     this.searchConfig = this.$util.clone(accountMimicListConfig);
     this.toDay = this.$util.diyTime('toDay');

@@ -10,7 +10,7 @@
 <template>
   <div class="recharge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="btnArr.includes('excel')"  @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -145,6 +145,7 @@ export default {
       // 买卖方表格数据
       sellList: [],
       buyList: [],
+      btnArr:[]
     };
   },
   methods: {
@@ -278,6 +279,8 @@ export default {
     // } else {
     //   this.configs = cashOutCol;
     // }
+    let authObj = this.$util.getAuthority('CashOut', cashOutCol, []);
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = cashOutCol;
     this.searchCofig = this.$util.clone(cashOutConfig);
     // this.getList();

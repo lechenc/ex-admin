@@ -2,7 +2,7 @@
 <template>
   <div class="sprecon-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="headBtnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div class="sprecon-button">
       <el-button :disabled="!isTableSelect" v-if="~headBtnArr.indexOf('passBatch') && checkBtnIsShow" type="primary" size="medium" @click="passBatch">批量审核</el-button>

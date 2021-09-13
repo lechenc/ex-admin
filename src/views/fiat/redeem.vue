@@ -10,7 +10,7 @@
 <template>
   <div class="recharge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -57,6 +57,7 @@ export default {
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
+      btnArr:[]
     };
   },
   methods: {
@@ -171,6 +172,8 @@ export default {
     // } else {
     //   this.configs = redeemCol;
     // }
+    let authObj = this.$util.getAuthority('Redeem', redeemCol, []);
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = redeemCol;
     this.searchCofig = this.$util.clone(redeemConfig);
     this.getList();

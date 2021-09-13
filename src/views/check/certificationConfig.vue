@@ -101,7 +101,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('CertificationConfig', [], []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
     this.getDetail();
   },
 };

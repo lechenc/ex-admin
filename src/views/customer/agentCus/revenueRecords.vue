@@ -166,7 +166,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('RevenueRecords', revenueRecordsCol, []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = revenueRecordsCol;
     this.searchCofig = this.$util.clone(revenueRecordsConfig);
 

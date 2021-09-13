@@ -6,7 +6,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -59,6 +59,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
+      btnArr:[]
       
       // totalExFee: "", // 手续费总计
       // totalArrivalAccount: "", // 到账总计
@@ -148,6 +149,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('Transfer', transferCol, []);
+    this.btnArr = authObj.btnArr || []
     this.configs = transferCol;
     this.searchCofig = this.$util.clone(transferConfig);
     this.$store.dispatch('common/getCoinList').then(() => {

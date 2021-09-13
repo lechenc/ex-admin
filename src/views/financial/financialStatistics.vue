@@ -17,7 +17,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
         :calLoading="calLoading"
         :calTotal="true"
@@ -25,15 +25,36 @@
       />
     </div>
     <div>
-      <Btable :needColorFont="true" @do-handle="doHandle" :listLoading="listLoading" :data="list" :configs="configs" />
+      <Btable
+        :needColorFont="true"
+        @do-handle="doHandle"
+        :listLoading="listLoading"
+        :data="list"
+        :configs="configs"
+      />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @size-change="pageSizeChange"
+        @current-change="goPage"
+        layout="total,sizes, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-sizes="[10, 50, 100, 200]"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
 
     <!-- 详情 -->
-    <el-dialog class="agentRebate-dialog" title="详情" width="600px" :visible.sync="dialogDetailVisible">
+    <el-dialog
+      class="agentRebate-dialog"
+      title="详情"
+      width="600px"
+      :visible.sync="dialogDetailVisible"
+    >
       <el-row :span="24">
         <el-col :span="6">时间:</el-col>
         <el-col :span="8">
@@ -115,19 +136,19 @@
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { financialStatisticsCol, financialStatisticsConfig } from '@/config/column/financial';
-import $api from '@/api/api';
-import utils from '@/utils/util';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { financialStatisticsCol, financialStatisticsConfig } from '@/config/column/financial'
+import $api from '@/api/api'
+import utils from '@/utils/util'
 
 export default {
   name: 'FinancialStatistics',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
   data() {
     return {
@@ -149,202 +170,214 @@ export default {
       dateRankDisabled: false,
       dialogDetailVisible: false,
       curRow: {},
-    };
+      btnArr: []
+    }
   },
   methods: {
     // 根据查询条件进行合计弹窗展示
     async calTotal(data) {
-      this.search_params_obj = data;
+      this.search_params_obj = data
 
       if (!this.search_params_obj.coinName) {
-        this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 });
-        return;
+        this.$message({ type: 'error', message: '币种必须选择!', duration: 2000 })
+        return
       }
       if (!this.search_params_obj.chainName) {
-        this.$message({ type: 'error', message: '链名称必须选择!', duration: 2000 });
-        return;
+        this.$message({ type: 'error', message: '链名称必须选择!', duration: 2000 })
+        return
       }
       if (this.search_params_obj.searchMonth) {
-        this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00';
+        this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00'
       }
       if (!this.search_params_obj.searchMonth && !this.search_params_obj.startTime) {
-        this.$message({ type: 'error', message: '请选择时间!', duration: 2000 });
-        return;
+        this.$message({ type: 'error', message: '请选择时间!', duration: 2000 })
+        return
       }
-      this.curRow = {};
-      this.calLoading = true;
-      const params = {};
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      this.dialogDetailVisible = true;
-      const res = await $api.apiGetFinancialStatisticsSum(params);
+      this.curRow = {}
+      this.calLoading = true
+      const params = {}
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      this.dialogDetailVisible = true
+      const res = await $api.apiGetFinancialStatisticsSum(params)
       if (res) {
-        this.curRow = res.data.data;
+        this.curRow = res.data.data
       }
-      this.calLoading = false;
+      this.calLoading = false
     },
     async doHandle(data) {
-      const { fn, row } = data;
+      const { fn, row } = data
       // 设置上架开关
       if (fn === 'message') {
         this.$confirm('是否通知钱包重新归集?', '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning',
+          type: 'warning'
         })
           .then(async () => {
             const res = await $api.apiRechargeMessage({
-              txid: row.txId,
-            });
+              txid: row.txId
+            })
             if (res) {
-              this.$message({ type: 'success', message: '通知成功，请等待5-10分钟 归集程序执行，不要连续点击' });
-              this.getList();
+              this.$message({
+                type: 'success',
+                message: '通知成功，请等待5-10分钟 归集程序执行，不要连续点击'
+              })
+              this.getList()
             }
           })
-          .catch(() => {});
+          .catch(() => {})
       }
     },
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       // if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
       //   this.search_params_obj.flag = 1;
       // }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
+      this.search_params_obj = {}
       this.searchCofig.forEach((v) => {
-        v['value'] = '';
-      });
-      this.searchCofig[1].value = 1;
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+        v['value'] = ''
+      })
+      this.searchCofig[1].value = 1
+      this.searchCofig[0].value = [
+        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      ]
 
-      this.getList();
+      this.getList()
     },
     exportExcel(val) {
-      this.search_params_obj = val.query;
-      const num = val.num;
-      utils.exportData.apply(this, [num]);
+      this.search_params_obj = val.query
+      const num = val.num
+      utils.exportData.apply(this, [num])
     },
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
 
     // getlist
     async getList() {
-      if (this.listLoading) return;
-     
+      if (this.listLoading) return
+
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        searchType: this.searchCofig[1]['value'],
-      };
-      this.requiredParams(query_data);
+        searchType: this.searchCofig[1]['value']
+      }
+      this.requiredParams(query_data)
       if (this.search_params_obj.searchMonth) {
-        this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00';
+        this.search_params_obj.searchMonth = this.search_params_obj.searchMonth + '-01 00:00:00'
       }
-      Object.assign(query_data, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getFinancialStatisticsList(query_data);
+      Object.assign(query_data, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getFinancialStatisticsList(query_data)
       if (res) {
-        const { records, total, current, pages } = res.data.data;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
-        this.list = records;
-        this.dataList = records;
+        const { records, total, current, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
+        this.list = records
+        this.dataList = records
       }
-      this.listLoading = false;
+      this.listLoading = false
     },
     async queryData(params) {
-      this.excelLoading = true;
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getFinancialStatisticsList(params);
-      this.excelLoading = false;
+      this.excelLoading = true
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.getFinancialStatisticsList(params)
+      this.excelLoading = false
       if (res) {
-        return res;
+        return res
       }
     },
     formatTime(val) {
-      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+        params.endTime = nowV.replace(/\//gi, '-')
+        params.startTime = befV.replace(/\//gi, '-')
         // 组件时间初始必须format格式
-        this.searchCofig[0].value = [befV, nowV];
+        this.searchCofig[0].value = [befV, nowV]
       }
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
     },
     async getRechargeChainName() {
-      const res = await $api.apiGetRechargeChainName({});
+      const res = await $api.apiGetRechargeChainName({})
       if (res) {
-        let arr = res.data.data;
+        let arr = res.data.data
         this.searchCofig[3]['list'] = arr.map((v) => {
           return {
             label: v.chainName,
-            value: v.chainName,
-          };
-        });
+            value: v.chainName
+          }
+        })
       }
-    },
+    }
   },
   mounted() {
-    this.configs = financialStatisticsCol;
+    let authObj = this.$util.getAuthority('FinancialStatistics', financialStatisticsCol, [])
+    this.btnArr = authObj.btnArr || []
+    this.configs = financialStatisticsCol
     // 初始化今天，之前的时间
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
 
-    this.searchCofig = this.$util.clone(financialStatisticsConfig);
+    this.searchCofig = this.$util.clone(financialStatisticsConfig)
     this.$store.dispatch('common/getCoinList').then(() => {
       this.searchCofig[4]['list'] = this.$store.state.common.coinlist.map((v) => {
         return {
           label: v.label,
-          value: v.label,
-        };
-      });
-    });
-    this.dateMonthDisabled = true;
-    this.getList();
-    this.getRechargeChainName();
+          value: v.label
+        }
+      })
+    })
+    this.dateMonthDisabled = true
+    this.getList()
+    this.getRechargeChainName()
 
     this.$watch(
       function () {
-        return this.searchCofig[1].value;
+        return this.searchCofig[1].value
       },
       // 合约出入金,type=1为合约出金,type=2为合约入金
       function (newVal, oldValue) {
         if (newVal == 1) {
-          this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-          this.searchCofig[2].value = '';
-          this.dateMonthDisabled = true;
-          this.dateRankDisabled = false;
+          this.searchCofig[0].value = [
+            this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+            this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+          ]
+          this.searchCofig[2].value = ''
+          this.dateMonthDisabled = true
+          this.dateRankDisabled = false
         } else if (newVal == 2) {
-          this.searchCofig[0].value = '';
-          this.searchCofig[2].value = '';
-          this.dateRankDisabled = true;
-          this.dateMonthDisabled = false;
+          this.searchCofig[0].value = ''
+          this.searchCofig[2].value = ''
+          this.dateRankDisabled = true
+          this.dateMonthDisabled = false
         }
-      },
-    );
-  },
-};
+      }
+    )
+  }
+}
 </script>
 <style scope lang="scss">
 .financialStatistics-container {

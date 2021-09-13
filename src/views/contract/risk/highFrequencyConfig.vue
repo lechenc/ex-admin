@@ -247,7 +247,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('HighFrequencyConfig', [], []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
 
     this.getList();
   },

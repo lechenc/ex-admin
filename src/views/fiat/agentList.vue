@@ -575,7 +575,8 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AgentList', [], []);
-    this.btnArr = authObj.btnArr || [] || [];
+    
+    this.btnArr = authObj.btnArr || [] || [] || [];
 
     this.searchCofig = this.$util.clone(agentListConfig);
     this.getList();

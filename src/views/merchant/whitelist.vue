@@ -10,7 +10,7 @@
 <template>
   <div class="recharge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div class="container-btn" v-if="isCURDAuth">
       <el-button type="primary" size="small" @click="addForm">添加</el-button>
@@ -95,6 +95,7 @@ export default {
         // text: [{ required: true, message: "必填", trigger: "blur" }],
         // text: [{ required: true, message: "必填", trigger: "blur" }],
       },
+      btnArr:[]
     };
   },
   methods: {
@@ -226,6 +227,8 @@ export default {
     // } else {
     //   this.configs = whiteCol;
     // }
+    let authObj = this.$util.getAuthority('Whitelist', whiteCol, [])
+    this.btnArr = authObj.btnArr || []
     this.configs = whiteCol;
     this.searchCofig = whiteConfig;
     // this.getList();

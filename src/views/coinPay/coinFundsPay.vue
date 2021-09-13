@@ -230,7 +230,7 @@ export default {
     this.total = 0 // 总条数
     this.pages = 0 // 总页数
     let authObj = this.$util.getAuthority('CoinFundsPay', coinFundsCol, [])
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = coinFundsCol
     this.searchCofig = this.$util.clone(coinFundsConfig)
 

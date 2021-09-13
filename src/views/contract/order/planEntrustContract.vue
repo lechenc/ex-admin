@@ -184,7 +184,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('PlanEntrustContract', planEntrustContractCol, []);
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = planEntrustContractCol;
     this.searchCofig = this.$util.clone(planEntrustContractConfig);
     // 初始化今天，和前天的时间

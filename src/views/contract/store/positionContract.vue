@@ -231,7 +231,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('PositionContract', positionContractCol, []);
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = positionContractCol;
     this.searchCofig = this.$util.clone(positionContractConfig);
     // 初始化今天，和前天的时间

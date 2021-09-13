@@ -377,7 +377,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AgentCusList', agentCusListCol, agentCusListColNoBtn);
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = authObj.val;
 
     this.configs = this.$util.clone(agentCusListConfig);

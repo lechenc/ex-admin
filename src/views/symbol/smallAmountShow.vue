@@ -104,7 +104,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('SmallAmountShow', [], []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
     this.$store.dispatch('common/getCoinList').then(() => {
       let coinList = this.$store.state.common.coinlist;
       this.coinList = coinList;

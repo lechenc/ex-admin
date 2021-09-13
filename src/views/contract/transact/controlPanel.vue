@@ -371,7 +371,7 @@ export default {
   async mounted() {
     let authObj = this.$util.getAuthority('ControlPanel', controlPanelCol, controlPanelColNoBtn);
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
 
     this.searchCofig = this.$util.clone(controlPanelConfig);
     

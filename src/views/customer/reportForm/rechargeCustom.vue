@@ -157,7 +157,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('RechargeCustom', rechargeCustomCol, []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = rechargeCustomCol;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');

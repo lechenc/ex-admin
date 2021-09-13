@@ -209,7 +209,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('GeneralEntrustContract', generalEntrustContractCol, generalEntrustContractColNoBtn);
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.searchCofig = this.$util.clone(generalEntrustContractConfig);
     // 初始化今天，和前天的时间
     this.toDay = this.$util.diyTime('toDay');

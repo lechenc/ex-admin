@@ -278,7 +278,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('CloseContract', closeContractCol, []);
     // //console.log('authObj', authObj);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = closeContractCol;
     this.searchCofig = this.$util.clone(closeContractConfig);
     // 初始化今天，和前天的时间

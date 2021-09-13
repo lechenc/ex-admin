@@ -310,7 +310,7 @@ export default {
   async mounted() {
     let authObj = this.$util.getAuthority('AccountContract', accountContractCol, []);
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.toDay = this.$util.diyTime('toDay');
     this.ago = this.$util.diyTime('ago');
     this.$store.dispatch('common/getCoinList').then(() => {
