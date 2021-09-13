@@ -10,7 +10,7 @@
 <template>
   <div class="recharge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -58,6 +58,7 @@ export default {
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
+      btnArr:[]
     };
   },
   methods: {
@@ -130,6 +131,8 @@ export default {
     // } else {
     //   this.configs = transactionCol;
     // }
+    let authObj = this.$util.getAuthority('Transaction', transactionCol, []);
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = transactionCol;
     this.searchCofig = this.$util.clone(transactionConfig);
     this.$store.dispatch('common/getFiatCoinList').then(() => {

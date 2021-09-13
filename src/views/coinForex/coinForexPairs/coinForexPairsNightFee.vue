@@ -315,7 +315,7 @@ export default {
       coinForexPairsNightFeeColNoBtn
     )
 
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = authObj.val
     this.searchCofig = coinForexPairsNightFeeConfig
     this.toDay = this.$util.diyTime('toDay')

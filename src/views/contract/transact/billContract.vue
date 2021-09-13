@@ -10,7 +10,7 @@
         :calTotalExcel="btnArr.includes('excel')"
         @do-calTotal-excel="calTotalExcel"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
         :calLoading="calLoading"
         :calTotal="true"
@@ -245,7 +245,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('BillContract', billContractCol, []);
     // //console.log('authObj', authObj);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = billContractCol;
     this.searchCofig = this.$util.clone(billContractConfig);
     // 初始化今天，和前天的时间

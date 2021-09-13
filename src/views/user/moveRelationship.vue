@@ -1,7 +1,7 @@
 <template>
   <div class="moveRelationship-container">
     <div class="container-top">
-      <Bsearch :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
     <div class="container-btn" v-if="isCURDAuth">
@@ -183,6 +183,7 @@ export default {
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
+      btnArr:[]
     };
   },
   methods: {
@@ -362,6 +363,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('MoveRelationship', moveRelationshipCol, moveRelationshipColNoBtn);
+    this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
     this.isCURDAuth = authObj.isAdd;
     // 初始化今天，之前的时间

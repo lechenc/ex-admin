@@ -157,7 +157,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('CoinForexDealList', coinForexDealListCol, []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = coinForexDealListCol;
     this.searchCofig = coinForexDealListConfig;
     this.toDay = this.$util.diyTime('toDay');

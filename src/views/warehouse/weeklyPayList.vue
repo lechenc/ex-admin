@@ -6,7 +6,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
         :calLoading="calLoading"
         :calTotal="true"
@@ -112,6 +112,7 @@ export default {
         { label: '八星级', value: 8 },
         { label: '零星级', value: 0 },
       ],
+      btnArr: []
     };
   },
   methods: {
@@ -273,6 +274,7 @@ export default {
     },
     initFunc() {
       let authObj = this.$util.getAuthority('WarehouseWeeklyPayList', weeklyCol, weeklyColNoBtn);
+      this.btnArr = authObj.btnArr || []
       this.configs = authObj.val;
       //( 此页面getList有关于configs 的额外逻辑 //  recordStatus为0代表有未完成的，则要显示操作列，否则不显示)
 

@@ -15,7 +15,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')" 
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -77,6 +77,7 @@ export default {
       toDay: '',
       ago: '',
       dialogCheckVisible:false, // 是否显示黑名单弹窗
+      btnArr:[]
     };
   },
   methods: {

@@ -236,7 +236,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AgentsLists', agentsListsCol, agentsListsColNoBtn);
-    this.btnArr = authObj.btnArr || [] || [];
+    this.btnArr = authObj.btnArr || [] || [] || [];
     this.configs = agentPlacesConfigsCol;
     this.detailConfigs = agentPlacesConfigsDetailCol;
     this.searchCofig = this.$util.clone(agentPlacesConfigsConfig);

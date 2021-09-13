@@ -150,8 +150,8 @@ export default {
     },
   },
   mounted() {
-    let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
-    this.btnArr = authObj.btnArr || []
+    let authObj = this.$util.getAuthority('UserlistPay', userCol, userColNoBtn);
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = authObj.val;
 
     // 初始化今天，和昨天的时间

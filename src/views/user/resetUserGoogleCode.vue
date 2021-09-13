@@ -124,7 +124,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('UserList', [], []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
     this.getDetail(this.$route.query.id);
   },
 };

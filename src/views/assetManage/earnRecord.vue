@@ -195,7 +195,7 @@ export default {
     },
     initFunc() {
       let authObj = this.$util.getAuthority('EarnAccount', chargeStatisticCol, [])
-      this.btnArr = authObj.btnArr || []
+      this.btnArr = authObj.btnArr || [] || []
       this.configs = chargeStatisticCol
       this.searchCofig = this.$util.clone(chargeStatisticConfig)
 

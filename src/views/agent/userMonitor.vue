@@ -279,7 +279,7 @@ export default {
   mounted() {
     let authObj = this.$util.getAuthority('UserMonitor', userMonitorCol, userMonitorColNoBtn);
     // //console.log('authObj', authObj);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(userMonitorConfig);
 

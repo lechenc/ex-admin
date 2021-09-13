@@ -185,7 +185,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('RechargePay', rechargeCol, [])
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = rechargeCol;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');

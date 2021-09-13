@@ -10,7 +10,7 @@
 <template>
   <div class="otcOrderCustomer-container">
     <div class="container-top">
-      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -54,6 +54,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
+      btnArr: []
     };
   },
   methods: {
@@ -233,6 +234,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('OtcOrderCustomer', otcOrderCustomerCol, otcOrderCustomerColNoBtn);
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = authObj.val;
     // this.isCURDAuth = authObj.isAdd;
     // 初始化今天，之前的时间

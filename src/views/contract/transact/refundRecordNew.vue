@@ -247,7 +247,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('RefundRecordNew', [], []);
-    this.btnArr = authObj.btnArr || [] || [];
+    this.btnArr = authObj.btnArr || [] || [] || [];
     this.configs = refundRecordNewCol;
     this.searchCofig = this.$util.clone(refundRecordNewConfig);
 

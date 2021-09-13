@@ -10,7 +10,7 @@
 <template>
   <div class="extract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -210,6 +210,7 @@ export default {
       },
       analysisQrCode: '', // 验证码信息
       qrcodeShow: false, // 是否显示验证码
+      btnArr: []
     };
   },
   filters: {
@@ -534,6 +535,7 @@ export default {
     this.pages = 0; // 总页数
 
     let authObj = this.$util.getAuthority('Extract', extractCol, extractColNoBtn);
+    this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');

@@ -10,7 +10,7 @@
 <template>
   <div class="appealJudge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -78,6 +78,7 @@ export default {
       rejectRules: {
         mark: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      btnArr:[]
     };
   },
   methods: {
@@ -209,6 +210,8 @@ export default {
     // } else {
     //   this.configs = assetManageCol;
     // }
+    let authObj = this.$util.getAuthority('AssetManage', assetManageCol, []);
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = assetManageCol;
     this.searchCofig = this.$util.clone(assetManageConfig);
     this.getList();

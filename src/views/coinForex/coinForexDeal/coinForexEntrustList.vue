@@ -156,7 +156,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('coinForexEntrustList', coinForexEntrustListCol, []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = coinForexEntrustListCol;
     this.searchCofig = coinForexEntrustListConfig;
     this.toDay = this.$util.diyTime('toDay');

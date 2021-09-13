@@ -503,7 +503,7 @@ export default {
     let authObj = this.$util.getAuthority('CoinContractMimic', coinContractMimicCol, coinContractMimicColNoBtn);
     
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || [] || [];
+    this.btnArr = authObj.btnArr || [] || [] || [];
 
     this.$store.dispatch('common/getCoinList').then(() => {
       this.coinList = this.$store.state.common.coinlist;

@@ -612,7 +612,7 @@ export default {
       coinForexPairsConfigsColNoBtn
     )
 
-    this.btnArr = authObj.btnArr || []
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = authObj.val
     this.searchCofig = coinForexPairsConfigsConfig
     this.toDay = this.$util.diyTime('toDay')

@@ -216,7 +216,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('VoucherVipUserList', voucherVipUserListCol, voucherVipUserListColNoBtn);
-    this.btnArr = authObj.btnArr || [] || [];
+    this.btnArr = authObj.btnArr || [];
     this.isCURDAuth = authObj.isAdd;
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(voucherVipUserListConfig);

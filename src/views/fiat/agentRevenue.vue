@@ -11,7 +11,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')" 
         @do-exportExcel="exportExcel"
         :calLoading="calLoading"
         :calTotal="true"
@@ -74,6 +74,7 @@ export default {
       coinList: [], //币种列表
       amountSum: '', // 总计收益数量
       pageAmountSum: '', // 当前页面收益数量
+      btnArr:[]
     };
   },
   methods: {
@@ -212,6 +213,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('AgentList', agentRevenueCol, []);
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = agentRevenueCol;
     this.searchCofig = this.$util.clone(agentRevenueConfig);
 

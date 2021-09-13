@@ -1170,7 +1170,7 @@ export default {
     let authObj = this.$util.getAuthority('AgentsLists', agentsListsCol, agentsListsColNoBtn);
 
     this.configs = authObj.val;
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.searchCofig = this.$util.clone(agentsListsConfig);
 
     // 初始化今天，和前天的时间
