@@ -6,7 +6,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -56,6 +56,7 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
+      btnArr:[]
       
     };
   },
@@ -150,6 +151,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
+    this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
 
     // 初始化今天，和昨天的时间

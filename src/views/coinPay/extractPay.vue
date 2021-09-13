@@ -15,7 +15,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
     </div>
@@ -228,6 +228,7 @@ export default {
       },
       analysisQrCode: '', // 验证码信息
       qrcodeShow: false, // 是否显示验证码
+      btnArr:[]
     };
   },
   filters: {
@@ -506,6 +507,7 @@ export default {
     this.pages = 0; // 总页数
 
     let authObj = this.$util.getAuthority('Extract', extractCol, extractColNoBtn);
+    this.btnArr = authObj.btnArr || []
     this.configs = authObj.val;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');

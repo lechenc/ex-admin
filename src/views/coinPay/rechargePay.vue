@@ -10,7 +10,7 @@
 <template>
   <div class="rechargePay-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" :calLoading="calLoading" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -53,7 +53,8 @@ export default {
       toDay: '',
       ago: '',
        
-      symbollist:[]
+      symbollist:[],
+      btnArr:[]
     };
   },
   methods: {
@@ -183,6 +184,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('RechargePay', rechargeCol, [])
+    this.btnArr = authObj.btnArr || []
     this.configs = rechargeCol;
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay');
