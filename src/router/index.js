@@ -990,25 +990,25 @@ export const asyncRouterMap = [
           {
             path: 'acceptanceList',
             name: 'AcceptanceList',
-            component: () => import('@/views/fiat/acceptanceMerchant/AcceptanceList'),
+            component: () => import('@/views/fiat/acceptanceMerchant/acceptanceList'),
             meta: { title: '承兑商代理列表', icon: '', role: [] }
           },
           {
             path: 'acceptanceRelation',
             name: 'AcceptanceRelation',
-            component: () => import('@/views/fiat/acceptanceMerchant/AcceptanceRelation'),
+            component: () => import('@/views/fiat/acceptanceMerchant/acceptanceRelation'),
             meta: { title: '承兑商代理关系', icon: '', role: [] }
           },
           {
             path: 'acceptanceSetting',
             name: 'AcceptanceSetting',
-            component: () => import('@/views/fiat/acceptanceMerchant/AcceptanceSetting'),
+            component: () => import('@/views/fiat/acceptanceMerchant/acceptanceSetting'),
             meta: { title: '承兑商设置', icon: '', role: [] }
           },
           {
             path: 'acceptanceChannelList',
             name: 'AcceptanceChannelList',
-            component: () => import('@/views/fiat/acceptanceMerchant/AcceptanceChannelList'),
+            component: () => import('@/views/fiat/acceptanceMerchant/acceptanceChannelList'),
             meta: { title: '渠道列表', icon: '', role: [] }
           },
           {
@@ -1828,6 +1828,12 @@ export const asyncRouterMap = [
             name: 'HighFrequencyMonitor',
             component: () => import('@/views/contract/risk/highFrequencyMonitor'),
             meta: { title: '高频监控列表', icon: '', role: [] }
+          },
+          {
+            path: 'contractUserMonitor',
+            name: 'ContractUserMonitor',
+            component: () => import('@/views/contract/risk/contractUserMonitor'),
+            meta: { title: '用户监控列表', icon: '', role: [] }
           }
         ]
       },

@@ -1,4 +1,3 @@
-
 /**
  * @desc 解决浮动运算问题，避免小数点后产生多位数和计算精度损失。
  * 问题示例：2.3 + 2.4 = 4.699999999999999，1.0 - 0.9 = 0.09999999999999998
@@ -9,7 +8,7 @@
  * strip(0.09999999999999998)=0.1
  */
 function strip(num, precision = 15) {
-  return +parseFloat(Number(num).toPrecision(precision));
+  return +parseFloat(Number(num).toPrecision(precision))
 }
 
 /**
@@ -18,9 +17,9 @@ function strip(num, precision = 15) {
  */
 function digitLength(num) {
   // Get digit length of e
-  const eSplit = num.toString().split(/[eE]/);
-  const len = (eSplit[0].split('.')[1] || '').length - +(eSplit[1] || 0);
-  return len > 0 ? len : 0;
+  const eSplit = num.toString().split(/[eE]/)
+  const len = (eSplit[0].split('.')[1] || '').length - +(eSplit[1] || 0)
+  return len > 0 ? len : 0
 }
 
 /**
@@ -29,10 +28,10 @@ function digitLength(num) {
  */
 function float2Fixed(num) {
   if (num.toString().indexOf('e') === -1) {
-    return Number(num.toString().replace('.', ''));
+    return Number(num.toString().replace('.', ''))
   }
-  const dLen = digitLength(num);
-  return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num);
+  const dLen = digitLength(num)
+  return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num)
 }
 
 /**
@@ -42,7 +41,9 @@ function float2Fixed(num) {
 function checkBoundary(num) {
   if (_boundaryCheckingState) {
     if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
-      console.warn(`${num} is beyond boundary when transfer to integer, the results may not be accurate`);
+      console.warn(
+        `${num} is beyond boundary when transfer to integer, the results may not be accurate`
+      )
     }
   }
 }
@@ -52,16 +53,16 @@ function checkBoundary(num) {
  */
 function times(num1, num2, ...others) {
   if (others.length > 0) {
-    return times(times(num1, num2), others[0], ...others.slice(1));
+    return times(times(num1, num2), others[0], ...others.slice(1))
   }
-  const num1Changed = float2Fixed(num1);
-  const num2Changed = float2Fixed(num2);
-  const baseNum = digitLength(num1) + digitLength(num2);
-  const leftValue = num1Changed * num2Changed;
+  const num1Changed = float2Fixed(num1)
+  const num2Changed = float2Fixed(num2)
+  const baseNum = digitLength(num1) + digitLength(num2)
+  const leftValue = num1Changed * num2Changed
 
-  checkBoundary(leftValue);
+  checkBoundary(leftValue)
 
-  return leftValue / Math.pow(10, baseNum);
+  return leftValue / Math.pow(10, baseNum)
 }
 
 /**
@@ -69,10 +70,10 @@ function times(num1, num2, ...others) {
  */
 function plus(num1, num2, ...others) {
   if (others.length > 0) {
-    return plus(plus(num1, num2), others[0], ...others.slice(1));
+    return plus(plus(num1, num2), others[0], ...others.slice(1))
   }
-  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)));
-  return (times(num1, baseNum) + times(num2, baseNum)) / baseNum;
+  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)))
+  return (times(num1, baseNum) + times(num2, baseNum)) / baseNum
 }
 
 /**
@@ -80,10 +81,10 @@ function plus(num1, num2, ...others) {
  */
 function minus(num1, num2, ...others) {
   if (others.length > 0) {
-    return minus(minus(num1, num2), others[0], ...others.slice(1));
+    return minus(minus(num1, num2), others[0], ...others.slice(1))
   }
-  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)));
-  return (times(num1, baseNum) - times(num2, baseNum)) / baseNum;
+  const baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)))
+  return (times(num1, baseNum) - times(num2, baseNum)) / baseNum
 }
 
 /**
@@ -91,34 +92,47 @@ function minus(num1, num2, ...others) {
  */
 function divide(num1, num2, ...others) {
   if (others.length > 0) {
-    return divide(divide(num1, num2), others[0], ...others.slice(1));
+    return divide(divide(num1, num2), others[0], ...others.slice(1))
   }
-  const num1Changed = float2Fixed(num1);
-  const num2Changed = float2Fixed(num2);
-  checkBoundary(num1Changed);
-  checkBoundary(num2Changed);
+  const num1Changed = float2Fixed(num1)
+  const num2Changed = float2Fixed(num2)
+  checkBoundary(num1Changed)
+  checkBoundary(num2Changed)
   // fix: 类似 10 ** -4 为 0.00009999999999999999，strip 修正
-  return times(num1Changed / num2Changed, strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
+  return times(
+    num1Changed / num2Changed,
+    strip(Math.pow(10, digitLength(num2) - digitLength(num1)))
+  )
 }
 
 /**
  * 四舍五入
  */
 function round(num, ratio) {
-  const base = Math.pow(10, ratio);
-  return divide(Math.round(times(num, base)), base);
+  const base = Math.pow(10, ratio)
+  return divide(Math.round(times(num, base)), base)
 }
 
-let _boundaryCheckingState = true;
+let _boundaryCheckingState = true
 /**
  * 是否进行边界检查，默认开启
  * @param flag 标记开关，true 为开启，false 为关闭，默认为 true
  */
 function enableBoundaryChecking(flag = true) {
-  _boundaryCheckingState = flag;
+  _boundaryCheckingState = flag
 }
 
-export { strip, plus, minus, times, divide, round, digitLength, float2Fixed, enableBoundaryChecking };
+export {
+  strip,
+  plus,
+  minus,
+  times,
+  divide,
+  round,
+  digitLength,
+  float2Fixed,
+  enableBoundaryChecking
+}
 export default {
   strip,
   plus,
@@ -128,5 +142,5 @@ export default {
   round,
   digitLength,
   float2Fixed,
-  enableBoundaryChecking,
-};
+  enableBoundaryChecking
+}

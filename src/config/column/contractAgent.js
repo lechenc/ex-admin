@@ -2297,7 +2297,90 @@ const agentPlacesConfigsDetailCol = [
   }
 ]
 
+const contractUserMonitorCol = [
+  {
+    label: '用户UID',
+    prop: 'uid'
+  },
+  {
+    label: '代理商UID',
+    prop: 'agentUid'
+  },
+  {
+    label: '用户可盈利阀值(USDT)',
+    prop: 'profitMargin'
+  },
+  {
+    label: '用户当期盈亏(USDT)',
+    prop: 'profitAndLoss'
+  },
+  {
+    label: '用户合约资产(USDT)',
+    prop: 'contractAmount'
+  },
+  {
+    label: '代理待结算(USDT)',
+    prop: 'agentSettlement'
+  },
+  {
+    label: '代理保证金',
+    prop: 'amountExpand'
+  },
+  {
+    label: '代理下方总有效用户(交易)',
+    prop: 'tradeUserNum'
+  },
+  {
+    label: '代理下方总用户',
+    prop: 'userNum'
+  },
+  {
+    label: '团队长返佣比例',
+    prop: 'packagePercent'
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 160,
+    btnGroup: [
+      {
+        label: '补充保证金',
+        fn: 'supple',
+        type: 'text',
+      },
+    ]
+  }
+]
+
+const contractUserMonitorConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'onlyNumber',
+    label: '代理商UID',
+    prop: 'agentUID',
+    value: '',
+    placeHolder: '请输入'
+  }
+]
+
 export {
+  contractUserMonitorCol,
+  contractUserMonitorConfig,
   agentPlacesConfigsDetailCol,
   agentPlacesConfigsCol,
   agentPlacesConfigsConfig,

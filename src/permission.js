@@ -354,10 +354,10 @@ const mapComponents = {
   AgentRevenue: () => import('@/views/fiat/agentRevenue'),
   LevelSetting: () => import('@/views/fiat/levelSetting'),
   OrderConfig: () => import('@/views/fiat/acceptanceMerchant/orderConfig'),
-  AcceptanceList: () => import('@/views/fiat/acceptanceMerchant/AcceptanceList'),
-  AcceptanceRelation: () => import('@/views/fiat/acceptanceMerchant/AcceptanceRelation'),
-  AcceptanceSetting: () => import('@/views/fiat/acceptanceMerchant/AcceptanceSetting'),
-  AcceptanceChannelList: () => import('@/views/fiat/acceptanceMerchant/AcceptanceChannelList'),
+  AcceptanceList: () => import('@/views/fiat/acceptanceMerchant/acceptanceList'),
+  AcceptanceRelation: () => import('@/views/fiat/acceptanceMerchant/acceptanceRelation'),
+  AcceptanceSetting: () => import('@/views/fiat/acceptanceMerchant/acceptanceSetting'),
+  AcceptanceChannelList: () => import('@/views/fiat/acceptanceMerchant/acceptanceChannelList'),
   CommissionContract: () => import('@/views/fiat/acceptanceMerchant/commissionContract'),
   CommissionContractFlow: () => import('@/views/fiat/acceptanceMerchant/commissionContractFlow'),
 
@@ -517,6 +517,7 @@ const mapComponents = {
   ContractTactics: () => import('@/views/contract/risk/contractTactics'),
   HighFrequencyConfig: () => import('@/views/contract/risk/highFrequencyConfig'),
   HighFrequencyMonitor: () => import('@/views/contract/risk/highFrequencyMonitor'),
+  ContractUserMonitor: () => import('@/views/contract/risk/contractUserMonitor'),
   // 账号管理
   AccountContract: () => import('@/views/contract/accountManagement/accountContract'),
   DestroyBill: () => import('@/views/contract/accountManagement/destroyBill'),

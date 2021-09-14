@@ -487,9 +487,9 @@ export default class api {
   // 法币后台
 
   // 法币 - 用户查询列表
-  static queryOtcUser(data) {
-    return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
-  }
+  // static queryOtcUser(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
+  // }
 
   //  法币 - 获取用户列表---详情页数据
   static queryOtcUserDetail(data) {
@@ -556,9 +556,9 @@ export default class api {
   }
 
   // 法币 -广告记录
-  static getAuditList(data) {
-    return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/getAuditList', data)
-  }
+  // static getAuditList(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/getAuditList', data)
+  // }
 
   // 法币 -资金流水列表
   static queryOtcMoneyChangeInfo(data) {
@@ -586,14 +586,14 @@ export default class api {
   }
 
   // 法币 -邀请关系--获取迁移列表
-  static queryInviteShip(data) {
-    return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/queryInviteShip', data)
-  }
+  // static queryInviteShip(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/queryInviteShip', data)
+  // }
 
   // 法币 -邀请关系--执行迁移操作
-  static updateInviteShip(data) {
-    return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/updateInviteShip', data)
-  }
+  // static updateInviteShip(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/updateInviteShip', data)
+  // }
 
   // 法币 -申诉管理--列表数据
   static infoShortList(data) {
@@ -641,9 +641,9 @@ export default class api {
   }
 
   // 法币 -接单全局设置--返佣设置
-  static getDefaultRate(data) {
-    return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getDefaultRate', data)
-  }
+  // static getDefaultRate(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getDefaultRate', data)
+  // }
 
   // 法币 - 接单全局设置--币商接单额度设置
   static getAuditList(data) {
@@ -811,9 +811,9 @@ export default class api {
   // 商户后台
 
   // 商户后台 - 用户查询列表页
-  static getMerchantList(data) {
-    return Fetch.postForm1('/otc/admin/wallet/backmgr/merchant/merchantList', data)
-  }
+  // static getMerchantList(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/backmgr/merchant/merchantList', data)
+  // }
 
   // 商户后台 - 用户查询---单条详情页
   static geMmerchantDetail(data) {
@@ -2605,9 +2605,9 @@ export default class api {
   }
 
   // 点卡 点卡资产 列表 统计
-  static getTicketCardListTotal(data) {
-    return Fetch.post('/admin/account/red/query-red-list', data)
-  }
+  // static getTicketCardListTotal(data) {
+  //   return Fetch.post('/admin/account/red/query-red-list', data)
+  // }
 
   // 点卡 用户详情 重置谷歌
   static apiEditGoogleCode(data) {
@@ -2734,14 +2734,14 @@ export default class api {
   }
 
   // 运营管理/体验金券管理/条件参数设置 新增
-  static addVoucherParameters(data) {
-    return Fetch.post('/admin/account/create/condition', data)
-  }
+  // static addVoucherParameters(data) {
+  //   return Fetch.post('/admin/account/create/condition', data)
+  // }
 
   // 运营管理/体验金券管理/条件参数设置 编辑
-  static editVoucherParameters(data) {
-    return Fetch.post('/admin/account/edit/condition', data)
-  }
+  // static editVoucherParameters(data) {
+  //   return Fetch.post('/admin/account/edit/condition', data)
+  // }
 
   // 系统管理/维护管理 列表
   static getMaintenanceList(data) {
@@ -2799,9 +2799,9 @@ export default class api {
   }
 
   // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
-  static getSpecialTriggerCondition(data) {
-    return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
-  }
+  // static getSpecialTriggerCondition(data) {
+  //   return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
+  // }
 
   // 运营管理/体验金券管理/活动列表 通过条件id获取对应的所有触发条件
   static getSpecialTriggerById(data) {
@@ -2892,10 +2892,10 @@ export default class api {
     return Fetch.postlogin('/admin/user/newlogin', data)
   }
 
-  // 系统管理  架构树
-  static apiGetStructureTreeList(data) {
-    return Fetch.post('/admin/user/structureTreeList', data)
-  }
+  // // 系统管理  架构树
+  // static apiGetStructureTreeList(data) {
+  //   return Fetch.post('/admin/user/structureTreeList', data)
+  // }
 
   // 系统管理 人员管理 左侧结构
   static apiGetPeopleManagementList(data) {

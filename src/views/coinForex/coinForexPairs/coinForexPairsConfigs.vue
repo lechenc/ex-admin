@@ -96,8 +96,8 @@
               ref="twoChoose"
               :labelWidth="formLabelWidth"
               labelWords="持仓手数数范围区间"
-              :getVal1.sync="robotForm.orderCounterQtyStep"
-              :getVal2.sync="robotForm.maxVol"
+              :getVal1.sync="robotForm.minMove"
+              :getVal2.sync="robotForm.maxMove"
               :isdisabled="false"
               @handler="getRangeVal"
             ></b-two-range-choose>
@@ -234,6 +234,7 @@ import {
 } from '@/config/column/coinForex'
 import $api from '@/api/api'
 import BTwoRangeChoose from '@/components/b-two-range-choose'
+import Precision from '@/utils/number-precision'
 export default {
   name: 'CoinForexPairsConfigs',
   components: {
@@ -410,8 +411,8 @@ export default {
           symbol: '',
           iconUrl: '',
           chineseName: '',
-          orderCounterQtyStep: '',
-          maxVol: '',
+          minMove: '',
+          maxMove: '',
           priceDiff: '',
           minVol: '',
           dealDistance: '',
@@ -431,7 +432,8 @@ export default {
       }
       this.$refs['robotForm'].validate(async (valid) => {
         if (valid) {
-          const { id, headblock, trade, ...prop } = this.robotForm
+          const { id, headblock, trade, ...prop } =
+            this.robotForm
 
           const params = {
             headblock: headblock ? 'Y' : 'N',
@@ -472,8 +474,8 @@ export default {
             symbol,
             iconUrl,
             chineseName,
-            orderCounterQtyStep,
-            maxVol,
+            minMove,
+            maxMove,
             priceDiff,
             minVol,
             dealDistance,
@@ -490,8 +492,8 @@ export default {
             symbol,
             iconUrl,
             chineseName,
-            orderCounterQtyStep,
-            maxVol,
+            minMove,
+            maxMove,
             priceDiff,
             minVol,
             dealDistance,
@@ -617,7 +619,7 @@ export default {
     this.searchCofig = coinForexPairsConfigsConfig
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
-    // this.getCoinForexList();
+    this.getCoinForexList()
     this.getList()
   }
 }
