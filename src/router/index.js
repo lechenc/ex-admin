@@ -1834,7 +1834,13 @@ export const asyncRouterMap = [
             name: 'HighFrequencyMonitor',
             component: () => import('@/views/contract/risk/highFrequencyMonitor'),
             meta: { title: '高频监控列表', icon: '', role: [] }
-          }
+          },
+          {
+            path: 'contractUserMonitor',
+            name: 'ContractUserMonitor',
+            component: () => import('@/views/contract/risk/contractUserMonitor'),
+            meta: { title: '用户监控列表', icon: '', role: [] }
+          },
         ]
       },
       {
