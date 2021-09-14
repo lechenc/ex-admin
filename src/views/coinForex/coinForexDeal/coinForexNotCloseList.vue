@@ -111,6 +111,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        orderString: 'created desc'
       };
       this.requiredParams(this.search_params_obj);
       Object.assign(params, this.search_params_obj);
