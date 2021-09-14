@@ -335,7 +335,7 @@ export default {
       pages: 0, // 总页数
 
       formLabelWidth: '120px',
-      handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 viewDetail详情}
+      handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 finalReview 终审 finalReject 终审驳回 viewDetail详情}
       handleData: {}, // 当前执行操作的数据
       dialogVisible: false, // 是否显示审核弹出框
       confirmText: '',
@@ -425,11 +425,23 @@ export default {
       const { fn, row } = data
       this.handleStatus = fn
       this.handleData = row
-      if (fn === 'preReview' || fn === 'nextReview') {
-        this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审'
-        this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过'
+      const reviews = ['preReview', 'nextReview', 'finalReview']
+      const rejects = ['preReject', 'nextReject', 'finalReject']
+      if (reviews.includes(fn)) {
+        const reviewObj = {
+          preReview: '提币初审',
+          nextReview: '提币复审',
+          finalReview: '提币终审'
+        }
+        const confirmObj = {
+          preReview: '初审通过',
+          nextReview: '复审通过',
+          finalReview: '终审通过'
+        }
+        this.reviewTitle = reviewObj[fn]
+        this.confirmText = confirmObj[fn]
         this.openReviewDialog()
-      } else if (fn === 'preReject' || fn === 'nextReject') {
+      } else if (rejects.includes(fn)) {
         this.openRejectDialog()
       } else if (fn === 'detail') {
         this.reviewTitle = '提币详情'
@@ -469,8 +481,13 @@ export default {
     async confirmReject() {
       this.$refs['rejectForm'].validate(async valid => {
         if (valid) {
+          const firstOrReviewObj = {
+            preReject: 1,
+            nextReject: 2,
+            finalReject: 3
+          }
           const params = {
-            firstOrReview: this.handleStatus === 'preReject' ? 1 : 2,
+            firstOrReview: firstOrReviewObj[this.handleStatus],
             auditStatus: 2,
             auditOpinion: this.rejectForm.mark,
             id: this.handleData.id,
@@ -479,8 +496,13 @@ export default {
           this.rejLoading = true
           const res = await $api.auditWithdraw(params)
           if (res) {
+            const message = {
+              preReject: '初审驳回成功',
+              nextReject: '复审驳回成功',
+              finalReject: '终审驳回成功'
+            }
             this.$message({
-              message: this.handleStatus === 'preReject' ? '初审驳回成功' : '复审驳回成功',
+              message: message[this.handleStatus],
               type: 'success'
             })
             this.rejectVisible = false
@@ -500,8 +522,13 @@ export default {
       // 当时当处于 审核状态
       this.$refs['reviewForm'].validate(async valid => {
         if (valid) {
+          const firstOrReviewObj = {
+            preReview: 1,
+            nextReview: 2,
+            finalReview: 3
+          }
           const params = {
-            firstOrReview: this.handleStatus === 'preReview' ? 1 : 2,
+            firstOrReview: firstOrReviewObj[this.handleStatus],
             auditStatus: 1,
             auditOpinion: '审核通过',
             id: this.handleData.id
@@ -512,8 +539,13 @@ export default {
           this.btnLoading = true
           const res = await $api.auditWithdraw(params)
           if (res) {
+            const confirmObj = {
+              preReview: '初审成功',
+              nextReview: '复审成功',
+              finalReview: '终审成功'
+            }
             this.$message({
-              message: this.handleStatus === 'preReview' ? '初审成功' : '复审成功',
+              message: confirmObj[this.handleStatus],
               type: 'success'
             })
             this.dialogVisible = false

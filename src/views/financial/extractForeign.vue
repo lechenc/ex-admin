@@ -467,7 +467,7 @@ export default {
       pages: 0, // 总页数
 
       formLabelWidth: '120px',
-      handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 viewDetail详情}
+      handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 finalReview 终审 finalReject 终审驳回 viewDetail详情}
       handleData: {}, // 当前执行操作的数据
       dialogVisible: false, // 是否显示审核弹出框
       confirmText: '',
@@ -547,6 +547,7 @@ export default {
     this.getWindControl()
   },
   methods: {
+    // 单元格的 className 的回调方法
     cellClassName({ row, column, rowIndex, columnIndex }) {
       return row.riskControlUserFlag === '是' && column.label === '风控用户'
         ? 'is-risk-control'
@@ -603,7 +604,9 @@ export default {
       const { fn, row } = data
       this.handleStatus = fn
       this.handleData = row
-      if (fn === 'preReview' || fn === 'nextReview' || fn === 'finalReview') {
+      const reviews = ['preReview', 'nextReview', 'finalReview']
+      const rejects = ['preReject', 'nextReject', 'finalReject']
+      if (reviews.includes(fn)) {
         const reviewObj = {
           preReview: '提币初审',
           nextReview: '提币复审',
@@ -615,8 +618,8 @@ export default {
           finalReview: '终审通过'
         }
         this.reviewTitle = reviewObj[fn]
-        // this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审'
         this.confirmText = confirmObj[fn]
+        // this.reviewTitle = fn === 'preReview' ? '提币初审' : '提币复审'
         // this.confirmText = fn === 'preReview' ? '初审通过' : '复审通过'
         this.nowName = fn
         if (fn === 'preReview') {
@@ -629,7 +632,7 @@ export default {
           this.buttonDisabled = false
           this.openReviewDialog()
         }
-      } else if (fn === 'preReject' || fn === 'nextReject' || fn === 'finalReject') {
+      } else if (rejects.includes(fn)) {
         this.openRejectDialog()
       } else if (fn === 'detail') {
         this.reviewTitle = '提币详情'
@@ -686,8 +689,13 @@ export default {
           this.rejLoading = true
           const res = await $api.auditWithdraw(params)
           if (res) {
+            const message = {
+              preReject: '初审驳回成功',
+              nextReject: '复审驳回成功',
+              finalReject: '终审驳回成功'
+            }
             this.$message({
-              message: this.handleStatus === 'preReject' ? '初审驳回成功' : '复审驳回成功',
+              message: message[this.handleStatus],
               type: 'success'
             })
             this.rejectVisible = false
@@ -708,8 +716,13 @@ export default {
       const fn = () => {
         this.$refs['reviewForm'].validate(async valid => {
           if (valid) {
+            const firstOrReviewObj = {
+              preReview: 1,
+              nextReview: 2,
+              finalReview: 3
+            }
             const params = {
-              firstOrReview: this.handleStatus === 'preReview' ? 1 : 2,
+              firstOrReview: firstOrReviewObj[this.handleStatus],
               auditStatus: 1,
               auditOpinion: '审核通过',
               id: this.handleData.id
@@ -720,8 +733,13 @@ export default {
             this.btnLoading = true
             const res = await $api.auditWithdraw(params)
             if (res) {
+              const message = {
+                preReview: '初审成功',
+                nextReview: '复审成功',
+                finalReview: '终审成功'
+              }
               this.$message({
-                message: this.handleStatus === 'preReview' ? '初审成功' : '复审成功',
+                message: message[this.handleStatus],
                 type: 'success'
               })
               this.dialogVisible = false
@@ -761,7 +779,6 @@ export default {
       this.qrcodeShow = true
     },
     doSearch(data) {
-      console.log('>>>>>>>>>')
       this.current_page = 1
       this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
@@ -816,7 +833,7 @@ export default {
       }
 
       this.calLoading = true
-      const coinId = this.coinList.filter(v => v.label == this.search_params_obj.coinName)[0].value
+      const coinId = this.coinList.filter(v => v.label === this.search_params_obj.coinName)[0].value
       const params = { isOwn: 0, coinId }
       this.requiredParams(params)
       params.appId = 0
@@ -913,6 +930,9 @@ export default {
 <style scope lang="scss">
 .extract-container {
   padding: 4px 10px 10px 10px;
+  .is-risk-control {
+    color: red;
+  }
   .container-top {
     margin: 10px 0;
   }

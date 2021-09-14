@@ -501,6 +501,15 @@ const extractCol = [
         alias: 'nextReview'
       },
       {
+        label: '终审',
+        fn: 'finalReview',
+        isPop: false,
+        filter_key: 'tradeStatus',
+        filter_status: 13,
+        type: 'success',
+        alias: 'finalReview'
+      },
+      {
         label: '初审驳回',
         fn: 'preReject',
         isPop: false,
@@ -518,6 +527,15 @@ const extractCol = [
         filter_status: 3,
         type: 'danger',
         alias: 'nextReject'
+      },
+      {
+        label: '终审驳回',
+        fn: 'finalReject',
+        isPop: false,
+        filter_key: 'tradeStatus',
+        filter_status: 13,
+        type: 'danger',
+        alias: 'finalReject'
       },
       {
         label: '详情',

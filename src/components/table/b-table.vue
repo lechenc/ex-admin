@@ -1226,9 +1226,6 @@ export default {
     }
   }
   .el-table__row {
-    .is-risk-control {
-      color: red;
-    }
     td {
       font-weight: 500;
       font-size: 14px;
