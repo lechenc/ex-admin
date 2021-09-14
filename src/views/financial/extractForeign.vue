@@ -467,7 +467,7 @@ export default {
       pages: 0, // 总页数
 
       formLabelWidth: '120px',
-      handleStatus: '', // 当前执行的审核或驳回状态{preReview 初审 preReject初审驳回 nextReview复审 nextReject复审驳回 finalReview 终审 finalReject 终审驳回 viewDetail详情}
+      handleStatus: '', // 当前执行的审核或驳回状态{preReview初审 preReject初审驳回 nextReview复审 nextReject复审驳回 finalReview终审 finalReject终审驳回 viewDetail详情}
       handleData: {}, // 当前执行操作的数据
       dialogVisible: false, // 是否显示审核弹出框
       confirmText: '',
@@ -869,7 +869,6 @@ export default {
         appId: 0
       }
       this.requiredParams(query_data)
-      console.log(this.search_params_obj, 'search_params_obj')
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
       const res = await $api.getWithdrawList(query_data)
