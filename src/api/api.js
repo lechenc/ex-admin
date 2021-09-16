@@ -302,6 +302,15 @@ export default class api {
     return Fetch.post('/admin/user/help/center/title/delete', data)
   }
 
+  // 运营管理 - 运营活动 获取列表
+  static getActivityList(data) {
+    return Fetch.post('/admin/account/activity/recharge/statisticsReward/list', data)
+  }
+  // 运营管理 - 运营活动 奖金统计
+  static getActivitySum(data) {
+    return Fetch.post('/admin/account/activity/recharge/statisticsReward/sum', data)
+  }
+
   // 运营管理 -  栏目配置 获取列表
   static getColumnList(data) {
     return Fetch.post('/admin/user/help/center/subject/list', data)
