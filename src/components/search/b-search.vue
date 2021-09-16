@@ -18,6 +18,7 @@
               <div>{{ config.label }}</div>
               <el-select
                 v-model="config.value"
+                :multiple="config.multiple"
                 class="text-input"
                 :clearable="!config.isClear"
                 :placeholder="config.placeHolder"

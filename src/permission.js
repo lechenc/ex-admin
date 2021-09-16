@@ -282,6 +282,7 @@ const mapComponents = {
   SsoWhiteList: () => import('@/views/front/ssoWhiteList'),
   Notice: () => import('@/views/front/notice'),
   Help: () => import('@/views/front/help'),
+  Activity: () => import('@/views/front/activity'),
   Column: () => import('@/views/front/column'),
   Banner: () => import('@/views/front/banner'),
   PopupNotice: () => import('@/views/front/popupNotice'),

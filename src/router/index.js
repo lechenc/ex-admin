@@ -682,6 +682,12 @@ export const asyncRouterMap = [
         meta: { title: '帮助中心', icon: '', role: [] }
       },
       {
+        path: 'activity',
+        name: 'Activity',
+        component: () => import('@/views/front/activity'),
+        meta: { title: '运营活动', icon: '', role: [] }
+      },
+      {
         path: 'column',
         name: 'Column',
         component: () => import('@/views/front/column'),
@@ -1047,16 +1053,16 @@ export const asyncRouterMap = [
             path: 'coinForexPairsConfigs',
             name: 'CoinForexPairsConfigs',
             component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
-            meta: { title: '交易对设置', icon: '', role: [] },
+            meta: { title: '交易对设置', icon: '', role: [] }
           },
 
           {
             path: 'coinForexPairsNightFee',
             name: 'CoinForexPairsNightFee',
             component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsNightFee'),
-            meta: { title: '隔夜费设置', icon: '', role: [] },
-          },
-        ],
+            meta: { title: '隔夜费设置', icon: '', role: [] }
+          }
+        ]
       },
 
       // 币汇财务管理
@@ -1070,16 +1076,16 @@ export const asyncRouterMap = [
             path: 'coinForexAccount',
             name: 'CoinForexAccount',
             component: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
-            meta: { title: '币汇流水', icon: '', role: [] },
+            meta: { title: '币汇流水', icon: '', role: [] }
           },
 
           {
             path: 'coinForexRate',
             name: 'CoinForexRate',
             component: () => import('@/views/coinForex/coinForexfinance/coinForexRate'),
-            meta: { title: '汇率查询', icon: '', role: [] },
-          },
-        ],
+            meta: { title: '汇率查询', icon: '', role: [] }
+          }
+        ]
       },
 
       // 币汇用户管理
@@ -1109,9 +1115,9 @@ export const asyncRouterMap = [
             path: 'coinForexRobotList',
             name: 'CoinForexRobotList',
             component: () => import('@/views/coinForex/coinForexRobot/coinForexRobotList'),
-            meta: { title: '币汇机器人', icon: '', role: [] },
-          },
-        ],
+            meta: { title: '币汇机器人', icon: '', role: [] }
+          }
+        ]
       },
 
       // 币汇交易管理
@@ -1132,31 +1138,25 @@ export const asyncRouterMap = [
             path: 'coinForexEntrustList',
             name: 'CoinForexEntrustList',
             component: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
-            meta: { title: '委托报表', icon: '', role: [] },
+            meta: { title: '委托报表', icon: '', role: [] }
           },
 
           {
             path: 'coinForexNotCloseList',
             name: 'CoinForexNotCloseList',
             component: () => import('@/views/coinForex/coinForexDeal/coinForexNotCloseList'),
-            meta: { title: '未平仓报表', icon: '', role: [] },
+            meta: { title: '未平仓报表', icon: '', role: [] }
           },
 
           {
             path: 'coinForexNetWorth',
             name: 'CoinForexNetWorth',
             component: () => import('@/views/coinForex/coinForexDeal/coinForexNetWorth'),
-            meta: { title: '净值监控', icon: '', role: [] },
-          },
-        ],
-      },
-
-
-
-      
-
-      
-    ],
+            meta: { title: '净值监控', icon: '', role: [] }
+          }
+        ]
+      }
+    ]
   },
   // 星球（标仓管理）
   {
