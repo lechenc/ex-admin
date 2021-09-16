@@ -2303,53 +2303,41 @@ const contractUserMonitorCol = [
     prop: 'uid'
   },
   {
-    label: '代理商UID',
-    prop: 'agentUid'
+    label: '上级代理商UID',
+    prop: 'agentId'
   },
   {
-    label: '用户可盈利阀值(USDT)',
-    prop: 'profitMargin'
+    label: '最上级代理商UID',
+    prop: 'topAgentId'
   },
   {
-    label: '用户当期盈亏(USDT)',
-    prop: 'profitAndLoss'
+    label: '开仓与平仓间隔时（笔）',
+    prop: 'intervalCount'
   },
   {
-    label: '用户合约资产(USDT)',
-    prop: 'contractAmount'
+    label: '合约单笔盈利达到（笔）',
+    prop: 'singleOrderCount'
   },
   {
-    label: '代理待结算(USDT)',
-    prop: 'agentSettlement'
+    label: '合约累计盈利达到（USDT）',
+    prop: 'totalOrderProfit'
   },
-  {
-    label: '代理保证金',
-    prop: 'amountExpand'
-  },
-  {
-    label: '代理下方总有效用户(交易)',
-    prop: 'tradeUserNum'
-  },
-  {
-    label: '代理下方总用户',
-    prop: 'userNum'
-  },
-  {
-    label: '团队长返佣比例',
-    prop: 'packagePercent'
-  },
-
   {
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 160,
+    width: 200,
     btnGroup: [
       {
-        label: '补充保证金',
-        fn: 'supple',
-        type: 'text',
+        label: '平仓记录',
+        fn: 'toCloseContract',
+        type: 'text'
       },
+      {
+        label: '用户管理',
+        fn: 'toUserlistDetail',
+        type: 'text'
+      }
     ]
   }
 ]
@@ -2358,8 +2346,8 @@ const contractUserMonitorConfig = [
   {
     type: 'date_rank',
     label: '时间',
-    prop: 'startTime',
-    prop2: 'endTime',
+    prop: 'timeRangeStart',
+    prop2: 'timeRangeEnd',
     value: ''
   },
   {
@@ -2371,8 +2359,36 @@ const contractUserMonitorConfig = [
   },
   {
     type: 'onlyNumber',
-    label: '代理商UID',
-    prop: 'agentUID',
+    label: '上级代理商UID',
+    prop: 'agentId',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'onlyNumber',
+    label: '最上级代理端UID',
+    prop: 'topAgentId',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'text',
+    label: '合约单笔盈利大于',
+    prop: 'singleOrderGt',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'text',
+    label: '合约累计盈利大于',
+    prop: 'totalOrderGt',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'text',
+    label: '开仓与平仓间隔时（s）',
+    prop: 'interval',
     value: '',
     placeHolder: '请输入'
   }

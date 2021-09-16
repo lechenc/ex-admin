@@ -13,7 +13,7 @@
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
-    <div class="container-footer">
+    <!-- <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination
         background
@@ -24,7 +24,7 @@
         :total="total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -64,7 +64,7 @@ export default {
       this.excelLoading = true
       this.requiredParams(params)
       Object.assign(params, this.search_params_obj)
-      const res = await $api.getUserMonitorList(params)
+      const res = await $api.getContractUserMonitorList(params)
       this.excelLoading = false
       if (res) {
         return res
@@ -77,18 +77,35 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data
+      if (fn == 'toCloseContract') {
+        this.$router.push({
+          query: {
+            uid: row.uid
+          },
+          path: '/contract/store/closeContract'
+        })
+      }
+
+      if (fn == 'toUserlistDetail') {
+        this.$router.push({
+          query: {
+            id: row.uid
+          },
+          path: '/user/userlistDetail'
+        })
+      }
     },
     doSearch(data) {
       this.current_page = 1
       this.search_params_obj = data
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+      if (!this.search_params_obj.timeRangeStart && !this.search_params_obj.timeRangeEnd) {
         this.search_params_obj.flag = 1
       }
       this.getList()
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach((v) => {
+      this.searchCofig.forEach(v => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [
@@ -107,19 +124,20 @@ export default {
     async getList() {
       if (this.listLoading) return
       const params = {
-        pageNum: this.current_page,
-        pageSize: this.pageSize
+        // pageNum: this.current_page,
+        // pageSize: this.pageSize
       }
       this.requiredParams(params)
       Object.assign(params, this.search_params_obj)
       this.listLoading = true
-      const res = await $api.getUserMonitorList(params)
+      const res = await $api.getContractUserMonitorList(params)
       if (res) {
-        const { records, total, current, pages } = res.data.data
-        this.list = records
-        this.total = total
-        this.current_page = current
-        this.pages = pages
+        // const { records, total, current, pages } = res.data.data
+        this.list = res.data.data
+        // this.list = records
+        // this.total = total
+        // this.current_page = current
+        // this.pages = pages
       }
       this.listLoading = false
     },
@@ -129,12 +147,14 @@ export default {
         let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
         let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
         this.searchCofig[0].value = [befV, nowV]
-        params.endTime = nowV.replace(/\//gi, '-')
-        params.startTime = befV.replace(/\//gi, '-')
+        params.timeRangeEnd = nowV.replace(/\//gi, '-')
+        params.timeRangeStart = befV.replace(/\//gi, '-')
       }
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
+      if (this.search_params_obj.timeRangeStart) {
+        this.search_params_obj.timeRangeEnd = this.formatTime(this.search_params_obj.timeRangeEnd)
+        this.search_params_obj.timeRangeStart = this.formatTime(
+          this.search_params_obj.timeRangeStart
+        )
       }
     },
     formatTime(val) {
@@ -142,13 +162,19 @@ export default {
     }
   },
   mounted() {
+    let authObj = this.$util.getAuthority('ContractUserMonitor', contractUserMonitorCol, [])
+    this.btnArr = authObj.btnArr || []
     this.configs = contractUserMonitorCol
     this.searchCofig = this.$util.clone(contractUserMonitorConfig)
 
     // 初始化今天，和昨天的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
-    this.getList()
+    this.searchCofig[0].value = [
+      this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+      this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+    ]
+    // this.getList()
   }
 }
 </script>

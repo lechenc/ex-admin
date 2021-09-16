@@ -191,7 +191,9 @@
                 autocomplete="off"
                 type="number"
               >
-                <template slot="append">%</template>
+                <template slot="append"
+                  >%</template
+                >
               </el-input>
             </el-form-item>
           </el-col>
@@ -430,10 +432,9 @@ export default {
       if (!this.$refs['twoChoose'].validateValue()) {
         return
       }
-      this.$refs['robotForm'].validate(async (valid) => {
+      this.$refs['robotForm'].validate(async valid => {
         if (valid) {
-          const { id, headblock, trade, ...prop } =
-            this.robotForm
+          const { id, headblock, trade, ...prop } = this.robotForm
 
           const params = {
             headblock: headblock ? 'Y' : 'N',
@@ -463,6 +464,7 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data
+
       if (fn === 'edit') {
         // this.getRobotUserArr();
         this.formName = '编辑币汇交易对'
@@ -492,8 +494,8 @@ export default {
             symbol,
             iconUrl,
             chineseName,
-            minMove,
-            maxMove,
+            minMove: minMove || '',
+            maxMove: maxMove || '',
             priceDiff,
             minVol,
             dealDistance,
@@ -541,7 +543,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach((v) => {
+      this.searchCofig.forEach(v => {
         v['value'] = ''
       })
       // this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -571,7 +573,7 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records
-        records.forEach((v) => {
+        records.forEach(v => {
           // y 是 n 否
           v['headblock'] = v['headblock'] === 'Y' ? true : false
           v['trade'] = v['trade'] === 'Y' ? true : false

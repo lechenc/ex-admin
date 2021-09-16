@@ -3462,4 +3462,14 @@ export default class api {
   static apiEditCoinForexPairsNightFee(data) {
     return Fetch.post('/forex/admin/updateForexCoinRateBatch', data)
   }
+
+  // 合约管理/风控管理/用户监控列表 列表
+  static getContractUserMonitorList(data) {
+    return Fetch.post('/user/risk/query', data)
+  }
+
+  // 合约管理/风控管理/用户监控列表 列表
+  // static getContractUserMonitorList(data) {
+  //   return Fetch.post('/admin/user/list', data)
+  // }
 }
