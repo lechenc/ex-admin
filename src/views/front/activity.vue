@@ -154,7 +154,7 @@ export default {
       this.requiredParams(query_data)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
-      const res = await $api.getActivityList(query_data)
+      const res = await $api.getActivityLists(query_data)
       if (res) {
         const { records, total, current, pages } = res.data.data
         if (records.length) {
