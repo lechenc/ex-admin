@@ -5,8 +5,8 @@ const coinForexDealListCol = [
     prop: 'orderNo'
   },
   {
-    label: '交易账户',
-    prop: 'uid'
+    label: '仓位ID',
+    prop: 'positionsId'
   },
   {
     label: '交易产品',
@@ -75,8 +75,8 @@ const coinForexDealListConfig = [
   },
   {
     type: 'text',
-    label: '订单号',
-    prop: 'orderId',
+    label: '仓位ID',
+    prop: 'positionId',
     value: ''
   },
   {
@@ -102,8 +102,8 @@ const coinForexEntrustListCol = [
     prop: 'orderId'
   },
   {
-    label: '交易账户',
-    prop: 'uid'
+    label: '仓位ID',
+    prop: 'positionsId'
   },
   {
     label: '交易产品',
@@ -165,8 +165,8 @@ const coinForexEntrustListConfig = [
 
   {
     type: 'text',
-    label: '订单号',
-    prop: 'orderId',
+    label: '仓位ID',
+    prop: 'positionId',
     value: ''
   },
   {
@@ -221,8 +221,8 @@ const coinForexNotCloseListCol = [
     prop: 'orderNo'
   },
   {
-    label: '交易账户',
-    prop: 'uid'
+    label: '仓位ID',
+    prop: 'id'
   },
   {
     label: '交易产品',
@@ -299,8 +299,8 @@ const coinForexNotCloseListConfig = [
   },
   {
     type: 'text',
-    label: '订单号',
-    prop: 'orderId',
+    label: '仓位ID',
+    prop: 'positionId',
     value: ''
   },
   {
@@ -447,14 +447,14 @@ const coinForexRateCol = [
     prop: 'updated'
   },
 
-  {
-    label: '手动配置开关',
-    prop: 'enable',
-    width: '120',
-    type: 'switch',
-    fn: 'trswitch',
-    alias: 'trswitch'
-  },
+  // {
+  //   label: '手动配置开关',
+  //   prop: 'enable',
+  //   width: '120',
+  //   type: 'switch',
+  //   fn: 'trswitch',
+  //   alias: 'trswitch'
+  // },
   {
     label: '操作',
     prop: 'action',

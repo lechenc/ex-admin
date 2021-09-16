@@ -1103,6 +1103,10 @@ const transferCol = [
     prop: 'orderNo'
   },
   {
+    label: '交易订单号',
+    prop: 'relateRecdId'
+  },
+  {
     label: 'UID',
     prop: 'uid'
   },
