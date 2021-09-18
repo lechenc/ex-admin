@@ -5,7 +5,7 @@
         cal-text="活动奖金统计"
         :configs="searchCofig"
         :excel-loading="excelLoading"
-        :export-excel="true"
+        :export-excel="btnArr.includes('excel')"
         :cal-loading="calLoading"
         :cal-total="true"
         @do-search="doSearch"
@@ -65,12 +65,14 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       formLabelWidth: '120px',
-      qrcodeShow: false // 是否显示验证码
+      qrcodeShow: false, // 是否显示验证码
+      btnArr: []
     }
   },
   mounted() {
     const authObj = this.$util.getAuthority('Activity', activityCol, activityColNoBtn)
     this.configs = authObj.val
+    this.btnArr = authObj.btnArr || []
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
