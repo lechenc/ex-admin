@@ -381,7 +381,16 @@ export default {
       // }
       this.$refs['robotForm'].validate(async valid => {
         if (valid) {
-          const { id, uid, status, isMock, minProportion, maxProportion, ...prop } = this.robotForm
+          const {
+            id,
+            uid,
+            status,
+            isMock,
+            minProportion,
+            proportion,
+            maxProportion,
+            ...prop
+          } = this.robotForm
           let userId = ''
           if (id !== '') {
             userId = this.robotForm.userId

@@ -18,8 +18,8 @@ import { MessageBox } from 'element-ui'
 
 axios.defaults.baseURL = window.SERVER_PATH
 
-// axios.defaults.baseURL = 'http://192.168.0.90/api' // 开发
-// axios.defaults.baseURL = "https://exchange-admin-uat.alphatest.vip/api"; // 预发布
+//axios.defaults.baseURL = 'http://trade-home-test.alphatest.vip' // 开发
+// axios.defaults.baseURL = 'https://exchange-admin-test.alphatest.vip/api' // 预发布
 
 // request 拦截器
 axios.interceptors.request.use(
