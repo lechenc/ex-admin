@@ -400,7 +400,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AgentList', [], []);
-    this.btnArr = authObj.btnArr || [] || [];
+    this.btnArr = authObj.btnArr || [] || [] || [];
     // // 这个页面没用table组件，而是写死在页面，那就特殊处理，看返回的里面有没有action的对象，没有就不能操作按钮
     // if (this.configs && this.configs.length > 0 && this.configs[this.configs.length - 1].type == 'action') {
     //   this.isCURDAuth = true;

@@ -1,7 +1,7 @@
 <template>
   <div class="acceptanceList-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <div class="container-btn">
@@ -654,7 +654,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AcceptanceList', acceptanceCol, acceptanceColNoBtn);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(acceptanceConfig);
     // 初始化今天，之前的时间

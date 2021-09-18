@@ -18,7 +18,7 @@
             </el-input> </el-form-item
         ></el-col>
 
-        <el-col :span="1" style="text-align: center; font-size: 17px; line-height: 38px"> ~ </el-col>
+        <el-col :span="2" style="text-align: center; font-size: 17px; line-height: 38px"> ~ </el-col>
         <el-col :span="11">
           <el-form-item label="" prop="target2" label-width="0">
             <el-input

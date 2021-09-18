@@ -15,7 +15,7 @@ import Layout from '@/layout/index'
 
 Vue.use(Router)
 
-import Login from '../views/login/index'
+// import Login from '../views/login/index'
 // const Login = resolve => require(['../views/login'], resolve);
 const dashboard = resolve => require(['../views/dashboard/homePage'], resolve)
 // 使用了vue-routerd的[Lazy Loading Routes](https://router.vuejs.org/en/advanced/lazy-loading.html)
@@ -1041,22 +1041,22 @@ export const asyncRouterMap = [
         path: 'coinForexPairs',
         name: 'CoinForexPairs',
         redirect: '/coinForex/coinForexPairs/coinForexPairsConfigs',
-        meta: { title: '交易品种设置', icon: '', role: [] },
+        meta: { title: '币汇交易对设置', icon: '', role: [] },
         children: [
           {
             path: 'coinForexPairsConfigs',
             name: 'CoinForexPairsConfigs',
             component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
-            meta: { title: '交易对设置', icon: '', role: [] },
+            meta: { title: '交易对设置', icon: '', role: [] }
           },
 
           {
             path: 'coinForexPairsNightFee',
             name: 'CoinForexPairsNightFee',
             component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsNightFee'),
-            meta: { title: '隔夜费设置', icon: '', role: [] },
-          },
-        ],
+            meta: { title: '隔夜费设置', icon: '', role: [] }
+          }
+        ]
       },
 
       // 币汇财务管理
@@ -1070,16 +1070,16 @@ export const asyncRouterMap = [
             path: 'coinForexAccount',
             name: 'CoinForexAccount',
             component: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
-            meta: { title: '币汇流水', icon: '', role: [] },
+            meta: { title: '币汇流水', icon: '', role: [] }
           },
 
           {
             path: 'coinForexRate',
             name: 'CoinForexRate',
             component: () => import('@/views/coinForex/coinForexfinance/coinForexRate'),
-            meta: { title: '汇率查询', icon: '', role: [] },
-          },
-        ],
+            meta: { title: '汇率查询', icon: '', role: [] }
+          }
+        ]
       },
 
       // 币汇用户管理
@@ -1109,9 +1109,9 @@ export const asyncRouterMap = [
             path: 'coinForexRobotList',
             name: 'CoinForexRobotList',
             component: () => import('@/views/coinForex/coinForexRobot/coinForexRobotList'),
-            meta: { title: '币汇机器人', icon: '', role: [] },
-          },
-        ],
+            meta: { title: '币汇机器人', icon: '', role: [] }
+          }
+        ]
       },
 
       // 币汇交易管理
@@ -1132,31 +1132,25 @@ export const asyncRouterMap = [
             path: 'coinForexEntrustList',
             name: 'CoinForexEntrustList',
             component: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
-            meta: { title: '委托报表', icon: '', role: [] },
+            meta: { title: '委托报表', icon: '', role: [] }
           },
 
           {
             path: 'coinForexNotCloseList',
             name: 'CoinForexNotCloseList',
             component: () => import('@/views/coinForex/coinForexDeal/coinForexNotCloseList'),
-            meta: { title: '未平仓报表', icon: '', role: [] },
+            meta: { title: '未平仓报表', icon: '', role: [] }
           },
 
           {
             path: 'coinForexNetWorth',
             name: 'CoinForexNetWorth',
             component: () => import('@/views/coinForex/coinForexDeal/coinForexNetWorth'),
-            meta: { title: '净值监控', icon: '', role: [] },
-          },
-        ],
-      },
-
-
-
-      
-
-      
-    ],
+            meta: { title: '净值监控', icon: '', role: [] }
+          }
+        ]
+      }
+    ]
   },
   // 星球（标仓管理）
   {
@@ -1834,6 +1828,12 @@ export const asyncRouterMap = [
             name: 'HighFrequencyMonitor',
             component: () => import('@/views/contract/risk/highFrequencyMonitor'),
             meta: { title: '高频监控列表', icon: '', role: [] }
+          },
+          {
+            path: 'contractUserMonitor',
+            name: 'ContractUserMonitor',
+            component: () => import('@/views/contract/risk/contractUserMonitor'),
+            meta: { title: '用户监控列表', icon: '', role: [] }
           }
         ]
       },

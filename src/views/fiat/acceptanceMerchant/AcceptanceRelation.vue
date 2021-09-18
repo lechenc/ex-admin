@@ -458,7 +458,7 @@ export default {
 
   mounted() {
     let authObj = this.$util.getAuthority('AcceptanceRelation', [], []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
 
     this.searchCofig = this.$util.clone(agentListRelationConfig);
     this.getList();

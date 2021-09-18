@@ -2297,7 +2297,107 @@ const agentPlacesConfigsDetailCol = [
   }
 ]
 
+const contractUserMonitorCol = [
+  {
+    label: '用户UID',
+    prop: 'uid'
+  },
+  {
+    label: '上级代理商UID',
+    prop: 'agentId'
+  },
+  {
+    label: '最上级代理商UID',
+    prop: 'topAgentId'
+  },
+  {
+    label: '开仓与平仓间隔时（笔）',
+    prop: 'intervalCount'
+  },
+  {
+    label: '合约单笔盈利达到（笔）',
+    prop: 'singleOrderCount'
+  },
+  {
+    label: '合约累计盈利达到（USDT）',
+    prop: 'totalOrderProfit'
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 200,
+    btnGroup: [
+      {
+        label: '平仓记录',
+        fn: 'toCloseContract',
+        type: 'text'
+      },
+      {
+        label: '用户管理',
+        fn: 'toUserlistDetail',
+        type: 'text'
+      }
+    ]
+  }
+]
+
+const contractUserMonitorConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'timeRangeStart',
+    prop2: 'timeRangeEnd',
+    value: ''
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'onlyNumber',
+    label: '上级代理商UID',
+    prop: 'agentId',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'onlyNumber',
+    label: '最上级代理端UID',
+    prop: 'topAgentId',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'text',
+    minWidth: '250px',
+    label: '风控筛选条件：合约单笔盈利大于',
+    prop: 'singleOrderGt',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'text',
+    label: '合约累计盈利大于',
+    prop: 'totalOrderGt',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'text',
+    label: '开仓与平仓间隔时（s）',
+    prop: 'interval',
+    value: '',
+    placeHolder: '请输入'
+  }
+]
+
 export {
+  contractUserMonitorCol,
+  contractUserMonitorConfig,
   agentPlacesConfigsDetailCol,
   agentPlacesConfigsCol,
   agentPlacesConfigsConfig,

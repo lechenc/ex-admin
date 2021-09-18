@@ -6,7 +6,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         :excelLoading="excelLoading"
-        :exportExcel="true"
+        :exportExcel="btnArr.includes('excel')" 
         @do-exportExcel="exportExcel"
         :calLoading="calLoading"
         :calTotal="true"
@@ -68,6 +68,7 @@ export default {
       coinList:[],  //币种列表
       // totalExFee: "", // 手续费总计
       // totalArrivalAccount: "", // 到账总计
+      btnArr:[]
     };
   },
   methods: {
@@ -164,6 +165,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('RevenueRecords', revenueRecordsCol, []);
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = revenueRecordsCol;
     this.searchCofig = this.$util.clone(revenueRecordsConfig);
 

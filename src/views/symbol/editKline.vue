@@ -350,7 +350,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('KlineList', [], []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
     this.getSymbolList();
     this.getSymbolListContract();
   },

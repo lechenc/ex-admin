@@ -22,8 +22,8 @@ module.exports = {
     {
       files: '.prettierrc',
       options: {
-        parser: 'json',
-      },
-    },
-  ],
-};
+        parser: 'json'
+      }
+    }
+  ]
+}

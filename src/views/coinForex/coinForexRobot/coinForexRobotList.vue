@@ -22,27 +22,56 @@
 
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @current-change="goPage"
+        layout="total, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
 
     <!-- 添加 编辑 -->
     <el-dialog width="600px" :title="formName" :visible.sync="dialogFormVisible">
       <el-form :model="robotForm" ref="robotForm" :rules="rules">
         <el-form-item label="交易产品" :label-width="formLabelWidth" prop="foreignId">
-          <el-select v-model="robotForm.foreignId" placeholder="" wdith="20%" :disabled="!!robotForm.id">
-            <el-option v-for="(item, idx) in coinForexList" :key="idx" :label="item.label" :value="item.label"></el-option>
+          <el-select
+            v-model="robotForm.foreignId"
+            placeholder=""
+            wdith="20%"
+            :disabled="!!robotForm.id"
+          >
+            <el-option
+              v-for="(item, idx) in coinForexList"
+              :key="idx"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="下单最小范围值" :label-width="formLabelWidth" prop="minVol">
-          <el-input v-model="robotForm.minVol" autocomplete="off" type="number"></el-input>
+          <el-input
+            @input="checkVal('minVol')"
+            v-model="robotForm.minVol"
+            autocomplete="off"
+            type="number"
+          ></el-input>
         </el-form-item>
         <el-form-item label="下单最大范围值" :label-width="formLabelWidth" prop="maxVol">
-          <el-input v-model="robotForm.maxVol" autocomplete="off" type="number"></el-input>
+          <el-input
+            @input="checkVal('maxVol')"
+            v-model="robotForm.maxVol"
+            autocomplete="off"
+            type="number"
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="启动开关" :label-width="formLabelWidth" prop="enable">
-          <el-switch v-model="robotForm.enable" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+          <el-switch v-model="robotForm.enable" active-color="#13ce66" inactive-color="#ff4949">
+          </el-switch>
         </el-form-item>
 
         <!-- <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
@@ -57,18 +86,22 @@
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { coinForexRobotListCol, coinForexRobotListColNoBtn, coinForexRobotListConfig } from '@/config/column/coinForex';
-import $api from '@/api/api';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import {
+  coinForexRobotListCol,
+  coinForexRobotListColNoBtn,
+  coinForexRobotListConfig
+} from '@/config/column/coinForex'
+import $api from '@/api/api'
 
 export default {
   name: 'CoinForexRobotList',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
   data() {
     return {
@@ -94,210 +127,221 @@ export default {
           {
             required: true,
             message: '必填',
-            trigger: 'blur',
-          },
+            trigger: 'blur'
+          }
         ],
 
         minVol: [
           {
             required: true,
             message: '必填',
-            trigger: 'change',
-          },
+            trigger: 'change'
+          }
         ],
 
         maxVol: [
           {
             required: true,
             message: '必填',
-            trigger: 'change',
-          },
-        ],
+            trigger: 'change'
+          }
+        ]
       },
       formLabelWidth: '195px',
       userArr: [], // 主流币机器人列表
       coinForexList: [],
-      dialogFormVisible: false,
-    };
+      dialogFormVisible: false
+    }
   },
 
   methods: {
+    // 对输入值的范围进行限制
+    checkVal(val) {
+      // this.robotForm[val] = (this.robotForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3'); // 4小数
+      if (this.robotForm[val] < 0) {
+        this.robotForm[val] = 0
+      }
+    },
     getRangeVal(val) {},
     // 添加交易对
     addRobot() {
-      this.formName = '添加币汇机器人';
-      this.dialogFormVisible = true;
+      this.formName = '添加币汇机器人'
+      this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['robotForm'].resetFields();
+        this.$refs['robotForm'].resetFields()
         this.robotForm = {
           id: '',
           foreignId: '',
           minVol: '',
           maxVol: '',
-          enable: false,
-        };
-      });
+          enable: false
+        }
+      })
     },
     // 提交
     confirmOp() {
-      this.$refs['robotForm'].validate(async (valid) => {
+      this.$refs['robotForm'].validate(async valid => {
         if (valid) {
-          const { id, foreignId, enable, ...prop } = this.robotForm;
-          let userId = '';
-          if (id !== '') {
-            userId = this.robotForm.userId;
-          }
+          const { id, foreignId, enable, ...prop } = this.robotForm
+          let symbolKey = this.coinForexList.find(v => {
+            return v.value == foreignId
+          }).label
           const params = {
             foreignId,
+            symbolKey,
             enable: enable ? 1 : 0,
-            ...prop,
-          };
+            ...prop
+          }
 
           // 新增 编辑
           const res = !id
             ? await $api.apiSaveCoinForexRobotList(params)
             : await $api.apiSaveCoinForexRobotList({
                 id,
-                ...params,
-              });
+                ...params
+              })
           if (res) {
-            let txt = !id ? '添加成功' : '编辑成功';
+            let txt = !id ? '添加成功' : '编辑成功'
             this.$message({
               message: res.data.message,
-              type: 'success',
-            });
-            this.dialogFormVisible = false;
-            this.getList();
+              type: 'success'
+            })
+            this.dialogFormVisible = false
+            this.getList()
           }
-          this.btnLoading = false;
+          this.btnLoading = false
         }
-      });
+      })
     },
     async doHandle(data) {
-      const { fn, row } = data;
+      const { fn, row } = data
       if (fn === 'edit') {
         // this.getRobotUserArr();
-        this.formName = '编辑币汇机器人';
-        this.dialogFormVisible = true;
+        this.formName = '编辑币汇机器人'
+        this.dialogFormVisible = true
         this.$nextTick(() => {
-          this.$refs['robotForm'].resetFields();
-          const { id, foreignId, minVol, maxVol, enable } = row;
+          this.$refs['robotForm'].resetFields()
+          const { id, foreignId, minVol, maxVol, enable } = row
           this.robotForm = {
             id,
             foreignId,
             minVol,
             maxVol,
-            enable: enable == 1 ? true : false,
-          };
-        });
+            enable: enable == 1 ? true : false
+          }
+        })
       }
 
       if (fn === 'trswitch') {
-        const { id, foreignId, minVol, maxVol, enable } = row;
+        const { id, foreignId, minVol, maxVol, enable } = row
         let params = {
           id,
           foreignId,
           minVol,
           maxVol,
-          enable: enable ? 1 : 0,
-        };
-        this.listLoading = true;
-        const res = await $api.apiSaveCoinForexRobotList(params);
-        if (res) {
-          this.$message({ message: '切换成功', type: 'success' });
-          this.getList();
-        } else {
-          this.getList();
+          enable: enable ? 1 : 0
         }
-        this.listLoading = false;
+        this.listLoading = true
+        const res = await $api.apiSaveCoinForexRobotList(params)
+        if (res) {
+          this.$message({ message: '切换成功', type: 'success' })
+          this.getList()
+        } else {
+          this.getList()
+        }
+        this.listLoading = false
       }
     },
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach((v) => {
-        v['value'] = '';
-      });
+      this.search_params_obj = {}
+      this.searchCofig.forEach(v => {
+        v['value'] = ''
+      })
       // this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-      this.getList();
+      this.getList()
     },
 
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
 
     async getList() {
-      if (this.listLoading) return;
-      this.listLoading = true;
+      if (this.listLoading) return
+      this.listLoading = true
 
       const params = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
-      };
-      this.requiredParams(this.search_params_obj);
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getCoinForexRobotListList(params);
-      if (res) {
-        const { records, current, total, pages } = res.data.data;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
-        this.list = records;
-        records.forEach((v) => {
-          v['enable'] = v['enable'] === 1 ? true : false;
-        });
-        this.list = records;
+        pageSize: this.pageSize
       }
-      this.listLoading = false;
+      this.requiredParams(this.search_params_obj)
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.getCoinForexRobotListList(params)
+      if (res) {
+        const { records, current, total, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
+        this.list = records
+        records.forEach(v => {
+          v['enable'] = v['enable'] === 1 ? true : false
+        })
+        this.list = records
+      }
+      this.listLoading = false
     },
     formatTime(val) {
-      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
     // 时间格式 YYYY-MM-DD
     requiredParams(params) {
-      return;
+      return
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        this.searchCofig[0].value = [befV, nowV];
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+        this.searchCofig[0].value = [befV, nowV]
+        params.endTime = nowV.replace(/\//gi, '-')
+        params.startTime = befV.replace(/\//gi, '-')
       }
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
     },
 
     // 币汇产品
     async getCoinForexList() {
       this.$store.dispatch('common/getCoinForexList').then(() => {
-        this.coinForexList = this.$store.state.common.coinForexList;
-        this.searchCofig[0]['list'] = this.coinForexList;
-      });
-    },
+        this.coinForexList = this.$store.state.common.coinForexList
+        this.searchCofig[0]['list'] = this.coinForexList
+      })
+    }
   },
   mounted() {
-    let authObj = this.$util.getAuthority('CoinForexRobotList', coinForexRobotListCol, coinForexRobotListColNoBtn);
-    
-    this.btnArr = authObj.btnArr || [];
-    this.configs = authObj.val;
-    this.searchCofig = coinForexRobotListConfig;
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
-    this.getCoinForexList();
-    this.getList();
-  },
-};
+    let authObj = this.$util.getAuthority(
+      'CoinForexRobotList',
+      coinForexRobotListCol,
+      coinForexRobotListColNoBtn
+    )
+
+    this.btnArr = authObj.btnArr || [] || []
+    this.configs = authObj.val
+    this.searchCofig = coinForexRobotListConfig
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
+    this.getCoinForexList()
+    this.getList()
+  }
+}
 </script>
 <style lang="scss">
 .coinForexRobotList-container {

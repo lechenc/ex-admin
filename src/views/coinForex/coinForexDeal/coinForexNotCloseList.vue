@@ -71,7 +71,7 @@ export default {
         .getCoinForexNotCloseListExport(params)
         .then((res) => {
           this.calLoadingExcel = false;
-          fileDownload(res.data, '交易报表.xlsx');
+          fileDownload(res.data, '未平仓报表.xlsx');
         })
         .catch(() => {
           this.calLoadingExcel = false;
@@ -111,6 +111,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        orderString: 'created desc'
       };
       this.requiredParams(this.search_params_obj);
       Object.assign(params, this.search_params_obj);
@@ -156,7 +157,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('coinForexNotCloseList', coinForexNotCloseListCol, []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = coinForexNotCloseListCol;
     this.searchCofig = coinForexNotCloseListConfig;
     this.toDay = this.$util.diyTime('toDay');

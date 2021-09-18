@@ -1,31 +1,45 @@
 <template>
   <div class="user-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="false" @do-exportExcel="exportExcel" />
+      <Bsearch
+        :configs="searchCofig"
+        @do-search="doSearch"
+        @do-reset="doReset"
+        :excelLoading="excelLoading"
+        :exportExcel="btnArr.includes('excel')"
+        @do-exportExcel="exportExcel"
+      />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"></el-pagination>
+      <el-pagination
+        background
+        @current-change="goPage"
+        layout="total, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-size="pageSize"
+        :total="total"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { userCol, userColNoBtn, userConfig } from '@/config/column/user';
-import $api from '@/api/api';
-import utils from '@/utils/util';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { userCol, userColNoBtn, userConfig } from '@/config/column/user'
+import $api from '@/api/api'
+import utils from '@/utils/util'
 export default {
   name: 'UserList',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
   data() {
     return {
@@ -42,122 +56,127 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-    };
+      btnArr: []
+    }
   },
   filters: {
-    userType(val) {},
+    userType(val) {}
   },
   methods: {
     doHandle(data) {
-      const { fn, row } = data;
+      const { fn, row } = data
       if (fn === 'viewDetail') {
         this.$router.push({
           path: '/user/userlistDetail',
           query: {
-            id: row.uid,
-          },
-        });
+            id: row.uid
+          }
+        })
       }
     },
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach((v) => {
-        v['value'] = '';
-      });
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
-      this.getList();
+      this.search_params_obj = {}
+      this.searchCofig.forEach(v => {
+        v['value'] = ''
+      })
+      this.searchCofig[0].value = [
+        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      ]
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     exportExcel(val) {
-      this.search_params_obj = val.query;
-      const num = val.num;
-      utils.exportData.apply(this, [num]);
+      this.search_params_obj = val.query
+      const num = val.num
+      utils.exportData.apply(this, [num])
     },
     // 首屏表格
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        appId: 0,
-      };
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getUserList(params);
-      if (res) {
-        const { records, total, pages, current } = res.data.data;
-        this.total = +total;
-        this.pages = +pages;
-        this.current_page = current;
-        this.list = records;
-        this.dataList = records;
+        appId: 0
       }
-      this.listLoading = false;
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getUserList(params)
+      if (res) {
+        const { records, total, pages, current } = res.data.data
+        this.total = +total
+        this.pages = +pages
+        this.current_page = current
+        this.list = records
+        this.dataList = records
+      }
+      this.listLoading = false
     },
     async queryData(params) {
-      this.excelLoading = true;
-      this.requiredParams(params);
-      params.appId = 0;
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getUserList(params);
-      this.excelLoading = false;
-      return res;
+      this.excelLoading = true
+      this.requiredParams(params)
+      params.appId = 0
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.getUserList(params)
+      this.excelLoading = false
+      return res
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        this.searchCofig[0].value = [befV, nowV];
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+        this.searchCofig[0].value = [befV, nowV]
+        params.endTime = nowV.replace(/\//gi, '-')
+        params.startTime = befV.replace(/\//gi, '-')
       }
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
     },
     formatTime(val) {
-      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
     async getLanguageList() {
-      const res = await $api.apiGetLanguageList({});
+      const res = await $api.apiGetLanguageList({})
       if (res) {
         let list = res.data.data
-         this.searchCofig[3]['list']  = list.map((v)=>{
+        this.searchCofig[3]['list'] = list.map(v => {
           return {
-            value:v.code,
-            label:v.label,
+            value: v.code,
+            label: v.label
           }
-        });
+        })
       }
-    },
+    }
   },
   mounted() {
-    let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
-    this.configs = authObj.val;
+    let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn)
+    this.configs = authObj.val
+    this.btnArr = authObj.btnArr || []
 
     // 初始化今天，和昨天的时间
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
 
-    this.searchCofig = this.$util.clone(userConfig);
-    this.getList();
-    this.getLanguageList();
-  },
-};
+    this.searchCofig = this.$util.clone(userConfig)
+    this.getList()
+    this.getLanguageList()
+  }
+}
 </script>
 
 <style lang="scss">

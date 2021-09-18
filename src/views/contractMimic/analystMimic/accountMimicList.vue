@@ -9,7 +9,7 @@
 <template>
   <div class="notice-container">
     <div class="container-top">
-      <Bsearch :configs="searchConfig" @do-search="doSearch" @do-reset="doReset" calText="合约统计" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" :calTotal="true" @do-calTotal="calTotal" />
+      <Bsearch :configs="searchConfig" @do-search="doSearch" @do-reset="doReset" calText="合约统计" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" :calTotal="true" @do-calTotal="calTotal" />
     </div>
     <div class="notice-button">
       <el-button type="primary" size="medium" @click="create(false)">创建</el-button>
@@ -246,7 +246,8 @@ export default {
       dataList: [],
       totalDialog: false,
       passCancelId: '',
-      batchCreate: false // 是否批量创建订单
+      batchCreate: false, // 是否批量创建订单
+      btnArr:[]
     };
   },
   watch: {
@@ -449,6 +450,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('AccountMimicList', accountMimicListCol, []);
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = accountMimicListCol;
     this.searchConfig = this.$util.clone(accountMimicListConfig);
     this.toDay = this.$util.diyTime('toDay');

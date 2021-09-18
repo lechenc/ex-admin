@@ -613,7 +613,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('BusinessRelationLists', [], []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.searchCofig = this.$util.clone(businessRelationListsConfig);
     this.getList(1);
   },

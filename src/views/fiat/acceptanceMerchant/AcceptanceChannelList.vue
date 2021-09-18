@@ -1,7 +1,7 @@
 <template>
   <div class="acceptanceChannelList-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <div class="container-btn">
@@ -161,7 +161,7 @@ export default {
             let { channelName, advertiserUid } = this.ruleForm;
             let params = { channelName, advertiserUid };
             const res = await $api.createAcceptanceChannel(params);
-            console.log(res);
+            
             if (res) {
               this.$message.success('创建成功');
               this.createVisible = false;
@@ -195,7 +195,7 @@ export default {
     },
 
     exportExcel(val) {
-      console.log('val',val)
+      
       this.search_params_obj = val.query;
       const num = val.num;
       utils.exportData.apply(this, [num]);
@@ -225,7 +225,7 @@ export default {
       Object.assign(query_data, this.search_params_obj);
       this.listLoading = true;
       const res = await $api.getAcceptanceChannelList(query_data);
-      console.log(res.data.data);
+      
       if (res) {
         const { records, total, current, pages } = res.data.data;
         this.total = total;
@@ -266,7 +266,7 @@ export default {
 
   mounted() {
     let authObj = this.$util.getAuthority('AcceptanceChannelList', acceptanceChannelListCol, []);
-    this.btnArr = authObj.btnArr;
+    this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(acceptanceChannelListConfig);
     this.getList();

@@ -528,7 +528,7 @@ export default {
 
     // 根据是否有编辑权限来决定是否可编辑切换
     let authObj = this.$util.getAuthority('UserList', userCol, userColNoBtn);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     if (!authObj.isModify) {
       this.isModify = true;
     } else {

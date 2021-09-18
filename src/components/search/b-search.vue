@@ -32,6 +32,26 @@
               </el-select>
             </div>
 
+            <!-- 选择框 带搜索功能 -->
+            <div v-if="config.type === 'select_search'">
+              <div>{{ config.label }}</div>
+              <el-select
+                v-model="config.value"
+                class="text-input"
+                filterable
+                :clearable="!config.isClear"
+                :placeholder="config.placeHolder"
+                :size="sizeDiy"
+              >
+                <el-option
+                  v-for="(item, i) in config.list"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+
             <!-- 选择框 label加粗 -->
             <div v-if="config.type === 'select_labelBold'">
               <div class="label_bold">{{ config.label }}</div>
@@ -287,14 +307,18 @@
           </div>
         </div>
         <div class="search-footer">
+          <el-button v-if="setWindControl" type="primary" :size="sizeDiy" @click="doWindControl">
+            {{ windControlText }}
+          </el-button>
           <el-button
             v-if="calTotal"
             plain
             :size="sizeDiy"
             :loading="calLoading"
             @click="doCalTotal"
-            >{{ calText }}</el-button
           >
+            {{ calText }}
+          </el-button>
           <el-button
             v-if="calTotalExcel"
             v-loading.fullscreen.lock="calLoadingExcel"
@@ -302,20 +326,28 @@
             :size="sizeDiy"
             element-loading-text="拉取中"
             @click="doCalTotalExcel"
-            >{{ calTextExcel }}</el-button
           >
+            {{ calTextExcel }}
+          </el-button>
           <!-- 预估统计 -->
-          <el-button v-if="estimate" plain :size="sizeDiy" :loading="calLoading" @click="doEstimate"
-            >预估统计</el-button
+          <el-button
+            v-if="estimate"
+            plain
+            :size="sizeDiy"
+            :loading="calLoading"
+            @click="doEstimate"
           >
+            预估统计
+          </el-button>
           <el-button
             v-if="statistics"
             plain
             :size="sizeDiy"
             :loading="calLoading"
             @click="doEstimate"
-            >统计</el-button
           >
+            统计
+          </el-button>
 
           <el-button type="primary" :size="sizeDiy" @click="doSearch">查询</el-button>
           <el-button v-if="!noReset" :size="sizeDiy" @click="reset">重置</el-button>
@@ -331,13 +363,13 @@
             @click.native.stop
           >
             <el-button plain :loading="excelLoading">
-              导出Excel<i class="el-icon-arrow-down el-icon--right" />
+              导出Excel<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native.stop="doExportExcel(0)">当前页</el-dropdown-item>
-              <el-dropdown-item @click.native.stop="doExportExcel(1)"
-                >当前查询条件</el-dropdown-item
-              >
+              <el-dropdown-item @click.native.stop="doExportExcel(1)">
+                当前查询条件
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -349,13 +381,15 @@
 </template>
 
 <script>
-import utils from '@/utils/util'
+// import utils from '@/utils/util'
 export default {
   name: 'BSearch',
   props: {
     configs: {
       type: Array,
-      default: []
+      default() {
+        return []
+      }
     },
     exportExcel: {
       type: Boolean,
@@ -372,6 +406,14 @@ export default {
     calTotal: {
       type: Boolean,
       default: false
+    },
+    setWindControl: {
+      type: Boolean,
+      default: false
+    },
+    windControlText: {
+      type: String,
+      default: '提币风控参数设置'
     },
     calText: {
       type: String,
@@ -466,21 +508,21 @@ export default {
     },
 
     pickerOptionsStart_s(val) {
-      const endDateVal = val[1]
+      // const endDateVal = val[1]
       return {
-        disabledDate(date) {
-          if (endDateVal) {
-            const timeNow = new Date(val[1]).getTime()
-            return date.getTime() > timeNow
-          }
-          const curDate = new Date()
-          // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
-          const overT = new Date()
-          overT.setHours(23)
-          overT.setMinutes(59)
-          overT.setSeconds(59)
-          return +date > +overT
-        },
+        // disabledDate(date) {
+        //   if (endDateVal) {
+        //     const timeNow = new Date(val[1]).getTime()
+        //     return date.getTime() > timeNow
+        //   }
+        //   // const curDate = new Date()
+        //   // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
+        //   const overT = new Date()
+        //   overT.setHours(23)
+        //   overT.setMinutes(59)
+        //   overT.setSeconds(59)
+        //   return +date > +overT
+        // },
         disabledDate(date) {
           const seven = 1593532800000 // 2020年7月1日的时间戳
           return date < seven
@@ -496,7 +538,7 @@ export default {
             const timeNow = new Date(val[1]).getTime()
             return date.getTime() > timeNow
           }
-          const curDate = new Date()
+          // const curDate = new Date()
           // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
           const overT = new Date()
           overT.setHours(23)
@@ -511,7 +553,7 @@ export default {
       return {
         disabledDate(date) {
           if (beginDateVal) {
-            const curDate = new Date()
+            // const curDate = new Date()
             // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
             const overT = new Date()
             overT.setHours(23)
@@ -521,7 +563,7 @@ export default {
             const timeNow = new Date(val[0]).getTime()
             return date.getTime() < timeNow || +date > +overT
           }
-          const curDate = new Date()
+          // const curDate = new Date()
           // 不设置日期为23：59：59那么默认的可能是其他时间，导致当天不能可选
           const overT = new Date()
           overT.setHours(23)
@@ -601,6 +643,10 @@ export default {
       const query = this.getQuery()
       this.$emit('do-parent', query)
     },
+    doWindControl() {
+      const query = this.getQuery()
+      this.$emit('do-wind-control', query)
+    },
     doCalTotal() {
       const query = this.getQuery()
       this.$emit('do-calTotal', query)
@@ -625,8 +671,7 @@ export default {
       if (!val1 || !val2) return
       const one = Number(val1)
       const max = Number(val2)
-      if (one <= max) {
-      } else {
+      if (one > max) {
         this.$message.error('输入值不得大于最大值')
       }
     },
@@ -634,8 +679,7 @@ export default {
       if (!val1 || !val2) return
       const one = Number(val2)
       const min = Number(val1)
-      if (one >= min) {
-      } else {
+      if (one < min) {
         this.$message.error('输入值不得小于最小值')
       }
     },
@@ -745,11 +789,7 @@ export default {
                 width: 100%;
                 margin-bottom: 5px;
               }
-              .el-date-editor {
-              }
             }
-          }
-          > div {
           }
         }
       }

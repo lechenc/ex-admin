@@ -10,7 +10,13 @@
 <template>
   <div class="recharge-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch
+        :configs="searchCofig"
+        @do-search="doSearch"
+        @do-reset="doReset"
+        :exportExcel="btnArr.includes('excel')"
+        @do-exportExcel="exportExcel"
+      />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -34,16 +40,16 @@
   </div>
 </template>
 <script>
-import Bsearch from "@/components/search/b-search";
-import Btable from "@/components/table/b-table";
-import { cardRecordCol, cardRecordColNoBtn, cardRecordConfig } from "@/config/column/merchant";
-import $api from "@/api/api";
-import utils from "@/utils/util";
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import { cardRecordCol, cardRecordColNoBtn, cardRecordConfig } from '@/config/column/merchant'
+import $api from '@/api/api'
+import utils from '@/utils/util'
 
 export default {
   components: {
     Btable,
-    Bsearch,
+    Bsearch
   },
   data() {
     return {
@@ -57,75 +63,78 @@ export default {
       pageSize: 10, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
-    };
+      btnArr: []
+    }
   },
   methods: {
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
-        v["value"] = "";
-      });
-      this.getList();
+      this.search_params_obj = {}
+      this.searchCofig.forEach((v) => {
+        v['value'] = ''
+      })
+      this.getList()
     },
     exportExcel() {
-      utils.exportData.apply(this, [0]);
+      utils.exportData.apply(this, [0])
     },
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     // getlist
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const query_data = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
-      };
-      if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        pageSize: this.pageSize
       }
-      Object.assign(query_data, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.atobTradeList(query_data);
+      if (this.search_params_obj.startTime) {
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
+      }
+      Object.assign(query_data, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.atobTradeList(query_data)
       if (res) {
-        const { list, total, pageNum, pages } = res.data.result.pageData;
-        this.total = +total;
-        this.pages = +pages;
-        this.current_page = +pageNum;
-        this.list = list;
-        this.dataList = list;
-        this.listLoading = false;
+        const { list, total, pageNum, pages } = res.data.result.pageData
+        this.total = +total
+        this.pages = +pages
+        this.current_page = +pageNum
+        this.list = list
+        this.dataList = list
+        this.listLoading = false
       }
     },
     formatTime(val) {
-      return ~(val+"").indexOf("-") ? val : this.$util.dateFormat(val, "YYYY-MM-DD hh:mm:ss");
-    },
+      return ~(val + '').indexOf('-') ? val : this.$util.dateFormat(val, 'YYYY-MM-DD hh:mm:ss')
+    }
   },
   mounted() {
-    this.configs = cardRecordCol;
-    this.searchCofig = cardRecordConfig;
-    this.$store.dispatch("common/getFiatCoinList").then(() => {
-      this.searchCofig[4]["list"] = this.$store.state.common.fiatcoinlist;
-    });
-    this.getList();
-  },
-};
+    let authObj = this.$util.getAuthority('CardRecord', cardRecordCol, [])
+    this.btnArr = authObj.btnArr || []
+    this.configs = cardRecordCol
+    this.searchCofig = cardRecordConfig
+    this.$store.dispatch('common/getFiatCoinList').then(() => {
+      this.searchCofig[4]['list'] = this.$store.state.common.fiatcoinlist
+    })
+    this.getList()
+  }
+}
 </script>
 <style scope lang="scss">
 .recharge-container {

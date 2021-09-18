@@ -111,6 +111,7 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
+        orderString: 'order_time desc'
       };
       this.requiredParams(this.search_params_obj);
       Object.assign(params, this.search_params_obj);
@@ -156,7 +157,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('coinForexEntrustList', coinForexEntrustListCol, []);
-    this.btnArr = authObj.btnArr || [];
+    this.btnArr = authObj.btnArr || [] || [];
     this.configs = coinForexEntrustListCol;
     this.searchCofig = coinForexEntrustListConfig;
     this.toDay = this.$util.diyTime('toDay');

@@ -1,7 +1,7 @@
 <template>
   <div class="acceptanceSetting-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel" />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -98,6 +98,7 @@ export default {
       }
     };
     return {
+      btnArr: [],
       weight: '',
       authorizationLimit: '',
       payCount: '',
@@ -445,7 +446,7 @@ export default {
       this.listLoading = true;
       const res = await $api.getUserGetMerchantInfo(query_data);
       if (res) {
-        console.log(res);
+        
         const { records, total, current, pages } = res.data.data;
         this.total = total;
         this.pages = pages;
@@ -503,6 +504,7 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority('AcceptanceSetting', acceptanceSettingCol, acceptanceSettingColNoBtn);
+    this.btnArr = authObj.btnArr || [];
     this.configs = authObj.val;
     this.searchCofig = this.$util.clone(acceptanceSettingConfig);
     // 初始化今天，之前的时间

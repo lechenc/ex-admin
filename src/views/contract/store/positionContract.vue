@@ -1,7 +1,7 @@
 <template>
   <div class="positionContract-container">
     <div class="container-top">
-      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="true" @do-exportExcel="exportExcel"  />
+      <Bsearch :calTotal="true" @do-calTotal="calTotal" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" :excelLoading="excelLoading" :exportExcel="btnArr.includes('excel')" @do-exportExcel="exportExcel"  />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
@@ -91,6 +91,7 @@ export default {
       excelLoading: false,
 
       dataList: [],
+      btnArr:[]
     };
   },
   methods: {
@@ -229,6 +230,8 @@ export default {
     },
   },
   mounted() {
+    let authObj = this.$util.getAuthority('PositionContract', positionContractCol, []);
+    this.btnArr = authObj.btnArr || [] || []
     this.configs = positionContractCol;
     this.searchCofig = this.$util.clone(positionContractConfig);
     // 初始化今天，和前天的时间
