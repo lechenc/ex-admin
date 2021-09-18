@@ -69,7 +69,7 @@ export default {
     }
   },
   mounted() {
-    const authObj = this.$util.getAuthority('ExtractForeign', activityCol, activityColNoBtn)
+    const authObj = this.$util.getAuthority('Activity', activityCol, activityColNoBtn)
     this.configs = authObj.val
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay')
@@ -96,6 +96,16 @@ export default {
         this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
       ]
       this.getList()
+    },
+    async queryData(params) {
+      this.excelLoading = true
+      params.isOwn = 0
+      params.appId = 0
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.getActivityLists(params)
+      this.excelLoading = false
+      return res
     },
     exportExcel(val) {
       this.search_params_obj = val.query
