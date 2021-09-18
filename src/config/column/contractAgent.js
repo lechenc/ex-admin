@@ -2373,7 +2373,8 @@ const contractUserMonitorConfig = [
   },
   {
     type: 'text',
-    label: '合约单笔盈利大于',
+    minWidth: '250px',
+    label: '风控筛选条件：合约单笔盈利大于',
     prop: 'singleOrderGt',
     value: '',
     placeHolder: '请输入'

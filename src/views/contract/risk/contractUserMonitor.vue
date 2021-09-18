@@ -98,6 +98,13 @@ export default {
     doSearch(data) {
       this.current_page = 1
       this.search_params_obj = data
+      if (
+        !this.search_params_obj.singleOrderGt &&
+        !this.search_params_obj.totalOrderGt &&
+        !this.search_params_obj.interval
+      ) {
+        return this.$message.error('请输入风控查询条件')
+      }
       if (!this.search_params_obj.timeRangeStart && !this.search_params_obj.timeRangeEnd) {
         this.search_params_obj.flag = 1
       }
@@ -112,7 +119,7 @@ export default {
         this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
         this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
       ]
-      this.getList()
+      // this.getList()
     },
     // 分页
     goPage(val) {

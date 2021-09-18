@@ -1041,7 +1041,7 @@ export const asyncRouterMap = [
         path: 'coinForexPairs',
         name: 'CoinForexPairs',
         redirect: '/coinForex/coinForexPairs/coinForexPairsConfigs',
-        meta: { title: '交易品种设置', icon: '', role: [] },
+        meta: { title: '币汇交易对设置', icon: '', role: [] },
         children: [
           {
             path: 'coinForexPairsConfigs',
