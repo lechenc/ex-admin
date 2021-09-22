@@ -1111,7 +1111,7 @@ const transferCol = [
     prop: 'orderNo'
   },
   {
-    label: '交易订单号',
+    label: '关联交易号',
     prop: 'relateRecdId'
   },
   {
