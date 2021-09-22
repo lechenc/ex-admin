@@ -5,7 +5,7 @@
         cal-text="活动奖金统计"
         :configs="searchCofig"
         :excel-loading="excelLoading"
-        :export-excel="true"
+        :export-excel="btnArr.includes('excel')"
         :cal-loading="calLoading"
         :cal-total="true"
         @do-search="doSearch"
@@ -65,12 +65,14 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       formLabelWidth: '120px',
-      qrcodeShow: false // 是否显示验证码
+      qrcodeShow: false, // 是否显示验证码
+      btnArr: []
     }
   },
   mounted() {
-    const authObj = this.$util.getAuthority('ExtractForeign', activityCol, activityColNoBtn)
+    const authObj = this.$util.getAuthority('Activity', activityCol, activityColNoBtn)
     this.configs = authObj.val
+    this.btnArr = authObj.btnArr || []
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
@@ -96,6 +98,16 @@ export default {
         this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
       ]
       this.getList()
+    },
+    async queryData(params) {
+      this.excelLoading = true
+      params.isOwn = 0
+      params.appId = 0
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.getActivityLists(params)
+      this.excelLoading = false
+      return res
     },
     exportExcel(val) {
       this.search_params_obj = val.query
@@ -154,7 +166,7 @@ export default {
       this.requiredParams(query_data)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
-      const res = await $api.getActivityList(query_data)
+      const res = await $api.getActivityLists(query_data)
       if (res) {
         const { records, total, current, pages } = res.data.data
         if (records.length) {

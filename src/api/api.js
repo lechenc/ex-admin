@@ -303,7 +303,7 @@ export default class api {
   }
 
   // 运营管理 - 运营活动 获取列表
-  static getActivityList(data) {
+  static getActivityLists(data) {
     return Fetch.post('/admin/account/activity/recharge/statisticsReward/list', data)
   }
   // 运营管理 - 运营活动 奖金统计

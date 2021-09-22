@@ -617,96 +617,34 @@ const activityCol = [
 const activityColNoBtn = [
   {
     label: 'UID',
-    prop: 'uid',
-    width: 100
+    prop: 'uid'
   },
   {
-    label: '币种',
-    prop: 'coinName'
+    label: '姓名',
+    prop: 'username'
   },
   {
-    label: '链名称',
-    prop: 'chainName'
+    label: '首日充值金额（USDT）',
+    prop: 'netAmount'
   },
   {
-    label: '提币数量',
-    prop: 'amount',
-    width: 200
+    label: '首充时间',
+    prop: 'firstRechargeTime'
+    // width: 200
   },
   {
-    label: '手续费',
-    prop: 'fee'
+    label: '奖励数量（USDT）',
+    prop: 'reward'
   },
   {
-    label: '到账数量',
-    prop: 'realAmount',
-    width: 200
+    label: '用户累计开仓交易额USDT',
+    prop: 'cumulativeTradeAmount'
+    // width: 200
   },
   {
-    label: '提币地址',
-    prop: 'toAddress',
-    width: 140
-  },
-  {
-    label: 'TXID',
-    prop: 'txId',
-    width: 200
-  },
-  {
-    label: '状态',
-    prop: 'tradeStatus',
-    type: 'filter',
-    show_type: 'text',
-    filters: [
-      { text: '待审核', val: 0 },
-      { text: '成功', val: 1 },
-      { text: '失败', val: 2 },
-      { text: '初步审核成功', val: 3 },
-      { text: '初步审核失败', val: 4 }
-    ]
-  },
-  {
-    label: '提币类型',
-    prop: 'isAuto',
-    type: 'filter',
-    show_type: 'text',
-    filters: [
-      { text: '无类型', val: 0 },
-      { text: '热钱包类型', val: 1 },
-      { text: '冷钱包类型', val: 2 }
-    ]
-  },
-  {
-    label: '提币时间',
-    prop: 'createTime',
-    width: 200
-  },
-  {
-    label: '初审时间',
-    prop: 'firstAuditTime',
-    width: 200
-  },
-  {
-    label: '初审人',
-    prop: 'firstAuditUserName'
-  },
-
-  {
-    label: '初审备注',
-    prop: 'firstRemark'
-  },
-  {
-    label: '复审时间',
-    prop: 'reviewAuditTime',
-    width: 200
-  },
-  {
-    label: '复审人',
-    prop: 'reviewAuditUserName'
-  },
-  {
-    label: '复审备注',
-    prop: 'reviewRemark'
+    label: '奖励到账金额USDT',
+    prop: 'rewardToAccount'
+    // width: 200
   }
 ]
 
