@@ -85,7 +85,7 @@ export default {
       Object.assign(params, this.search_params_obj)
       $api
         .getCoinForexDealListExport(params)
-        .then((res) => {
+        .then(res => {
           this.calLoadingExcel = false
           fileDownload(res.data, '交易报表.xlsx')
         })
@@ -106,7 +106,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach((v) => {
+      this.searchCofig.forEach(v => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [
@@ -141,7 +141,7 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records
-        records.forEach((v) => {
+        records.forEach(v => {
           v['status'] = v['status'] === 1 ? true : false
         })
         this.list = records
@@ -172,7 +172,7 @@ export default {
     async getCoinForexList() {
       this.$store.dispatch('common/getCoinForexList').then(() => {
         this.coinForexList = this.$store.state.common.coinForexList
-        this.searchCofig[3]['list'] = this.coinForexList
+        this.searchCofig[4]['list'] = this.coinForexList
       })
     }
   },
