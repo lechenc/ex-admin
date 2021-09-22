@@ -682,6 +682,12 @@ export const asyncRouterMap = [
         meta: { title: '帮助中心', icon: '', role: [] }
       },
       {
+        path: 'activity',
+        name: 'Activity',
+        component: () => import('@/views/front/activity'),
+        meta: { title: '运营活动', icon: '', role: [] }
+      },
+      {
         path: 'column',
         name: 'Column',
         component: () => import('@/views/front/column'),
