@@ -367,7 +367,7 @@
               导出Excel<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native.stop="doExportExcel(0)">当前页</el-dropdown-item>
+              <el-dropdown-item v-if="exportExcelCurrentPageIsShow" @click.native.stop="doExportExcel(0)">当前页</el-dropdown-item>
               <el-dropdown-item @click.native.stop="doExportExcel(1)">
                 当前查询条件
               </el-dropdown-item>
@@ -458,7 +458,14 @@ export default {
     dateMonthDisabled: {
       type: Boolean,
       default: false
-    }
+    },
+    // 导出表格 当前页是否显示
+    exportExcelCurrentPageIsShow: {
+      type: Boolean,
+      default: true
+    },
+
+
   },
   data() {
     return {

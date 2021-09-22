@@ -7,6 +7,7 @@
         @do-reset="doReset"
         :excelLoading="excelLoading"
         :exportExcel="btnArr.includes('excel')"
+        :exportExcelCurrentPageIsShow="false"
         @do-exportExcel="exportExcel"
       />
     </div>

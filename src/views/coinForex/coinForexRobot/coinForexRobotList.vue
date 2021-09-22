@@ -39,6 +39,7 @@
         <el-form-item label="交易产品" :label-width="formLabelWidth" prop="foreignId">
           <el-select
             v-model="robotForm.foreignId"
+            filterable
             placeholder=""
             wdith="20%"
             :disabled="!!robotForm.id"

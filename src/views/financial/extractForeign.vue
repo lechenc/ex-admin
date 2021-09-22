@@ -46,9 +46,16 @@
         @current-change="goPage"
       />
     </div>
-
+    <!-- :title="reviewTitle  + '(注意：该笔提币的币种是SHIB)'" -->
     <!-- 审核通过弹窗 -->
-    <el-dialog :visible.sync="dialogVisible" width="760px" :title="reviewTitle">
+    <el-dialog :visible.sync="dialogVisible" width="760px">
+      <div slot="title">
+        {{ reviewTitle }}
+        <span v-if="handleData.coinName != 'BTC'" style="color:red;font-weight: 700;"
+          >(注意：该笔提币的币种是{{ handleData.coinName }})</span
+        >
+      </div>
+
       <el-form ref="reviewForm" :model="reviewForm" :rules="rules">
         <el-row>
           <el-col :span="12">
