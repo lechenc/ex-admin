@@ -39,6 +39,7 @@
         <el-form-item label="交易产品" :label-width="formLabelWidth" prop="symbol">
           <el-select
             v-model="robotForm.symbol"
+            filterable
             placeholder=""
             wdith="20%"
             :disabled="!!robotForm.id"
@@ -59,7 +60,9 @@
             autocomplete="off"
             type="number"
           >
-            <template slot="append">%</template>
+            <template slot="append"
+              >%</template
+            >
           </el-input>
         </el-form-item>
         <el-form-item label="空头隔夜费率" :label-width="formLabelWidth" prop="koServiceCharge">
@@ -69,7 +72,9 @@
             autocomplete="off"
             type="number"
           >
-            <template slot="append">%</template>
+            <template slot="append"
+              >%</template
+            >
           </el-input>
         </el-form-item>
 
@@ -179,11 +184,11 @@ export default {
     },
     // 提交
     confirmOp() {
-      this.$refs['robotForm'].validate(async (valid) => {
+      this.$refs['robotForm'].validate(async valid => {
         if (valid) {
           const { id, symbol, costType, ...prop } = this.robotForm
 
-          let forexCoinId = this.coinForexList.filter((v) => {
+          let forexCoinId = this.coinForexList.filter(v => {
             return v.label == symbol
           })[0].value
 
@@ -244,7 +249,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach((v) => {
+      this.searchCofig.forEach(v => {
         v['value'] = ''
       })
       // this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -274,7 +279,7 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records
-        records.forEach((v) => {
+        records.forEach(v => {
           v['enable'] = v['enable'] === 1 ? true : false
         })
         this.list = records
