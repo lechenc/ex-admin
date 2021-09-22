@@ -51,7 +51,12 @@
     <el-dialog :visible.sync="dialogVisible" width="760px">
       <div slot="title">
         {{ reviewTitle }}
-        <span v-if="handleData.coinName != 'BTC'" style="color:red;font-weight: 700;"
+        <span
+          v-if="
+            (handleData.coinName != 'BTC' && handleData.tradeStatus == 0) ||
+              (handleData.coinName != 'BTC' && handleData.tradeStatus == 3)
+          "
+          style="color:red;font-weight: 700;"
           >(注意：该笔提币的币种是{{ handleData.coinName }})</span
         >
       </div>
