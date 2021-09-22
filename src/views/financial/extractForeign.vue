@@ -739,7 +739,7 @@ export default {
               auditOpinion: '审核通过',
               id: this.handleData.id
             }
-            if (this.handleStatus === 'nextReview') {
+            if (this.handleStatus === 'finalReview') {
               params.txId = this.reviewForm.txId
             }
             this.btnLoading = true
