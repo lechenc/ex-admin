@@ -5,6 +5,10 @@ const coinForexDealListCol = [
     prop: 'orderNo'
   },
   {
+    label: '交易账户',
+    prop: 'uid'
+  },
+  {
     label: '仓位ID',
     prop: 'positionsId'
   },
@@ -102,6 +106,10 @@ const coinForexEntrustListCol = [
     prop: 'orderId'
   },
   {
+    label: '交易账户',
+    prop: 'uid'
+  },
+  {
     label: '仓位ID',
     prop: 'positionsId'
   },
@@ -170,6 +178,12 @@ const coinForexEntrustListConfig = [
     value: ''
   },
   {
+    type: 'onlyNumber',
+    label: '交易账户',
+    prop: 'uid',
+    value: ''
+  },
+  {
     type: 'select_search',
     label: '交易产品',
     prop: 'foreignId',
@@ -219,6 +233,10 @@ const coinForexNotCloseListCol = [
   {
     label: '订单号',
     prop: 'orderNo'
+  },
+  {
+    label: '交易账户',
+    prop: 'uid'
   },
   {
     label: '仓位ID',

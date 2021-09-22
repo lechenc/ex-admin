@@ -789,7 +789,8 @@ const extractForeignCol = [
       { text: '成功', val: 1 },
       { text: '失败', val: 2 },
       { text: '初步审核成功', val: 3 },
-      { text: '初步审核失败', val: 4 }
+      { text: '初步审核失败', val: 4 },
+      { text: '复审通过', val: 13 }
     ]
   },
   // { label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 }
@@ -920,6 +921,12 @@ const extractForeignColNoBtn = [
     width: 200
   },
   {
+    label: '风控用户',
+    prop: 'riskControlUserFlag',
+    width: 200,
+    filters: [{ text: '是', val: true }, { text: '否', val: false }]
+  },
+  {
     label: 'UID',
     prop: 'uid',
     width: 100
@@ -966,9 +973,11 @@ const extractForeignColNoBtn = [
       { text: '成功', val: 1 },
       { text: '失败', val: 2 },
       { text: '初步审核成功', val: 3 },
-      { text: '初步审核失败', val: 4 }
+      { text: '初步审核失败', val: 4 },
+      { text: '复审通过', val: 13 }
     ]
   },
+  // { label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 }
   {
     label: '提币类型',
     prop: 'isAuto',
@@ -994,7 +1003,6 @@ const extractForeignColNoBtn = [
     label: '初审人',
     prop: 'firstAuditUserName'
   },
-
   {
     label: '初审备注',
     prop: 'firstRemark'
