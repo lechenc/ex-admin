@@ -130,8 +130,7 @@
             v-model="chainForm.alarmPhone"
             placeholder="请输入"
             autocomplete="off"
-            type="number"
-            @input="checkVal('alarmPhone')"
+            type="text"
           />
         </el-form-item>
         <el-form-item label="余额不足提醒邮箱" :label-width="formLabelWidth" prop="alarmEmail">
