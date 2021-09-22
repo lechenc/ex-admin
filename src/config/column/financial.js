@@ -1145,7 +1145,7 @@ const transferCol = [
       { text: '币币', val: 1 },
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
-      { text: '币汇', val: 4 },
+      // { text: '币汇', val: 4 },
       { text: '合约', val: 5 },
       { text: '币汇', val: 9 }
     ]
@@ -1159,7 +1159,7 @@ const transferCol = [
       { text: '币币', val: 1 },
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
-      { text: '币汇', val: 4 },
+      // { text: '币汇', val: 4 },
       { text: '合约', val: 5 },
       { text: '币汇', val: 9 }
     ]
@@ -1224,7 +1224,7 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      { label: '币汇', value: '4' },
+      // { label: '币汇', value: '4' },
       { label: '合约', value: '5' },
       { label: '币汇', value: '9' }
     ]
@@ -1238,7 +1238,7 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      { label: '币汇', value: '4' },
+      // { label: '币汇', value: '4' },
       { label: '合约', value: '5' },
       { label: '币汇', value: '9' }
     ]
