@@ -3472,4 +3472,11 @@ export default class api {
   // static getContractUserMonitorList(data) {
   //   return Fetch.post('/admin/user/list', data)
   // }
+
+   // 合约管理/风控管理/用户监控列表 列表
+   static apiGetearningsRecordTotal(data) {
+    return Fetch.post('/admin/account/contract/profit/dayDetailStat', data)
+  }
+
+
 }

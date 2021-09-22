@@ -528,6 +528,7 @@ export default {
           this.$message({ message: '切换成功', type: 'success' })
           this.getList()
         } else {
+          console.log('12321')
           this.getList()
         }
         this.listLoading = false
@@ -557,7 +558,8 @@ export default {
     },
 
     async getList() {
-      if (this.listLoading) return
+      console.log('this.listLoading', this.listLoading)
+
       this.listLoading = true
 
       const params = {
@@ -581,6 +583,7 @@ export default {
         this.list = records
       }
       this.listLoading = false
+      console.log('123', this.listLoading)
     },
     formatTime(val) {
       return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')

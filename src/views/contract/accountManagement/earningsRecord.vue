@@ -14,35 +14,53 @@
       </el-col>
     </el-row>
     <div class="container-top">
-      <Bsearch  :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch
+        :calLoading="calLoading"
+        :calTotal="true"
+        @do-calTotal="calTotal"
+        calText="合计统计"
+        :configs="searchCofig"
+        @do-search="doSearch"
+        @do-reset="doReset"
+      />
     </div>
 
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
+
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @current-change="goPage"
+        layout="total, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { earningsRecordCol, earningsRecordConfig } from '@/config/column/contract';
-import $api from '@/api/api';
-import Precision from '@/utils/number-precision';
-import activePage from '@/mixin/keepPage';
-import BTwoRangeChoose from '@/components/b-two-range-choose';
-import utils from '@/utils/util';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { earningsRecordCol, earningsRecordConfig } from '@/config/column/contract'
+import $api from '@/api/api'
+import Precision from '@/utils/number-precision'
+import activePage from '@/mixin/keepPage'
+import BTwoRangeChoose from '@/components/b-two-range-choose'
+import utils from '@/utils/util'
+
 export default {
   name: 'EarningsRecord',
   components: {
     Btable,
     Bsearch,
     iconPage,
-    BTwoRangeChoose,
+    BTwoRangeChoose
   },
   data() {
     return {
@@ -60,144 +78,145 @@ export default {
       total: 0, // 总条数
       pages: 0, // 总页数
       coin_List: [], // 交易对列表
-      calLoading: false,
-    };
+      calLoading: false
+    }
   },
   methods: {
     async calTotal(data) {
-      this.search_params_obj = data;
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
-      }
-      this.calLoading = true;
-      const params = {
-        userType: 106,
-      };
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      const res = await $api.getAccountContractList(params);
+      this.search_params_obj = data
+
+      this.calLoading = true
+      const params = {}
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      const res = await $api.apiGetearningsRecordTotal(params)
       if (res) {
-        const getObj = res.data.data[0];
+        const getObj = res.data.data
         if (getObj) {
+          const { profitLossTotal, commissionTotal } = getObj
           this.$alert(
             // 时间段：2020.7.20-2020.7.25
             `<p>时间段：${this.search_params_obj.startTime} - ${this.search_params_obj.endTime}</p>
-            <p>合约平仓盈亏：${getObj.sumProfitLoss}</p>
-            <p>手续费返佣：${getObj.totalCommission}</p>`,
+            <p>平仓合约平仓盈亏：${profitLossTotal}</p>
+            <p>平台手续费返佣：${commissionTotal}</p>
+            <p>变动资产金额：${Precision.plus(profitLossTotal, commissionTotal)}</p>
+
+            `,
             '统计结果',
             {
-              dangerouslyUseHTMLString: true,
-            },
-          ).catch(() => {});
+              dangerouslyUseHTMLString: true
+            }
+          ).catch(() => {})
         } else {
-          this.$message({ type: 'error', message: '数据列表为空!' });
+          this.$message({ type: 'error', message: '数据列表为空!' })
         }
       }
-      this.calLoading = false;
+      this.calLoading = false
     },
 
     async doHandle(data) {
-      const { fn, row } = data;
+      const { fn, row } = data
     },
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach((v) => {
-        v['value'] = '';
-      });
-      this.searchCofig[0].value = [this.toDay,this.ago ];;
-      this.getList();
+      this.search_params_obj = {}
+      this.searchCofig.forEach(v => {
+        v['value'] = ''
+      })
+      this.searchCofig[0].value = [this.toDay, this.ago]
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     // 百分比转为数值
     percentToNum(val) {
       if ((val + '').indexOf('%') !== -1) {
-        val = val.replace(/\%/, '');
+        val = val.replace(/\%/, '')
       } else {
       }
-      return Precision.divide(val, 100);
+      return Precision.divide(val, 100)
     },
     // 数字转为百分比
     numToPercent(val) {
-      return Precision.times(val, 100);
+      return Precision.times(val, 100)
     },
     formatTime(val) {
-      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         // let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
         // let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        this.searchCofig[0].value = [this.toDay,this.ago ];
-        params.endTime = this.ago.replace(/\//gi, '-');
-        params.startTime = this.toDay.replace(/\//gi, '-');
+        this.searchCofig[0].value = [this.toDay, this.ago]
+        params.endTime = this.ago.replace(/\//gi, '-')
+        params.startTime = this.toDay.replace(/\//gi, '-')
       }
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
-          let tmpName = '';
-          tmpName = this.coin_List.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0].label;
-          this.search_params_obj.coinMarket = tmpName;
+          let tmpName = ''
+          tmpName = this.coin_List.filter(v => v['value'] == this.search_params_obj.coinMarket)[0]
+            .label
+          this.search_params_obj.coinMarket = tmpName
         }
       }
     },
     // getlist
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const query_data = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
-      };
-      this.requiredParams(this.search_params_obj);
-      Object.assign(query_data, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getEarningsRecordList(query_data);
-      if (res) {
-        const { records, total, current, pages } = res.data.data;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
-        this.list = records;
+        pageSize: this.pageSize
       }
-      this.listLoading = false;
-    },
+      this.requiredParams(this.search_params_obj)
+      Object.assign(query_data, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getEarningsRecordList(query_data)
+      if (res) {
+        const { records, total, current, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
+        this.list = records
+      }
+      this.listLoading = false
+    }
   },
   async mounted() {
-    this.configs = earningsRecordCol;
-    this.searchCofig = this.$util.clone(earningsRecordConfig);
+    this.configs = earningsRecordCol
+    this.searchCofig = this.$util.clone(earningsRecordConfig)
     // this.toDay = this.$util.diyTime('toDay');
     // this.ago = this.$util.diyTime('ago');
 
-    this.toDay = new Date().getTime();
-    this.ago = new Date().getTime();
-    this.toDay = this.toDay - 3600 * 1000 * 24 * 7 
-    this.toDay =  utils.GMTToStrZero(this.toDay)
-    this.ago =  utils.GMTToStr(this.ago);
-    console.log('ago',this.ago)
-    console.log('toDay',this.toDay)
-    this.getList();
-  },
-};
+    this.toDay = new Date().getTime()
+    this.ago = new Date().getTime()
+    this.toDay = this.toDay - 3600 * 1000 * 24 * 7
+    this.toDay = utils.GMTToStrZero(this.toDay)
+    this.ago = utils.GMTToStr(this.ago)
+
+    this.getList()
+  }
+}
 </script>
 <style lang="scss">
 .coinContract-container {
   .earningsRecordDialog {
     text-align: center;
   }
+
   padding: 4px 10px 10px 10px;
   .estimateDialog {
     .el-dialog__body {

@@ -178,24 +178,6 @@
         </el-table-column>
       </el-table-column>
 
-      <!-- 加一个其他值 -->
-      <el-table-column
-        v-if="config.type == 'plusOthersNumber'"
-        :key="config.label"
-        :label="config.label"
-        :width="config.width ? config.width : ''"
-        :min-width="120"
-      >
-        <template slot-scope="scope">
-          <span v-if="config.othersNumber">
-            {{ getPlus(scope.row[config.prop], config.othersNumber) }}
-          </span>
-          <span v-else-if="config.prop2">
-            {{ getPlus(scope.row[config.prop], scope.row[config.prop2]) }}
-          </span>
-        </template>
-      </el-table-column>
-
       <!-- 几个数相加 -->
       <el-table-column
         v-if="config.type == 'plusPropArr'"
@@ -1042,11 +1024,7 @@ export default {
     isDeskTop() {
       return this.$store.state.app.device !== 'mobile'
     },
-    getPlus() {
-      return (n1, n2) => {
-        return Precision.plus(n1, n2)
-      }
-    },
+
     // 包含哪个值不显示 除了包含那些值的显示
     indexOfExceptFn() {
       return (row, btn) => {
