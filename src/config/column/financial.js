@@ -1791,7 +1791,9 @@ const coinFundsCol = [
       { text: '内部充币', val: '111' },
       { text: '异常补发', val: '112' },
       { text: '财务工资', val: '113' },
-      { text: '运营活动奖励', val: '114' }
+      { text: '运营活动奖励', val: '114' },
+      { text: '币币划转至币汇', val: '115' },
+      { text: '币汇划转至币币', val: '116' }
     ]
   },
   {
@@ -1952,7 +1954,9 @@ const coinFundsConfig = [
       { label: '内部充币', value: '111' },
       { label: '异常补发', value: '112' },
       { label: '财务工资', value: '113' },
-      { label: '运营活动奖励', value: '114' }
+      { label: '运营活动奖励', value: '114' },
+      { label: '币币划转至币汇', value: '115' },
+      { label: '币汇划转至币币', value: '116' }
     ]
   }
 ]
