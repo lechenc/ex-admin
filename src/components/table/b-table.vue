@@ -713,6 +713,27 @@
               </el-button>
             </template>
 
+            <!--等于第一个不等于第二个-->
+            <template
+              v-else-if="
+                btn.filter_key &&
+                  $util.isArray(btn.filter_key) &&
+                  !btn.isPop &&
+                  btn.out &&
+                  scope.row[btn.filter_key[0]] == btn.filter_status[0] &&
+                  scope.row[btn.filter_key[1]] != btn.filter_status[1]
+              "
+            >
+              <el-button
+                slot="reference"
+                :type="btn.type"
+                plain
+                size="small"
+                @click="doHandle($event, scope.row, btn['fn'])"
+              >
+                {{ btn.label }}
+              </el-button>
+            </template>
             <!--常用于特定值下出现的按钮 非这个-->
             <template
               v-else-if="

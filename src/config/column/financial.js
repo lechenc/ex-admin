@@ -888,8 +888,9 @@ const extractForeignCol = [
         label: '终审',
         fn: 'finalReview',
         isPop: false,
+        out: true,
         filter_key: ['tradeStatus', 'isAuto'],
-        filter_status: [13, 2],
+        filter_status: [13, 1],
         type: 'success',
         alias: 'finalReview'
       },
@@ -916,8 +917,9 @@ const extractForeignCol = [
         label: '终审驳回',
         fn: 'finalReject',
         isPop: false,
+        out: true,
         filter_key: ['tradeStatus', 'isAuto'],
-        filter_status: [13, 2],
+        filter_status: [13, 1],
         type: 'danger',
         alias: 'finalReject'
       },
