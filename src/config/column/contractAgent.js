@@ -2388,6 +2388,7 @@ const contractUserMonitorConfig = [
   },
   {
     type: 'text',
+    minWidth: '160px',
     label: '开仓与平仓间隔时（s）',
     prop: 'interval',
     value: '',
