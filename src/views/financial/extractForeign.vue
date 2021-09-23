@@ -53,12 +53,15 @@
         {{ reviewTitle }}
         <span
           v-if="
-            (handleData.coinName != 'BTC' && handleData.tradeStatus == 0) ||
-              (handleData.coinName != 'BTC' && handleData.tradeStatus == 3)
+            handleData.coinName !== 'BTC' &&
+              (handleData.tradeStatus === 0 ||
+                handleData.tradeStatus === 3 ||
+                handleData.tradeStatus === 13)
           "
           style="color:red;font-weight: 700;"
-          >(注意：该笔提币的币种是{{ handleData.coinName }})</span
         >
+          (注意：该笔提币的币种是{{ handleData.coinName }})
+        </span>
       </div>
 
       <el-form ref="reviewForm" :model="reviewForm" :rules="rules">
@@ -135,13 +138,12 @@
           </el-col>
         </el-row>
         <el-row />
-        <el-form-item label="订单状态" :label-width="formLabelWidth">{{
-          handleData.tradeStatus | fStatus
-        }}</el-form-item>
+        <el-form-item label="订单状态" :label-width="formLabelWidth">
+          {{ statusText[handleData.tradeStatus] }}
+        </el-form-item>
         <el-row />
-
         <el-row
-          v-if="parseInt(handleData.tradeStatus) > 2 || parseInt(handleData.tradeStatus) == 1"
+          v-if="parseInt(handleData.tradeStatus) === 3 || parseInt(handleData.tradeStatus) === 4"
         >
           <el-col :span="12">
             <el-form-item label="初审时间" :label-width="formLabelWidth">
@@ -155,10 +157,7 @@
           </el-col>
         </el-row>
         <el-row
-          v-if="
-            (parseInt(handleData.tradeStatus) > 3 || parseInt(handleData.tradeStatus) == 1) &&
-              parseInt(handleData.tradeStatus) != 4
-          "
+          v-if="parseInt(handleData.tradeStatus) === 13 || parseInt(handleData.tradeStatus) === 14"
         >
           <el-col :span="12">
             <el-form-item label="复审时间" :label-width="formLabelWidth">
@@ -172,10 +171,7 @@
           </el-col>
         </el-row>
         <el-row
-          v-if="
-            (parseInt(handleData.tradeStatus) > 13 || parseInt(handleData.tradeStatus) == 1) &&
-              parseInt(handleData.tradeStatus) != 4
-          "
+          v-if="parseInt(handleData.tradeStatus) === 1 || parseInt(handleData.tradeStatus) === 2"
         >
           <el-col :span="12">
             <el-form-item label="终审时间" :label-width="formLabelWidth">
@@ -212,27 +208,21 @@
           </el-form-item>
         </template>
         <el-form-item
-          v-if="handleData.tradeStatus > 2 || parseInt(handleData.tradeStatus) == 1"
+          v-if="handleData.tradeStatus === 4"
           label="初审备注"
           :label-width="formLabelWidth"
         >
           {{ handleData.firstRemark }}
         </el-form-item>
         <el-form-item
-          v-if="
-            (handleData.tradeStatus > 3 || parseInt(handleData.tradeStatus) == 1) &&
-              parseInt(handleData.tradeStatus) != 4
-          "
+          v-if="handleData.tradeStatus === 14"
           label="复审备注"
           :label-width="formLabelWidth"
         >
           {{ handleData.reviewRemark }}
         </el-form-item>
         <el-form-item
-          v-if="
-            (handleData.tradeStatus > 13 || parseInt(handleData.tradeStatus) == 1) &&
-              parseInt(handleData.tradeStatus) != 4
-          "
+          v-if="handleData.tradeStatus === 2"
           label="终审备注"
           :label-width="formLabelWidth"
         >
@@ -424,36 +414,6 @@ export default {
     vueQr,
     iconPage
   },
-  filters: {
-    //  0-待审核,1-成功,2-失败,3-初步审核成功,4-初步审核失败
-    fStatus(val) {
-      let tmp = ''
-      switch (val) {
-        case 0:
-          tmp = '待审核'
-          break
-        case 1:
-          tmp = '成功'
-          break
-        case 2:
-          tmp = '失败'
-          break
-        case 3:
-          tmp = '初步审核成功'
-          break
-        case 4:
-          tmp = '初步审核失败'
-          break
-        case 5:
-          tmp = '划转待确认'
-          break
-        case 6:
-          tmp = '充币确认中'
-          break
-      }
-      return tmp
-    }
-  },
   data() {
     return {
       inOutGoldListLoading: false,
@@ -528,6 +488,17 @@ export default {
         effectiveType: [{ required: true, message: '必填', trigger: 'blur' }],
         enable: [{ required: true, message: '必填', trigger: 'blur' }],
         monitoringRange: [{ required: true, message: '必填', trigger: 'blur' }]
+      },
+      statusText: {
+        0: '待审核',
+        1: '成功',
+        2: '失败',
+        3: '初步审核成功',
+        4: '初步审核失败',
+        5: '划转待确认',
+        6: '充币确认中',
+        13: '复审审核成功',
+        14: '复审审核失败'
       }
     }
   },

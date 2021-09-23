@@ -426,7 +426,9 @@ const extractCol = [
       { text: '成功', val: 1 },
       { text: '失败', val: 2 },
       { text: '初步审核成功', val: 3 },
-      { text: '初步审核失败', val: 4 }
+      { text: '初步审核失败', val: 4 },
+      { text: '复审审核成功', val: 13 },
+      { text: '复审审核失败', val: 14 }
     ]
   },
   {
@@ -566,6 +568,11 @@ const extractColNoBtn = [
     width: 100
   },
   {
+    label: '上级UID',
+    prop: 'proxyUid',
+    width: 100
+  },
+  {
     label: '币种',
     prop: 'coinName'
   },
@@ -612,7 +619,9 @@ const extractColNoBtn = [
       { text: '成功', val: 1 },
       { text: '失败', val: 2 },
       { text: '初步审核成功', val: 3 },
-      { text: '初步审核失败', val: 4 }
+      { text: '初步审核失败', val: 4 },
+      { text: '复审审核成功', val: 13 },
+      { text: '复审审核失败', val: 14 }
     ]
   },
   {
@@ -646,6 +655,20 @@ const extractColNoBtn = [
   {
     label: '复审备注',
     prop: 'reviewRemark'
+  },
+
+  {
+    label: '终审时间',
+    prop: 'lastAuditTime',
+    width: 200
+  },
+  {
+    label: '终审人',
+    prop: 'lastAuditUserName'
+  },
+  {
+    label: '终审备注',
+    prop: 'lastRemark'
   }
 ]
 
@@ -790,7 +813,8 @@ const extractForeignCol = [
       { text: '失败', val: 2 },
       { text: '初步审核成功', val: 3 },
       { text: '初步审核失败', val: 4 },
-      { text: '复审通过', val: 13 }
+      { text: '复审审核成功', val: 13 },
+      { text: '复审审核失败', val: 14 }
     ]
   },
   // { label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 }
@@ -864,8 +888,8 @@ const extractForeignCol = [
         label: '终审',
         fn: 'finalReview',
         isPop: false,
-        filter_key: 'tradeStatus',
-        filter_status: 13,
+        filter_key: ['tradeStatus', 'isAuto'],
+        filter_status: [13, 2],
         type: 'success',
         alias: 'finalReview'
       },
@@ -892,8 +916,8 @@ const extractForeignCol = [
         label: '终审驳回',
         fn: 'finalReject',
         isPop: false,
-        filter_key: 'tradeStatus',
-        filter_status: 13,
+        filter_key: ['tradeStatus', 'isAuto'],
+        filter_status: [13, 2],
         type: 'danger',
         alias: 'finalReject'
       },
@@ -974,7 +998,8 @@ const extractForeignColNoBtn = [
       { text: '失败', val: 2 },
       { text: '初步审核成功', val: 3 },
       { text: '初步审核失败', val: 4 },
-      { text: '复审通过', val: 13 }
+      { text: '复审审核成功', val: 13 },
+      { text: '复审审核失败', val: 14 }
     ]
   },
   // { label: '无类型', value: 0 },{ label: '热钱包类型', value: 1 },{ label: '冷钱包类型', value: 2 }
