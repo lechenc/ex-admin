@@ -15,7 +15,12 @@
       <!-- :rules="chainForm.status ? rules : rules1" -->
       <el-form ref="chainForm" :model="chainForm" :rules="rules" :validate-on-rule-change="false">
         <el-form-item label="链名称" :label-width="formLabelWidth" prop="chain">
-          <el-select v-model="chainForm.chain" placeholder="请选择" @change="chainChange">
+          <el-select
+            v-model="chainForm.chain"
+            :disabled="isEdit"
+            placeholder="请选择"
+            @change="chainChange"
+          >
             <el-option
               v-for="(item, idx) in chainList"
               :key="idx"
@@ -25,7 +30,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="币种" :label-width="formLabelWidth" prop="coin">
-          <el-select v-model="chainForm.coin" placeholder="请选择">
+          <el-select v-model="chainForm.coin" :disabled="isEdit" placeholder="请选择">
             <el-option
               v-for="(item, idx) in coinList"
               :key="idx"
@@ -256,7 +261,8 @@ export default {
       coinKey: '',
       protocol: '',
       chainList: [],
-      chainCoinObj: {}
+      chainCoinObj: {},
+      isEdit: false
     }
   },
   computed: {
@@ -353,6 +359,7 @@ export default {
       const { fn, row } = data
       // 编辑币种
       if (fn === 'edit') {
+        this.isEdit = true
         this.formName = '编辑'
         this.dialogFormVisible = true
         this.getChainCoin()
@@ -420,6 +427,7 @@ export default {
     },
     // 添加链类型
     addChain() {
+      this.isEdit = false
       this.formName = '添加'
       this.dialogFormVisible = true
       this.getChainCoin()
