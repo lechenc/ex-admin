@@ -171,7 +171,7 @@ export default {
     async getCoinForexList() {
       this.$store.dispatch('common/getCoinForexList').then(() => {
         this.coinForexList = this.$store.state.common.coinForexList
-        this.searchCofig[3]['list'] = this.coinForexList
+        this.searchCofig[4]['list'] = this.coinForexList
       })
     }
   },

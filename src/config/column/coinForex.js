@@ -79,6 +79,12 @@ const coinForexDealListConfig = [
   },
   {
     type: 'text',
+    label: '订单号',
+    prop: 'orderId',
+    value: ''
+  },
+  {
+    type: 'text',
     label: '仓位ID',
     prop: 'positionId',
     value: ''
@@ -172,15 +178,21 @@ const coinForexEntrustListConfig = [
   },
 
   {
-    type: 'text',
-    label: '仓位ID',
-    prop: 'positionId',
-    value: ''
-  },
-  {
     type: 'onlyNumber',
     label: '交易账户',
     prop: 'uid',
+    value: ''
+  },
+  {
+    type: 'text',
+    label: '订单号',
+    prop: 'orderId',
+    value: ''
+  },
+  {
+    type: 'text',
+    label: '仓位ID',
+    prop: 'positionId',
     value: ''
   },
   {
@@ -313,6 +325,12 @@ const coinForexNotCloseListConfig = [
     type: 'onlyNumber',
     label: '交易账户',
     prop: 'uid',
+    value: ''
+  },
+  {
+    type: 'text',
+    label: '订单号',
+    prop: 'orderId',
     value: ''
   },
   {

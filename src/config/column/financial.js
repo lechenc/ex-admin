@@ -1136,7 +1136,7 @@ const transferCol = [
     prop: 'orderNo'
   },
   {
-    label: '交易订单号',
+    label: '关联交易号',
     prop: 'relateRecdId'
   },
   {
@@ -1170,8 +1170,9 @@ const transferCol = [
       { text: '币币', val: 1 },
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
-      { text: '币汇', val: 4 },
-      { text: '合约', val: 5 }
+      // { text: '币汇', val: 4 },
+      { text: '合约', val: 5 },
+      { text: '币汇', val: 9 }
     ]
   },
   {
@@ -1183,8 +1184,9 @@ const transferCol = [
       { text: '币币', val: 1 },
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
-      { text: '币汇', val: 4 },
-      { text: '合约', val: 5 }
+      // { text: '币汇', val: 4 },
+      { text: '合约', val: 5 },
+      { text: '币汇', val: 9 }
     ]
   },
   {
@@ -1247,8 +1249,9 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      { label: '币汇', value: '4' },
-      { label: '合约', value: '5' }
+      // { label: '币汇', value: '4' },
+      { label: '合约', value: '5' },
+      { label: '币汇', value: '9' }
     ]
   },
   {
@@ -1260,8 +1263,9 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      { label: '币汇', value: '4' },
-      { label: '合约', value: '5' }
+      // { label: '币汇', value: '4' },
+      { label: '合约', value: '5' },
+      { label: '币汇', value: '9' }
     ]
   }
 ]
@@ -1812,7 +1816,9 @@ const coinFundsCol = [
       { text: '内部充币', val: '111' },
       { text: '异常补发', val: '112' },
       { text: '财务工资', val: '113' },
-      { text: '运营活动奖励', val: '114' }
+      { text: '运营活动奖励', val: '114' },
+      { text: '币币划转至币汇', val: '115' },
+      { text: '币汇划转至币币', val: '116' }
     ]
   },
   {
@@ -1973,7 +1979,9 @@ const coinFundsConfig = [
       { label: '内部充币', value: '111' },
       { label: '异常补发', value: '112' },
       { label: '财务工资', value: '113' },
-      { label: '运营活动奖励', value: '114' }
+      { label: '运营活动奖励', value: '114' },
+      { label: '币币划转至币汇', value: '115' },
+      { label: '币汇划转至币币', value: '116' }
     ]
   }
 ]
