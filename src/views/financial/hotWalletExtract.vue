@@ -130,7 +130,7 @@
             @input="checkVal('userNightWithdrawAmountTotal')"
           />
         </el-form-item>
-        <el-form-item label="余额不足提醒手机号" :label-width="formLabelWidth" prop="alarmPhone">
+        <!-- <el-form-item label="余额不足提醒手机号" :label-width="formLabelWidth" prop="alarmPhone">
           <el-input
             v-model="chainForm.alarmPhone"
             placeholder="请输入"
@@ -158,7 +158,7 @@
             type="number"
             @input="checkVal('alarmBalance')"
           />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
           <el-input
@@ -244,16 +244,15 @@ export default {
         nightTime: '', // 夜间热钱包启用时间
         userNightWithdrawTimes: '', // 每个用户夜间可使用提币次数
         userNightWithdrawAmount: '', // 每个用户夜间单次可提币限额
-        userNightWithdrawAmountTotal: '', // 每个用户夜间可使用提币总额
-        alarmBalance: '', // 钱包余额低于该参数值提醒值
-        alarmPhone: '', // 余额不足提醒手机
-        alarmEmail: '' // 余额不足提醒邮箱
+        userNightWithdrawAmountTotal: '' // 每个用户夜间可使用提币总额
+        // alarmBalance: '', // 钱包余额低于该参数值提醒值
+        // alarmPhone: '', // 余额不足提醒手机
+        // alarmEmail: '' // 余额不足提醒邮箱
       },
 
       formName: '',
       formLabelWidth: '125px',
       labelWidth: '125px',
-      decimalReg: /^(\-)*(\d+)\.(\d\d\d\d\d\d).*$/,
       dialogSetVisible: false,
       setListLoading: false,
       setConfigs: [],
@@ -285,10 +284,10 @@ export default {
         'nightTime',
         'userNightWithdrawTimes',
         'userNightWithdrawAmount',
-        'userNightWithdrawAmountTotal',
-        'alarmBalance',
-        'alarmPhone',
-        'alarmEmail'
+        'userNightWithdrawAmountTotal'
+        // 'alarmBalance',
+        // 'alarmPhone',
+        // 'alarmEmail'
       ]
       const status = this.chainForm.status
       const keys = Object.keys(this.chainForm)
@@ -329,31 +328,29 @@ export default {
     },
     // 对输入值的范围进行限制
     checkVal(val) {
-      // if (val === 'singleMaxAmount' || val === 'dayMaxAmount') {
-      //   this.chainForm[val] = (this.chainForm[val] + '').replace(this.decimalReg, '$1$2.$3');
-      // }
+      const arr = [
+        'maxAutoWithdraw',
+        'userNightWithdrawAmount',
+        'userNightWithdrawAmountTotal',
+        'maxDailyAutoWithdraw'
+      ]
+      if (arr.includes(val)) {
+        this.chainForm[val] = (this.chainForm[val] + '').replace(
+          /^(\-)*(\d+)\.(\d{0,8}).*$/,
+          '$2.$3'
+        )
+      } else if (val === 'userNightWithdrawTimes') {
+        this.chainForm[val] = (parseInt(this.chainForm[val]) + '').replace(
+          /^(\-)*(\d{0,4}).*$/,
+          '$2'
+        )
+        // this.chainForm[val] = (this.chainForm[val] + '').replace(/^(\d4).*$/, '$1')
+      }
       if (this.chainForm[val] < 0) {
         this.chainForm[val] = 0
       }
     },
 
-    // 根据币种限制小数位
-    changeDecimal(val) {
-      this.chainForm.singleMaxAmount = ''
-      this.chainForm.dayMaxAmount = ''
-      const decimal = this.coinList.filter(v => v['label'] == val)[0].decimalPlaces
-
-      const arr = []
-      for (let i = 0; i < decimal; i++) {
-        arr.push('\\d')
-      }
-      const s1 = '/^(\\-)*(\\d+)\\.('
-      const s2 = arr.join('')
-      const s3 = ').*$/'
-
-      const reg = s1.concat(s2, s3)
-      this.decimalReg = eval(reg)
-    },
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data
