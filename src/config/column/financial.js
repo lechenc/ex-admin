@@ -2633,19 +2633,18 @@ const hotWalletExtractCol = [
     label: '每个用户夜间可使用提币总额',
     prop: 'userNightWithdrawAmountTotal'
   },
-  {
-    label: '余额不足提醒手机号',
-    prop: 'alarmPhone'
-  },
-  {
-    label: '余额不足提醒邮箱',
-    prop: 'alarmEmail'
-  },
-  {
-    label: '钱包余额低于该参数值提醒值',
-    prop: 'alarmBalance'
-  },
-
+  // {
+  //   label: '余额不足提醒手机号',
+  //   prop: 'alarmPhone'
+  // },
+  // {
+  //   label: '余额不足提醒邮箱',
+  //   prop: 'alarmEmail'
+  // },
+  // {
+  //   label: '钱包余额低于该参数值提醒值',
+  //   prop: 'alarmBalance'
+  // },
   {
     label: '创建时间',
     prop: 'createTime',
@@ -2696,6 +2695,53 @@ const hotWalletExtractColNoBtn = [
     label: '单日限额',
     prop: 'maxDailyAutoWithdraw'
   },
+  {
+    type: 'switch',
+    prop: 'isStatus',
+    label: '热钱包启用开关',
+    alias: 'trswitch',
+    disabled: true
+  },
+  {
+    label: '白天热钱包启用时间开始',
+    prop: 'dayEnableTimeStart'
+  },
+  {
+    label: '白天热钱包启用时间结束',
+    prop: 'dayEnableTimeEnd'
+  },
+  {
+    label: '夜间热钱包启用时间开始',
+    prop: 'nightEnableTimeStart'
+  },
+  {
+    label: '夜间热钱包启用时间结束',
+    prop: 'nightEnableTimeEnd'
+  },
+  {
+    label: '每个用户夜间可使用提币次数',
+    prop: 'userNightWithdrawTimes'
+  },
+  {
+    label: '每个用户夜间单次可提币限额',
+    prop: 'userNightWithdrawAmount'
+  },
+  {
+    label: '每个用户夜间可使用提币总额',
+    prop: 'userNightWithdrawAmountTotal'
+  },
+  // {
+  //   label: '余额不足提醒手机号',
+  //   prop: 'alarmPhone'
+  // },
+  // {
+  //   label: '余额不足提醒邮箱',
+  //   prop: 'alarmEmail'
+  // },
+  // {
+  //   label: '钱包余额低于该参数值提醒值',
+  //   prop: 'alarmBalance'
+  // },
   {
     label: '创建时间',
     prop: 'createTime',
