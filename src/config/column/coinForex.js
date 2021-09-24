@@ -236,7 +236,7 @@ const coinForexEntrustListConfig = [
     label: '委托方向',
     prop: 'dealDirection',
     value: '',
-    list: [{ label: '卖', value: 0 }, { label: '买', value: 1 }]
+    list: [{ label: '卖', value: 1 }, { label: '买', value: 0 }]
   }
 ]
 
@@ -351,7 +351,7 @@ const coinForexNotCloseListConfig = [
     label: '买或卖',
     prop: 'dealDirection',
     value: '',
-    list: [{ label: '卖', value: 0 }, { label: '买', value: 1 }]
+    list: [{ label: '卖', value: 1 }, { label: '买', value: 0 }]
   }
 ]
 
