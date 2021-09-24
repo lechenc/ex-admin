@@ -34,7 +34,7 @@ import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
 import { contractUserMonitorCol, contractUserMonitorConfig } from '@/config/column/contractAgent'
 import $api from '@/api/api'
-
+import utils from '@/utils/util'
 export default {
   name: 'ContractUserMonitor',
   components: {
@@ -68,6 +68,7 @@ export default {
       const res = await $api.getContractUserMonitorList(params)
       this.excelLoading = false
       if (res) {
+        console.log('res', res)
         return res
       }
     },

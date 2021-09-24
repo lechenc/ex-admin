@@ -825,8 +825,8 @@ const extractForeignCol = [
     show_type: 'text',
     filters: [
       { text: '无类型', val: 0 },
-      { text: '热钱包类型', val: 1 },
-      { text: '冷钱包类型', val: 2 }
+      { text: '自动提币', val: 1 },
+      { text: '手动提币', val: 2 }
     ]
   },
   {
@@ -1012,8 +1012,8 @@ const extractForeignColNoBtn = [
     show_type: 'text',
     filters: [
       { text: '无类型', val: 0 },
-      { text: '热钱包类型', val: 1 },
-      { text: '冷钱包类型', val: 2 }
+      { text: '自动提币', val: 1 },
+      { text: '手动提币', val: 2 }
     ]
   },
   {
@@ -1114,8 +1114,8 @@ const extractForeignConfig = [
     value: '',
     list: [
       { label: '无类型', value: 0 },
-      { label: '热钱包类型', value: 1 },
-      { label: '冷钱包类型', value: 2 }
+      { label: '自动提币', value: 1 },
+      { label: '手动提币', value: 2 }
     ]
   },
   {

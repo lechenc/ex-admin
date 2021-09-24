@@ -53,7 +53,7 @@
         {{ reviewTitle }}
         <span
           v-if="
-            handleData.coinName !== 'BTC' &&
+            handleData.coinName !== 'USDT' &&
               (handleData.tradeStatus === 0 ||
                 handleData.tradeStatus === 3 ||
                 handleData.tradeStatus === 13)
