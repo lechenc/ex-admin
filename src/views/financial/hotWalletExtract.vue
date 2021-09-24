@@ -328,7 +328,12 @@ export default {
     },
     // 对输入值的范围进行限制
     checkVal(val) {
-      const arr = ['maxAutoWithdraw', 'userNightWithdrawAmount', 'userNightWithdrawAmountTotal']
+      const arr = [
+        'maxAutoWithdraw',
+        'userNightWithdrawAmount',
+        'userNightWithdrawAmountTotal',
+        'maxDailyAutoWithdraw'
+      ]
       if (arr.includes(val)) {
         this.chainForm[val] = (this.chainForm[val] + '').replace(
           /^(\-)*(\d+)\.(\d{0,8}).*$/,
