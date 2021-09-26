@@ -492,23 +492,15 @@ export default class api {
 
   // 获取归集设置币种
   static getCollection(data) {
-      return Fetch.get('/vue-admin-template/app/collection', data)
-    }
+    return Fetch.get('/vue-admin-template/app/collection', data)
+  }
 
-    // 法币后台
+  // 法币后台
 
-    // 法币 - 用户查询列表
-    <<
-    << << < HEAD
-    // static queryOtcUser(data) {
-    //   return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
-    // }
-    ===
-    === =
-    static queryOtcUser(data) {
-      return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // 法币 - 用户查询列表
+  // static queryOtcUser(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
+  // }
 
   //  法币 - 获取用户列表---详情页数据
   static queryOtcUserDetail(data) {
@@ -571,21 +563,13 @@ export default class api {
 
   //  法币 - Otc用户查询列表
   static queryOtcUser(data) {
-      return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
-    }
+    return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/queryOtcUser', data)
+  }
 
-    // 法币 -广告记录
-    <<
-    << << < HEAD
-    // static getAuditList(data) {
-    //   return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/getAuditList', data)
-    // }
-    ===
-    === =
-    static getAuditList(data) {
-      return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/getAuditList', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // 法币 -广告记录
+  // static getAuditList(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/app/otc/backmgr/getAuditList', data)
+  // }
 
   // 法币 -资金流水列表
   static queryOtcMoneyChangeInfo(data) {
@@ -609,31 +593,18 @@ export default class api {
 
   // 法币 -邀请关系--查定位的父级
   static getFaInviteRecd(data) {
-      return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getFaInviteRecd', data)
-    }
+    return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getFaInviteRecd', data)
+  }
 
-    // 法币 -邀请关系--获取迁移列表
-    <<
-    << << < HEAD
-    // static queryInviteShip(data) {
-    //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/queryInviteShip', data)
-    // }
-
-    // 法币 -邀请关系--执行迁移操作
-    // static updateInviteShip(data) {
-    //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/updateInviteShip', data)
-    // }
-    ===
-    === =
-    static queryInviteShip(data) {
-      return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/queryInviteShip', data)
-    }
+  // 法币 -邀请关系--获取迁移列表
+  // static queryInviteShip(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/queryInviteShip', data)
+  // }
 
   // 法币 -邀请关系--执行迁移操作
-  static updateInviteShip(data) {
-      return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/updateInviteShip', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // static updateInviteShip(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/updateInviteShip', data)
+  // }
 
   // 法币 -申诉管理--列表数据
   static infoShortList(data) {
@@ -677,21 +648,13 @@ export default class api {
 
   // 法币 -申诉---切换上架状态(新版)
   static changeOnshelfAdsNew(data) {
-      return Fetch.post('/admin/order/otc/edit-advert', data)
-    }
+    return Fetch.post('/admin/order/otc/edit-advert', data)
+  }
 
-    // 法币 -接单全局设置--返佣设置
-    <<
-    << << < HEAD
-    // static getDefaultRate(data) {
-    //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getDefaultRate', data)
-    // }
-    ===
-    === =
-    static getDefaultRate(data) {
-      return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getDefaultRate', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // 法币 -接单全局设置--返佣设置
+  // static getDefaultRate(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/invite/backmgr/getDefaultRate', data)
+  // }
 
   // 法币 - 接单全局设置--币商接单额度设置
   static getAuditList(data) {
@@ -853,23 +816,15 @@ export default class api {
 
   // 法币 - 代理管理 - 修改平台账号
   static setUpdatePlatformUserRates(data) {
-      return Fetch.post('/admin/user/tp/update-platform-user-rates', data)
-    }
+    return Fetch.post('/admin/user/tp/update-platform-user-rates', data)
+  }
 
-    // 商户后台
+  // 商户后台
 
-    // 商户后台 - 用户查询列表页
-    <<
-    << << < HEAD
-    // static getMerchantList(data) {
-    //   return Fetch.postForm1('/otc/admin/wallet/backmgr/merchant/merchantList', data)
-    // }
-    ===
-    === =
-    static getMerchantList(data) {
-      return Fetch.postForm1('/otc/admin/wallet/backmgr/merchant/merchantList', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // 商户后台 - 用户查询列表页
+  // static getMerchantList(data) {
+  //   return Fetch.postForm1('/otc/admin/wallet/backmgr/merchant/merchantList', data)
+  // }
 
   // 商户后台 - 用户查询---单条详情页
   static geMmerchantDetail(data) {
@@ -2657,21 +2612,13 @@ export default class api {
 
   // 点卡 点卡资产 列表 统计
   static getTicketCardListTotal(data) {
-      return Fetch.post('/admin/account/red/query-red-list', data)
-    }
+    return Fetch.post('/admin/account/red/query-red-list', data)
+  }
 
-    // 点卡 点卡资产 列表 统计
-    <<
-    << << < HEAD
-    // static getTicketCardListTotal(data) {
-    //   return Fetch.post('/admin/account/red/query-red-list', data)
-    // }
-    ===
-    === =
-    static getTicketCardListTotal(data) {
-      return Fetch.post('/admin/account/red/query-red-list', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // 点卡 点卡资产 列表 统计
+  // static getTicketCardListTotal(data) {
+  //   return Fetch.post('/admin/account/red/query-red-list', data)
+  // }
 
   // 点卡 用户详情 重置谷歌
   static apiEditGoogleCode(data) {
@@ -2794,31 +2741,18 @@ export default class api {
 
   // 币种管理 小额资产展示管理 信息
   static getSmallAmountShow(data) {
-      return Fetch.post('/admin/account/query/querySmallAssetsDisplay', data)
-    }
+    return Fetch.post('/admin/account/query/querySmallAssetsDisplay', data)
+  }
 
-    // 运营管理/体验金券管理/条件参数设置 新增
-    <<
-    << << < HEAD
-    // static addVoucherParameters(data) {
-    //   return Fetch.post('/admin/account/create/condition', data)
-    // }
-
-    // 运营管理/体验金券管理/条件参数设置 编辑
-    // static editVoucherParameters(data) {
-    //   return Fetch.post('/admin/account/edit/condition', data)
-    // }
-    ===
-    === =
-    static addVoucherParameters(data) {
-      return Fetch.post('/admin/account/create/condition', data)
-    }
+  // 运营管理/体验金券管理/条件参数设置 新增
+  // static addVoucherParameters(data) {
+  //   return Fetch.post('/admin/account/create/condition', data)
+  // }
 
   // 运营管理/体验金券管理/条件参数设置 编辑
-  static editVoucherParameters(data) {
-      return Fetch.post('/admin/account/edit/condition', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // static editVoucherParameters(data) {
+  //   return Fetch.post('/admin/account/edit/condition', data)
+  // }
 
   // 系统管理/维护管理 列表
   static getMaintenanceList(data) {
@@ -2872,21 +2806,13 @@ export default class api {
 
   // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
   static getSpecialTriggerCondition(data) {
-      return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
-    }
+    return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
+  }
 
-    // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
-    <<
-    << << < HEAD
-    // static getSpecialTriggerCondition(data) {
-    //   return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
-    // }
-    ===
-    === =
-    static getSpecialTriggerCondition(data) {
-      return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // 运营管理/体验金券管理/活动列表 获取 邀请 和 净划入 type1 ,2  的触发条件
+  // static getSpecialTriggerCondition(data) {
+  //   return Fetch.post('/admin/account/contract/user/getAllConditionByType', data)
+  // }
 
   // 运营管理/体验金券管理/活动列表 通过条件id获取对应的所有触发条件
   static getSpecialTriggerById(data) {
@@ -2974,22 +2900,13 @@ export default class api {
 
   // 系统管理--登录(新)
   static newLogin(data) {
-      return Fetch.postlogin('/admin/user/newlogin', data)
-    }
+    return Fetch.postlogin('/admin/user/newlogin', data)
+  }
 
-    <<
-    << << < HEAD
-    // // 系统管理  架构树
-    // static apiGetStructureTreeList(data) {
-    //   return Fetch.post('/admin/user/structureTreeList', data)
-    // }
-    ===
-    === =
-    // 系统管理  架构树
-    static apiGetStructureTreeList(data) {
-      return Fetch.post('/admin/user/structureTreeList', data)
-    } >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+  // // 系统管理  架构树
+  // static apiGetStructureTreeList(data) {
+  //   return Fetch.post('/admin/user/structureTreeList', data)
+  // }
 
   // 系统管理 人员管理 左侧结构
   static apiGetPeopleManagementList(data) {
@@ -3469,178 +3386,91 @@ export default class api {
 
   // 币汇 币种
   static apiGetCoinForexList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryForexCoinList', data) ===
-      === =
-      return Fetch.post('/forex/background/queryForexCoinList', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryForexCoinList', data)
   }
 
   // 币汇管理/币汇交易管理/交易报表 列表
   static getCoinForexDealListList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryLiquidateBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/queryLiquidateBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryLiquidateBackground', data)
   }
 
   // 币汇管理/币汇交易管理/交易报表 快速导出excel
   static getCoinForexDealListExport(data) {
-    <<
-    << << < HEAD
-    return Fetch.postExcel('/forex/admin/downloadLiquidateBackground', data) ===
-      === =
-      return Fetch.postExcel('/forex/background/downloadLiquidateBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.postExcel('/forex/admin/downloadLiquidateBackground', data)
   }
 
   // 币汇管理/币汇交易管理/交易报表 列表
   static getCoinForexEntrustListList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryOrderBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/queryOrderBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryOrderBackground', data)
   }
 
   // 币汇管理/币汇交易管理/交易报表 快速导出excel
   static getCoinForexEntrustListExport(data) {
-    <<
-    << << < HEAD
-    return Fetch.postExcel('/forex/admin/downloadOrderBackground', data) ===
-      === =
-      return Fetch.postExcel('/forex/background/downloadOrderBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.postExcel('/forex/admin/downloadOrderBackground', data)
   }
 
   // 币汇管理/币汇交易管理/未平仓报表 列表
   static getCoinForexNotCloseListList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryNoLiquidateBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/queryNoLiquidateBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryNoLiquidateBackground', data)
   }
 
   // 币汇管理/币汇交易管理/未平仓报表 快速导出excel
   static getCoinForexNotCloseListExport(data) {
-    <<
-    << << < HEAD
-    return Fetch.postExcel('/forex/admin/downloadNoLiquidateBackground', data) ===
-      === =
-      return Fetch.postExcel('/forex/background/downloadNoLiquidateBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.postExcel('/forex/admin/downloadNoLiquidateBackground', data)
   }
 
   // 币汇管理/机器人管理/币汇机器人 列表
   static getCoinForexRobotListList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryRobotBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/queryRobotBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryRobotBackground', data)
   }
 
   // 币汇管理/机器人管理/币汇机器人 保存
   static apiSaveCoinForexRobotList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/saveRobotBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/saveRobotBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/saveRobotBackground', data)
   }
 
   // 币汇管理/财务管理/汇率查询 列表
   static getCoinForexRateList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/selectForexDealCoinBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/selectForexDealCoinBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/selectForexDealCoinBackground', data)
   }
 
   // 币汇管理/财务管理/汇率查询 保存
   static apiSaveCoinForexRate(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/saveForexDealCoinBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/saveForexDealCoinBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/saveForexDealCoinBackground', data)
   }
 
   // 币汇管理/交易对设置管理/币汇交易对设置 列表
   static getCoinForexPairsConfigsList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryForexCoinList', data) ===
-      === =
-      return Fetch.post('/forex/background/queryForexCoinList', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryForexCoinList', data)
   }
 
   // 币汇管理/财务管理/汇率查询 保存
   static apiEditCoinForexPairsConfigs(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/updateForexCoin', data) ===
-      === =
-      return Fetch.post('/forex/background/updateForexCoin', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/updateForexCoin', data)
   }
 
   // 币汇管理/财务管理/汇率查询 保存
   static apiCoinForexPairsConfigsSwitch(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/updateTradeAndHeadBlock', data) ===
-      === =
-      return Fetch.post('/forex/background/updateTradeAndHeadBlock', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/updateTradeAndHeadBlock', data)
   }
 
   // 币汇管理/财务管理/币汇流水 列表
   static getCoinForexAccountList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryForexFlowList', data) ===
-      === =
-      return Fetch.post('/forex/background/queryForexFlowList', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryForexFlowList', data)
   }
 
   // 币汇管理/交易管理/净值监控 列表
   static getCoinForexNetWorthList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryNetWorthBackground', data) ===
-      === =
-      return Fetch.post('/forex/background/queryNetWorthBackground', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryNetWorthBackground', data)
   }
 
   // 币汇管理/交易品种设置/隔夜费设置 列表
   static getCoinForexPairsNightFeeList(data) {
-    <<
-    << << < HEAD
-    return Fetch.post('/forex/admin/queryForexCoinRateList', data) ===
-      === =
-      return Fetch.post('/forex/background/queryForexCoinRateList', data) >>>
-        >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
+    return Fetch.post('/forex/admin/queryForexCoinRateList', data)
   }
 
   // 币汇管理/交易品种设置/隔夜费设置 添加/编辑
   static apiEditCoinForexPairsNightFee(data) {
-    <<
-    << << < HEAD
     return Fetch.post('/forex/admin/updateForexCoinRateBatch', data)
   }
 
@@ -3656,13 +3486,8 @@ export default class api {
 
   // 合约管理/风控管理/用户监控列表 列表
   static apiGetearningsRecordTotal(data) {
-      return Fetch.post('/admin/account/contract/profit/dayDetailStat', data)
-    }
+    return Fetch.post('/admin/account/contract/profit/dayDetailStat', data)
+  }
 
 
-    ===
-    === =
-    return Fetch.post('/forex/background/updateForexCoinRateBatch', data)
-} >>>
->>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
 }

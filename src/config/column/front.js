@@ -639,8 +639,7 @@ const activityCol = [{
   },
   {
     label: '奖励数量（USDT）',
-    prop: 'reward' <<
-      << << < HEAD
+    prop: 'reward'
   },
   {
     label: '用户累计开仓交易额USDT',
@@ -697,66 +696,6 @@ const activityConfig = [{
     value: ''
   },
   {
-    ===
-    === =
-  },
-  {
-    label: '用户累计开仓交易额USDT',
-    prop: 'cumulativeTradeAmount'
-    // width: 200
-  },
-  {
-    label: '奖励到账金额USDT',
-    prop: 'rewardToAccount'
-    // width: 200
-  }
-]
-
-// 财务管理 -- 提币记录
-const activityColNoBtn = [{
-    label: 'UID',
-    prop: 'uid'
-  },
-  {
-    label: '姓名',
-    prop: 'username'
-  },
-  {
-    label: '首日充值金额（USDT）',
-    prop: 'netAmount'
-  },
-  {
-    label: '首充时间',
-    prop: 'firstRechargeTime'
-    // width: 200
-  },
-  {
-    label: '奖励数量（USDT）',
-    prop: 'reward'
-  },
-  {
-    label: '用户累计开仓交易额USDT',
-    prop: 'cumulativeTradeAmount'
-    // width: 200
-  },
-  {
-    label: '奖励到账金额USDT',
-    prop: 'rewardToAccount'
-    // width: 200
-  }
-]
-
-// 财务管理 -- 提币记录 搜索
-const activityConfig = [{
-    type: 'date_rank',
-    label: '时间',
-    prop: 'startTime',
-    prop2: 'endTime',
-    value: ''
-  },
-  {
-    >>>
-    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
     type: 'text',
     label: 'UID',
     prop: 'uid',
