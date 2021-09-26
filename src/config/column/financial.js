@@ -861,6 +861,19 @@ const extractForeignCol = [
     prop: 'reviewRemark'
   },
   {
+    label: '终审时间',
+    prop: 'lastAuditTime',
+    width: 200
+  },
+  {
+    label: '终审人',
+    prop: 'lastAuditUserName'
+  },
+  {
+    label: '终审备注',
+    prop: 'lastRemark'
+  },
+  {
     label: '操作',
     prop: 'action',
     type: 'action',
@@ -1046,6 +1059,19 @@ const extractForeignColNoBtn = [
   {
     label: '复审备注',
     prop: 'reviewRemark'
+  },
+  {
+    label: '终审时间',
+    prop: 'lastAuditTime',
+    width: 200
+  },
+  {
+    label: '终审人',
+    prop: 'lastAuditUserName'
+  },
+  {
+    label: '终审备注',
+    prop: 'lastRemark'
   }
 ]
 
