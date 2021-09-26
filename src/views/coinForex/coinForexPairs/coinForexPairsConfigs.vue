@@ -99,6 +99,7 @@
               :getVal1.sync="robotForm.minMove"
               :getVal2.sync="robotForm.maxMove"
               :isdisabled="false"
+              :noMinus="true"
               @handler="getRangeVal"
             ></b-two-range-choose>
           </el-col>
