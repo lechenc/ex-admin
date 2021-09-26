@@ -8,8 +8,7 @@
  */
 
 // 前台管理 -- 公告管理 -- table
-const noticeCol = [
-  {
+const noticeCol = [{
     label: '中文标题',
     prop: 'title'
   },
@@ -45,8 +44,7 @@ const noticeCol = [
     prop: 'action',
     type: 'action',
     width: 140,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'editRow',
         type: 'primary',
@@ -63,8 +61,7 @@ const noticeCol = [
 ]
 
 // 前台管理 -- 公告管理 -- table
-const noticeColNoBtn = [
-  {
+const noticeColNoBtn = [{
     label: '中文标题',
     prop: 'title'
   },
@@ -91,17 +88,14 @@ const noticeColNoBtn = [
 ]
 
 // 前台管理 -- 公告管理 -- 搜索栏
-const noticeConfig = [
-  {
-    type: 'text',
-    label: '标题',
-    prop: 'title'
-  }
-]
+const noticeConfig = [{
+  type: 'text',
+  label: '标题',
+  prop: 'title'
+}]
 
 // 前台管理 -- 公告管理 -- 详情
-const noticeDetailCol = [
-  {
+const noticeDetailCol = [{
     label: '币种',
     prop: 'symbol'
   },
@@ -116,8 +110,7 @@ const noticeDetailCol = [
 ]
 
 // 前台管理 -- 弹窗公告 -- table
-const popupNoticeCol = [
-  {
+const popupNoticeCol = [{
     label: '中文标题',
     prop: 'title'
   },
@@ -153,8 +146,7 @@ const popupNoticeCol = [
     prop: 'action',
     type: 'action',
     width: 140,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'editRow',
         type: 'primary',
@@ -171,8 +163,7 @@ const popupNoticeCol = [
 ]
 
 // 前台管理 -- 弹窗公告 -- table
-const popupNoticeColNoBtn = [
-  {
+const popupNoticeColNoBtn = [{
     label: '中文标题',
     prop: 'title'
   },
@@ -199,8 +190,7 @@ const popupNoticeColNoBtn = [
 ]
 
 // 前台管理 -- 弹窗公告 -- 搜索栏
-const popupNoticeConfig = [
-  {
+const popupNoticeConfig = [{
     type: 'text',
     label: '标题',
     prop: 'title'
@@ -210,14 +200,19 @@ const popupNoticeConfig = [
     label: '公告类型',
     prop: 'type',
     value: 1,
-    list: [{ label: '普通弹窗公告', value: 1 }, { label: '维护公告', value: 2 }],
+    list: [{
+      label: '普通弹窗公告',
+      value: 1
+    }, {
+      label: '维护公告',
+      value: 2
+    }],
     isClear: true
   }
 ]
 
 // 前台管理 -- banner管理 -- table
-const bannerCol = [
-  {
+const bannerCol = [{
     label: '名称',
     prop: 'bannerName',
     width: '200'
@@ -227,7 +222,13 @@ const bannerCol = [
     prop: 'isProxyVisible',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '是', val: true }, { text: '否', val: false }]
+    filters: [{
+      text: '是',
+      val: true
+    }, {
+      text: '否',
+      val: false
+    }]
   },
   {
     label: '中文图片',
@@ -244,7 +245,16 @@ const bannerCol = [
     prop: 'deviceType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc,h5', val: 3 }]
+    filters: [{
+      text: 'ios',
+      val: 1
+    }, {
+      text: '安卓',
+      val: 2
+    }, {
+      text: 'pc,h5',
+      val: 3
+    }]
   },
   {
     label: '排序',
@@ -272,8 +282,7 @@ const bannerCol = [
     prop: 'action',
     type: 'action',
     width: 180,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'edit',
         type: 'primary',
@@ -289,8 +298,7 @@ const bannerCol = [
   }
 ]
 
-const bannerColNoBtn = [
-  {
+const bannerColNoBtn = [{
     label: '名称',
     prop: 'bannerName',
     width: '200'
@@ -300,7 +308,13 @@ const bannerColNoBtn = [
     prop: 'isProxyVisible',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '是', val: true }, { text: '否', val: false }]
+    filters: [{
+      text: '是',
+      val: true
+    }, {
+      text: '否',
+      val: false
+    }]
   },
   {
     label: '中文图片',
@@ -317,7 +331,16 @@ const bannerColNoBtn = [
     prop: 'deviceType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc,h5', val: 3 }]
+    filters: [{
+      text: 'ios',
+      val: 1
+    }, {
+      text: '安卓',
+      val: 2
+    }, {
+      text: 'pc,h5',
+      val: 3
+    }]
   },
   {
     label: '排序',
@@ -336,22 +359,25 @@ const bannerColNoBtn = [
 ]
 
 // 前台管理 -- banner管理 -- 搜索栏
-const bannerConfig = [
-  {
-    label: '标题',
-    prop: 'bannerName',
-    type: 'text'
-  }
-]
+const bannerConfig = [{
+  label: '标题',
+  prop: 'bannerName',
+  type: 'text'
+}]
 
 // 前台管理 -- 邀请海报管理 -- table
-const posterCol = [
-  {
+const posterCol = [{
     label: '类型',
     prop: 'bannerType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通海报', val: 1 }, { text: '会员海报', val: 2 }]
+    filters: [{
+      text: '普通海报',
+      val: 1
+    }, {
+      text: '会员海报',
+      val: 2
+    }]
   },
   {
     label: '名称',
@@ -373,7 +399,16 @@ const posterCol = [
     prop: 'deviceType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc,h5', val: 3 }]
+    filters: [{
+      text: 'ios',
+      val: 1
+    }, {
+      text: '安卓',
+      val: 2
+    }, {
+      text: 'pc,h5',
+      val: 3
+    }]
   },
   {
     label: '排序',
@@ -402,8 +437,7 @@ const posterCol = [
     prop: 'action',
     type: 'action',
     width: 180,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'edit',
         type: 'primary',
@@ -420,13 +454,18 @@ const posterCol = [
 ]
 
 // 前台管理 -- 邀请海报管理无权限 -- table
-const posterColNoBtn = [
-  {
+const posterColNoBtn = [{
     label: '类型',
     prop: 'bannerType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通海报', val: 1 }, { text: '会员海报', val: 2 }]
+    filters: [{
+      text: '普通海报',
+      val: 1
+    }, {
+      text: '会员海报',
+      val: 2
+    }]
   },
   {
     label: '名称',
@@ -448,7 +487,16 @@ const posterColNoBtn = [
     prop: 'deviceType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: 'ios', val: 1 }, { text: '安卓', val: 2 }, { text: 'pc,h5', val: 3 }]
+    filters: [{
+      text: 'ios',
+      val: 1
+    }, {
+      text: '安卓',
+      val: 2
+    }, {
+      text: 'pc,h5',
+      val: 3
+    }]
   },
   {
     label: '排序',
@@ -468,26 +516,21 @@ const posterColNoBtn = [
 ]
 
 // 前台管理 -- 邀请海报管理 -- 搜索栏
-const posterConfig = [
-  {
-    label: '名称',
-    prop: 'bannerName',
-    type: 'text'
-  }
-]
+const posterConfig = [{
+  label: '名称',
+  prop: 'bannerName',
+  type: 'text'
+}]
 
 // 前台管理 -- 帮助中心 -- 搜索栏
-const helpConfig = [
-  {
-    label: '标题',
-    prop: 'chineseTitle',
-    type: 'text'
-  }
-]
+const helpConfig = [{
+  label: '标题',
+  prop: 'chineseTitle',
+  type: 'text'
+}]
 
 // 前台管理 -- 帮助中心
-const helpCol = [
-  {
+const helpCol = [{
     label: '栏目名称',
     prop: 'chineseSubjectName'
   },
@@ -527,8 +570,7 @@ const helpCol = [
     prop: 'action',
     type: 'action',
     width: 140,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'editRow',
         type: 'primary',
@@ -544,8 +586,7 @@ const helpCol = [
   }
 ]
 
-const helpColNoBtn = [
-  {
+const helpColNoBtn = [{
     label: 'UID',
     prop: 'uid',
     width: 100
@@ -579,8 +620,7 @@ const helpColNoBtn = [
   }
 ]
 
-const activityCol = [
-  {
+const activityCol = [{
     label: 'UID',
     prop: 'uid'
   },
@@ -599,7 +639,8 @@ const activityCol = [
   },
   {
     label: '奖励数量（USDT）',
-    prop: 'reward'
+    prop: 'reward' <<
+      << << < HEAD
   },
   {
     label: '用户累计开仓交易额USDT',
@@ -614,8 +655,7 @@ const activityCol = [
 ]
 
 // 财务管理 -- 提币记录
-const activityColNoBtn = [
-  {
+const activityColNoBtn = [{
     label: 'UID',
     prop: 'uid'
   },
@@ -649,8 +689,7 @@ const activityColNoBtn = [
 ]
 
 // 财务管理 -- 提币记录 搜索
-const activityConfig = [
-  {
+const activityConfig = [{
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -658,6 +697,66 @@ const activityConfig = [
     value: ''
   },
   {
+    ===
+    === =
+  },
+  {
+    label: '用户累计开仓交易额USDT',
+    prop: 'cumulativeTradeAmount'
+    // width: 200
+  },
+  {
+    label: '奖励到账金额USDT',
+    prop: 'rewardToAccount'
+    // width: 200
+  }
+]
+
+// 财务管理 -- 提币记录
+const activityColNoBtn = [{
+    label: 'UID',
+    prop: 'uid'
+  },
+  {
+    label: '姓名',
+    prop: 'username'
+  },
+  {
+    label: '首日充值金额（USDT）',
+    prop: 'netAmount'
+  },
+  {
+    label: '首充时间',
+    prop: 'firstRechargeTime'
+    // width: 200
+  },
+  {
+    label: '奖励数量（USDT）',
+    prop: 'reward'
+  },
+  {
+    label: '用户累计开仓交易额USDT',
+    prop: 'cumulativeTradeAmount'
+    // width: 200
+  },
+  {
+    label: '奖励到账金额USDT',
+    prop: 'rewardToAccount'
+    // width: 200
+  }
+]
+
+// 财务管理 -- 提币记录 搜索
+const activityConfig = [{
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    >>>
+    >>> > 48 d9482aef0fe4d3bd232ea4bf2e0c5cd12e8133
     type: 'text',
     label: 'UID',
     prop: 'uid',
@@ -671,8 +770,7 @@ const activityConfig = [
     prop: 'reward',
     value: '',
     multiple: true,
-    list: [
-      {
+    list: [{
         label: 10,
         value: 10
       },
@@ -712,8 +810,7 @@ const activityConfig = [
     prop: 'rewardToAccount',
     value: '',
     multiple: true,
-    list: [
-      {
+    list: [{
         label: 10,
         value: 10
       },
@@ -750,17 +847,14 @@ const activityConfig = [
 ]
 
 // 前台管理 -- 栏目 -- 搜索栏
-const columnConfig = [
-  {
-    label: '标题',
-    prop: 'chineseSubjectName',
-    type: 'text'
-  }
-]
+const columnConfig = [{
+  label: '标题',
+  prop: 'chineseSubjectName',
+  type: 'text'
+}]
 
 // 前台管理 -- 栏目
-const columnCol = [
-  {
+const columnCol = [{
     label: '栏目中文名称',
     prop: 'chineseSubjectName'
   },
@@ -786,8 +880,7 @@ const columnCol = [
     prop: 'action',
     type: 'action',
     width: 140,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'editRow',
         type: 'primary',
@@ -803,8 +896,7 @@ const columnCol = [
   }
 ]
 
-const columnColNoBtn = [
-  {
+const columnColNoBtn = [{
     label: '栏目中文名称',
     prop: 'chineseSubjectName'
   },
@@ -828,14 +920,22 @@ const columnColNoBtn = [
 ]
 
 // 运营管理 -- 单点登录白名单管理
-const ssoWhiteListCol = [
-  {
+const ssoWhiteListCol = [{
     label: '单点类型',
     prop: 'ssoType',
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: 'IOS', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }]
+    filters: [{
+      text: 'IOS',
+      val: 1
+    }, {
+      text: '安卓',
+      val: 2
+    }, {
+      text: 'PC',
+      val: 3
+    }]
   },
   {
     label: '备注',
@@ -868,8 +968,7 @@ const ssoWhiteListCol = [
     prop: 'action',
     type: 'action',
     width: 140,
-    btnGroup: [
-      {
+    btnGroup: [{
         label: '编辑',
         fn: 'edit',
         type: 'primary',
@@ -885,14 +984,22 @@ const ssoWhiteListCol = [
   }
 ]
 
-const ssoWhiteListColNoBtn = [
-  {
+const ssoWhiteListColNoBtn = [{
     label: '单点类型',
     prop: 'ssoType',
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: 'IOS', val: 1 }, { text: '安卓', val: 2 }, { text: 'PC', val: 3 }]
+    filters: [{
+      text: 'IOS',
+      val: 1
+    }, {
+      text: '安卓',
+      val: 2
+    }, {
+      text: 'PC',
+      val: 3
+    }]
   },
   {
     label: '备注',
@@ -915,8 +1022,7 @@ const ssoWhiteListColNoBtn = [
 ]
 
 // 运营管理/短信发送记录
-const msgSendRecordCol = [
-  {
+const msgSendRecordCol = [{
     label: '发送平台',
     prop: 'platformName'
   },
@@ -927,7 +1033,13 @@ const msgSendRecordCol = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: '短信', val: 1 }, { text: '邮件', val: 2 }]
+    filters: [{
+      text: '短信',
+      val: 1
+    }, {
+      text: '邮件',
+      val: 2
+    }]
   },
 
   {
@@ -970,7 +1082,13 @@ const msgSendRecordCol = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: '成功', val: true }, { text: '失败', val: false }]
+    filters: [{
+      text: '成功',
+      val: true
+    }, {
+      text: '失败',
+      val: false
+    }]
   },
   {
     label: '发送内容',
@@ -982,8 +1100,7 @@ const msgSendRecordCol = [
 ]
 
 // 运营管理/短信发送记录
-const msgSendRecordColNoBtn = [
-  {
+const msgSendRecordColNoBtn = [{
     label: '发送平台',
     prop: 'platformName'
   },
@@ -994,7 +1111,13 @@ const msgSendRecordColNoBtn = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: '短信', val: 1 }, { text: '邮件', val: 2 }]
+    filters: [{
+      text: '短信',
+      val: 1
+    }, {
+      text: '邮件',
+      val: 2
+    }]
   },
 
   {
@@ -1037,13 +1160,18 @@ const msgSendRecordColNoBtn = [
     type: 'filter',
     show_type: 'text',
     // 1.PC 2.IOS 3.Android
-    filters: [{ text: '成功', val: true }, { text: '失败', val: false }]
+    filters: [{
+      text: '成功',
+      val: true
+    }, {
+      text: '失败',
+      val: false
+    }]
   }
 ]
 
 // 运营管理/短信发送记录
-const msgSendRecordConfig = [
-  {
+const msgSendRecordConfig = [{
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -1063,7 +1191,13 @@ const msgSendRecordConfig = [
     prop: 'messageType',
     value: 1,
     // ： 1短信 2邮件
-    list: [{ label: '短信', value: 1 }, { label: '邮件', value: 2 }]
+    list: [{
+      label: '短信',
+      value: 1
+    }, {
+      label: '邮件',
+      value: 2
+    }]
   },
   {
     type: 'text',
@@ -1078,17 +1212,31 @@ const msgSendRecordConfig = [
     prop: 'syncResult',
     value: '',
     // ： 1短信 2邮件
-    list: [{ label: '成功', value: true }, { label: '失败', value: false }]
+    list: [{
+      label: '成功',
+      value: true
+    }, {
+      label: '失败',
+      value: false
+    }]
   },
   {
     type: 'select',
     label: '发送平台',
     prop: 'platform',
     value: '',
-    list: [
-      { label: '摩杜云', value: '1' },
-      { label: '美联软通', value: '2' },
-      { label: '网易网盾', value: '3' }
+    list: [{
+        label: '摩杜云',
+        value: '1'
+      },
+      {
+        label: '美联软通',
+        value: '2'
+      },
+      {
+        label: '网易网盾',
+        value: '3'
+      }
     ]
   }
 ]

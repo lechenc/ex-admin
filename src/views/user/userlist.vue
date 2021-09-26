@@ -11,7 +11,7 @@
       />
     </div>
     <div>
-      <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+      <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
@@ -45,7 +45,7 @@ export default {
     return {
       listLoading: false, // 表格loading
       excelLoading: false, // 导出loading
-      list: [], //委托列表
+      list: [], // 委托列表
       dataList: [], // 用于导出的数据
       configs: [], // 委托列表列配置
       searchCofig: [], // 搜索框配置
@@ -182,7 +182,6 @@ export default {
 <style lang="scss">
 .user-container {
   padding: 4px 10px 10px 10px;
-
   .container-top {
     margin: 10px 0;
   }
