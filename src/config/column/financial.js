@@ -733,7 +733,9 @@ const extractConfig = [
       { label: '成功', value: 1 },
       { label: '失败', value: 2 },
       { label: '初步审核成功', value: 3 },
-      { label: '初步审核失败', value: 4 }
+      { label: '初步审核失败', value: 4 },
+      { label: '复审审核成功', value: 13 },
+      { label: '复审审核失败', value: 14 }
     ]
   },
   {
@@ -1123,7 +1125,9 @@ const extractForeignConfig = [
       { label: '成功', value: 1 },
       { label: '失败', value: 2 },
       { label: '初步审核成功', value: 3 },
-      { label: '初步审核失败', value: 4 }
+      { label: '初步审核失败', value: 4 },
+      { label: '复审审核成功', value: 13 },
+      { label: '复审审核失败', value: 14 }
     ]
   },
   {
