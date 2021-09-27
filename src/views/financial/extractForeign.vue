@@ -192,7 +192,7 @@
         <!--	<el-form-item v-if="handleStatus === 'preReview'" label="备注" prop="mark" :label-width="formLabelWidth">
 					<el-input v-model="reviewForm.mark"></el-input>
 				</el-form-item> -->
-        <template v-if="handleStatus === 'finalReview'">
+        <template v-if="handleStatus === 'nextReview'">
           <el-form-item label="txId" prop="txId" :label-width="formLabelWidth">
             <el-input v-model="reviewForm.txId" size="medium" />
           </el-form-item>
@@ -718,7 +718,7 @@ export default {
               auditOpinion: '审核通过',
               id: this.handleData.id
             }
-            if (this.handleStatus === 'finalReview') {
+            if (this.handleStatus === 'nextReview') {
               params.txId = this.reviewForm.txId
             }
             this.btnLoading = true
