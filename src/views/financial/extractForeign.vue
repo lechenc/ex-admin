@@ -535,7 +535,7 @@ export default {
     })
     this.getList()
     this.getRechargeChainName()
-    this.getWindControl()
+    // this.getWindControl()
   },
   methods: {
     // 单元格的 className 的回调方法
