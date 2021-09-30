@@ -688,7 +688,8 @@ const coinForexPairsConfigsColNoBtn = [
     label: '百分比强平率',
     prop: 'closeRate',
     type: 'afterJoin', // 结尾拼接一个
-    join: '%'
+    join: '%',
+    nothingValue: '0' // 没有值时显示
   },
 
   {
@@ -958,12 +959,18 @@ const coinForexPairsNightFeeColNoBtn = [
 
   {
     label: '多头隔夜费率',
-    prop: 'doServiceCharge'
+    prop: 'doServiceCharge',
+    type: 'afterJoin', // 结尾拼接一个
+    join: '%',
+    nothingValue: '0' // 没有值时显示
   },
 
   {
     label: '空头隔夜费率',
-    prop: 'koServiceCharge'
+    prop: 'koServiceCharge',
+    type: 'afterJoin', // 结尾拼接一个
+    join: '%',
+    nothingValue: '0' // 没有值时显示
   },
   {
     label: '触发费率时间',
