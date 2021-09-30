@@ -262,9 +262,9 @@
         </template>
       </el-table-column>
 
-      <!--  结尾 % -->
+      <!--  结尾拼接一个 -->
       <el-table-column
-        v-if="config.type === 'afterPercent'"
+        v-if="config.type === 'afterJoin'"
         :key="config.prop"
         :label="config.label"
         :width="config.width ? config.width : ''"
