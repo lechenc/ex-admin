@@ -102,7 +102,14 @@ const coinForexDealListConfig = [
     prop: 'type',
     value: '',
     list: [{ label: '正常平仓', value: 0 }, { label: '爆仓', value: 1 }]
-  }
+  },
+  // {
+  //   type: 'select',
+  //   label: '买或卖',
+  //   prop: 'dealDirection',
+  //   value: '',
+  //   list: [{ label: '卖', value: 0 }, { label: '买', value: 1 }]
+  // }
 ]
 
 // 币汇管理/币汇交易管理/委托报表
@@ -236,7 +243,7 @@ const coinForexEntrustListConfig = [
     label: '委托方向',
     prop: 'dealDirection',
     value: '',
-    list: [{ label: '卖', value: 1 }, { label: '买', value: 0 }]
+    list: [{ label: '卖', value:  0}, { label: '买', value: 1 }]
   }
 ]
 
@@ -351,7 +358,7 @@ const coinForexNotCloseListConfig = [
     label: '买或卖',
     prop: 'dealDirection',
     value: '',
-    list: [{ label: '卖', value: 1 }, { label: '买', value: 0 }]
+    list: [{ label: '卖', value: 0 }, { label: '买', value: 1 }]
   }
 ]
 
