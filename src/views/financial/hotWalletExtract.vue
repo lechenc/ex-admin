@@ -130,7 +130,7 @@
             @input="checkVal('userNightWithdrawAmountTotal')"
           />
         </el-form-item>
-        -->
+
         <!-- <el-form-item label="余额不足提醒手机号" :label-width="formLabelWidth" prop="alarmPhone">
           <el-input
             v-model="chainForm.alarmPhone"
@@ -160,6 +160,7 @@
             @input="checkVal('alarmBalance')"
           />
         </el-form-item>
+        -->
 
         <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
           <el-input
@@ -178,17 +179,17 @@
       </div>
     </el-dialog>
     <!-- 弹窗 -->
-        <el-dialog :visible.sync="dialogSetVisible" width="650px" title="查看余额">
-          <el-row style="margin-bottom: 22px">
-            <el-col :span="6">
-              链类型名称: <span style="color: #4390ff">{{ protocol }}</span>
-            </el-col>
-            <el-col :span="6">
-              币种名称: <span style="color: #4390ff">{{ coinKey }}</span>
-            </el-col>
-          </el-row>
-          <Btable :list-loading="setListLoading" :data="setlist" :configs="setConfigs" />
-        </el-dialog> </el-form
+    <el-dialog :visible.sync="dialogSetVisible" width="650px" title="查看余额">
+      <el-row style="margin-bottom: 22px">
+        <el-col :span="6">
+          链类型名称: <span style="color: #4390ff">{{ protocol }}</span>
+        </el-col>
+        <el-col :span="6">
+          币种名称: <span style="color: #4390ff">{{ coinKey }}</span>
+        </el-col>
+      </el-row>
+      <Btable :list-loading="setListLoading" :data="setlist" :configs="setConfigs" />
+    </el-dialog> </el-form
     ></el-dialog>
   </div>
 </template>
