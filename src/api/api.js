@@ -3489,5 +3489,10 @@ export default class api {
     return Fetch.post('/admin/account/contract/profit/dayDetailStat', data)
   }
 
+  // 代理管理/代理商业绩查询 列表
+  static apiGetAgentAchievementsList(data) {
+    return Fetch.post('/admin/user/contract/achievement/list', data)
+  }
+
 
 }
