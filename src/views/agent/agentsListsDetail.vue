@@ -11,16 +11,22 @@
         <div>
           <div>代理商UID：{{ current_row.uid }}</div>
           <div>上级代理商：{{ current_row.upperUid === 0 ? '--' : current_row.upperUid }}</div>
-          <div>备注：{{ current_row.remark || '无'}}</div>
+          <div>备注：{{ current_row.remark || '无' }}</div>
           <div>登录名：{{ current_row.username }}</div>
-          <div>手机：{{ current_row.phone || '无'}}</div>
-          <div>邮箱：{{ current_row.email || '无'}}</div>
+          <div>手机：{{ current_row.phone || '无' }}</div>
+          <div>邮箱：{{ current_row.email || '无' }}</div>
           <div>手续费返佣比例：{{ current_row.commissionPercent }}</div>
           <div>团队长返佣比例：{{ current_row.packPercent }}</div>
           <div>加入保证金比例：{{ current_row.bondPercent }}</div>
           <div>设置保证金额度：{{ current_row.bondLimit }}</div>
-          <div>手续费返佣结算时间：{{ delayUnitobj[current_row.feeDelayUnit] }} + {{ current_row.feeDelayDay }}</div>
-          <div>团队长返佣结算时间：{{ delayUnitobj[current_row.delayUnit] }} + {{ current_row.delayDay }}</div>
+          <div>
+            手续费返佣结算时间：{{ delayUnitobj[current_row.feeDelayUnit] }} +
+            {{ current_row.feeDelayDay }}
+          </div>
+          <div>
+            团队长返佣结算时间：{{ delayUnitobj[current_row.delayUnit] }} +
+            {{ current_row.delayDay }}
+          </div>
           <div>创建高返佣机会总次数：{{ current_row.quotaCount }}</div>
           <div>创建高返佣机会剩余次数：{{ current_row.remainingQuotaCount }}</div>
           <div v-if="modeIsShow">代理总盈亏阀值：{{ current_row.profitMargin || '无' }}</div>
@@ -33,7 +39,13 @@
     </el-card>
     <el-card>
       <H3>资产信息</H3>
-      <Btable :listLoading="assetsListLoading" :data="list" :configs="listConfigs" @do-handle="doHandle" />
+      <Btable
+        :listLoading="assetsListLoading"
+        :data="list"
+        :configs="listConfigs"
+        @headerBtnFn="headerBtnFn"
+        @do-handle="doHandle"
+      />
     </el-card>
     <el-card>
       <H3
@@ -41,20 +53,47 @@
       >
       <Btable :listLoading="teamLoading" :data="teamList" :configs="otcConfigs" />
       <div class="container-footer">
-        <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
+        <el-pagination
+          background
+          @size-change="pageSizeChange"
+          @current-change="goPage"
+          layout="total,sizes, prev, pager, next, jumper"
+          :current-page="current_page"
+          :page-sizes="[10, 50, 100, 200]"
+          :page-size="pageSize"
+          :total="total"
+        >
+        </el-pagination>
       </div>
     </el-card>
+
+    <!-- 查看明细 -->
+    <el-dialog title="查看明细" width="700px" :visible.sync="headerBtnFnDialogVisible">
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <el-form style="margin-top: 25px" :model="headerBtnFnform" >
+        <el-row :span="24">
+          <el-col :span="20">
+            <el-form-item class="center-item" label-width="280px" label="下面整条链贡献给平台的纯手续费合计：">
+              
+              {{headerBtnFnform.platformProfitLoss}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import $api from '@/api/api';
-import Btable from '@/components/table/b-table';
-import { teamAssetsCol, teamInfoCol } from '@/config/column/contractAgent';
+import Bsearch from '@/components/search/b-search'
+import $api from '@/api/api'
+import Btable from '@/components/table/b-table'
+import { teamAssetsCol, teamInfoCol, agentsListsDetailConfig } from '@/config/column/contractAgent'
 
 export default {
   components: {
     Btable,
+    Bsearch
   },
   name: 'AgentsListsDetail',
   data() {
@@ -62,7 +101,7 @@ export default {
       delayUnitobj: {
         1: '周',
         2: '月',
-        3: '日',
+        3: '日'
       },
       modeIsShow: false,
       listLoading: false, // 表格loading
@@ -88,121 +127,188 @@ export default {
       invite_total: 0, //邀请明细总数
 
       userId: '',
-    };
+      headerBtnFnDialogVisible: false,
+      searchCofig: [],
+      headerBtnFnform: {},
+      toDay: '',
+      ago: '',
+      search_params_obj: {}
+    }
   },
   filters: {
     agentMode(val) {
       if (val == 1) {
-        return '手续费模式';
+        return '手续费模式'
       } else {
-        return '';
+        return ''
       }
-    },
+    }
   },
   activated() {
-    this.listConfigs = teamAssetsCol;
-    this.otcConfigs = teamInfoCol;
-
-    this.userId = this.$route.query.userId;
-    this.getDetail();
-    this.getAssetsListFunc();
-    this.getTeamListFunc();
+    this.toDay = ''
+    this.ago = ''
+    this.searchCofig = this.$util.clone(agentsListsDetailConfig)
+    this.listConfigs = teamAssetsCol
+    this.otcConfigs = teamInfoCol
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
+    this.userId = this.$route.query.userId
+    this.requiredParams({})
+    this.getDetail()
+    this.getAssetsListFunc()
+    this.getTeamListFunc()
   },
   methods: {
+    doSearch(data) {
+      this.search_params_obj = data
+      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
+        return this.$message.error('请选择时间')
+      }
+      this.headerBtnFnSearch()
+    },
+    requiredParams(params) {
+      if (this.$util.isEmptyObject(this.search_params_obj)) {
+        const befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+        const nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+        params.endTime = nowV.replace(/\//gi, '-')
+        params.startTime = befV.replace(/\//gi, '-')
+        // 组件时间初始必须format格式
+        this.searchCofig[0].value = [befV, nowV]
+      }
+      if (this.search_params_obj.startTime) {
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
+      }
+    },
+    formatTime(val) {
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
+    },
+    //
+    async headerBtnFnSearch() {
+      
+      const query_data = {
+        userId: this.userId,
+        uid: this.current_row.uid
+      }
+      this.requiredParams(this.search_params_obj)
+      Object.assign(query_data, this.search_params_obj)
+
+      const res = await $api.apiGetPlatformProfitLossInfo(query_data)
+      if (res) {
+        this.headerBtnFnform = res.data.data
+      }
+    },
+    doReset() {
+      this.search_params_obj = {}
+      this.searchCofig.forEach((v) => {
+        v['value'] = ''
+      })
+      this.searchCofig[0].value = [
+        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      ]
+      this.headerBtnFnSearch()
+    },
+    headerBtnFn() {
+      this.headerBtnFnDialogVisible = true
+       this.headerBtnFnform = {}
+    },
     reloadPage(val) {
-      this[val] = false;
-      this.getAssetsListFunc();
+      this[val] = false
+      this.getAssetsListFunc()
     },
     // 资产信息操作按钮
     async doHandle(data) {
-      const { fn, row } = data;
+      const { fn, row } = data
       if (fn == 'edit') {
-        this.isWithdrawDialog = true;
+        this.isWithdrawDialog = true
       }
     },
 
     goInvitePage(val) {
-      this.invite_curr_page = val;
-      this.getInviteList();
+      this.invite_curr_page = val
+      this.getInviteList()
     },
     goAssetsPage(val) {
-      this.assets_curr_page = val;
-      this.getAssetsList();
+      this.assets_curr_page = val
+      this.getAssetsList()
     },
 
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getTeamListFunc();
+      this.current_page = 1
+      this.pageSize = val
+      this.getTeamListFunc()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getTeamListFunc();
+      this.current_page = val
+      this.getTeamListFunc()
     },
     async getDetail() {
-      if (this.listLoading) return;
-      this.listLoading = true;
-      const res = await $api.getAgentInfo({ userId: this.userId });
+      if (this.listLoading) return
+      this.listLoading = true
+      const res = await $api.getAgentInfo({ userId: this.userId })
       if (res) {
-        this.current_row = res.data.data;
+        this.current_row = res.data.data
         if (res.data.data.userGrade == 2) {
-          this.modeIsShow = true;
+          this.modeIsShow = true
         } else {
-          this.modeIsShow = false;
+          this.modeIsShow = false
         }
       }
-      this.listLoading = false;
+      this.listLoading = false
     },
     // 获取 资产信息表格
     async getAssetsListFunc() {
-      if (this.assetsListLoading) return;
-      this.assetsListLoading = true;
-      const res = await $api.getAgentAssetsInfo({ userId: this.userId });
+      if (this.assetsListLoading) return
+      this.assetsListLoading = true
+      const res = await $api.getAgentAssetsInfo({ userId: this.userId })
       if (res) {
-        const records = res.data.data && res.data.data.coinAccountList;
+        const records = res.data.data && res.data.data.coinAccountList
         if (records && records.length > 0) {
-          this.list = records;
+          this.list = records
         }
       }
-      this.assetsListLoading = false;
+      this.assetsListLoading = false
     },
     // 获取 团队信息表格
     async getTeamListFunc() {
-      if (this.teamLoading) return;
+      if (this.teamLoading) return
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        userId: this.userId,
-      };
-      this.teamLoading = true;
-      const res = await $api.getAgentTeamInfo(params);
+        userId: this.userId
+      }
+      this.teamLoading = true
+      const res = await $api.getAgentTeamInfo(params)
       if (res) {
-        const { records, pages, current, total } = res.data.data;
-        this.total = total;
-        this.pages = pages;
-        this.current_page = current;
+        const { records, pages, current, total } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
         if (records && records.length > 0) {
-          this.teamList = records;
+          this.teamList = records
         } else {
-          this.teamList = [];
+          this.teamList = []
         }
       }
-      this.teamLoading = false;
-    },
+      this.teamLoading = false
+    }
   },
   mounted() {
-    this.listConfigs = teamAssetsCol;
-    this.otcConfigs = teamInfoCol;
-
-    this.userId = this.$route.query.userId;
-
-    this.getDetail();
-    this.getAssetsListFunc();
-    this.getTeamListFunc();
-  },
-};
+    this.searchCofig = this.$util.clone(agentsListsDetailConfig)
+    this.listConfigs = teamAssetsCol
+    this.otcConfigs = teamInfoCol
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
+    this.userId = this.$route.query.userId
+    this.requiredParams({})
+    this.getDetail()
+    this.getAssetsListFunc()
+    this.getTeamListFunc()
+  }
+}
 </script>
 
 <style lang="scss">
