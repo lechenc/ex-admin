@@ -73,8 +73,9 @@ div:focus {
   width: 8px;
   height: 8px;
 }
-.el-dialog{
-  margin-bottom:30px;
+
+.el-dialog {
+  margin-bottom: 30px;
 }
 
 //滚动条的滑块
@@ -105,6 +106,16 @@ div:focus {
 .el-table__body-wrapper::-webkit-scrollbar-thumb {
   background-color: #409eff;
   border-radius: 3px;
+}
+
+.center-item {
+  display: flex;
+  align-items: center;
+
+  .el-form-item__content {
+    flex: 1;
+    margin-left: 0 !important;
+  }
 }
 
 @media screen and (max-width: 750px) {

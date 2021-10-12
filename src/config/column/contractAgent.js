@@ -1052,7 +1052,10 @@ const teamAssetsCol = [
   },
   {
     label: '下面整条链贡献给平台的合约盈亏合计',
-    prop: 'platformProfitLoss'
+    prop: 'platformProfitLoss',
+    type: 'headerBtn',
+    btnName: '查看详情',
+    headerBtnType:'text'
   },
   {
     label: '自身获得团队长合计',
@@ -2411,7 +2414,7 @@ const agentAchievementsCol = [
     label: '类型',
     prop: 'typeName'
   },
-  
+
   {
     label: '手机',
     prop: 'phone'
@@ -2428,7 +2431,7 @@ const agentAchievementsCol = [
     label: '下线代理数量',
     prop: 'agentUserCount'
   },
-  
+
   {
     label: '币种',
     prop: 'coinName'
@@ -2452,7 +2455,7 @@ const agentAchievementsCol = [
   {
     label: '净入金',
     prop: 'totalNetAmount'
-  },
+  }
 ]
 
 const agentAchievementsConfig = [
@@ -2470,17 +2473,28 @@ const agentAchievementsConfig = [
     value: '',
     placeHolder: '请输入'
   },
-  
+
   {
     type: 'select',
     label: '币种',
     prop: 'coinName',
     value: '',
     list: []
+  }
+]
+
+const agentsListsDetailConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
   },
 ]
 
 export {
+  agentsListsDetailConfig,
   agentAchievementsCol,
   agentAchievementsConfig,
   contractUserMonitorCol,
