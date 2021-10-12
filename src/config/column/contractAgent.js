@@ -1054,8 +1054,9 @@ const teamAssetsCol = [
     label: '下面整条链贡献给平台的合约盈亏合计',
     prop: 'platformProfitLoss',
     type: 'headerBtn',
-    btnName: '查看详情',
-    headerBtnType:'text'
+    btnFn: 'platformProfitLossInfo',
+    btnLabel: '查看详情',
+    btnType: 'text'
   },
   {
     label: '自身获得团队长合计',
@@ -2490,7 +2491,7 @@ const agentsListsDetailConfig = [
     prop: 'startTime',
     prop2: 'endTime',
     value: ''
-  },
+  }
 ]
 
 export {

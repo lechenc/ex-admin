@@ -34,7 +34,6 @@
       <el-table-column
         v-if="config.type === 'headerBtn'"
         :key="config.label"
-        :label="config.label"
         :width="config.width ? config.width : ''"
         :min-width="120"
       >
@@ -47,8 +46,8 @@
         <template slot="header">
           <div>
             <span>{{ config.label }}</span>
-            <el-button :type="config.text || 'text'" @click="headerBtnFn">{{
-              config.btnName
+            <el-button :type="config.text || 'text'" @click="headerBtnFn($event,config.btnFn)">{{
+              config.btnLabel
             }}</el-button>
           </div>
         </template>
@@ -1111,8 +1110,20 @@ export default {
     }
   },
   methods: {
-    headerBtnFn() {
-      this.$emit('headerBtnFn')
+    // "操作"列按钮操作
+    doHandle(e, item, fn) {
+      const obj = {
+        row: item,
+        fn: fn
+      }
+
+      this.$emit('do-handle', obj)
+    },
+    headerBtnFn(e, fn) {
+       const obj = {
+        fn: fn
+      }
+      this.$emit('headerBtnFn',obj)
     },
     tableRowClassName({ row, rowIndex }) {
       // 如果行内时间是今天此行字体颜色为金色
@@ -1180,15 +1191,7 @@ export default {
         this.$store.dispatch('app/setViewerVideo', url)
       }
     },
-    // "操作"列按钮操作
-    doHandle(e, item, fn) {
-      const obj = {
-        row: item,
-        fn: fn
-      }
-
-      this.$emit('do-handle', obj)
-    },
+    
     // （"非操作列"行内）按钮操作
     doHandleLine(e, item, fn, curData) {
       const obj = {
