@@ -68,14 +68,17 @@
     </el-card>
 
     <!-- 查看明细 -->
-    <el-dialog title="查看明细" width="700px" :visible.sync="headerBtnFnDialogVisible">
+    <el-dialog title="查看明细" width="650px" :visible.sync="headerBtnFnDialogVisible">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
-      <el-form style="margin-top: 25px" :model="headerBtnFnform" >
+      <el-form v-loading="headerBtnListLoading" style="margin-top: 25px" :model="headerBtnFnform">
         <el-row :span="24">
           <el-col :span="20">
-            <el-form-item class="center-item" label-width="280px" label="下面整条链贡献给平台的纯手续费合计：">
-              
-              {{headerBtnFnform.platformProfitLoss}}
+            <el-form-item
+              class="center-item"
+              label-width="300px"
+              label="下面整条链贡献给平台的手续费合计："
+            >
+              {{ headerBtnFnform.platformCommission }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -132,7 +135,8 @@ export default {
       headerBtnFnform: {},
       toDay: '',
       ago: '',
-      search_params_obj: {}
+      search_params_obj: {},
+      headerBtnListLoading: false
     }
   },
   filters: {
@@ -185,7 +189,8 @@ export default {
     },
     //
     async headerBtnFnSearch() {
-      
+      if (this.headerBtnListLoading) return
+      this.headerBtnListLoading = true
       const query_data = {
         userId: this.userId,
         uid: this.current_row.uid
@@ -197,6 +202,7 @@ export default {
       if (res) {
         this.headerBtnFnform = res.data.data
       }
+      this.headerBtnListLoading = false
     },
     doReset() {
       this.search_params_obj = {}
@@ -209,9 +215,11 @@ export default {
       ]
       this.headerBtnFnSearch()
     },
-    headerBtnFn() {
-      this.headerBtnFnDialogVisible = true
-       this.headerBtnFnform = {}
+    async headerBtnFn(data) {
+      const { fn } = data
+      if (fn == 'platformCommissionInfo') {
+        this.headerBtnFnDialogVisible = true
+      }
     },
     reloadPage(val) {
       this[val] = false
