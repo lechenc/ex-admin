@@ -149,11 +149,13 @@ export default {
     }
   },
   activated() {
+    this.search_params_obj = {}
     this.searchCofig = this.$util.clone(agentsListsDetailConfig)
     this.listConfigs = teamAssetsCol
     this.otcConfigs = teamInfoCol
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
+    
     this.userId = this.$route.query.userId
     this.requiredParams({})
     this.getDetail()
@@ -216,7 +218,10 @@ export default {
     async headerBtnFn(data) {
       const { fn } = data
       if (fn == 'platformCommissionInfo') {
-        this.headerBtnFnDialogVisible = true
+        this.$nextTick(() => {
+          this.headerBtnFnform = {}
+          this.headerBtnFnDialogVisible = true
+        })
       }
     },
     reloadPage(val) {
@@ -303,6 +308,7 @@ export default {
     }
   },
   mounted() {
+    this.search_params_obj = {}
     this.searchCofig = this.$util.clone(agentsListsDetailConfig)
     this.listConfigs = teamAssetsCol
     this.otcConfigs = teamInfoCol
