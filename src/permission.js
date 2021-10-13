@@ -446,6 +446,7 @@ const mapComponents = {
   UserMonitor: () => import('@/views/agent/userMonitor'),
   AgentMonitor: () => import('@/views/agent/agentMonitor'),
   AgentPermissionConfigs: () => import('@/views/agent/agentPermissionConfigs'),
+  AgentAchievements: () => import('@/views/agent/agentAchievements'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
   AgentPlacesConfigs: () => import('@/views/agent/agentPlacesConfigs'),
 

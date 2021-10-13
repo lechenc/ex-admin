@@ -30,6 +30,29 @@
         :min-width="120"
       />
 
+      <!-- 表头加个按钮 -->
+      <el-table-column
+        v-if="config.type === 'headerBtn'"
+        :key="config.label"
+        :width="config.width ? config.width : ''"
+        :min-width="120"
+      >
+        <template slot-scope="scope">
+          <span>
+            {{ scope.row[config.prop] + '' }}
+          </span>
+        </template>
+
+        <template slot="header">
+          <div>
+            <span>{{ config.label }}</span>
+            <el-button :type="config.text || 'text'" @click="headerBtnFn($event,config.btnFn)">{{
+              config.btnLabel
+            }}</el-button>
+          </div>
+        </template>
+      </el-table-column>
+
       <!-- 特殊情况,其他列某些值的,此值隐藏为-符号   -->
       <el-table-column
         v-if="config.type === 'myShowHide'"
@@ -262,9 +285,9 @@
         </template>
       </el-table-column>
 
-      <!--  结尾 % -->
+      <!--  结尾拼接一个 -->
       <el-table-column
-        v-if="config.type === 'afterPercent'"
+        v-if="config.type === 'afterJoin'"
         :key="config.prop"
         :label="config.label"
         :width="config.width ? config.width : ''"
@@ -695,11 +718,11 @@
             <template
               v-else-if="
                 btn.filter_key &&
-                  !btn.filter_type &&
-                  !$util.isArray(btn.filter_key) &&
-                  !btn.isPop &&
-                  !btn.out &&
-                  scope.row[btn.filter_key] == btn.filter_status
+                !btn.filter_type &&
+                !$util.isArray(btn.filter_key) &&
+                !btn.isPop &&
+                !btn.out &&
+                scope.row[btn.filter_key] == btn.filter_status
               "
             >
               <el-button
@@ -717,11 +740,11 @@
             <template
               v-else-if="
                 btn.filter_key &&
-                  $util.isArray(btn.filter_key) &&
-                  !btn.isPop &&
-                  btn.out &&
-                  scope.row[btn.filter_key[0]] == btn.filter_status[0] &&
-                  scope.row[btn.filter_key[1]] != btn.filter_status[1]
+                $util.isArray(btn.filter_key) &&
+                !btn.isPop &&
+                btn.out &&
+                scope.row[btn.filter_key[0]] == btn.filter_status[0] &&
+                scope.row[btn.filter_key[1]] != btn.filter_status[1]
               "
             >
               <el-button
@@ -738,10 +761,10 @@
             <template
               v-else-if="
                 btn.filter_key &&
-                  !$util.isArray(btn.filter_key) &&
-                  !btn.isPop &&
-                  btn.out &&
-                  scope.row[btn.filter_key] != btn.filter_status
+                !$util.isArray(btn.filter_key) &&
+                !btn.isPop &&
+                btn.out &&
+                scope.row[btn.filter_key] != btn.filter_status
               "
             >
               <el-button
@@ -758,11 +781,11 @@
             <template
               v-else-if="
                 btn.filter_key &&
-                  $util.isArray(btn.filter_key) &&
-                  !btn.isPop &&
-                  !btn.out &&
-                  scope.row[btn.filter_key[0]] == btn.filter_status[0] &&
-                  scope.row[btn.filter_key[1]] == btn.filter_status[1]
+                $util.isArray(btn.filter_key) &&
+                !btn.isPop &&
+                !btn.out &&
+                scope.row[btn.filter_key[0]] == btn.filter_status[0] &&
+                scope.row[btn.filter_key[1]] == btn.filter_status[1]
               "
             >
               <el-button
@@ -781,8 +804,8 @@
             <template
               v-else-if="
                 btn.filter_type == 'array' &&
-                  btn.filter_status.includes(scope.row[btn.filter_key] + '') &&
-                  spreconCheckBtnIsShow
+                btn.filter_status.includes(scope.row[btn.filter_key] + '') &&
+                spreconCheckBtnIsShow
               "
             >
               <el-button
@@ -801,7 +824,7 @@
             <template
               v-else-if="
                 btn.filter_type == 'arrayExcept' &&
-                  !btn.filter_status.includes(scope.row[btn.filter_key] + '')
+                !btn.filter_status.includes(scope.row[btn.filter_key] + '')
               "
             >
               <el-button
@@ -819,7 +842,7 @@
             <template
               v-else-if="
                 btn.filter_type == 'filter_label' &&
-                  filter_type_value == scope.row[btn.filter_key] + ''
+                filter_type_value == scope.row[btn.filter_key] + ''
               "
             >
               <el-button
@@ -836,15 +859,15 @@
             <template
               v-else-if="
                 !btn.filter_key &&
-                  btn.other_filter &&
-                  !btn.out &&
-                  ((btn.filter_status.length == 3 &&
+                btn.other_filter &&
+                !btn.out &&
+                ((btn.filter_status.length == 3 &&
+                  scope.row[btn.other_filter[0]] == btn.filter_status[0] &&
+                  (scope.row[btn.other_filter[1]] == btn.filter_status[1] ||
+                    scope.row[btn.other_filter[2]] == btn.filter_status[2])) ||
+                  (btn.filter_status.length == 2 &&
                     scope.row[btn.other_filter[0]] == btn.filter_status[0] &&
-                    (scope.row[btn.other_filter[1]] == btn.filter_status[1] ||
-                      scope.row[btn.other_filter[2]] == btn.filter_status[2])) ||
-                    (btn.filter_status.length == 2 &&
-                      scope.row[btn.other_filter[0]] == btn.filter_status[0] &&
-                      scope.row[btn.other_filter[1]] == btn.filter_status[1]))
+                    scope.row[btn.other_filter[1]] == btn.filter_status[1]))
               "
             >
               <el-button
@@ -892,9 +915,9 @@
             <el-popconfirm
               v-else-if="
                 btn.filter_key &&
-                  scope.row[btn.filter_key] == btn.filter_status &&
-                  btn.isPop &&
-                  !btn.out
+                scope.row[btn.filter_key] == btn.filter_status &&
+                btn.isPop &&
+                !btn.out
               "
               :title="btn['confirm_txt']"
               @onConfirm="doHandle($event, scope.row, btn['fn'])"
@@ -941,13 +964,13 @@ export default {
   name: 'BTable',
   filters: {
     textFilter(v, arr) {
-      const o = arr.find(item => {
+      const o = arr.find((item) => {
         return item.val == v
       })
       return !o ? '' : o['text']
     },
     typeFilter(v, arr) {
-      const o = arr.filter(item => {
+      const o = arr.filter((item) => {
         return item.val == v
       })
       if (!o.length) {
@@ -1049,7 +1072,7 @@ export default {
     // 包含哪个值不显示 除了包含那些值的显示
     indexOfExceptFn() {
       return (row, btn) => {
-        return btn.filter_status.every(v => {
+        return btn.filter_status.every((v) => {
           return row[btn.filter_key].indexOf(v) < 0
         })
       }
@@ -1058,7 +1081,7 @@ export default {
     // 包含那些值的显示
     indexOfFn() {
       return (row, btn) => {
-        return btn.filter_status.some(v => {
+        return btn.filter_status.some((v) => {
           return row[btn.filter_key].indexOf(v) !== -1
         })
       }
@@ -1087,6 +1110,21 @@ export default {
     }
   },
   methods: {
+    // "操作"列按钮操作
+    doHandle(e, item, fn) {
+      const obj = {
+        row: item,
+        fn: fn
+      }
+
+      this.$emit('do-handle', obj)
+    },
+    headerBtnFn(e, fn) {
+       const obj = {
+        fn: fn
+      }
+      this.$emit('headerBtnFn',obj)
+    },
     tableRowClassName({ row, rowIndex }) {
       // 如果行内时间是今天此行字体颜色为金色
       if (this.needColorFont) {
@@ -1107,7 +1145,7 @@ export default {
     },
     // 是否有某些值
     getHave(val, typeValue) {
-      const msg = val.some(v => {
+      const msg = val.some((v) => {
         return v == typeValue
       })
       return msg
@@ -1153,15 +1191,7 @@ export default {
         this.$store.dispatch('app/setViewerVideo', url)
       }
     },
-    // "操作"列按钮操作
-    doHandle(e, item, fn) {
-      const obj = {
-        row: item,
-        fn: fn
-      }
-
-      this.$emit('do-handle', obj)
-    },
+    
     // （"非操作列"行内）按钮操作
     doHandleLine(e, item, fn, curData) {
       const obj = {
