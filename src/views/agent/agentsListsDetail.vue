@@ -149,8 +149,6 @@ export default {
     }
   },
   activated() {
-    this.toDay = ''
-    this.ago = ''
     this.searchCofig = this.$util.clone(agentsListsDetailConfig)
     this.listConfigs = teamAssetsCol
     this.otcConfigs = teamInfoCol
