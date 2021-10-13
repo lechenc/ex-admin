@@ -76,9 +76,9 @@
             <el-form-item
               class="center-item"
               label-width="300px"
-              label="下面整条链贡献给平台的纯手续费合计："
+              label="下面整条链贡献给平台的手续费合计："
             >
-              {{ headerBtnFnform.platformProfitLoss }}
+              {{ headerBtnFnform.platformCommission }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -217,7 +217,7 @@ export default {
     },
     async headerBtnFn(data) {
       const { fn } = data
-      if (fn == 'platformProfitLossInfo') {
+      if (fn == 'platformCommissionInfo') {
         this.headerBtnFnDialogVisible = true
       }
     },
