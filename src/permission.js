@@ -448,6 +448,7 @@ const mapComponents = {
   AgentPermissionConfigs: () => import('@/views/agent/agentPermissionConfigs'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
   AgentPlacesConfigs: () => import('@/views/agent/agentPlacesConfigs'),
+  AgentAchievements: () => import('@/views/agent/agentAchievements'),
 
   CoinContract: () => import('@/views/contract/transact/coinContract'),
   GearSetting: () => import('@/views/contract/transact/gearSetting'),

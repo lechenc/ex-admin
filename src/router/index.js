@@ -1639,7 +1639,15 @@ export const asyncRouterMap = [
         name: 'AgentPermissionConfigs',
         component: () => import('@/views/agent/agentPermissionConfigs'),
         meta: { title: '代理端权限管理', icon: '', role: [] }
-      }
+      },
+
+      {
+        path: 'agentAchievements',
+        name: 'AgentAchievements',
+        component: () => import('@/views/agent/agentAchievements'),
+        meta: { title: '代理商业绩查询', icon: '', role: [] }
+      },
+
     ]
   },
 
