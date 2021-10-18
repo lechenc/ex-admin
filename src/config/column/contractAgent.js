@@ -2400,6 +2400,90 @@ const contractUserMonitorConfig = [
   }
 ]
 
+// 代理管理/代理商业绩查询
+const agentAchievementsCol = [
+  // {
+  //   label: '时间',
+  //   prop: 'createTime',
+  //   type: 'time'
+  // },
+  {
+    label: '代理商UID',
+    prop: 'uid'
+  },
+  {
+    label: '类型',
+    prop: 'typeName'
+  },
+
+  {
+    label: '手机',
+    prop: 'phone'
+  },
+  {
+    label: '邮箱',
+    prop: 'email'
+  },
+  {
+    label: '下线普通用户数量',
+    prop: 'commonUserCount'
+  },
+  {
+    label: '下线代理数量',
+    prop: 'agentUserCount'
+  },
+
+  {
+    label: '币种',
+    prop: 'coinName'
+  },
+
+  {
+    label: '总充币',
+    prop: 'depositAmount'
+  },
+
+  {
+    label: '总买币',
+    prop: 'octInAmount'
+  },
+
+  {
+    label: '总入金',
+    prop: 'totalInAmount'
+  },
+
+  {
+    label: '净入金',
+    prop: 'totalNetAmount'
+  }
+]
+
+const agentAchievementsConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+
+  {
+    type: 'select',
+    label: '币种',
+    prop: 'coinName',
+    value: '',
+    list: []
+  }
+]
+
 const agentsListsDetailConfig = [
   {
     type: 'date_rank',
@@ -2411,6 +2495,8 @@ const agentsListsDetailConfig = [
 ]
 
 export {
+  agentAchievementsConfig,
+  agentAchievementsCol,
   agentsListsDetailConfig,
   contractUserMonitorCol,
   contractUserMonitorConfig,
