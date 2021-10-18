@@ -1143,6 +1143,12 @@ export default {
       }
       return 'default-row'
     },
+    headerBtnFn(e, fn) {
+       const obj = {
+        fn: fn
+      }
+      this.$emit('headerBtnFn',obj)
+    },
     // 是否有某些值
     getHave(val, typeValue) {
       const msg = val.some((v) => {
