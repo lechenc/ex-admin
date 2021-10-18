@@ -1048,7 +1048,11 @@ const teamAssetsCol = [
   },
   {
     label: '下面整条链贡献给平台的手续费合计',
-    prop: 'platformCommission'
+    prop: 'platformCommission',
+    type: 'headerBtn',
+    btnFn: 'platformCommissionInfo',
+    btnLabel: '查看详情',
+    btnType: 'text'
   },
   {
     label: '下面整条链贡献给平台的合约盈亏合计',
