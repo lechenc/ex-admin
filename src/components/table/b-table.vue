@@ -30,6 +30,29 @@
         :min-width="120"
       />
 
+      <!-- 表头加个按钮 -->
+      <el-table-column
+        v-if="config.type === 'headerBtn'"
+        :key="config.label"
+        :width="config.width ? config.width : ''"
+        :min-width="120"
+      >
+        <template slot-scope="scope">
+          <span>
+            {{ scope.row[config.prop] + '' }}
+          </span>
+        </template>
+
+        <template slot="header">
+          <div>
+            <span>{{ config.label }}</span>
+            <el-button :type="config.text || 'text'" @click="headerBtnFn($event,config.btnFn)">{{
+              config.btnLabel
+            }}</el-button>
+          </div>
+        </template>
+      </el-table-column>
+
       <!-- 特殊情况,其他列某些值的,此值隐藏为-符号   -->
       <el-table-column
         v-if="config.type === 'myShowHide'"
