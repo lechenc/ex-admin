@@ -2400,7 +2400,18 @@ const contractUserMonitorConfig = [
   }
 ]
 
+const agentsListsDetailConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  }
+]
+
 export {
+  agentsListsDetailConfig,
   contractUserMonitorCol,
   contractUserMonitorConfig,
   agentPlacesConfigsDetailCol,
