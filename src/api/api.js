@@ -3489,5 +3489,10 @@ export default class api {
     return Fetch.post('/admin/account/contract/profit/dayDetailStat', data)
   }
 
+  // 代理管理/代理商详情  下面整条链贡献给平台的合约盈亏合计 详情
+  static apiGetPlatformProfitLossInfo(data) {
+    return Fetch.post('/admin/account/contract/agent/account/infoNew', data)
+  }
+
 
 }
