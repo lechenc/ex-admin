@@ -580,7 +580,7 @@ const coinForexPairsConfigsCol = [
   },
 
   {
-    label: '持仓手数数范围区间',
+    label: '持仓手数范围区间',
     arr: ['minMove', 'maxMove'],
     type: 'textArr',
     join: '-'
@@ -595,7 +595,7 @@ const coinForexPairsConfigsCol = [
     prop: 'dealDistance'
   },
   {
-    label: '百分比强平率',
+    label: '强平保证金率',
     prop: 'closeRate',
     type: 'afterJoin', // 结尾拼接一个
     join: '%',
@@ -677,7 +677,7 @@ const coinForexPairsConfigsColNoBtn = [
   },
 
   {
-    label: '持仓手数数范围区间',
+    label: '持仓手数范围区间',
     arr: ['minMove', 'maxMove'],
     type: 'textArr',
     join: '-'
@@ -692,7 +692,7 @@ const coinForexPairsConfigsColNoBtn = [
     prop: 'dealDistance'
   },
   {
-    label: '百分比强平率',
+    label: '强平保证金率',
     prop: 'closeRate',
     type: 'afterJoin', // 结尾拼接一个
     join: '%',

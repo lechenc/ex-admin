@@ -95,7 +95,7 @@
             <b-two-range-choose
               ref="twoChoose"
               :labelWidth="formLabelWidth"
-              labelWords="持仓手数数范围区间"
+              labelWords="持仓手数范围区间"
               :getVal1.sync="robotForm.minMove"
               :getVal2.sync="robotForm.maxMove"
               :isdisabled="false"
