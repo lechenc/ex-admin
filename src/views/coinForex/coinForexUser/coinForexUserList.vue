@@ -126,6 +126,12 @@ export default {
   },
 
   methods: {
+    // 页容变化
+    pageSizeChange(val) {
+      this.current_page = 1;
+      this.pageSize = val;
+      this.getList();
+    },
     async confirm() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
