@@ -849,32 +849,32 @@ const extractForeignCol = [
     label: '初审备注',
     prop: 'firstRemark'
   },
-  {
-    label: '复审时间',
-    prop: 'reviewAuditTime',
-    width: 200
-  },
-  {
-    label: '复审人',
-    prop: 'reviewAuditUserName'
-  },
-  {
-    label: '复审备注',
-    prop: 'reviewRemark'
-  },
-  {
-    label: '终审时间',
-    prop: 'lastAuditTime',
-    width: 200
-  },
-  {
-    label: '终审人',
-    prop: 'lastAuditUserName'
-  },
-  {
-    label: '终审备注',
-    prop: 'lastRemark'
-  },
+  // {
+  //   label: '复审时间',
+  //   prop: 'reviewAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '复审人',
+  //   prop: 'reviewAuditUserName'
+  // },
+  // {
+  //   label: '复审备注',
+  //   prop: 'reviewRemark'
+  // },
+  // {
+  //   label: '终审时间',
+  //   prop: 'lastAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '终审人',
+  //   prop: 'lastAuditUserName'
+  // },
+  // {
+  //   label: '终审备注',
+  //   prop: 'lastRemark'
+  // },
   {
     label: '操作',
     prop: 'action',
@@ -1049,32 +1049,32 @@ const extractForeignColNoBtn = [
     label: '初审备注',
     prop: 'firstRemark'
   },
-  {
-    label: '复审时间',
-    prop: 'reviewAuditTime',
-    width: 200
-  },
-  {
-    label: '复审人',
-    prop: 'reviewAuditUserName'
-  },
-  {
-    label: '复审备注',
-    prop: 'reviewRemark'
-  },
-  {
-    label: '终审时间',
-    prop: 'lastAuditTime',
-    width: 200
-  },
-  {
-    label: '终审人',
-    prop: 'lastAuditUserName'
-  },
-  {
-    label: '终审备注',
-    prop: 'lastRemark'
-  }
+  // {
+  //   label: '复审时间',
+  //   prop: 'reviewAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '复审人',
+  //   prop: 'reviewAuditUserName'
+  // },
+  // {
+  //   label: '复审备注',
+  //   prop: 'reviewRemark'
+  // }
+  // {
+  //   label: '终审时间',
+  //   prop: 'lastAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '终审人',
+  //   prop: 'lastAuditUserName'
+  // },
+  // {
+  //   label: '终审备注',
+  //   prop: 'lastRemark'
+  // }
 ]
 
 // 财务管理 -- 提币记录 搜索
