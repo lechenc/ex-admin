@@ -849,19 +849,19 @@ const extractForeignCol = [
     label: '初审备注',
     prop: 'firstRemark'
   },
-  {
-    label: '复审时间',
-    prop: 'reviewAuditTime',
-    width: 200
-  },
-  {
-    label: '复审人',
-    prop: 'reviewAuditUserName'
-  },
-  {
-    label: '复审备注',
-    prop: 'reviewRemark'
-  },
+  // {
+  //   label: '复审时间',
+  //   prop: 'reviewAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '复审人',
+  //   prop: 'reviewAuditUserName'
+  // },
+  // {
+  //   label: '复审备注',
+  //   prop: 'reviewRemark'
+  // },
   // {
   //   label: '终审时间',
   //   prop: 'lastAuditTime',
@@ -1049,19 +1049,19 @@ const extractForeignColNoBtn = [
     label: '初审备注',
     prop: 'firstRemark'
   },
-  {
-    label: '复审时间',
-    prop: 'reviewAuditTime',
-    width: 200
-  },
-  {
-    label: '复审人',
-    prop: 'reviewAuditUserName'
-  },
-  {
-    label: '复审备注',
-    prop: 'reviewRemark'
-  }
+  // {
+  //   label: '复审时间',
+  //   prop: 'reviewAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '复审人',
+  //   prop: 'reviewAuditUserName'
+  // },
+  // {
+  //   label: '复审备注',
+  //   prop: 'reviewRemark'
+  // }
   // {
   //   label: '终审时间',
   //   prop: 'lastAuditTime',
