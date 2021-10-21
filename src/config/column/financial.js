@@ -247,14 +247,14 @@ const rechargeConfig = [
     prop: 'chainName',
     value: '',
     list: []
-  },
-  {
-    type: 'onlyNumber',
-    label: '上级UID',
-    prop: 'upperUid',
-    value: '',
-    placeholder: '请输入'
   }
+  // {
+  //   type: 'onlyNumber',
+  //   label: '上级UID',
+  //   prop: 'upperUid',
+  //   value: '',
+  //   placeholder: '请输入'
+  // }
 ]
 
 // 财务管理 -- 币币资金流水
@@ -374,11 +374,11 @@ const extractCol = [
     prop: 'uid',
     width: 100
   },
-  {
-    label: '上级UID',
-    prop: 'proxyUid',
-    width: 100
-  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'proxyUid',
+  //   width: 100
+  // },
   {
     label: '币种',
     prop: 'coinName'
@@ -464,19 +464,19 @@ const extractCol = [
     prop: 'reviewRemark'
   },
 
-  {
-    label: '终审时间',
-    prop: 'lastAuditTime',
-    width: 200
-  },
-  {
-    label: '终审人',
-    prop: 'lastAuditUserName'
-  },
-  {
-    label: '终审备注',
-    prop: 'lastRemark'
-  },
+  // {
+  //   label: '终审时间',
+  //   prop: 'lastAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '终审人',
+  //   prop: 'lastAuditUserName'
+  // },
+  // {
+  //   label: '终审备注',
+  //   prop: 'lastRemark'
+  // },
 
   {
     label: '操作',
@@ -502,15 +502,15 @@ const extractCol = [
         type: 'success',
         alias: 'nextReview'
       },
-      {
-        label: '终审',
-        fn: 'finalReview',
-        isPop: false,
-        filter_key: 'tradeStatus',
-        filter_status: 13,
-        type: 'success',
-        alias: 'finalReview'
-      },
+      // {
+      //   label: '终审',
+      //   fn: 'finalReview',
+      //   isPop: false,
+      //   filter_key: 'tradeStatus',
+      //   filter_status: 13,
+      //   type: 'success',
+      //   alias: 'finalReview'
+      // },
       {
         label: '初审驳回',
         fn: 'preReject',
@@ -530,15 +530,15 @@ const extractCol = [
         type: 'danger',
         alias: 'nextReject'
       },
-      {
-        label: '终审驳回',
-        fn: 'finalReject',
-        isPop: false,
-        filter_key: 'tradeStatus',
-        filter_status: 13,
-        type: 'danger',
-        alias: 'finalReject'
-      },
+      // {
+      //   label: '终审驳回',
+      //   fn: 'finalReject',
+      //   isPop: false,
+      //   filter_key: 'tradeStatus',
+      //   filter_status: 13,
+      //   type: 'danger',
+      //   alias: 'finalReject'
+      // },
       {
         label: '详情',
         fn: 'detail',
@@ -567,11 +567,11 @@ const extractColNoBtn = [
     prop: 'uid',
     width: 100
   },
-  {
-    label: '上级UID',
-    prop: 'proxyUid',
-    width: 100
-  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'proxyUid',
+  //   width: 100
+  // },
   {
     label: '币种',
     prop: 'coinName'
@@ -655,21 +655,21 @@ const extractColNoBtn = [
   {
     label: '复审备注',
     prop: 'reviewRemark'
-  },
-
-  {
-    label: '终审时间',
-    prop: 'lastAuditTime',
-    width: 200
-  },
-  {
-    label: '终审人',
-    prop: 'lastAuditUserName'
-  },
-  {
-    label: '终审备注',
-    prop: 'lastRemark'
   }
+
+  // {
+  //   label: '终审时间',
+  //   prop: 'lastAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '终审人',
+  //   prop: 'lastAuditUserName'
+  // },
+  // {
+  //   label: '终审备注',
+  //   prop: 'lastRemark'
+  // }
 ]
 
 // 财务管理 -- 提币记录 搜索
@@ -733,9 +733,9 @@ const extractConfig = [
       { label: '成功', value: 1 },
       { label: '失败', value: 2 },
       { label: '初步审核成功', value: 3 },
-      { label: '初步审核失败', value: 4 },
-      { label: '复审审核成功', value: 13 },
-      { label: '复审审核失败', value: 14 }
+      { label: '初步审核失败', value: 4 }
+      // { label: '复审审核成功', value: 13 },
+      // { label: '复审审核失败', value: 14 }
     ]
   },
   {
@@ -744,14 +744,14 @@ const extractConfig = [
     prop: 'chainName',
     value: '',
     list: []
-  },
-  {
-    type: 'onlyNumber',
-    label: '上级UID',
-    prop: 'upperUid',
-    value: '',
-    placeHolder: '请输入'
   }
+  // {
+  //   type: 'onlyNumber',
+  //   label: '上级UID',
+  //   prop: 'upperUid',
+  //   value: '',
+  //   placeHolder: '请输入'
+  // }
 ]
 
 // 财务管理 -- 提币记录
@@ -761,12 +761,12 @@ const extractForeignCol = [
     prop: 'id',
     width: 200
   },
-  {
-    label: '风控用户',
-    prop: 'riskControlUserFlag',
-    width: 200,
-    filters: [{ text: '是', val: true }, { text: '否', val: false }]
-  },
+  // {
+  //   label: '风控用户',
+  //   prop: 'riskControlUserFlag',
+  //   width: 200,
+  //   filters: [{ text: '是', val: true }, { text: '否', val: false }]
+  // },
   {
     label: 'UID',
     prop: 'uid',
@@ -862,19 +862,19 @@ const extractForeignCol = [
     label: '复审备注',
     prop: 'reviewRemark'
   },
-  {
-    label: '终审时间',
-    prop: 'lastAuditTime',
-    width: 200
-  },
-  {
-    label: '终审人',
-    prop: 'lastAuditUserName'
-  },
-  {
-    label: '终审备注',
-    prop: 'lastRemark'
-  },
+  // {
+  //   label: '终审时间',
+  //   prop: 'lastAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '终审人',
+  //   prop: 'lastAuditUserName'
+  // },
+  // {
+  //   label: '终审备注',
+  //   prop: 'lastRemark'
+  // },
   {
     label: '操作',
     prop: 'action',
@@ -899,16 +899,16 @@ const extractForeignCol = [
         type: 'success',
         alias: 'nextReview'
       },
-      {
-        label: '终审',
-        fn: 'finalReview',
-        isPop: false,
-        out: true,
-        filter_key: ['tradeStatus', 'isAuto'],
-        filter_status: [13, 1],
-        type: 'success',
-        alias: 'finalReview'
-      },
+      // {
+      //   label: '终审',
+      //   fn: 'finalReview',
+      //   isPop: false,
+      //   out: true,
+      //   filter_key: ['tradeStatus', 'isAuto'],
+      //   filter_status: [13, 1],
+      //   type: 'success',
+      //   alias: 'finalReview'
+      // },
       {
         label: '初审驳回',
         fn: 'preReject',
@@ -928,16 +928,16 @@ const extractForeignCol = [
         type: 'danger',
         alias: 'nextReject'
       },
-      {
-        label: '终审驳回',
-        fn: 'finalReject',
-        isPop: false,
-        out: true,
-        filter_key: ['tradeStatus', 'isAuto'],
-        filter_status: [13, 1],
-        type: 'danger',
-        alias: 'finalReject'
-      },
+      // {
+      //   label: '终审驳回',
+      //   fn: 'finalReject',
+      //   isPop: false,
+      //   out: true,
+      //   filter_key: ['tradeStatus', 'isAuto'],
+      //   filter_status: [13, 1],
+      //   type: 'danger',
+      //   alias: 'finalReject'
+      // },
       {
         label: '详情',
         fn: 'detail',
@@ -961,12 +961,12 @@ const extractForeignColNoBtn = [
     prop: 'id',
     width: 200
   },
-  {
-    label: '风控用户',
-    prop: 'riskControlUserFlag',
-    width: 200,
-    filters: [{ text: '是', val: true }, { text: '否', val: false }]
-  },
+  // {
+  //   label: '风控用户',
+  //   prop: 'riskControlUserFlag',
+  //   width: 200,
+  //   filters: [{ text: '是', val: true }, { text: '否', val: false }]
+  // },
   {
     label: 'UID',
     prop: 'uid',
@@ -1061,20 +1061,20 @@ const extractForeignColNoBtn = [
   {
     label: '复审备注',
     prop: 'reviewRemark'
-  },
-  {
-    label: '终审时间',
-    prop: 'lastAuditTime',
-    width: 200
-  },
-  {
-    label: '终审人',
-    prop: 'lastAuditUserName'
-  },
-  {
-    label: '终审备注',
-    prop: 'lastRemark'
   }
+  // {
+  //   label: '终审时间',
+  //   prop: 'lastAuditTime',
+  //   width: 200
+  // },
+  // {
+  //   label: '终审人',
+  //   prop: 'lastAuditUserName'
+  // },
+  // {
+  //   label: '终审备注',
+  //   prop: 'lastRemark'
+  // }
 ]
 
 // 财务管理 -- 提币记录 搜索
@@ -1125,9 +1125,9 @@ const extractForeignConfig = [
       { label: '成功', value: 1 },
       { label: '失败', value: 2 },
       { label: '初步审核成功', value: 3 },
-      { label: '初步审核失败', value: 4 },
-      { label: '复审审核成功', value: 13 },
-      { label: '复审审核失败', value: 14 }
+      { label: '初步审核失败', value: 4 }
+      // { label: '复审审核成功', value: 13 },
+      // { label: '复审审核失败', value: 14 }
     ]
   },
   {
@@ -1147,18 +1147,18 @@ const extractForeignConfig = [
       { label: '自动提币', value: 1 },
       { label: '手动提币', value: 2 }
     ]
-  },
-  {
-    type: 'select',
-    label: '风控用户',
-    prop: 'riskControlUserFlag',
-    value: '',
-    list: [
-      { label: '全部', value: '' },
-      { label: '是', value: true },
-      { label: '否', value: false }
-    ]
   }
+  // {
+  //   type: 'select',
+  //   label: '风控用户',
+  //   prop: 'riskControlUserFlag',
+  //   value: '',
+  //   list: [
+  //     { label: '全部', value: '' },
+  //     { label: '是', value: true },
+  //     { label: '否', value: false }
+  //   ]
+  // }
 ]
 
 // 财务管理 -- 划转记录
@@ -2635,34 +2635,34 @@ const hotWalletExtractCol = [
     alias: 'trswitch',
     disabled: true
   },
-  {
-    label: '白天热钱包启用时间开始',
-    prop: 'dayEnableTimeStart'
-  },
-  {
-    label: '白天热钱包启用时间结束',
-    prop: 'dayEnableTimeEnd'
-  },
-  {
-    label: '夜间热钱包启用时间开始',
-    prop: 'nightEnableTimeStart'
-  },
-  {
-    label: '夜间热钱包启用时间结束',
-    prop: 'nightEnableTimeEnd'
-  },
-  {
-    label: '每个用户夜间可使用提币次数',
-    prop: 'userNightWithdrawTimes'
-  },
-  {
-    label: '每个用户夜间单次可提币限额',
-    prop: 'userNightWithdrawAmount'
-  },
-  {
-    label: '每个用户夜间可使用提币总额',
-    prop: 'userNightWithdrawAmountTotal'
-  },
+  // {
+  //   label: '白天热钱包启用时间开始',
+  //   prop: 'dayEnableTimeStart'
+  // },
+  // {
+  //   label: '白天热钱包启用时间结束',
+  //   prop: 'dayEnableTimeEnd'
+  // },
+  // {
+  //   label: '夜间热钱包启用时间开始',
+  //   prop: 'nightEnableTimeStart'
+  // },
+  // {
+  //   label: '夜间热钱包启用时间结束',
+  //   prop: 'nightEnableTimeEnd'
+  // },
+  // {
+  //   label: '每个用户夜间可使用提币次数',
+  //   prop: 'userNightWithdrawTimes'
+  // },
+  // {
+  //   label: '每个用户夜间单次可提币限额',
+  //   prop: 'userNightWithdrawAmount'
+  // },
+  // {
+  //   label: '每个用户夜间可使用提币总额',
+  //   prop: 'userNightWithdrawAmountTotal'
+  // },
   // {
   //   label: '余额不足提醒手机号',
   //   prop: 'alarmPhone'
@@ -2732,34 +2732,34 @@ const hotWalletExtractColNoBtn = [
     alias: 'trswitch',
     disabled: true
   },
-  {
-    label: '白天热钱包启用时间开始',
-    prop: 'dayEnableTimeStart'
-  },
-  {
-    label: '白天热钱包启用时间结束',
-    prop: 'dayEnableTimeEnd'
-  },
-  {
-    label: '夜间热钱包启用时间开始',
-    prop: 'nightEnableTimeStart'
-  },
-  {
-    label: '夜间热钱包启用时间结束',
-    prop: 'nightEnableTimeEnd'
-  },
-  {
-    label: '每个用户夜间可使用提币次数',
-    prop: 'userNightWithdrawTimes'
-  },
-  {
-    label: '每个用户夜间单次可提币限额',
-    prop: 'userNightWithdrawAmount'
-  },
-  {
-    label: '每个用户夜间可使用提币总额',
-    prop: 'userNightWithdrawAmountTotal'
-  },
+  // {
+  //   label: '白天热钱包启用时间开始',
+  //   prop: 'dayEnableTimeStart'
+  // },
+  // {
+  //   label: '白天热钱包启用时间结束',
+  //   prop: 'dayEnableTimeEnd'
+  // },
+  // {
+  //   label: '夜间热钱包启用时间开始',
+  //   prop: 'nightEnableTimeStart'
+  // },
+  // {
+  //   label: '夜间热钱包启用时间结束',
+  //   prop: 'nightEnableTimeEnd'
+  // },
+  // {
+  //   label: '每个用户夜间可使用提币次数',
+  //   prop: 'userNightWithdrawTimes'
+  // },
+  // {
+  //   label: '每个用户夜间单次可提币限额',
+  //   prop: 'userNightWithdrawAmount'
+  // },
+  // {
+  //   label: '每个用户夜间可使用提币总额',
+  //   prop: 'userNightWithdrawAmountTotal'
+  // },
   // {
   //   label: '余额不足提醒手机号',
   //   prop: 'alarmPhone'
@@ -2793,10 +2793,10 @@ const hotWalletExtractSetCol = [
     label: '当前余额',
     prop: 'amount'
   },
-  {
-    label: '累计充入该地址数量',
-    prop: 'totalDeposit'
-  },
+  // {
+  //   label: '累计充入该地址数量',
+  //   prop: 'totalDeposit'
+  // },
   {
     label: '累计热提币',
     prop: 'totalWithdraw'
