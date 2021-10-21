@@ -16,7 +16,7 @@
         :export-excel="true"
         :cal-loading="calLoading"
         :cal-total="true"
-        :set-wind-control="true"
+        :set-wind-control="false"
         @do-search="doSearch"
         @do-reset="doReset"
         @do-exportExcel="exportExcel"
@@ -157,8 +157,11 @@
           </el-col>
         </el-row>
         <el-row
-          v-if="parseInt(handleData.tradeStatus) === 13 || parseInt(handleData.tradeStatus) === 14"
+          v-if="parseInt(handleData.tradeStatus) === 1 || parseInt(handleData.tradeStatus) === 2"
         >
+          <!-- <el-row
+          v-if="parseInt(handleData.tradeStatus) === 13 || parseInt(handleData.tradeStatus) === 14"
+        > -->
           <el-col :span="12">
             <el-form-item label="复审时间" :label-width="formLabelWidth">
               {{ handleData.reviewAuditTime }}
@@ -170,7 +173,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row
+        <!-- <el-row
           v-if="parseInt(handleData.tradeStatus) === 1 || parseInt(handleData.tradeStatus) === 2"
         >
           <el-col :span="12">
@@ -183,13 +186,13 @@
               {{ handleData.lastAuditUserName }}
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <el-row />
         <!--	<el-form-item v-if="handleStatus === 'preReview'" label="备注" prop="mark" :label-width="formLabelWidth">
 					<el-input v-model="reviewForm.mark"></el-input>
 				</el-form-item> -->
-        <template v-if="handleStatus === 'finalReview'">
+        <template v-if="handleStatus === 'nextReview'">
           <el-form-item label="txId" prop="txId" :label-width="formLabelWidth">
             <el-input v-model="reviewForm.txId" size="medium" />
           </el-form-item>
@@ -215,19 +218,24 @@
           {{ handleData.firstRemark }}
         </el-form-item>
         <el-form-item
-          v-if="handleData.tradeStatus === 14"
+          v-if="handleData.tradeStatus === 2"
           label="复审备注"
           :label-width="formLabelWidth"
         >
+          <!-- <el-form-item
+          v-if="handleData.tradeStatus === 14"
+          label="复审备注"
+          :label-width="formLabelWidth"
+        > -->
           {{ handleData.reviewRemark }}
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           v-if="handleData.tradeStatus === 2"
           label="终审备注"
           :label-width="formLabelWidth"
         >
           {{ handleData.lastRemark }}
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="dialogVisible = false">取消</el-button>
@@ -527,7 +535,7 @@ export default {
     })
     this.getList()
     this.getRechargeChainName()
-    this.getWindControl()
+    // this.getWindControl()
   },
   methods: {
     // 单元格的 className 的回调方法
@@ -710,7 +718,7 @@ export default {
               auditOpinion: '审核通过',
               id: this.handleData.id
             }
-            if (this.handleStatus === 'finalReview') {
+            if (this.handleStatus === 'nextReview') {
               params.txId = this.reviewForm.txId
             }
             this.btnLoading = true
