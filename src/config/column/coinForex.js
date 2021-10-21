@@ -856,10 +856,10 @@ const coinForexNetWorthCol = [
     label: '交易账户',
     prop: 'uid'
   },
-  {
-    label: '余额',
-    prop: 'usable'
-  },
+  // {
+  //   label: '余额',
+  //   prop: 'usable'
+  // },
 
   {
     label: '净值',
