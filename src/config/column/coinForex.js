@@ -21,8 +21,12 @@ const coinForexDealListCol = [
     prop: 'directionString'
   },
   {
-    label: '交易量',
+    label: '交易手数',
     prop: 'numberString'
+  },
+  {
+    label: '交易量',
+    prop: 'holdVolString'
   },
   {
     label: '手续费',
@@ -146,8 +150,13 @@ const coinForexEntrustListCol = [
   },
 
   {
-    label: '委托量',
+    label: '委托手数',
     prop: 'handNumString'
+  },
+
+  {
+    label: '委托量',
+    prop: 'totalNumString'
   },
 
   {
