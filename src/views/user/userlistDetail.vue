@@ -138,7 +138,7 @@
         <div slot="content">{{resetKYCTextObj[2].hint}}</div>
         <span>
           <el-button
-            v-if="btnArr.includes('resetKYC')"
+            v-if="btnArr.includes('resetKYC2')"
             :disabled="current_row.userVerifiedStatus != 1"
             @click="resetKYCFn(2)"
             type="primary"
@@ -151,7 +151,7 @@
         <div slot="content">{{resetKYCTextObj[3].hint}}</div>
         <span>
           <el-button
-            v-if="btnArr.includes('resetKYC')"
+            v-if="btnArr.includes('resetKYC3')"
             :disabled="current_row.userVerifiedStatus != 4"
             @click="resetKYCFn(3)"
             type="primary"
@@ -164,7 +164,7 @@
         <div slot="content">{{resetKYCTextObj[4].hint}}</div>
         <span>
           <el-button
-            v-if="btnArr.includes('resetKYC')"
+            v-if="btnArr.includes('resetKYC4')"
             :disabled="current_row.userVerifiedStatus != 4"
             @click="resetKYCFn(4)"
             type="primary"
