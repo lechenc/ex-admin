@@ -127,7 +127,7 @@
           <el-button
             v-if="btnArr.includes('resetKYC')"
             :disabled="current_row.userVerifiedStatus != 1"
-            @click="resetKYC(1)"
+            @click="resetKYCFn(1)"
             type="primary"
             >{{resetKYCTextObj[1].btnText}}</el-button
           >
@@ -140,7 +140,7 @@
           <el-button
             v-if="btnArr.includes('resetKYC')"
             :disabled="current_row.userVerifiedStatus != 1"
-            @click="resetKYC(2)"
+            @click="resetKYCFn(2)"
             type="primary"
             >{{resetKYCTextObj[2].btnText}}</el-button
           >
@@ -153,7 +153,7 @@
           <el-button
             v-if="btnArr.includes('resetKYC')"
             :disabled="current_row.userVerifiedStatus != 4"
-            @click="resetKYC(3)"
+            @click="resetKYCFn(3)"
             type="primary"
             >{{resetKYCTextObj[3].btnText}}</el-button
           >
@@ -166,7 +166,7 @@
           <el-button
             v-if="btnArr.includes('resetKYC')"
             :disabled="current_row.userVerifiedStatus != 4"
-            @click="resetKYC(4)"
+            @click="resetKYCFn(4)"
             type="primary"
             >{{resetKYCTextObj[4].btnText}}</el-button
           >
@@ -423,7 +423,7 @@ export default {
         })
       }
     },
-    resetKYC(type) {
+    resetKYCFn(type) {
       this.$confirm('确定重置状态?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -437,6 +437,7 @@ export default {
           })
           if (res) {
             this.$message.success('重置成功')
+            this.getDetail(this.$route.query.id)
           }
         })
         .catch((error) => {
