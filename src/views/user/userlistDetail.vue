@@ -126,7 +126,7 @@
         <span>
           <el-button
             v-if="btnArr.includes('resetKYC')"
-            :disabled="current_row.userVerifiedStatus != 1"
+            :disabled="current_row.userVerifiedStatus != 1 && current_row.userVerifiedStatus != 2"
             @click="resetKYCFn(1)"
             type="primary"
             >{{resetKYCTextObj[1].btnText}}</el-button
@@ -139,7 +139,7 @@
         <span>
           <el-button
             v-if="btnArr.includes('resetKYC2')"
-            :disabled="current_row.userVerifiedStatus != 1"
+            :disabled="current_row.userVerifiedStatus != 1 && current_row.userVerifiedStatus != 2"
             @click="resetKYCFn(2)"
             type="primary"
             >{{resetKYCTextObj[2].btnText}}</el-button
