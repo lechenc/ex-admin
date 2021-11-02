@@ -301,6 +301,11 @@ const coinForexNotCloseListCol = [
     label: '交易量',
     prop: 'holdVolString'
   },
+  
+  {
+    label: '交易手数',
+    prop: 'handlerNumString'
+  },
 
   {
     label: '开仓时间',
