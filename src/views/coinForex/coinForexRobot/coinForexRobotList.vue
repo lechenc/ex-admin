@@ -22,15 +22,7 @@
 
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
 
     <!-- 添加 编辑 -->
@@ -156,6 +148,12 @@ export default {
   },
 
   methods: {
+    // 页容变化
+    pageSizeChange(val) {
+      this.current_page = 1;
+      this.pageSize = val;
+      this.getList();
+    },
     // 对输入值的范围进行限制
     checkVal(val) {
       // this.robotForm[val] = (this.robotForm[val] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3'); // 4小数

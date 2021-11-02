@@ -65,6 +65,12 @@ export default {
     }
   },
   methods: {
+    // 页容变化
+    pageSizeChange(val) {
+      this.current_page = 1;
+      this.pageSize = val;
+      this.getList();
+    },
     exportExcel(val) {
       this.search_params_obj = val.query
       const num = val.num 

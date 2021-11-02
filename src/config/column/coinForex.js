@@ -21,8 +21,12 @@ const coinForexDealListCol = [
     prop: 'directionString'
   },
   {
-    label: '交易量',
+    label: '交易手数',
     prop: 'numberString'
+  },
+  {
+    label: '交易量',
+    prop: 'holdVolString'
   },
   {
     label: '手续费',
@@ -146,8 +150,13 @@ const coinForexEntrustListCol = [
   },
 
   {
-    label: '委托量',
+    label: '委托手数',
     prop: 'handNumString'
+  },
+
+  {
+    label: '委托量',
+    prop: 'totalNumString'
   },
 
   {
@@ -580,7 +589,7 @@ const coinForexPairsConfigsCol = [
   },
 
   {
-    label: '持仓手数数范围区间',
+    label: '持仓手数范围区间',
     arr: ['minMove', 'maxMove'],
     type: 'textArr',
     join: '-'
@@ -595,7 +604,7 @@ const coinForexPairsConfigsCol = [
     prop: 'dealDistance'
   },
   {
-    label: '百分比强平率',
+    label: '强平保证金率',
     prop: 'closeRate',
     type: 'afterJoin', // 结尾拼接一个
     join: '%',
@@ -677,7 +686,7 @@ const coinForexPairsConfigsColNoBtn = [
   },
 
   {
-    label: '持仓手数数范围区间',
+    label: '持仓手数范围区间',
     arr: ['minMove', 'maxMove'],
     type: 'textArr',
     join: '-'
@@ -692,7 +701,7 @@ const coinForexPairsConfigsColNoBtn = [
     prop: 'dealDistance'
   },
   {
-    label: '百分比强平率',
+    label: '强平保证金率',
     prop: 'closeRate',
     type: 'afterJoin', // 结尾拼接一个
     join: '%',
@@ -856,10 +865,10 @@ const coinForexNetWorthCol = [
     label: '交易账户',
     prop: 'uid'
   },
-  {
-    label: '余额',
-    prop: 'usable'
-  },
+  // {
+  //   label: '余额',
+  //   prop: 'usable'
+  // },
 
   {
     label: '净值',

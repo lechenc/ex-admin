@@ -26,15 +26,7 @@
 
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination
-        background
-        @current-change="goPage"
-        layout="total, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-size="pageSize"
-        :total="total"
-      >
-      </el-pagination>
+      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
     </div>
   </div>
 </template>
@@ -75,6 +67,12 @@ export default {
   },
 
   methods: {
+    // 页容变化
+    pageSizeChange(val) {
+      this.current_page = 1;
+      this.pageSize = val;
+      this.getList();
+    },
     // 导出excel
     calTotalExcel(data) {
       this.search_params_obj = data
