@@ -80,6 +80,14 @@ const accountCol = [
     prop: 'createTime',
     type: 'time',
   },
+  {
+    label: '账号状态',
+    prop: 'status',
+    type: 'filter',
+    show_type: 'text',
+    width: '120',
+    filters: [{ text: '开启', val: 1 },{ text: '关闭', val: 0 }, ],
+  },
   // 隐藏，统一放在编辑页面来操作，因为为了安全必须需要有谷歌验证码才能修改用户信息
   // {
   //   label: '账号状态',
@@ -122,6 +130,14 @@ const accountColNoBtn = [
     label: '添加时间',
     prop: 'createTime',
     type: 'time',
+  },
+  {
+    label: '账号状态',
+    prop: 'status',
+    type: 'filter',
+    show_type: 'text',
+    width: '120',
+    filters: [{ text: '开启', val: 1 },{ text: '关闭', val: 0 }, ],
   },
   // 隐藏，统一放在编辑页面来操作，因为为了安全必须需要有谷歌验证码才能修改用户信息
   // {
