@@ -13,7 +13,7 @@
       <Bsearch
         :configs="searchCofig"
         :excel-loading="excelLoading"
-        :export-excel="true"
+        :export-excel="btnArr.includes('excel')"
         :cal-loading="calLoading"
         :cal-total="true"
         :set-wind-control="false"
@@ -507,7 +507,8 @@ export default {
         6: '充币确认中',
         13: '复审审核成功',
         14: '复审审核失败'
-      }
+      },
+      btnArr: []
     }
   },
   mounted() {
@@ -517,6 +518,7 @@ export default {
       extractForeignColNoBtn
     )
     this.configs = authObj.val
+    this.btnArr = authObj.btnArr
 
     this.inOutGoldConfigs = userColInOutGoldList
     // 初始化今天，之前的时间
