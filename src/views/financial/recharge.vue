@@ -23,6 +23,7 @@
         @do-calTotal="calTotal"
       />
     </div>
+    
     <div>
       <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
