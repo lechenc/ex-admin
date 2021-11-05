@@ -1335,7 +1335,8 @@ const spreconCol = [
     filters: [
       { text: '异常补发', val: 1 },
       { text: '财务工资', val: 2 },
-      { text: '运营活动奖励', val: 3 }
+      { text: '运营活动奖励', val: 3 },
+      { text: '违规扣除', val: 4 },
     ]
   },
   {
@@ -1344,8 +1345,13 @@ const spreconCol = [
   },
 
   {
-    label: '币种',
+    label: '币种/合约账户',
     prop: 'coinName'
+  },
+
+  {
+    label: '资金输出账户',
+    prop: 'transferUserId'
   },
   {
     label: '数量',
@@ -1467,7 +1473,8 @@ const spreconColNoBtn = [
     filters: [
       { text: '异常补发', val: 1 },
       { text: '财务工资', val: 2 },
-      { text: '运营活动奖励', val: 3 }
+      { text: '运营活动奖励', val: 3 },
+      { text: '违规扣除', val: 4 },
     ]
   },
   {
@@ -1476,8 +1483,13 @@ const spreconColNoBtn = [
   },
 
   {
-    label: '币种',
+    label: '币种/合约账户',
     prop: 'coinName'
+  },
+
+  {
+    label: '资金输出账户',
+    prop: 'transferUserId'
   },
   {
     label: '数量',
@@ -1511,11 +1523,18 @@ const spreconColNoBtn = [
   {
     label: '审核人IP',
     prop: 'auditIp'
-  }
+  },
 ]
 
 // 财务管理 -- 特殊调账管理 搜索
 const spreconConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: '',
+  },
   {
     type: 'text',
     label: '订单号',
@@ -1532,7 +1551,7 @@ const spreconConfig = [
   },
   {
     type: 'select',
-    label: '币种',
+    label: '币种/合约账户',
     prop: 'coinId',
     value: '',
     list: []
@@ -1549,8 +1568,13 @@ const spreconConfig = [
     label: '资金账户类型',
     prop: 'accountType',
     value: '',
-    // list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '理财', value: 3 }, { label: '币汇', value: 4 }, { label: '合约', value: 5 }],
-    list: [{ label: '币币', value: 1 }]
+    list: [
+      { label: '币币', value: 1 },
+      //  { label: '法币', value: 2 },
+      //  { label: '理财', value: 3 },
+      //  { label: '币汇', value: 4 },
+      { label: '合约', value: 5 }
+    ]
   },
   {
     type: 'select',
@@ -1560,7 +1584,8 @@ const spreconConfig = [
     list: [
       { label: '异常补发', value: 1 },
       { label: '财务工资', value: 2 },
-      { label: '运营活动奖励', value: 3 }
+      { label: '运营活动奖励', value: 3 },
+      { label: '违规扣除', value: 4 },
     ]
   }
 ]

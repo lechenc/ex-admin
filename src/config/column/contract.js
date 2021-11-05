@@ -3565,8 +3565,14 @@ const accountContractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 320,
+    width: 360,
     btnGroup: [
+      {
+        label: '划转',
+        fn: 'transfer',
+        type: 'primary',
+        alias: 'transfer',
+      },
       {
         label: '销账',
         fn: 'destroy',
