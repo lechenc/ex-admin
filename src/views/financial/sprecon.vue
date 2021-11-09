@@ -54,8 +54,8 @@
         @do-handle="doHandle"
       />
     </div>
-    <div class="container-tip">当前调账总增加金额：{{sumList.curAddAmountSum}}</div>
-    <div class="container-tip">当前调账总增加金额：{{sumList.curSubAmountSum}}</div>
+    <div class="container-tip">当前调账总增加金额：{{ sumList.curAddAmountSum }}</div>
+    <div class="container-tip">当前调账总增加金额：{{ sumList.curSubAmountSum }}</div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination
@@ -73,7 +73,7 @@
     <!-- 创建调账 -->
     <el-dialog :title="addOrderTitle" :visible.sync="addOrderDialog" width="600px">
       <el-form :model="orderForm" :rules="rules" ref="orderForm">
-        <el-form-item label="账户类型" :label-width="formLabelWidth" prop="accountType">
+        <el-form-item label="账户类型：" :label-width="formLabelWidth" prop="accountType">
           <el-select @change="accountTypeChange" v-model="orderForm.accountType" size="small">
             <el-option
               v-for="(item, idx) in accountList"
@@ -86,7 +86,7 @@
         <!-- orderForm.accountType == 5  显示合约账户-->
         <el-form-item
           v-if="orderForm.accountType == 5"
-          label="合约账户"
+          label="合约账户："
           :label-width="formLabelWidth"
           prop="coinId"
         >
@@ -100,7 +100,7 @@
           </el-select>
         </el-form-item>
         <!-- 其余 显示币种-->
-        <el-form-item v-else label="币种" :label-width="formLabelWidth" prop="coinId">
+        <el-form-item v-else label="币种：" :label-width="formLabelWidth" prop="coinId">
           <el-select v-model="orderForm.coinId" size="small">
             <el-option
               v-for="(item, idx) in coinList"
@@ -111,15 +111,19 @@
           </el-select>
         </el-form-item>
         <!--<el-input v-model="orderForm.uid" prop="uid" id="uid" clearable @blur.native.capture="searchAssets"></el-input> -->
-        <el-form-item label="UID:" prop="uid" :label-width="formLabelWidth">
-          <el-input v-model="orderForm.uid" clearable>
+        <el-form-item label="UID：" prop="uid" :label-width="formLabelWidth">
+          <el-input v-model="orderForm.uid" @input="checkVal('orderForm', 'uid', 'not')" clearable>
             <div slot="append" class="gcode" @click.stop="searchAssets">查询资产</div>
           </el-input>
         </el-form-item>
-        <el-form-item label="可用数量" :label-width="formLabelWidth">
-          <el-input v-model="orderForm.amountAvail" clearable :disabled="true"> </el-input>
+        <el-form-item label="可用数量：" :label-width="formLabelWidth">
+          <el-row :span="24">
+            <el-col :span="19">
+              <el-input v-model="orderForm.amountAvail" clearable :disabled="true"> </el-input>
+            </el-col>
+          </el-row>
         </el-form-item>
-        <el-form-item label="调账数量:" prop="amount" :label-width="formLabelWidth">
+        <el-form-item label="调账数量：" prop="amount" :label-width="formLabelWidth">
           <el-row>
             <!--
             <el-col :span="4">
@@ -128,15 +132,19 @@
             ></el-col>
             -->
             <el-col :span="10">
-              <el-input v-model="orderForm.amount" size="small"></el-input></el-col
+              <el-input v-model="orderForm.amount" type="number" size="small"></el-input></el-col
           ></el-row>
         </el-form-item>
-        <el-form-item label="调账原因:" :label-width="formLabelWidth" prop="remark">
+        <el-form-item label="调账原因：" :label-width="formLabelWidth" prop="remark">
           <el-input type="textarea" placeholder="请输入描述" v-model="orderForm.remark"></el-input>
         </el-form-item>
 
-        <el-form-item prop="transferUserId" label="资金输出账户:" :label-width="formLabelWidth">
-          <el-select v-model="orderForm.transferUserId" size="small">
+        <el-form-item prop="transferUserId" label="资金出入账户：" :label-width="formLabelWidth">
+          <el-select
+            @change="spreconGetAccount(orderForm.transferUserId)"
+            v-model="orderForm.transferUserId"
+            size="small"
+          >
             <el-option
               v-for="(item, idx) in outputAccountList"
               :key="idx"
@@ -148,7 +156,11 @@
 
         <el-row :span="24">
           <el-col>
-            <el-form-item :label-width="formLabelWidth" label="调账类型:" prop="reconciliationType">
+            <el-form-item
+              :label-width="formLabelWidth"
+              label="调账类型："
+              prop="reconciliationType"
+            >
               <el-radio-group v-model="orderForm.reconciliationType">
                 <el-radio :label="1">异常补发</el-radio>
                 <el-radio :label="2">财务工资</el-radio>
@@ -159,13 +171,13 @@
           </el-col>
         </el-row>
 
-        <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="账户余额:" :label-width="formLabelWidth">
+        <el-form-item label="账户余额：" :label-width="formLabelWidth">
+          <el-row :span="24">
+            <el-col :span="19">
               <el-input disabled v-model="curTotalAmount"> </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            </el-col>
+          </el-row>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addOrderDialog = false" size="medium">取 消</el-button>
@@ -177,21 +189,28 @@
 
     <!-- 创建批量导入 -->
     <el-dialog title="创建特殊调账" :visible.sync="groupOrderDialog" width="850px">
-      <el-form label-width="150px">
+      <el-form label-width="150px" ref="batchOrderForm" :model="batchOrderForm" :rules="batchRules">
         <el-row :span="24">
           <el-col :span="12">
-            <el-form-item label="资金输出账户:">
-              <!-- <el-radio-group v-model="groupOrderForm.radio">
-                <el-radio :label="1">资金输出账户</el-radio>
-                <el-radio :label="2">财务佣金</el-radio>
-              </el-radio-group> -->
-              财务
+            <el-form-item label="资金出入账户：" prop="transferUserId">
+              <el-select
+                @change="spreconGetAccount(batchOrderForm.transferUserId)"
+                v-model="batchOrderForm.transferUserId"
+                size="small"
+              >
+                <el-option
+                  v-for="(item, idx) in outputAccountList"
+                  :key="idx"
+                  :label="item.realName"
+                  :value="item.userId"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="24">
-          <el-col :span="12">
-            <el-form-item label="账户余额:">
+          <el-col :span="19">
+            <el-form-item label="账户余额：">
               {{ curTotalAmount }}
             </el-form-item>
           </el-col>
@@ -199,7 +218,7 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label="获取表格:">
+            <el-form-item label="获取表格：">
               <el-button type="text" @click="downLoadDefaultExcel"> 下载初始表格</el-button>
             </el-form-item>
           </el-col>
@@ -207,22 +226,23 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label-width="75px">
-              格式列说明：[(账户类型) 1 = 币币， 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 =
-              财务工资，3 = 运营活动奖励，4 = 违规扣除]
+            <el-form-item label="格式列说明：" >
+               [(账户类型) 1 = 币币， 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 =
+              异常补发，2 = 财务工资，3 = 运营活动奖励，4 = 违规扣除]
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label="上传表格:">
+            <el-form-item label="上传表格：">
               <el-upload
                 :action="$special_file_api"
                 :headers="importHeaders"
                 multiple
                 name="file"
-                :data="{}"
+                :disabled="!batchOrderForm.transferUserId"
+                :data="{ userId: batchOrderForm.transferUserId }"
                 :show-file-list="true"
                 accept=".xlsx,.xls"
                 :before-upload="batchBeforeUpload"
@@ -233,7 +253,9 @@
                 ref="batchUploads"
                 :before-remove="batchRemove"
               >
-                <el-button size="small" type="primary">点击上传</el-button>
+                <el-button size="small" type="primary" @click="batchUploadsClick"
+                  >点击上传</el-button
+                >
               </el-upload>
             </el-form-item>
           </el-col>
@@ -439,7 +461,12 @@ export default {
       outputAccountList: [],
       contractCoinList: [],
       toDay: '',
-      ago: ''
+      ago: '',
+      sumList: {},
+      batchOrderForm: {},
+      batchRules: {
+        transferUserId: [{ required: true, message: '必选', trigger: 'blur' }]
+      }
     }
   },
   watch: {
@@ -486,6 +513,24 @@ export default {
     }
   },
   methods: {
+    batchUploadsClick() {
+      let valid = true
+      this.$refs['batchOrderForm'].validateField(['transferUserId'], (errorMessage) => {
+        if (errorMessage) {
+          valid = false
+
+          return
+        }
+      })
+      if (!valid) return
+    },
+    // 对输入值的范围进行限制
+    checkVal(obj, val, nodot) {
+      // 有第这个参数则是禁止小数位，必须整数
+      if (nodot) {
+        this[obj][val] = this[obj][val].replace(/[^\d]/g, '')
+      }
+    },
     accountTypeChange(val) {
       this.orderForm.coinId = ''
     },
@@ -590,20 +635,28 @@ export default {
       this.allAuditArr = tmp
       // }
     },
-    async spreconGetAccount() {
-      const res = await $api.apiSpreconGetAccount({})
+    async spreconGetAccount(id) {
+      let params = {
+        userId: id
+      }
+      const res = await $api.apiSpreconGetAccount(params)
       if (res) {
-        const { totalAmount } = res.data.data
+        const { totalAmount } = res.data.data || ''
         this.curTotalAmount = totalAmount
       }
     },
     // 创建批量导入
     async addGroupOrder() {
       this.groupOrderDialog = true
-      this.spreconGetAccount()
+      this.getSpreconOutputAccountList()
       this.$nextTick(() => {
         this.errorList = []
         this.$refs.batchUploads.clearFiles()
+        this.curTotalAmount = ''
+        this.$refs['batchOrderForm'].resetFields()
+        this.batchOrderForm = {
+          userId: ''
+        }
       })
     },
     downLoadDefaultExcel() {
@@ -637,6 +690,16 @@ export default {
     },
     // 文件限制
     batchBeforeUpload(file) {
+      // let valid = true
+      // this.$refs['batchOrderForm'].validateField(['transferUserId'], (errorMessage) => {
+      //   if (errorMessage) {
+      //     valid = false
+
+      //     return
+      //   }
+      // })
+      // if (!valid) return
+
       const testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
       const extension = testmsg === 'xls'
       const extension2 = testmsg === 'xlsx'
@@ -744,7 +807,7 @@ export default {
       this.addOrderDialog = true
       this.$nextTick(() => {
         this.orderForm = {
-          accountType: '',
+          accountType: 1,
           coinId: '',
           uid: '',
           amountAvail: '',
@@ -755,11 +818,11 @@ export default {
           transferUserId: ''
         }
         this.$refs['orderForm'].resetFields()
+        this.curTotalAmount = ''
       })
-      this.spreconGetAccount()
       this.getSpreconOutputAccountList()
     },
-    // 获取资金输出账户列表
+    // 获取资金出入账户列表
     async getSpreconOutputAccountList() {
       const res = await $api.apiGetSpreconOutputAccountList({})
       if (res) {
@@ -891,7 +954,7 @@ export default {
     async getSpecialReconciliationSum(query_data) {
       const res = await $api.apiGetSpecialReconciliationSum(query_data)
       if (res) {
-        this.sumList = res.data.data
+        this.sumList = res.data.data || {}
       }
     },
     // getlist

@@ -1336,7 +1336,7 @@ const spreconCol = [
       { text: '异常补发', val: 1 },
       { text: '财务工资', val: 2 },
       { text: '运营活动奖励', val: 3 },
-      { text: '违规扣除', val: 4 },
+      { text: '违规扣除', val: 4 }
     ]
   },
   {
@@ -1474,7 +1474,7 @@ const spreconColNoBtn = [
       { text: '异常补发', val: 1 },
       { text: '财务工资', val: 2 },
       { text: '运营活动奖励', val: 3 },
-      { text: '违规扣除', val: 4 },
+      { text: '违规扣除', val: 4 }
     ]
   },
   {
@@ -1523,7 +1523,7 @@ const spreconColNoBtn = [
   {
     label: '审核人IP',
     prop: 'auditIp'
-  },
+  }
 ]
 
 // 财务管理 -- 特殊调账管理 搜索
@@ -1533,7 +1533,7 @@ const spreconConfig = [
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
@@ -1585,7 +1585,7 @@ const spreconConfig = [
       { label: '异常补发', value: 1 },
       { label: '财务工资', value: 2 },
       { label: '运营活动奖励', value: 3 },
-      { label: '违规扣除', value: 4 },
+      { label: '违规扣除', value: 4 }
     ]
   }
 ]
@@ -1875,7 +1875,8 @@ const coinFundsCol = [
       { text: '财务工资', val: '113' },
       { text: '运营活动奖励', val: '114' },
       { text: '币币划转至币汇', val: '115' },
-      { text: '币汇划转至币币', val: '116' }
+      { text: '币汇划转至币币', val: '116' },
+      { text: '违规扣除', val: '117' }
     ]
   },
   {
@@ -2038,7 +2039,8 @@ const coinFundsConfig = [
       { label: '财务工资', value: '113' },
       { label: '运营活动奖励', value: '114' },
       { label: '币币划转至币汇', value: '115' },
-      { label: '币汇划转至币币', value: '116' }
+      { label: '币汇划转至币币', value: '116' },
+      { label: '违规扣除', value: '117' }
     ]
   }
 ]
