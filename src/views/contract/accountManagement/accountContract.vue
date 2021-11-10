@@ -64,12 +64,13 @@
       <el-form :model="transferForm" label-width="120px" ref="transferForm" :rules="transferRules">
         <el-row :span="24">
           <el-col :span="22">
-            <el-form-item label="币种" prop="balanceCur">
-              <el-select
+            <el-form-item label="币种" prop="coinId">
+              <!-- <el-select
                 @change="getTransferAccountUserAccount"
                 v-model="transferForm.coinId"
                 placeholder="请选择"
-              >
+              > -->
+              <el-select v-model="transferForm.coinId" placeholder="请选择">
                 <el-option
                   v-for="item in coin_List"
                   :label="item.label"
@@ -85,7 +86,12 @@
         <el-row :span="24">
           <el-col :span="22">
             <el-form-item label="可用余额">
-              <el-input disabled type="text" v-model="transferBalance" placeholder=""></el-input>
+              <el-input
+                disabled
+                type="text"
+                v-model="transferForm.transferBalance"
+                placeholder=""
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -164,7 +170,7 @@ export default {
   data() {
     const validateTransferAmount = (rule, value, callback) => {
       const one = Number(value)
-      const max = Number(this.transferBalance)
+      const max = Number(this.transferForm.transferBalance)
       if (!max || one > max) {
         return callback(new Error('可划转数量不足'))
       }
@@ -225,6 +231,8 @@ export default {
       transferFormVisible: false,
       transferForm: {},
       transferRules: {
+        
+        coinId: [{ required: true, message: '必选', trigger: 'blur' }],
         amount: [
           { required: true, message: '必填', trigger: 'blur' },
           { validator: validateTransferAmount, trigger: 'blur' }
@@ -234,7 +242,6 @@ export default {
         remark: [{ required: true, message: '必填', trigger: 'blur' }]
       },
       transferToList: [],
-      transferBalance: '',
       curTransferObj: {},
       transferBtnLoading: false
     }
@@ -267,17 +274,17 @@ export default {
         }
       })
     },
-    async getTransferAccountUserAccount(val) {
-      let params = {
-        accountType: 1,
-        uid: this.curTransferObj.uid,
-        coinId:val
-      }
-      const res = await $api.accountUseraccount(params)
-      if (res) {
-        this.transferBalance = res.data.data.amount || 0
-      }
-    },
+    // async getTransferAccountUserAccount(val) {
+    //   let params = {
+    //     accountType: 1,
+    //     uid: this.curTransferObj.uid,
+    //     coinId:val
+    //   }
+    //   const res = await $api.accountUseraccount(params)
+    //   if (res) {
+    //     this.transferBalance = res.data.data.amount || 0
+    //   }
+    // },
 
     async confirmOp() {
       this.$refs['dForm'].validate(async (valid) => {
@@ -382,12 +389,12 @@ export default {
         this.curTransferObj = row
         this.$nextTick(() => {
           this.$refs['transferForm'].resetFields()
-          this.transferBalance = ''
           this.transferForm = {
             coinId: '',
             amount: '',
             toUserType: '',
-            remark: ''
+            remark: '',
+            transferBalance: row.balance
           }
         })
       }
