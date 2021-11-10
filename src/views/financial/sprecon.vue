@@ -112,7 +112,7 @@
         </el-form-item>
         <!--<el-input v-model="orderForm.uid" prop="uid" id="uid" clearable @blur.native.capture="searchAssets"></el-input> -->
         <el-form-item label="UID：" prop="uid" :label-width="formLabelWidth">
-          <el-input v-model="orderForm.uid" @input="checkVal('orderForm', 'uid', 'not')" clearable>
+          <el-input maxlength="20" v-model="orderForm.uid" @input="checkVal('orderForm', 'uid', 'not')" clearable>
             <div slot="append" class="gcode" @click.stop="searchAssets">查询资产</div>
           </el-input>
         </el-form-item>
@@ -131,12 +131,13 @@
                 <el-option label="+" :value="'+'"></el-option> <el-option label="-" :value="'-'"></el-option></el-select
             ></el-col>
             -->
-            <el-col :span="10">
-              <el-input v-model="orderForm.amount" type="number" size="small"></el-input></el-col
+            <el-col :span="19">
+              <!-- 限制20长度 -->
+              <el-input @input="orderForm.amount = orderForm.amount.slice(0,20)" v-model="orderForm.amount" type="number" size="small"></el-input></el-col
           ></el-row>
         </el-form-item>
         <el-form-item label="调账原因：" :label-width="formLabelWidth" prop="remark">
-          <el-input type="textarea" placeholder="请输入描述" v-model="orderForm.remark"></el-input>
+          <el-input maxlength="100" type="textarea" placeholder="请输入描述" v-model="orderForm.remark"></el-input>
         </el-form-item>
 
         <el-form-item prop="transferUserId" label="资金出入账户：" :label-width="formLabelWidth">
