@@ -226,9 +226,9 @@
 
         <el-row :span="24">
           <el-col :span="24">
-            <el-form-item label="格式列说明：" >
-               [(账户类型) 1 = 币币， 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 =
-              异常补发，2 = 财务工资，3 = 运营活动奖励，4 = 违规扣除]
+            <el-form-item label="格式列说明：">
+              [(账户类型) 1 = 币币， 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 =
+              财务工资，3 = 运营活动奖励，4 = 违规扣除]
             </el-form-item>
           </el-col>
         </el-row>
@@ -269,64 +269,64 @@
     </el-dialog>
 
     <!-- 调账详情，审核 -->
-    <el-dialog title="查看调账详情" :visible.sync="dialogVisible" width="600px">
+    <el-dialog title="查看调账详情：" :visible.sync="dialogVisible" width="600px">
       <el-form :model="dataForm" ref="dataForm">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="订单号" :label-width="formLabelWidth">{{
+            <el-form-item label="订单号：" :label-width="formLabelWidth">{{
               curRow.orderNo
             }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="UID" :label-width="formLabelWidth">{{ curRow.uid }}</el-form-item>
+            <el-form-item label="UID：" :label-width="formLabelWidth">{{ curRow.uid }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="账户类型" :label-width="formLabelWidth">{{
+            <el-form-item label="账户类型：" :label-width="formLabelWidth">{{
               curRow.accountType | fStatus
             }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="币种" :label-width="formLabelWidth">{{
+            <el-form-item label="币种/合约账户：" :label-width="formLabelWidth">{{
               curRow.coinName
             }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="调账数量" :label-width="formLabelWidth">{{
+            <el-form-item label="调账数量：" :label-width="formLabelWidth">{{
               curRow.amount
             }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="申请时间" :label-width="formLabelWidth">{{
+            <el-form-item label="申请时间：" :label-width="formLabelWidth">{{
               curRow.createTime | typeTime
             }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="申请人" :label-width="formLabelWidth">{{
+            <el-form-item label="申请人：" :label-width="formLabelWidth">{{
               curRow.appliName
             }}</el-form-item>
           </el-col>
         </el-row>
         <el-row v-if="hasChecked">
           <el-col :span="12">
-            <el-form-item label="审核时间" :label-width="formLabelWidth">{{
+            <el-form-item label="审核时间：" :label-width="formLabelWidth">{{
               curRow.auditTime | typeTime
             }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="审核人" :label-width="formLabelWidth">{{
+            <el-form-item label="审核人：" :label-width="formLabelWidth">{{
               curRow.auditName
             }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="调账原因" :label-width="formLabelWidth">{{
+            <el-form-item label="调账原因：" :label-width="formLabelWidth">{{
               curRow.remark
             }}</el-form-item>
           </el-col>
@@ -641,8 +641,8 @@ export default {
       }
       const res = await $api.apiSpreconGetAccount(params)
       if (res) {
-        const { totalAmount } = res.data.data || ''
-        this.curTotalAmount = totalAmount
+        const obj = res.data.data || {}
+        this.curTotalAmount = obj.totalAmount || 0
       }
     },
     // 创建批量导入
@@ -974,9 +974,9 @@ export default {
         this.total = total
         this.pages = pages
         this.current_page = current
-        records.forEach((v) => {
-          v.coinName = this.coinList.filter((f) => f.value == v.coinId)[0].label
-        })
+        // records.forEach((v) => {
+        //   v.coinName = this.coinList.filter((f) => f.value == v.coinId)[0].label
+        // })
         this.list = records
         this.dataList = records
       }
