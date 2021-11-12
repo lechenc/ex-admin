@@ -2452,7 +2452,11 @@ const flowRecordContractCol = [
       {
         text: '开空',
         val: 19
-      }
+      },
+      { text: '异常补发', val: '112' },
+      { text: '财务工资', val: '113' },
+      { text: '运营活动奖励', val: '114' },
+      { text: '违规扣除', val: '117' }
     ]
   },
   {
@@ -2614,7 +2618,11 @@ const flowRecordContractConfig = [
       {
         label: '开空',
         value: 19
-      }
+      },
+      { label: '异常补发', value: '112' },
+      { label: '财务工资', value: '113' },
+      { label: '运营活动奖励', value: '114' },
+      { label: '违规扣除', value: '117' }
     ]
   }
 ]
@@ -3531,6 +3539,8 @@ const accountContractCol = [
     label: 'UID',
     prop: 'uid'
   },
+  
+    
   {
     label: '币种',
     prop: 'coinName'
