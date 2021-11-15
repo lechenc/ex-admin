@@ -83,10 +83,14 @@ export default {
       utils.exportData.apply(this, [num])
     },
     async queryData(params) {
-      console.log('params',params)
       this.excelLoading = true
       this.requiredParams(params)
       Object.assign(params, this.search_params_obj)
+      const query_data = {
+        tradeType: 0,
+        appId: 0
+      }
+      Object.assign(params, query_data)
       const res = await $api.queryAdvTradeListNew(params)
       this.excelLoading = false
       return res
