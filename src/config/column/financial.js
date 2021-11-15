@@ -1351,7 +1351,7 @@ const spreconCol = [
 
   {
     label: '资金输出账户',
-    prop: 'transferUserId'
+    prop: 'transferName'
   },
   {
     label: '数量',
