@@ -472,9 +472,9 @@ export default {
       const res = await $api.getAccountContractList(query_data)
       if (res) {
         let list = res.data.data
-        // 当前可用  =   【累计平台盈亏 + 累计平台手续费返佣】 减去 【补发金额+团队长返佣金额+累计销账金额】
+        // 当前可用  =   【累计平台盈亏 + 累计平台手续费返佣 + 划入】 减去 【补发金额+团队长返佣金额+累计销账金额 + 划出】
         // abnormalReissueAmount  累计异常补发金额  固定 113791.6288
-        // leaderCommissionAmount  leaderCommissionAmount  固定 23948.4439
+        // leaderCommissionAmount  团队长返佣金额  固定 23948.4439
         if (list.length) {
           list.forEach((v) => {
             v.abnormalReissueAmount = '113791.6288'
