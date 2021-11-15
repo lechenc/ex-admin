@@ -668,7 +668,7 @@ async function exportData(type, max = 10000, loading = null) {
   }
   const { export_json_to_excel } = require('./export2excel/Export2Excel.js')
   const startExport = async list => {
-    console.log('list',list)
+    
     const header = []
     const keys = []
     const data = []

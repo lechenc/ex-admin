@@ -83,6 +83,7 @@ export default {
       utils.exportData.apply(this, [num])
     },
     async queryData(params) {
+      console.log('params',params)
       this.excelLoading = true
       this.requiredParams(params)
       Object.assign(params, this.search_params_obj)
@@ -135,9 +136,6 @@ export default {
         this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
       ]
       this.getList()
-    },
-    exportExcel() {
-      utils.exportData.apply(this, [0])
     },
     // 页容变化
     pageSizeChange(val) {
