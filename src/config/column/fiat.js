@@ -1201,19 +1201,19 @@ const otcOrderCol = [
   },
   {
     label: '下单时间',
-    prop: 'createTime',
+    prop: 'localCreateTime',
     type: 'time',
     width: '100',
   },
   {
     label: '支付时间',
-    prop: 'payTime',
+    prop: 'localPayTime',
     type: 'time',
     width: '100',
   },
   {
     label: '放行时间',
-    prop: 'letgoTime',
+    prop: 'localLetGoTime',
     type: 'time',
     width: '100',
   },
@@ -1352,21 +1352,23 @@ const otcOrderColNoBtn = [
     width: '100',
     filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
   },
+  
+  
   {
     label: '下单时间',
-    prop: 'createTime',
+    prop: 'localCreateTime',
     type: 'time',
     width: '100',
   },
   {
     label: '支付时间',
-    prop: 'payTime',
+    prop: 'localPayTime',
     type: 'time',
     width: '100',
   },
   {
     label: '放行时间',
-    prop: 'letgoTime',
+    prop: 'localLetGoTime',
     type: 'time',
     width: '100',
   },
