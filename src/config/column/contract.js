@@ -3535,6 +3535,14 @@ const accountContractCol = [{
     label: '累计销账金额',
     prop: 'destroyAmount'
   },
+  {
+    label: '划入金额',
+    prop: 'transferTotalIn'
+  },
+  {
+    label: '划出金额',
+    prop: 'transferTotalOut'
+  },
 
   {
     label: '操作',
