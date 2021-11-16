@@ -479,10 +479,10 @@ export default {
           list.forEach((v) => {
             v.abnormalReissueAmount = '113791.6288'
             v.leaderCommissionAmount = '23948.4439'
-            v.balance = [v.sumProfitLoss, v.totalCommission].reduce((prev, cur) => {
+            v.balance = [v.sumProfitLoss, v.totalCommission,v.transferTotalIn].reduce((prev, cur) => {
               return Precision.plus(prev, cur)
             }, 0)
-            v.balance = [v.abnormalReissueAmount, v.leaderCommissionAmount, v.destroyAmount].reduce(
+            v.balance = [v.abnormalReissueAmount, v.leaderCommissionAmount, v.destroyAmount,v.transferTotalOut].reduce(
               (prev, cur) => {
                 return Precision.minus(prev, cur)
               },
