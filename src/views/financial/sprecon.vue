@@ -54,8 +54,8 @@
         @do-handle="doHandle"
       />
     </div>
-    <div class="container-tip">当前调账总增加金额：{{ sumList.curAddAmountSum }}</div>
-    <div class="container-tip">当前调账总增加金额：{{ sumList.curSubAmountSum }}</div>
+    <!-- <div class="container-tip">当前调账总增加金额：{{ sumList.curAddAmountSum }}</div>
+    <div class="container-tip">当前调账总增加金额：{{ sumList.curSubAmountSum }}</div> -->
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination
