@@ -1,15 +1,15 @@
 const userCol = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '手机（账号）',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱',
-    prop: 'email',
+    prop: 'email'
   },
   // {
   //   label: "企业类型",
@@ -32,7 +32,7 @@ const userCol = [
   {
     label: '注册时间',
     prop: 'registTimeStamp',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '操作',
@@ -44,24 +44,24 @@ const userCol = [
         label: '查看/编辑',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
-      },
-    ],
-  },
-];
+        alias: 'detail'
+      }
+    ]
+  }
+]
 
 const userColNoBtn = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '手机（账号）',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱',
-    prop: 'email',
+    prop: 'email'
   },
   // {
   //   label: "企业类型",
@@ -84,9 +84,9 @@ const userColNoBtn = [
   {
     label: '注册时间',
     prop: 'registTimeStamp',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 const userConfig = [
   {
@@ -94,14 +94,14 @@ const userConfig = [
     label: '注册时间',
     prop: 'startDate',
     prop2: 'endDate',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '手机（账户）',
     prop: 'account',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
@@ -109,7 +109,7 @@ const userConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   // {
   //   type: "select",
@@ -123,27 +123,27 @@ const userConfig = [
     label: '邮箱',
     prop: 'email',
     value: '',
-    placeHolder: '请输入',
-  },
-];
+    placeHolder: '请输入'
+  }
+]
 
 const inviteCol = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '账号',
-    prop: 'gg',
+    prop: 'gg'
   },
   {
     label: '买入佣金费率',
-    prop: 'tt',
+    prop: 'tt'
   },
   {
     label: '卖出佣金费率',
     prop: 'time',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '操作',
@@ -155,66 +155,66 @@ const inviteCol = [
         label: '修改',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '迁移',
         fn: 'move',
         type: 'primary',
-        alias: 'move',
-      },
-    ],
-  },
-];
+        alias: 'move'
+      }
+    ]
+  }
+]
 
 const inviteColNoBtn = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '账号',
-    prop: 'gg',
+    prop: 'gg'
   },
   {
     label: '买入佣金费率',
-    prop: 'tt',
+    prop: 'tt'
   },
   {
     label: '卖出佣金费率',
     prop: 'time',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 const invitationCol = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '手机',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱',
-    prop: 'email',
+    prop: 'email'
   },
   {
     label: '用户类型',
     prop: 'qyType',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
     // filters: [{ text: "普通用户", val: 1 }, { text: "系统用户", val: 100 }, { text: "机器人", val: 3 }],
   },
   {
     label: '兑入佣金比',
-    prop: 'gg',
+    prop: 'gg'
   },
   {
     label: '兑出佣金比',
-    prop: 'tt',
+    prop: 'tt'
   },
   {
     label: '操作',
@@ -226,42 +226,42 @@ const invitationCol = [
         label: '迁移',
         fn: 'move',
         type: 'primary',
-        alias: 'move',
-      },
-    ],
-  },
-];
+        alias: 'move'
+      }
+    ]
+  }
+]
 
 const invitationColNoBtn = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '手机',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱',
-    prop: 'email',
+    prop: 'email'
   },
   {
     label: '用户类型',
     prop: 'qyType',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
     // filters: [{ text: "普通用户", val: 1 }, { text: "系统用户", val: 100 }, { text: "机器人", val: 3 }],
   },
   {
     label: '兑入佣金比',
-    prop: 'gg',
+    prop: 'gg'
   },
   {
     label: '兑出佣金比',
-    prop: 'tt',
-  },
-];
+    prop: 'tt'
+  }
+]
 
 const invitationConfig = [
   {
@@ -269,15 +269,15 @@ const invitationConfig = [
     label: '账号',
     prop: 'account',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: '用户编号',
     prop: 'nickName',
     value: '',
-    placeHolder: '请输入',
-  },
+    placeHolder: '请输入'
+  }
   // {
   //   type: "text",
   //   label: "邮箱",
@@ -292,12 +292,12 @@ const invitationConfig = [
   //   value: "",
   //   list: [{ label: "待审核", value: 0 }, { label: "审核通过", value: 1 }, { label: "审核不通过", value: 2 }, { label: "未提交审核", value: 3 }],
   // },
-];
+]
 
 const advertiseRecordCol = [
   {
     label: '广告商UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '广告类型',
@@ -305,12 +305,12 @@ const advertiseRecordCol = [
     type: 'filter',
     show_type: 'text',
     width: 170,
-    filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }],
+    filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }]
     // filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }, { val: 3, text: '抢单在线出售' }, { val: 4, text: '抢单在线购买' }],
   },
   {
     label: '交易币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '定价方式',
@@ -318,62 +318,66 @@ const advertiseRecordCol = [
     type: 'filter',
     show_type: 'text',
     width: 130,
-    filters: [{ val: 1, text: '固定定价' }, { val: 0, text: '浮动定价' }, { val: 2, text: '市场定价' }],
+    filters: [
+      { val: 1, text: '固定定价' },
+      { val: 0, text: '浮动定价' },
+      { val: 2, text: '市场定价' }
+    ]
   },
   {
     label: '交易价格(CNY)',
     prop: 'price',
-    width: '170',
+    width: '170'
   },
   {
     label: '初始总量',
     prop: 'totalStock',
-    width: '170',
+    width: '170'
   },
   {
     label: '冻结存量',
     prop: 'lockedStock',
-    width: '170',
+    width: '170'
   },
   {
     label: '已成交的数量',
     prop: 'dealAmount',
-    width: '170',
+    width: '170'
   },
   {
     label: '剩余数量',
     prop: 'remainAmount',
-    width: '170',
+    width: '170'
   },
   {
     label: '最大交易额',
-    prop: 'maxTradeAmount',
+    prop: 'maxTradeAmount'
   },
   {
     label: '最小交易额',
-    prop: 'minTradeAmount',
+    prop: 'minTradeAmount'
   },
   {
     label: '支付方式',
     prop: 'payList',
     type: 'labelArr',
-    typeDetail: 'stringlist',
+    typeDetail: 'stringlist'
   },
   {
     label: '广告单号',
-    prop: 'id',
+    prop: 'id'
   },
   {
     label: '上/下架时间',
     prop: 'onshelfTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '是否上架',
     prop: 'isOnshelf',
     type: 'switch',
     fn: 'switchAd',
-    alias: 'trputon',
+    alias: 'trputon'
   },
   {
     label: '操作',
@@ -385,16 +389,16 @@ const advertiseRecordCol = [
         label: '查看/编辑',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
-      },
-    ],
-  },
-];
+        alias: 'detail'
+      }
+    ]
+  }
+]
 
 const advertiseRecordColNoBtn = [
   {
     label: '广告商UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '广告类型',
@@ -402,68 +406,72 @@ const advertiseRecordColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 170,
-    filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }],
+    filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }]
   },
   {
     label: '交易币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '定价方式',
     prop: 'pricingMethod',
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 1, text: '固定定价' }, { val: 0, text: '浮动定价' }, { val: 2, text: '市场定价' }],
+    filters: [
+      { val: 1, text: '固定定价' },
+      { val: 0, text: '浮动定价' },
+      { val: 2, text: '市场定价' }
+    ]
   },
   {
     label: '交易价格(CNY)',
     prop: 'price',
-    width: '170',
+    width: '170'
   },
   {
     label: '初始总量',
     prop: 'totalStock',
-    width: '170',
+    width: '170'
   },
   {
     label: '冻结存量',
     prop: 'lockedStock',
-    width: '170',
+    width: '170'
   },
   {
     label: '已成交的数量',
     prop: 'dealAmount',
-    width: '170',
+    width: '170'
   },
   {
     label: '剩余数量',
     prop: 'remainAmount',
-    width: '170',
+    width: '170'
   },
   {
     label: '最大交易额',
-    prop: 'maxTradeAmount',
+    prop: 'maxTradeAmount'
   },
   {
     label: '最小交易额',
-    prop: 'minTradeAmount',
+    prop: 'minTradeAmount'
   },
   {
     label: '支付方式',
     prop: 'payList',
     type: 'labelArr',
-    typeDetail: 'stringlist',
+    typeDetail: 'stringlist'
   },
   {
     label: '广告单号',
-    prop: 'id',
+    prop: 'id'
   },
   {
     label: '上/下架时间',
     prop: 'onshelfTime',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 const advertiseRecordConfig = [
   {
@@ -471,7 +479,7 @@ const advertiseRecordConfig = [
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
@@ -479,49 +487,53 @@ const advertiseRecordConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   {
     type: 'select',
     label: '广告类型',
     prop: 'advertType',
     value: '',
-    list: [{ label: '在线出售', value: 1 }, { label: '在线求购', value: 2 }],
+    list: [{ label: '在线出售', value: 1 }, { label: '在线求购', value: 2 }]
   },
   {
     type: 'select',
     label: '币种',
     prop: 'coinName',
     value: '',
-    list: [],
+    list: []
   },
   {
     type: 'select',
     label: '是否上架',
     prop: 'isOnshelf',
     value: '',
-    list: [{ label: '上架', value: 1 }, { label: '下架', value: 0 }],
+    list: [{ label: '上架', value: 1 }, { label: '下架', value: 0 }]
   },
   {
     type: 'select',
     label: '价格类型',
     prop: 'pricingMethod',
     value: '',
-    list: [{ label: '固定定价', value: 1 }, { label: '浮动定价', value: 0 }, { label: '市场定价', value: 2 }],
+    list: [
+      { label: '固定定价', value: 1 },
+      { label: '浮动定价', value: 0 },
+      { label: '市场定价', value: 2 }
+    ]
   },
   {
     type: 'select',
     label: '剩余数量排序',
     prop: 'remainOrder',
     value: '',
-    list: [{ label: '正序', value: 'ASC' }, { label: '倒序', value: 'DESC' }],
-  },
-];
+    list: [{ label: '正序', value: 'ASC' }, { label: '倒序', value: 'DESC' }]
+  }
+]
 
 const infoCol = [
   {
     label: '广告商UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '广告类型',
@@ -529,81 +541,85 @@ const infoCol = [
     type: 'filter',
     show_type: 'text',
     width: 170,
-    filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }],
+    filters: [{ val: 1, text: '在线出售' }, { val: 2, text: '在线求购' }]
   },
   {
     label: '交易币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '定价方式',
     prop: 'pricingMethod',
     type: 'filter',
     show_type: 'text',
-    filters: [{ val: 1, text: '固定定价' }, { val: 0, text: '浮动定价' }, { val: 2, text: '市场定价' }],
+    filters: [
+      { val: 1, text: '固定定价' },
+      { val: 0, text: '浮动定价' },
+      { val: 2, text: '市场定价' }
+    ]
   },
   {
     label: '交易价格(CNY)',
     prop: 'price',
-    width: '170',
+    width: '170'
   },
   {
     label: '初始总量',
     prop: 'totalStock',
-    width: '170',
+    width: '170'
   },
   {
     label: '冻结存量',
     prop: 'lockedStock',
-    width: '170',
+    width: '170'
   },
   {
     label: '已成交的数量',
     prop: 'dealAmount',
-    width: '170',
+    width: '170'
   },
   {
     label: '剩余数量',
     prop: 'remainAmount',
-    width: '170',
+    width: '170'
   },
   {
     label: '最大交易额',
-    prop: 'maxTradeAmount',
+    prop: 'maxTradeAmount'
   },
   {
     label: '最小交易额',
-    prop: 'minTradeAmount',
+    prop: 'minTradeAmount'
   },
   {
     label: '支付方式',
     prop: 'payList',
     type: 'labelArr',
-    typeDetail: 'stringlist',
+    typeDetail: 'stringlist'
   },
   {
     label: '广告单号',
-    prop: 'id',
+    prop: 'id'
   },
   {
     label: '上/下架时间',
     prop: 'onshelfTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '是否上架',
     prop: 'isOnshelf',
     type: 'switch',
     fn: 'switchAd',
-    alias: 'trputon',
-  },
-];
+    alias: 'trputon'
+  }
+]
 
 const dealCol = [
   {
     label: '订单号',
     prop: 'recordId',
-    width: '180',
+    width: '180'
   },
   {
     label: '广告类型',
@@ -613,37 +629,37 @@ const dealCol = [
     width: 170,
     filters: [
       { val: '1', text: '在线出售' },
-      { val: '2', text: '在线求购' },
+      { val: '2', text: '在线求购' }
       // { val: '3', text: '抢单在线出售' },
       // { val: '4', text: '抢单在线购买' },
       // { val: '5', text: '匹配在线出售' },
       // { val: '6', text: '匹配在线购买' },
-    ],
+    ]
   },
   {
     label: '广告商UID',
-    prop: 'advertUid',
+    prop: 'advertUid'
   },
   {
     label: '交易方UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '交易价格(CNY)',
     prop: 'price',
-    width: '170',
+    width: '170'
   },
   {
     label: '交易数量',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '总金额',
-    prop: 'money',
+    prop: 'money'
   },
   // {
   //   label: '收款人',
@@ -669,35 +685,49 @@ const dealCol = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
+    filters: [
+      { text: '未付款', val: 1 },
+      { text: '已付款(等待放行)', val: 2 },
+      { text: '已完成', val: 3 },
+      { text: '用户取消', val: 4 },
+      { text: '申诉中', val: 5 },
+      { text: '申诉后完成交易', val: 6 },
+      { text: '申诉后取消交易', val: 7 },
+      { text: '支付超时取消', val: 8 }
+    ]
   },
   {
     label: '交易类型',
     prop: 'tradeType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '法币交易', val: 0 }, { text: '匹配下单', val: 1 }, { text: '抢单', val: 2 }, { text: '手动录单', val: 3 }],
+    filters: [
+      { text: '法币交易', val: 0 },
+      { text: '匹配下单', val: 1 },
+      { text: '抢单', val: 2 },
+      { text: '手动录单', val: 3 }
+    ]
   },
   {
     label: '手续费',
-    prop: 'fee',
+    prop: 'fee'
   },
   {
     label: '下单时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '确认付款时间',
     prop: 'payTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '确认放行时间',
     prop: 'letgoTime',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 const appealCol = [
   {
@@ -715,24 +745,24 @@ const appealCol = [
       { text: '币富通一键购买单', val: 5 },
       { text: '币富通一键出售单', val: 6 },
       { text: '商户币币批量出金', val: 7 },
-      { text: '用户币币手动入金', val: 8 },
-    ],
+      { text: '用户币币手动入金', val: 8 }
+    ]
   },
   {
     label: '订单号',
-    prop: 'tradeId',
+    prop: 'tradeId'
   },
   {
     label: '买方UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '卖方UID',
-    prop: 'targetUid',
+    prop: 'targetUid'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   // {
   //   label: '交易价格(CNY)',
@@ -740,15 +770,15 @@ const appealCol = [
   // },
   {
     label: '交易数量',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '兑人民币汇率',
-    prop: 'cny',
+    prop: 'cny'
   },
   {
     label: '折算人民币数量',
-    prop: 'money',
+    prop: 'money'
   },
   // {
   //   label: '总金额',
@@ -763,49 +793,49 @@ const appealCol = [
     filters: [
       {
         text: '申诉中',
-        val: '0',
+        val: '0'
       },
       {
         text: '已处理',
-        val: '1',
+        val: '1'
       },
       {
         text: '取消',
-        val: '3',
-      },
-    ],
+        val: '3'
+      }
+    ]
   },
-  
+
   {
     label: '买家口令',
-    prop: 'slaveCode',
+    prop: 'slaveCode'
   },
   {
     label: '卖家口令',
-    prop: 'masterCode',
+    prop: 'masterCode'
   },
   {
     label: '确认付款时间',
-    prop: 'payTime',
+    prop: 'payTime'
   },
   {
     label: '申诉时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '判决时间',
     prop: 'auditTime',
-    type: 'time',
+    type: 'time'
   },
 
   {
     label: '判决人',
-    prop: 'auditUserName',
+    prop: 'auditUserName'
   },
   {
     label: '判决人IP',
-    prop: 'auditIp',
+    prop: 'auditIp'
   },
 
   {
@@ -818,7 +848,7 @@ const appealCol = [
         label: '详情',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
+        alias: 'detail'
       },
       {
         label: '判诀',
@@ -827,8 +857,8 @@ const appealCol = [
         filter_key: 'appealStatus',
         filter_status: 0,
         type: 'success',
-        alias: 'judgment',
-      },
+        alias: 'judgment'
+      }
       // {
       //   label: "修改金额",
       //   fn: "edit",
@@ -838,9 +868,9 @@ const appealCol = [
       //   type: "danger",
       //   alias: "edit",
       // },
-    ],
-  },
-];
+    ]
+  }
+]
 
 const appealColNoBtn = [
   {
@@ -858,24 +888,24 @@ const appealColNoBtn = [
       { text: '币富通一键购买单', val: 5 },
       { text: '币富通一键出售单', val: 6 },
       { text: '商户币币批量出金', val: 7 },
-      { text: '用户币币手动入金', val: 8 },
-    ],
+      { text: '用户币币手动入金', val: 8 }
+    ]
   },
   {
     label: '订单号',
-    prop: 'tradeId',
+    prop: 'tradeId'
   },
   {
     label: '买方UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '卖方UID',
-    prop: 'targetUid',
+    prop: 'targetUid'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   // {
   //   label: '交易价格(CNY)',
@@ -883,15 +913,15 @@ const appealColNoBtn = [
   // },
   {
     label: '交易数量',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '兑人民币汇率',
-    prop: 'cny',
+    prop: 'cny'
   },
   {
     label: '折算人民币数量',
-    prop: 'money',
+    prop: 'money'
   },
   // {
   //   label: '总金额',
@@ -905,51 +935,51 @@ const appealColNoBtn = [
     filters: [
       {
         text: '申诉中',
-        val: '0',
+        val: '0'
       },
       {
         text: '已处理',
-        val: '1',
+        val: '1'
       },
       {
         text: '取消',
-        val: '3',
-      },
-    ],
+        val: '3'
+      }
+    ]
   },
- 
+
   {
     label: '买家口令',
-    prop: 'slaveCode',
+    prop: 'slaveCode'
   },
   {
     label: '卖家口令',
-    prop: 'masterCode',
+    prop: 'masterCode'
   },
   {
     label: '确认付款时间',
-    prop: 'payTime',
+    prop: 'payTime'
   },
   {
     label: '申诉时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '判决时间',
     prop: 'auditTime',
-    type: 'time',
+    type: 'time'
   },
 
   {
     label: '判决人',
-    prop: 'auditUserName',
+    prop: 'auditUserName'
   },
   {
     label: '判决人IP',
-    prop: 'auditIp',
-  },
-];
+    prop: 'auditIp'
+  }
+]
 
 const appealConfig = [
   {
@@ -957,14 +987,14 @@ const appealConfig = [
     label: '添加时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'tradeId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
@@ -980,8 +1010,8 @@ const appealConfig = [
       { label: '币富通一键购买单', value: 5 },
       { label: '币富通一键出售单', value: 6 },
       { label: '商户币币批量出金', value: 7 },
-      { label: '用户币币手动入金', value: 8 },
-    ],
+      { label: '用户币币手动入金', value: 8 }
+    ]
   },
   {
     type: 'select',
@@ -991,33 +1021,33 @@ const appealConfig = [
     list: [
       {
         label: '申诉中',
-        value: '0',
+        value: '0'
       },
       {
         label: '已处理',
-        value: '1',
+        value: '1'
       },
       {
         label: '取消',
-        value: '3',
-      },
-    ],
-  },
-];
+        value: '3'
+      }
+    ]
+  }
+]
 
 const appealDetailCol = [
   {
     label: '广告商UID',
-    prop: 'advertUid',
+    prop: 'advertUid'
   },
 
   {
     label: '买方UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '卖方UID',
-    prop: 'targetUid',
+    prop: 'targetUid'
   },
 
   // {
@@ -1026,16 +1056,16 @@ const appealDetailCol = [
   // },
   {
     label: '交易数量',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '兑人民币汇率',
-    prop: 'cny',
+    prop: 'cny'
   },
   {
     label: '折算人民币数量',
     width: 100,
-    prop: 'money',
+    prop: 'money'
   },
   // {
   //   label: '总金额',
@@ -1043,19 +1073,19 @@ const appealDetailCol = [
   // },
   {
     label: '收款人名称',
-    prop: 'bankUserName',
+    prop: 'bankUserName'
   },
   {
     label: '银行卡号',
-    prop: 'bankCardId',
+    prop: 'bankCardId'
   },
   {
     label: '银行名称',
-    prop: 'bankName',
+    prop: 'bankName'
   },
   {
     label: '支行名称',
-    prop: 'bankBranch',
+    prop: 'bankBranch'
   },
   {
     label: '状态',
@@ -1065,17 +1095,17 @@ const appealDetailCol = [
     filters: [
       {
         text: '申诉中',
-        val: '0',
+        val: '0'
       },
       {
         text: '已处理',
-        val: '1',
+        val: '1'
       },
       {
         text: '取消',
-        val: '3',
-      },
-    ],
+        val: '3'
+      }
+    ]
   },
   {
     label: '订单交易类型',
@@ -1083,32 +1113,31 @@ const appealDetailCol = [
     type: 'filter',
     show_type: 'text',
     width: 140,
-    filters: [{ val: '0', text: '普通交易' }, { val: '1', text: '商户交易' }],
+    filters: [{ val: '0', text: '普通交易' }, { val: '1', text: '商户交易' }]
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
 
-  
   // {
   //   label: '申诉口令',
   //   prop: 'masterCode',
   // },
   {
     label: '买家口令',
-    prop: 'slaveCode',
+    prop: 'slaveCode'
   },
   {
     label: '卖家口令',
-    prop: 'masterCode',
+    prop: 'masterCode'
   },
   {
     label: '申诉时间',
     prop: 'createTime',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 const otcOrderCol = [
   {
@@ -1117,17 +1146,17 @@ const otcOrderCol = [
     type: 'filter',
     show_type: 'text',
     width: 80,
-    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }],
+    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }]
   },
   {
     label: '订单号',
     prop: 'recordId',
-    width: '100',
+    width: '100'
   },
   {
     label: '广告单号',
     prop: 'advertId',
-    width: '100',
+    width: '100'
   },
   {
     label: '广告类型',
@@ -1137,46 +1166,46 @@ const otcOrderCol = [
     width: 90,
     filters: [
       { val: '1', text: '在线出售' },
-      { val: '2', text: '在线求购' },
+      { val: '2', text: '在线求购' }
       // { val: '3', text: '抢单在线出售' },
       // { val: '4', text: '抢单在线购买' },
       // { val: '5', text: '匹配在线出售' },
-    ],
+    ]
   },
   {
     label: '广告商UID',
     prop: 'advertUid',
-    width: '90',
+    width: '90'
   },
   {
     label: '用户UID',
     prop: 'uid',
-    width: '90',
+    width: '90'
   },
   {
     label: '币种',
     prop: 'coinName',
-    width: '90',
+    width: '90'
   },
   {
     label: '交易价格(CNY）',
     prop: 'price',
-    width: '100',
+    width: '100'
   },
   {
     label: '交易数量',
     prop: 'amount',
-    width: '90',
+    width: '90'
   },
   {
     label: '总金额',
     prop: 'money',
-    width: '90',
+    width: '90'
   },
   {
     label: '手续费',
     prop: 'fee',
-    width: '90',
+    width: '90'
   },
   {
     label: '支付类型',
@@ -1184,12 +1213,16 @@ const otcOrderCol = [
     type: 'filter',
     show_type: 'text',
     width: 90,
-    filters: [{ val: '1', text: '银行卡' }, { val: '2', text: '支付宝' }, { val: '3', text: '微信' }],
+    filters: [
+      { val: '1', text: '银行卡' },
+      { val: '2', text: '支付宝' },
+      { val: '3', text: '微信' }
+    ]
   },
   {
     label: '支付凭证',
     prop: 'paymentUrl',
-    type: 'imgArr',
+    type: 'imgArr'
   },
   {
     label: '订单状态',
@@ -1197,40 +1230,49 @@ const otcOrderCol = [
     type: 'filter',
     show_type: 'text',
     width: '100',
-    filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
+    filters: [
+      { text: '未付款', val: 1 },
+      { text: '已付款(等待放行)', val: 2 },
+      { text: '已完成', val: 3 },
+      { text: '用户取消', val: 4 },
+      { text: '申诉中', val: 5 },
+      { text: '申诉后完成交易', val: 6 },
+      { text: '申诉后取消交易', val: 7 },
+      { text: '支付超时取消', val: 8 }
+    ]
   },
   {
     label: '下单时间',
     prop: 'localCreateTime',
     type: 'time',
-    width: '100',
+    width: '100'
   },
   {
     label: '支付时间',
     prop: 'localPayTime',
     type: 'time',
-    width: '100',
+    width: '100'
   },
   {
     label: '放行时间',
     prop: 'localLetGoTime',
     type: 'time',
-    width: '100',
+    width: '100'
   },
   {
     label: '收款人名称',
     prop: 'bankUserName',
-    width: '100',
+    width: '100'
   },
   {
     label: '银行名称',
     prop: 'bankName',
-    width: '100',
+    width: '100'
   },
   {
     label: '支行名称',
     prop: 'bankBranch',
-    width: '100',
+    width: '100'
   },
   {
     label: '是否激活',
@@ -1238,7 +1280,7 @@ const otcOrderCol = [
     type: 'filter',
     show_type: 'text',
     width: 100,
-    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }],
+    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }]
   },
   {
     label: '操作',
@@ -1250,18 +1292,18 @@ const otcOrderCol = [
         label: '激活',
         fn: 'activation',
         type: 'primary',
-        alias: 'activation',
+        alias: 'activation'
       },
       {
         label: '对话记录',
         fn: 'dialog',
         type: 'primary',
         alias: 'dialog',
-        noIsClick: true,
-      },
-    ],
-  },
-];
+        noIsClick: true
+      }
+    ]
+  }
+]
 
 const otcOrderColNoBtn = [
   {
@@ -1270,17 +1312,17 @@ const otcOrderColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 80,
-    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }],
+    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }]
   },
   {
     label: '订单号',
     prop: 'recordId',
-    width: '100',
+    width: '100'
   },
   {
     label: '广告单号',
     prop: 'advertId',
-    width: '100',
+    width: '100'
   },
   {
     label: '广告类型',
@@ -1290,46 +1332,46 @@ const otcOrderColNoBtn = [
     width: 90,
     filters: [
       { val: '1', text: '在线出售' },
-      { val: '2', text: '在线求购' },
+      { val: '2', text: '在线求购' }
       // { val: '3', text: '抢单在线出售' },
       // { val: '4', text: '抢单在线购买' },
       // { val: '5', text: '匹配在线出售' },
-    ],
+    ]
   },
   {
     label: '广告商UID',
     prop: 'advertUid',
-    width: '90',
+    width: '90'
   },
   {
     label: '用户UID',
     prop: 'uid',
-    width: '90',
+    width: '90'
   },
   {
     label: '币种',
     prop: 'coinName',
-    width: '90',
+    width: '90'
   },
   {
     label: '交易价格(CNY）',
     prop: 'price',
-    width: '100',
+    width: '100'
   },
   {
     label: '交易数量',
     prop: 'amount',
-    width: '90',
+    width: '90'
   },
   {
     label: '总金额',
     prop: 'money',
-    width: '90',
+    width: '90'
   },
   {
     label: '手续费',
     prop: 'fee',
-    width: '90',
+    width: '90'
   },
   {
     label: '支付类型',
@@ -1337,12 +1379,16 @@ const otcOrderColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 90,
-    filters: [{ val: '1', text: '银行卡' }, { val: '2', text: '支付宝' }, { val: '3', text: '微信' }],
+    filters: [
+      { val: '1', text: '银行卡' },
+      { val: '2', text: '支付宝' },
+      { val: '3', text: '微信' }
+    ]
   },
   {
     label: '支付凭证',
     prop: 'paymentUrl',
-    type: 'imgArr',
+    type: 'imgArr'
   },
   {
     label: '订单状态',
@@ -1350,42 +1396,50 @@ const otcOrderColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: '100',
-    filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
+    filters: [
+      { text: '未付款', val: 1 },
+      { text: '已付款(等待放行)', val: 2 },
+      { text: '已完成', val: 3 },
+      { text: '用户取消', val: 4 },
+      { text: '申诉中', val: 5 },
+      { text: '申诉后完成交易', val: 6 },
+      { text: '申诉后取消交易', val: 7 },
+      { text: '支付超时取消', val: 8 }
+    ]
   },
-  
-  
+
   {
     label: '下单时间',
     prop: 'localCreateTime',
     type: 'time',
-    width: '100',
+    width: '100'
   },
   {
     label: '支付时间',
     prop: 'localPayTime',
     type: 'time',
-    width: '100',
+    width: '100'
   },
   {
     label: '放行时间',
     prop: 'localLetGoTime',
     type: 'time',
-    width: '100',
+    width: '100'
   },
   {
     label: '收款人名称',
     prop: 'bankUserName',
-    width: '100',
+    width: '100'
   },
   {
     label: '银行名称',
     prop: 'bankName',
-    width: '100',
+    width: '100'
   },
   {
     label: '支行名称',
     prop: 'bankBranch',
-    width: '100',
+    width: '100'
   },
   {
     label: '是否激活',
@@ -1393,9 +1447,9 @@ const otcOrderColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 100,
-    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }],
-  },
-];
+    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }]
+  }
+]
 
 const otcOrderConfig = [
   {
@@ -1403,7 +1457,7 @@ const otcOrderConfig = [
     label: '添加时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
@@ -1411,7 +1465,7 @@ const otcOrderConfig = [
     prop: 'advertUid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   {
     type: 'text',
@@ -1419,7 +1473,7 @@ const otcOrderConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   // {
   //   type: 'text',
@@ -1433,21 +1487,34 @@ const otcOrderConfig = [
     label: '收款类型',
     prop: 'payType',
     value: '',
-    list: [{ label: '银行卡', value: 1 }, { label: '支付宝', value: 2 }, { label: '微信', value: 3 }],
+    list: [
+      { label: '银行卡', value: 1 },
+      { label: '支付宝', value: 2 },
+      { label: '微信', value: 3 }
+    ]
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'recordId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '订单状态',
     prop: 'tradeStatus',
     value: '',
-    list: [{ label: '未付款', value: 1 }, { label: '已付款(等待放行)', value: 2 }, { label: '已完成', value: 3 }, { label: '用户取消', value: 4 }, { label: '申诉中', value: 5 }, { label: '申诉后完成交易', value: 6 }, { label: '申诉后取消交易', value: 7 }, { label: '支付超时取消', value: 8 }],
+    list: [
+      { label: '未付款', value: 1 },
+      { label: '已付款(等待放行)', value: 2 },
+      { label: '已完成', value: 3 },
+      { label: '用户取消', value: 4 },
+      { label: '申诉中', value: 5 },
+      { label: '申诉后完成交易', value: 6 },
+      { label: '申诉后取消交易', value: 7 },
+      { label: '支付超时取消', value: 8 }
+    ]
   },
   {
     type: 'select',
@@ -1456,20 +1523,20 @@ const otcOrderConfig = [
     value: '',
     list: [
       { label: '在线出售', value: 1 },
-      { label: '在线求购', value: 2 },
+      { label: '在线求购', value: 2 }
       // { label: '抢单在线出售', value: 3 },
       // { label: '抢单在线购买', value: 4 },
       // { label: '匹配在线出售', value: 5 },
       // { label: '匹配在线购买', value: 6 },
-    ],
+    ]
   },
   {
     type: 'select',
     label: '币种',
     prop: 'coinName',
     value: '',
-    list: [],
-  },
+    list: []
+  }
   // {
   //   type: 'select',
   //   label: '交易类型',
@@ -1477,7 +1544,7 @@ const otcOrderConfig = [
   //   value: '',
   //   list: [{ label: '普通法币交易', value: 0 }, { label: 'Tp订单交易', value: 1 }],
   // },
-];
+]
 
 const otcOrderCustomerCol = [
   {
@@ -1488,90 +1555,94 @@ const otcOrderCustomerCol = [
     width: 60,
     filters: [
       { val: '1', text: '在线出售' },
-      { val: '2', text: '在线求购' },
+      { val: '2', text: '在线求购' }
       // { val: '3', text: '抢单在线出售' },
       // { val: '4', text: '抢单在线购买' },
       // { val: '5', text: '匹配在线出售' },
-    ],
+    ]
   },
   {
     label: '平台订单号',
     prop: 'recordId',
-    width: '80',
+    width: '80'
   },
   {
     label: '商户订单号',
     prop: 'apiOrderNo',
-    width: '80',
+    width: '80'
   },
   {
     label: '广告商UID',
     prop: 'advertUid',
-    width: '95',
+    width: '95'
   },
   {
     label: '商户UID',
     prop: 'uid',
-    width: '80',
+    width: '80'
   },
   {
     label: '币种',
     prop: 'coinName',
-    width: '80',
+    width: '80'
   },
   {
     label: '交易价格(CNY）',
     prop: 'price',
-    width: '80',
+    width: '80'
   },
   {
     label: '交易数量',
     prop: 'amount',
-    width: '90',
+    width: '90'
   },
   {
     label: '总金额',
     prop: 'money',
-    width: '70',
+    width: '70'
   },
   {
     label: '手续费',
     prop: 'fee',
-    width: '70',
+    width: '70'
   },
-  {
-    label: '下单时间',
-    prop: 'createTime',
-    type: 'time',
-    width: '110',
-  },
+
   {
     label: '订单状态',
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
     width: '80',
-    filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
+    filters: [
+      { text: '未付款', val: 1 },
+      { text: '已付款(等待放行)', val: 2 },
+      { text: '已完成', val: 3 },
+      { text: '用户取消', val: 4 },
+      { text: '申诉中', val: 5 },
+      { text: '申诉后完成交易', val: 6 },
+      { text: '申诉后取消交易', val: 7 },
+      { text: '支付超时取消', val: 8 }
+    ]
   },
   {
     label: '收款人名称',
     prop: 'bankUserName',
-    width: '80',
+    width: '80'
   },
   {
     label: '卡号',
     prop: 'bankCardId',
-    width: '100',
+    width: '100'
   },
   {
     label: '银行名称',
     prop: 'bankName',
-    width: '90',
+    width: '90'
   },
   {
     label: '支行名称',
     prop: 'bankBranch',
-    width: '90',
+    width: '90'
   },
   {
     label: '交易类型',
@@ -1579,12 +1650,12 @@ const otcOrderCustomerCol = [
     type: 'filter',
     show_type: 'text',
     width: 120,
-    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }],
+    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }]
   },
   {
     label: '广告单号',
     prop: 'advertId',
-    width: '180',
+    width: '180'
   },
   {
     label: '支付类型',
@@ -1592,22 +1663,34 @@ const otcOrderCustomerCol = [
     type: 'filter',
     show_type: 'text',
     width: 100,
-    filters: [{ val: '1', text: '银行卡' }, { val: '2', text: '支付宝' }, { val: '3', text: '微信' }],
+    filters: [
+      { val: '1', text: '银行卡' },
+      { val: '2', text: '支付宝' },
+      { val: '3', text: '微信' }
+    ]
   },
   {
     label: '支付凭证',
     prop: 'paymentUrl',
-    type: 'imgArr',
+    type: 'imgArr'
+  },
+  {
+    label: '下单时间',
+    prop: 'localCreateTime',
+    type: 'time',
+    width: '100'
   },
   {
     label: '支付时间',
-    prop: 'payTime',
+    prop: 'localPayTime',
     type: 'time',
+    width: '100'
   },
   {
     label: '放行时间',
-    prop: 'letgoTime',
+    prop: 'localLetGoTime',
     type: 'time',
+    width: '100'
   },
   {
     label: '是否激活',
@@ -1615,7 +1698,7 @@ const otcOrderCustomerCol = [
     type: 'filter',
     show_type: 'text',
     width: 100,
-    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }],
+    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }]
   },
   {
     label: '操作',
@@ -1627,25 +1710,25 @@ const otcOrderCustomerCol = [
         label: '激活',
         fn: 'activation',
         type: 'primary',
-        alias: 'activation',
+        alias: 'activation'
       },
       {
         label: '对话记录',
         fn: 'dialog',
         type: 'primary',
         alias: 'dialog',
-        noIsClick: true,
+        noIsClick: true
       },
       {
         label: '回调',
         fn: 'callBack',
         type: 'primary',
         alias: 'callBack',
-        noIsClick: true,
-      },
-    ],
-  },
-];
+        noIsClick: true
+      }
+    ]
+  }
+]
 
 const otcOrderCustomerColNoBtn = [
   {
@@ -1656,90 +1739,94 @@ const otcOrderCustomerColNoBtn = [
     width: 60,
     filters: [
       { val: '1', text: '在线出售' },
-      { val: '2', text: '在线求购' },
+      { val: '2', text: '在线求购' }
       // { val: '3', text: '抢单在线出售' },
       // { val: '4', text: '抢单在线购买' },
       // { val: '5', text: '匹配在线出售' },
-    ],
+    ]
   },
   {
     label: '平台订单号',
     prop: 'recordId',
-    width: '80',
+    width: '80'
   },
   {
     label: '商户订单号',
     prop: 'apiOrderNo',
-    width: '80',
+    width: '80'
   },
   {
     label: '广告商UID',
     prop: 'advertUid',
-    width: '95',
+    width: '95'
   },
   {
     label: '商户UID',
     prop: 'uid',
-    width: '80',
+    width: '80'
   },
   {
     label: '币种',
     prop: 'coinName',
-    width: '80',
+    width: '80'
   },
   {
     label: '交易价格(CNY）',
     prop: 'price',
-    width: '80',
+    width: '80'
   },
   {
     label: '交易数量',
     prop: 'amount',
-    width: '90',
+    width: '90'
   },
   {
     label: '总金额',
     prop: 'money',
-    width: '70',
+    width: '70'
   },
   {
     label: '手续费',
     prop: 'fee',
-    width: '70',
+    width: '70'
   },
-  {
-    label: '下单时间',
-    prop: 'createTime',
-    type: 'time',
-    width: '110',
-  },
+
   {
     label: '订单状态',
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
     width: '80',
-    filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
+    filters: [
+      { text: '未付款', val: 1 },
+      { text: '已付款(等待放行)', val: 2 },
+      { text: '已完成', val: 3 },
+      { text: '用户取消', val: 4 },
+      { text: '申诉中', val: 5 },
+      { text: '申诉后完成交易', val: 6 },
+      { text: '申诉后取消交易', val: 7 },
+      { text: '支付超时取消', val: 8 }
+    ]
   },
   {
     label: '收款人名称',
     prop: 'bankUserName',
-    width: '80',
+    width: '80'
   },
   {
     label: '卡号',
     prop: 'bankCardId',
-    width: '100',
+    width: '100'
   },
   {
     label: '银行名称',
     prop: 'bankName',
-    width: '90',
+    width: '90'
   },
   {
     label: '支行名称',
     prop: 'bankBranch',
-    width: '90',
+    width: '90'
   },
   {
     label: '交易类型',
@@ -1747,12 +1834,12 @@ const otcOrderCustomerColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 120,
-    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }],
+    filters: [{ val: '0', text: '普通法币交易' }, { val: '1', text: 'Tp订单交易' }]
   },
   {
     label: '广告单号',
     prop: 'advertId',
-    width: '180',
+    width: '180'
   },
   {
     label: '支付类型',
@@ -1760,22 +1847,34 @@ const otcOrderCustomerColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 100,
-    filters: [{ val: '1', text: '银行卡' }, { val: '2', text: '支付宝' }, { val: '3', text: '微信' }],
+    filters: [
+      { val: '1', text: '银行卡' },
+      { val: '2', text: '支付宝' },
+      { val: '3', text: '微信' }
+    ]
   },
   {
     label: '支付凭证',
     prop: 'paymentUrl',
-    type: 'imgArr',
+    type: 'imgArr'
+  },
+  {
+    label: '下单时间',
+    prop: 'localCreateTime',
+    type: 'time',
+    width: '100'
   },
   {
     label: '支付时间',
-    prop: 'payTime',
+    prop: 'localPayTime',
     type: 'time',
+    width: '100'
   },
   {
     label: '放行时间',
-    prop: 'letgoTime',
+    prop: 'localLetGoTime',
     type: 'time',
+    width: '100'
   },
   {
     label: '是否激活',
@@ -1783,9 +1882,9 @@ const otcOrderCustomerColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: 100,
-    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }],
-  },
-];
+    filters: [{ val: '0', text: '未激活' }, { val: '1', text: '激活' }]
+  }
+]
 
 const otcOrderCustomerConfig = [
   {
@@ -1793,7 +1892,7 @@ const otcOrderCustomerConfig = [
     label: '添加时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
@@ -1801,7 +1900,7 @@ const otcOrderCustomerConfig = [
     prop: 'advertUid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   {
     type: 'text',
@@ -1809,7 +1908,7 @@ const otcOrderCustomerConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   // {
   //   type: 'text',
@@ -1823,28 +1922,41 @@ const otcOrderCustomerConfig = [
     label: '收款类型',
     prop: 'payType',
     value: '',
-    list: [{ label: '银行卡', value: 1 }, { label: '支付宝', value: 2 }, { label: '微信', value: 3 }],
+    list: [
+      { label: '银行卡', value: 1 },
+      { label: '支付宝', value: 2 },
+      { label: '微信', value: 3 }
+    ]
   },
   {
     type: 'text',
     label: '平台订单号',
     prop: 'recordId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: '商户订单号',
     prop: 'apiOrderNo',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '订单状态',
     prop: 'tradeStatus',
     value: '',
-    list: [{ label: '未付款', value: 1 }, { label: '已付款(等待放行)', value: 2 }, { label: '已完成', value: 3 }, { label: '用户取消', value: 4 }, { label: '申诉中', value: 5 }, { label: '申诉后完成交易', value: 6 }, { label: '申诉后取消交易', value: 7 }, { label: '支付超时取消', value: 8 }],
+    list: [
+      { label: '未付款', value: 1 },
+      { label: '已付款(等待放行)', value: 2 },
+      { label: '已完成', value: 3 },
+      { label: '用户取消', value: 4 },
+      { label: '申诉中', value: 5 },
+      { label: '申诉后完成交易', value: 6 },
+      { label: '申诉后取消交易', value: 7 },
+      { label: '支付超时取消', value: 8 }
+    ]
   },
   {
     type: 'select',
@@ -1853,19 +1965,19 @@ const otcOrderCustomerConfig = [
     value: '',
     list: [
       { label: '在线出售', value: 1 },
-      { label: '在线求购', value: 2 },
+      { label: '在线求购', value: 2 }
       // { label: '抢单在线出售', value: 3 },
       // { label: '抢单在线购买', value: 4 },
       // { label: '匹配在线出售', value: 5 },
       // { label: '匹配在线购买', value: 6 },
-    ],
+    ]
   },
   {
     type: 'select',
     label: '币种',
     prop: 'coinName',
     value: '',
-    list: [],
+    list: []
   },
   // {
   //   type: 'select',
@@ -1879,16 +1991,16 @@ const otcOrderCustomerConfig = [
     label: '收款人姓名',
     prop: 'bankUserName',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: '银行卡号',
     prop: 'bankCardId',
     value: '',
-    placeHolder: '请输入',
-  },
-];
+    placeHolder: '请输入'
+  }
+]
 
 const redeemCol = [
   // {
@@ -1901,7 +2013,7 @@ const redeemCol = [
   // },
   {
     label: '商户名称',
-    prop: 'makerName',
+    prop: 'makerName'
   },
   // {
   //   label: "出售方UID",
@@ -1913,18 +2025,18 @@ const redeemCol = [
   // },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '价格/数量',
 
     arr: ['price', 'amount'],
     type: 'textArr',
-    join: ',',
+    join: ','
   },
   {
     label: '手续费(USDT)',
-    prop: 'fee',
+    prop: 'fee'
   },
   // {
   //   label: "商户到账数量(USDT)",
@@ -1935,11 +2047,20 @@ const redeemCol = [
     prop: 'tradeStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '未付款', val: 1 }, { text: '已付款(等待放行)', val: 2 }, { text: '已完成', val: 3 }, { text: '用户取消', val: 4 }, { text: '申诉中', val: 5 }, { text: '申诉后完成交易', val: 6 }, { text: '申诉后取消交易', val: 7 }, { text: '支付超时取消', val: 8 }],
+    filters: [
+      { text: '未付款', val: 1 },
+      { text: '已付款(等待放行)', val: 2 },
+      { text: '已完成', val: 3 },
+      { text: '用户取消', val: 4 },
+      { text: '申诉中', val: 5 },
+      { text: '申诉后完成交易', val: 6 },
+      { text: '申诉后取消交易', val: 7 },
+      { text: '支付超时取消', val: 8 }
+    ]
   },
   {
     label: '商户单号/平台账号',
-    prop: 'account',
+    prop: 'account'
   },
   // {
   //   label: "付款人",
@@ -2001,13 +2122,13 @@ const redeemCol = [
       {
         label: '激活',
         fn: 'activation',
-        type: 'success',
-      },
-    ],
-  },
-];
+        type: 'success'
+      }
+    ]
+  }
+]
 
-const redeemColNoBtn = [];
+const redeemColNoBtn = []
 
 const redeemConfig = [
   {
@@ -2015,14 +2136,14 @@ const redeemConfig = [
     label: '添加时间',
     prop: 'startDate',
     prop2: 'endDate',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '商户名称',
     prop: 'account',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   // {
   //   type: "text",
@@ -2043,22 +2164,35 @@ const redeemConfig = [
     label: '收款类型',
     prop: 'tradeStatus',
     value: '',
-    list: [{ label: '未付款', value: 1 }, { label: '已付款(等待放行)', value: 2 }, { label: '已完成', value: 3 }, { label: '取消', value: 4 }, { label: '申述中', value: 5 }],
+    list: [
+      { label: '未付款', value: 1 },
+      { label: '已付款(等待放行)', value: 2 },
+      { label: '已完成', value: 3 },
+      { label: '取消', value: 4 },
+      { label: '申述中', value: 5 }
+    ]
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'recdId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '状态',
     prop: 'auditStatus',
     value: '',
-    list: [{ label: '全部', value: '' }, { label: '未付款', value: '1' }, { label: '已付款(待放行)', value: '2' }, { label: '已完成', value: '3' }, { label: '已取消', value: '4' }, { label: '申述中', value: '5' }],
-  },
+    list: [
+      { label: '全部', value: '' },
+      { label: '未付款', value: '1' },
+      { label: '已付款(待放行)', value: '2' },
+      { label: '已完成', value: '3' },
+      { label: '已取消', value: '4' },
+      { label: '申述中', value: '5' }
+    ]
+  }
   // {
   //   type: "select",
   //   label: "超时筛选",
@@ -2080,83 +2214,83 @@ const redeemConfig = [
   //   value: "",
   //   list: [{ label: "待审核", value: 0 }, { label: "审核通过", value: 1 }, { label: "审核不通过", value: 2 }, { label: "未提交审核", value: 3 }],
   // },
-];
+]
 
 const cashOutCol = [
   {
     label: '交易类型',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '商户名称',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '商户UID',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '购买方UID',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '订单金额(CNY)',
-    prop: 'cc',
+    prop: 'cc'
   },
   {
     label: '手续费(USDT)',
-    prop: 'ee',
+    prop: 'ee'
   },
   {
     label: '价格/数量',
-    prop: 'dd',
+    prop: 'dd'
   },
   {
     label: '订单状态',
     prop: 'qyType',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
     // filters: [{ text: "普通用户", val: 1 }, { text: "系统用户", val: 100 }, { text: "机器人", val: 3 }],
   },
   {
     label: '订单号',
-    prop: 'ee',
+    prop: 'ee'
   },
   {
     label: '收款人',
-    prop: 'ee',
+    prop: 'ee'
   },
   {
     label: '收款账号',
-    prop: 'ee',
+    prop: 'ee'
   },
   {
     label: '收款账户信息',
-    prop: 'ee',
+    prop: 'ee'
   },
   {
     label: '收款账户类型',
     prop: 'qyType',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
     // filters: [{ text: "普通用户", val: 1 }, { text: "系统用户", val: 100 }, { text: "机器人", val: 3 }],
   },
   {
     label: '添加时间',
     prop: 'ee',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '确认付款时间',
     prop: 'ee',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '确定放行时间',
     prop: 'gg',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '操作',
@@ -2170,7 +2304,7 @@ const cashOutCol = [
         isPop: false,
         filter_key: 'tradeStatus',
         filter_status: 0,
-        type: 'success',
+        type: 'success'
       },
       {
         label: '判决',
@@ -2178,7 +2312,7 @@ const cashOutCol = [
         isPop: false,
         filter_key: 'tradeStatus',
         filter_status: 3,
-        type: 'danger',
+        type: 'danger'
       },
       {
         label: '修改金额',
@@ -2186,18 +2320,18 @@ const cashOutCol = [
         isPop: false,
         filter_key: 'tradeStatus',
         filter_status: 3,
-        type: 'danger',
+        type: 'danger'
       },
       {
         label: '扣除返佣',
         fn: 'rebate',
-        type: 'primary',
-      },
-    ],
-  },
-];
+        type: 'primary'
+      }
+    ]
+  }
+]
 
-const cashOutColNoBtn = [];
+const cashOutColNoBtn = []
 
 const cashOutConfig = [
   {
@@ -2205,14 +2339,14 @@ const cashOutConfig = [
     label: '添加时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '商户名称',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
@@ -2220,94 +2354,109 @@ const cashOutConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   {
     type: 'text',
     label: '收款人',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'account',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '状态',
     prop: 'auditStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '审核通过', value: 1 }, { label: '审核不通过', value: 2 }, { label: '未提交审核', value: 3 }],
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '审核通过', value: 1 },
+      { label: '审核不通过', value: 2 },
+      { label: '未提交审核', value: 3 }
+    ]
   },
   {
     type: 'select',
     label: '超时筛选',
     prop: 'auditStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '审核通过', value: 1 }, { label: '审核不通过', value: 2 }, { label: '未提交审核', value: 3 }],
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '审核通过', value: 1 },
+      { label: '审核不通过', value: 2 },
+      { label: '未提交审核', value: 3 }
+    ]
   },
   {
     type: 'select',
     label: '收款账户',
     prop: 'auditStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '审核通过', value: 1 }, { label: '审核不通过', value: 2 }, { label: '未提交审核', value: 3 }],
-  },
-];
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '审核通过', value: 1 },
+      { label: '审核不通过', value: 2 },
+      { label: '未提交审核', value: 3 }
+    ]
+  }
+]
 
 const transactionCol = [
   {
     label: '时间',
     prop: 'uid',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '商家UID',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '交易方UID',
-    prop: 'aa',
+    prop: 'aa'
   },
   {
     label: '币种',
-    prop: 'bb',
+    prop: 'bb'
   },
   {
     label: '类型',
     prop: 'qyType',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
     // filters: [{ text: "普通用户", val: 1 }, { text: "系统用户", val: 100 }, { text: "机器人", val: 3 }],
   },
   {
     label: '价格',
-    prop: 'cc',
+    prop: 'cc'
   },
   {
     label: '数量',
-    prop: 'dd',
+    prop: 'dd'
   },
   {
     label: '金额',
-    prop: 'ee',
+    prop: 'ee'
   },
   {
     label: '手续费',
-    prop: 'gg',
+    prop: 'gg'
   },
   {
     label: '订单号',
-    prop: 'ff',
-  },
-];
+    prop: 'ff'
+  }
+]
 
-const transactionColNoBtn = [];
+const transactionColNoBtn = []
 
 const transactionConfig = [
   {
@@ -2315,7 +2464,7 @@ const transactionConfig = [
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
@@ -2323,56 +2472,61 @@ const transactionConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid',
+    subType: 'uid'
   },
   {
     type: 'select',
     label: '币种',
     prop: 'auditStatus',
     value: '',
-    list: [],
+    list: []
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'account',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '类型',
     prop: 'auditStatus',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '审核通过', value: 1 }, { label: '审核不通过', value: 2 }, { label: '未提交审核', value: 3 }],
-  },
-];
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '审核通过', value: 1 },
+      { label: '审核不通过', value: 2 },
+      { label: '未提交审核', value: 3 }
+    ]
+  }
+]
 
 const fundsFlowCol = [
   {
     label: '时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '手机号',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱号',
-    prop: 'email',
+    prop: 'email'
   },
   {
     label: '用户类型',
-    prop: 'userTypeName',
+    prop: 'userTypeName'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '类型',
@@ -2380,23 +2534,23 @@ const fundsFlowCol = [
     type: 'filter',
     show_type: 'filters',
     filters: 'optTypeFB',
-    width: 100,
+    width: 100
   },
   {
     label: '可用资产变化',
-    prop: 'balanceChange',
+    prop: 'balanceChange'
   },
   {
     label: '可用资产余额',
-    prop: 'balance',
+    prop: 'balance'
   },
   {
     label: '冻结资产变化',
-    prop: 'frozenAmountChange',
+    prop: 'frozenAmountChange'
   },
   {
     label: '冻结资产余额',
-    prop: 'frozenAmount',
+    prop: 'frozenAmount'
   },
   // {
   //   label: "资产证明变化",
@@ -2408,35 +2562,35 @@ const fundsFlowCol = [
   // },
   {
     label: '订单号',
-    prop: 'relateRecdId',
-  },
-];
+    prop: 'relateRecdId'
+  }
+]
 
 const fundsFlowColNoBtn = [
   {
     label: '时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '手机号',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱号',
-    prop: 'email',
+    prop: 'email'
   },
   {
     label: '用户类型',
-    prop: 'userTypeName',
+    prop: 'userTypeName'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '类型',
@@ -2444,23 +2598,23 @@ const fundsFlowColNoBtn = [
     type: 'filter',
     show_type: 'filters',
     filters: 'optTypeFB',
-    width: 100,
+    width: 100
   },
   {
     label: '可用资产变化',
-    prop: 'balanceChange',
+    prop: 'balanceChange'
   },
   {
     label: '可用资产余额',
-    prop: 'balance',
+    prop: 'balance'
   },
   {
     label: '冻结资产变化',
-    prop: 'frozenAmountChange',
+    prop: 'frozenAmountChange'
   },
   {
     label: '冻结资产余额',
-    prop: 'frozenAmount',
+    prop: 'frozenAmount'
   },
   // {
   //   label: "资产证明变化",
@@ -2472,9 +2626,9 @@ const fundsFlowColNoBtn = [
   // },
   {
     label: '订单号',
-    prop: 'relateRecdId',
-  },
-];
+    prop: 'relateRecdId'
+  }
+]
 
 const fundsFlowConfig = [
   {
@@ -2482,21 +2636,21 @@ const fundsFlowConfig = [
     label: '时间',
     prop: 'startDate',
     prop2: 'endDate',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: 'UID',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: '账号',
     prop: 'phone',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   // {
   //   type: "text",
@@ -2510,30 +2664,34 @@ const fundsFlowConfig = [
     label: '邮箱号',
     prop: 'email',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '币种',
     prop: 'coinName',
     value: '',
-    list: [],
+    list: []
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'recdId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '用户类型',
     prop: 'userType',
     value: '',
-    list: [{ label: '普通用户', value: 1 }, { label: '商户', value: 20 }, { label: '系统用户', value: 100 }],
-  },
-];
+    list: [
+      { label: '普通用户', value: 1 },
+      { label: '商户', value: 20 },
+      { label: '系统用户', value: 100 }
+    ]
+  }
+]
 
 const assetManageCol = [
   // {
@@ -2545,34 +2703,39 @@ const assetManageCol = [
     prop: 'coinId',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
   },
   {
     label: '资产证明',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '状态',
     prop: 'auditStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '审核通过', val: 1 }, { text: '审核失败', val: 2 }, { text: '资产证明已释放', val: 3 }],
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '审核通过', val: 1 },
+      { text: '审核失败', val: 2 },
+      { text: '资产证明已释放', val: 3 }
+    ]
   },
   {
     label: '资产操作类型',
     prop: 'optType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '充值资产证明', val: 1 }, { text: '申请取出', val: 2 }],
+    filters: [{ text: '充值资产证明', val: 1 }, { text: '申请取出', val: 2 }]
   },
   {
     label: '申请时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '原因',
-    prop: 'auditComment',
+    prop: 'auditComment'
   },
   {
     label: '操作',
@@ -2584,13 +2747,13 @@ const assetManageCol = [
         label: '通过',
         fn: 'pass',
         type: 'success',
-        alias: 'pass',
+        alias: 'pass'
       },
       {
         label: '驳回',
         fn: 'refuse',
         type: 'danger',
-        alias: 'refuse',
+        alias: 'refuse'
       },
       {
         label: '释放资产证明',
@@ -2598,11 +2761,11 @@ const assetManageCol = [
         isPop: false,
         filter_key: 'auditStatus',
         filter_status: 1,
-        type: 'success',
-      },
-    ],
-  },
-];
+        type: 'success'
+      }
+    ]
+  }
+]
 
 const assetManageColNoBtn = [
   {
@@ -2610,36 +2773,41 @@ const assetManageColNoBtn = [
     prop: 'coinId',
     type: 'filter',
     show_type: 'text',
-    filters: [],
+    filters: []
   },
   {
     label: '资产证明',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '状态',
     prop: 'auditStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '待审核', val: 0 }, { text: '审核通过', val: 1 }, { text: '审核失败', val: 2 }, { text: '资产证明已释放', val: 3 }],
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '审核通过', val: 1 },
+      { text: '审核失败', val: 2 },
+      { text: '资产证明已释放', val: 3 }
+    ]
   },
   {
     label: '资产操作类型',
     prop: 'optType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '充值资产证明', val: 1 }, { text: '申请取出', val: 2 }],
+    filters: [{ text: '充值资产证明', val: 1 }, { text: '申请取出', val: 2 }]
   },
   {
     label: '申请时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '原因',
-    prop: 'auditComment',
-  },
-];
+    prop: 'auditComment'
+  }
+]
 
 const assetManageConfig = [
   // {
@@ -2661,72 +2829,77 @@ const assetManageConfig = [
     label: '账户',
     prop: 'phone',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '状态',
     prop: 'status',
     value: '',
-    list: [{ label: '待审核', value: 0 }, { label: '审核通过', value: 1 }, { label: '审核失败', value: 2 }, { label: '资产证明已释放', value: 3 }],
+    list: [
+      { label: '待审核', value: 0 },
+      { label: '审核通过', value: 1 },
+      { label: '审核失败', value: 2 },
+      { label: '资产证明已释放', value: 3 }
+    ]
   },
   {
     type: 'select',
     label: '资产操作类型',
     prop: 'optType',
     value: '',
-    list: [{ label: '充值资产证明', value: 1 }, { label: '申请取出', value: 2 }],
-  },
-];
+    list: [{ label: '充值资产证明', value: 1 }, { label: '申请取出', value: 2 }]
+  }
+]
 
 const otcGlobalCol = [
   {
     label: '币种名称',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '广告费率',
-    prop: 'fee',
+    prop: 'fee'
   },
   {
     label: '单笔交易最小限额',
     prop: 'singleMinAmount',
-    width: '160',
+    width: '160'
   },
   {
     label: '单笔交易最大限额',
     prop: 'singleMaxAmount',
-    width: '160',
+    width: '160'
   },
   {
     label: '订单付款时间',
-    prop: 'payTimeout',
+    prop: 'payTimeout'
   },
   {
     label: '放行时间',
-    prop: 'releaseTime',
+    prop: 'releaseTime'
   },
   {
     label: '订单日取消上限',
     prop: 'dailyCancellationQuantity',
-    width: '140',
+    width: '140'
   },
   {
     label: '排序',
-    prop: 'position',
+    prop: 'position'
   },
   {
     label: '小数位',
-    prop: 'decimalPlaces',
+    prop: 'decimalPlaces'
   },
   {
     label: '保证金数量',
-    prop: 'depositAmount',
+    prop: 'depositAmount'
   },
   {
     label: '保证金退还天数',
     prop: 'depositDay',
-    width: '140',
+    width: '140'
   },
   {
     label: '是否开启TP交易',
@@ -2734,7 +2907,7 @@ const otcGlobalCol = [
     type: 'switch',
     fn: 'trdraw',
     alias: 'trdraw',
-    width: '150',
+    width: '150'
   },
   {
     label: '是否开启法币交易',
@@ -2742,7 +2915,7 @@ const otcGlobalCol = [
     type: 'switch',
     fn: 'trstart',
     alias: 'trstart',
-    width: '150',
+    width: '150'
   },
   {
     label: '是否启用保证金',
@@ -2750,7 +2923,7 @@ const otcGlobalCol = [
     type: 'switch',
     fn: 'trputon',
     alias: 'trputon',
-    width: '150',
+    width: '150'
   },
   {
     label: '操作',
@@ -2762,71 +2935,71 @@ const otcGlobalCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
-      },
-    ],
-  },
-];
+        alias: 'edit'
+      }
+    ]
+  }
+]
 
 const otcGlobalColNoBtn = [
   {
     label: '币种名称',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '广告费率',
-    prop: 'fee',
+    prop: 'fee'
   },
   {
     label: '单笔交易最小限额',
     prop: 'singleMinAmount',
-    width: '160',
+    width: '160'
   },
   {
     label: '单笔交易最大限额',
     prop: 'singleMaxAmount',
-    width: '160',
+    width: '160'
   },
   {
     label: '订单付款时间',
-    prop: 'payTimeout',
+    prop: 'payTimeout'
   },
   {
     label: '排序',
-    prop: 'position',
+    prop: 'position'
   },
   {
     label: '小数位',
-    prop: 'decimalPlaces',
+    prop: 'decimalPlaces'
   },
   {
     label: '放行时间',
-    prop: 'releaseTime',
+    prop: 'releaseTime'
   },
   {
     label: '订单日取消上限',
     prop: 'dailyCancellationQuantity',
-    width: '140',
+    width: '140'
   },
   {
     label: '保证金数量',
-    prop: 'depositAmount',
+    prop: 'depositAmount'
   },
   {
     label: '保证金退还天数',
     prop: 'depositDay',
-    width: '140',
-  },
-];
+    width: '140'
+  }
+]
 
 const otcBailCol = [
   {
     label: '币种名称',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '数量',
-    prop: 'deposit',
+    prop: 'deposit'
   },
   // {
   //   label: "状态",
@@ -2842,22 +3015,22 @@ const otcBailCol = [
         label: '编辑',
         fn: 'edit',
         type: 'success',
-        alias: 'edit',
-      },
-    ],
-  },
-];
+        alias: 'edit'
+      }
+    ]
+  }
+]
 
 const otcBailColNoBtn = [
   {
     label: '币种名称',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '数量',
-    prop: 'deposit',
-  },
-];
+    prop: 'deposit'
+  }
+]
 
 const paymentMethodCol = [
   {
@@ -2865,18 +3038,18 @@ const paymentMethodCol = [
     prop: 'payType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '银行卡', val: 1 }, { text: '支付宝', val: 2 }, { text: '微信', val: 3 }],
+    filters: [{ text: '银行卡', val: 1 }, { text: '支付宝', val: 2 }, { text: '微信', val: 3 }]
   },
   {
     label: '上限数量',
-    prop: 'limitNum',
+    prop: 'limitNum'
   },
   {
     label: '状态',
     prop: 'status',
     type: 'switch',
     fn: 'trputon',
-    alias: 'trputon',
+    alias: 'trputon'
   },
   {
     label: '操作',
@@ -2888,11 +3061,11 @@ const paymentMethodCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
-      },
-    ],
-  },
-];
+        alias: 'edit'
+      }
+    ]
+  }
+]
 
 const paymentMethodColNoBtn = [
   {
@@ -2900,49 +3073,56 @@ const paymentMethodColNoBtn = [
     prop: 'payType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '银行卡', val: 1 }, { text: '支付宝', val: 2 }, { text: '微信', val: 3 }],
+    filters: [{ text: '银行卡', val: 1 }, { text: '支付宝', val: 2 }, { text: '微信', val: 3 }]
   },
   {
     label: '上限数量',
-    prop: 'limitNum',
-  },
-];
+    prop: 'limitNum'
+  }
+]
 
 const agentRevenueCol = [
   {
     label: 'UID',
     prop: 'uid',
-    width: '110',
+    width: '110'
   },
   {
     label: '订单时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '订单号',
-    prop: 'recordId',
+    prop: 'recordId'
   },
   {
     label: '订单类型',
     prop: 'advertType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '在线出售', val: 1 }, { text: '在线求购', val: 2 }, { text: '抢单在线出售', val: 3 }, { text: '抢单在线购买', val: 4 }, { text: '匹配在线出售', val: 5 }, { text: '匹配在线购买', val: 6 }],
+    filters: [
+      { text: '在线出售', val: 1 },
+      { text: '在线求购', val: 2 },
+      { text: '抢单在线出售', val: 3 },
+      { text: '抢单在线购买', val: 4 },
+      { text: '匹配在线出售', val: 5 },
+      { text: '匹配在线购买', val: 6 }
+    ]
   },
   {
     label: '订单数量（USDT）',
-    prop: 'originAmount',
+    prop: 'originAmount'
   },
   {
     label: '收益比例',
-    prop: 'rate',
+    prop: 'rate'
   },
   {
     label: '收益数量（USDT）',
-    prop: 'amount',
-  },
-];
+    prop: 'amount'
+  }
+]
 
 const agentRevenueConfig = [
   {
@@ -2950,30 +3130,30 @@ const agentRevenueConfig = [
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'orderId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: 'UID',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '订单类型',
     prop: 'advertType',
     value: '',
-    list: [{ label: '在线出售', value: 1 }, { label: '在线求购', value: 2 }],
-  },
-];
+    list: [{ label: '在线出售', value: 1 }, { label: '在线求购', value: 2 }]
+  }
+]
 
 const agentListConfig = [
   {
@@ -2981,39 +3161,39 @@ const agentListConfig = [
     label: '广告商UID',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '代理关系',
     prop: 'direction',
     value: '',
-    list: [{ label: '查上级', value: 1 }, { label: '查下级', value: 2 }],
-  },
-];
+    list: [{ label: '查上级', value: 1 }, { label: '查下级', value: 2 }]
+  }
+]
 
 const customerAccountCol = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '用户类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }],
+    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }]
   },
   {
     label: '用户名称',
-    prop: 'merchantName',
+    prop: 'merchantName'
   },
   {
     label: '法币交易状态',
     prop: 'userOtcStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '失效', val: 0 }, { text: '有效', val: 1 }],
+    filters: [{ text: '失效', val: 0 }, { text: '有效', val: 1 }]
   },
   // {
   //   label: '商户总支出手续费',
@@ -3021,15 +3201,15 @@ const customerAccountCol = [
   // },
   {
     label: 'USDT资产',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '可用USDT资产',
-    prop: 'realAmount',
+    prop: 'realAmount'
   },
   {
     label: '冻结USDT资产',
-    prop: 'frozenAmount',
+    prop: 'frozenAmount'
   },
   {
     label: '操作',
@@ -3044,7 +3224,7 @@ const customerAccountCol = [
         filter_key: 'userOtcStatus',
         filter_status: 1,
         type: 'danger',
-        alias: 'lock',
+        alias: 'lock'
       },
       {
         label: '激活',
@@ -3053,41 +3233,41 @@ const customerAccountCol = [
         filter_key: 'userOtcStatus',
         filter_status: 0,
         type: 'success',
-        alias: 'activation',
+        alias: 'activation'
       },
       {
         label: '流水查询',
         fn: 'detail',
         isPop: false,
         type: 'primary',
-        alias: 'detail',
-      },
-    ],
-  },
-];
+        alias: 'detail'
+      }
+    ]
+  }
+]
 
 const customerAccountColNoBtn = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '用户类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }],
+    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }]
   },
   {
     label: '用户名称',
-    prop: 'merchantName',
+    prop: 'merchantName'
   },
   {
     label: '法币交易状态',
     prop: 'userOtcStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '失效', val: 0 }, { text: '有效', val: 1 }],
+    filters: [{ text: '失效', val: 0 }, { text: '有效', val: 1 }]
   },
   // {
   //   label: '商户总支出手续费',
@@ -3095,31 +3275,31 @@ const customerAccountColNoBtn = [
   // },
   {
     label: 'USDT资产',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '可用USDT资产',
-    prop: 'realAmount',
+    prop: 'realAmount'
   },
   {
     label: '冻结USDT资产',
-    prop: 'frozenAmount',
-  },
-];
+    prop: 'frozenAmount'
+  }
+]
 
 const customerFlowCol = [
   {
     label: '时间',
     prop: 'createTime',
-    width: 190,
+    width: 190
   },
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '类型',
@@ -3178,33 +3358,33 @@ const customerFlowCol = [
       { text: '提币手续费', val: '83' },
       { text: '资产账户划转', val: '84' },
       { text: '收益账户销账', val: '85' },
-      { text: '收入账号手动充值', val: '86' },
-    ],
+      { text: '收入账号手动充值', val: '86' }
+    ]
   },
   {
     label: '变动资产',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '变动前资产',
-    prop: 'beforeAmount',
+    prop: 'beforeAmount'
   },
   {
     label: '变动后资产',
-    prop: 'afterAmount',
+    prop: 'afterAmount'
   },
   {
     label: '资金类型',
     prop: 'amountType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '可用余额', val: 1 }, { text: '冻结金额', val: 2 }],
+    filters: [{ text: '可用余额', val: 1 }, { text: '冻结金额', val: 2 }]
   },
   {
     label: '订单号',
-    prop: 'relateRecdId',
-  },
-];
+    prop: 'relateRecdId'
+  }
+]
 
 const customerFlowConfig = [
   {
@@ -3212,28 +3392,28 @@ const customerFlowConfig = [
     label: '创建时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'select',
     label: '资金类型',
     prop: 'amountType',
     value: '',
-    list: [{ label: '可用余额', value: 1 }, { label: '冻结金额', value: 2 }],
+    list: [{ label: '可用余额', value: 1 }, { label: '冻结金额', value: 2 }]
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'relateRecdId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '币种',
     prop: 'coinId',
     value: '',
-    list: [],
+    list: []
   },
   {
     type: 'select',
@@ -3291,50 +3471,50 @@ const customerFlowConfig = [
       { label: '提币手续费', value: '83' },
       { label: '资产账户划转', value: '84' },
       { label: '收益账户销账', value: '85' },
-      { label: '收入账号手动充值', value: '86' },
-    ],
-  },
-];
+      { label: '收入账号手动充值', value: '86' }
+    ]
+  }
+]
 
 const matchWeightCol = [
   {
     label: '用户名称',
-    prop: 'merchantName',
+    prop: 'merchantName'
   },
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '用户类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通用户', val: 0 }, { text: '广告商', val: 1 }],
+    filters: [{ text: '普通用户', val: 0 }, { text: '广告商', val: 1 }]
   },
   {
     label: '支付方式限制次数',
-    prop: 'payCount',
+    prop: 'payCount'
   },
   {
     label: '匹配权重值',
-    prop: 'weight',
+    prop: 'weight'
   },
   {
     label: '会员等级',
-    prop: 'gradeg',
+    prop: 'gradeg'
   },
   {
     label: '信用额度',
-    prop: 'creditLimit',
+    prop: 'creditLimit'
   },
   {
     label: '授权额度',
-    prop: 'authorizationLimit',
+    prop: 'authorizationLimit'
   },
   {
     label: '每日总额度',
-    prop: 'total',
+    prop: 'total'
   },
   {
     label: '操作',
@@ -3346,7 +3526,7 @@ const matchWeightCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '解冻信用额度',
@@ -3355,53 +3535,53 @@ const matchWeightCol = [
         filter_key: 'isCanFreeze',
         filter_status: 1,
         type: 'success',
-        alias: 'freeze',
-      },
-    ],
-  },
-];
+        alias: 'freeze'
+      }
+    ]
+  }
+]
 
 const matchWeightColNoBtn = [
   {
     label: '用户名称',
-    prop: 'merchantName',
+    prop: 'merchantName'
   },
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '用户类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通用户', val: 0 }, { text: '广告商', val: 1 }],
+    filters: [{ text: '普通用户', val: 0 }, { text: '广告商', val: 1 }]
   },
   {
     label: '支付方式限制次数',
-    prop: 'payCount',
+    prop: 'payCount'
   },
   {
     label: '匹配权重值',
-    prop: 'weight',
+    prop: 'weight'
   },
   {
     label: '会员等级',
-    prop: 'gradeg',
+    prop: 'gradeg'
   },
   {
     label: '信用额度',
-    prop: 'creditLimit',
+    prop: 'creditLimit'
   },
   {
     label: '授权额度',
-    prop: 'authorizationLimit',
+    prop: 'authorizationLimit'
   },
   {
     label: '每日总额度',
-    prop: 'total',
-  },
-];
+    prop: 'total'
+  }
+]
 
 const matchWeightConfig = [
   {
@@ -3409,29 +3589,29 @@ const matchWeightConfig = [
     label: '用户名称',
     prop: 'merchantName',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'text',
     label: 'UID',
     prop: 'uid',
     value: '',
-    placeHolder: '请输入',
-  },
-];
+    placeHolder: '请输入'
+  }
+]
 
 const rateManageCol = [
   {
     label: '货币',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '购买汇率',
-    prop: 'currentBuyFee',
+    prop: 'currentBuyFee'
   },
   {
     label: '出售汇率',
-    prop: 'currentSellFee',
+    prop: 'currentSellFee'
   },
   {
     label: '操作',
@@ -3443,45 +3623,45 @@ const rateManageCol = [
         label: '购买汇差',
         fn: 'buy',
         type: 'primary',
-        alias: 'buy',
+        alias: 'buy'
       },
       {
         label: '出售汇差',
         fn: 'sell',
         type: 'primary',
-        alias: 'sell',
-      },
-    ],
-  },
-];
+        alias: 'sell'
+      }
+    ]
+  }
+]
 
 const rateManageColNoBtn = [
   {
     label: '货币',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '购买汇率',
-    prop: 'currentBuyFee',
+    prop: 'currentBuyFee'
   },
   {
     label: '出售汇率',
-    prop: 'currentSellFee',
-  },
-];
+    prop: 'currentSellFee'
+  }
+]
 
 const levelSettingCol = [
   {
     label: '等级ID',
-    prop: 'memberLevel',
+    prop: 'memberLevel'
   },
   {
     label: '等级名称',
-    prop: 'levelName',
+    prop: 'levelName'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   // {
   //   label: '额度要求',
@@ -3492,7 +3672,7 @@ const levelSettingCol = [
   {
     label: '额度要求',
     prop: 'amount',
-    width: 220,
+    width: 220
   },
   {
     label: '操作',
@@ -3504,82 +3684,82 @@ const levelSettingCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '删除',
         fn: 'del',
         type: 'danger',
-        alias: 'del',
-      },
-    ],
-  },
-];
+        alias: 'del'
+      }
+    ]
+  }
+]
 
 const levelSettingColNoBtn = [
   {
     label: '等级ID',
-    prop: 'memberLevel',
+    prop: 'memberLevel'
   },
   {
     label: '等级名称',
-    prop: 'levelName',
+    prop: 'levelName'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '额度要求',
     prop: 'amount',
-    width: 220,
-  },
-];
+    width: 220
+  }
+]
 
 const orderConfigCol = [
   {
     label: '商户名称',
-    prop: 'userName',
+    prop: 'userName'
   },
   {
     label: '商户编号',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: 'userId',
     prop: 'userId',
-    type: 'myIsShow',
+    type: 'myIsShow'
   },
   {
     label: '充值渠道授权',
     prop: 'despositChannel',
-    width: 200,
+    width: 200
   },
   {
     label: '充值承兑商授权',
     prop: 'despositAdvertiser',
-    width: 200,
+    width: 200
   },
   {
     label: '提现渠道授权',
-    prop: 'withdrawChannel',
+    prop: 'withdrawChannel'
   },
   {
     label: '提现承兑商授权',
     prop: 'withdrawAdvertiser',
-    width: 200,
+    width: 200
   },
   {
     label: '充值单笔限额',
     arr: ['chargeMinimum', 'chargeMaximum'],
     type: 'textArr',
-    join: '~',
+    join: '~'
   },
   {
     label: '提现单笔限额',
     arr: ['withdrawalMinimum', 'withdrawalMaximum'],
     type: 'textArr',
-    join: '~',
+    join: '~'
   },
 
   {
@@ -3592,110 +3772,110 @@ const orderConfigCol = [
         label: '配置',
         fn: 'configuration',
         type: 'primary',
-        alias: 'configuration',
-      },
-    ],
-  },
-];
+        alias: 'configuration'
+      }
+    ]
+  }
+]
 
 const orderConfigColNoBtn = [
   {
     label: '商户名称',
-    prop: 'userName',
+    prop: 'userName'
   },
   {
     label: '商户编号',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: 'userId',
     prop: 'userId',
-    type: 'myIsShow',
+    type: 'myIsShow'
   },
   {
     label: '充值渠道授权',
     prop: 'despositChannel',
-    width: 200,
+    width: 200
   },
   {
     label: '充值承兑商授权',
     prop: 'despositAdvertiser',
-    width: 200,
+    width: 200
   },
   {
     label: '提现渠道授权',
-    prop: 'withdrawChannel',
+    prop: 'withdrawChannel'
   },
   {
     label: '提现承兑商授权',
     prop: 'withdrawAdvertiser',
-    width: 200,
+    width: 200
   },
   {
     label: '充值单笔限额',
     arr: ['chargeMinimum', 'chargeMaximum'],
     type: 'textArr',
-    join: '~',
+    join: '~'
   },
   {
     label: '提现单笔限额',
     arr: ['withdrawalMinimum', 'withdrawalMaximum'],
     type: 'textArr',
-    join: '~',
-  },
-];
+    join: '~'
+  }
+]
 
 // 商户接单配置
 const orderConfigConfig = [
   {
     label: '商户名称',
     prop: 'userName',
-    placeHolder: '请输入商户名称',
+    placeHolder: '请输入商户名称'
   },
   {
     label: '商户编号',
     prop: 'userId',
-    placeHolder: '请输入商户编号',
-  },
-];
+    placeHolder: '请输入商户编号'
+  }
+]
 
 // 承兑商列表
 const acceptanceCol = [
   {
     label: '序号',
     type: 'index',
-    width: '120',
+    width: '120'
   },
   {
     label: '注册时间',
     prop: 'createTime',
-    width: 150,
+    width: 150
   },
   {
     label: '上级代理商编号',
-    prop: 'upperUid',
+    prop: 'upperUid'
   },
   {
     label: '代理商编号',
-    prop: 'uid',
+    prop: 'uid'
   },
 
   {
     label: '手机号',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱号',
-    prop: 'email',
+    prop: 'email'
   },
   {
     label: '出售返佣费率',
-    prop: 'rewardInRate',
+    prop: 'rewardInRate'
   },
 
   {
     label: '邀请码',
-    prop: 'inviteCode',
+    prop: 'inviteCode'
   },
 
   {
@@ -3708,54 +3888,54 @@ const acceptanceCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '详情',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
-      },
-    ],
-  },
-];
+        alias: 'detail'
+      }
+    ]
+  }
+]
 
 const acceptanceColNoBtn = [
   {
     label: '注册时间',
     prop: 'createTime',
-    width: 150,
+    width: 150
   },
   {
     label: '上级代理商编号',
-    prop: 'upperUid',
+    prop: 'upperUid'
   },
   {
     label: '代理商编号',
-    prop: 'uid',
+    prop: 'uid'
   },
 
   {
     label: '手机号',
-    prop: 'phone',
+    prop: 'phone'
   },
   {
     label: '邮箱号',
-    prop: 'email',
+    prop: 'email'
   },
   {
     label: '转入返佣费率',
-    prop: 'rewardInRate',
+    prop: 'rewardInRate'
   },
   {
     label: '下级承兑商数',
-    prop: 'subsetMerchantCount',
+    prop: 'subsetMerchantCount'
   },
   {
     label: '邀请码',
-    prop: 'inviteCode',
-  },
-];
+    prop: 'inviteCode'
+  }
+]
 
 const acceptanceConfig = [
   // {
@@ -3764,26 +3944,26 @@ const acceptanceConfig = [
   // },
   {
     label: '邮箱号',
-    prop: 'email',
+    prop: 'email'
   },
   {
     type: 'onlyNumber',
     label: '代理商编号',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     type: 'onlyNumber',
     label: '上级代理商编号',
-    prop: 'upperUid',
+    prop: 'upperUid'
   },
   {
     type: 'select',
     label: '代理商状态',
     prop: 'isTrade',
     value: '',
-    list: [{ label: '已锁定', value: 1 }, { label: '正常', value: 0 }],
-  },
-];
+    list: [{ label: '已锁定', value: 1 }, { label: '正常', value: 0 }]
+  }
+]
 
 // 承兑商关系
 const agentListRelationConfig = [
@@ -3799,10 +3979,7 @@ const agentListRelationConfig = [
     label: '代理关系',
     prop: 'direction',
     value: '',
-    list: [
-      { label: '查上级', value: 1 },
-      { label: '查下级', value: 2 }
-    ]
+    list: [{ label: '查上级', value: 1 }, { label: '查下级', value: 2 }]
   }
 ]
 
@@ -3827,10 +4004,7 @@ const acceptanceSettingCol = [
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [
-      { text: '普通用户', val: 0 },
-      { text: '广告商', val: 1 },
-    ]
+    filters: [{ text: '普通用户', val: 0 }, { text: '广告商', val: 1 }]
   },
   {
     label: '每日收款方式限制次数',
@@ -3841,7 +4015,7 @@ const acceptanceSettingCol = [
     label: '匹配权重值',
     prop: 'weight'
   },
-  
+
   {
     label: '授信额度',
     prop: 'authorizationLimit'
@@ -3861,8 +4035,7 @@ const acceptanceSettingCol = [
         fn: 'edit',
         type: 'primary',
         alias: 'edit'
-      },
-      
+      }
     ]
   }
 ]
@@ -3992,38 +4165,38 @@ const acceptanceChannelListConfig = [
 const commissionContractCol = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '用户类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }],
+    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }]
   },
   {
     label: '用户名称',
-    prop: 'merchantName',
+    prop: 'merchantName'
   },
   {
     label: '法币交易状态',
     prop: 'userOtcStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '禁止', val: 0 }, { text: '正常', val: 1 }],
+    filters: [{ text: '禁止', val: 0 }, { text: '正常', val: 1 }]
   },
- 
+
   {
     label: 'USDT资产',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '可用USDT资产',
-    prop: 'realAmount',
+    prop: 'realAmount'
   },
   {
     label: '冻结USDT资产',
-    prop: 'frozenAmount',
+    prop: 'frozenAmount'
   },
   {
     label: '操作',
@@ -4038,7 +4211,7 @@ const commissionContractCol = [
         filter_key: 'userOtcStatus',
         filter_status: 1,
         type: 'danger',
-        alias: 'lock',
+        alias: 'lock'
       },
       {
         label: '激活',
@@ -4047,70 +4220,70 @@ const commissionContractCol = [
         filter_key: 'userOtcStatus',
         filter_status: 0,
         type: 'success',
-        alias: 'activation',
+        alias: 'activation'
       },
       {
         label: '流水查询',
         fn: 'detail',
         isPop: false,
         type: 'primary',
-        alias: 'detail',
-      },
-    ],
-  },
-];
+        alias: 'detail'
+      }
+    ]
+  }
+]
 
 const commissionContractColNoBtn = [
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '用户类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }],
+    filters: [{ text: '普通用户', val: 1 }, { text: '商户总账', val: 20 }]
   },
   {
     label: '用户名称',
-    prop: 'merchantName',
+    prop: 'merchantName'
   },
   {
     label: '法币交易状态',
     prop: 'userOtcStatus',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '禁止', val: 0 }, { text: '正常', val: 1 }],
+    filters: [{ text: '禁止', val: 0 }, { text: '正常', val: 1 }]
   },
- 
+
   {
     label: 'USDT资产',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '可用USDT资产',
-    prop: 'realAmount',
+    prop: 'realAmount'
   },
   {
     label: '冻结USDT资产',
-    prop: 'frozenAmount',
-  },
-];
+    prop: 'frozenAmount'
+  }
+]
 
 const commissionContractFlowCol = [
   {
     label: '时间',
     prop: 'createTime',
-    width: 190,
+    width: 190
   },
   {
     label: 'UID',
-    prop: 'uid',
+    prop: 'uid'
   },
   {
     label: '币种',
-    prop: 'coinName',
+    prop: 'coinName'
   },
   {
     label: '类型',
@@ -4169,33 +4342,33 @@ const commissionContractFlowCol = [
       { text: '提币手续费', val: '83' },
       { text: '资产账户划转', val: '84' },
       { text: '收益账户销账', val: '85' },
-      { text: '收入账号手动充值', val: '86' },
-    ],
+      { text: '收入账号手动充值', val: '86' }
+    ]
   },
   {
     label: '变动资产',
-    prop: 'amount',
+    prop: 'amount'
   },
   {
     label: '变动前资产',
-    prop: 'beforeAmount',
+    prop: 'beforeAmount'
   },
   {
     label: '变动后资产',
-    prop: 'afterAmount',
+    prop: 'afterAmount'
   },
   {
     label: '资金类型',
     prop: 'amountType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '可用余额', val: 1 }, { text: '冻结金额', val: 2 }],
+    filters: [{ text: '可用余额', val: 1 }, { text: '冻结金额', val: 2 }]
   },
   {
     label: '订单号',
-    prop: 'relateRecdId',
-  },
-];
+    prop: 'relateRecdId'
+  }
+]
 
 const commissionContractFlowConfig = [
   {
@@ -4203,28 +4376,28 @@ const commissionContractFlowConfig = [
     label: '创建时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'select',
     label: '资金类型',
     prop: 'amountType',
     value: '',
-    list: [{ label: '可用余额', value: 1 }, { label: '冻结金额', value: 2 }],
+    list: [{ label: '可用余额', value: 1 }, { label: '冻结金额', value: 2 }]
   },
   {
     type: 'text',
     label: '订单号',
     prop: 'relateRecdId',
     value: '',
-    placeHolder: '请输入',
+    placeHolder: '请输入'
   },
   {
     type: 'select',
     label: '币种',
     prop: 'coinId',
     value: '',
-    list: [],
+    list: []
   },
   {
     type: 'select',
@@ -4282,10 +4455,10 @@ const commissionContractFlowConfig = [
       { label: '提币手续费', value: '83' },
       { label: '资产账户划转', value: '84' },
       { label: '收益账户销账', value: '85' },
-      { label: '收入账号手动充值', value: '86' },
-    ],
-  },
-];
+      { label: '收入账号手动充值', value: '86' }
+    ]
+  }
+]
 
 export {
   commissionContractFlowCol,
@@ -4360,5 +4533,5 @@ export {
   paymentMethodColNoBtn,
   otcOrderCustomerCol,
   otcOrderCustomerColNoBtn,
-  otcOrderCustomerConfig,
-};
+  otcOrderCustomerConfig
+}
