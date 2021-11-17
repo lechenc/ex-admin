@@ -3499,5 +3499,34 @@ export default class api {
     return Fetch.post('/admin/account/contract/agent/account/infoNew', data)
   }
 
+  // 合约管理/账号管理/合约账户 划转 接收账户 列表
+  static apiGetAccountContractTransferToList(data) {
+    return Fetch.post('/admin/account/contract/profit/transferToList', data)
+  }
+
+  // 合约管理/账号管理/合约账户 划转 确定
+  static apiAccountContractTransfer(data) {
+    return Fetch.post('/admin/account/profit-user-transfer', data)
+  }
+
+  // 财务管理/特殊调账管理 资金输出账户 列表
+  static apiGetSpreconOutputAccountList(data) {
+    return Fetch.post('/admin/user/sub-expend-user-list2', data)
+  }
+
+  // 合约币对 列表
+  static apiGetContractCoinmarket(data) {
+    return Fetch.post('/market/get-all-contract-coinmarket', data)
+  }
+
+   // 财务管理--特殊调账列表 sum
+   static apiGetSpecialReconciliationSum(data) {
+    return Fetch.post('/admin/account/special-reconciliation-amount-sum', data)
+  }
+
+   
+
+  
+
 
 }

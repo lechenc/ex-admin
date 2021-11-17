@@ -20,6 +20,7 @@ const getDefaultState = () => {
     symbolMimicListAnalyst: [],
     symbolMimicListAnalystAll: [],
     coinForexList: [], // 币汇
+    contractCoinmarket:[]  // 合约币对
   };
 };
 
@@ -28,6 +29,10 @@ const state = getDefaultState();
 const mutations = {
   SET_COINLIST: (state, list) => {
     state.coinlist = list;
+  },
+  
+  SET_CONTRACTCOINMARKET: (state, list) => {
+    state.contractCoinmarket = list;
   },
 
   SET_SYMBOLLIST: (state, list) => {
@@ -71,6 +76,24 @@ const actions = {
             return { label: v['coinName'], value: v['coinId'], decimalPlaces: v['decimalPlaces'] };
           });
           commit('SET_COINLIST', list);
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  // 合约币对  (特殊调账管理 - 合约账户)
+  getContractCoinmarket({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      $api
+        .apiGetContractCoinmarket()
+        .then(res => {
+          const list = res.data.data.map(v => {
+            return { label: v['coinMarket'], value: v['coinId'] };
+          });
+          commit('SET_CONTRACTCOINMARKET', list);
           resolve();
         })
         .catch(error => {
