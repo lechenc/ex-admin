@@ -320,15 +320,16 @@
           >
             {{ calText }}
           </el-button>
+          <!-- 快速导出excel -->
           <el-button
-            v-if="calTotalExcel"
-            v-loading.fullscreen.lock="calLoadingExcel"
+            v-if="calIsShowFastExcel"
+            v-loading.fullscreen.lock="calLoadingFastExcel"
             plain
             :size="sizeDiy"
             element-loading-text="拉取中"
-            @click="doCalTotalExcel"
+            @click="doCalFastExcel"
           >
-            {{ calTextExcel }}
+            {{ calTextFastExcel }}
           </el-button>
           <!-- 预估统计 -->
           <el-button
@@ -416,26 +417,34 @@ export default {
       type: String,
       default: '提币风控参数设置'
     },
+    // 合计按钮 按钮文案
     calText: {
       type: String,
       default: '合计数量'
     },
+    // 合计按钮 按钮Loading
     calLoading: {
       type: Boolean,
       default: false
     },
-    calTotalExcel: {
+
+    // 快速导出excel  显示
+    calIsShowFastExcel: {
       type: Boolean,
       default: false
     },
-    calTextExcel: {
+    // 快速导出excel  按钮文案
+    calTextFastExcel: {
       type: String,
-      default: '导出excel'
+      default: '快速导出excel'
     },
-    calLoadingExcel: {
+    // 快速导出excel  按钮Loading
+    calLoadingFastExcel: {
       type: Boolean,
       default: false
     },
+
+
     statistics: {
       type: Boolean,
       default: false
@@ -659,9 +668,10 @@ export default {
       const query = this.getQuery()
       this.$emit('do-calTotal', query)
     },
-    doCalTotalExcel() {
+    // 快速导出excel
+    doCalFastExcel() {
       const query = this.getQuery()
-      this.$emit('do-calTotal-excel', query)
+      this.$emit('do-calFast-excel', query)
     },
     doEstimate() {
       const query = this.getQuery()
