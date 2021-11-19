@@ -180,7 +180,7 @@ export default {
       if (res) {
         const { records, total, current, pages } = res.data.data;
         records.forEach(v => {
-          v['strongPrice'] = (v['strongPrice'] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3');
+          // v['strongPrice'] = (v['strongPrice'] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3');
           v['fixedDeposit'] = (v['fixedDeposit'] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3');
 
           v['marginRatio'] = (Precision.times(v['marginRatio'], 100) + '').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3') + '%';
