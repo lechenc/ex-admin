@@ -85,7 +85,7 @@ export default {
     },
     // 导出excel
     calFastExcel(data) {
-      console.log('data',data)
+      
       if (this.calLoadingFastExcel) return
       this.calLoadingFastExcel = true
       this.requiredParams(data)
