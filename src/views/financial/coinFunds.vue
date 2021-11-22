@@ -192,16 +192,9 @@ export default {
         res.data.data.records.forEach((v) => {
           v.coinName = this.coinList.filter((f) => f.value == v.coinId)[0].label
         })
-
-        let arr = []
-        res.data.data.records.forEach((v) => {
-          if (v.optType != '88' || v.optType != '89' || v.optType != '94' || v.optType != '96') {
-            arr.push(v)
-          }
-        })
       }
       this.excelLoading = false
-      return arr
+      return res
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
