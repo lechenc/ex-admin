@@ -241,7 +241,7 @@
                   :action="$forex_file_api"
                   multiple
                   name="file"
-                  :data="{ time: 'one_day' }"
+                  :data="{ time: 'one_day', symbol: this.curRow.symbol }"
                   :show-file-list="true"
                   :on-success="importKLineUpload"
                   :on-error="uploadError"
@@ -273,7 +273,7 @@
                   multiple
                   name="file"
                   :limit="1"
-                  :data="{ time: 'one_week' }"
+                  :data="{ time: 'one_week', symbol: this.curRow.symbol }"
                   :show-file-list="true"
                   :on-success="importKLineUpload"
                   :on-error="uploadError"
@@ -304,7 +304,7 @@
                   multiple
                   :limit="1"
                   name="file"
-                  :data="{ time: 'one_month'  }"
+                  :data="{ time: 'one_month', symbol: this.curRow.symbol }"
                   :show-file-list="true"
                   :on-success="importKLineUpload"
                   :on-error="uploadError"
@@ -455,7 +455,8 @@ export default {
       dialogFormVisible: false,
       dialogImportKLineVisible: false,
       importKLineForm: {},
-      importKLineBtnType: 1
+      importKLineBtnType: 1,
+      curRow: {}
     }
   },
 
@@ -622,6 +623,7 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data
+      this.curRow = row
 
       if (fn === 'edit') {
         // this.getRobotUserArr();
