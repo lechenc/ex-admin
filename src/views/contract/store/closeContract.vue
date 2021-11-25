@@ -3,18 +3,22 @@
     <div class="container-top">
       <Bsearch
         :calTotal="true"
-        @do-calTotal="calTotal"
         :configs="searchCofig"
         @do-search="doSearch"
         @do-reset="doReset"
+
+        @do-calTotal="calTotal"
         :calLoading="calLoading"
-        calTextExcel="快速导出excel"
-        :calTotalExcel="btnArr.includes('excel')"
-        :calLoadingExcel="calLoadingExcel"
-        @do-calTotal-excel="calTotalExcel"
+
         :excelLoading="excelLoading"
         :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
+
+
+        :calLoadingFastExcel="calLoadingFastExcel"
+        calTextFastExcel="快速导出excel"
+        :calIsShowFastExcel="btnArr.includes('excel')"
+        @do-calFast-excel="calFastExcel"
       />
     </div>
     <div>
@@ -105,7 +109,7 @@ export default {
 
       dataList: [],
       btnArr: [],
-      calLoadingExcel: false,
+      calLoadingFastExcel: false,
       listLoading: false, // 表格loading
       calLoading: false,
     };
@@ -128,22 +132,22 @@ export default {
     },
   },
   methods: {
-    // 导出excel
-    calTotalExcel(data) {
+    // 快速导出excel
+    calFastExcel(data) {
       this.search_params_obj = data;
       const params = {};
 
-      this.calLoadingExcel = true;
+      this.calLoadingFastExcel = true;
       this.requiredParams(params);
       Object.assign(params, this.search_params_obj);
       $api
         .apiCloseContractListExport(params)
         .then((res) => {
-          this.calLoadingExcel = false;
+          this.calLoadingFastExcel = false;
           fileDownload(res.data, '平仓记录.xlsx');
         })
         .catch(() => {
-          this.calLoadingExcel = false;
+          this.calLoadingFastExcel = false;
         });
     },
     exportExcel(val) {

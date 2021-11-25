@@ -13,10 +13,10 @@
         :configs="searchCofig"
         @do-search="doSearch"
         @do-reset="doReset"
-        :calLoadingExcel="calLoadingExcel"
-        calTextExcel="快速导出excel"
-        :calTotalExcel="btnArr.includes('excel')"
-        @do-calTotal-excel="calTotalExcel"
+        :calLoadingFastExcel="calLoadingFastExcel"
+        calTextFastExcel="快速导出excel"
+        :calIsShowFastExcel="btnArr.includes('excel')"
+        @do-calFast-excel="calFastExcel"
       />
     </div>
 
@@ -26,7 +26,17 @@
 
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @size-change="pageSizeChange"
+        @current-change="goPage"
+        layout="total,sizes, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-sizes="[10, 50, 100, 200]"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -60,7 +70,7 @@ export default {
       total: 0, // 总条数
       toDay: '',
       ago: '',
-      calLoadingExcel: false,
+      calLoadingFastExcel: false,
       btnArr: [],
       coinForexList: []
     }
@@ -69,26 +79,24 @@ export default {
   methods: {
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
-    // 导出excel
-    calTotalExcel(data) {
-      this.search_params_obj = data
-      const params = {}
 
-      this.calLoadingExcel = true
-      this.requiredParams(params)
-      Object.assign(params, this.search_params_obj)
+    // 导出excel
+    calFastExcel(data) {
+      if (this.calLoadingFastExcel) return
+      this.calLoadingFastExcel = true
+      this.requiredParams(data)
       $api
-        .getCoinForexEntrustListExport(params)
-        .then(res => {
-          this.calLoadingExcel = false
+        .getCoinForexEntrustListExport(data)
+        .then((res) => {
+          this.calLoadingFastExcel = false
           fileDownload(res.data, '委托报表.xlsx')
         })
         .catch(() => {
-          this.calLoadingExcel = false
+          this.calLoadingFastExcel = false
         })
     },
     async doHandle(data) {
@@ -104,7 +112,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [
@@ -138,7 +146,7 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records
-        records.forEach(v => {
+        records.forEach((v) => {
           v['status'] = v['status'] === 1 ? true : false
         })
         this.list = records
@@ -148,6 +156,7 @@ export default {
     formatTime(val) {
       return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
+
     // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
@@ -157,11 +166,9 @@ export default {
         params.orderEndTime = nowV.replace(/\//gi, '-')
         params.orderStartTime = befV.replace(/\//gi, '-')
       }
-      if (this.search_params_obj.orderStartTime) {
-        this.search_params_obj.orderEndTime = this.formatTime(this.search_params_obj.orderEndTime)
-        this.search_params_obj.orderStartTime = this.formatTime(
-          this.search_params_obj.orderStartTime
-        )
+      if (params.orderStartTime) {
+        params.orderEndTime = this.formatTime(params.orderEndTime)
+        params.orderStartTime = this.formatTime(params.orderStartTime)
       }
     },
 

@@ -3524,6 +3524,16 @@ export default class api {
     return Fetch.post('/admin/account/special-reconciliation-amount-sum', data)
   }
 
+   // 币汇管理/币汇交易对设置/白名单设置 编辑配置
+   static apiEditCoinForexPairsWhiteListConfig(data) {
+    return Fetch.post('/forex/admin/saveUserAuth', data)
+  }
+
+  // 币汇管理/币汇交易对设置/白名单设置 获取配置
+  static apiGetCoinForexPairsWhiteListConfig(data) {
+    return Fetch.post('/forex/admin/queryUserAuth', data)
+  }
+
    
 
   

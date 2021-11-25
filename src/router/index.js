@@ -1061,7 +1061,14 @@ export const asyncRouterMap = [
             name: 'CoinForexPairsNightFee',
             component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsNightFee'),
             meta: { title: '隔夜费设置', icon: '', role: [] }
-          }
+          },
+
+          {
+            path: 'coinForexPairsWhiteList',
+            name: 'CoinForexPairsWhiteList',
+            component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsWhiteList'),
+            meta: { title: '白名单设置', icon: '', role: [] }
+          },
         ]
       },
 
