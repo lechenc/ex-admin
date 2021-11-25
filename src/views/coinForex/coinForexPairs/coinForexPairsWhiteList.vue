@@ -40,6 +40,7 @@
                     @input="checkVal('userList')"
                     :disabled="!isModify"
                     v-model="form.userList"
+                    :autosize="{ minRows: 3 }"
                     type="textarea"
                     placeholder="请输入UID , 以逗号隔开"
                   ></el-input>
