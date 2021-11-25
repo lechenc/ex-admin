@@ -648,14 +648,21 @@ const coinForexPairsConfigsCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '130',
+    width: '220',
     btnGroup: [
       {
         label: '编辑',
         fn: 'edit',
         type: 'primary',
         alias: 'edit'
-      }
+      },
+
+      {
+        label: '上传导入K线',
+        fn: 'importKLine',
+        type: 'primary',
+        alias: 'importKLine'
+      },
     ]
   }
 ]

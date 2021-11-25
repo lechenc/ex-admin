@@ -22,7 +22,17 @@
 
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @size-change="pageSizeChange"
+        @current-change="goPage"
+        layout="total,sizes, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-sizes="[10, 50, 100, 200]"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
 
     <!-- 添加 编辑 -->
@@ -184,9 +194,7 @@
                 autocomplete="off"
                 type="number"
               >
-                <template slot="append"
-                  >%</template
-                >
+                <template slot="append">%</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -214,6 +222,109 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 上传导入K线-->
+    <el-dialog width="600px" title="上传导入K线" :visible.sync="dialogImportKLineVisible">
+      <el-form :model="importKLineForm" label-width="120px" ref="importKLineForm">
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="日K线：">
+              <el-input
+                size="small"
+                v-model="importKLineForm.importKLine1"
+                placeholder="请上传.xls、xlsx格式文件 ,非必填"
+              >
+                <el-upload
+                  :before-upload="importKLineBeforeUpload"
+                  :action="$forex_file_api"
+                  multiple
+                  name="file"
+                  :data="{ time: 'one_day' }"
+                  :show-file-list="true"
+                  :on-success="importKLineUpload"
+                  :on-error="uploadError"
+                  slot="append"
+                  :limit="1"
+                  accept=".xlsx,.xls"
+                  ref="importKLine1"
+                >
+                  <el-button size="small" type="primary" @click="importKLineClk(1)"
+                    >点击上传</el-button
+                  >
+                </el-upload>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="周K线：">
+              <el-input
+                size="small"
+                v-model="importKLineForm.importKLine2"
+                placeholder="请上传.xls、xlsx格式文件 ,非必填"
+              >
+                <el-upload
+                  :before-upload="importKLineBeforeUpload"
+                  :action="$forex_file_api"
+                  multiple
+                  name="file"
+                  :limit="1"
+                  :data="{ time: 'one_week' }"
+                  :show-file-list="true"
+                  :on-success="importKLineUpload"
+                  :on-error="uploadError"
+                  slot="append"
+                  accept=".xlsx,.xls"
+                  ref="importKLine2"
+                >
+                  <el-button size="small" type="primary" @click="importKLineClk(2)"
+                    >点击上传</el-button
+                  >
+                </el-upload>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="月K线：">
+              <el-input
+                size="small"
+                v-model="importKLineForm.importKLine3"
+                placeholder="请上传.xls、xlsx格式文件 ,非必填"
+              >
+                <el-upload
+                  :before-upload="importKLineBeforeUpload"
+                  :action="$forex_file_api"
+                  multiple
+                  :limit="1"
+                  name="file"
+                  :data="{ time: 'one_month'  }"
+                  :show-file-list="true"
+                  :on-success="importKLineUpload"
+                  :on-error="uploadError"
+                  slot="append"
+                  accept=".xlsx,.xls"
+                  ref="importKLine3"
+                >
+                  <el-button size="small" type="primary" @click="importKLineClk(3)"
+                    >点击上传</el-button
+                  >
+                </el-upload>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <!-- <el-button @click="dialogImportKLineVisible = false">取 消</el-button> -->
+        <el-button type="primary" @click="dialogImportKLineVisible = false">确 认</el-button>
+        <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
       </div>
     </el-dialog>
   </div>
@@ -341,16 +452,64 @@ export default {
       formLabelWidth: '170px',
       userArr: [], // 主流币机器人列表
       coinForexList: [],
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      dialogImportKLineVisible: false,
+      importKLineForm: {},
+      importKLineBtnType: 1
     }
   },
 
   methods: {
+    // 上传导入K线 按钮type
+    importKLineClk(type) {
+      this.importKLineBtnType = type
+    },
+    // 上传导入K线
+    importKLineUpload(response, file, fileList) {
+      if (!response.data) {
+        this.$message.error('上传失败')
+        this.$nextTick(() => [(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')])
+        return
+      } else {
+        this.$message.success('上传成功')
+      }
+
+      this.$refs['importKLine' + this.importKLineBtnType].handleRemove(file)
+      this.$refs['importKLine' + this.importKLineBtnType].clearFiles()
+      // this.$refs.importKLineDay.clearFiles()
+      // this.coinForm.iconUrl = response.result.urls[0];
+    },
+
+    // 上传导入K线 文件限制
+    importKLineBeforeUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
+      const extension = testmsg === 'xlsx' || testmsg === 'xls'
+      // const isLt2M = file.size / 1024 / 1024 < 2
+      const isLt2M = true
+      if (!extension) {
+        this.$message({
+          message: '上传文件只能是 xlsx、xls格式!',
+          type: 'error'
+        })
+      }
+      // if (!isLt2M) {
+      //   this.$message({
+      //     message: '上传文件大小不能超过 2MB!',
+      //     type: 'error'
+      //   })
+      // }
+      if (extension && isLt2M) {
+        this.importKLineForm['importKLine' + this.importKLineBtnType] = file.name
+      }
+
+      return extension && isLt2M
+    },
+
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
     // 对输入值的范围进行限制
     checkVal(val) {
@@ -376,6 +535,7 @@ export default {
       }
       return extension && isLt2M
     },
+
     getRangeVal(val) {
       // val.valid
       // val.form
@@ -393,7 +553,8 @@ export default {
     },
 
     uploadError() {
-      this.$message.error('图片上传失败')
+      this.$message.error('上传失败')
+      this.$nextTick(() => [(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')])
     },
     exceed(file, fileList) {
       this.$message.error('单次只能选择一张图片进行上传！')
@@ -429,7 +590,7 @@ export default {
       if (!this.$refs['twoChoose'].validateValue()) {
         return
       }
-      this.$refs['robotForm'].validate(async valid => {
+      this.$refs['robotForm'].validate(async (valid) => {
         if (valid) {
           const { id, headblock, trade, ...prop } = this.robotForm
 
@@ -529,6 +690,17 @@ export default {
         }
         this.listLoading = false
       }
+      // 上传导入K线
+      if (fn === 'importKLine') {
+        this.dialogImportKLineVisible = true
+        this.$nextTick(() => {
+          this.importKLineForm = {
+            importKLine1: '',
+            importKLine2: '',
+            importKLine3: ''
+          }
+        })
+      }
     },
     doSearch(data) {
       this.current_page = 1
@@ -540,7 +712,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       // this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
@@ -569,7 +741,7 @@ export default {
         this.pages = pages
         this.current_page = current
         this.list = records
-        records.forEach(v => {
+        records.forEach((v) => {
           // y 是 n 否
           v['headblock'] = v['headblock'] === 'Y' ? true : false
           v['trade'] = v['trade'] === 'Y' ? true : false

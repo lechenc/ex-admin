@@ -77,6 +77,7 @@ Vue.config.productionTip = false
 Vue.prototype.$img_api = window.SERVER_PATH_PIC // 图片上传地址
 Vue.prototype.$file_api = window.SERVER_PATH_FILE // 压缩包上传地址
 Vue.prototype.$special_file_api = window.SERVER_PATH_SPECIAL_FILE // 财务管理/特殊调账管理上传EXCEL
+Vue.prototype.$forex_file_api = window.SERVER_PATH_FOREX_FILE // 币汇管理/币汇交易对设置/交易对设置 上传EXCEL
 
 Vue.prototype.$pageSize = 10
 Vue.prototype._ = _

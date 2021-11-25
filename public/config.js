@@ -51,3 +51,4 @@ window.SERVER_PATH_PIC = window.SERVER_PATH + '/admin/user/file/upload-file' // 
 window.SERVER_PATH_FILE = window.SERVER_PATH + '/admin/user/upload/package'
 window.SERVER_PATH_SPECIAL_FILE =
   window.SERVER_PATH + '/admin/account/file/special-reconciliation-excel' // 财务管理/特殊调账管理上传
+window.SERVER_PATH_FOREX_FILE   = window.SERVER_PATH + '/forex/admin/export'  // 币汇管理/币汇交易对设置/交易对设置 上传EXCEL
