@@ -467,9 +467,13 @@ export default {
     },
     // 上传导入K线
     importKLineUpload(response, file, fileList) {
-      if (!response.data) {
+      
+      if (response.code != 1) {
         this.$message.error('上传失败')
-        this.$nextTick(() => [(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')])
+        this.$nextTick(() => {
+          [(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')]
+          this.$refs['importKLine' + this.importKLineBtnType].clearFiles()
+        })
         return
       } else {
         this.$message.success('上传成功')
