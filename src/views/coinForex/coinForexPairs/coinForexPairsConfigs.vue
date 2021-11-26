@@ -238,7 +238,7 @@
               >
                 <el-upload
                   :before-upload="importKLineBeforeUpload"
-                  :action="$forex_file_api"
+                  :action="$forex_file_api + 1"
                   multiple
                   name="file"
                   :data="{ time: 'one_day', symbol: this.curRow.symbol }"
@@ -468,7 +468,7 @@ export default {
     // 上传导入K线
     importKLineUpload(response, file, fileList) {
       if (!response.data) {
-        this.$message.error('上传失败')
+        this.$message.error(response.message || '上传失败')
         this.$nextTick(() => [(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')])
         return
       } else {
