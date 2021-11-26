@@ -238,7 +238,7 @@
               >
                 <el-upload
                   :before-upload="importKLineBeforeUpload"
-                  :action="$forex_file_api + 1"
+                  :action="$forex_file_api"
                   multiple
                   name="file"
                   :data="{ time: 'one_day', symbol: this.curRow.symbol }"
@@ -323,7 +323,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <!-- <el-button @click="dialogImportKLineVisible = false">取 消</el-button> -->
-        <el-button type="primary" @click="dialogImportKLineVisible = false">确 认</el-button>
+        <el-button type="primary" @click="dialogImportKLineVisible = false">确 定</el-button>
         <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
       </div>
     </el-dialog>
@@ -467,9 +467,12 @@ export default {
     },
     // 上传导入K线
     importKLineUpload(response, file, fileList) {
-      if (!response.data) {
+      if (response.code != 1) {
         this.$message.error(response.message || '上传失败')
-        this.$nextTick(() => [(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')])
+        this.$nextTick(() => {
+          ;[(this.importKLineForm['importKLine' + this.importKLineBtnType] = '')]
+          this.$refs['importKLine' + this.importKLineBtnType].clearFiles()
+        })
         return
       } else {
         this.$message.success('上传成功')
