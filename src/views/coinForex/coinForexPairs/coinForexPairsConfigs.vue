@@ -238,7 +238,7 @@
               >
                 <el-upload
                   :before-upload="importKLineBeforeUpload"
-                  :action="$forex_file_api"
+                  :action="$forex_file_api+1"
                   multiple
                   name="file"
                   :data="{ time: 'one_day', symbol: this.curRow.symbol }"
@@ -323,7 +323,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <!-- <el-button @click="dialogImportKLineVisible = false">取 消</el-button> -->
-        <el-button type="primary" @click="dialogImportKLineVisible = false">确 认</el-button>
+        <el-button type="primary" @click="dialogImportKLineVisible = false">确 定</el-button>
         <!-- <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button> -->
       </div>
     </el-dialog>
