@@ -292,7 +292,7 @@ export default {
           return {...item, value: item.label}
         }
       }).filter(item => item)
-      console.log(coin1, 'coin1')
+      
       this.coin[1] = coin1
     });
     this.$store.dispatch('common/getSymbolListContract').then(() => {
@@ -301,7 +301,7 @@ export default {
           return {...item, value: item.label}
         }
       }).filter(item => item)
-      console.log('coin2: ', coin2);
+      
       this.coin[0] = coin2
     })
     this.formConfig[1]['list'] = this.coinTypeArr;

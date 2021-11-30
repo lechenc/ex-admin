@@ -2924,7 +2924,186 @@ const financialStatisticsConfig = [
   }
 ]
 
+
+// 财务管理/负债数据统计
+const debtStatisticsCol = [
+  {
+    label: '订单号',
+    prop: 'id'
+  },
+  {
+    label: 'UID',
+    prop: 'uid'
+  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'proxyUid'
+  // },
+  {
+    label: '币种',
+    prop: 'coinName'
+  },
+  {
+    label: '链名称',
+    prop: 'chainName'
+  },
+  {
+    label: '到账数量',
+    prop: 'amount'
+  },
+  {
+    label: 'FROM地址',
+    prop: 'fromAddress'
+  },
+  {
+    label: 'TO地址',
+    prop: 'toAddress'
+  },
+  {
+    label: '充币TXID',
+    prop: 'txId'
+  },
+  {
+    label: '状态',
+    prop: 'tradeStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '充币待确认', val: 6 }
+    ]
+  },
+  {
+    label: '充币时间',
+    prop: 'createTime'
+  },
+  {
+    label: '归集状态',
+    prop: 'collectStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '未归集', val: 0 }, { text: '已归集', val: 1 }, { text: '归集失败', val: 2 }]
+  },
+  {
+    label: '归集TXID',
+    prop: 'collectTxId'
+  },
+  {
+    label: '归集时间',
+    prop: 'confirmTime'
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: '200',
+    btnGroup: [
+      {
+        label: '重新调用钱包去归集',
+        fn: 'message',
+        filter_type: 'array',
+        filter_key: 'collectStatus',
+        filter_status: ['1'],
+        type: 'success',
+        alias: 'message'
+      }
+    ]
+  }
+]
+
+const debtStatisticsColNoBtn = [
+  {
+    label: '订单号',
+    prop: 'id'
+  },
+  {
+    label: 'UID',
+    prop: 'uid'
+  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'proxyUid'
+  // },
+  {
+    label: '币种',
+    prop: 'coinName'
+  },
+  {
+    label: '链名称',
+    prop: 'chainName'
+  },
+  {
+    label: '到账数量',
+    prop: 'amount'
+  },
+  {
+    label: 'FROM地址',
+    prop: 'fromAddress'
+  },
+  {
+    label: 'TO地址',
+    prop: 'toAddress'
+  },
+  {
+    label: '充币TXID',
+    prop: 'txId'
+  },
+  {
+    label: '状态',
+    prop: 'tradeStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      { text: '待审核', val: 0 },
+      { text: '成功', val: 1 },
+      { text: '失败', val: 2 },
+      { text: '充币待确认', val: 6 }
+    ]
+  },
+  {
+    label: '充币时间',
+    prop: 'createTime'
+  },
+  {
+    label: '归集状态',
+    prop: 'collectStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '未归集', val: 0 }, { text: '已归集', val: 1 }, { text: '归集失败', val: 2 }]
+  },
+  {
+    label: '归集TXID',
+    prop: 'collectTxId'
+  },
+  {
+    label: '归集时间',
+    prop: 'confirmTime'
+  }
+]
+
+const debtStatisticsConfig = [
+  {
+    type: 'date_rank_sec',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    type: 'select',
+    label: '币种',
+    prop: 'coinId',
+    value: '',
+    list: []
+  },
+]
+
 export {
+  debtStatisticsConfig,
+  debtStatisticsColNoBtn,
+  debtStatisticsCol,
   financialStatisticsCol,
   financialStatisticsConfig,
   hotWalletExtractSetCol,

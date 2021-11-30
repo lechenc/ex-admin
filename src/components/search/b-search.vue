@@ -182,6 +182,30 @@
                 </div>
               </template>
             </div>
+
+            <!-- 日期选择 pc端或者横屏用这个 -->
+            <div v-if="config.type === 'date_rank_sec' && (isDeskTop || (!isDeskTop && isOrientation))">
+              <div>{{ config.label }}</div>
+              <template>
+                <div class="block">
+                  <!-- <span class="demonstration">默认</span> -->
+                  <el-date-picker
+                    v-model="config.value"
+                    :disabled="dateRankDisabled"
+                    :size="sizeDiy"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    value-format="yyyy/MM/dd HH:mm:ss"
+                    :picker-options="$util.datePickerOptions({ disabledDate: 'all' })"
+                    :default-time="['00:00:00', '23:59:59']"
+                  />
+                </div>
+              </template>
+            </div>
+
+
             <!-- 日期选择 移动端并且竖屏用这个 -->
             <div
               v-if="config.type === 'date_rank' && !isDeskTop && !isOrientation"

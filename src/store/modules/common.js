@@ -167,7 +167,6 @@ const actions = {
       $api
         .getSymbolListSupportContract({})
         .then(res => {
-          console.log('res', res);
           const list = res.data.data.map(v => {
             return {
               label: v['coinMarket'],

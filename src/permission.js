@@ -396,6 +396,7 @@ const mapComponents = {
   SearchUserAddress: () => import('@/views/financial/searchUserAddress'),
   HotWalletExtract: () => import('@/views/financial/hotWalletExtract'),
   FinancialStatistics: () => import('@/views/financial/financialStatistics'),
+  DebtStatistics: () => import('@/views/financial/debtStatistics'),
 
   AssetManageList: () => import('@/views/assetManage/assetManageList'),
   TransferRecord: () => import('@/views/assetManage/transferRecord'),
