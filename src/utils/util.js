@@ -668,7 +668,6 @@ async function exportData(type, max = 10000, loading = null) {
   }
   const { export_json_to_excel } = require('./export2excel/Export2Excel.js')
   const startExport = async list => {
-    
     const header = []
     const keys = []
     const data = []
@@ -802,6 +801,7 @@ function getAuthority(name, vArr, noVarr) {
   const tArr = store.state.app.hybridRouters
   // 匹配到的后台数据节点
   let matchVal = null
+
   // 返回的权限配置参数
   let temp = {
     status: 2,
@@ -822,8 +822,19 @@ function getAuthority(name, vArr, noVarr) {
     }
   }
   judgeArr(tArr, name)
-  // 其实只要有个配置按钮节点，都代表能操作
+
+  // 导出excel也加了权限,所以要判断是不是只有导出excel的权限,是的话还是要给无权限的列表
+  let isOnlyExcel = false
+
   if (matchVal && matchVal.length > 0) {
+    isOnlyExcel =
+      matchVal.filter(v => {
+        return v.desctext !== 'excel'
+      }).length == 0
+  }
+
+  // 其实只要有个配置按钮节点，都代表能操作
+  if (matchVal && matchVal.length > 0 && !isOnlyExcel) {
     // 获取所有配置项的名称列表
     const aliasArr = matchVal.map(v => v.desctext.replace(/\s*$/g, ''))
     if (_vArr) {

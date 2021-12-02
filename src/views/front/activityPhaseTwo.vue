@@ -1,5 +1,5 @@
 <template>
-  <div class="extract-container">
+  <div class="activityPhaseTwo-container">
     <div class="container-top">
       <Bsearch
         cal-text="活动奖金统计"
@@ -35,13 +35,13 @@
 <script>
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
-import { activityCol, activityColNoBtn, activityConfig } from '@/config/column/front'
+import { activityPhaseTwoCol, activityPhaseTwoColNoBtn, activityPhaseTwoConfig } from '@/config/column/front'
 import $api from '@/api/api'
 import utils from '@/utils/util'
 import iconPage from '@/components/icon-page'
 
 export default {
-  name: 'Activity',
+  name: 'ActivityPhaseTwo',
   components: {
     Btable,
     Bsearch,
@@ -70,13 +70,14 @@ export default {
     }
   },
   mounted() {
-    const authObj = this.$util.getAuthority('Activity', activityCol, activityColNoBtn)
+    const authObj = this.$util.getAuthority('ActivityPhaseTwo', activityPhaseTwoCol, activityPhaseTwoColNoBtn)
+    console.log('authObj',authObj)
     this.configs = authObj.val
     this.btnArr = authObj.btnArr || []
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
-    this.searchCofig = this.$util.clone(activityConfig)
+    this.searchCofig = this.$util.clone(activityPhaseTwoConfig)
     this.getList()
   },
   methods: {
@@ -220,7 +221,7 @@ export default {
 }
 </script>
 <style scope lang="scss">
-.extract-container {
+.activityPhaseTwo-container {
   padding: 4px 10px 10px 10px;
   .is-risk-control {
     color: red;
