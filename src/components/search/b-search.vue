@@ -183,7 +183,7 @@
               </template>
             </div>
 
-            <!-- 日期选择 pc端或者横屏用这个 -->
+            <!-- 日期选择 pc端或者横屏用这个  带秒数的 -->
             <div v-if="config.type === 'date_rank_sec' && (isDeskTop || (!isDeskTop && isOrientation))">
               <div>{{ config.label }}</div>
               <template>
@@ -193,7 +193,7 @@
                     v-model="config.value"
                     :disabled="dateRankDisabled"
                     :size="sizeDiy"
-                    type="daterange"
+                    type="datetimerange"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
@@ -645,7 +645,7 @@ export default {
               }
               query[item.prop2] = overT || item.value[1]
             }
-          } else if (item.type === 'date_rank_s') {
+          } else if (item.type === 'date_rank_s' || item.type === 'date_rank_sec') {
             // 区间双框
             if (item.value[0] !== '') {
               query[item.prop] = item.value[0]

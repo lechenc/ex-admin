@@ -10,17 +10,126 @@
 <template>
   <div class="debtStatistics-container">
     <div class="container-top">
-      <Bsearch
-        :configs="searchCofig"
-        @do-search="doSearch"
-        @do-reset="doReset"
-      />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
-    
-    <div>
+    <!-- 统计 -->
+
+    <div class="container-total">
+      <el-row :span="24" :gutter="10">
+        <el-col :span="6" v-for="(item, idx) in innerTopArr" :key="idx" class="inner-top-item">
+          <el-card shadow="always">
+            <div slot="header" class="item-title">
+              <span>{{ item.title }}</span>
+            </div>
+
+            <div class="item-content">
+              <p class="item-number">
+                {{ curRow[item.prop] || '103246.112411' }}
+              </p>
+              <p class="item-beginning" v-show="curRow[item.beginningProp]">
+                {{ item.beginningTitle }} {{ curRow[item.beginningProp] || 0 }}
+              </p>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+
+    <div class="container-detail">
+      <el-radio-group style="margin-bottom: 17px" v-model="tabPosition">
+        <el-radio-button label="top">账户</el-radio-button>
+        <el-radio-button label="right">币币</el-radio-button>
+        <el-radio-button label="bottom">法币</el-radio-button>
+        <el-radio-button label="left">合约</el-radio-button>
+      </el-radio-group>
+
+      <el-row :span="24" :gutter="10">
+        <el-col
+          v-show="tabPosition == 'top' "
+          class="detail-item"
+          :span="8"
+        >
+          <el-card shadow="always">
+            <div slot="header" class="item-title">
+              <span>收益 (收益账户)</span>
+              <span>期初金额</span>
+              <span>期末金额</span>
+            </div>
+
+            <div class="item-content">
+              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
+                <span>收益账户</span>
+                <span>103246.1534</span>
+                <span>103246.1534</span>
+              </p>
+            </div>
+          </el-card>
+        </el-col>
+
+        <el-col class="detail-item" :span="8">
+          <el-card shadow="always">
+            <div slot="header" class="item-title">
+              <span>负债 (收益账户)</span>
+              <span>期初金额</span>
+              <span>期末金额</span>
+            </div>
+
+            <div class="item-content">
+              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
+                <span>收益账户</span>
+                <span>103246.1534</span>
+                <span>103246.1534</span>
+              </p>
+            </div>
+          </el-card>
+        </el-col>
+
+        <el-col class="detail-item" :span="8">
+          <el-card shadow="always">
+            <div slot="header" class="item-title">
+              <span>异常数据 (收益账户)</span>
+              <span>期初金额</span>
+              <span>期末金额</span>
+            </div>
+
+            <div class="item-content">
+              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
+                <span>收益账户</span>
+                <span>103246.1534</span>
+                <span>103246.1534</span>
+              </p>
+            </div>
+          </el-card>
+        </el-col>
+
+        <el-col
+          v-show="tabPosition == 'top' "
+          class="detail-item"
+          :span="8"
+        >
+          <el-card shadow="always">
+            <div slot="header" class="item-title">
+              <span>资产 (收益账户)</span>
+              <span>期初金额</span>
+              <span>期末金额</span>
+            </div>
+
+            <div class="item-content">
+              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
+                <span>收益账户</span>
+                <span>103246.1534</span>
+                <span>103246.1534</span>
+              </p>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- <div>
       <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
-    </div>
-    <div class="container-footer">
+    </div> -->
+    <!-- <div class="container-footer">
       <icon-page :total="total" :pages="pages" />
       <el-pagination
         background
@@ -32,14 +141,18 @@
         @size-change="pageSizeChange"
         @current-change="goPage"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
-import { debtStatisticsCol, debtStatisticsColNoBtn, debtStatisticsConfig } from '@/config/column/financial'
+import {
+  debtStatisticsCol,
+  debtStatisticsColNoBtn,
+  debtStatisticsConfig
+} from '@/config/column/financial'
 import $api from '@/api/api'
 
 export default {
@@ -63,10 +176,52 @@ export default {
       pages: 0, // 总页数
       toDay: '',
       ago: '',
-      btnArr: []
+      btnArr: [],
+      curRow: {},
+      innerTopArr: [
+        // 统计数组
+        {
+          title: '交易所资产 (钱包)',
+          prop: 'keys',
+          beginningTitle: '期初资产：',
+          beginningProp: 'keys2'
+        },
+        {
+          title: '收益 (收益账号)',
+          prop: 'keys',
+          beginningTitle: '期初资产：',
+          beginningProp: 'keys2'
+        },
+        {
+          title: '负债 (用户资产)',
+          prop: 'keys',
+          beginningTitle: '期初资产：',
+          beginningProp: 'keys2'
+        },
+        {
+          title: '差额 ',
+          prop: 'keys',
+          beginningTitle: '期初资产：',
+          beginningProp: 'keys2'
+        },
+        {
+          title: '钱包入金',
+          prop: 'keys'
+        },
+        {
+          title: '钱包出金',
+          prop: 'keys'
+        },
+        {
+          title: '净入金',
+          prop: 'keys'
+        }
+      ],
+      curRow: {}, // 基础数据成员
+      tabPosition: 'top'
     }
   },
-  
+
   methods: {
     async doHandle(data) {
       const { fn, row } = data
@@ -102,7 +257,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [
@@ -111,7 +266,7 @@ export default {
       ]
       this.getList()
     },
-    
+
     // 页容变化
     pageSizeChange(val) {
       this.current_page = 1
@@ -123,7 +278,7 @@ export default {
       this.current_page = val
       this.getList()
     },
-    
+
     // getlist
     async getList() {
       if (this.listLoading) return
@@ -146,28 +301,35 @@ export default {
       }
       this.listLoading = false
     },
-    
+
     formatTime(val) {
       return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
         const befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+
         const nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+
         params.endTime = nowV.replace(/\//gi, '-')
         params.startTime = befV.replace(/\//gi, '-')
+
         // 组件时间初始必须format格式
         this.searchCofig[0].value = [befV, nowV]
       }
+
       if (this.search_params_obj.startTime) {
         this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
         this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
-    },
-    
+    }
   },
   mounted() {
-    const authObj = this.$util.getAuthority('DebtStatistics', debtStatisticsCol, debtStatisticsColNoBtn)
+    const authObj = this.$util.getAuthority(
+      'DebtStatistics',
+      debtStatisticsCol,
+      debtStatisticsColNoBtn
+    )
     this.configs = authObj.val
     this.btnArr = authObj.btnArr
     // 初始化今天，之前的时间
@@ -180,7 +342,7 @@ export default {
     })
 
     this.getList()
-  },
+  }
 }
 </script>
 <style scope lang="scss">
@@ -189,6 +351,62 @@ export default {
   .container-top {
     margin: 10px 0;
   }
+  .container-total {
+    .inner-top-item {
+      min-width: 250px;
+      margin-bottom: 15px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .el-card {
+        .el-card__header {
+          padding-top: 14px;
+          padding-bottom: 14px;
+        }
+        .item-title {
+          font-size: 18px;
+        }
+        .item-content {
+          text-align: center;
+          .item-number {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: #409eff;
+            font-size: 30px;
+          }
+          .item-beginning {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .container-detail {
+    .el-radio-button__inner {
+      padding: 16px 80px;
+    }
+    .detail-item {
+      margin-bottom: 15px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .item-title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+      }
+      .item-content {
+        .content-item {
+          display: flex;
+          justify-content: space-between;
+          font-size: 16px;
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+
   .container-footer {
     display: flex;
     justify-content: space-between;

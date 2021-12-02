@@ -234,7 +234,7 @@
               <el-input
                 size="small"
                 v-model="importKLineForm.importKLine1"
-                placeholder="请上传.xls、xlsx格式文件 ,非必填"
+                placeholder="请上传.xls、xlsx、csv格式文件 ,非必填"
               >
                 <el-upload
                   :before-upload="importKLineBeforeUpload"
@@ -247,7 +247,7 @@
                   :on-error="uploadError"
                   slot="append"
                   :limit="1"
-                  accept=".xlsx,.xls"
+                  accept=".xlsx,.xls,.csv"
                   ref="importKLine1"
                 >
                   <el-button size="small" type="primary" @click="importKLineClk(1)"
@@ -265,7 +265,7 @@
               <el-input
                 size="small"
                 v-model="importKLineForm.importKLine2"
-                placeholder="请上传.xls、xlsx格式文件 ,非必填"
+                placeholder="请上传.xls、xlsx、csv格式文件 ,非必填"
               >
                 <el-upload
                   :before-upload="importKLineBeforeUpload"
@@ -278,7 +278,7 @@
                   :on-success="importKLineUpload"
                   :on-error="uploadError"
                   slot="append"
-                  accept=".xlsx,.xls"
+                  accept=".xlsx,.xls,.csv"
                   ref="importKLine2"
                 >
                   <el-button size="small" type="primary" @click="importKLineClk(2)"
@@ -296,7 +296,7 @@
               <el-input
                 size="small"
                 v-model="importKLineForm.importKLine3"
-                placeholder="请上传.xls、xlsx格式文件 ,非必填"
+                placeholder="请上传.xls、xlsx、csv格式文件 ,非必填"
               >
                 <el-upload
                   :before-upload="importKLineBeforeUpload"
@@ -309,7 +309,7 @@
                   :on-success="importKLineUpload"
                   :on-error="uploadError"
                   slot="append"
-                  accept=".xlsx,.xls"
+                  accept=".xlsx,.xls,.csv"
                   ref="importKLine3"
                 >
                   <el-button size="small" type="primary" @click="importKLineClk(3)"
@@ -487,12 +487,12 @@ export default {
     // 上传导入K线 文件限制
     importKLineBeforeUpload(file) {
       var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
-      const extension = testmsg === 'xlsx' || testmsg === 'xls'
+      const extension = testmsg === 'xlsx' || testmsg === 'xls' || testmsg === 'csv'
       // const isLt2M = file.size / 1024 / 1024 < 2
       const isLt2M = true
       if (!extension) {
         this.$message({
-          message: '上传文件只能是 xlsx、xls格式!',
+          message: '上传文件只能是 xlsx、xls、csv格式!',
           type: 'error'
         })
       }

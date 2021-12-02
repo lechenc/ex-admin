@@ -1,37 +1,13 @@
 <template>
   <div class="dashboard-container">
     <div class="container-top">
-      <div class="line" @click="$router.push({name:'WelcomeMain'})">数据统计</div>
+      <div class="line" @click="$router.push({ name: 'WelcomeMain' })">数据统计</div>
     </div>
     <h3>待处理事件</h3>
     <ul class="inner-top">
-      <li @click="$router.push('/check/examine')">
-        <div class="subTitle">{{ curRow.real_name }}</div>
-        <div class="title"><img src="/img/h0.png" alt="" /> 实名待处理</div>
-      </li>
-      <li @click="$router.push('/financial/extractForeign')">
-        <div class="subTitle">{{ curRow.propose }}</div>
-        <div class="title"><img src="/img/h1.png" alt="" />外部提币待处理</div>
-      </li>
-       <li @click="$router.push('/financial/extract')">
-        <div class="subTitle">{{ curRow.ownPropose }}</div>
-        <div class="title"><img src="/img/h1.png" alt="" />内部提币待处理</div>
-      </li>
-      <li @click="$router.push('/fiat/appeal')">
-        <div class="subTitle">{{ curRow.representation }}</div>
-        <div class="title"><img src="/img/h2.png" alt="" />申诉待处理</div>
-      </li>
-      <li @click="$router.push('/check/advertise')">
-        <div class="subTitle">{{ curRow.advertiser }}</div>
-        <div class="title"><img src="/img/h3.png" alt="" />广告商取消认证待审核</div>
-      </li>
-      <!-- <li>
-        <div class="subTitle">{{ curRow.workOrder }}</div>
-        <div class="title"><img src="/img/h4.png" alt="" />工单待处理</div>
-      </li> -->
-      <li @click="$router.push('/check/pay')">
-        <div class="subTitle">{{ curRow.payTypeNumber }}</div>
-        <div class="title"><img src="/img/h4.png" alt="" />支付方式待审核</div>
+      <li v-for="(item, idx) in innerTopArr" :key="idx" @click="$router.push(item.path)">
+        <div class="subTitle">{{ curRow[item.prop] }}</div>
+        <div class="title"><img :src="item.icon" alt="" /> {{item.title}}</div>
       </li>
     </ul>
 
@@ -322,44 +298,82 @@
         </el-tabs>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 // import { mapGetters } from 'vuex'
-import $api from "@/api/api";
+import $api from '@/api/api'
 export default {
-  name: "HomePage",
+  name: 'HomePage',
   data() {
     return {
       curRow: {}, // 基础数据成员
-      radioStatus: "three", // 分类
+      radioStatus: 'three', // 分类
       selectStatus: 1, // 分类
       myChart: null, // 折线图对象
-      activeRegist: "first",
-      activeBB: "first",
-      activeRecharge: "first",
-      activeFabi: "first",
-    };
+      activeRegist: 'first',
+      activeBB: 'first',
+      activeRecharge: 'first',
+      activeFabi: 'first',
+      innerTopArr: [ //待处理事件数组
+        {
+          path: '/check/examine',
+          prop: 'real_name',
+          icon: '/img/h0.png',
+          title: ' 实名待处理'
+        },
+        {
+          path: '/financial/extractForeign',
+          prop: 'propose',
+          icon: '/img/h1.png',
+          title: '外部提币待处理'
+        },
+        {
+          path: '/financial/extract',
+          prop: 'ownPropose',
+          icon: '/img/h1.png',
+          title: '内部提币待处理'
+        },
+        {
+          path: '/fiat/appeal',
+          prop: 'representation',
+          icon: '/img/h2.png',
+          title: '申诉待处理'
+        },
+        {
+          path: '/check/advertise',
+          prop: 'advertiser',
+          icon: '/img/h3.png',
+          title: '广告商取消认证待审核'
+        },
+        {
+          path: '/check/pay',
+          prop: 'payTypeNumber',
+          icon: '/img/h4.png',
+          title: '支付方式待审核'
+        },
+      ]
+    }
   },
-  computed:{
+  computed: {
     device() {
-      return this.$store.state.app.device;
+      return this.$store.state.app.device
     }
   },
   methods: {
     // 基本信息
     async listDetail() {
-      const res = await $api.overviewStatistics({});
+      const res = await $api.overviewStatistics({})
       if (res) {
-        const records = res.data.data;
+        const records = res.data.data
         if (records) {
-          let tmp = records;
-          for(var i in tmp){
-              if(tmp.hasOwnProperty(i)) {
-                  tmp[i] = tmp[i] && (tmp[i] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3') || 0;
-              }
+          let tmp = records
+          for (var i in tmp) {
+            if (tmp.hasOwnProperty(i)) {
+              tmp[i] =
+                (tmp[i] && (tmp[i] + '').replace(/^(\-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3')) || 0
+            }
           }
           this.curRow = tmp
         }
@@ -368,9 +382,9 @@ export default {
   },
   mounted() {
     //  @click="$router.push({path:'/check/examine',query:{ id:0 }})"
-    this.listDetail();
-  },
-};
+    this.listDetail()
+  }
+}
 </script>
 
 <style lang="scss">
@@ -382,7 +396,7 @@ export default {
     margin: 0 0 20px 0;
   }
   h3::before {
-    content: "";
+    content: '';
     border-left: 5px solid #03a7f0;
     margin-right: 10px;
   }
@@ -393,7 +407,7 @@ export default {
     margin: 0 0 20px 20px;
   }
   h4::before {
-    content: "";
+    content: '';
     border-left: 5px solid #03a7f0;
     margin-right: 10px;
   }
@@ -440,12 +454,12 @@ export default {
               text-align: center;
               margin: 30px 0 30px 0;
             }
-            div:last-child{
-              font-weight:600;
-              color:#4390ff;
+            div:last-child {
+              font-weight: 600;
+              color: #4390ff;
             }
             &::after {
-              content: "";
+              content: '';
               clear: both;
             }
           }
@@ -554,5 +568,5 @@ export default {
     }
   }
 }
-@import "@/styles/media/dashboard.scss";
+@import '@/styles/media/dashboard.scss';
 </style>
