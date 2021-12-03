@@ -3554,9 +3554,14 @@ export default class api {
     return Fetch.postExcel('/admin/account/activity/recharge/reward-excel/download', data)
   }
 
-  // 运营管理 - 运营活动 获取列表
+  // 财务管理/负债数据统计 获取列表 (下面)
   static apiGetDebtStatisticsInfo(data) {
     return Fetch.post('/account/reconciliation/statisticsInfo', data)
+  }
+
+  // 财务管理/负债数据统计 获取列表  (上面)
+  static apiGetDebtStatisticsLists(data) {
+    return Fetch.post('/account/reconciliation/statistics', data)
   }
 
   

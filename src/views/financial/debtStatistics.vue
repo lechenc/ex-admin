@@ -17,17 +17,17 @@
     <div class="container-total">
       <el-row :span="24" :gutter="10">
         <el-col :span="6" v-for="(item, idx) in innerTopArr" :key="idx" class="inner-top-item">
-          <el-card shadow="always">
+          <el-card :body-style="{ height: '120px' }" shadow="always">
             <div slot="header" class="item-title">
               <span>{{ item.title }}</span>
             </div>
 
             <div class="item-content">
               <p class="item-number">
-                {{ curRow[item.prop] || '103246.112411' }}
+                {{ topObj[item.prop] }}
               </p>
-              <p class="item-beginning" v-show="curRow[item.beginningProp]">
-                {{ item.beginningTitle }} {{ curRow[item.beginningProp] || 0 }}
+              <p class="item-beginning" v-show="item.beginningTitle">
+                {{ item.beginningTitle }} {{ topObj[item.beginningProp] || 0 }}
               </p>
             </div>
           </el-card>
@@ -44,96 +44,24 @@
       </el-radio-group>
 
       <el-row :span="24" :gutter="10">
-        <el-col v-show="tabPosition == 'top'" class="detail-item" :span="8">
-          <el-card shadow="always">
+        <el-col class="detail-item" :span="8" v-for="(itm, index) in innerFooterArr" :key="index">
+          <el-card v-if="itm.list.length" :body-style="{ minHeight: '350px' }" shadow="always">
             <div slot="header" class="item-title">
-              <span>收益 (收益账户)</span>
+              <span>{{ itm.title }}</span>
               <span>期初金额</span>
               <span>期末金额</span>
             </div>
-
             <div class="item-content">
-              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
-                <span>收益账户</span>
-                <span>103246.1534</span>
-                <span>103246.1534</span>
-              </p>
-            </div>
-          </el-card>
-        </el-col>
-
-        <el-col class="detail-item" :span="8">
-          <el-card shadow="always">
-            <div slot="header" class="item-title">
-              <span>负债 (收益账户)</span>
-              <span>期初金额</span>
-              <span>期末金额</span>
-            </div>
-
-            <div class="item-content">
-              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
-                <span>收益账户</span>
-                <span>103246.1534</span>
-                <span>103246.1534</span>
-              </p>
-            </div>
-          </el-card>
-        </el-col>
-
-        <el-col class="detail-item" :span="8">
-          <el-card shadow="always">
-            <div slot="header" class="item-title">
-              <span>异常数据 (收益账户)</span>
-              <span>期初金额</span>
-              <span>期末金额</span>
-            </div>
-
-            <div class="item-content">
-              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
-                <span>收益账户</span>
-                <span>103246.1534</span>
-                <span>103246.1534</span>
-              </p>
-            </div>
-          </el-card>
-        </el-col>
-
-        <el-col v-show="tabPosition == 'top'" class="detail-item" :span="8">
-          <el-card shadow="always">
-            <div slot="header" class="item-title">
-              <span>资产 (收益账户)</span>
-              <span>期初金额</span>
-              <span>期末金额</span>
-            </div>
-
-            <div class="item-content">
-              <p v-for="(item, idx) in 6" :key="idx" class="content-item">
-                <span>收益账户</span>
-                <span>103246.1534</span>
-                <span>103246.1534</span>
+              <p v-for="(item, idx) in itm.list" :key="idx" class="content-item">
+                <span style="width: 120px">{{ accountTypeObj[item.accountType] }}</span>
+                <span>{{ item.initialAsset }}</span>
+                <span>{{ item.afterAsset }}</span>
               </p>
             </div>
           </el-card>
         </el-col>
       </el-row>
     </div>
-
-    <!-- <div>
-      <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
-    </div> -->
-    <!-- <div class="container-footer">
-      <icon-page :total="total" :pages="pages" />
-      <el-pagination
-        background
-        layout="total,sizes, prev, pager, next, jumper"
-        :current-page="current_page"
-        :page-sizes="[10, 50, 100, 200]"
-        :page-size="pageSize"
-        :total="total"
-        @size-change="pageSizeChange"
-        @current-change="goPage"
-      />
-    </div> -->
   </div>
 </template>
 <script>
@@ -169,49 +97,64 @@ export default {
       toDay: '',
       ago: '',
       btnArr: [],
-      curRow: {},
       innerTopArr: [
         // 统计数组
         {
           title: '交易所资产 (钱包)',
-          prop: 'keys',
+          prop: 'afterWallet',
           beginningTitle: '期初资产：',
-          beginningProp: 'keys2'
+          beginningProp: 'initialWallet'
         },
         {
           title: '收益 (收益账号)',
-          prop: 'keys',
+          prop: 'afterProfit',
           beginningTitle: '期初资产：',
-          beginningProp: 'keys2'
+          beginningProp: 'initialProfit'
         },
         {
           title: '负债 (用户资产)',
-          prop: 'keys',
+          prop: 'afterLiabilities',
           beginningTitle: '期初资产：',
-          beginningProp: 'keys2'
+          beginningProp: 'initialLiabilities'
         },
         {
           title: '差额 ',
-          prop: 'keys',
-          beginningTitle: '期初资产：',
-          beginningProp: 'keys2'
+          prop: 'difference'
         },
         {
           title: '钱包入金',
-          prop: 'keys'
+          prop: 'walletInGold'
         },
         {
           title: '钱包出金',
-          prop: 'keys'
+          prop: 'walletOutGold'
         },
         {
           title: '净入金',
-          prop: 'keys'
+          prop: 'onlyInGold'
         }
       ],
-      curRow: {}, // 基础数据成员
+      topObj: {},
       tabPosition: -1,
-      infoLoading: false
+      infoLoading: false,
+      innerFooterArr: [],
+      accountTypeObj: {
+        1: '普通用户',
+        2: '平台商户账户',
+        3: 'CPT用户',
+        4: '顶级广告商账户',
+        5: '广告商代理',
+        6: '商务',
+        7: '代理',
+        8: '收益账户',
+        9: '成本账户',
+        10: '支出账户',
+        11: '支出子账户',
+        12: '收入账户',
+        13: '合约收益账户',
+        14: '冷钱包',
+        15: '热钱包'
+      }
     }
   },
 
@@ -246,7 +189,7 @@ export default {
     doSearch(data) {
       this.current_page = 1
       this.search_params_obj = data
-      // this.getList()
+      this.getList()
       this.getInfo()
     },
     doReset() {
@@ -258,7 +201,9 @@ export default {
         this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
         this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
       ]
+      this.tabPosition = -1
       this.getList()
+      this.getInfo()
     },
 
     // 页容变化
@@ -284,14 +229,15 @@ export default {
       this.requiredParams(query_data)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
-      const res = await $api.apiGetDebtStatisticsInfo(query_data)
+      const res = await $api.apiGetDebtStatisticsLists(query_data)
       if (res) {
-        const { records, total, current, pages } = res.data.data
-        this.total = total
-        this.pages = pages
-        this.current_page = current
-        this.list = records
-        this.dataList = records
+        // const { records, total, current, pages } = res.data.data
+        // this.total = total
+        // this.pages = pages
+        // this.current_page = current
+        // this.list = records
+        // this.dataList = records
+        this.topObj = res.data.data
       }
       this.listLoading = false
     },
@@ -307,12 +253,25 @@ export default {
       this.infoLoading = true
       const res = await $api.apiGetDebtStatisticsInfo(query_data)
       if (res) {
-        const { records, total, current, pages } = res.data.data
-        this.total = total
-        this.pages = pages
-        this.current_page = current
-        this.list = records
-        this.dataList = records
+        const { illegalityList, liabilitiesList, profitList, walletList } = res.data.data
+        this.innerFooterArr = [
+          {
+            title: '异常数据',
+            list: illegalityList
+          },
+          {
+            title: '负债 (收益账户)',
+            list: liabilitiesList
+          },
+          {
+            title: '收益 (收益账户)',
+            list: profitList
+          },
+          {
+            title: '资产 (钱包资产)',
+            list: walletList
+          }
+        ]
       }
       this.infoLoading = false
     },
@@ -356,7 +315,7 @@ export default {
       this.searchCofig[1]['list'] = this.$store.state.common.coinlist
     })
 
-    // this.getList()
+    this.getList()
     this.getInfo()
   }
 }
@@ -416,6 +375,7 @@ export default {
         .content-item {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
           font-size: 16px;
           margin-bottom: 30px;
         }
