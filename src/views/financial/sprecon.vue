@@ -665,7 +665,7 @@ export default {
       $api
         .apiSpreconDownLoadDefaultExcel({})
         .then((res) => {
-          console.log('res', res)
+          
           fileDownload(res.data, '特殊调账模板.xlsx')
         })
         .catch(() => {})

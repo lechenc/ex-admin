@@ -10,7 +10,7 @@
 <template>
   <div class="debtStatistics-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch :configs="searchCofig" ref="Bsearch" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <!-- 统计 -->
 
@@ -36,19 +36,15 @@
     </div>
 
     <div class="container-detail">
-      <el-radio-group style="margin-bottom: 17px" v-model="tabPosition">
-        <el-radio-button label="top">账户</el-radio-button>
-        <el-radio-button label="right">币币</el-radio-button>
-        <el-radio-button label="bottom">法币</el-radio-button>
-        <el-radio-button label="left">合约</el-radio-button>
+      <el-radio-group style="margin-bottom: 17px" @change="tabPositionChange" v-model="tabPosition">
+        <el-radio-button :label="-1">账户</el-radio-button>
+        <el-radio-button :label="0">币币</el-radio-button>
+        <el-radio-button :label="1">法币</el-radio-button>
+        <el-radio-button :label="2">合约</el-radio-button>
       </el-radio-group>
 
       <el-row :span="24" :gutter="10">
-        <el-col
-          v-show="tabPosition == 'top' "
-          class="detail-item"
-          :span="8"
-        >
+        <el-col v-show="tabPosition == 'top'" class="detail-item" :span="8">
           <el-card shadow="always">
             <div slot="header" class="item-title">
               <span>收益 (收益账户)</span>
@@ -102,11 +98,7 @@
           </el-card>
         </el-col>
 
-        <el-col
-          v-show="tabPosition == 'top' "
-          class="detail-item"
-          :span="8"
-        >
+        <el-col v-show="tabPosition == 'top'" class="detail-item" :span="8">
           <el-card shadow="always">
             <div slot="header" class="item-title">
               <span>资产 (收益账户)</span>
@@ -218,11 +210,15 @@ export default {
         }
       ],
       curRow: {}, // 基础数据成员
-      tabPosition: 'top'
+      tabPosition: -1,
+      infoLoading: false
     }
   },
 
   methods: {
+    async tabPositionChange(val) {
+      this.$refs.Bsearch.doSearch()
+    },
     async doHandle(data) {
       const { fn, row } = data
       // 设置上架开关
@@ -250,10 +246,8 @@ export default {
     doSearch(data) {
       this.current_page = 1
       this.search_params_obj = data
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1
-      }
-      this.getList()
+      // this.getList()
+      this.getInfo()
     },
     doReset() {
       this.search_params_obj = {}
@@ -283,14 +277,14 @@ export default {
     async getList() {
       if (this.listLoading) return
       const query_data = {
-        pageNum: this.current_page,
-        pageSize: this.pageSize,
-        appId: 0
+        // pageNum: this.current_page,
+        // pageSize: this.pageSize,
+        type: this.tabPosition
       }
       this.requiredParams(query_data)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
-      const res = await $api.getDepositList(query_data)
+      const res = await $api.apiGetDebtStatisticsInfo(query_data)
       if (res) {
         const { records, total, current, pages } = res.data.data
         this.total = total
@@ -300,6 +294,27 @@ export default {
         this.dataList = records
       }
       this.listLoading = false
+    },
+
+    // getlist
+    async getInfo() {
+      if (this.infoLoading) return
+      const query_data = {
+        type: this.tabPosition
+      }
+      this.requiredParams(query_data)
+      Object.assign(query_data, this.search_params_obj)
+      this.infoLoading = true
+      const res = await $api.apiGetDebtStatisticsInfo(query_data)
+      if (res) {
+        const { records, total, current, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
+        this.list = records
+        this.dataList = records
+      }
+      this.infoLoading = false
     },
 
     formatTime(val) {
@@ -341,7 +356,8 @@ export default {
       this.searchCofig[1]['list'] = this.$store.state.common.coinlist
     })
 
-    this.getList()
+    // this.getList()
+    this.getInfo()
   }
 }
 </script>

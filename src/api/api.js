@@ -3534,6 +3534,35 @@ export default class api {
     return Fetch.post('/forex/admin/queryUserAuth', data)
   }
 
+  // 运营管理 - 运营活动 获取列表
+  static apiGetActivityPhaseTwoLists(data) {
+    return Fetch.post('/admin/account/activity/recharge/statistics-reward-list', data)
+  }
+
+  // 运营管理 - 运营活动 获取列表 统计
+  static apiGetActivityPhaseTwoSum(data) {
+    return Fetch.post('/admin/account/activity/recharge/statistics-reward-sum', data)
+  }
+
+  // 运营管理 - 运营活动  用户违规标记 改变
+  static apiUpdateActivityPhaseTwoViolation(data) {
+    return Fetch.post('/admin/account/activity/recharge/update-violation', data)
+  }
+
+  // 运营管理/运营活动二期 模板下载
+  static apiActivityPhaseTwoDownLoadDefaultExcel(data) {
+    return Fetch.postExcel('/admin/account/activity/recharge/reward-excel/download', data)
+  }
+
+  // 运营管理 - 运营活动 获取列表
+  static apiGetDebtStatisticsInfo(data) {
+    return Fetch.post('/account/reconciliation/statisticsInfo', data)
+  }
+
+  
+
+  
+
    
 
   

@@ -1286,184 +1286,89 @@ const activityPhaseTwoCol = [
     prop: 'uid'
   },
   {
-    label: '姓名',
-    prop: 'username'
+    label: '累计充值金额',
+    prop: 'inAmount'
   },
   {
-    label: '首日充值金额（USDT）',
+    label: '累计提币金额',
+    prop: 'outAmount'
+  },
+  {
+    label: '累计净入金',
     prop: 'netAmount'
   },
   {
-    label: '首充时间',
-    prop: 'firstRechargeTime'
-    // width: 200
-  },
-  {
-    label: '奖励数量（USDT）',
-    prop: 'reward'
-  },
-  {
-    label: '用户累计开仓交易额USDT',
+    label: '累计开仓交易额',
     prop: 'cumulativeTradeAmount'
   },
   {
-    label: '奖励到账金额USDT',
+    label: '应得奖励数量',
+    prop: 'reward'
+  },
+  {
+    label: '实际到账奖励数量',
     prop: 'rewardToAccount'
   },
   {
+    label: '实名状态',
+    prop: 'userVerifiedStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      { text: '高级待审核', val: 0, type: 'info' },
+      { text: '初级认证成功', val: 1, type: 'success' },
+      { text: '高级认证失败', val: 2, type: 'warning' },
+      { text: '未认证', val: 3, type: 'primary' },
+      { text: '高级认证成功', val: 4, type: 'success' }
+    ]
+  },
+  {
     label: '用户违规标记',
-    prop: 'isOtcDeposit',
+    prop: 'isViolation',
     type: 'switch',
     fn: 'trsignBtn',
     alias: 'trsignBtn',
     width: '150'
-  },
-]
-
-// 运营管理 -- 运营活动二期
-const activityPhaseTwoColNoBtn = [
-  {
-    label: 'UID',
-    prop: 'uid'
-  },
-  {
-    label: '姓名',
-    prop: 'username'
-  },
-  {
-    label: '首日充值金额（USDT）',
-    prop: 'netAmount'
-  },
-  {
-    label: '首充时间',
-    prop: 'firstRechargeTime'
-    // width: 200
-  },
-  {
-    label: '奖励数量（USDT）',
-    prop: 'reward'
-  },
-  {
-    label: '用户累计开仓交易额USDT',
-    prop: 'cumulativeTradeAmount'
-  },
-  {
-    label: '奖励到账金额USDT',
-    prop: 'rewardToAccount'
-  },
-  {
-    label: '用户违规标记',
-    prop: 'rewardToAccount',
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '是', val: 1 }, { text: '否', val: 0 }]
-  },
+  }
 ]
 
 // 运营管理 -- 运营活动二期  搜索
 const activityPhaseTwoConfig = [
   {
-    type: 'date_rank',
-    label: '时间',
-    prop: 'startTime',
-    prop2: 'endTime',
-    value: ''
-  },
-  {
-    type: 'text',
+    type: 'onlyNumber',
     label: 'UID',
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    subType: 'uid'
   },
   {
     type: 'select',
-    label: '奖励数量',
-    prop: 'reward',
+    label: '用户违规标记',
+    prop: 'isViolation',
     value: '',
-    multiple: true,
     list: [
-      {
-        label: 10,
-        value: 10
-      },
-      {
-        label: 30,
-        value: 30
-      },
-      {
-        label: 50,
-        value: 50
-      },
-      {
-        label: 100,
-        value: 100
-      },
-      {
-        label: 300,
-        value: 300
-      },
-      {
-        label: 500,
-        value: 500
-      },
-      {
-        label: 1000,
-        value: 1000
-      },
-      {
-        label: 2000,
-        value: 2000
-      }
+      { label: '全部', value: '' },
+      { label: '是', value: true },
+      { label: '否', value: false },
     ]
   },
   {
     type: 'select',
-    label: '到账奖励数量',
-    prop: 'rewardToAccount',
+    label: '实名状态',
+    prop: 'userVerifiedStatus',
     value: '',
-    multiple: true,
     list: [
-      {
-        label: 10,
-        value: 10
-      },
-      {
-        label: 30,
-        value: 30
-      },
-      {
-        label: 50,
-        value: 50
-      },
-      {
-        label: 100,
-        value: 100
-      },
-      {
-        label: 300,
-        value: 300
-      },
-      {
-        label: 500,
-        value: 500
-      },
-      {
-        label: 1000,
-        value: 1000
-      },
-      {
-        label: 2000,
-        value: 2000
-      }
+      { label: '未认证', value: 3 },
+      { label: '初级认证成功', value: 1 },
+      { label: '高级待审核', value: 0 },
+      { label: '高级认证失败', value: 2 },
+      { label: '高级认证成功', value: 4 }
     ]
   }
 ]
 
 export {
   activityPhaseTwoCol,
-  activityPhaseTwoColNoBtn,
   activityPhaseTwoConfig,
   msgSendRecordCol,
   msgSendRecordColNoBtn,
