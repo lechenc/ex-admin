@@ -66,7 +66,7 @@
                     v-for="(value, key) in listTypeObj"
                     :key="key"
                     :label="value"
-                    :value="key"
+                    :value="value"
                   >
                   </el-option>
                 </el-select>
@@ -183,13 +183,13 @@ export default {
           }
         ],
 
-        remark: [
-          {
-            required: true,
-            message: '必填',
-            trigger: 'blur'
-          }
-        ]
+        // remark: [
+        //   {
+        //     required: true,
+        //     message: '必填',
+        //     trigger: 'blur'
+        //   }
+        // ]
       },
       listTypeObj: {
         1: '白名单',
@@ -292,9 +292,10 @@ export default {
             const query_data = {
               id
             }
-            Fetch.post('/user/filter/ip/delete' + '/' + id, query_data)
-            this.$message.success('删除成功')
-            this.getList()
+            Fetch.post('/user/filter/ip/delete' + '/' + id, query_data).then(() => {
+              this.$message.success('删除成功')
+              this.getList()
+            })
           })
           .catch(() => {
             this.getList()
@@ -311,9 +312,10 @@ export default {
           const query_data = {
             id: id
           }
-          Fetch.post('/user/feature/status' + '/' + id, query_data)
-          this.$message.success('切换成功')
-          this.getListBtn()
+          Fetch.post('/user/feature/status' + '/' + id, query_data).then(() => {
+            this.$message.success('切换成功')
+            this.getListBtn()
+          })
         })
         .catch(() => {
           this.getListBtn()
