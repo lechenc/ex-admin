@@ -3564,6 +3564,38 @@ export default class api {
     return Fetch.post('/account/reconciliation/statistics', data)
   }
 
+  // 系统管理/IP地址管理 列表
+  static apiGetIpAddressLists(data) {
+    return Fetch.post('/user/filter/ip/query', data)
+  }
+
+  // 系统管理/IP地址管理 获取上方按钮
+  static apiGetIpAddressListBtn(data) {
+    return Fetch.post('/user/feature/query', data)
+  }
+
+  // 系统管理/IP地址管理 改变上方按钮状态
+  static apiEditIpAddressListBtn(data) {
+    return Fetch.post('/user/feature/status', data)
+  }
+
+   // 系统管理/IP地址管理 添加ip
+   static apiAddIpAddressListLists(data) {
+    return Fetch.post('/user/filter/ip/create', data)
+  }
+
+  // 系统管理/IP地址管理 编辑ip
+  static apiEditIpAddressListLists(data) {
+    return Fetch.post('/user/filter/ip/update', data)
+  }
+
+  // 系统管理/IP地址管理 删除ip
+  static apiDelIpAddressListLists(data) {
+    return Fetch.post('/user/filter/ip/delete', data)
+  }
+
+  
+
   
 
   

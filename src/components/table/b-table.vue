@@ -46,7 +46,7 @@
         <template slot="header">
           <div>
             <span>{{ config.label }}</span>
-            <el-button :type="config.text || 'text'" @click="headerBtnFn($event,config.btnFn)">{{
+            <el-button :type="config.text || 'text'" @click="headerBtnFn($event, config.btnFn)">{{
               config.btnLabel
             }}</el-button>
           </div>
@@ -661,6 +661,24 @@
         </template>
       </el-table-column>
 
+      <!-- 开关 -->
+      <el-table-column
+        v-if="config.type === 'filter_switch' && actionShow"
+        :key="config.prop"
+        :label="config.label"
+        :width="config.width ? config.width : ''"
+      >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row[config.prop]"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :disabled="config.filter_key ? scope.row[config.filter_key] == config.filter_status : false"
+            @change="doHandle($event, scope.row, config.fn)"
+          />
+        </template>
+      </el-table-column>
+
       <!-- 开关  特定情况下显示-->
       <el-table-column
         v-if="config.type === 'switchIndexOf' && actionShow"
@@ -1120,10 +1138,10 @@ export default {
       this.$emit('do-handle', obj)
     },
     headerBtnFn(e, fn) {
-       const obj = {
+      const obj = {
         fn: fn
       }
-      this.$emit('headerBtnFn',obj)
+      this.$emit('headerBtnFn', obj)
     },
     tableRowClassName({ row, rowIndex }) {
       // 如果行内时间是今天此行字体颜色为金色
@@ -1144,10 +1162,10 @@ export default {
       return 'default-row'
     },
     headerBtnFn(e, fn) {
-       const obj = {
+      const obj = {
         fn: fn
       }
-      this.$emit('headerBtnFn',obj)
+      this.$emit('headerBtnFn', obj)
     },
     // 是否有某些值
     getHave(val, typeValue) {
@@ -1197,7 +1215,7 @@ export default {
         this.$store.dispatch('app/setViewerVideo', url)
       }
     },
-    
+
     // （"非操作列"行内）按钮操作
     doHandleLine(e, item, fn, curData) {
       const obj = {

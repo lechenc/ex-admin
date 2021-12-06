@@ -631,7 +631,14 @@ export const asyncRouterMap = [
         name: 'StructureTree',
         component: () => import('@/views/system/structureTree'),
         meta: { title: '结构架构树', icon: '', role: [] }
-      }
+      },
+
+      {
+        path: 'ipAddress',
+        name: 'IpAddress',
+        component: () => import('@/views/system/ipAddress'),
+        meta: { title: 'IP地址管理', icon: '', role: [] }
+      },
     ]
   },
   // app管理

@@ -44,22 +44,24 @@
       </el-radio-group>
 
       <el-row :span="24" :gutter="10">
-        <el-col class="detail-item" :span="8" v-for="(itm, index) in innerFooterArr" :key="index">
-          <el-card v-if="itm.list.length" :body-style="{ minHeight: '350px' }" shadow="always">
-            <div slot="header" class="item-title">
-              <span>{{ itm.title }}</span>
-              <span>期初金额</span>
-              <span>期末金额</span>
-            </div>
-            <div class="item-content">
-              <p v-for="(item, idx) in itm.list" :key="idx" class="content-item">
-                <span style="width: 120px">{{ accountTypeObj[item.accountType] }}</span>
-                <span>{{ item.initialAsset }}</span>
-                <span>{{ item.afterAsset }}</span>
-              </p>
-            </div>
-          </el-card>
-        </el-col>
+        <template v-for="(itm, index) in innerFooterArr">
+          <el-col class="detail-item" :span="8" :key="index" v-if="itm.list.length">
+            <el-card :body-style="{ minHeight: '350px' }" shadow="always">
+              <div slot="header" class="item-title">
+                <span>{{ itm.title }}</span>
+                <span>期初金额</span>
+                <span>期末金额</span>
+              </div>
+              <div class="item-content">
+                <p v-for="(item, idx) in itm.list" :key="idx" class="content-item">
+                  <span style="width: 120px">{{ accountTypeObj[item.accountType] }}</span>
+                  <span>{{ item.initialAsset }}</span>
+                  <span>{{ item.afterAsset }}</span>
+                </p>
+              </div>
+            </el-card>
+          </el-col>
+        </template>
       </el-row>
     </div>
   </div>
@@ -99,6 +101,7 @@ export default {
       btnArr: [],
       innerTopArr: [
         // 统计数组
+
         {
           title: '交易所资产 (钱包)',
           prop: 'afterWallet',
@@ -134,11 +137,12 @@ export default {
           prop: 'onlyInGold'
         }
       ],
-      topObj: {},
+      topObj: {}, // 统计部分对象
       tabPosition: -1,
       infoLoading: false,
-      innerFooterArr: [],
+      innerFooterArr: [], // 详细部分数组
       accountTypeObj: {
+        // 账号类型
         1: '普通用户',
         2: '平台商户账户',
         3: 'CPT用户',

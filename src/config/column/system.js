@@ -10,23 +10,23 @@
 const roleCol = [
   {
     label: '角色名称',
-    prop: 'name',
+    prop: 'name'
   },
   {
     label: '用户数',
-    prop: 'userNumber',
+    prop: 'userNumber'
   },
   {
     label: '添加时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '角色权限开关',
     prop: 'status',
     type: 'switch',
     fn: 'switchCoin',
-    alias: 'trroleauth',
+    alias: 'trroleauth'
   },
   {
     label: '操作',
@@ -37,48 +37,48 @@ const roleCol = [
         label: '修改/授权',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '删除',
         fn: 'delete',
         type: 'danger',
-        alias: 'del',
-      },
-    ],
-  },
-];
+        alias: 'del'
+      }
+    ]
+  }
+]
 
 const roleColNoBtn = [
   {
     label: '角色名称',
-    prop: 'name',
+    prop: 'name'
   },
   {
     label: '用户数',
-    prop: 'userNumber',
+    prop: 'userNumber'
   },
   {
     label: '添加时间',
     prop: 'createTime',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 //  账号管理
 const accountCol = [
   {
     label: '账号',
-    prop: 'account',
+    prop: 'account'
   },
   {
     label: '角色',
-    prop: 'roleName',
+    prop: 'roleName'
   },
   {
     label: '添加时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '账号状态',
@@ -86,7 +86,7 @@ const accountCol = [
     type: 'filter',
     show_type: 'text',
     width: '120',
-    filters: [{ text: '开启', val: 1 },{ text: '关闭', val: 0 }, ],
+    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }]
   },
   // 隐藏，统一放在编辑页面来操作，因为为了安全必须需要有谷歌验证码才能修改用户信息
   // {
@@ -105,31 +105,31 @@ const accountCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '删除',
         fn: 'delete',
         type: 'danger',
-        alias: 'del',
-      },
-    ],
-  },
-];
+        alias: 'del'
+      }
+    ]
+  }
+]
 
 const accountColNoBtn = [
   {
     label: '账号',
-    prop: 'account',
+    prop: 'account'
   },
   {
     label: '角色',
-    prop: 'roleName',
+    prop: 'roleName'
   },
   {
     label: '添加时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '账号状态',
@@ -137,8 +137,8 @@ const accountColNoBtn = [
     type: 'filter',
     show_type: 'text',
     width: '120',
-    filters: [{ text: '开启', val: 1 },{ text: '关闭', val: 0 }, ],
-  },
+    filters: [{ text: '开启', val: 1 }, { text: '关闭', val: 0 }]
+  }
   // 隐藏，统一放在编辑页面来操作，因为为了安全必须需要有谷歌验证码才能修改用户信息
   // {
   //   label: '账号状态',
@@ -146,7 +146,7 @@ const accountColNoBtn = [
   //   type: 'switch',
   //   fn: 'switchCoin'
   // },
-];
+]
 
 const accountConfig = [
   {
@@ -154,9 +154,9 @@ const accountConfig = [
     label: '账号',
     prop: 'account',
     value: '',
-    placeHolder: '请输入账号',
-  },
-];
+    placeHolder: '请输入账号'
+  }
+]
 
 // 修改密码
 const pwdCol = [
@@ -169,12 +169,12 @@ const pwdCol = [
         label: '修改',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
-      },
-    ],
-  },
-];
-const pwdNoBtn = [];
+        alias: 'edit'
+      }
+    ]
+  }
+]
+const pwdNoBtn = []
 
 // 修改谷歌验证码
 const gcodeCol = [
@@ -187,39 +187,39 @@ const gcodeCol = [
         label: '修改',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
-      },
-    ],
-  },
-];
-const gcodeNoBtn = [];
+        alias: 'edit'
+      }
+    ]
+  }
+]
+const gcodeNoBtn = []
 
 // 操作日志 表格项
 const logCol = [
   {
     label: '操作人员',
-    prop: 'account',
+    prop: 'account'
   },
   {
     label: '角色',
-    prop: 'roleName',
+    prop: 'roleName'
   },
   {
     label: '内容',
-    prop: 'content',
+    prop: 'content'
   },
   {
     label: '请求地址',
-    prop: 'requestAddress',
+    prop: 'requestAddress'
   },
   {
     label: 'IP',
-    prop: 'userIp',
+    prop: 'userIp'
   },
   {
     label: '时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '操作',
@@ -230,11 +230,11 @@ const logCol = [
         label: '详情',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
-      },
-    ],
-  },
-];
+        alias: 'detail'
+      }
+    ]
+  }
+]
 
 // 操作日志 搜索栏
 const logConfig = [
@@ -243,45 +243,45 @@ const logConfig = [
     label: '时间',
     prop: 'startTime',
     prop2: 'endTime',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '账号',
     prop: 'account',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '角色',
     prop: 'roleName',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '内容',
     prop: 'content',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '请求地址',
     prop: 'requestAddress',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: 'IP',
     prop: 'userIp',
-    value: '',
-  },
-];
+    value: ''
+  }
+]
 
 // 路径配置 表格项
 const configPathCol = [
   {
     label: '路径名称',
-    prop: 'name',
+    prop: 'name'
   },
   // {
   //   label: "路径ID",
@@ -289,7 +289,7 @@ const configPathCol = [
   // },
   {
     label: '请求路径',
-    prop: 'requestUrl',
+    prop: 'requestUrl'
   },
   {
     label: '操作',
@@ -301,23 +301,23 @@ const configPathCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'primary',
+        alias: 'primary'
       },
       {
         label: '删除',
         fn: 'del',
         type: 'danger',
-        alias: 'del',
-      },
-    ],
-  },
-];
+        alias: 'del'
+      }
+    ]
+  }
+]
 
 // 路径配置 表格项
 const configPathColNoBtn = [
   {
     label: '路径名称',
-    prop: 'name',
+    prop: 'name'
   },
   // {
   //   label: "路径ID",
@@ -325,9 +325,9 @@ const configPathColNoBtn = [
   // },
   {
     label: '请求路径',
-    prop: 'requestUrl',
-  },
-];
+    prop: 'requestUrl'
+  }
+]
 
 // 路径配置 搜索栏
 const configPathConfig = [
@@ -335,41 +335,41 @@ const configPathConfig = [
     type: 'text',
     label: '路径名称',
     prop: 'name',
-    value: '',
+    value: ''
   },
   {
     type: 'text',
     label: '请求路径',
     prop: 'requestUrl',
-    value: '',
-  },
-];
+    value: ''
+  }
+]
 
 //域名管理
 const domainNameCol = [
   {
     label: '域名地址',
-    prop: 'domainName',
+    prop: 'domainName'
   },
   {
     label: '排序',
-    prop: 'sort',
+    prop: 'sort'
   },
   {
     label: '是否默认',
     prop: 'isDefault',
     type: 'switch',
     fn: 'trDefault',
-    alias: 'trDefault',
+    alias: 'trDefault'
   },
   {
     label: '备注',
-    prop: 'remark',
+    prop: 'remark'
   },
   {
     label: '创建时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '操作',
@@ -381,70 +381,70 @@ const domainNameCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '详情',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
+        alias: 'detail'
       },
       {
         label: '删除',
         fn: 'del',
         type: 'danger',
-        alias: 'del',
-      },
-    ],
-  },
-];
+        alias: 'del'
+      }
+    ]
+  }
+]
 
 //域名管理
 const domainNameColNoBtn = [
   {
     label: '域名地址',
-    prop: 'domainName',
+    prop: 'domainName'
   },
   {
     label: '排序',
-    prop: 'sort',
+    prop: 'sort'
   },
   {
     label: '备注',
-    prop: 'remark',
+    prop: 'remark'
   },
   {
     label: '创建时间',
     prop: 'createTime',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 //固定域名管理
 const domainNameFixedCol = [
   {
     label: '固定域名地址',
-    prop: 'domainName',
+    prop: 'domainName'
   },
   {
     label: '排序',
-    prop: 'sort',
+    prop: 'sort'
   },
   {
     label: '是否默认',
     prop: 'isDefault',
     type: 'switch',
     fn: 'trDefault',
-    alias: 'trDefault',
+    alias: 'trDefault'
   },
   {
     label: '备注',
-    prop: 'remark',
+    prop: 'remark'
   },
   {
     label: '创建时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '操作',
@@ -456,58 +456,58 @@ const domainNameFixedCol = [
         label: '编辑',
         fn: 'edit',
         type: 'primary',
-        alias: 'edit',
+        alias: 'edit'
       },
       {
         label: '详情',
         fn: 'detail',
         type: 'primary',
-        alias: 'detail',
+        alias: 'detail'
       },
       {
         label: '删除',
         fn: 'del',
         type: 'danger',
-        alias: 'del',
-      },
-    ],
-  },
-];
+        alias: 'del'
+      }
+    ]
+  }
+]
 
 //固定域名管理
 const domainNameFixedColNoBtn = [
   {
     label: '固定域名地址',
-    prop: 'domainName',
+    prop: 'domainName'
   },
   {
     label: '排序',
-    prop: 'sort',
+    prop: 'sort'
   },
   {
     label: '备注',
-    prop: 'remark',
+    prop: 'remark'
   },
   {
     label: '创建时间',
     prop: 'createTime',
-    type: 'time',
-  },
-];
+    type: 'time'
+  }
+]
 
 // 集团管理
 const peopleManagementCol = [
   {
     label: '账号',
-    prop: 'account',
+    prop: 'account'
   },
   {
     label: '职务',
-    prop: 'jobName',
+    prop: 'jobName'
   },
   {
     label: '部门',
-    prop: 'deptName',
+    prop: 'deptName'
   },
   {
     label: '级别',
@@ -515,29 +515,29 @@ const peopleManagementCol = [
     type: 'filter',
     show_type: 'textColorLine',
     width: '120',
-    filters: [{ text: '普通成员', val: 0 }, { text: '部门负责人', val: 1 }],
+    filters: [{ text: '普通成员', val: 0 }, { text: '部门负责人', val: 1 }]
   },
   {
     label: '备注',
-    prop: 'name',
+    prop: 'name'
   },
 
   {
     label: '添加时间',
     prop: 'createTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '更新时间',
     prop: 'updateTime',
-    type: 'time',
+    type: 'time'
   },
   {
     label: '可用状态',
     prop: 'status',
     type: 'switch',
     fn: 'switch',
-    alias: 'trswitch',
+    alias: 'trswitch'
   },
   {
     label: '操作',
@@ -545,21 +545,19 @@ const peopleManagementCol = [
     prop: 'action',
     type: 'action',
     btnGroup: [
-      
       {
         label: '编辑',
         fn: 'edit',
-        type: 'primary',
+        type: 'primary'
       },
       {
         label: '删除',
         fn: 'del',
-        type: 'primary',
-      },
-    ],
-  },
-];
-
+        type: 'primary'
+      }
+    ]
+  }
+]
 
 const peopleManagementConfig = [
   {
@@ -567,8 +565,138 @@ const peopleManagementConfig = [
     label: '搜索部门',
     prop: 'name',
     value: '',
-    width: '350px',
-  },
-];
+    width: '350px'
+  }
+]
 
-export {domainNameFixedCol,domainNameFixedColNoBtn, peopleManagementCol, peopleManagementConfig, domainNameCol, domainNameColNoBtn, logCol, logConfig, roleCol, roleColNoBtn, accountCol, accountColNoBtn, accountConfig, pwdCol, pwdNoBtn, gcodeCol, gcodeNoBtn, configPathCol, configPathColNoBtn, configPathConfig };
+// 系统管理/IP地址管理
+const ipAddressCol = [
+  {
+    label: 'IP地址',
+    prop: 'ip'
+  },
+
+  {
+    label: '名单类型',
+    prop: 'type',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '白名单', val: 1 }, { text: '黑名单', val: 2 }]
+  },
+
+  {
+    label: '启用/禁用',
+    prop: 'enable',
+    type: 'filter_switch',
+    fn: 'trable',
+    alias: 'trable',
+    width: '150',
+    filter_key: 'property', // property值 为1时禁用
+    filter_status: 1
+  },
+
+  {
+    label: 'IP类型',
+    prop: 'property',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '内部', val: 1 }, { text: '外部', val: 2 }]
+  },
+
+  {
+    label: '备注',
+    prop: 'remark'
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 240,
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit',
+        // property值  除了1显示
+        filter_type: 'arrayExcept',
+        filter_key: 'property',
+        filter_status: ['1']
+      },
+
+      {
+        label: '删除',
+        fn: 'delete',
+        type: 'danger',
+        alias: 'delete',
+        // property值  除了1显示
+        filter_type: 'arrayExcept',
+        filter_key: 'property',
+        filter_status: ['1']
+      }
+    ]
+  }
+]
+
+// 系统管理/IP地址管理
+const ipAddressColNoBtn = [
+  {
+    label: 'IP地址',
+    prop: 'ip'
+  },
+
+  {
+    label: '名单类型',
+    prop: 'type',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '白名单', val: 1 }, { text: '黑名单', val: 2 }]
+  },
+
+  {
+    label: '启用/禁用',
+    prop: 'enable',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '启用', val: true }, { text: '禁用', val: false }]
+  },
+
+  {
+    label: 'IP类型',
+    prop: 'type',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '内部', val: 1 }, { text: '外部', val: 2 }]
+  },
+
+  {
+    label: '备注',
+    prop: 'remark'
+  }
+]
+
+export {
+  ipAddressCol,
+  ipAddressColNoBtn,
+  domainNameFixedCol,
+  domainNameFixedColNoBtn,
+  peopleManagementCol,
+  peopleManagementConfig,
+  domainNameCol,
+  domainNameColNoBtn,
+  logCol,
+  logConfig,
+  roleCol,
+  roleColNoBtn,
+  accountCol,
+  accountColNoBtn,
+  accountConfig,
+  pwdCol,
+  pwdNoBtn,
+  gcodeCol,
+  gcodeNoBtn,
+  configPathCol,
+  configPathColNoBtn,
+  configPathConfig
+}
