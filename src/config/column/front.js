@@ -1340,6 +1340,8 @@ const activityPhaseTwoConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
+    lengthLimited: 'uid',// 长度限制
+    digits:'9' // 长度限制
   },
   {
     type: 'select',

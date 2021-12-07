@@ -98,6 +98,17 @@
             <div v-if="config.type === 'onlyNumber'">
               <div>{{ config.label }}</div>
               <el-input
+                v-if="config.lengthLimited"
+                :maxlength="config.digits ? config.digits : 9"
+                v-model="config.value"
+                class="text-input"
+                type="text"
+                :placeholder="config.placeholder || '请输入内容'"
+                :size="sizeDiy"
+                @input="config.value = config.value.replace(/[^\d]/g, '')"
+              />
+              <el-input
+                v-else
                 v-model="config.value"
                 class="text-input"
                 type="text"
@@ -184,7 +195,9 @@
             </div>
 
             <!-- 日期选择 pc端或者横屏用这个  带秒数的 -->
-            <div v-if="config.type === 'date_rank_sec' && (isDeskTop || (!isDeskTop && isOrientation))">
+            <div
+              v-if="config.type === 'date_rank_sec' && (isDeskTop || (!isDeskTop && isOrientation))"
+            >
               <div>{{ config.label }}</div>
               <template>
                 <div class="block">
@@ -204,7 +217,6 @@
                 </div>
               </template>
             </div>
-
 
             <!-- 日期选择 移动端并且竖屏用这个 -->
             <div
@@ -392,7 +404,11 @@
               导出Excel<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="exportExcelCurrentPageIsShow" @click.native.stop="doExportExcel(0)">当前页</el-dropdown-item>
+              <el-dropdown-item
+                v-if="exportExcelCurrentPageIsShow"
+                @click.native.stop="doExportExcel(0)"
+                >当前页</el-dropdown-item
+              >
               <el-dropdown-item @click.native.stop="doExportExcel(1)">
                 当前查询条件
               </el-dropdown-item>
@@ -468,7 +484,6 @@ export default {
       default: false
     },
 
-
     statistics: {
       type: Boolean,
       default: false
@@ -496,9 +511,7 @@ export default {
     exportExcelCurrentPageIsShow: {
       type: Boolean,
       default: true
-    },
-
-
+    }
   },
   data() {
     return {
@@ -540,7 +553,7 @@ export default {
       document.activeElement.blur()
       this.$nextTick(() => {
         const inputTime = document.querySelectorAll('.el-date-editor .el-range-input')
-        inputTime.forEach(item => {
+        inputTime.forEach((item) => {
           item.addEventListener('focus', () => {
             document.activeElement.blur()
           })
