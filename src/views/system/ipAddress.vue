@@ -181,7 +181,7 @@ export default {
             message: '必选',
             trigger: 'blur'
           }
-        ],
+        ]
 
         // remark: [
         //   {
@@ -292,10 +292,14 @@ export default {
             const query_data = {
               id
             }
-            Fetch.post('/user/filter/ip/delete' + '/' + id, query_data).then(() => {
+            const res = await Fetch.post('/user/filter/ip/delete' + '/' + id, query_data)
+            if (res.data.code === 1) {
               this.$message.success('删除成功')
-              this.getList()
-            })
+            } else {
+              this.$message.error(res.data.message)
+            }
+
+            this.getList()
           })
           .catch(() => {
             this.getList()
@@ -308,14 +312,18 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(() => {
+        .then(async () => {
           const query_data = {
             id: id
           }
-          Fetch.post('/user/feature/status' + '/' + id, query_data).then(() => {
+          const res = await Fetch.post('/user/feature/status' + '/' + id, query_data)
+
+          if (res.data.code === 1) {
             this.$message.success('切换成功')
-            this.getListBtn()
-          })
+          } else {
+            this.$message.error(res.data.message)
+          }
+          this.getListBtn()
         })
         .catch(() => {
           this.getListBtn()
