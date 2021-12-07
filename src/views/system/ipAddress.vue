@@ -66,7 +66,7 @@
                     v-for="(value, key) in listTypeObj"
                     :key="key"
                     :label="value"
-                    :value="value"
+                    :value="key"
                   >
                   </el-option>
                 </el-select>
