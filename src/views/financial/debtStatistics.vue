@@ -364,6 +364,7 @@ export default {
             margin-bottom: 15px;
             color: #409eff;
             font-size: 30px;
+            word-wrap: break-word;
           }
           .item-beginning {
             font-size: 16px;
