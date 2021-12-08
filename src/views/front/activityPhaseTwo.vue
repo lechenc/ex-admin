@@ -200,7 +200,7 @@ export default {
           isViolation: row.isViolation,
           id: row.id
         }
-        const res = $api.apiUpdateActivityPhaseTwoViolation(params)
+        const res = await $api.apiUpdateActivityPhaseTwoViolation(params)
         if (res) {
           this.$message.success('状态切换成功')
         }
