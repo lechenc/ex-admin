@@ -38,9 +38,9 @@
     <div class="container-detail">
       <el-radio-group style="margin-bottom: 17px" @change="tabPositionChange" v-model="tabPosition">
         <el-radio-button :label="-1">账户</el-radio-button>
-        <el-radio-button :label="0">币币</el-radio-button>
-        <el-radio-button :label="1">法币</el-radio-button>
-        <el-radio-button :label="2">合约</el-radio-button>
+        <el-radio-button :label="1">币币</el-radio-button>
+        <el-radio-button :label="2">法币</el-radio-button>
+        <el-radio-button :label="0">合约</el-radio-button>
       </el-radio-group>
 
       <el-row :span="24" :gutter="10">
