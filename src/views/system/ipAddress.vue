@@ -63,10 +63,10 @@
               <template>
                 <el-select v-model="cForm.type" placeholder="请选择">
                   <el-option
-                    v-for="(value, key) in listTypeObj"
-                    :key="key"
-                    :label="value"
-                    :value="key"
+                    v-for="item in listTypeArr"
+                    :label="item.label"
+                    :value="item.value"
+                    :key="item.value"
                   >
                   </el-option>
                 </el-select>
@@ -191,10 +191,10 @@ export default {
         //   }
         // ]
       },
-      listTypeObj: {
-        1: '白名单',
-        2: '黑名单'
-      },
+      listTypeArr: [
+        { label: '白名单', value: 1 },
+        { label: '黑名单', value: 2 }
+      ],
       ipTypeArr: [
         { label: '外部', value: 2 },
         { label: '内部', value: 1 }
@@ -229,6 +229,7 @@ export default {
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data
+      console.log('row', row)
       // 编辑
       if (fn === 'edit') {
         this.formName = '编辑IP地址'
@@ -249,15 +250,11 @@ export default {
 
       if (fn === 'trable') {
         const { id, enable, ip, type, property, remark } = row
-        this.$confirm(
-          `确定${enable ? '开启' : '关闭'}此${this.listTypeObj[type]}权限吗？`,
-          '温馨提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }
-        )
+        this.$confirm(`确定${enable ? '开启' : '关闭'}此权限吗？`, '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
           .then(async () => {
             const query_data = {
               id,
@@ -282,8 +279,8 @@ export default {
 
       // 编辑
       if (fn === 'delete') {
-        const { id, type } = row
-        this.$confirm(`确定删除此${this.listTypeObj[type]}权限吗？`, '温馨提示', {
+        const { id } = row
+        this.$confirm(`确定删除此权限吗？`, '温馨提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

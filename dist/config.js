@@ -9,8 +9,13 @@
 // window.SERVER_PATH = 'http://192.168.0.241/api'; // 开发接口地
 window.SERVER_PATH = 'https://exchange-admin-test.alphatest.vip/api' // 测试接口地址.
 
+// // 开发接口地址.
+// if (/241|localhost/.test(window.location.href)) {
+//   window.SERVER_PATH = 'http://192.168.0.241/api' 
+// }
+
 // 开发接口地址.
-if (/241|localhost/.test(window.location.href)) {
+if (/241/.test(window.location.href)) {
   window.SERVER_PATH = 'http://192.168.0.241/api' 
 }
 
