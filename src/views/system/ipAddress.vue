@@ -193,7 +193,7 @@ export default {
       },
       listTypeArr: [
         { label: '白名单', value: 1 },
-        { label: '黑名单', value: 2 }
+        // { label: '黑名单', value: 2 }
       ],
       ipTypeArr: [
         { label: '外部', value: 2 },
@@ -434,7 +434,11 @@ export default {
         list.forEach((v) => {
           v.enable = v.enable == 1 ? true : false
         })
+        list = list.filter((v)=>{
+          return v.feature != 'FILTER_BLACK_IP'
+        })
         this.listBtnArr = list
+
       }
     },
 

@@ -3095,7 +3095,7 @@ const debtStatisticsConfig = [
     type: 'select',
     label: '币种',
     prop: 'coinId',
-    value: '',
+    value: 4,
     list: []
   },
 ]

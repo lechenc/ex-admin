@@ -330,7 +330,8 @@ export default {
     this.$store.dispatch('common/getCoinList').then(() => {
       this.searchCofig[1]['list'] = this.$store.state.common.coinlist
     })
-    this.requiredParams({})
+
+    this.getList()
   }
 }
 </script>
