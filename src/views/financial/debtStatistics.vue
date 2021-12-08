@@ -24,10 +24,10 @@
 
             <div class="item-content">
               <p class="item-number">
-                {{ topObj[item.prop] }}
+                {{ topObj[item.prop]  | getDigits}}
               </p>
               <p class="item-beginning" v-show="item.beginningTitle">
-                {{ item.beginningTitle }} {{ topObj[item.beginningProp] || 0 }}
+                {{ item.beginningTitle }} {{ topObj[item.beginningProp] || 0 | getDigits }}
               </p>
             </div>
           </el-card>
@@ -55,8 +55,8 @@
               <div class="item-content">
                 <p v-for="(item, idx) in itm.list" :key="idx" class="content-item">
                   <span style="width: 120px">{{ accountTypeObj[item.accountType] }}</span>
-                  <span>{{ item.initialAsset }}</span>
-                  <span>{{ item.afterAsset }}</span>
+                  <span>{{ item.initialAsset | getDigits }}</span>
+                  <span>{{ item.afterAsset  | getDigits}}</span>
                 </p>
               </div>
             </el-card>
@@ -160,6 +160,18 @@ export default {
         15: '热钱包'
       }
     }
+  },
+
+  filters: {
+    // 保留8位小数
+   getDigits(val) {
+     
+      if (!val) {
+        return '0.00000000'
+      } else {
+        return val.toFixed('8')
+      }
+    },
   },
 
   methods: {
