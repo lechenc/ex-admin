@@ -229,7 +229,6 @@ export default {
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data
-      console.log('row', row)
       // 编辑
       if (fn === 'edit') {
         this.formName = '编辑IP地址'
