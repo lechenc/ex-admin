@@ -24,7 +24,7 @@
 
             <div class="item-content">
               <p class="item-number">
-                {{ topObj[item.prop]  | getDigits}}
+                {{ topObj[item.prop] | getDigits }}
               </p>
               <p class="item-beginning" v-show="item.beginningTitle">
                 {{ item.beginningTitle }} {{ topObj[item.beginningProp] || 0 | getDigits }}
@@ -46,7 +46,7 @@
       <el-row :span="24" :gutter="10">
         <template v-for="(itm, index) in innerFooterArr">
           <el-col class="detail-item" :span="8" :key="index" v-if="itm.list.length">
-            <el-card :body-style="{ minHeight: '350px' }" shadow="always">
+            <el-card :body-style="{ minHeight: '420px' }" shadow="always">
               <div slot="header" class="item-title">
                 <span>{{ itm.title }}</span>
                 <span>期初金额</span>
@@ -56,7 +56,7 @@
                 <p v-for="(item, idx) in itm.list" :key="idx" class="content-item">
                   <span style="width: 120px">{{ accountTypeObj[item.accountType] }}</span>
                   <span>{{ item.initialAsset | getDigits }}</span>
-                  <span>{{ item.afterAsset  | getDigits}}</span>
+                  <span>{{ item.afterAsset | getDigits }}</span>
                 </p>
               </div>
             </el-card>
@@ -164,14 +164,13 @@ export default {
 
   filters: {
     // 保留8位小数
-   getDigits(val) {
-     
+    getDigits(val) {
       if (!val) {
         return '0.00000000'
       } else {
         return val.toFixed('8')
       }
-    },
+    }
   },
 
   methods: {
@@ -203,6 +202,7 @@ export default {
       }
     },
     doSearch(data) {
+    
       this.current_page = 1
       this.search_params_obj = data
       this.getList()
@@ -217,9 +217,10 @@ export default {
         this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
         this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
       ]
+
+      this.searchCofig[1].value = 4
       this.tabPosition = -1
-      this.getList()
-      this.getInfo()
+      this.$refs.Bsearch.doSearch()
     },
 
     // 页容变化
@@ -247,6 +248,7 @@ export default {
       this.listLoading = true
       const res = await $api.apiGetDebtStatisticsLists(query_data)
       if (res) {
+        
         // const { records, total, current, pages } = res.data.data
         // this.total = total
         // this.pages = pages
@@ -273,19 +275,19 @@ export default {
         this.innerFooterArr = [
           {
             title: '异常数据',
-            list: illegalityList
+            list: illegalityList || []
           },
           {
             title: '负债 (收益账户)',
-            list: liabilitiesList
+            list: liabilitiesList || []
           },
           {
             title: '收益 (收益账户)',
-            list: profitList
+            list: profitList || []
           },
           {
             title: '资产 (钱包资产)',
-            list: walletList
+            list: walletList || []
           }
         ]
       }
@@ -330,8 +332,7 @@ export default {
     this.$store.dispatch('common/getCoinList').then(() => {
       this.searchCofig[1]['list'] = this.$store.state.common.coinlist
     })
-
-    this.getList()
+    this.requiredParams({})
   }
 }
 </script>
