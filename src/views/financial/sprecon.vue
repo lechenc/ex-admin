@@ -687,6 +687,7 @@ export default {
         this.errorList = response.data
         this.$message.error(response.message)
         this.$refs.batchUploads.clearFiles()
+        
       } else {
         this.$message.error(response.message)
         this.$refs.batchUploads.clearFiles()
