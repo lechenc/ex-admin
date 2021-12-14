@@ -323,7 +323,7 @@
               </template>
             </div>
 
-            <!-- 选择框 -->
+            <!-- 选择框改变时改变table -->
             <div v-if="config.type === 'selectChange'">
               <div>{{ config.label }}</div>
               <el-select

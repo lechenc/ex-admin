@@ -228,8 +228,8 @@
         <el-row :span="24">
           <el-col :span="24">
             <el-form-item label="格式列说明：">
-              <!-- [(账户类型) 1 = 币币， 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = -->
-              [(账户类型) 1 = 币币] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 =
+              <!-- [(账户类型) 1 = 币币，2 = 法币, 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = -->
+              [(账户类型) 1 = 币币，2 = 法币，5 = 合约] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 =
               财务工资，3 = 运营活动奖励，4 = 违规扣除]
             </el-form-item>
           </el-col>
@@ -467,7 +467,7 @@ export default {
       sumList: {},
       batchOrderForm: {},
       batchRules: {
-        transferUserId: [{ required: true, message: '必选', trigger: 'blur' }]
+        transferUserId: [{ required: true, message: '必选', trigger: 'change' }]
       }
     }
   },
@@ -686,8 +686,10 @@ export default {
       } else if (response.code == -2) {
         this.errorList = response.data
         this.$message.error(response.message)
+        this.$refs.batchUploads.clearFiles()
       } else {
         this.$message.error(response.message)
+        this.$refs.batchUploads.clearFiles()
       }
     },
     // 文件限制
@@ -1044,13 +1046,19 @@ export default {
       // 合约出入金,type=1为合约出金,type=2为合约入金
       function (newVal, oldValue) {
         if (newVal == 1) {
-          // 商务
+          // 币币
+          this.searchCofig[3]['value'] = ''
+          this.searchCofig[3].list = this.coinList
+        }
+
+        if (newVal == 2) {
+          // 合约
           this.searchCofig[3]['value'] = ''
           this.searchCofig[3].list = this.coinList
         }
 
         if (newVal == 5) {
-          // 商务
+          // 合约
           this.searchCofig[3]['value'] = ''
           this.searchCofig[3].list = this.contractCoinList
         }

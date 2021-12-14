@@ -48,7 +48,7 @@ const inOutGoldInfoConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -152,7 +152,7 @@ const coinInOutGoldConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -289,7 +289,7 @@ const fiatCoinInOutGoldConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -375,7 +375,7 @@ const contractInOutGoldConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',

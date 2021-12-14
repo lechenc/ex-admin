@@ -263,7 +263,7 @@ const transferRecordConfig = [
     placeholder: '请输入',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -704,7 +704,7 @@ const writeoffRecordConfig = [
     placeholder: '请输入',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -790,7 +790,7 @@ const runRecordConfig = [
     placeholder: '请输入',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -957,7 +957,7 @@ const manualRechargeConfig = [
     value: '',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',

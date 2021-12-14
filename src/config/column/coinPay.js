@@ -583,7 +583,7 @@ const coinFundsConfig = [
     subType: 'uid',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -979,7 +979,7 @@ const extractConfig = [
     subType: 'uid',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -1498,7 +1498,7 @@ const otcOrderConfig = [
     ],
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -1621,7 +1621,7 @@ const rechargeConfig = [
     subType: 'uid',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -1837,7 +1837,7 @@ const transferConfig = [
     placeHolder: '请输入',
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',

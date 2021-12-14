@@ -188,7 +188,7 @@ const rechargeConfig = [
     placeholder: '请输入'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -343,7 +343,7 @@ const turnoverConfig = [
     prop: 'coinId'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -689,7 +689,7 @@ const extractConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -1095,7 +1095,7 @@ const extractForeignConfig = [
     subType: 'uid'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -1266,7 +1266,7 @@ const transferConfig = [
     subType: 'uid'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -1550,7 +1550,7 @@ const spreconConfig = [
     subType: 'uid'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种/合约账户',
     prop: 'coinId',
     value: '',
@@ -1570,7 +1570,7 @@ const spreconConfig = [
     value: '',
     list: [
       { label: '币币', value: 1 },
-      //  { label: '法币', value: 2 },
+       { label: '法币', value: 2 },
       //  { label: '理财', value: 3 },
       //  { label: '币汇', value: 4 },
       { label: '合约', value: 5 }
@@ -1634,6 +1634,20 @@ const spreconErrorCol = [
   {
     label: '调账原因',
     prop: '调账原因'
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 110,
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'editError',
+        alias: 'editError',
+        type: 'primary'
+      }
+    ]
   }
 ]
 
@@ -1922,7 +1936,7 @@ const coinFundsConfig = [
     subType: 'uid'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -1935,7 +1949,7 @@ const coinFundsConfig = [
     value: ''
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '类型',
     prop: 'optType',
     value: '',
@@ -2245,7 +2259,7 @@ const lockManageConfig = [
     subType: 'uid'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -2490,7 +2504,7 @@ const unfreezeManageConfig = [
     type: 'onlyNumber'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -2917,7 +2931,7 @@ const financialStatisticsConfig = [
     list: []
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -3093,7 +3107,7 @@ const debtStatisticsConfig = [
     value: ''
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: 4,

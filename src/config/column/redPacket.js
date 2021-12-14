@@ -210,7 +210,7 @@ const redPacketListConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -321,7 +321,7 @@ const redPacketCoinNoBtn = [
 
 const redPacketCoinConfig = [
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',

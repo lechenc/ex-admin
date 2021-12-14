@@ -991,7 +991,7 @@ const payRecordListConfig = [
     value: ''
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'optType1',
     value: '',
@@ -1114,7 +1114,7 @@ const payRecordAbnormalConfig = [
     value: ''
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'optType1',
     value: '',
@@ -1428,7 +1428,7 @@ const buyListConfig = [
     list: [{ label: 'aaa', value: 1 }, { label: 'bbb', value: 2 }],
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'optType1',
     value: '',

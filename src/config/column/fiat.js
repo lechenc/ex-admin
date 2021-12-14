@@ -497,7 +497,7 @@ const advertiseRecordConfig = [
     list: [{ label: '在线出售', value: 1 }, { label: '在线求购', value: 2 }]
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -1531,7 +1531,7 @@ const otcOrderConfig = [
     ]
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -1973,7 +1973,7 @@ const otcOrderCustomerConfig = [
     ]
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -2475,7 +2475,7 @@ const transactionConfig = [
     subType: 'uid'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'auditStatus',
     value: '',
@@ -2667,7 +2667,7 @@ const fundsFlowConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',
@@ -3409,7 +3409,7 @@ const customerFlowConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
@@ -4393,7 +4393,7 @@ const commissionContractFlowConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',

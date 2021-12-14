@@ -3772,7 +3772,7 @@ const earningsFlowConfig = [{
     placeHolder: '请输入'
   },
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',
