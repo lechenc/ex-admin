@@ -1644,7 +1644,6 @@ const spreconErrorCol = [
       {
         label: '编辑',
         fn: 'editError',
-        alias: 'editError',
         type: 'primary'
       }
     ]

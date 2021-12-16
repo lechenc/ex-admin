@@ -714,7 +714,7 @@
               v-else-if="!btn.filter_key && !btn.type"
               type="text"
               size="small"
-              @click="doHandle($event, scope.row, btn['fn'])"
+              @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
             >
               {{ btn.label }}
             </el-button>
@@ -727,7 +727,7 @@
               plain
               size="small"
               :disabled="scope.row.isclick && btn.noIsClick"
-              @click="doHandle($event, scope.row, btn['fn'])"
+              @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
             >
               {{ btn.label }}
             </el-button>
@@ -748,7 +748,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -770,7 +770,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -790,7 +790,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -811,7 +811,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -831,7 +831,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -850,7 +850,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -868,7 +868,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -893,7 +893,7 @@
                 :type="btn.type"
                 plain
                 size="mini"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -911,7 +911,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -924,7 +924,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -961,7 +961,7 @@
                     "
                     plain
                     type="primary"
-                    @click="doHandle($event, scope.row, item['fn'])"
+                    @click="doHandle($event, scope.row, item['fn'],scope.$index)"
                   >
                     {{ item.label }}
                   </el-button>
@@ -1129,10 +1129,11 @@ export default {
   },
   methods: {
     // "操作"列按钮操作
-    doHandle(e, item, fn) {
+    doHandle(e, item, fn,index) {
       const obj = {
         row: item,
-        fn: fn
+        fn: fn,
+        index,
       }
 
       this.$emit('do-handle', obj)

@@ -112,7 +112,12 @@
         </el-form-item>
         <!--<el-input v-model="orderForm.uid" prop="uid" id="uid" clearable @blur.native.capture="searchAssets"></el-input> -->
         <el-form-item label="UID：" prop="uid" :label-width="formLabelWidth">
-          <el-input maxlength="20" v-model="orderForm.uid" @input="checkVal('orderForm', 'uid', 'not')" clearable>
+          <el-input
+            maxlength="20"
+            v-model="orderForm.uid"
+            @input="checkVal('orderForm', 'uid', 'not')"
+            clearable
+          >
             <div slot="append" class="gcode" @click.stop="searchAssets">查询资产</div>
           </el-input>
         </el-form-item>
@@ -133,11 +138,21 @@
             -->
             <el-col :span="19">
               <!-- 限制20长度 -->
-              <el-input @input="orderForm.amount = orderForm.amount.slice(0,20)" v-model="orderForm.amount" type="number" size="small"></el-input></el-col
+              <el-input
+                @input="orderForm.amount = orderForm.amount.slice(0, 20)"
+                v-model="orderForm.amount"
+                type="number"
+                size="small"
+              ></el-input></el-col
           ></el-row>
         </el-form-item>
         <el-form-item label="调账原因：" :label-width="formLabelWidth" prop="remark">
-          <el-input maxlength="100" type="textarea" placeholder="请输入描述" v-model="orderForm.remark"></el-input>
+          <el-input
+            maxlength="100"
+            type="textarea"
+            placeholder="请输入描述"
+            v-model="orderForm.remark"
+          ></el-input>
         </el-form-item>
 
         <el-form-item prop="transferUserId" label="资金出入账户：" :label-width="formLabelWidth">
@@ -267,7 +282,12 @@
         </div> -->
       </el-form>
       <h3>错误列表</h3>
-      <Btable :listLoading="errorListLoading" :data="errorList" :configs="errorConfigs" />
+      <Btable
+        :listLoading="errorListLoading"
+        :data="errorList"
+        :configs="errorConfigs"
+        @do-handle="errorDoHandle"
+      />
     </el-dialog>
 
     <!-- 调账详情，审核 -->
@@ -280,7 +300,9 @@
             }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="UID：" :label-width="formLabelWidth">{{ curRow.uid }}</el-form-item>
+            <el-form-item label="UID：" :label-width="formLabelWidth">{{
+              curRow.uid
+            }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
@@ -361,6 +383,46 @@
         <el-button type="primary" @click.stop="confirmReject">驳回</el-button>
       </div>
     </el-dialog>
+
+
+     <!-- 添加 编辑 -->
+    <el-dialog width="600px" title="编辑" :visible.sync="dialogErrorVisible">
+      <el-form :model="errorForm" ref="robotForm" :rules="rules">
+        <el-form-item label="交易品种" :label-width="formLabelWidth" prop="symbol">
+          <el-select
+            v-model="robotForm.symbol"
+            placeholder=""
+            wdith="20%"
+            :disabled="!!robotForm.id"
+          >
+            <el-option
+              v-for="(item, idx) in coinForexList"
+              :key="idx"
+              :label="item.label"
+              :value="item.label"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="中文名称" :label-width="formLabelWidth" prop="chineseName">
+              <el-input v-model="robotForm.chineseName" autocomplete="off" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+       
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogErrorVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+
   </div>
 </template>
 <script>
@@ -468,7 +530,8 @@ export default {
       batchOrderForm: {},
       batchRules: {
         transferUserId: [{ required: true, message: '必选', trigger: 'change' }]
-      }
+      },
+      dialogErrorVisible:false
     }
   },
   watch: {
@@ -665,7 +728,6 @@ export default {
       $api
         .apiSpreconDownLoadDefaultExcel({})
         .then((res) => {
-          
           fileDownload(res.data, '特殊调账模板.xlsx')
         })
         .catch(() => {})
@@ -687,7 +749,6 @@ export default {
         this.errorList = response.data
         this.$message.error(response.message)
         this.$refs.batchUploads.clearFiles()
-        
       } else {
         this.$message.error(response.message)
         this.$refs.batchUploads.clearFiles()
@@ -745,6 +806,13 @@ export default {
       } else if (fn === 'viewDetail') {
         this.isCheckStatus = false
         this.dialogVisible = true
+      }
+    },
+    async errorDoHandle(data) {
+      const { fn, row ,index} = data
+      console.log(index)
+      if (fn == 'editError') {
+        
       }
     },
     // 打开新建弹出框
