@@ -434,9 +434,7 @@ export default {
         list.forEach((v) => {
           v.enable = v.enable == 1 ? true : false
         })
-        list = list.filter((v)=>{
-          return v.feature != 'FILTER_BLACK_IP'
-        })
+       
         this.listBtnArr = list
 
       }
