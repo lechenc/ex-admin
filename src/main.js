@@ -83,6 +83,22 @@ Vue.prototype.$activityPhaseTwo_file_api = window.SERVER_PATH_ACTIVITYPHASETWO_F
 Vue.prototype.$pageSize = 10
 Vue.prototype._ = _
 
+// 短信类型
+Vue.prototype.$msgTypeArr = [
+  { label: '摩杜云', value: 1 },
+  { label: '美联软通', value: 2 },
+  // { label: '网易网盾', value: '3' },
+  { label: 'VONAGE', value: 4 },
+]
+// 邮件类型
+Vue.prototype.$emailTypeArr = [
+  { label: '摩杜云', value: 1 },
+  { label: 'Umail ', value: 2 },
+  { label: 'Spread', value: 3 },
+  { label: '阿里云', value: 4 },
+  { label: 'MSG91', value: 5 },
+]
+
 Vue.prototype.$variableCoin = 'USDT' // 默认币种
 
 new Vue({

@@ -1,6 +1,12 @@
 <template>
   <div class="msg-container">
-    <el-form :model="form" ref="form" label-width="80px" :rules="rules" style="width: 90%; padding-left: 15px">
+    <el-form
+      :model="form"
+      ref="form"
+      label-width="80px"
+      :rules="rules"
+      style="width: 90%; padding-left: 15px"
+    >
       <el-row class="item-box">
         <el-col :span="24">
           <h3>邮件开关</h3>
@@ -8,10 +14,14 @@
         <el-col :span="24">
           <template>
             <el-radio-group v-model="form.email_radio">
-              <el-radio :label="1" :disabled="disabled">魔杜卡</el-radio>
-              <el-radio :label="2" :disabled="disabled">Umail</el-radio>
-              <el-radio :label="3" :disabled="disabled">Spread</el-radio>
-              <el-radio :label="4" :disabled="disabled">阿里云</el-radio>
+              <el-radio
+                v-for="(item, index) in $emailTypeArr"
+                :key="index"
+                :label="item.value"
+                :disabled="disabled"
+              >
+                {{ item.label }}
+              </el-radio>
             </el-radio-group>
           </template>
         </el-col>
@@ -23,8 +33,14 @@
         <el-col :span="24">
           <template>
             <el-radio-group v-model="form.msg_radio">
-              <el-radio :label="1" :disabled="disabled">魔杜卡</el-radio>
-              <el-radio :label="2" :disabled="disabled">美联</el-radio>
+              <el-radio
+                v-for="(item, index) in $msgTypeArr"
+                :key="index"
+                :label="item.value"
+                :disabled="disabled"
+              >
+                {{ item.label }}
+              </el-radio>
             </el-radio-group>
           </template>
         </el-col>
@@ -55,7 +71,7 @@
 </template>
 
 <script>
-import $api from '@/api/api';
+import $api from '@/api/api'
 export default {
   name: 'Help',
   data() {
@@ -67,44 +83,44 @@ export default {
       form: {
         email_radio: 1,
         msg_radio: 1,
-        wySms_radio: 0,
-      },
-    };
+        wySms_radio: 0
+      }
+    }
   },
   methods: {
     async getList() {
-      const res = await $api.getSmsPlatform({});
+      const res = await $api.getSmsPlatform({})
       if (res) {
-        const { emailSwitch, smsSwitch ,wySmsSwitch} = res.data.data;
+        const { emailSwitch, smsSwitch, wySmsSwitch } = res.data.data
         this.form = {
           email_radio: Number(emailSwitch),
           msg_radio: Number(smsSwitch),
-          wySms_radio: Number(wySmsSwitch),
-        };
+          wySms_radio: Number(wySmsSwitch)
+        }
       }
     },
     cnacel() {
-      this.disabled = true;
-      this.getList();
+      this.disabled = true
+      this.getList()
     },
     async confirm() {
-       const { msg_radio, email_radio ,wySms_radio} = this.form;
+      const { msg_radio, email_radio, wySms_radio } = this.form
       const res = await $api.switchSmsPlatform({
         smsSwitch: msg_radio,
         emailSwitch: email_radio,
-        wySmsSwitch: wySms_radio,
-      });
+        wySmsSwitch: wySms_radio
+      })
       if (res) {
-        this.$message({ message: '修改成功', type: 'success' });
-        this.disabled = true;
-        this.getList();
+        this.$message({ message: '修改成功', type: 'success' })
+        this.disabled = true
+        this.getList()
       }
-    },
+    }
   },
   created() {
-    this.getList();
-  },
-};
+    this.getList()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

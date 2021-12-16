@@ -29,7 +29,7 @@
         <el-form-item label="页面路由:" prop="menuUrl">
           <el-input v-model="ruleForm.menuUrl" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="描述:" style="position: relative">
+        <el-form-item label="描述:" prop="desctext" style="position: relative">
           <!-- <span class="tips_textarea">{{ ruleForm.desctext ? ruleForm.desctext.length : "0" }}/50</span> -->
           <el-input type="textarea" placeholder="请输入描述" v-model="ruleForm.desctext"></el-input>
         </el-form-item>
@@ -70,6 +70,8 @@ export default {
         requestUrl: [{ required: true, message: '请输入请求url', trigger: 'blur' }],
         name: [{ required: true, message: '请输入功能名称', trigger: 'blur' }],
         menuUrl: [{ required: false, message: '请输入页面路由', trigger: 'blur' }],
+        desctext: [{ required: true, message: '请输入功能名称', trigger: 'blur' }],
+        
       },
       currentNode: '',
       currentData: '',

@@ -7,6 +7,9 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
  */
 
+import Vue from 'vue'
+let vm = new Vue()
+
 // 前台管理 -- 公告管理 -- table
 const noticeCol = [
   {
@@ -1262,20 +1265,7 @@ const msgSendRecordConfig = [
     label: '发送平台',
     prop: 'platform',
     value: '',
-    list: [
-      {
-        label: '摩杜云',
-        value: '1'
-      },
-      {
-        label: '美联软通',
-        value: '2'
-      },
-      {
-        label: '网易网盾',
-        value: '3'
-      }
-    ]
+    list: vm.$msgTypeArr
   }
 ]
 
@@ -1340,8 +1330,8 @@ const activityPhaseTwoConfig = [
     prop: 'uid',
     value: '',
     placeHolder: '请输入',
-    lengthLimited: 'uid',// 长度限制
-    digits:'9' // 长度限制
+    lengthLimited: 'uid', // 长度限制
+    digits: '9' // 长度限制
   },
   {
     type: 'select',
@@ -1351,7 +1341,7 @@ const activityPhaseTwoConfig = [
     list: [
       { label: '全部', value: '' },
       { label: '是', value: true },
-      { label: '否', value: false },
+      { label: '否', value: false }
     ]
   },
   {

@@ -1880,13 +1880,14 @@ const coinFundsCol = [
     ]
   },
   {
-    label: '变动资产',
-    prop: 'amount'
-  },
-  {
     label: '变动前资产',
     prop: 'beforeAmount'
   },
+  {
+    label: '变动资产',
+    prop: 'amount'
+  },
+  
   {
     label: '变动后资产',
     prop: 'afterAmount'
