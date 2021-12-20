@@ -71,7 +71,7 @@
       </el-pagination>
     </div>
     <!-- 创建调账 -->
-    <el-dialog :title="addOrderTitle" :visible.sync="addOrderDialog" width="600px">
+    <el-dialog :title="addOrderTitle" :visible.sync="addOrderDialog" width="650px">
       <el-form :model="orderForm" :rules="rules" ref="orderForm">
         <el-form-item label="账户类型：" :label-width="formLabelWidth" prop="accountType">
           <el-select @change="accountTypeChange" v-model="orderForm.accountType" size="small">
@@ -181,9 +181,9 @@
                 <el-radio
                   v-for="(item, index) in reconciliationList"
                   :key="index"
-                  :label="index.value"
+                  :label="item.value"
                 >
-                  {{ index.label }}
+                  {{ item.label }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
