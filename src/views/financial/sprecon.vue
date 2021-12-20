@@ -1078,7 +1078,7 @@ export default {
             ...key
           } = this.orderForm
           let coinName
-          if (accountType == 1) {
+          if (accountType == 1 || accountType == 2) {
             coinName = this.coinList.filter((v) => v.value == coinId)[0].label
           } else if (accountType == 5) {
             coinName = this.contractCoinList.filter((v) => v.value == coinId)[0].label
