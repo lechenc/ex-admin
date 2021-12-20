@@ -1590,16 +1590,15 @@ const spreconConfig = [
   }
 ]
 
-// 财务管理 -- 特殊调账管理 批量导入草屋列表
+// 财务管理 -- 特殊调账管理 批量导入错误列表
 const spreconErrorCol = [
   {
     label: 'UID',
     prop: 'UID'
   },
   {
-    label: '增/减(1代表增、2代表减）',
+    label: '增/减',
     prop: '增/减(1代表增、2代表减）',
-    width: 200,
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '增', val: 1 }, { text: '减', val: 2 }]
