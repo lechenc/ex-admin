@@ -17,7 +17,7 @@
     <div class="container-total">
       <el-row :span="24" :gutter="10">
         <el-col :span="6" v-for="(item, idx) in innerTopArr" :key="idx" class="inner-top-item">
-          <el-card :body-style="{ height: '120px' }" shadow="always">
+          <el-card :body-style="{ height: '170px' }" shadow="always">
             <div slot="header" class="item-title">
               <span>{{ item.title }}</span>
             </div>
@@ -368,6 +368,7 @@ export default {
           }
           .item-beginning {
             font-size: 16px;
+            margin: 40px auto;
           }
         }
       }
