@@ -14,6 +14,7 @@
     class="new-table"
     v-bind="$attrs"
     @selection-change="selectRow"
+    @cell-dblclick="tableEdit"
   >
     <template v-if="selection">
       <el-table-column type="selection" width="55" />
@@ -673,7 +674,9 @@
             v-model="scope.row[config.prop]"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            :disabled="config.filter_key ? scope.row[config.filter_key] == config.filter_status : false"
+            :disabled="
+              config.filter_key ? scope.row[config.filter_key] == config.filter_status : false
+            "
             @change="doHandle($event, scope.row, config.fn)"
           />
         </template>
@@ -714,7 +717,7 @@
               v-else-if="!btn.filter_key && !btn.type"
               type="text"
               size="small"
-              @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+              @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
             >
               {{ btn.label }}
             </el-button>
@@ -727,7 +730,7 @@
               plain
               size="small"
               :disabled="scope.row.isclick && btn.noIsClick"
-              @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+              @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
             >
               {{ btn.label }}
             </el-button>
@@ -748,7 +751,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -770,7 +773,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -790,7 +793,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -811,7 +814,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -831,7 +834,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -850,7 +853,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -868,7 +871,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -893,7 +896,7 @@
                 :type="btn.type"
                 plain
                 size="mini"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -911,7 +914,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -924,7 +927,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'],scope.$index)"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -961,7 +964,7 @@
                     "
                     plain
                     type="primary"
-                    @click="doHandle($event, scope.row, item['fn'],scope.$index)"
+                    @click="doHandle($event, scope.row, item['fn'], scope.$index)"
                   >
                     {{ item.label }}
                   </el-button>
@@ -1027,6 +1030,12 @@ export default {
       default: () => {
         return []
       }
+    },
+
+    // table是否可用直接编辑
+    tableIsEdit: {
+      type: Boolean,
+      default: false
     },
 
     actionShow: {
@@ -1128,12 +1137,35 @@ export default {
     }
   },
   methods: {
+    tableEdit(row, column, cell, event) {
+      if (!this.tableIsEdit) return
+      if (column.label) {
+        var beforeVal = event.target.textContent
+        event.target.innerHTML = ''
+        let str = `<div class='cell'>
+            <div class='el-input'>
+              <input type='text' placeholder='请输入内容' class='el-input__inner'>
+            </div>
+        </div>`
+        cell.innerHTML = str
+        // 获取双击后生成的input  根据层级嵌套会有所变化
+        let cellInput = cell.children[0].children[0].children[0]
+        cellInput.value = beforeVal
+        cellInput.focus() // input自动聚焦
+        // 失去焦点后  将input移除
+        cellInput.onblur = function () {
+          let onblurCont = `<div class='cell'>${cellInput.value}</div>`
+          cell.innerHTML = onblurCont // 换成原有的显示内容
+          // 调用axios接口
+        }
+      }
+    },
     // "操作"列按钮操作
-    doHandle(e, item, fn,index) {
+    doHandle(e, item, fn, index) {
       const obj = {
         row: item,
         fn: fn,
-        index,
+        index
       }
 
       this.$emit('do-handle', obj)

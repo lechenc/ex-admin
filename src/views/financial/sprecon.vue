@@ -90,7 +90,7 @@
           :label-width="formLabelWidth"
           prop="coinId"
         >
-          <el-select v-model="orderForm.coinId" size="small">
+          <el-select v-model="orderForm.coinId" filterable size="small">
             <el-option
               v-for="(item, idx) in contractCoinList"
               :key="idx"
@@ -101,7 +101,7 @@
         </el-form-item>
         <!-- 其余 显示币种-->
         <el-form-item v-else label="币种：" :label-width="formLabelWidth" prop="coinId">
-          <el-select v-model="orderForm.coinId" size="small">
+          <el-select v-model="orderForm.coinId" filterable size="small">
             <el-option
               v-for="(item, idx) in coinList"
               :key="idx"
@@ -178,10 +178,13 @@
               prop="reconciliationType"
             >
               <el-radio-group v-model="orderForm.reconciliationType">
-                <el-radio :label="1">异常补发</el-radio>
-                <el-radio :label="2">财务工资</el-radio>
-                <el-radio :label="3">运营活动奖励</el-radio>
-                <el-radio :label="4">违规扣除</el-radio>
+                <el-radio
+                  v-for="(item, index) in reconciliationList"
+                  :key="index"
+                  :label="index.value"
+                >
+                  {{ index.label }}
+                </el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -288,6 +291,10 @@
         :configs="errorConfigs"
         @do-handle="errorDoHandle"
       />
+
+      <div v-if="errorList.length" class="sprecon-button afresh">
+        <el-button type="primary" @click="afreshUploadFn">重新上传</el-button>
+      </div>
     </el-dialog>
 
     <!-- 调账详情，审核 -->
@@ -384,19 +391,59 @@
       </div>
     </el-dialog>
 
-
-     <!-- 添加 编辑 -->
+    <!--  编辑 -->
     <el-dialog width="600px" title="编辑" :visible.sync="dialogErrorVisible">
-      <el-form :model="errorForm" ref="robotForm" :rules="rules">
-        <el-form-item label="交易品种" :label-width="formLabelWidth" prop="symbol">
-          <el-select
-            v-model="robotForm.symbol"
-            placeholder=""
-            wdith="20%"
-            :disabled="!!robotForm.id"
-          >
+      <el-form :model="errorForm" ref="errorForm" :rules="errorRules">
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="UID：" :label-width="formLabelWidth" prop="uid">
+              <el-input v-model="errorForm.uid" autocomplete="off" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item label="增/减：" :label-width="formLabelWidth" prop="increaseDecrease">
+          <el-select v-model="errorForm.increaseDecrease" placeholder="">
             <el-option
-              v-for="(item, idx) in coinForexList"
+              v-for="(item, idx) in increaseDecreaseList"
+              :key="idx"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="账户类型：" :label-width="formLabelWidth" prop="accountType">
+          <el-select v-model="errorForm.accountType" placeholder="">
+            <el-option
+              v-for="(item, idx) in accountList"
+              :key="idx"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          v-if="errorForm.accountType == 5"
+          label="合约账户："
+          :label-width="formLabelWidth"
+          prop="coinId"
+        >
+          <el-select v-model="errorForm.coinId" filterable size="small">
+            <el-option
+              v-for="(item, idx) in contractCoinList"
+              :key="idx"
+              :label="item.label"
+              :value="item.label"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <!-- 其余 显示币种-->
+        <el-form-item v-else label="币种：" :label-width="formLabelWidth" prop="coinId">
+          <el-select v-model="errorForm.coinId" filterable size="small">
+            <el-option
+              v-for="(item, idx) in coinList"
               :key="idx"
               :label="item.label"
               :value="item.label"
@@ -404,25 +451,57 @@
           </el-select>
         </el-form-item>
 
-
         <el-row :span="24">
           <el-col :span="22">
-            <el-form-item label="中文名称" :label-width="formLabelWidth" prop="chineseName">
-              <el-input v-model="robotForm.chineseName" autocomplete="off" type="text"></el-input>
+            <el-form-item label="数量：" :label-width="formLabelWidth" prop="amount">
+              <el-input v-model="errorForm.amount" autocomplete="off" type="text"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
-       
+        <el-form-item label="调账类型：" :label-width="formLabelWidth" prop="reconciliationType">
+          <el-select v-model="errorForm.reconciliationType" placeholder="">
+            <el-option
+              v-for="(item, idx) in reconciliationList"
+              :key="idx"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="调账原因：" :label-width="formLabelWidth" prop="reason">
+              <el-input
+                v-model="errorForm.reason"
+                autocomplete="off"
+                :autosize="{ minRows: 3, maxRows: 4 }"
+                type="textarea"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :span="24">
+          <el-col :span="22">
+            <el-form-item label="错误原因：" :label-width="formLabelWidth" prop="errorReason">
+              <el-input
+                disabled
+                v-model="errorForm.errorReason"
+                autocomplete="off"
+                :autosize="{ minRows: 3, maxRows: 4 }"
+                type="textarea"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogErrorVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
+        <el-button type="primary" @click="errorConfirmOp" :loading="btnLoading">确 定</el-button>
       </div>
     </el-dialog>
-
-
-
   </div>
 </template>
 <script>
@@ -439,6 +518,7 @@ import $api from '@/api/api'
 import utils from '@/utils/util'
 import { parseTime } from '@/utils/index'
 import fileDownload from 'js-file-download'
+import axios from 'axios'
 export default {
   name: 'Sprecon',
   components: {
@@ -475,13 +555,6 @@ export default {
       curRow: {}, // 当前点击行的数据(展示详情使用)
       dataForm: {},
 
-      accountList: [
-        { label: '币币', value: 1 },
-        // { label: '法币', value: 2 },
-        // { label: '理财', value: 3 },
-        // { label: '币汇', value: 4 },
-        { label: '合约', value: 5 }
-      ],
       addOrderTitle: '创建调账（增）',
       addOrderDialog: false, // 创建弹出窗
       orderForm: {},
@@ -516,8 +589,7 @@ export default {
       },
 
       importHeaders: { token: window.localStorage.getItem('admin_token') },
-      errorListLoading: false,
-      errorList: [],
+
       errorConfigs: [],
       curTotalAmount: '',
       isBranchPass: false,
@@ -531,7 +603,37 @@ export default {
       batchRules: {
         transferUserId: [{ required: true, message: '必选', trigger: 'change' }]
       },
-      dialogErrorVisible:false
+      dialogErrorVisible: false,
+      errorForm: {},
+      increaseDecreaseList: [
+        { label: '增', value: 1 },
+        { label: '减', value: 2 }
+      ],
+      accountList: [
+        { label: '币币', value: 1 },
+        { label: '法币', value: 2 },
+        // { label: '理财', value: 3 },
+        // { label: '币汇', value: 4 },
+        { label: '合约', value: 5 }
+      ],
+      reconciliationList: [
+        { label: '异常补发', value: 1 },
+        { label: '财务工资', value: 2 },
+        { label: '运营活动奖励', value: 3 },
+        { label: '违规扣除', value: 4 }
+      ],
+      errorRules: {
+        uid: [{ required: true, message: '必填', trigger: 'blur' }],
+        increaseDecrease: [{ required: true, message: '必填', trigger: 'change' }],
+        reconciliationType: [{ required: true, message: '必填', trigger: 'change' }],
+        coinId: [{ required: true, message: '必填', trigger: 'change' }],
+        amount: [{ required: true, message: '必填', trigger: 'blur' }],
+        accountType: [{ required: true, message: '必填', trigger: 'change' }],
+        reason: [{ required: true, message: '必填', trigger: 'blur' }]
+      },
+      errorListLoading: false,
+      errorList: [],
+      errorCurIndex: ''
     }
   },
   watch: {
@@ -578,6 +680,70 @@ export default {
     }
   },
   methods: {
+    async afreshUploadFn() {
+      let parmas = {
+        userId: this.batchOrderForm.transferUserId,
+        reviseList: this.errorList
+      }
+      this.errorList = []
+
+      const res = await axios.post('/admin/account/add/special-reconciliation-revise', parmas)
+
+      if (res.data.code == 1) {
+        this.groupOrderDialog = false
+        this.$message.success(res.data.message)
+        this.getList()
+      } else if (res.data.code == -2) {
+        this.$message.error(res.data.message)
+        this.errorList = res.data.data
+      } else {
+        this.$message.error(res.data.message)
+      }
+    },
+    async errorDoHandle(data) {
+      const { fn, row, index } = data
+
+      if (fn == 'editError') {
+        this.errorCurIndex = index
+        this.dialogErrorVisible = true
+        this.$nextTick(() => {
+          this.$refs.errorForm.resetFields()
+          this.errorForm = {
+            uid: row['UID'],
+            increaseDecrease: row['增/减(1代表增、2代表减）'],
+            reconciliationType: row['调账类型'],
+            coinId: row['币种/合约账户'],
+            amount: row['数量'],
+            accountType: row['账户类型'],
+            reason: row['调账原因'],
+            errorReason: row['错误原因']
+          }
+        })
+      }
+    },
+    errorConfirmOp() {
+      const {
+        uid,
+        increaseDecrease,
+        reconciliationType,
+        coinId,
+        amount,
+        accountType,
+        reason,
+        errorReason
+      } = this.errorForm
+      this.$set(this.errorList, this.errorCurIndex, {
+        UID: uid,
+        '增/减(1代表增、2代表减）': increaseDecrease,
+        调账类型: reconciliationType,
+        '币种/合约账户': coinId,
+        数量: amount,
+        账户类型: accountType,
+        调账原因: reason,
+        错误原因: errorReason
+      })
+      this.dialogErrorVisible = false
+    },
     batchUploadsClick() {
       let valid = true
       this.$refs['batchOrderForm'].validateField(['transferUserId'], (errorMessage) => {
@@ -808,13 +974,7 @@ export default {
         this.dialogVisible = true
       }
     },
-    async errorDoHandle(data) {
-      const { fn, row ,index} = data
-      console.log(index)
-      if (fn == 'editError') {
-        
-      }
-    },
+
     // 打开新建弹出框
     openAddDialog() {
       this.addOrderDialog = true
@@ -1040,7 +1200,7 @@ export default {
       this.requiredParams(query_data)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
-      this.getSpecialReconciliationSum(query_data)
+      // this.getSpecialReconciliationSum(query_data)
       const res = await $api.specialReconciliation(query_data)
       if (res) {
         const { records, total, current, pages } = res.data.data
@@ -1141,6 +1301,9 @@ export default {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;
+  }
+  .afresh {
+    text-align: center;
   }
   .container-tip {
     margin: 10px 0;

@@ -1570,7 +1570,7 @@ const spreconConfig = [
     value: '',
     list: [
       { label: '币币', value: 1 },
-       { label: '法币', value: 2 },
+      { label: '法币', value: 2 },
       //  { label: '理财', value: 3 },
       //  { label: '币汇', value: 4 },
       { label: '合约', value: 5 }
@@ -1597,8 +1597,9 @@ const spreconErrorCol = [
     prop: 'UID'
   },
   {
-    label: '增/减',
+    label: '增/减(1代表增、2代表减）',
     prop: '增/减(1代表增、2代表减）',
+    width: 200,
     type: 'filter',
     show_type: 'text',
     filters: [{ text: '增', val: 1 }, { text: '减', val: 2 }]
@@ -1606,14 +1607,14 @@ const spreconErrorCol = [
   {
     label: '账户类型',
     prop: '账户类型',
-    width: 100,
+    width: '100',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }]
+    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '合约', val: 5 }]
   },
   {
-    label: '币种',
-    prop: '币种'
+    label: '币种/合约账户',
+    prop: '币种/合约账户'
   },
   {
     label: '数量',
@@ -1622,7 +1623,7 @@ const spreconErrorCol = [
   {
     label: '调账类型',
     prop: '调账类型',
-    width: 100,
+    width: '100',
     type: 'filter',
     show_type: 'text',
     filters: [
@@ -1636,6 +1637,11 @@ const spreconErrorCol = [
     prop: '调账原因'
   },
   {
+    label: '错误原因',
+    prop: '错误原因'
+  },
+
+  {
     label: '操作',
     prop: 'action',
     type: 'action',
@@ -1644,6 +1650,7 @@ const spreconErrorCol = [
       {
         label: '编辑',
         fn: 'editError',
+        alias: 'editError',
         type: 'primary'
       }
     ]
@@ -1900,7 +1907,7 @@ const coinFundsCol = [
     label: '变动资产',
     prop: 'amount'
   },
-  
+
   {
     label: '变动后资产',
     prop: 'afterAmount'
@@ -2938,7 +2945,6 @@ const financialStatisticsConfig = [
   }
 ]
 
-
 // 财务管理/负债数据统计
 const debtStatisticsCol = [
   {
@@ -3111,7 +3117,7 @@ const debtStatisticsConfig = [
     prop: 'coinId',
     value: 4,
     list: []
-  },
+  }
 ]
 
 export {

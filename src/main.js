@@ -43,6 +43,9 @@ import Utils from '@/utils/util'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
 
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
+
 install(Utils, '$util')
 
 ElementUI.Dialog.props.closeOnClickModal.default = false
@@ -100,6 +103,9 @@ Vue.prototype.$emailTypeArr = [
 ]
 
 Vue.prototype.$variableCoin = 'USDT' // 默认币种
+
+Vue.prototype.$FileSaver = FileSaver; //设置全局
+Vue.prototype.$XLSX = XLSX; //设置全局
 
 new Vue({
   el: '#app',

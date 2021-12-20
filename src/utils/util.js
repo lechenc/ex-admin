@@ -656,6 +656,7 @@ async function exportData(type, max = 10000, loading = null) {
         type: type,
         max: max
       })
+      console.log('stack',stack)
       that.$message.warning('当前正在执行导出任务，该任务已经添加到队列')
     } catch (e) {
       console.error(e)

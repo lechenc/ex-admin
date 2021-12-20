@@ -192,7 +192,7 @@ export default {
         // ]
       },
       listTypeArr: [
-        { label: '白名单', value: 1 },
+        { label: '白名单', value: 1 }
         // { label: '黑名单', value: 2 }
       ],
       ipTypeArr: [
@@ -288,8 +288,10 @@ export default {
             const query_data = {
               id
             }
+
             const res = await Fetch.post('/user/filter/ip/delete' + '/' + id, query_data)
-            if (res.data.code === 1) {
+
+            if (res) {
               this.$message.success('删除成功')
             } else {
               this.$message.error(res.data.message)
@@ -314,7 +316,7 @@ export default {
           }
           const res = await Fetch.post('/user/feature/status' + '/' + id, query_data)
 
-          if (res.data.code === 1) {
+          if (res) {
             this.$message.success('切换成功')
           } else {
             this.$message.error(res.data.message)
@@ -434,11 +436,10 @@ export default {
         list.forEach((v) => {
           v.enable = v.enable == 1 ? true : false
         })
-        list = list.filter((v)=>{
+        list = list.filter((v) => {
           return v.feature != 'FILTER_BLACK_IP'
         })
         this.listBtnArr = list
-
       }
     },
 

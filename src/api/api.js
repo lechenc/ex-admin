@@ -3594,6 +3594,16 @@ export default class api {
     return Fetch.post('/user/filter/ip/delete', data)
   }
 
+  // 财务管理/特殊调账管理上传ip
+  static apiSpecialFileApi(data) {
+    return Fetch.post('/admin/account/file/special-reconciliation-excel', data)
+  }
+
+  // 财务管理/特殊调账管理重新上传
+  static apiSpecialAfreshFileApi(data) {
+    return Fetch.post('/admin/account/add/special-reconciliation-revise', data)
+  }
+
   
 
   
