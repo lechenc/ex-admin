@@ -229,8 +229,10 @@ export default {
     // 表格操作
     async doHandle(data) {
       const { fn, row } = data
+      console.log('row',row)
       // 编辑
       if (fn === 'edit') {
+        if (!!row.enable) return this.$message.error('状态开启后,编辑和删除不可点击')
         this.formName = '编辑IP地址'
         this.dialogFormVisible = true
         this.$nextTick(() => {
@@ -278,6 +280,7 @@ export default {
 
       // 编辑
       if (fn === 'delete') {
+         if (!!row.enable) return this.$message.error('状态开启后,编辑和删除不可点击')
         const { id } = row
         this.$confirm(`确定删除此权限吗？`, '温馨提示', {
           confirmButtonText: '确定',

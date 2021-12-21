@@ -622,7 +622,7 @@ const ipAddressCol = [
         // property值  除了1显示
         filter_type: 'arrayExcept',
         filter_key: 'property',
-        filter_status: ['1']
+        filter_status: ['1'],
       },
 
       {

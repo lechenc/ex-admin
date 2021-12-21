@@ -849,6 +849,7 @@
               "
             >
               <el-button
+                :disabled="btn.noIsClick"
                 slot="reference"
                 :type="btn.type"
                 plain
