@@ -235,6 +235,7 @@ export default {
         { label: '平台币', value: 0 },
         { label: '主流币1', value: 1 },
         { label: '主流币2', value: 2 },
+        { label: '主流币3', value: 3 },
       ],
       formName: '新增交易对',
       formLabelWidth: '120px',

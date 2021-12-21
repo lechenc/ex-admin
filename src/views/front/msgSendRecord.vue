@@ -182,7 +182,7 @@ export default {
       function () {
         return this.searchCofig[2].value
       },
-      // 合约出入金,type=1为合约出金,type=2为合约入金
+      // 1为短信类型,2为邮件类型
       function (newVal, oldValue) {
         
         if (newVal == 1) {
