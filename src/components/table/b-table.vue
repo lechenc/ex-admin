@@ -712,7 +712,6 @@
         <template slot-scope="scope">
           <span v-for="(btn, i) in config.btnGroup" :key="i + 't`t'">
             <template v-if="btn.type == 'noVisible'"></template>
-            
 
             <el-button
               v-else-if="!btn.filter_key && !btn.type"
