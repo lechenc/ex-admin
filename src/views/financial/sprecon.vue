@@ -693,10 +693,10 @@ export default {
         this.groupOrderDialog = false
         this.$message.success(res.data.message)
         this.getList()
-      } else if (res.data.code == -2) {
-        this.$message.error(res.data.message)
-        this.errorList = res.data.data
       } else {
+        if (res.data.data && res.data.data.length) {
+          this.errorList = res.data.data
+        }
         this.$message.error(res.data.message)
       }
     },
@@ -911,11 +911,10 @@ export default {
         this.groupOrderDialog = false
         this.$message.success(response.message)
         this.getList()
-      } else if (response.code == -2) {
-        this.errorList = response.data
-        this.$message.error(response.message)
-        this.$refs.batchUploads.clearFiles()
       } else {
+        if (response.data && response.data.length) {
+          this.errorList = response.data
+        }
         this.$message.error(response.message)
         this.$refs.batchUploads.clearFiles()
       }
