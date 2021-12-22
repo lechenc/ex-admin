@@ -189,8 +189,7 @@
         </el-col>
       </el-row>
       <Btable :list-loading="setListLoading" :data="setlist" :configs="setConfigs" />
-    </el-dialog> </el-form
-    ></el-dialog>
+    </el-dialog>
   </div>
 </template>
 
@@ -430,6 +429,7 @@ export default {
       this.isEdit = false
       this.formName = '添加'
       this.dialogFormVisible = true
+      this.chainList = []
       this.getChainCoin()
       this.$nextTick(() => {
         this.$refs['chainForm'].resetFields()
@@ -533,6 +533,7 @@ export default {
             label: key,
             value: key
           })
+          
         }
       }
     }
