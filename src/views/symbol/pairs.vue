@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-04-07 14:25:59
- * @LastEditTime: 2020-09-04 14:29:24
+ * @LastEditTime: 2021-12-22 12:26:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\symbol\pairs.vue
@@ -28,12 +28,12 @@
           <el-input v-model="symbolForm.coinMarketId" autocomplete="off" @input="checkVal('coinMarketId')"></el-input>
         </el-form-item>
         <el-form-item label="交易币种" :label-width="formLabelWidth" prop="coinId">
-          <el-select v-model="symbolForm.coinId" placeholder="" wdith="20%">
+          <el-select filterable v-model="symbolForm.coinId" placeholder="" wdith="20%">
             <el-option v-for="(item, idx) in coin_list" :key="idx" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="定价货币" :label-width="formLabelWidth" prop="marketId">
-          <el-select v-model="symbolForm.marketId" placeholder="" wdith="20%">
+          <el-select filterable v-model="symbolForm.marketId" placeholder="" wdith="20%">
             <el-option v-for="(item, idx) in coin_list" :key="idx" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>

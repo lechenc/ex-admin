@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2020-11-06 12:05:08
+ * @LastEditTime: 2021-12-22 12:25:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -141,7 +141,7 @@ const symbolCol = [
     type: 'filter',
     show_type: 'text',
     width: '120',
-    filters: [{ text: '平台币', val: 0 }, { text: '主流币1', val: 1 }, { text: '主流币2', val: 2 }],
+    filters: [{ text: '平台币', val: 0 }, { text: '主流币1', val: 1 }, { text: '主流币2', val: 2 }, { text: '主流币3', val: 3 }],
   },
   {
     label: '下单档位',
@@ -296,7 +296,7 @@ const symbolColNoBtn = [
 
 const symbolConfig = [
   {
-    type: 'select',
+    type: 'select_search',
     label: '交易对',
     prop: 'coinMarketId',
     value: '',
