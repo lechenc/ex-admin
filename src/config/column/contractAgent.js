@@ -2476,7 +2476,7 @@ const agentAchievementsConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinName',
     value: '',

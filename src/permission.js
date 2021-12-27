@@ -273,6 +273,7 @@ const mapComponents = {
   Maintenance: () => import('@/views/system/maintenance'),
   PeopleManagement: () => import('@/views/system/peopleManagement'),
   StructureTree: () => import('@/views/system/structureTree'),
+  IpAddress: () => import('@/views/system/ipAddress'),
 
   Version: () => import('@/views/app/version'),
   LocalPackage: () => import('@/views/app/localPackage'),
@@ -283,6 +284,7 @@ const mapComponents = {
   Notice: () => import('@/views/front/notice'),
   Help: () => import('@/views/front/help'),
   Activity: () => import('@/views/front/activity'),
+  ActivityPhaseTwo: () => import('@/views/front/activityPhaseTwo'),
   Column: () => import('@/views/front/column'),
   Banner: () => import('@/views/front/banner'),
   PopupNotice: () => import('@/views/front/popupNotice'),
@@ -373,6 +375,7 @@ const mapComponents = {
   CoinForexRate: () => import('@/views/coinForex/coinForexfinance/coinForexRate'),
   CoinForexPairsConfigs: () => import('@/views/coinForex/coinForexPairs/coinForexPairsConfigs'),
   CoinForexPairsNightFee: () => import('@/views/coinForex/coinForexPairs/coinForexPairsNightFee'),
+  CoinForexPairsWhiteList: () => import('@/views/coinForex/coinForexPairs/coinForexPairsWhiteList'),
   CoinForexNetWorth: () => import('@/views/coinForex/coinForexDeal/coinForexNetWorth'),
 
   WarehouseUser: () => import('@/views/warehouse/user'),
@@ -395,6 +398,7 @@ const mapComponents = {
   SearchUserAddress: () => import('@/views/financial/searchUserAddress'),
   HotWalletExtract: () => import('@/views/financial/hotWalletExtract'),
   FinancialStatistics: () => import('@/views/financial/financialStatistics'),
+  DebtStatistics: () => import('@/views/financial/debtStatistics'),
 
   AssetManageList: () => import('@/views/assetManage/assetManageList'),
   TransferRecord: () => import('@/views/assetManage/transferRecord'),
@@ -449,6 +453,7 @@ const mapComponents = {
   AgentAchievements: () => import('@/views/agent/agentAchievements'),
   BusinessRefundRecord: () => import('@/views/agent/businessRefundRecord'),
   AgentPlacesConfigs: () => import('@/views/agent/agentPlacesConfigs'),
+  AgentAchievements: () => import('@/views/agent/agentAchievements'),
 
   CoinContract: () => import('@/views/contract/transact/coinContract'),
   GearSetting: () => import('@/views/contract/transact/gearSetting'),

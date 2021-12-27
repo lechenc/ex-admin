@@ -23,6 +23,7 @@
         @do-calTotal="calTotal"
       />
     </div>
+    
     <div>
       <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
@@ -78,6 +79,7 @@ export default {
   mounted() {
     const authObj = this.$util.getAuthority('Recharge', rechargeCol, rechargeColNoBtn)
     this.configs = authObj.val
+    this.btnArr = authObj.btnArr
     // 初始化今天，之前的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')

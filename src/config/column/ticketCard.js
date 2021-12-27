@@ -85,7 +85,7 @@ const ticketCardListConfig = [
   },
 
   {
-    type: 'select',
+    type: 'select_search',
     label: '币种',
     prop: 'coinId',
     value: '',

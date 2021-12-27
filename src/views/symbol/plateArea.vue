@@ -69,7 +69,7 @@
             <el-row class="my-row" :span="24">
               <el-col :span="12">
                 <el-form-item label="交易对" prop="tbCoinMarketId">
-                  <el-select :disabled='isDetail' v-model="symbolGroup.tbCoinMarketId" placeholder="请选择">
+                  <el-select filterable :disabled='isDetail' v-model="symbolGroup.tbCoinMarketId" placeholder="请选择">
                     <el-option v-for="item in symbollist" :label="item.label" :value="item.tbCoinMarketId" :key="item.tbCoinMarketId"> </el-option>
                   </el-select>
                 </el-form-item>
@@ -94,7 +94,7 @@
               <el-col :span="21">
                 <el-form-item label="icon" prop="img">
                   <el-input :disabled='isDetail' size="small" placeholder="请输入链接" v-model="symbolGroup.img">
-                    <el-upload :disabled='isDetail' accept=".png,.jpg" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="false" :before-upload="beforeUpload" :on-success="uploadIcon" :on-error="uploadError" slot="append" :limit="1" :on-exceed="exceed" ref="iconDot">
+                    <el-upload :disabled='isDetail' accept=".png,.jpg" :action="$img_api" multiple name="file" :data="{ type: 'exchange' }" :show-file-list="false" :before-upload="beforeUpload" :on-success="uploadIcon" :on-error="uploadError" slot="append"  :on-exceed="exceed" ref="iconDot">
                       <el-button size="small" @click="getUploadIconIndex(index)" type="primary">点击上传</el-button>
                     </el-upload>
                   </el-input>

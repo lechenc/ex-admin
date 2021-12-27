@@ -13,7 +13,7 @@
     </div>
     <div class="container-center">
       <div class="center-sidebar">
-        <div class="center-sidebar-title">人员结构</div>
+        <div class="center-sidebar-title">人员结构.</div>
         <div class="center-sidebar-tree">
           <el-tree ref="sidebarTree" @node-click="sidebarTreeClick" :filter-node-method="filterNode" :default-expanded-keys="[1]" :draggable="false" :allow-drop="collapse" @node-drop="sort" :data="treeData" node-key="roleId" :props="defaultProps" :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">

@@ -21,8 +21,12 @@ const coinForexDealListCol = [
     prop: 'directionString'
   },
   {
-    label: '交易量',
+    label: '交易手数',
     prop: 'numberString'
+  },
+  {
+    label: '交易量',
+    prop: 'holdVolString'
   },
   {
     label: '手续费',
@@ -146,8 +150,13 @@ const coinForexEntrustListCol = [
   },
 
   {
-    label: '委托量',
+    label: '委托手数',
     prop: 'handNumString'
+  },
+
+  {
+    label: '委托量',
+    prop: 'totalNumString'
   },
 
   {
@@ -291,6 +300,11 @@ const coinForexNotCloseListCol = [
   {
     label: '交易量',
     prop: 'holdVolString'
+  },
+  
+  {
+    label: '交易手数',
+    prop: 'handlerNumString'
   },
 
   {
@@ -634,14 +648,21 @@ const coinForexPairsConfigsCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: '130',
+    width: '220',
     btnGroup: [
       {
         label: '编辑',
         fn: 'edit',
         type: 'primary',
         alias: 'edit'
-      }
+      },
+
+      {
+        label: '上传导入K线',
+        fn: 'importKLine',
+        type: 'primary',
+        alias: 'importKLine'
+      },
     ]
   }
 ]
@@ -856,10 +877,10 @@ const coinForexNetWorthCol = [
     label: '交易账户',
     prop: 'uid'
   },
-  {
-    label: '余额',
-    prop: 'usable'
-  },
+  // {
+  //   label: '余额',
+  //   prop: 'usable'
+  // },
 
   {
     label: '净值',

@@ -98,6 +98,17 @@
             <div v-if="config.type === 'onlyNumber'">
               <div>{{ config.label }}</div>
               <el-input
+                v-if="config.lengthLimited"
+                :maxlength="config.digits ? config.digits : 9"
+                v-model="config.value"
+                class="text-input"
+                type="text"
+                :placeholder="config.placeholder || '请输入内容'"
+                :size="sizeDiy"
+                @input="config.value = config.value.replace(/[^\d]/g, '')"
+              />
+              <el-input
+                v-else
                 v-model="config.value"
                 class="text-input"
                 type="text"
@@ -182,6 +193,31 @@
                 </div>
               </template>
             </div>
+
+            <!-- 日期选择 pc端或者横屏用这个  带秒数的 -->
+            <div
+              v-if="config.type === 'date_rank_sec' && (isDeskTop || (!isDeskTop && isOrientation))"
+            >
+              <div>{{ config.label }}</div>
+              <template>
+                <div class="block">
+                  <!-- <span class="demonstration">默认</span> -->
+                  <el-date-picker
+                    v-model="config.value"
+                    :disabled="dateRankDisabled"
+                    :size="sizeDiy"
+                    type="datetimerange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    value-format="yyyy/MM/dd HH:mm:ss"
+                    :picker-options="$util.datePickerOptions({ disabledDate: 'all' })"
+                    :default-time="['00:00:00', '23:59:59']"
+                  />
+                </div>
+              </template>
+            </div>
+
             <!-- 日期选择 移动端并且竖屏用这个 -->
             <div
               v-if="config.type === 'date_rank' && !isDeskTop && !isOrientation"
@@ -287,7 +323,7 @@
               </template>
             </div>
 
-            <!-- 选择框 -->
+            <!-- 选择框改变时改变table -->
             <div v-if="config.type === 'selectChange'">
               <div>{{ config.label }}</div>
               <el-select
@@ -320,15 +356,16 @@
           >
             {{ calText }}
           </el-button>
+          <!-- 快速导出excel -->
           <el-button
-            v-if="calTotalExcel"
-            v-loading.fullscreen.lock="calLoadingExcel"
+            v-if="calIsShowFastExcel"
+            v-loading.fullscreen.lock="calLoadingFastExcel"
             plain
             :size="sizeDiy"
             element-loading-text="拉取中"
-            @click="doCalTotalExcel"
+            @click="doCalFastExcel"
           >
-            {{ calTextExcel }}
+            {{ calTextFastExcel }}
           </el-button>
           <!-- 预估统计 -->
           <el-button
@@ -367,7 +404,11 @@
               导出Excel<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="exportExcelCurrentPageIsShow" @click.native.stop="doExportExcel(0)">当前页</el-dropdown-item>
+              <el-dropdown-item
+                v-if="exportExcelCurrentPageIsShow"
+                @click.native.stop="doExportExcel(0)"
+                >当前页</el-dropdown-item
+              >
               <el-dropdown-item @click.native.stop="doExportExcel(1)">
                 当前查询条件
               </el-dropdown-item>
@@ -416,26 +457,33 @@ export default {
       type: String,
       default: '提币风控参数设置'
     },
+    // 合计按钮 按钮文案
     calText: {
       type: String,
       default: '合计数量'
     },
+    // 合计按钮 按钮Loading
     calLoading: {
       type: Boolean,
       default: false
     },
-    calTotalExcel: {
+
+    // 快速导出excel  显示
+    calIsShowFastExcel: {
       type: Boolean,
       default: false
     },
-    calTextExcel: {
+    // 快速导出excel  按钮文案
+    calTextFastExcel: {
       type: String,
-      default: '导出excel'
+      default: '快速导出excel'
     },
-    calLoadingExcel: {
+    // 快速导出excel  按钮Loading
+    calLoadingFastExcel: {
       type: Boolean,
       default: false
     },
+
     statistics: {
       type: Boolean,
       default: false
@@ -463,9 +511,7 @@ export default {
     exportExcelCurrentPageIsShow: {
       type: Boolean,
       default: true
-    },
-
-
+    }
   },
   data() {
     return {
@@ -507,7 +553,7 @@ export default {
       document.activeElement.blur()
       this.$nextTick(() => {
         const inputTime = document.querySelectorAll('.el-date-editor .el-range-input')
-        inputTime.forEach(item => {
+        inputTime.forEach((item) => {
           item.addEventListener('focus', () => {
             document.activeElement.blur()
           })
@@ -612,7 +658,7 @@ export default {
               }
               query[item.prop2] = overT || item.value[1]
             }
-          } else if (item.type === 'date_rank_s') {
+          } else if (item.type === 'date_rank_s' || item.type === 'date_rank_sec') {
             // 区间双框
             if (item.value[0] !== '') {
               query[item.prop] = item.value[0]
@@ -659,9 +705,10 @@ export default {
       const query = this.getQuery()
       this.$emit('do-calTotal', query)
     },
-    doCalTotalExcel() {
+    // 快速导出excel
+    doCalFastExcel() {
       const query = this.getQuery()
-      this.$emit('do-calTotal-excel', query)
+      this.$emit('do-calFast-excel', query)
     },
     doEstimate() {
       const query = this.getQuery()

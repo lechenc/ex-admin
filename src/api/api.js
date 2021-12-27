@@ -3499,5 +3499,120 @@ export default class api {
     return Fetch.post('/admin/account/contract/agent/account/infoNew', data)
   }
 
+  // 合约管理/账号管理/合约账户 划转 接收账户 列表
+  static apiGetAccountContractTransferToList(data) {
+    return Fetch.post('/admin/account/contract/profit/transferToList', data)
+  }
+
+  // 合约管理/账号管理/合约账户 划转 确定
+  static apiAccountContractTransfer(data) {
+    return Fetch.post('/admin/account/profit-user-transfer', data)
+  }
+
+  // 财务管理/特殊调账管理 资金输出账户 列表
+  static apiGetSpreconOutputAccountList(data) {
+    return Fetch.post('/admin/user/sub-expend-user-list2', data)
+  }
+
+  // 合约币对 列表
+  static apiGetContractCoinmarket(data) {
+    return Fetch.post('/market/get-all-contract-coinmarket', data)
+  }
+
+   // 财务管理--特殊调账列表 sum
+   static apiGetSpecialReconciliationSum(data) {
+    return Fetch.post('/admin/account/special-reconciliation-amount-sum', data)
+  }
+
+   // 币汇管理/币汇交易对设置/白名单设置 编辑配置
+   static apiEditCoinForexPairsWhiteListConfig(data) {
+    return Fetch.post('/forex/admin/saveUserAuth', data)
+  }
+
+  // 币汇管理/币汇交易对设置/白名单设置 获取配置
+  static apiGetCoinForexPairsWhiteListConfig(data) {
+    return Fetch.post('/forex/admin/queryUserAuth', data)
+  }
+
+  // 运营管理 - 运营活动 获取列表
+  static apiGetActivityPhaseTwoLists(data) {
+    return Fetch.post('/admin/account/activity/recharge/statistics-reward-list', data)
+  }
+
+  // 运营管理 - 运营活动 获取列表 统计
+  static apiGetActivityPhaseTwoSum(data) {
+    return Fetch.post('/admin/account/activity/recharge/statistics-reward-sum', data)
+  }
+
+  // 运营管理 - 运营活动  用户违规标记 改变
+  static apiUpdateActivityPhaseTwoViolation(data) {
+    return Fetch.post('/admin/account/activity/recharge/update-violation', data)
+  }
+
+  // 运营管理/运营活动二期 模板下载
+  static apiActivityPhaseTwoDownLoadDefaultExcel(data) {
+    return Fetch.postExcel('/admin/account/activity/recharge/reward-excel/download', data)
+  }
+
+  // 财务管理/负债数据统计 获取列表 (下面)
+  static apiGetDebtStatisticsInfo(data) {
+    return Fetch.post('/account/reconciliation/statisticsInfo', data)
+  }
+
+  // 财务管理/负债数据统计 获取列表  (上面)
+  static apiGetDebtStatisticsLists(data) {
+    return Fetch.post('/account/reconciliation/statistics', data)
+  }
+
+  // 系统管理/IP地址管理 列表
+  static apiGetIpAddressLists(data) {
+    return Fetch.post('/user/filter/ip/query', data)
+  }
+
+  // 系统管理/IP地址管理 获取上方按钮
+  static apiGetIpAddressListBtn(data) {
+    return Fetch.post('/user/feature/query', data)
+  }
+
+  // 系统管理/IP地址管理 改变上方按钮状态
+  static apiEditIpAddressListBtn(data) {
+    return Fetch.post('/user/feature/status', data)
+  }
+
+   // 系统管理/IP地址管理 添加ip
+   static apiAddIpAddressListLists(data) {
+    return Fetch.post('/user/filter/ip/create', data)
+  }
+
+  // 系统管理/IP地址管理 编辑ip
+  static apiEditIpAddressListLists(data) {
+    return Fetch.post('/user/filter/ip/update', data)
+  }
+
+  // 系统管理/IP地址管理 删除ip
+  static apiDelIpAddressListLists(data) {
+    return Fetch.post('/user/filter/ip/delete', data)
+  }
+
+  // 财务管理/特殊调账管理上传ip
+  static apiSpecialFileApi(data) {
+    return Fetch.post('/admin/account/file/special-reconciliation-excel', data)
+  }
+
+  // 财务管理/特殊调账管理重新上传
+  static apiSpecialAfreshFileApi(data) {
+    return Fetch.post('/admin/account/add/special-reconciliation-revise', data)
+  }
+
+  
+
+  
+
+  
+
+   
+
+  
+
 
 }

@@ -52,7 +52,7 @@ export default {
       total: 0, // 总条数
       toDay: '',
       ago: '',
-      calLoadingExcel: false,
+      calLoadingFastExcel: false,
       btnArr: [],
       coinForexList:[]
     };

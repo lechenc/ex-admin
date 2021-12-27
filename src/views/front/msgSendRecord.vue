@@ -182,30 +182,22 @@ export default {
       function () {
         return this.searchCofig[2].value
       },
-      // 合约出入金,type=1为合约出金,type=2为合约入金
+      // 1为短信类型,2为邮件类型
       function (newVal, oldValue) {
+        
         if (newVal == 1) {
+
           this.searchCofig[5]['value'] = ''
-          this.searchCofig[5]['list'] = [
-            { label: '摩杜云', value: '1' },
-            { label: '美联软通', value: '2' },
-            { label: '网易网盾', value: '3' }
-          ]
+          // 短信类型
+          this.searchCofig[5]['list'] = this.$msgTypeArr
         } else if (newVal == 2) {
           this.searchCofig[5]['value'] = ''
-          this.searchCofig[5]['list'] = [
-            { label: '摩杜云', value: '1' },
-            { label: 'Umail ', value: '2' },
-            { label: 'Spread', value: '3' },
-            { label: '阿里云', value: '4' }
-          ]
+          // 邮件类型
+          this.searchCofig[5]['list'] = this.$emailTypeArr
         } else {
+          // 短信类型
           this.searchCofig[5]['value'] = ''
-          this.searchCofig[5]['list'] = [
-            { label: '摩杜云', value: '1' },
-            { label: '美联软通', value: '2' },
-            { label: '网易网盾', value: '3' }
-          ]
+          this.searchCofig[5]['list'] =  this.$msgTypeArr
         }
       }
     )

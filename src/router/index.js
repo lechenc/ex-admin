@@ -521,7 +521,14 @@ export const asyncRouterMap = [
         name: 'FinancialStatistics',
         component: () => import('@/views/financial/financialStatistics'),
         meta: { title: '财务数据统计列表', icon: '', role: [] }
-      }
+      },
+
+      {
+        path: 'debtStatistics',
+        name: 'DebtStatistics',
+        component: () => import('@/views/financial/debtStatistics'),
+        meta: { title: '负债数据统计', icon: '', role: [] }
+      },
     ]
   },
   // 系统管理
@@ -624,7 +631,14 @@ export const asyncRouterMap = [
         name: 'StructureTree',
         component: () => import('@/views/system/structureTree'),
         meta: { title: '结构架构树', icon: '', role: [] }
-      }
+      },
+
+      {
+        path: 'ipAddress',
+        name: 'IpAddress',
+        component: () => import('@/views/system/ipAddress'),
+        meta: { title: 'IP地址管理', icon: '', role: [] }
+      },
     ]
   },
   // app管理
@@ -686,6 +700,12 @@ export const asyncRouterMap = [
         name: 'Activity',
         component: () => import('@/views/front/activity'),
         meta: { title: '运营活动', icon: '', role: [] }
+      },
+      {
+        path: 'activityPhaseTwo',
+        name: 'ActivityPhaseTwo',
+        component: () => import('@/views/front/activityPhaseTwo'),
+        meta: { title: '运营活动二期', icon: '', role: [] }
       },
       {
         path: 'column',
@@ -1061,7 +1081,14 @@ export const asyncRouterMap = [
             name: 'CoinForexPairsNightFee',
             component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsNightFee'),
             meta: { title: '隔夜费设置', icon: '', role: [] }
-          }
+          },
+
+          {
+            path: 'coinForexPairsWhiteList',
+            name: 'CoinForexPairsWhiteList',
+            component: () => import('@/views/coinForex/coinForexPairs/coinForexPairsWhiteList'),
+            meta: { title: '白名单设置', icon: '', role: [] }
+          },
         ]
       },
 

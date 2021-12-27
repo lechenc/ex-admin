@@ -13,10 +13,10 @@
         :configs="searchCofig"
         @do-search="doSearch"
         @do-reset="doReset"
-        :calLoadingExcel="calLoadingExcel"
-        calTextExcel="快速导出excel"
-        :calTotalExcel="btnArr.includes('excel')"
-        @do-calTotal-excel="calTotalExcel"
+        :calLoadingFastExcel="calLoadingFastExcel"
+        calTextFastExcel="快速导出excel"
+        :calIsShowFastExcel="btnArr.includes('excel')"
+        @do-calFast-excel="calFastExcel"
       />
     </div>
 
@@ -60,7 +60,7 @@ export default {
       total: 0, // 总条数
       toDay: '',
       ago: '',
-      calLoadingExcel: false,
+      calLoadingFastExcel: false,
       btnArr: [],
       coinForexList: []
     }
@@ -73,22 +73,20 @@ export default {
       this.pageSize = val;
       this.getList();
     },
-    // 导出excel
-    calTotalExcel(data) {
-      this.search_params_obj = data
-      const params = {}
 
-      this.calLoadingExcel = true
-      this.requiredParams(params)
-      Object.assign(params, this.search_params_obj)
+    // 导出excel
+    calFastExcel(data) {
+      if (this.calLoadingFastExcel) return
+      this.calLoadingFastExcel = true
+      this.requiredParams(data)
       $api
-        .getCoinForexNotCloseListExport(params)
-        .then(res => {
-          this.calLoadingExcel = false
+        .getCoinForexNotCloseListExport(data)
+        .then((res) => {
+          this.calLoadingFastExcel = false
           fileDownload(res.data, '未平仓报表.xlsx')
         })
         .catch(() => {
-          this.calLoadingExcel = false
+          this.calLoadingFastExcel = false
         })
     },
     async doHandle(data) {
@@ -148,6 +146,8 @@ export default {
     formatTime(val) {
       return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
     },
+    
+
     // 时间格式 YYYY-MM-DD
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
@@ -157,9 +157,9 @@ export default {
         params.openEndTime = nowV.replace(/\//gi, '-')
         params.openStartTime = befV.replace(/\//gi, '-')
       }
-      if (this.search_params_obj.openStartTime) {
-        this.search_params_obj.openEndTime = this.formatTime(this.search_params_obj.openEndTime)
-        this.search_params_obj.openStartTime = this.formatTime(this.search_params_obj.openStartTime)
+      if (params.openStartTime) {
+        params.openEndTime = this.formatTime(params.openEndTime)
+        params.openStartTime = this.formatTime(params.openStartTime)
       }
     },
 

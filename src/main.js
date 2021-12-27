@@ -43,6 +43,9 @@ import Utils from '@/utils/util'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
 
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
+
 install(Utils, '$util')
 
 ElementUI.Dialog.props.closeOnClickModal.default = false
@@ -77,11 +80,32 @@ Vue.config.productionTip = false
 Vue.prototype.$img_api = window.SERVER_PATH_PIC // 图片上传地址
 Vue.prototype.$file_api = window.SERVER_PATH_FILE // 压缩包上传地址
 Vue.prototype.$special_file_api = window.SERVER_PATH_SPECIAL_FILE // 财务管理/特殊调账管理上传EXCEL
+Vue.prototype.$forex_file_api = window.SERVER_PATH_FOREX_FILE // 币汇管理/币汇交易对设置/交易对设置 上传EXCEL
+Vue.prototype.$activityPhaseTwo_file_api = window.SERVER_PATH_ACTIVITYPHASETWO_FILE // 运营管理/运营活动二期 上传EXCEL
 
 Vue.prototype.$pageSize = 10
 Vue.prototype._ = _
 
+// 短信类型
+Vue.prototype.$msgTypeArr = [
+  { label: '摩杜云', value: 1 },
+  { label: '美联软通', value: 2 },
+  // { label: '网易网盾', value: '3' },
+  { label: 'VONAGE', value: 4 },
+]
+// 邮件类型
+Vue.prototype.$emailTypeArr = [
+  { label: '摩杜云', value: 1 },
+  { label: 'Umail ', value: 2 },
+  { label: 'Spread', value: 3 },
+  { label: '阿里云', value: 4 },
+  { label: 'MSG91', value: 5 },
+]
+
 Vue.prototype.$variableCoin = 'USDT' // 默认币种
+
+Vue.prototype.$FileSaver = FileSaver; //设置全局
+Vue.prototype.$XLSX = XLSX; //设置全局
 
 new Vue({
   el: '#app',

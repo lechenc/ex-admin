@@ -14,6 +14,7 @@
     class="new-table"
     v-bind="$attrs"
     @selection-change="selectRow"
+    @cell-dblclick="tableEdit"
   >
     <template v-if="selection">
       <el-table-column type="selection" width="55" />
@@ -46,7 +47,7 @@
         <template slot="header">
           <div>
             <span>{{ config.label }}</span>
-            <el-button :type="config.text || 'text'" @click="headerBtnFn($event,config.btnFn)">{{
+            <el-button :type="config.text || 'text'" @click="headerBtnFn($event, config.btnFn)">{{
               config.btnLabel
             }}</el-button>
           </div>
@@ -661,6 +662,26 @@
         </template>
       </el-table-column>
 
+      <!-- 开关 -->
+      <el-table-column
+        v-if="config.type === 'filter_switch' && actionShow"
+        :key="config.prop"
+        :label="config.label"
+        :width="config.width ? config.width : ''"
+      >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row[config.prop]"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :disabled="
+              config.filter_key ? scope.row[config.filter_key] == config.filter_status : false
+            "
+            @change="doHandle($event, scope.row, config.fn)"
+          />
+        </template>
+      </el-table-column>
+
       <!-- 开关  特定情况下显示-->
       <el-table-column
         v-if="config.type === 'switchIndexOf' && actionShow"
@@ -696,7 +717,7 @@
               v-else-if="!btn.filter_key && !btn.type"
               type="text"
               size="small"
-              @click="doHandle($event, scope.row, btn['fn'])"
+              @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
             >
               {{ btn.label }}
             </el-button>
@@ -709,7 +730,7 @@
               plain
               size="small"
               :disabled="scope.row.isclick && btn.noIsClick"
-              @click="doHandle($event, scope.row, btn['fn'])"
+              @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
             >
               {{ btn.label }}
             </el-button>
@@ -730,7 +751,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -752,7 +773,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -772,7 +793,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -793,7 +814,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -813,7 +834,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -828,11 +849,12 @@
               "
             >
               <el-button
+                :disabled="btn.noIsClick"
                 slot="reference"
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -850,7 +872,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -875,7 +897,7 @@
                 :type="btn.type"
                 plain
                 size="mini"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -893,7 +915,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -906,7 +928,7 @@
                 :type="btn.type"
                 plain
                 size="small"
-                @click="doHandle($event, scope.row, btn['fn'])"
+                @click="doHandle($event, scope.row, btn['fn'], scope.$index)"
               >
                 {{ btn.label }}
               </el-button>
@@ -943,7 +965,7 @@
                     "
                     plain
                     type="primary"
-                    @click="doHandle($event, scope.row, item['fn'])"
+                    @click="doHandle($event, scope.row, item['fn'], scope.$index)"
                   >
                     {{ item.label }}
                   </el-button>
@@ -1009,6 +1031,12 @@ export default {
       default: () => {
         return []
       }
+    },
+
+    // table是否可用直接编辑
+    tableIsEdit: {
+      type: Boolean,
+      default: false
     },
 
     actionShow: {
@@ -1110,20 +1138,44 @@ export default {
     }
   },
   methods: {
+    tableEdit(row, column, cell, event) {
+      if (!this.tableIsEdit) return
+      if (column.label) {
+        var beforeVal = event.target.textContent
+        event.target.innerHTML = ''
+        let str = `<div class='cell'>
+            <div class='el-input'>
+              <input type='text' placeholder='请输入内容' class='el-input__inner'>
+            </div>
+        </div>`
+        cell.innerHTML = str
+        // 获取双击后生成的input  根据层级嵌套会有所变化
+        let cellInput = cell.children[0].children[0].children[0]
+        cellInput.value = beforeVal
+        cellInput.focus() // input自动聚焦
+        // 失去焦点后  将input移除
+        cellInput.onblur = function () {
+          let onblurCont = `<div class='cell'>${cellInput.value}</div>`
+          cell.innerHTML = onblurCont // 换成原有的显示内容
+          // 调用axios接口
+        }
+      }
+    },
     // "操作"列按钮操作
-    doHandle(e, item, fn) {
+    doHandle(e, item, fn, index) {
       const obj = {
         row: item,
-        fn: fn
+        fn: fn,
+        index
       }
 
       this.$emit('do-handle', obj)
     },
     headerBtnFn(e, fn) {
-       const obj = {
+      const obj = {
         fn: fn
       }
-      this.$emit('headerBtnFn',obj)
+      this.$emit('headerBtnFn', obj)
     },
     tableRowClassName({ row, rowIndex }) {
       // 如果行内时间是今天此行字体颜色为金色
@@ -1142,6 +1194,12 @@ export default {
         }
       }
       return 'default-row'
+    },
+    headerBtnFn(e, fn) {
+      const obj = {
+        fn: fn
+      }
+      this.$emit('headerBtnFn', obj)
     },
     // 是否有某些值
     getHave(val, typeValue) {
@@ -1191,7 +1249,7 @@ export default {
         this.$store.dispatch('app/setViewerVideo', url)
       }
     },
-    
+
     // （"非操作列"行内）按钮操作
     doHandleLine(e, item, fn, curData) {
       const obj = {
