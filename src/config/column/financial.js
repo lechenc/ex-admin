@@ -2612,6 +2612,7 @@ const contractTransferConfig = [
 ]
 
 const hotWalletExtractCol = [
+  
   {
     label: '链类型名称',
     prop: 'chain'
