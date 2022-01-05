@@ -19,7 +19,7 @@ const rechargeCol = [
   },
   {
     label: '上级UID',
-    prop: 'proxyUid'
+    prop: 'superiorUid'
   },
   {
     label: '币种',
@@ -106,7 +106,7 @@ const rechargeColNoBtn = [
   },
   {
     label: '上级UID',
-    prop: 'proxyUid'
+    prop: 'superiorUid'
   },
   {
     label: '币种',
@@ -251,7 +251,7 @@ const rechargeConfig = [
   {
     type: 'onlyNumber',
     label: '上级UID',
-    prop: 'upperUid',
+    prop: 'superiorUid',
     value: '',
     placeholder: '请输入'
   }
@@ -827,8 +827,8 @@ const extractForeignCol = [
     show_type: 'text',
     filters: [
       { text: '无类型', val: 0 },
-      { text: '自动提币', val: 1 },
-      { text: '手动提币', val: 2 }
+      { text: '热提自动处理', val: 1 },
+      { text: '冷提手动处理', val: 2 }
     ]
   },
   {
@@ -1027,8 +1027,8 @@ const extractForeignColNoBtn = [
     show_type: 'text',
     filters: [
       { text: '无类型', val: 0 },
-      { text: '自动提币', val: 1 },
-      { text: '手动提币', val: 2 }
+      { text: '热提自动处理', val: 1 },
+      { text: '冷提手动处理', val: 2 }
     ]
   },
   {
@@ -1101,13 +1101,13 @@ const extractForeignConfig = [
     value: '',
     list: []
   },
-  // {
-  //   type: "text",
-  //   label: "订单号",
-  //   prop: "id",
-  //   value: "",
-  //   placeHolder: "请输入订单号",
-  // },
+  {
+    type: "text",
+    label: "订单号",
+    prop: "id",
+    value: "",
+    placeHolder: "请输入订单号",
+  },
   {
     type: 'text',
     label: '提币地址',
@@ -1125,9 +1125,9 @@ const extractForeignConfig = [
       { label: '成功', value: 1 },
       { label: '失败', value: 2 },
       { label: '初步审核成功', value: 3 },
-      { label: '初步审核失败', value: 4 }
-      // { label: '复审审核成功', value: 13 },
-      // { label: '复审审核失败', value: 14 }
+      { label: '初步审核失败', value: 4 },
+      { label: '复审审核成功', value: 13 },
+      { label: '复审审核失败', value: 14 }
     ]
   },
   {
@@ -1144,8 +1144,8 @@ const extractForeignConfig = [
     value: '',
     list: [
       { label: '无类型', value: 0 },
-      { label: '自动提币', value: 1 },
-      { label: '手动提币', value: 2 }
+      { label: '热提自动处理', value: 1 },
+      { label: '冷提手动处理', value: 2 }
     ]
   },
   {
@@ -2676,12 +2676,20 @@ const hotWalletExtractCol = [
     label: '单日限额',
     prop: 'maxDailyAutoWithdraw'
   },
+  // {
+  //   type: 'switch',
+  //   prop: 'isStatus',
+  //   label: '热钱包启用开关',
+  //   alias: 'trswitch',
+  //   disabled: true
+  // },
+
   {
-    type: 'switch',
-    prop: 'isStatus',
     label: '热钱包启用开关',
-    alias: 'trswitch',
-    disabled: true
+    prop: 'isStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '开', val: true }, { text: '关', val: false }]
   },
   {
     label: '白天热钱包启用时间开始',
@@ -2737,7 +2745,7 @@ const hotWalletExtractCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 180,
+    width: 270,
     btnGroup: [
       {
         label: '编辑',
@@ -2747,11 +2755,20 @@ const hotWalletExtractCol = [
       },
 
       {
+        label: '删除',
+        fn: 'delete',
+        type: 'danger',
+        alias: 'delete'
+      },
+
+      {
         label: '查看余额',
         fn: 'checkBalance',
         type: 'primary',
         alias: 'checkBalance'
-      }
+      },
+
+      
     ]
   }
 ]
@@ -2773,12 +2790,19 @@ const hotWalletExtractColNoBtn = [
     label: '单日限额',
     prop: 'maxDailyAutoWithdraw'
   },
+  // {
+  //   label: "热钱包启用开关",
+  //   prop: "isStatus",
+  //   type: "filter",
+  //   show_type: "text",
+  //   filters: [{ text: "开", val: 0 }, { text: "关", val: 1 }],
+  // },
   {
-    label: "热钱包启用开关",
-    prop: "isStatus",
-    type: "filter",
-    show_type: "text",
-    filters: [{ text: "开", val: 0 }, { text: "关", val: 1 }],
+    label: '热钱包启用开关',
+    prop: 'isStatus',
+    type: 'filter',
+    show_type: 'text',
+    filters: [{ text: '开', val: true }, { text: '关', val: false }]
   },
   {
     label: '白天热钱包启用时间开始',
@@ -2846,7 +2870,7 @@ const hotWalletExtractSetCol = [
     prop: 'totalDeposit'
   },
   {
-    label: '累计热提币',
+    label: '累计热提币提出数量',
     prop: 'totalWithdraw'
   }
 ]

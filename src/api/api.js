@@ -3244,10 +3244,10 @@ export default class api {
     return Fetch.post('/admin/user/pay/query/channel-list', data)
   }
 
-  // // 财务管理/热钱包提币管理 删除
-  // static apiDelHotWalletExtract(data) {
-  //   return Fetch.post('/account/withdrawconfig/del', data)
-  // }
+  // 财务管理/热钱包提币管理 删除
+  static apiDelHotWalletExtract(data) {
+    return Fetch.post('/account/withdrawconfig/del', data)
+  }
 
   // 财务管理/热钱包提币管理 列表
   static apiGetHotWalletExtractList(data) {

@@ -1,13 +1,36 @@
 <template>
   <div class="hotWalletExtract-container">
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <!-- <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" /> -->
     </div>
-    <div v-if="isCURDAuth" class="container-btn">
-      <el-button type="primary" size="medium" @click="addChain">添加</el-button>
+
+    <el-card v-if="warnList.length" class="container-warn">
+      <p v-for="(item, index) in warnList" :key="index">
+        {{ `${item.chain}-${item.coin}热钱包地址余额不足，请尽快补充${item.maxAutoWithdraw}` }}
+      </p>
+    </el-card>
+
+    <div class="container-btn">
+      <el-button v-if="isCURDAuth" type="primary" size="medium" @click="addChain">添加</el-button>
+      <el-button style="margin-right: 20px" type="primary" size="medium" @click="getList"
+        >刷新</el-button
+      >
     </div>
     <div>
       <Btable :list-loading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
+    </div>
+    <div class="container-footer">
+      <icon-page :total="total" :pages="pages" />
+      <el-pagination
+        background
+        layout="total,sizes, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-sizes="[10, 50, 100, 200]"
+        :page-size="pageSize"
+        :total="total"
+        @size-change="pageSizeChange"
+        @current-change="goPage"
+      />
     </div>
 
     <!-- 添加 编辑 -->
@@ -178,8 +201,8 @@
         <el-button type="primary" :loading="btnLoading" @click="confirmOp">确 定</el-button>
       </div>
     </el-dialog>
-    <!-- 弹窗 -->
-    <el-dialog :visible.sync="dialogSetVisible" width="650px" title="查看余额">
+    <!-- 查看余额 弹窗 -->
+    <el-dialog :visible.sync="dialogSetVisible" width="700px" title="查看余额">
       <el-row style="margin-bottom: 22px">
         <el-col :span="6">
           链类型名称: <span style="color: #4390ff">{{ protocol }}</span>
@@ -190,13 +213,35 @@
       </el-row>
       <Btable :list-loading="setListLoading" :data="setlist" :configs="setConfigs" />
     </el-dialog>
+
+    <!-- 添加 编辑 -->
+    <el-dialog title="删除确认" width="500px" :visible.sync="deleteDialogFormVisible">
+      <el-form ref="deleteForm" :model="deleteForm" :rules="deletRules">
+        <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
+          <el-input
+            v-model="deleteForm.googleCode"
+            placeholder="请输入"
+            class="my-mumber-input"
+            autocomplete="off"
+            type="text"
+            @input="checkVal3('deleteForm', 'googleCode')"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="deleteDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" :loading="deleteBtnLoading" @click="deleteConfirmOp"
+          >确 定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
-// import iconPage from '@/components/icon-page'
+import iconPage from '@/components/icon-page'
 import {
   hotWalletExtractCol,
   hotWalletExtractColNoBtn,
@@ -209,8 +254,8 @@ export default {
   name: 'CoinWhiteList',
   components: {
     Btable,
-    Bsearch
-    // iconPage
+    Bsearch,
+    iconPage
   },
 
   filters: {
@@ -221,7 +266,7 @@ export default {
   },
   data() {
     return {
-      isCURDAuth: true, // 是否有增删改查权限
+      isCURDAuth: false, // 是否有增删改查权限
       btnLoading: false, // 提交loading
       btnLoading2: false,
       listLoading: false, // 表格loading
@@ -263,7 +308,15 @@ export default {
       protocol: '',
       chainList: [],
       chainCoinObj: {},
-      isEdit: false
+      isEdit: false,
+      // 删除
+      deleteDialogFormVisible: false,
+      deleteForm: {},
+      deleteBtnLoading: false,
+      deletRules: {
+        googleCode: [{ required: true, message: '必填', trigger: 'blur' }]
+      },
+      warnList: []
     }
   },
   computed: {
@@ -271,7 +324,7 @@ export default {
       if (!this.chainForm.chain || !this.chainCoinObj[this.chainForm.chain]) {
         return []
       } else {
-        const arr = this.chainCoinObj[this.chainForm.chain].map(v => {
+        const arr = this.chainCoinObj[this.chainForm.chain].map((v) => {
           return {
             label: v.coinName,
             value: v.coinId
@@ -294,7 +347,7 @@ export default {
       const status = this.chainForm.status
       const keys = Object.keys(this.chainForm)
       const rules = {}
-      keys.forEach(key => {
+      keys.forEach((key) => {
         rules[key] = [
           {
             required: changeKeys.includes(key) ? status : true,
@@ -318,6 +371,25 @@ export default {
     this.getList()
   },
   methods: {
+    async deleteConfirmOp() {
+      const { googleCode, id } = this.deleteForm
+      const params = {
+        id,
+        googleCode
+      }
+      const res = await $api.apiDelHotWalletExtract(params)
+      if (res) {
+        this.$message({ type: 'success', message: '删除成功!' })
+        this.deleteDialogFormVisible = false
+        this.getList()
+      }
+    },
+    // 页容变化
+    pageSizeChange(val) {
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
+    },
     changeStauus() {
       this.$refs.chainForm.clearValidate()
     },
@@ -365,7 +437,7 @@ export default {
         this.$nextTick(() => {
           this.$refs['chainForm'].resetFields()
           const Keys = Object.keys(this.chainForm)
-          Keys.forEach(key => {
+          Keys.forEach((key) => {
             this.chainForm[key] = row[key]
           })
           this.chainForm.status = !!row['status']
@@ -389,12 +461,12 @@ export default {
         this.protocol = protocol
         this.coinKey = coinKey
         const request = $api.apiHotWalletExtractCheckDetail
-        firstRequest.then(res => {
+        firstRequest.then((res) => {
           const { data } = res.data
           if (data instanceof Array) {
             data.forEach((address, idx) => {
               this.setlist.push({ address })
-              request({ protocol, coinKey, address }).then(responent => {
+              request({ protocol, coinKey, address }).then((responent) => {
                 const item = responent.data.data
                 this.$set(this.setlist, idx, {
                   ...this.setlist[idx],
@@ -405,24 +477,23 @@ export default {
           }
         })
       }
-      // if (fn === 'delete') {
-      //   this.$confirm('确定删除？', '温馨提示', {
-      //     confirmButtonText: '确定',
-      //     cancelButtonText: '取消',
-      //     type: 'warning',
-      //   })
-      //     .then(async () => {
-      //       const params = {
-      //         id: row.id,
-      //       };
-      //       const res = await $api.apiDelHotWalletExtract(params);
-      //       if (res) {
-      //         this.$message({ type: 'success', message: '通过操作成功!' });
-      //         this.getList();
-      //       }
-      //     })
-      //     .catch(() => {});
-      // }
+      if (fn === 'delete') {
+        this.$confirm('确定删除？', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(async () => {
+            this.deleteDialogFormVisible = true
+            this.$nextTick(() => {
+              this.deleteForm = {
+                id: row.id,
+                googleCode: ''
+              }
+            })
+          })
+          .catch(() => {})
+      }
     },
     // 添加链类型
     addChain() {
@@ -434,7 +505,7 @@ export default {
       this.$nextTick(() => {
         this.$refs['chainForm'].resetFields()
         const chainKeys = Object.keys(this.chainForm)
-        chainKeys.forEach(key => {
+        chainKeys.forEach((key) => {
           this.chainForm[key] = ''
         })
         this.chainForm['status'] = false
@@ -442,7 +513,7 @@ export default {
     },
     // 提交
     confirmOp() {
-      this.$refs['chainForm'].validate(async valid => {
+      this.$refs['chainForm'].validate(async (valid) => {
         if (valid) {
           const { id, status, dayTime, nightTime } = this.chainForm
           if (status) {
@@ -496,7 +567,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       this.getList()
@@ -509,15 +580,27 @@ export default {
     // getlist
     async getList() {
       if (this.listLoading) return
-      const query_data = {}
+      const query_data = {
+        pageNum: this.current_page,
+        pageSize: this.pageSize
+      }
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
       const res = await $api.apiGetHotWalletExtractList(query_data)
       // console.log('res', res);
       if (res) {
-        this.list = res.data.data.map(item => {
+        const { records, total, current, pages } = res.data.data
+        this.list = records.map((item) => {
           return { ...item, isStatus: Boolean(item.status) }
         })
+
+        this.warnList = this.list.filter((item) => {
+          return item.alarmBalance <= 0 && item.isStatus
+        })
+
+        this.total = total
+        this.pages = pages
+        this.current_page = current
         this.listLoading = false
       } else {
         this.listLoading = false
@@ -533,7 +616,6 @@ export default {
             label: key,
             value: key
           })
-          
         }
       }
     }
@@ -549,8 +631,19 @@ export default {
     margin: 10px 0;
   }
 
+  .container-warn {
+    p{
+      text-align: center;
+      color: red;
+      font-weight: 700;
+      font-size: 20px;
+    }
+  }
+
   .container-btn {
     margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
   }
 
   .container-footer {
