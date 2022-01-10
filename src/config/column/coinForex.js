@@ -1088,11 +1088,17 @@ const coinForexAccountCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 150,
+    width: 250,
     btnGroup: [
       {
         label: '每日收益',
         fn: 'everydayEarning',
+        type: 'primary'
+      },
+
+      {
+        label: '账号流水',
+        fn: 'accountEarning',
         type: 'primary'
       }
     ]
@@ -1142,19 +1148,159 @@ const coinForeEverydayEarningCol = [
   {
     label: '时间',
     prop: 'time'
+  }
+]
+
+const coinForeEverydayEarningConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  }
+]
+
+// 币汇管理/财务管理/账号流水 列表
+const coinForeAccountEarningCol = [
+  {
+    label: '时间',
+    prop: 'created'
   },
+  {
+    label: 'UID',
+    prop: 'uid'
+  },
+  {
+    label: '交易品种',
+    prop: 'symbol'
+  },
+  
+
+  {
+    label: '类型',
+    prop: 'type',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '平仓',
+        val: 1
+      },
+      {
+        text: '爆仓',
+        val: 2
+      },
+      {
+        text: '币汇划入',
+        val: 3
+      },
+      {
+        text: '币汇转出',
+        val: 4
+      },
+      {
+        text: '手续费',
+        val: 5
+      },
+      {
+        text: '隔夜费用',
+        val: 6
+      },
+      {
+        text: '点差代理返佣',
+        val: 7
+      }
+      
+    ]
+  },
+
+  {
+    label: '变动前账户余额',
+    prop: 'beforePrice'
+  },
+
+  {
+    label: '变动金额',
+    prop: 'changePrice'
+  },
+
+  {
+    label: '变动后账户余额',
+    prop: 'afterPrice'
+  },
+
+  {
+    label: '订单号',
+    prop: 'orderNo'
+  },
+
   
 ]
 
-const coinForeEverydayEarningConfig = [{
-  type: 'date_rank',
-  label: '时间',
-  prop: 'startTime',
-  prop2: 'endTime',
-  value: ''
-}]
+const coinForeAccountEarningConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'select',
+    label: '类型',
+    prop: 'type',
+    value: '',
+    list: [
+      {
+        label: '平仓',
+        value: 1
+      },
+      {
+        label: '爆仓',
+        value: 2
+      },
+      {
+        label: '币汇划入',
+        value: 3
+      },
+      {
+        label: '币汇转出',
+        value: 4
+      },
+      {
+        label: '手续费',
+        value: 5
+      },
+      {
+        label: '隔夜费用',
+        value: 6
+      },
+      {
+        label: '点差代理返佣',
+        value: 7
+      }
+    ]
+  },
+  {
+    type: 'text',
+    label: '订单号',
+    prop: 'orderNo',
+    value: '',
+    placeHolder: '请输入'
+  }
+]
 
 export {
+  coinForeAccountEarningCol,
+  coinForeAccountEarningConfig,
   coinForeEverydayEarningCol,
   coinForeEverydayEarningConfig,
   coinForexAccountCol,

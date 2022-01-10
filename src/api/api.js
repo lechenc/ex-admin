@@ -3614,6 +3614,13 @@ export default class api {
     return Fetch.post('/forex/admin/system/account/systemAccountStaticsForDay', data)
   }
 
+  // 币汇管理/财务管理/账号流水列表
+  static apiGetCoinForeAccountEarningList(data) {
+    return Fetch.post('/forex/admin/system/account/ForexSystemFlowRecord', data)
+  }
+
+   
+
   
 
   

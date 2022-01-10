@@ -1126,7 +1126,15 @@ export const asyncRouterMap = [
             name: 'CoinForeEverydayEarning',
             component: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
             meta: { title: '每日收益', icon: '', role: [] }
-          }
+          },
+
+          {
+            hidden: true,
+            path: 'coinForeAccountEarning',
+            name: 'CoinForeAccountEarning',
+            component: () => import('@/views/coinForex/coinForexfinance/coinForeAccountEarning'),
+            meta: { title: '账号流水', icon: '', role: [] }
+          },
         ]
       },
 

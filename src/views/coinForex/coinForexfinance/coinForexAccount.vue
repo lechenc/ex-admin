@@ -16,7 +16,7 @@
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
     </div>
 
-    <div class="container-footer">
+    <!-- <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination
         background
@@ -29,7 +29,7 @@
         :total="total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -82,6 +82,13 @@ export default {
           // query: { userId: row.userId }
         })
       }
+
+      if (fn == 'accountEarning') {
+        this.$router.push({
+          path: '/coinForex/coinForexfinance/coinForeAccountEarning'
+          // query: { userId: row.userId }
+        })
+      }
     },
     doSearch(data) {
       this.current_page = 1
@@ -117,19 +124,19 @@ export default {
       }
       // this.requiredParams(this.search_params_obj)
       Object.assign(params, this.search_params_obj)
-      // const res = await $api.apiGetCoinForexAccountList(params)
-      // if (res) {
-      //   const { records, current, total, pages } = res.data.data
-      //   this.total = total
-      //   this.pages = pages
-      //   this.current_page = current
-      //   this.list = records
-      //   records.forEach(v => {
-      //     v['status'] = v['status'] === 1 ? true : false
-      //   })
-      //   this.list = records
+      const res = await $api.apiGetCoinForexAccountList(params)
+      if (res) {
+        const { records, current, total, pages } = res.data.data
+        this.total = total
+        this.pages = pages
+        this.current_page = current
+        this.list = records
+        records.forEach(v => {
+          v['status'] = v['status'] === 1 ? true : false
+        })
+        this.list = records
 
-      // }
+      }
       this.list = [
         {
           label: 1,
