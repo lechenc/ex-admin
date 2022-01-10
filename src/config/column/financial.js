@@ -2727,10 +2727,10 @@ const hotWalletExtractCol = [
   //   label: '余额不足提醒邮箱',
   //   prop: 'alarmEmail'
   // },
-  // {
-  //   label: '钱包余额低于该参数值提醒值',
-  //   prop: 'alarmBalance'
-  // },
+  {
+    label: '钱包余额低于该值参数时提醒',
+    prop: 'alarmBalance'
+  },
   {
     label: '创建时间',
     prop: 'createTime',
@@ -2840,10 +2840,10 @@ const hotWalletExtractColNoBtn = [
   //   label: '余额不足提醒邮箱',
   //   prop: 'alarmEmail'
   // },
-  // {
-  //   label: '钱包余额低于该参数值提醒值',
-  //   prop: 'alarmBalance'
-  // },
+  {
+    label: '钱包余额低于该值参数时提醒',
+    prop: 'alarmBalance'
+  },
   {
     label: '创建时间',
     prop: 'createTime',
@@ -2864,6 +2864,10 @@ const hotWalletExtractSetCol = [
   {
     label: '当前余额',
     prop: 'amount'
+  },
+  {
+    label: '余额低于该值参数时提醒',
+    prop: 'alarmBalance'
   },
   {
     label: '累计充入该地址数量',

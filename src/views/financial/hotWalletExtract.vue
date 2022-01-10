@@ -170,6 +170,7 @@
             type="email"
           />
         </el-form-item>
+          -->
         <el-form-item
           label="钱包余额低于该参数值提醒值"
           :label-width="formLabelWidth"
@@ -183,7 +184,7 @@
             @input="checkVal('alarmBalance')"
           />
         </el-form-item>
-        -->
+      
 
         <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
           <el-input
@@ -291,8 +292,8 @@ export default {
         nightTime: '', // 夜间热钱包启用时间
         userNightWithdrawTimes: '', // 每个用户夜间可使用提币次数
         userNightWithdrawAmount: '', // 每个用户夜间单次可提币限额
-        userNightWithdrawAmountTotal: '' // 每个用户夜间可使用提币总额
-        // alarmBalance: '', // 钱包余额低于该参数值提醒值
+        userNightWithdrawAmountTotal: '' ,// 每个用户夜间可使用提币总额
+        alarmBalance: '', // 钱包余额低于该参数值提醒值
         // alarmPhone: '', // 余额不足提醒手机
         // alarmEmail: '' // 余额不足提醒邮箱
       },
@@ -340,8 +341,8 @@ export default {
         'nightTime',
         'userNightWithdrawTimes',
         'userNightWithdrawAmount',
-        'userNightWithdrawAmountTotal'
-        // 'alarmBalance',
+        'userNightWithdrawAmountTotal',
+        'alarmBalance',
         // 'alarmPhone',
         // 'alarmEmail'
       ]
