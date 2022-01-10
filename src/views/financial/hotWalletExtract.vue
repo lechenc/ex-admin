@@ -525,19 +525,18 @@ export default {
       this.$refs['chainForm'].validate(async (valid) => {
         if (valid) {
           const { id, status, dayTime, nightTime, coin } = this.chainForm
-
           if (status) {
-            const dayEndH = dayTime[1].split(':')[0]
-            const dayEndM = dayTime[1].split(':')[1]
-            const dayEndS = dayTime[1].split(':')[2]
-            const nightStH = nightTime[0].split(':')[0]
-            const nightStM = nightTime[0].split(':')[1]
-            const nightSts = nightTime[0].split(':')[2]
-            if (
-              dayEndH > nightStH ||
-              (dayEndH === nightStH && dayEndM > nightStM) ||
-              (dayEndH === nightStH && dayEndM === nightStM && dayEndS > nightSts)
-            ) {
+            const dayStr = dayTime[0].split(':').join('')
+            const dayEnd = dayTime[1].split(':').join('')
+            const nightStr = nightTime[0].split(':').join('')
+            const nightEnd = nightTime[1].split(':').join('')
+
+            if (Number(nightEnd) > Number(dayEnd) && Number(dayEnd) > Number(nightStr)) {
+              this.$message.error('白天热钱包启用时间和夜间启用时间不得重复交叉')
+              return
+            }
+
+            if (Number(dayEnd) > Number(nightEnd) && Number(nightEnd) > Number(dayStr)) {
               this.$message.error('白天热钱包启用时间和夜间启用时间不得重复交叉')
               return
             }
