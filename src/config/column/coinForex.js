@@ -1111,7 +1111,9 @@ const coinForexAccountConfig = [
     label: '币种',
     prop: 'symbol',
     value: '',
-    list: []
+    list: [
+      { label: 'USD', value: 1 },
+    ]
   }
 ]
 
@@ -1292,7 +1294,7 @@ const coinForeAccountEarningConfig = [
   {
     type: 'text',
     label: '订单号',
-    prop: 'orderNo',
+    prop: 'uniquelyIdentifies',
     value: '',
     placeHolder: '请输入'
   }

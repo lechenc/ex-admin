@@ -78,8 +78,8 @@ export default {
       const { fn, row } = data
       if (fn == 'everydayEarning') {
         this.$router.push({
-          path: '/coinForex/coinForexfinance/coinForeEverydayEarning'
-          // query: { userId: row.userId }
+          path: '/coinForex/coinForexfinance/coinForeEverydayEarning',
+          query: { uid: row.uid }
         })
       }
 
@@ -126,23 +126,14 @@ export default {
       Object.assign(params, this.search_params_obj)
       const res = await $api.apiGetCoinForexAccountList(params)
       if (res) {
-        const { records, current, total, pages } = res.data.data
-        this.total = total
-        this.pages = pages
-        this.current_page = current
-        this.list = records
-        records.forEach(v => {
-          v['status'] = v['status'] === 1 ? true : false
-        })
-        this.list = records
-
+        this.list = res.data.data
       }
-      this.list = [
-        {
-          label: 1,
-          value: 1
-        }
-      ]
+      // this.list = [
+      //   {
+      //     label: 1,
+      //     uid:1
+      //   }
+      // ]
       this.listLoading = false
     },
     formatTime(val) {
@@ -162,14 +153,6 @@ export default {
         this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
     },
-
-    // 币汇产品
-    async getCoinForexList() {
-      this.$store.dispatch('common/getCoinForexList').then(() => {
-        this.coinForexList = this.$store.state.common.coinForexList
-        this.searchCofig[2]['list'] = this.coinForexList
-      })
-    },
     // 币种
     async getSymbolList() {
       this.$store.dispatch('common/getCoinList').then(() => {
@@ -184,8 +167,7 @@ export default {
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
     this.getList()
-    // this.getCoinForexList()
-    this.getSymbolList()
+    // this.getSymbolList()
   }
 }
 </script>

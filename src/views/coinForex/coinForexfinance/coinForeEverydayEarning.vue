@@ -14,11 +14,7 @@
       </el-col>
     </el-row>
     <div class="container-top">
-      <Bsearch
-        :configs="searchCofig"
-        @do-search="doSearch"
-        @do-reset="doReset"
-      />
+      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
 
     <div>
@@ -43,7 +39,10 @@
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
-import { coinForeEverydayEarningCol, coinForeEverydayEarningConfig } from '@/config/column/coinForex'
+import {
+  coinForeEverydayEarningCol,
+  coinForeEverydayEarningConfig
+} from '@/config/column/coinForex'
 import $api from '@/api/api'
 import Precision from '@/utils/number-precision'
 import activePage from '@/mixin/keepPage'
@@ -73,13 +72,10 @@ export default {
       pageSize: this.$pageSize, // 当前每页显示页码数
       total: 0, // 总条数
       pages: 0, // 总页数
-      coin_List: [], // 交易对列表
-      
+      coin_List: [] // 交易对列表
     }
   },
   methods: {
-    
-
     async doHandle(data) {
       const { fn, row } = data
     },
@@ -93,7 +89,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [this.toDay, this.ago]
@@ -134,7 +130,7 @@ export default {
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
           let tmpName = ''
-          tmpName = this.coin_List.filter(v => v['value'] == this.search_params_obj.coinMarket)[0]
+          tmpName = this.coin_List.filter((v) => v['value'] == this.search_params_obj.coinMarket)[0]
             .label
           this.search_params_obj.coinMarket = tmpName
         }
@@ -146,6 +142,9 @@ export default {
       const query_data = {
         pageNum: this.current_page,
         pageSize: this.pageSize
+      }
+      if (this.$route.query.uid) {
+        query_data.systemUid = this.$route.query.uid
       }
       this.requiredParams(this.search_params_obj)
       Object.assign(query_data, this.search_params_obj)
