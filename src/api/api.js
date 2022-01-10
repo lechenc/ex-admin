@@ -3455,7 +3455,7 @@ export default class api {
   }
 
   // 币汇管理/财务管理/币汇流水 列表
-  static getCoinForexAccountList(data) {
+  static getCoinForexRecordList(data) {
     return Fetch.post('/forex/admin/queryForexFlowList', data)
   }
 

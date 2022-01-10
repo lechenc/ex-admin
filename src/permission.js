@@ -367,6 +367,7 @@ const mapComponents = {
   // 币汇管理
 
   // CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
+  CoinForexRecord: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
   CoinForexAccount: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
   CoinForexDealList: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
   CoinForexEntrustList: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),

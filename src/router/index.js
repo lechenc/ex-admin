@@ -1100,9 +1100,9 @@ export const asyncRouterMap = [
         meta: { title: '财务管理', icon: '', role: [] },
         children: [
           {
-            path: 'coinForexAccount',
-            name: 'CoinForexAccount',
-            component: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
+            path: 'coinForexRecord',
+            name: 'CoinForexRecord',
+            component: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
             meta: { title: '币汇流水', icon: '', role: [] }
           },
 
@@ -1111,7 +1111,14 @@ export const asyncRouterMap = [
             name: 'CoinForexRate',
             component: () => import('@/views/coinForex/coinForexfinance/coinForexRate'),
             meta: { title: '汇率查询', icon: '', role: [] }
-          }
+          },
+
+          {
+            path: 'coinForexAccount',
+            name: 'CoinForexAccount',
+            component: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
+            meta: { title: '币汇账号', icon: '', role: [] }
+          },
         ]
       },
 

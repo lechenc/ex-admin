@@ -775,7 +775,7 @@ const coinForexPairsConfigsConfig = [
 ]
 
 // 币汇管理/财务管理/币汇流水 列表
-const coinForexAccountCol = [
+const coinForexRecordCol = [
   {
     label: '时间',
     prop: 'created'
@@ -825,7 +825,7 @@ const coinForexAccountCol = [
   }
 ]
 
-const coinForexAccountConfig = [
+const coinForexRecordConfig = [
   {
     type: 'date_rank',
     label: '时间',
@@ -1056,8 +1056,8 @@ export {
   coinForexPairsNightFeeConfig,
   coinForexNetWorthCol,
   coinForexNetWorthConfig,
-  coinForexAccountCol,
-  coinForexAccountConfig,
+  coinForexRecordCol,
+  coinForexRecordConfig,
   coinForexPairsConfigsCol,
   coinForexPairsConfigsColNoBtn,
   coinForexPairsConfigsConfig,

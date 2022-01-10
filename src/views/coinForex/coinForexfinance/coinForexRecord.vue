@@ -8,15 +8,8 @@
  -->
 <template>
   <div class="coinForexRecord-container">
-    <!-- <div class="container-top">
+    <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
-    </div> -->
-
-    <div class="container-head">
-      
-      <el-button  type="primary" size="medium" @click="getList"
-        >刷新</el-button
-      >
     </div>
 
     <div>
@@ -166,7 +159,7 @@ export default {
     margin-left: 0;
   }
 
-  .container-head {
+  .container-btn {
     margin: 20px 0;
     display: flex;
     justify-content: space-between;

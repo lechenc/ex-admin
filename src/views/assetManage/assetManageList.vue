@@ -74,6 +74,7 @@ export default {
         { label: '星球充值账号', value: 105 },
         { label: '合约账号', value: 106 },
         // { label: '合约体验金账号', value: 107 },
+        { label: '币汇收益账号', value: 107 },
       ],
 
       title: '添加账号',
@@ -111,17 +112,15 @@ export default {
           //  星球充值账号
           this.$router.push({ path: '/contract/accountManagement/accountContract', query: { topBtn: true } });
         }else if (typeId === 107) {
-          //  体验金账号
-          this.$router.push({ path: '/voucher/voucherExperience', query: { userId: row.userId } });
+          //  币汇账号
+          this.$router.push({ path: '/coinForex/coinForexfinance/coinForexAccount', query: { userId: row.userId } });
         }
       }
     },
     doSearch(data) {
       this.current_page = 1;
       this.search_params_obj = data;
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
-      }
+      
       this.getList();
     },
     doReset() {
