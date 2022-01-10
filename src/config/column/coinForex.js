@@ -106,7 +106,7 @@ const coinForexDealListConfig = [
     prop: 'type',
     value: '',
     list: [{ label: '正常平仓', value: 0 }, { label: '爆仓', value: 1 }]
-  },
+  }
   // {
   //   type: 'select',
   //   label: '买或卖',
@@ -252,7 +252,7 @@ const coinForexEntrustListConfig = [
     label: '委托方向',
     prop: 'dealDirection',
     value: '',
-    list: [{ label: '卖', value:  0}, { label: '买', value: 1 }]
+    list: [{ label: '卖', value: 0 }, { label: '买', value: 1 }]
   }
 ]
 
@@ -301,7 +301,7 @@ const coinForexNotCloseListCol = [
     label: '交易量',
     prop: 'holdVolString'
   },
-  
+
   {
     label: '交易手数',
     prop: 'handlerNumString'
@@ -662,7 +662,7 @@ const coinForexPairsConfigsCol = [
         fn: 'importKLine',
         type: 'primary',
         alias: 'importKLine'
-      },
+      }
     ]
   }
 ]
@@ -1050,7 +1050,115 @@ const coinForexPairsNightFeeConfig = [
   }
 ]
 
+// 币汇管理/财务管理/币汇账号 列表
+const coinForexAccountCol = [
+  {
+    label: 'UID',
+    prop: 'uid'
+  },
+  {
+    label: '币种',
+    prop: 'symbol'
+  },
+  {
+    label: '平仓收益',
+    prop: 'PLStatistics'
+  },
+
+  {
+    label: '隔夜费',
+    prop: 'servicePriceStatistics'
+  },
+
+  {
+    label: '划转手续费',
+    prop: 'transferServidePriceStatistics'
+  },
+
+  {
+    label: '返佣',
+    prop: 'agentRevateStatistics'
+  },
+
+  {
+    label: '时间',
+    prop: 'time'
+  },
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 150,
+    btnGroup: [
+      {
+        label: '每日收益',
+        fn: 'everydayEarning',
+        type: 'primary'
+      }
+    ]
+  }
+]
+
+const coinForexAccountConfig = [
+  {
+    type: 'select_search',
+    label: '币种',
+    prop: 'symbol',
+    value: '',
+    list: []
+  }
+]
+
+// 币汇管理/财务管理/每日收益 列表
+const coinForeEverydayEarningCol = [
+  {
+    label: 'UID',
+    prop: 'uid'
+  },
+  {
+    label: '币种',
+    prop: 'symbol'
+  },
+  {
+    label: '平仓收益',
+    prop: 'PLStatistics'
+  },
+
+  {
+    label: '隔夜费',
+    prop: 'servicePriceStatistics'
+  },
+
+  {
+    label: '划转手续费',
+    prop: 'transferServidePriceStatistics'
+  },
+
+  {
+    label: '返佣',
+    prop: 'agentRevateStatistics'
+  },
+
+  {
+    label: '时间',
+    prop: 'time'
+  },
+  
+]
+
+const coinForeEverydayEarningConfig = [{
+  type: 'date_rank',
+  label: '时间',
+  prop: 'startTime',
+  prop2: 'endTime',
+  value: ''
+}]
+
 export {
+  coinForeEverydayEarningCol,
+  coinForeEverydayEarningConfig,
+  coinForexAccountCol,
+  coinForexAccountConfig,
   coinForexPairsNightFeeCol,
   coinForexPairsNightFeeColNoBtn,
   coinForexPairsNightFeeConfig,

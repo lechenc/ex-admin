@@ -369,6 +369,7 @@ const mapComponents = {
   // CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
   CoinForexRecord: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
   CoinForexAccount: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
+  CoinForeEverydayEarning: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
   CoinForexDealList: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
   CoinForexEntrustList: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
   CoinForexNotCloseList: () => import('@/views/coinForex/coinForexDeal/coinForexNotCloseList'),

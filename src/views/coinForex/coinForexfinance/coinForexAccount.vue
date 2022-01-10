@@ -7,16 +7,9 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\financial\assets.vue
  -->
 <template>
-  <div class="coinForexRecord-container">
-    <!-- <div class="container-top">
+  <div class="coinForexAccount-container">
+    <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
-    </div> -->
-
-    <div class="container-head">
-      
-      <el-button  type="primary" size="medium" @click="getList"
-        >刷新</el-button
-      >
     </div>
 
     <div>
@@ -25,7 +18,17 @@
 
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @size-change="pageSizeChange" @current-change="goPage" layout="total,sizes, prev, pager, next, jumper" :current-page="current_page" :page-sizes="[10, 50, 100, 200]" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @size-change="pageSizeChange"
+        @current-change="goPage"
+        layout="total,sizes, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-sizes="[10, 50, 100, 200]"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -33,11 +36,11 @@
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
-import { coinForexRecordCol, coinForexRecordConfig } from '@/config/column/coinForex'
+import { coinForexAccountCol, coinForexAccountConfig } from '@/config/column/coinForex'
 import $api from '@/api/api'
 
 export default {
-  name: 'CoinForexRecord',
+  name: 'CoinForexAccount',
   components: {
     Btable,
     Bsearch,
@@ -67,30 +70,34 @@ export default {
   methods: {
     // 页容变化
     pageSizeChange(val) {
-      this.current_page = 1;
-      this.pageSize = val;
-      this.getList();
+      this.current_page = 1
+      this.pageSize = val
+      this.getList()
     },
     async doHandle(data) {
       const { fn, row } = data
+      if (fn == 'everydayEarning') {
+        this.$router.push({
+          path: '/coinForex/coinForexfinance/coinForeEverydayEarning'
+          // query: { userId: row.userId }
+        })
+      }
     },
     doSearch(data) {
       this.current_page = 1
       this.search_params_obj = data
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1
-      }
+
       this.getList()
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
-      this.searchCofig[0].value = [
-        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
-      ]
+      // this.searchCofig[0].value = [
+      //   this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+      //   this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      // ]
       this.getList()
     },
 
@@ -105,23 +112,30 @@ export default {
       this.listLoading = true
 
       const params = {
-        pageNum: this.current_page,
-        pageSize: this.pageSize
+        // pageNum: this.current_page,
+        // pageSize: this.pageSize
       }
-      this.requiredParams(this.search_params_obj)
+      // this.requiredParams(this.search_params_obj)
       Object.assign(params, this.search_params_obj)
-      const res = await $api.getCoinForexRecordList(params)
-      if (res) {
-        const { records, current, total, pages } = res.data.data
-        this.total = total
-        this.pages = pages
-        this.current_page = current
-        this.list = records
-        records.forEach(v => {
-          v['status'] = v['status'] === 1 ? true : false
-        })
-        this.list = records
-      }
+      // const res = await $api.apiGetCoinForexAccountList(params)
+      // if (res) {
+      //   const { records, current, total, pages } = res.data.data
+      //   this.total = total
+      //   this.pages = pages
+      //   this.current_page = current
+      //   this.list = records
+      //   records.forEach(v => {
+      //     v['status'] = v['status'] === 1 ? true : false
+      //   })
+      //   this.list = records
+
+      // }
+      this.list = [
+        {
+          label: 1,
+          value: 1
+        }
+      ]
       this.listLoading = false
     },
     formatTime(val) {
@@ -148,20 +162,28 @@ export default {
         this.coinForexList = this.$store.state.common.coinForexList
         this.searchCofig[2]['list'] = this.coinForexList
       })
+    },
+    // 币种
+    async getSymbolList() {
+      this.$store.dispatch('common/getCoinList').then(() => {
+        this.coin_List = this.$store.state.common.coinlist
+        this.searchCofig[0]['list'] = this.$store.state.common.coinlist
+      })
     }
   },
   mounted() {
-    this.configs = coinForexRecordCol
-    this.searchCofig = coinForexRecordConfig
+    this.configs = coinForexAccountCol
+    this.searchCofig = coinForexAccountConfig
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
-    this.getCoinForexList()
     this.getList()
+    // this.getCoinForexList()
+    this.getSymbolList()
   }
 }
 </script>
 <style lang="scss">
-.coinForexRecord-container {
+.coinForexAccount-container {
   .el-form-item__content {
     margin-left: 0;
   }

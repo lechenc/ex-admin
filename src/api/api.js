@@ -3604,6 +3604,20 @@ export default class api {
     return Fetch.post('/admin/account/add/special-reconciliation-revise', data)
   }
 
+  //  币汇管理/财务管理/币汇账号 列表
+  static apiGetCoinForexAccountList(data) {
+    return Fetch.post('/forex/admin/system/account/systemAccountStatics', data)
+  }
+
+  // 币汇管理/财务管理/每日收益 列表
+  static apiGetCoinForeEverydayEarningList(data) {
+    return Fetch.post('/forex/admin/system/account/systemAccountStaticsForDay', data)
+  }
+
+  
+
+  
+
   
 
   
