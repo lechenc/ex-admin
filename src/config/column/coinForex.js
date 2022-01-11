@@ -1173,7 +1173,7 @@ const coinForeAccountEarningCol = [
   },
   {
     label: 'UID',
-    prop: 'uid'
+    prop: 'systemUid'
   },
   {
     label: '交易品种',
@@ -1253,7 +1253,7 @@ const coinForeAccountEarningConfig = [
   {
     type: 'onlyNumber',
     label: 'UID',
-    prop: 'uid',
+    prop: 'systemUid',
     value: '',
     placeHolder: '请输入'
   },

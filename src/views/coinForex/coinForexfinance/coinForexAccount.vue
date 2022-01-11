@@ -76,17 +76,19 @@ export default {
     },
     async doHandle(data) {
       const { fn, row } = data
+      
       if (fn == 'everydayEarning') {
         this.$router.push({
           path: '/coinForex/coinForexfinance/coinForeEverydayEarning',
-          query: { uid: row.systemUserId }
+          query: { uid: row.systemUid }
         })
       }
 
       if (fn == 'accountEarning') {
         this.$router.push({
-          path: '/coinForex/coinForexfinance/coinForeAccountEarning'
-          // query: { userId: row.userId }
+          path: '/coinForex/coinForexfinance/coinForeAccountEarning',
+          
+          query: { uid: row.systemUid }
         })
       }
     },
