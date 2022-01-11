@@ -16,7 +16,7 @@
         :export-excel="btnArr.includes('excel')"
         :cal-loading="calLoading"
         :cal-total="true"
-        :set-wind-control="true"
+        :set-wind-control="false"
         @do-search="doSearch"
         @do-reset="doReset"
         @do-exportExcel="exportExcel"

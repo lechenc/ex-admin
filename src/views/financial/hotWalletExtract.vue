@@ -416,7 +416,8 @@ export default {
         'maxAutoWithdraw',
         'userNightWithdrawAmount',
         'userNightWithdrawAmountTotal',
-        'maxDailyAutoWithdraw'
+        'maxDailyAutoWithdraw',
+        'alarmBalance'
       ]
       if (arr.includes(val)) {
         this.chainForm[val] = (this.chainForm[val] + '').replace(
