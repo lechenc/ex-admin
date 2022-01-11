@@ -170,6 +170,7 @@
             type="email"
           />
         </el-form-item>
+          -->
         <el-form-item
           label="钱包余额低于该参数值提醒值"
           :label-width="formLabelWidth"
@@ -183,7 +184,7 @@
             @input="checkVal('alarmBalance')"
           />
         </el-form-item>
-        -->
+      
 
         <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
           <el-input
@@ -291,8 +292,8 @@ export default {
         nightTime: '', // 夜间热钱包启用时间
         userNightWithdrawTimes: '', // 每个用户夜间可使用提币次数
         userNightWithdrawAmount: '', // 每个用户夜间单次可提币限额
-        userNightWithdrawAmountTotal: '' // 每个用户夜间可使用提币总额
-        // alarmBalance: '', // 钱包余额低于该参数值提醒值
+        userNightWithdrawAmountTotal: '' ,// 每个用户夜间可使用提币总额
+        alarmBalance: '', // 钱包余额低于该参数值提醒值
         // alarmPhone: '', // 余额不足提醒手机
         // alarmEmail: '' // 余额不足提醒邮箱
       },
@@ -316,7 +317,8 @@ export default {
       deletRules: {
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }]
       },
-      warnList: []
+      warnList: [],
+      coin_List:[], // 币种列表
     }
   },
   computed: {
@@ -339,8 +341,8 @@ export default {
         'nightTime',
         'userNightWithdrawTimes',
         'userNightWithdrawAmount',
-        'userNightWithdrawAmountTotal'
-        // 'alarmBalance',
+        'userNightWithdrawAmountTotal',
+        'alarmBalance',
         // 'alarmPhone',
         // 'alarmEmail'
       ]
@@ -369,8 +371,15 @@ export default {
     this.isCURDAuth = authObj.isAdd
     this.setConfigs = hotWalletExtractSetCol
     this.getList()
+    this.getSymbolList()
   },
   methods: {
+    // 得到币种列表
+    async getSymbolList() {
+      this.$store.dispatch('common/getCoinList').then(() => {
+        this.coin_List = this.$store.state.common.coinlist;
+      });
+    },
     async deleteConfirmOp() {
       const { googleCode, id } = this.deleteForm
       const params = {
@@ -515,7 +524,7 @@ export default {
     confirmOp() {
       this.$refs['chainForm'].validate(async (valid) => {
         if (valid) {
-          const { id, status, dayTime, nightTime } = this.chainForm
+          const { id, status, dayTime, nightTime ,coin} = this.chainForm
           if (status) {
             const dayEndH = dayTime[1].split(':')[0]
             const dayEndM = dayTime[1].split(':')[1]
@@ -530,13 +539,17 @@ export default {
           const dayEnableTimeEnd = dayTime ? dayTime[1] : ''
           const nightEnableTimeStart = nightTime ? nightTime[0] : ''
           const nightEnableTimeEnd = nightTime ? nightTime[1] : ''
+          
+          const coinId = this.coin_List.filter(v=> v.label == coin)[0].value
           const params = {
             ...this.chainForm,
             status: status ? 1 : 0,
             dayEnableTimeStart,
             dayEnableTimeEnd,
             nightEnableTimeStart,
-            nightEnableTimeEnd
+            nightEnableTimeEnd,
+            coin,
+            coinId
           }
           delete params['dayTime']
           delete params['nightTime']

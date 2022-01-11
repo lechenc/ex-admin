@@ -884,7 +884,7 @@ const agentFinancialFlowCol = [
     type: 'filter',
     show_type: 'text',
     filters: [
-      // { text: '合约返佣', val: 88 },
+      // { text: '逐仓返佣', val: 88 },
       { text: '充币', val: 0 },
       { text: '提币待审核', val: 1 },
       { text: '提币成功', val: 2 },
@@ -901,13 +901,18 @@ const agentFinancialFlowCol = [
       { text: '锁仓手动释放冻结金额', val: 23 },
       { text: '广告下架', val: 39 },
 
-      { text: '合约返佣', val: 88 },
-      { text: '合约返佣结算', val: 95 },
+      { text: '币币转入合约全仓账户', val: '76' },
+      { text: '合约全仓账户转出币币账户', val: '77' },
+      { text: '法币转入合约全仓账户', val: '78' },
+      { text: '合约全仓账户转入法币账户', val: '79' },
+
+      { text: '逐仓返佣', val: 88 },
+      { text: '逐仓返佣结算', val: 95 },
       { text: '普通用户手续费返佣', val: 101 },
-      { text: '币币划转至合约', val: 50 },
-      { text: '合约划转至币币', val: 51 },
-      { text: '法币划转至合约', val: 52 },
-      { text: '合约划转至法币', val: 53 },
+      { text: '币币划转至逐仓', val: 50 },
+      { text: '逐仓划转至币币', val: 51 },
+      { text: '法币划转至逐仓', val: 52 },
+      { text: '逐仓划转至法币', val: 53 },
       { text: '币币划转至法币', val: 10 },
       { text: '法币划转至币币', val: 11 },
       { text: '发送红包', val: '106' },
@@ -916,6 +921,10 @@ const agentFinancialFlowCol = [
       { text: '补充保证金', val: '109' },
       { text: '释放保证金', val: '110' }
     ]
+  },
+  {
+    label: '逐仓账户',
+    prop: 'coinName'
   },
   {
     label: '变动资产',
@@ -975,13 +984,18 @@ const agentFinancialFlowConfig = [
       { label: '锁仓手动释放冻结金额', value: 23 },
       { label: '广告下架', value: 39 },
 
-      { label: '合约返佣', value: 88 },
-      { label: '合约返佣结算', value: 95 },
+      { label: '币币转入合约全仓账户', value: '76' },
+      { label: '合约全仓账户转出币币账户', value: '77' },
+      { label: '法币转入合约全仓账户', value: '78' },
+      { label: '合约全仓账户转入法币账户', value: '79' },
+
+      { label: '逐仓返佣', value: 88 },
+      { label: '逐仓返佣结算', value: 95 },
       { label: '普通用户手续费返佣', value: 101 },
-      { label: '币币划转至合约', value: 50 },
-      { label: '合约划转至币币', value: 51 },
-      { label: '法币划转至合约', value: 52 },
-      { label: '合约划转至法币', value: 53 },
+      { label: '币币划转至逐仓', value: 50 },
+      { label: '逐仓划转至币币', value: 51 },
+      { label: '法币划转至逐仓', value: 52 },
+      { label: '逐仓划转至法币', value: 53 },
       { label: '币币划转至法币', value: 10 },
       { label: '法币划转至币币', value: 11 },
       { label: '发送红包', value: '106' },
