@@ -352,7 +352,8 @@ export default {
       keys.forEach((key) => {
         rules[key] = [
           {
-            required: changeKeys.includes(key) ? status : true,
+            // required: changeKeys.includes(key) ? status : true,
+            required:  true,
             message: '必填',
             trigger: 'blur'
           }
