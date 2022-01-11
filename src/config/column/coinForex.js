@@ -1054,7 +1054,7 @@ const coinForexPairsNightFeeConfig = [
 const coinForexAccountCol = [
   {
     label: 'UID',
-    prop: 'uid'
+    prop: 'systemUserId'
   },
   {
     label: '币种',
