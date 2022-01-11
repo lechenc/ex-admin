@@ -901,7 +901,7 @@ export default {
       const res = await $api.apiGetRechargeChainName({})
       if (res) {
         const arr = res.data.data
-        this.searchCofig[5]['list'] = arr.map((v) => {
+        this.searchCofig[6]['list'] = arr.map((v) => {
           return {
             label: v.chainName,
             value: v.chainName
