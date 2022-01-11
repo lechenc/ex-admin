@@ -29,7 +29,12 @@
         </el-form-item> -->
         <el-form-item label="账号类型" :label-width="formLabelWidth" prop="userType">
           <el-select v-model="form.userType" size="small" clearable>
-            <el-option v-for="(item, idx) in roleList" :key="idx" :label="item.label" :value="item.value"></el-option>
+            <el-option
+              v-for="(item, idx) in roleList"
+              :key="idx"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -41,18 +46,22 @@
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { assetManageListCol, assetManageListColNoBtn, assetManageListConfig } from '@/config/column/assetManage';
-import $api from '@/api/api';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import {
+  assetManageListCol,
+  assetManageListColNoBtn,
+  assetManageListConfig
+} from '@/config/column/assetManage'
+import $api from '@/api/api'
 
 export default {
   name: 'AssetManageList',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
   data() {
     return {
@@ -74,6 +83,7 @@ export default {
         { label: '星球充值账号', value: 105 },
         { label: '合约账号', value: 106 },
         // { label: '合约体验金账号', value: 107 },
+        { label: '币汇收益账号', value: 107 }
       ],
 
       title: '添加账号',
@@ -81,125 +91,136 @@ export default {
       dialogVisible: false, // 是否弹出弹窗
       curRow: {}, // 当前被点击的数据条目
       form: {
-        userType: '',
+        userType: ''
         // subUsername: '',
       },
       rules: {
-        userType: [{ required: true, message: '必填' }],
+        userType: [{ required: true, message: '必填' }]
         // subUsername: [{ required: true, message: '必填' }],
-      },
-    };
+      }
+    }
   },
   methods: {
     async doHandle(data) {
-      const { fn, row } = data;
-      const typeId = +row.userType;
+      const { fn, row } = data
+      const typeId = +row.userType
       if (fn === 'detail') {
         if (typeId === 101) {
           // 手续费账号
-          this.$router.push({ path: '/assetManage/earnAccount', query: { userId: row.userId } });
+          this.$router.push({ path: '/assetManage/earnAccount', query: { userId: row.userId } })
         } else if (typeId === 102) {
           //  成本账号
-          this.$router.push({ path: '/assetManage/costAccount', query: { userId: row.userId } });
+          this.$router.push({ path: '/assetManage/costAccount', query: { userId: row.userId } })
         } else if (typeId === 103) {
           //  支出账号
-          this.$router.push({ path: '/assetManage/expenseAcountList', query: { userId: row.userId } });
+          this.$router.push({
+            path: '/assetManage/expenseAcountList',
+            query: { userId: row.userId }
+          })
         } else if (typeId === 105) {
           //  星球充值账号
-          this.$router.push({ path: '/assetManage/revenueAccount', query: { userId: row.userId } });
+          this.$router.push({ path: '/assetManage/revenueAccount', query: { userId: row.userId } })
         } else if (typeId === 106) {
           //  星球充值账号
-          this.$router.push({ path: '/contract/accountManagement/accountContract', query: { topBtn: true } });
-        }else if (typeId === 107) {
-          //  体验金账号
-          this.$router.push({ path: '/voucher/voucherExperience', query: { userId: row.userId } });
+          this.$router.push({
+            path: '/contract/accountManagement/accountContract',
+            query: { topBtn: true }
+          })
+        } else if (typeId === 107) {
+          //  币汇账号
+          this.$router.push({
+            path: '/coinForex/coinForexfinance/coinForexAccount'
+            // query: { userId: row.userId }
+          })
         }
       }
     },
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
-      if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
-      }
-      this.getList();
+      this.current_page = 1
+      this.search_params_obj = data
+
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
+      this.search_params_obj = {}
       this.searchCofig.forEach((v) => {
-        v['value'] = '';
-      });
-      this.getList();
+        v['value'] = ''
+      })
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     addLine() {
-      this.formName = '添加账号';
-      this.dialogVisible = true;
+      this.formName = '添加账号'
+      this.dialogVisible = true
       this.$nextTick(() => {
         this.form = {
-          userType: '',
+          userType: ''
           // subUsername: '',
-        };
-        this.$refs['form'].resetFields();
-      });
+        }
+        this.$refs['form'].resetFields()
+      })
     },
     // 提交
     confirmOp() {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { userType } = this.form;
+          const { userType } = this.form
           const params = {
-            userType,
+            userType
             // subUsername,
-          };
-          this.btnLoading = true;
-          // 新增 编辑
-          const res = await $api.addAssetUser(params);
-          if (res) {
-            this.$message({ message: '成功添加账号', type: 'success' });
-            this.dialogVisible = false;
-            this.getList();
           }
-          this.btnLoading = false;
+          this.btnLoading = true
+          // 新增 编辑
+          const res = await $api.addAssetUser(params)
+          if (res) {
+            this.$message({ message: '成功添加账号', type: 'success' })
+            this.dialogVisible = false
+            this.getList()
+          }
+          this.btnLoading = false
         }
-      });
+      })
     },
     // 数据列表
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const params = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
-      };
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.assetUserList(params);
-      if (res.data && res.data.data) {
-        const { records, total, current, pages } = res.data.data;
-        this.list = records;
-        this.total = total;
-        this.current_page = current;
-        this.pages = pages;
+        pageSize: this.pageSize
       }
-      this.listLoading = false;
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.assetUserList(params)
+      if (res.data && res.data.data) {
+        const { records, total, current, pages } = res.data.data
+        this.list = records
+        this.total = total
+        this.current_page = current
+        this.pages = pages
+      }
+      this.listLoading = false
     },
-    requiredParams(params) {},
+    requiredParams(params) {}
   },
   mounted() {
-    let authObj = this.$util.getAuthority('AssetManageList', assetManageListCol, assetManageListColNoBtn);
-    this.configs = authObj.val;
-    this.isCURDAuth = authObj.isAdd;
+    let authObj = this.$util.getAuthority(
+      'AssetManageList',
+      assetManageListCol,
+      assetManageListColNoBtn
+    )
+    this.configs = authObj.val
+    this.isCURDAuth = authObj.isAdd
 
-    this.searchCofig = this.$util.clone(assetManageListConfig);
+    this.searchCofig = this.$util.clone(assetManageListConfig)
 
-    this.getList();
-  },
-};
+    this.getList()
+  }
+}
 </script>
 <style lang="scss">
 .assetManageList-container {

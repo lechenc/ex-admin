@@ -3455,7 +3455,7 @@ export default class api {
   }
 
   // 币汇管理/财务管理/币汇流水 列表
-  static getCoinForexAccountList(data) {
+  static getCoinForexRecordList(data) {
     return Fetch.post('/forex/admin/queryForexFlowList', data)
   }
 
@@ -3603,6 +3603,27 @@ export default class api {
   static apiSpecialAfreshFileApi(data) {
     return Fetch.post('/admin/account/add/special-reconciliation-revise', data)
   }
+
+  //  币汇管理/财务管理/币汇账号 列表
+  static apiGetCoinForexAccountList(data) {
+    return Fetch.post('/forex/admin/system/account/systemAccountStatics', data)
+  }
+
+  // 币汇管理/财务管理/每日收益 列表
+  static apiGetCoinForeEverydayEarningList(data) {
+    return Fetch.post('/forex/admin/system/account/systemAccountStaticsForDay', data)
+  }
+
+  // 币汇管理/财务管理/账号流水列表
+  static apiGetCoinForeAccountEarningList(data) {
+    return Fetch.post('/forex/admin/system/account/ForexSystemFlowRecord', data)
+  }
+
+   
+
+  
+
+  
 
   
 
