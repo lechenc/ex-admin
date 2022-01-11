@@ -140,6 +140,9 @@ export default {
         pageNum: this.current_page,
         pageSize: this.pageSize
       }
+      if (this.$route.query.uid) {
+        query_data.systemUid = this.$route.query.uid
+      }
       this.requiredParams(this.search_params_obj)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
