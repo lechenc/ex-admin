@@ -92,8 +92,8 @@
           <el-time-picker
             v-model="chainForm.dayTime"
             is-range
-            value-format="HH:mm"
-            format="HH:mm"
+            value-format="HH:mm:ss"
+            format="HH:mm:ss"
             :disabled="!chainForm.status"
             range-separator="至"
             start-placeholder="选择开始时间"
@@ -105,8 +105,8 @@
           <el-time-picker
             v-model="chainForm.nightTime"
             is-range
-            value-format="HH:mm"
-            format="HH:mm"
+            value-format="HH:mm:ss"
+            format="HH:mm:ss"
             :disabled="!chainForm.status"
             range-separator="至"
             start-placeholder="选择开始时间"
@@ -184,7 +184,6 @@
             @input="checkVal('alarmBalance')"
           />
         </el-form-item>
-      
 
         <el-form-item label="谷歌验证码" :label-width="formLabelWidth" prop="googleCode">
           <el-input
@@ -250,6 +249,7 @@ import {
 } from '@/config/column/financial'
 import { parseTime } from '@/utils/index'
 import $api from '@/api/api'
+import { number } from 'echarts/lib/export'
 
 export default {
   name: 'CoinWhiteList',
@@ -292,8 +292,8 @@ export default {
         nightTime: '', // 夜间热钱包启用时间
         userNightWithdrawTimes: '', // 每个用户夜间可使用提币次数
         userNightWithdrawAmount: '', // 每个用户夜间单次可提币限额
-        userNightWithdrawAmountTotal: '' ,// 每个用户夜间可使用提币总额
-        alarmBalance: '', // 钱包余额低于该参数值提醒值
+        userNightWithdrawAmountTotal: '', // 每个用户夜间可使用提币总额
+        alarmBalance: '' // 钱包余额低于该参数值提醒值
         // alarmPhone: '', // 余额不足提醒手机
         // alarmEmail: '' // 余额不足提醒邮箱
       },
@@ -318,7 +318,7 @@ export default {
         googleCode: [{ required: true, message: '必填', trigger: 'blur' }]
       },
       warnList: [],
-      coin_List:[], // 币种列表
+      coin_List: [] // 币种列表
     }
   },
   computed: {
@@ -342,7 +342,7 @@ export default {
         'userNightWithdrawTimes',
         'userNightWithdrawAmount',
         'userNightWithdrawAmountTotal',
-        'alarmBalance',
+        'alarmBalance'
         // 'alarmPhone',
         // 'alarmEmail'
       ]
@@ -352,7 +352,8 @@ export default {
       keys.forEach((key) => {
         rules[key] = [
           {
-            required: changeKeys.includes(key) ? status : true,
+            // required: changeKeys.includes(key) ? status : true,
+            required:  true,
             message: '必填',
             trigger: 'blur'
           }
@@ -377,8 +378,8 @@ export default {
     // 得到币种列表
     async getSymbolList() {
       this.$store.dispatch('common/getCoinList').then(() => {
-        this.coin_List = this.$store.state.common.coinlist;
-      });
+        this.coin_List = this.$store.state.common.coinlist
+      })
     },
     async deleteConfirmOp() {
       const { googleCode, id } = this.deleteForm
@@ -524,13 +525,19 @@ export default {
     confirmOp() {
       this.$refs['chainForm'].validate(async (valid) => {
         if (valid) {
-          const { id, status, dayTime, nightTime ,coin} = this.chainForm
+          const { id, status, dayTime, nightTime, coin } = this.chainForm
           if (status) {
-            const dayEndH = dayTime[1].split(':')[0]
-            const dayEndM = dayTime[1].split(':')[1]
-            const nightStH = nightTime[0].split(':')[0]
-            const nightStM = nightTime[0].split(':')[1]
-            if (dayEndH > nightStH || (dayEndH === nightStH && dayEndM > nightStM)) {
+            const dayStr = dayTime[0].split(':').join('')
+            const dayEnd = dayTime[1].split(':').join('')
+            const nightStr = nightTime[0].split(':').join('')
+            const nightEnd = nightTime[1].split(':').join('')
+
+            if (Number(nightEnd) > Number(dayEnd) && Number(dayEnd) > Number(nightStr)) {
+              this.$message.error('白天热钱包启用时间和夜间启用时间不得重复交叉')
+              return
+            }
+
+            if (Number(dayEnd) > Number(nightEnd) && Number(nightEnd) > Number(dayStr)) {
               this.$message.error('白天热钱包启用时间和夜间启用时间不得重复交叉')
               return
             }
@@ -539,8 +546,8 @@ export default {
           const dayEnableTimeEnd = dayTime ? dayTime[1] : ''
           const nightEnableTimeStart = nightTime ? nightTime[0] : ''
           const nightEnableTimeEnd = nightTime ? nightTime[1] : ''
-          
-          const coinId = this.coin_List.filter(v=> v.label == coin)[0].value
+
+          const coinId = this.coin_List.filter((v) => v.label == coin)[0].value
           const params = {
             ...this.chainForm,
             status: status ? 1 : 0,
@@ -645,7 +652,7 @@ export default {
   }
 
   .container-warn {
-    p{
+    p {
       text-align: center;
       color: red;
       font-weight: 700;
