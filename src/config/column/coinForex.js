@@ -1054,7 +1054,7 @@ const coinForexPairsNightFeeConfig = [
 const coinForexAccountCol = [
   {
     label: 'UID',
-    prop: 'systemUserId'
+    prop: 'systemUid'
   },
   {
     label: '币种',
@@ -1062,7 +1062,7 @@ const coinForexAccountCol = [
   },
   {
     label: '平仓收益',
-    prop: 'PLStatistics'
+    prop: 'plstatistics'
   },
 
   {
@@ -1072,12 +1072,12 @@ const coinForexAccountCol = [
 
   {
     label: '划转手续费',
-    prop: 'transferServidePriceStatistics'
+    prop: 'transferServicePriceStatistics'
   },
 
   {
     label: '返佣',
-    prop: 'agentRevateStatistics'
+    prop: 'agentRebateStatistics'
   },
 
   {
@@ -1117,11 +1117,13 @@ const coinForexAccountConfig = [
   }
 ]
 
+
+
 // 币汇管理/财务管理/每日收益 列表
 const coinForeEverydayEarningCol = [
   {
     label: 'UID',
-    prop: 'uid'
+    prop: 'systemUid'
   },
   {
     label: '币种',
@@ -1129,7 +1131,7 @@ const coinForeEverydayEarningCol = [
   },
   {
     label: '平仓收益',
-    prop: 'PLStatistics'
+    prop: 'plstatistics'
   },
 
   {
@@ -1139,18 +1141,18 @@ const coinForeEverydayEarningCol = [
 
   {
     label: '划转手续费',
-    prop: 'transferServidePriceStatistics'
+    prop: 'transferServicePriceStatistics'
   },
 
   {
     label: '返佣',
-    prop: 'agentRevateStatistics'
+    prop: 'agentRebateStatistics'
   },
 
   {
     label: '时间',
     prop: 'time'
-  }
+  },
 ]
 
 const coinForeEverydayEarningConfig = [
