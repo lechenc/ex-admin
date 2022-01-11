@@ -79,7 +79,7 @@ export default {
       if (fn == 'everydayEarning') {
         this.$router.push({
           path: '/coinForex/coinForexfinance/coinForeEverydayEarning',
-          query: { uid: row.uid }
+          query: { uid: row.systemUserId }
         })
       }
 
