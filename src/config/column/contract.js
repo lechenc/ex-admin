@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2020-12-22 18:01:28
+ * @LastEditTime: 2022-01-12 13:04:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -3870,7 +3870,8 @@ const earningsRecordCol = [
   {
     label: '变动资产金额',
     type: 'plusPropArr',
-    propArr: ['profitLoss', 'commission']
+    // propArr: ['profitLoss', 'commission']
+    propArr: [{ sign: '+', propName: 'profitLoss' }, { sign: '+', propName: 'commission' }]
   },
   {
     label: '变动前可用金额',

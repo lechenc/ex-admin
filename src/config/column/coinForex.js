@@ -1081,9 +1081,16 @@ const coinForexAccountCol = [
   },
 
   {
-    label: '时间',
-    prop: 'time'
+    label: '当前可用',
+    type: 'plusPropArr',
+    propArr: [
+      { sign: '+', propName: 'plstatistics' },
+      { sign: '+', propName: 'servicePriceStatistics' },
+      { sign: '+', propName: 'transferServicePriceStatistics' },
+      { sign: '+', propName: 'agentRebateStatistics' }
+    ]
   },
+
   {
     label: '操作',
     prop: 'action',
@@ -1111,13 +1118,9 @@ const coinForexAccountConfig = [
     label: '币种',
     prop: 'symbol',
     value: '',
-    list: [
-      { label: 'USD', value: 1 },
-    ]
+    list: [{ label: 'USD', value: 1 }]
   }
 ]
-
-
 
 // 币汇管理/财务管理/每日收益 列表
 const coinForeEverydayEarningCol = [
@@ -1148,10 +1151,15 @@ const coinForeEverydayEarningCol = [
     label: '返佣',
     prop: 'agentRebateStatistics'
   },
-
   {
-    label: '时间',
-    prop: 'time'
+    label: '当前可用',
+    type: 'plusPropArr',
+    propArr: [
+      { sign: '+', propName: 'plstatistics' },
+      { sign: '+', propName: 'servicePriceStatistics' },
+      { sign: '+', propName: 'transferServicePriceStatistics' },
+      { sign: '+', propName: 'agentRebateStatistics' }
+    ]
   },
 ]
 
@@ -1179,7 +1187,6 @@ const coinForeAccountEarningCol = [
     label: '交易品种',
     prop: 'symbol'
   },
-  
 
   {
     label: '类型',
@@ -1215,7 +1222,6 @@ const coinForeAccountEarningCol = [
         text: '点差代理返佣',
         val: 7
       }
-      
     ]
   },
 
@@ -1237,9 +1243,7 @@ const coinForeAccountEarningCol = [
   {
     label: '订单号',
     prop: 'orderNo'
-  },
-
-  
+  }
 ]
 
 const coinForeAccountEarningConfig = [
