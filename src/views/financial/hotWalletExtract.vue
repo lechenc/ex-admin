@@ -6,7 +6,7 @@
 
     <el-card v-if="warnList.length" class="container-warn">
       <p v-for="(item, index) in warnList" :key="index">
-        {{ `${item.chain}-${item.coin}热钱包地址余额不足，请尽快补充${item.maxAutoWithdraw}` }}
+        {{ `${item.chain}-${item.coin}热钱包地址余额不足，请尽快补充` }}
       </p>
     </el-card>
 
@@ -353,7 +353,7 @@ export default {
         rules[key] = [
           {
             // required: changeKeys.includes(key) ? status : true,
-            required:  true,
+            required: true,
             message: '必填',
             trigger: 'blur'
           }
@@ -506,6 +506,37 @@ export default {
           .catch(() => {})
       }
     },
+
+
+    async getWarnList(chain,coin) {
+      this.warnList = []
+      const firstRequest = $api.apiHotWalletExtractCheckChain({
+        protocol: chain
+      })
+      // this.setlist = []
+      // this.protocol = protocol
+      // this.coinKey = coin
+      const request = $api.apiHotWalletExtractCheckDetail
+      firstRequest.then((res) => {
+        const { data } = res.data
+        if (data instanceof Array) {
+          data.forEach((address, idx) => {
+            // this.setlist.push({ address })
+            request({ protocol:chain, coinKey:coin, address }).then((responent) => {
+              // const item = responent.data.data
+              // this.$set(this.setlist, idx, {
+              //   ...this.setlist[idx],
+              //   ...item
+              // })
+              const item = responent.data.data
+              if (parseFloat(item.amount)<parseFloat(item.alarmBalance)) {
+                this.warnList.push({chain,coin})
+              }
+            })
+          })
+        }
+      })
+    },
     // 添加链类型
     addChain() {
       this.isEdit = false
@@ -615,8 +646,11 @@ export default {
           return { ...item, isStatus: Boolean(item.status) }
         })
 
-        this.warnList = this.list.filter((item) => {
-          return item.alarmBalance <= 0 && item.isStatus
+        // this.warnList = this.list.filter((item) => {
+        //   return item.alarmBalance <= 0 && item.isStatus
+        // })
+        this.list.forEach((v) => {
+          this.getWarnList(v.chain,v.coin)
         })
 
         this.total = total
@@ -627,6 +661,8 @@ export default {
         this.listLoading = false
       }
     },
+
+    
 
     async getChainCoin() {
       const res = await $api.apiGetChainCoinList({})
