@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2020-12-18 15:40:46
+ * @LastEditTime: 2022-01-12 15:04:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -761,12 +761,12 @@ const extractForeignCol = [
     prop: 'id',
     width: 200
   },
-  {
-    label: '风控用户',
-    prop: 'riskControlUserFlag',
-    width: 200,
-    filters: [{ text: '是', val: true }, { text: '否', val: false }]
-  },
+  // {
+  //   label: '风控用户',
+  //   prop: 'riskControlUserFlag',
+  //   width: 200,
+  //   filters: [{ text: '是', val: true }, { text: '否', val: false }]
+  // },
   {
     label: 'UID',
     prop: 'uid',
@@ -961,12 +961,12 @@ const extractForeignColNoBtn = [
     prop: 'id',
     width: 200
   },
-  {
-    label: '风控用户',
-    prop: 'riskControlUserFlag',
-    width: 200,
-    filters: [{ text: '是', val: true }, { text: '否', val: false }]
-  },
+  // {
+  //   label: '风控用户',
+  //   prop: 'riskControlUserFlag',
+  //   width: 200,
+  //   filters: [{ text: '是', val: true }, { text: '否', val: false }]
+  // },
   {
     label: 'UID',
     prop: 'uid',
@@ -1148,17 +1148,17 @@ const extractForeignConfig = [
       { label: '冷提手动处理', value: 2 }
     ]
   },
-  {
-    type: 'select',
-    label: '风控用户',
-    prop: 'riskControlUserFlag',
-    value: '',
-    list: [
-      { label: '全部', value: '' },
-      { label: '是', value: true },
-      { label: '否', value: false }
-    ]
-  }
+  // {
+  //   type: 'select',
+  //   label: '风控用户',
+  //   prop: 'riskControlUserFlag',
+  //   value: '',
+  //   list: [
+  //     { label: '全部', value: '' },
+  //     { label: '是', value: true },
+  //     { label: '否', value: false }
+  //   ]
+  // }
 ]
 
 // 财务管理 -- 划转记录
