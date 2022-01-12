@@ -507,8 +507,7 @@ export default {
       }
     },
 
-
-    async getWarnList(chain,coin) {
+    async getWarnList(chain, coin) {
       this.warnList = []
       const firstRequest = $api.apiHotWalletExtractCheckChain({
         protocol: chain
@@ -522,15 +521,15 @@ export default {
         if (data instanceof Array) {
           data.forEach((address, idx) => {
             // this.setlist.push({ address })
-            request({ protocol:chain, coinKey:coin, address }).then((responent) => {
+            request({ protocol: chain, coinKey: coin, address }).then((responent) => {
               // const item = responent.data.data
               // this.$set(this.setlist, idx, {
               //   ...this.setlist[idx],
               //   ...item
               // })
               const item = responent.data.data
-              if (parseFloat(item.amount)<parseFloat(item.alarmBalance)) {
-                this.warnList.push({chain,coin})
+              if (parseFloat(item.amount) < parseFloat(item.alarmBalance)) {
+                this.warnList.push({ chain, coin })
               }
             })
           })
@@ -646,12 +645,15 @@ export default {
           return { ...item, isStatus: Boolean(item.status) }
         })
 
-        // this.warnList = this.list.filter((item) => {
-        //   return item.alarmBalance <= 0 && item.isStatus
-        // })
-        this.list.forEach((v) => {
-          this.getWarnList(v.chain,v.coin)
+        this.warnList = this.list.filter((item) => {
+          return (
+            (!item.balance && item.isStatus) ||
+            (parseFloat(item.balance) < parseFloat(item.alarmBalance) && item.isStatus)
+          )
         })
+        // this.list.forEach((v) => {
+        //   this.getWarnList(v.chain,v.coin)
+        // })
 
         this.total = total
         this.pages = pages
@@ -661,8 +663,6 @@ export default {
         this.listLoading = false
       }
     },
-
-    
 
     async getChainCoin() {
       const res = await $api.apiGetChainCoinList({})
