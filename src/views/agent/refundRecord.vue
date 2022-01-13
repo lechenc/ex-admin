@@ -1,5 +1,12 @@
 <template>
   <div class="refundRecord-container">
+    <div class="container-btn">
+      <el-radio-group @change="orderTypeChange" v-model="orderType" style="margin-bottom: 30px">
+        <el-radio-button :label="1">合约</el-radio-button>
+        <el-radio-button :label="3">币汇</el-radio-button>
+      </el-radio-group>
+    </div>
+
     <div class="container-top">
       <Bsearch
         :configs="searchCofig"
@@ -8,6 +15,7 @@
         @do-search="doSearch"
         @do-reset="doReset"
         @do-calTotal="calTotal"
+        ref="Bsearch"
       />
     </div>
     <div>
@@ -56,24 +64,48 @@ export default {
       toDay: '',
       ago: '',
       curRow: {},
-      symbollist: [],
-      formLabelWidth: '120px'
+      symbollistContract: [],
+      formLabelWidth: '120px',
+      orderType: 1,
+      symbollistCoinForex: []
     }
   },
   mounted() {
     this.configs = refundRecordCol
     this.searchCofig = this.$util.clone(refundRecordConfig)
 
-    this.$store.dispatch('common/getSymbolListContract').then(() => {
-      this.symbollist = this.$store.state.common.symbollistContract
-      this.searchCofig[4]['list'] = this.$store.state.common.symbollistContract
-    })
     // 初始化今天，和昨天的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
     this.getList()
+    this.getSymbolListContract()
+    this.getSymbolListCoinForex()
   },
   methods: {
+    // 合约交易对获取
+    async getSymbolListContract() {
+      this.$store.dispatch('common/getSymbolListContract').then(() => {
+        this.symbollistContract = this.$store.state.common.symbollistContract
+        this.searchCofig[5]['list'] = this.$store.state.common.symbollistContract
+      })
+    },
+
+    //币汇交易对获取
+    async getSymbolListCoinForex() {
+      this.$store.dispatch('common/getCoinForexList').then(() => {
+        this.symbollistCoinForex = this.$store.state.common.coinForexList
+      })
+    },
+
+    orderTypeChange(val) {
+      this.searchCofig[5]['value'] = ''
+      this.$refs.Bsearch.doSearch()
+      if (val == 1) {
+        this.searchCofig[5]['list'] = this.symbollistContract
+      } else if (val == 3) {
+        this.searchCofig[5]['list'] = this.symbollistCoinForex
+      }
+    },
     doSearch(data) {
       this.current_page = 1
       this.search_params_obj = data
@@ -83,8 +115,9 @@ export default {
       this.getList()
     },
     doReset() {
+      this.orderType =  1
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [
@@ -106,7 +139,8 @@ export default {
       }
       this.calLoading = true
       const params = {
-        userType: 1
+        userType: 1,
+        orderType: this.orderType
       }
       this.requiredParams(params)
       Object.assign(params, this.search_params_obj)
@@ -134,7 +168,8 @@ export default {
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        userType: 1
+        userType: 1,
+        orderType: this.orderType
       }
       this.requiredParams(params)
       Object.assign(params, this.search_params_obj)
@@ -165,15 +200,16 @@ export default {
       // if (this.search_params_obj.coinMarket) {
       //   if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
       //     let tmp = '';
-      //     tmp = this.symbollist.filter(v => v['value'] == this.search_params_obj.coinMarket)[0].label;
+      //     tmp = this.symbollistContract.filter(v => v['value'] == this.search_params_obj.coinMarket)[0].label;
       //     this.search_params_obj.coinMarket = tmp;
       //   }
       // }
       if (this.search_params_obj.coinMarket) {
         if (/^[0-9]+.?[0-9]*$/.test(this.search_params_obj.coinMarket)) {
           let tmp = ''
-          tmp = this.symbollist.filter(v => v['value'] == this.search_params_obj.coinMarket)[0]
-            .label
+          tmp = this.symbollistContract.filter(
+            (v) => v['value'] == this.search_params_obj.coinMarket
+          )[0].label
           this.search_params_obj.coinMarket = tmp
         }
       }
@@ -208,6 +244,7 @@ export default {
   .container-btn {
     margin: 20px 0;
   }
+
   .container-footer {
     display: flex;
     justify-content: space-between;
