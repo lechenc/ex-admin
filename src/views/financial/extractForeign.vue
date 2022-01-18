@@ -54,11 +54,11 @@
         <span
           v-if="
             handleData.coinName !== 'USDT' &&
-              (handleData.tradeStatus === 0 ||
-                handleData.tradeStatus === 3 ||
-                handleData.tradeStatus === 13)
+            (handleData.tradeStatus === 0 ||
+              handleData.tradeStatus === 3 ||
+              handleData.tradeStatus === 13)
           "
-          style="color:red;font-weight: 700;"
+          style="color: red; font-weight: 700"
         >
           (注意：该笔提币的币种是{{ handleData.coinName }})
         </span>
@@ -156,12 +156,10 @@
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row
-          v-if="parseInt(handleData.tradeStatus) === 1 || parseInt(handleData.tradeStatus) === 2"
-        >
-          <!-- <el-row
           v-if="parseInt(handleData.tradeStatus) === 13 || parseInt(handleData.tradeStatus) === 14"
-        > -->
+        >
           <el-col :span="12">
             <el-form-item label="复审时间" :label-width="formLabelWidth">
               {{ handleData.reviewAuditTime }}
@@ -173,7 +171,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-row
+        <el-row
           v-if="parseInt(handleData.tradeStatus) === 1 || parseInt(handleData.tradeStatus) === 2"
         >
           <el-col :span="12">
@@ -186,13 +184,13 @@
               {{ handleData.lastAuditUserName }}
             </el-form-item>
           </el-col>
-        </el-row> -->
+        </el-row>
 
         <el-row />
         <!--	<el-form-item v-if="handleStatus === 'preReview'" label="备注" prop="mark" :label-width="formLabelWidth">
 					<el-input v-model="reviewForm.mark"></el-input>
 				</el-form-item> -->
-        <template v-if="handleStatus === 'nextReview'">
+        <template v-if="handleStatus === 'finalReview'">
           <el-form-item label="txId" prop="txId" :label-width="formLabelWidth">
             <el-input v-model="reviewForm.txId" size="medium" />
           </el-form-item>
@@ -218,7 +216,7 @@
           {{ handleData.firstRemark }}
         </el-form-item>
         <el-form-item
-          v-if="handleData.tradeStatus === 2"
+          v-if="handleData.tradeStatus === 14"
           label="复审备注"
           :label-width="formLabelWidth"
         >
@@ -229,13 +227,13 @@
         > -->
           {{ handleData.reviewRemark }}
         </el-form-item>
-        <!-- <el-form-item
+        <el-form-item
           v-if="handleData.tradeStatus === 2"
           label="终审备注"
           :label-width="formLabelWidth"
         >
           {{ handleData.lastRemark }}
-        </el-form-item> -->
+        </el-form-item>
       </el-form>
       <div slot="footer" class="inner-footer">
         <el-button @click.stop="dialogVisible = false">取消</el-button>
@@ -393,9 +391,7 @@
       </div>
       <div slot="footer" class="wind-control-btn">
         <el-button @click.stop="windControlShow = false">取消</el-button>
-        <el-button type="primary" @click.stop="submitWindControlForm">
-          确定
-        </el-button>
+        <el-button type="primary" @click.stop="submitWindControlForm"> 确定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -528,7 +524,7 @@ export default {
     this.searchCofig = this.$util.clone(extractForeignConfig)
     this.$store.dispatch('common/getCoinList').then(() => {
       this.coinList = this.$store.state.common.coinlist
-      this.searchCofig[2]['list'] = this.$store.state.common.coinlist.map(v => {
+      this.searchCofig[2]['list'] = this.$store.state.common.coinlist.map((v) => {
         return {
           label: v.label,
           value: v.label
@@ -537,7 +533,7 @@ export default {
     })
     this.getList()
     this.getRechargeChainName()
-    // this.getWindControl()
+    this.getWindControl()
   },
   methods: {
     // 单元格的 className 的回调方法
@@ -558,11 +554,11 @@ export default {
     },
     // 提交风控参数
     async submitWindControlForm() {
-      this.$refs['windControlForm'].validate(async valid => {
+      this.$refs['windControlForm'].validate(async (valid) => {
         if (valid) {
           const params = {}
           const keys = Object.keys(this.windControlForm)
-          keys.forEach(element => {
+          keys.forEach((element) => {
             params[element] =
               element === 'enable'
                 ? this.windControlForm[element]
@@ -664,7 +660,7 @@ export default {
     // 驳回弹窗 点击  驳回
     async confirmReject() {
       if (this.buttonDisabled && this.nowName === 'preReview') return
-      this.$refs['rejectForm'].validate(async valid => {
+      this.$refs['rejectForm'].validate(async (valid) => {
         if (valid) {
           const firstOrReviewObj = {
             preReject: 1,
@@ -707,7 +703,7 @@ export default {
       }
       // 当时当处于 审核状态
       const fn = () => {
-        this.$refs['reviewForm'].validate(async valid => {
+        this.$refs['reviewForm'].validate(async (valid) => {
           if (valid) {
             const firstOrReviewObj = {
               preReview: 1,
@@ -720,7 +716,7 @@ export default {
               auditOpinion: '审核通过',
               id: this.handleData.id
             }
-            if (this.handleStatus === 'nextReview') {
+            if (this.handleStatus === 'finalReview') {
               params.txId = this.reviewForm.txId
             }
             this.btnLoading = true
@@ -781,7 +777,7 @@ export default {
     },
     doReset() {
       this.search_params_obj = {}
-      this.searchCofig.forEach(v => {
+      this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
       this.searchCofig[0].value = [
@@ -826,7 +822,8 @@ export default {
       }
 
       this.calLoading = true
-      const coinId = this.coinList.filter(v => v.label === this.search_params_obj.coinName)[0].value
+      const coinId = this.coinList.filter((v) => v.label === this.search_params_obj.coinName)[0]
+        .value
       const params = { isOwn: 0, coinId }
       this.requiredParams(params)
       params.appId = 0
@@ -836,11 +833,7 @@ export default {
         const getObj = res.data.data
         if (getObj) {
           this.$alert(
-            `<p>币种：${this.search_params_obj.coinName}</p>  <p>提币数量总计：${
-              getObj.amountSum
-            }</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${
-              getObj.realAmountSum
-            }</p><p>热提：${getObj.hotWithdrawSum}</p><p>冷提：${getObj.coldWithdrawSum}</p>`,
+            `<p>币种：${this.search_params_obj.coinName}</p>  <p>提币数量总计：${getObj.amountSum}</p><p>手续费总计：${getObj.feeSum}</p><p>到账数量总计：${getObj.realAmountSum}</p><p>热提：${getObj.hotWithdrawSum}</p><p>冷提：${getObj.coldWithdrawSum}</p>`,
             '统计结果',
             {
               dangerouslyUseHTMLString: true
@@ -870,7 +863,7 @@ export default {
         this.total = total
         this.pages = pages
         this.current_page = current
-        this.list = records.map(item => {
+        this.list = records.map((item) => {
           return { ...item, riskControlUserFlag: item.riskControlUserFlag ? '是' : '否' }
         })
         this.dataList = records
@@ -908,7 +901,7 @@ export default {
       const res = await $api.apiGetRechargeChainName({})
       if (res) {
         const arr = res.data.data
-        this.searchCofig[5]['list'] = arr.map(v => {
+        this.searchCofig[6]['list'] = arr.map((v) => {
           return {
             label: v.chainName,
             value: v.chainName

@@ -3244,24 +3244,24 @@ export default class api {
     return Fetch.post('/admin/user/pay/query/channel-list', data)
   }
 
-  // // 财务管理/热钱包提币管理 删除
-  // static apiDelHotWalletExtract(data) {
-  //   return Fetch.post('/account/withdrawconfig/del', data)
-  // }
+  // 财务管理/热钱包提币管理 删除
+  static apiDelHotWalletExtract(data) {
+    return Fetch.post('/admin/account/withdrawconfig/del', data)
+  }
 
   // 财务管理/热钱包提币管理 列表
   static apiGetHotWalletExtractList(data) {
-    return Fetch.post('/account/withdrawconfig/find', data)
+    return Fetch.post('/admin/account/withdrawconfig/find', data)
   }
 
   // 财务管理/热钱包提币管理 添加
   static apiAddHotWalletExtract(data) {
-    return Fetch.post('/account/withdrawconfig/add', data)
+    return Fetch.post('/admin/account/withdrawconfig/add', data)
   }
 
   // 财务管理/热钱包提币管理 编辑
   static apiEditHotWalletExtract(data) {
-    return Fetch.post('/account/withdrawconfig/edit', data)
+    return Fetch.post('/admin/account/withdrawconfig/edit', data)
   }
 
   // 财务管理/热钱包提币管理 查看余额
