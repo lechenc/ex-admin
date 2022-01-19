@@ -7,7 +7,7 @@
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\views\financial\assets.vue
  -->
 <template>
-  <div class="coinForexAccount-container">
+  <div class="coinForexRecord-container">
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
@@ -26,11 +26,11 @@
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
-import { coinForexAccountCol, coinForexAccountConfig } from '@/config/column/coinForex'
+import { coinForexRecordCol, coinForexRecordConfig } from '@/config/column/coinForex'
 import $api from '@/api/api'
 
 export default {
-  name: 'CoinForexAccount',
+  name: 'CoinForexRecord',
   components: {
     Btable,
     Bsearch,
@@ -103,7 +103,7 @@ export default {
       }
       this.requiredParams(this.search_params_obj)
       Object.assign(params, this.search_params_obj)
-      const res = await $api.getCoinForexAccountList(params)
+      const res = await $api.getCoinForexRecordList(params)
       if (res) {
         const { records, current, total, pages } = res.data.data
         this.total = total
@@ -144,8 +144,8 @@ export default {
     }
   },
   mounted() {
-    this.configs = coinForexAccountCol
-    this.searchCofig = coinForexAccountConfig
+    this.configs = coinForexRecordCol
+    this.searchCofig = coinForexRecordConfig
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
     this.getCoinForexList()
@@ -154,9 +154,15 @@ export default {
 }
 </script>
 <style lang="scss">
-.coinForexAccount-container {
+.coinForexRecord-container {
   .el-form-item__content {
     margin-left: 0;
+  }
+
+  .container-btn {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
   }
 
   padding: 4px 10px 10px 10px;
