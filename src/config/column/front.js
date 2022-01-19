@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2020-08-05 20:41:02
+ * @LastEditTime: 2022-01-19 17:42:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1359,7 +1359,190 @@ const activityPhaseTwoConfig = [
   }
 ]
 
+const springFestivalMysteryBoxCol = [
+  {
+    label: '盲盒ID',
+    prop: 'boxId'
+  },
+  // 1：邀请交易盲盒 ，2：充值盲盒，3：幸运盲盒，4：交易盲盒，5：惊喜盲盒
+  {
+    label: '盲盒种类',
+    prop: 'boxType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '邀请交易盲盒',
+        val: 1
+      },
+      {
+        text: '充值盲盒',
+        val: 2
+      },
+      {
+        text: '幸运盲盒',
+        val: 3
+      },
+      {
+        text: '交易盲盒',
+        val: 4
+      },
+      {
+        text: '惊喜盲盒',
+        val: 5
+      }
+    ]
+  },
+  {
+    label: '用户UID',
+    prop: 'uid'
+  },
+  {
+    label: '盲盒获取方式',
+    prop: 'isManual',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '系统发放',
+        val: 0
+      },
+      {
+        text: '手动发放',
+        val: 1
+      }
+    ]
+  },
+  {
+    label: '币种数量',
+    prop: 'totalAmount'
+  },
+  {
+    label: '红包个数',
+    prop: 'count'
+  },
+  {
+    label: '领取数量',
+    prop: 'usedAmount'
+  },
+  {
+    label: '退回数量',
+    prop: 'returnAmount'
+  },
+
+  {
+    label: '红包生效状态',
+    prop: 'invalidStatus',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '生效中',
+        val: 0
+      },
+      {
+        text: '已失效',
+        val: 1
+      }
+    ]
+  },
+  {
+    label: '红包创建时间',
+    prop: 'createTime'
+  },
+  {
+    label: '红包失效时间',
+    prop: 'invalidTime'
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 140,
+    btnGroup: [
+      {
+        label: '查看领取详情',
+        fn: 'info',
+        type: 'text',
+        alias: 'info'
+      }
+    ]
+  }
+]
+
+const springFestivalMysteryBoxConfig = [
+  {
+    type: 'date_rank',
+    label: '创建时间',
+    prop: 'arrivalEndTime',
+    prop2: 'arrivalEndTime',
+    value: ''
+  },
+
+  {
+    type: 'onlyNumber',
+    label: '用户UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+
+  {
+    type: 'select_search',
+    label: '币种',
+    prop: 'coinId',
+    value: '',
+    list: []
+  },
+
+  {
+    type: 'select',
+    label: '领取状态',
+    prop: 'receiveStatus',
+    value: '',
+    list: [
+      // 0-未领取 1-部分领取 2全部领取
+      {
+        label: '未领取',
+        value: 0
+      },
+      {
+        label: '部分领取',
+        value: 1
+      },
+      {
+        label: '全部领取',
+        value: 2
+      }
+    ]
+  },
+
+  {
+    type: 'select',
+    label: '红包状态',
+    prop: 'invalidStatus',
+    value: '',
+    list: [
+      // 0-生效中 1-已失效
+      {
+        label: '生效中',
+        value: 0
+      },
+      {
+        label: '已失效',
+        value: 1
+      }
+    ]
+  }
+]
+
 export {
+  springFestivalMysteryBoxConfig,
+  springFestivalMysteryBoxCol,
   activityPhaseTwoCol,
   activityPhaseTwoConfig,
   msgSendRecordCol,
