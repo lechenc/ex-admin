@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 18:56:31
- * @LastEditTime: 2022-01-19 17:44:26
+ * @LastEditTime: 2022-01-19 17:48:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\router\index.js
@@ -1129,12 +1129,12 @@ export const asyncRouterMap = [
         redirect: '/coinForex/coinForexfinance/coinForexAccount',
         meta: { title: '财务管理', icon: '', role: [] },
         children: [
-          {
-            path: 'coinForexRecord',
-            name: 'CoinForexRecord',
-            component: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
-            meta: { title: '币汇流水', icon: '', role: [] }
-          },
+          // {
+          //   path: 'coinForexRecord',
+          //   name: 'CoinForexRecord',
+          //   component: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
+          //   meta: { title: '币汇流水', icon: '', role: [] }
+          // },
 
           {
             path: 'coinForexRate',
@@ -1150,21 +1150,21 @@ export const asyncRouterMap = [
             meta: { title: '币汇账号', icon: '', role: [] }
           },
 
-          {
-            hidden: true,
-            path: 'coinForeEverydayEarning',
-            name: 'CoinForeEverydayEarning',
-            component: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
-            meta: { title: '每日收益', icon: '', role: [] }
-          },
+          // {
+          //   hidden: true,
+          //   path: 'coinForeEverydayEarning',
+          //   name: 'CoinForeEverydayEarning',
+          //   component: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
+          //   meta: { title: '每日收益', icon: '', role: [] }
+          // },
 
-          {
-            hidden: true,
-            path: 'coinForeAccountEarning',
-            name: 'CoinForeAccountEarning',
-            component: () => import('@/views/coinForex/coinForexfinance/coinForeAccountEarning'),
-            meta: { title: '账号流水', icon: '', role: [] }
-          },
+          // {
+          //   hidden: true,
+          //   path: 'coinForeAccountEarning',
+          //   name: 'CoinForeAccountEarning',
+          //   component: () => import('@/views/coinForex/coinForexfinance/coinForeAccountEarning'),
+          //   meta: { title: '账号流水', icon: '', role: [] }
+          // },
         ]
       },
 
