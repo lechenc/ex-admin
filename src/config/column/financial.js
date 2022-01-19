@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-12 15:04:55
+ * @LastEditTime: 2022-01-19 17:12:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -17,10 +17,10 @@ const rechargeCol = [
     label: 'UID',
     prop: 'uid'
   },
-  {
-    label: '上级UID',
-    prop: 'superiorUid'
-  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'superiorUid'
+  // },
   {
     label: '币种',
     prop: 'coinName'
@@ -104,10 +104,10 @@ const rechargeColNoBtn = [
     label: 'UID',
     prop: 'uid'
   },
-  {
-    label: '上级UID',
-    prop: 'superiorUid'
-  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'superiorUid'
+  // },
   {
     label: '币种',
     prop: 'coinName'
@@ -248,13 +248,13 @@ const rechargeConfig = [
     value: '',
     list: []
   },
-  {
-    type: 'onlyNumber',
-    label: '上级UID',
-    prop: 'superiorUid',
-    value: '',
-    placeholder: '请输入'
-  }
+  // {
+  //   type: 'onlyNumber',
+  //   label: '上级UID',
+  //   prop: 'superiorUid',
+  //   value: '',
+  //   placeholder: '请输入'
+  // }
 ]
 
 // 财务管理 -- 币币资金流水
@@ -374,11 +374,11 @@ const extractCol = [
     prop: 'uid',
     width: 100
   },
-  {
-    label: '上级UID',
-    prop: 'proxyUid',
-    width: 100
-  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'proxyUid',
+  //   width: 100
+  // },
   {
     label: '币种',
     prop: 'coinName'
@@ -567,11 +567,11 @@ const extractColNoBtn = [
     prop: 'uid',
     width: 100
   },
-  {
-    label: '上级UID',
-    prop: 'proxyUid',
-    width: 100
-  },
+  // {
+  //   label: '上级UID',
+  //   prop: 'proxyUid',
+  //   width: 100
+  // },
   {
     label: '币种',
     prop: 'coinName'
@@ -745,13 +745,13 @@ const extractConfig = [
     value: '',
     list: []
   },
-  {
-    type: 'onlyNumber',
-    label: '上级UID',
-    prop: 'upperUid',
-    value: '',
-    placeHolder: '请输入'
-  }
+  // {
+  //   type: 'onlyNumber',
+  //   label: '上级UID',
+  //   prop: 'upperUid',
+  //   value: '',
+  //   placeHolder: '请输入'
+  // }
 ]
 
 // 财务管理 -- 提币记录
