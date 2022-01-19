@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-04-27 14:59:36
- * @LastEditTime: 2020-12-01 15:11:47
+ * @LastEditTime: 2022-01-19 13:18:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\bitspot-bg\src\views\financial\extract.vue
@@ -533,7 +533,7 @@ export default {
     })
     this.getList()
     this.getRechargeChainName()
-    this.getWindControl()
+    // this.getWindControl()
   },
   methods: {
     // 单元格的 className 的回调方法
