@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-19 17:42:22
+ * @LastEditTime: 2022-01-19 18:48:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1416,71 +1416,160 @@ const springFestivalMysteryBoxCol = [
     ]
   },
   {
-    label: '币种数量',
-    prop: 'totalAmount'
-  },
-  {
-    label: '红包个数',
-    prop: 'count'
-  },
-  {
-    label: '领取数量',
-    prop: 'usedAmount'
-  },
-  {
-    label: '退回数量',
-    prop: 'returnAmount'
-  },
-
-  {
-    label: '红包生效状态',
-    prop: 'invalidStatus',
+    label: '盲盒状态',
+    prop: 'isEnable',
     width: 100,
     type: 'filter',
     show_type: 'text',
     filters: [
       {
-        text: '生效中',
-        val: 0
+        text: '已开启',
+        val: 1
       },
       {
-        text: '已失效',
-        val: 1
+        text: '未开启',
+        val: 0
       }
     ]
   },
   {
-    label: '红包创建时间',
-    prop: 'createTime'
+    label: '内含币种',
+    prop: 'totalAmount'
   },
   {
-    label: '红包失效时间',
-    prop: 'invalidTime'
+    label: '币数量',
+    prop: 'count'
+  },
+  {
+    label: '等U价值',
+    prop: 'usdtAmount'
+  },
+  {
+    label: '盲盒发放时间',
+    prop: 'createTimeS'
   },
 
   {
-    label: '操作',
-    prop: 'action',
-    type: 'action',
-    width: 140,
-    btnGroup: [
-      {
-        label: '查看领取详情',
-        fn: 'info',
-        type: 'text',
-        alias: 'info'
-      }
-    ]
+    label: '盲盒开启时间',
+    prop: 'enableTimeS'
+  },
+  {
+    label: '盲盒过期时间',
+    prop: 'enableTimeE'
+  },
+
+  {
+    label: '备注',
+    prop: 'manualRemarks'
   }
 ]
 
 const springFestivalMysteryBoxConfig = [
   {
     type: 'date_rank',
-    label: '创建时间',
-    prop: 'arrivalEndTime',
-    prop2: 'arrivalEndTime',
+    label: '盲盒开启时间',
+    prop: 'enableTimeS',
+    prop2: 'enableTimeE',
     value: ''
+  },
+
+  {
+    type: 'date_rank',
+    label: '盲盒发放时间',
+    prop: 'createTimeS',
+    prop2: 'createTimeE',
+    value: ''
+  },
+
+  {
+    type: 'select',
+    label: '盲盒种类',
+    prop: 'boxType',
+    value: '',
+    list: [
+      {
+        label: '邀请交易盲盒',
+        value: 1
+      },
+      {
+        label: '充值盲盒',
+        value: 2
+      },
+      {
+        label: '幸运盲盒',
+        value: 3
+      },
+      {
+        label: '交易盲盒',
+        value: 4
+      },
+      {
+        label: '惊喜盲盒',
+        value: 5
+      }
+    ]
+  },
+  {
+    type: 'select',
+    label: '等U价值',
+    prop: 'boxType1',
+    value: '',
+    list: [
+      {
+        label: '邀请交易盲盒',
+        value: 1
+      },
+      {
+        label: '充值盲盒',
+        value: 2
+      },
+      {
+        label: '幸运盲盒',
+        value: 3
+      },
+      {
+        label: '交易盲盒',
+        value: 4
+      },
+      {
+        label: '惊喜盲盒',
+        value: 5
+      }
+    ]
+  },
+
+  {
+    type: 'select',
+    label: '盲盒开启状态',
+    prop: 'isEnable',
+    value: '',
+    list: [
+      {
+        label: '未开启',
+        value: 0
+      },
+      {
+        label: '已开启',
+        value: 1
+      }
+    ]
+  },
+
+  {
+    type: 'select',
+    label: '盲盒有效状态',
+    prop: 'isEffective',
+    value: '',
+    list: [
+      {
+        label: '有效',
+        value: 0
+      },
+      {
+        label: '失效',
+        value: 1
+      }
+    ]
   },
 
   {
@@ -1492,48 +1581,25 @@ const springFestivalMysteryBoxConfig = [
   },
 
   {
-    type: 'select_search',
-    label: '币种',
-    prop: 'coinId',
+    type: 'onlyNumber',
+    label: '盲盒ID',
+    prop: 'boxId',
     value: '',
-    list: []
+    placeHolder: '请输入'
   },
 
   {
     type: 'select',
-    label: '领取状态',
-    prop: 'receiveStatus',
+    label: '盲盒获取方式',
+    prop: 'isManual',
     value: '',
     list: [
-      // 0-未领取 1-部分领取 2全部领取
       {
-        label: '未领取',
+        label: '系统发放',
         value: 0
       },
       {
-        label: '部分领取',
-        value: 1
-      },
-      {
-        label: '全部领取',
-        value: 2
-      }
-    ]
-  },
-
-  {
-    type: 'select',
-    label: '红包状态',
-    prop: 'invalidStatus',
-    value: '',
-    list: [
-      // 0-生效中 1-已失效
-      {
-        label: '生效中',
-        value: 0
-      },
-      {
-        label: '已失效',
+        label: '手动发放',
         value: 1
       }
     ]

@@ -371,7 +371,7 @@ const mapComponents = {
   // 币汇管理
 
   // CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
-  // CoinForexRecord: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
+  CoinForexRecord: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
   CoinForexAccount: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
   // CoinForeEverydayEarning: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
   // CoinForeAccountEarning: () => import('@/views/coinForex/coinForexfinance/coinForeAccountEarning'),
