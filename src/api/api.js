@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-01-20 15:24:44
+ * @LastEditTime: 2022-01-20 19:37:17
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3648,6 +3648,18 @@ export default class api {
   static apiGetSpringFestivalOverviewList(data) {
     return Fetch.post('/admin/account/box/boxActivityStatisticsList', data)
   }
+
+  // 运营管理/春节活动/获取盲盒奖池金额
+  static apiGetSpringFestivalGetBoxNum(data) {
+    return Fetch.post('/account/activity/getBoxNum', data)
+  }
+
+  // 运营管理/春节活动/活动数据总览统计
+  static apiGetSpringFestivalOverviewTotal(data) {
+    return Fetch.post('/admin/account/box/boxActivityStatistics', data)
+  }
+
+  
 
   
 

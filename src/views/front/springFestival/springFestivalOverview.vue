@@ -34,6 +34,30 @@
     <el-dialog title="修改前端202200数据" width="650px" :visible.sync="dialogFormVisible">
       <el-form :model="cForm" ref="cForm" :rules="rules">
         <el-row :span="24">
+          <el-col :span="11">
+            <el-form-item label="总量：" :label-width="formLabelWidth">
+              {{ totalNum }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="自动已发：" :label-width="formLabelWidth">
+              {{ getBoxNumObj.price }}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :span="24">
+          <el-col :span="11">
+            <el-form-item label="剩余：" :label-width="formLabelWidth">
+              {{ getBoxNumObj.balance }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="手动累计增加数量：" label-width="140px">
+              {{ getBoxNumObj.handPrice }}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :span="24">
           <el-col :span="22">
             <el-form-item label="手动增加数量：" :label-width="formLabelWidth" prop="uidList1">
               <el-input
@@ -53,6 +77,22 @@
         <el-button type="primary" @click="confirmOp" :loading="btnLoading">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      style="springFestivalOverview-dialog"
+      title="合计统计"
+      width="800px"
+      :visible.sync="totalDialogFormVisible"
+    >
+      <div v-for="(value, key) in totalObj" :key="key" style="margin-bottom: 20px">
+        <el-row style="font-weight:700" :span="24"> {{ totalUserTypeObj[value.type]+':' }} {{ value.total +'U'}} </el-row>
+        <el-row style="color:green;font-weight:700" :span="24">
+          <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
+            {{ totalBoxTypeObj[item.type]+':' }} {{ item.num +'个'}}
+          </el-col>
+        </el-row>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -61,7 +101,7 @@ import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
 import { springFestivalOverviewCol } from '@/config/column/front'
 import $api from '@/api/api'
-
+import Precision from '@/utils/number-precision'
 export default {
   name: 'springFestivalOverview',
   components: {
@@ -102,11 +142,41 @@ export default {
       formLabelWidth: '130px',
 
       btnLoading: false,
-      dataList: []
+      dataList: [],
+      totalNum: 202200, // 总量,写死202200
+      getBoxNumObj: {},
+      totalObj: {},
+      // 1 用户总计获得盲盒数量  2 用户总计获得盲盒价值 3 用户总计开启盲盒数量 4 用户总计开启盲盒价值 5 库存总计盲盒数量 6 库存总计盲盒价值
+      totalUserTypeObj: {
+        1: '用户总计获得盲盒数量',
+        2: '用户总计获得盲盒价值',
+        3: '用户总计开启盲盒数量',
+        4: '用户总计开启盲盒价值',
+        5: '库存总计盲盒数量',
+        6: '库存总计盲盒价值'
+      },
+      // 0:邀请新充值盲盒(AXS)1：邀请交易盲盒(MANA)2：充值盲盒( USDT)，3：幸运盲盒( EPIK)4：交易盲盒(SAND)
+      totalBoxTypeObj: {
+        0: '邀请新充值盲盒(AXS)',
+        1: '邀请交易盲盒(MANA)',
+        2: '充值盲盒( USDT)',
+        3: '幸运盲盒( EPIK)',
+        4: '交易盲盒(SAND)'
+      },
+      totalDialogFormVisible: false
     }
   },
   methods: {
-    totalFn() {},
+    async getSpringFestivalOverviewTotal() {
+      const res = await $api.apiGetSpringFestivalOverviewTotal({})
+      if (res) {
+        this.totalObj = res.data.data
+      }
+    },
+    totalFn() {
+      this.totalDialogFormVisible = true
+      this.getSpringFestivalOverviewTotal()
+    },
     // 对输入值的范围进行限制
     checkVal(val) {
       if (val === 'num') {
@@ -143,8 +213,21 @@ export default {
         }
       })
     },
+
+    async getSpringFestivalGetBoxNum() {
+      const res = await $api.apiGetSpringFestivalGetBoxNum({})
+      if (res) {
+        const { handPrice, price } = res.data.data
+        this.getBoxNumObj = {
+          handPrice,
+          price,
+          balance: Precision.minus(this.totalNum, Precision.plus(handPrice, price))
+        }
+      }
+    },
     editFn() {
       this.dialogFormVisible = true
+      this.getSpringFestivalGetBoxNum()
       this.$nextTick(() => {
         this.$refs['cForm'].resetFields()
 
@@ -251,6 +334,9 @@ export default {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;
+  }
+  .el-dialog {
+    color: rgb(202, 249, 99);
   }
   .container-btn {
     margin: 20px 5px;

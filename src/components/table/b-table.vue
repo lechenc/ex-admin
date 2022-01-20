@@ -184,7 +184,7 @@
       <!-- 多级表头-->
       <el-table-column
         v-if="config.type === 'moreLabel'"
-        :key="config.type"
+        :key="config.label"
         :label="config.label"
         :width="config.width ? config.width : ''"
         :min-width="90"

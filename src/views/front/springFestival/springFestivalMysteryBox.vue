@@ -81,10 +81,10 @@
         </el-row>
         <el-row :span="24">
           <el-col :span="22">
-            <el-form-item label="发放备注" :label-width="formLabelWidth" prop="uidList1">
+            <el-form-item label="发放备注" :label-width="formLabelWidth" prop="remark">
               <el-input
-                @input="checkVal('uidList1')"
-                v-model="cForm.uidList1"
+                @input="checkVal('remark')"
+                v-model="cForm.remark"
                 type="textarea"
                 rows="3"
                 autocomplete="off"
@@ -139,12 +139,13 @@ export default {
         uidList: '',
         boxId: '',
         num: '',
-        boxId1: ''
+        remark: ''
       },
       rules: {
         uidList: [{ required: true, message: '必填', trigger: 'blur' }],
         boxId: [{ required: true, message: '必填', trigger: 'blur' }],
-        num: [{ required: true, message: '必填', trigger: 'blur' }]
+        num: [{ required: true, message: '必填', trigger: 'blur' }],
+        remark: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       formLabelWidth: '130px',
       boxTypeList: [
@@ -219,7 +220,7 @@ export default {
           uidList: '',
           boxId: '',
           num: '',
-          boxId1: ''
+          remark: ''
         }
       })
     },
