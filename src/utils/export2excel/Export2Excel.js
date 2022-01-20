@@ -2,7 +2,7 @@
  * @Autor: Diskfan
  * @Date: 2019-08-15 15:42:41
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-14 14:53:50
+ * @LastEditTime: 2022-01-20 12:38:22
  * @Description: 
  */
 /* eslint-disable */
@@ -128,7 +128,7 @@ function formatJson (jsonData) {
   //console.log(jsonData)
 }
 export function export_json_to_excel (th, jsonData, defaultTitle) {
-  console.log('th, jsonData, defaultTitle',th, jsonData, defaultTitle)
+ 
 
   /* original data */
 
@@ -145,6 +145,6 @@ export function export_json_to_excel (th, jsonData, defaultTitle) {
 
   var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: false, type: 'binary' });
   var title = defaultTitle || '列表'
-  console.log('123',new Blob([s2ab(wbout)], { type: "application/octet-stream" }), title + ".xlsx")
+  
   saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), title + ".xlsx")
 }

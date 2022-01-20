@@ -352,6 +352,7 @@
           </span>
         </template>
       </el-table-column>
+      <!-- 多个字段拼接 -->
 
       <el-table-column
         v-if="config.type === 'textArr'"

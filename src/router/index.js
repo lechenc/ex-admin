@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 18:56:31
- * @LastEditTime: 2022-01-19 18:02:36
+ * @LastEditTime: 2022-01-20 15:04:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\router\index.js
@@ -876,9 +876,15 @@ export const asyncRouterMap = [
       {
         path: 'springFestival',
         name: 'SpringFestival',
-        redirect: '/front/springFestival/springFestivalMysteryBox',
+        redirect: '/front/springFestival/springFestivalOverview',
         meta: { title: '春节活动', icon: '', role: [] },
         children: [
+          {
+            path: 'springFestivalOverview',
+            name: 'SpringFestivalOverview',
+            component: () => import('@/views/front/springFestival/springFestivalOverview'),
+            meta: { title: '活动数据总览', icon: '', role: [] }
+          },
           {
             path: 'springFestivalMysteryBox',
             name: 'SpringFestivalMysteryBox',

@@ -1,5 +1,5 @@
 <template>
-  <div class="treatyAssetsContract-container">
+  <div class="springFestivalActivityUsers-container">
     <div class="container-top">
       <Bsearch
         :configs="searchCofig"
@@ -9,12 +9,6 @@
         :exportExcel="btnArr.includes('excel')"
         @do-exportExcel="exportExcel"
       />
-    </div>
-
-    <div class="container-btn" v-if="btnArr.length">
-       <el-button v-if="~btnArr.indexOf('add')" type="primary" size="medium" @click="addFn"
-          >手动发放盲盒</el-button
-        >
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -39,11 +33,11 @@
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
-import { springFestivalMysteryBoxCol, springFestivalMysteryBoxConfig } from '@/config/column/front'
+import { springFestivalActivityUsersCol, springFestivalActivityUsersConfig } from '@/config/column/front'
 import $api from '@/api/api'
-
+import utils from '@/utils/util'
 export default {
-  name: 'RedPacketList',
+  name: 'springFestivalActivityUsers',
   components: {
     Btable,
     Bsearch,
@@ -66,13 +60,12 @@ export default {
       toDay: '',
       ago: '',
       excelLoading: false, // 导出loading
-      btnArr: []
+      btnArr: [],
+      dataList: []
     }
   },
   methods: {
-    addFn(){
-      
-    },
+    addFn() {},
     exportExcel(val) {
       this.search_params_obj = val.query
       const num = val.num
@@ -83,7 +76,7 @@ export default {
       this.requiredParams(params)
       params.appId = 0
       Object.assign(params, this.search_params_obj)
-      const res = await $api.getUserList(params)
+      const res = await $api.apiGetSpringFestivalActivityUsersList(params)
       this.excelLoading = false
       return res
     },
@@ -101,10 +94,10 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
-      this.searchCofig[0].value = [
-        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
-      ]
+      // this.searchCofig[0].value = [
+      //   this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+      //   this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      // ]
       this.getList()
     },
     // 页容变化
@@ -129,13 +122,14 @@ export default {
       this.requiredParams(query_data)
       Object.assign(query_data, this.search_params_obj)
       this.listLoading = true
-      const res = await $api.apiGetSpringFestivalMysteryBoxList(query_data)
+      const res = await $api.apiGetSpringFestivalActivityUsersList(query_data)
       if (res) {
         const { records, total, current, pages } = res.data.data
         this.total = total
         this.pages = pages
         this.current_page = current
         this.list = records
+        this.dataList = records
       }
       this.listLoading = false
     },
@@ -171,14 +165,14 @@ export default {
   },
   mounted() {
     let authObj = this.$util.getAuthority(
-      'SpringFestivalMysteryBox',
-      springFestivalMysteryBoxCol,
+      'SpringFestivalActivityUsers',
+      springFestivalActivityUsersCol,
       []
     )
     this.btnArr = authObj.btnArr || []
-    
-    this.configs = springFestivalMysteryBoxCol
-    this.searchCofig = this.$util.clone(springFestivalMysteryBoxConfig)
+
+    this.configs = springFestivalActivityUsersCol
+    this.searchCofig = this.$util.clone(springFestivalActivityUsersConfig)
     // 初始化今天，和前天的时间
     this.toDay = this.$util.diyTime('toDay')
     this.ago = this.$util.diyTime('ago')
@@ -187,7 +181,7 @@ export default {
 }
 </script>
 <style scope lang="scss">
-.treatyAssetsContract-container {
+.springFestivalActivityUsers-container {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;

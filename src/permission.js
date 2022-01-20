@@ -319,6 +319,7 @@ const mapComponents = {
   SpringFestivalMysteryBox: () => import('@/views/front/springFestival/springFestivalMysteryBox'),
   SpringFestivalActivityUsers: () => import('@/views/front/springFestival/springFestivalActivityUsers'),
   SpringFestivalLuckyHash: () => import('@/views/front/springFestival/springFestivalLuckyHash'),
+  SpringFestivalOverview: () => import('@/views/front/springFestival/springFestivalOverview'),
 
   Search: () => import('@/views/merchant/search'),
   SearchDetail: () => import('@/views/merchant/searchDetail'),
