@@ -59,10 +59,10 @@
         </el-row>
         <el-row :span="24">
           <el-col :span="22">
-            <el-form-item label="手动增加数量：" :label-width="formLabelWidth" prop="uidList1">
+            <el-form-item label="手动增加数量：" :label-width="formLabelWidth" prop="totalNum">
               <el-input
-                @input="checkVal('uidList1')"
-                v-model="cForm.uidList1"
+                @input="checkVal('totalNum')"
+                v-model="cForm.totalNum"
                 type="number"
                 autocomplete="off"
                 placeholder="请输入数量"
@@ -85,10 +85,12 @@
       :visible.sync="totalDialogFormVisible"
     >
       <div v-for="(value, key) in totalObj" :key="key" style="margin-bottom: 20px">
-        <el-row style="font-weight:700" :span="24"> {{ totalUserTypeObj[value.type]+':' }} {{ value.total +'U'}} </el-row>
-        <el-row style="color:green;font-weight:700" :span="24">
+        <el-row style="font-weight: 700" :span="24">
+          {{ totalUserTypeObj[value.type] + ':' }} {{ value.total + 'U' }}
+        </el-row>
+        <el-row style="color: green; font-weight: 700" :span="24">
           <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
-            {{ totalBoxTypeObj[item.type]+':' }} {{ item.num +'个'}}
+            {{ totalBoxTypeObj[item.type] + ':' }} {{ item.num + '个' }}
           </el-col>
         </el-row>
       </div>
@@ -128,16 +130,9 @@ export default {
       excelLoading: false, // 导出loading
       btnArr: [],
       dialogFormVisible: false,
-      cForm: {
-        uidList: '',
-        boxId: '',
-        num: '',
-        boxId1: ''
-      },
+      cForm: {},
       rules: {
-        uidList: [{ required: true, message: '必填', trigger: 'blur' }],
-        boxId: [{ required: true, message: '必填', trigger: 'blur' }],
-        num: [{ required: true, message: '必填', trigger: 'blur' }]
+        totalNum: [{ required: true, message: '必填', trigger: 'blur' }]
       },
       formLabelWidth: '130px',
 
@@ -161,7 +156,8 @@ export default {
         1: '邀请交易盲盒(MANA)',
         2: '充值盲盒( USDT)',
         3: '幸运盲盒( EPIK)',
-        4: '交易盲盒(SAND)'
+        4: '交易盲盒(SAND)',
+        5: '惊喜盲盒'
       },
       totalDialogFormVisible: false
     }
@@ -179,30 +175,24 @@ export default {
     },
     // 对输入值的范围进行限制
     checkVal(val) {
-      if (val === 'num') {
-        if (this.cForm[val] < 1) {
-          this.cForm[val] = 1
-        }
-        if (this.cForm[val] > 100) {
-          this.cForm[val] = 100
-        }
-      }
-
-      if (val === 'uidList') {
-        this.cForm[val] = (this.cForm[val] + '').replace(/[^\d,]/g, '')
+      if (this.cForm[val] < 0) {
+        this.cForm[val] = 0
       }
     },
     confirmOp() {
       this.$refs['cForm'].validate(async (valid) => {
         if (valid) {
+          let { totalNum } = this.cForm
+          if (parseFloat(totalNum) > parseFloat(this.getBoxNumObj.balance)) {
+            return this.$message.error('剩余数量不足')
+          }
           if (this.btnLoading) return
           this.btnLoading = true
-          let { uidList, ...repo } = this.cForm
+
           let params = {
-            uidList: uidList.split(','),
-            ...repo
+            totalNum
           }
-          const res = await $api.apiCreatespringFestivalOverview(params)
+          const res = await $api.apieditSpringFestivalOverview(params)
 
           if (res) {
             this.$message({ message: res.data.message, type: 'success' })
@@ -232,10 +222,7 @@ export default {
         this.$refs['cForm'].resetFields()
 
         this.cForm = {
-          uidList: '',
-          boxId: '',
-          num: '',
-          boxId1: ''
+          totalNum: ''
         }
       })
     },

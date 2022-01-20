@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-01-20 19:37:17
+ * @LastEditTime: 2022-01-20 21:19:36
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3658,6 +3658,13 @@ export default class api {
   static apiGetSpringFestivalOverviewTotal(data) {
     return Fetch.post('/admin/account/box/boxActivityStatistics', data)
   }
+
+  // 运营管理/春节活动/手动修改盲盒金额
+  static  apieditSpringFestivalOverview(data) {
+    return Fetch.post('/account/activity/updateBoxNum', data)
+  }
+
+ 
 
   
 
