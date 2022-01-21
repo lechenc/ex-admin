@@ -11,42 +11,9 @@
         <el-button type="primary" @click="getList">刷新</el-button>
       </div>
     </div>
-    <!-- <div>
+    <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
-    </div> -->
-    <el-card>
-      <el-row class="box-card-row" :span="24">
-        <el-col :span="3">盲盒价值/盲盒名称</el-col>
-        <el-col :span="4" v-for="(item, index) in boxTypeList" :key="index">
-          <span>库存量/已发量/已开量</span>
-          <br />
-          <span>{{ item.label }}</span>
-        </el-col>
-      </el-row>
-
-      <el-row class="box-card-row" v-for="(value, key) in list" :key="key" :span="24">
-        <el-col v-if="!value.length" :span="3"> 0 </el-col>
-        <el-col v-else :span="3">
-          {{ value[0]['usdtnum'] + value[0]['symbol'] }}
-        </el-col>
-
-        <el-col v-for="(item, index) in boxTypeList" :key="index" :span="4">
-          
-          <span v-for="(valueitem, valueindex) in value" :key="valueindex">
-            <template v-if="valueitem.boxType == item.value">
-              <span>{{ valueitem.inventoryToUSDT +' -'}}</span>
-              <span>{{ valueitem.issueNumToUSDT  +' -'}}</span>
-              <span>{{ valueitem.openNumToUSDT }}</span>
-              <br>
-              <span>{{ valueitem.inventorySymbolNum +' -'}}</span>
-              <span>{{ valueitem.issueSymbolNum +' -'}}</span>
-              <span>{{ valueitem.openSymbolNum }}</span>
-            </template>
-          </span>
-        </el-col>
-      </el-row>
-    </el-card>
-
+    </div>
     <!-- <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
       <el-pagination
@@ -192,34 +159,7 @@ export default {
         4: '交易盲盒(SAND)',
         5: '惊喜盲盒'
       },
-      totalDialogFormVisible: false,
-      boxTypeList: [
-        {
-          label: '邀请交易盲盒',
-          value: 1,
-          index: 0
-        },
-        {
-          label: '充值盲盒',
-          value: 2,
-          index: 1
-        },
-        {
-          label: '幸运盲盒',
-          value: 3,
-          index: 2
-        },
-        {
-          label: '交易盲盒',
-          value: 4,
-          index: 3
-        },
-        {
-          label: '惊喜盲盒',
-          value: 5,
-          index: 4
-        }
-      ]
+      totalDialogFormVisible: false
     }
   },
   methods: {
@@ -327,13 +267,13 @@ export default {
       this.listLoading = true
       const res = await $api.apiGetSpringFestivalOverviewList(query_data)
       if (res) {
-        let list = res.data.data
-        // let list = []
-        // for (const key in obj) {
-        //   for (let index = 0; index < obj[key].length; index++) {
-        //     list.push(obj[key][index])
-        //   }
-        // }
+        let obj = res.data.data
+        let list = []
+        for (const key in obj) {
+          for (let index = 0; index < obj[key].length; index++) {
+            list.push(obj[key][index])
+          }
+        }
         console.log('list', list)
         this.list = list
       }
@@ -381,12 +321,6 @@ export default {
   padding: 4px 10px 10px 10px;
   .container-top {
     margin: 10px 0;
-  }
-  .box-card-row {
-    min-height: 70px;
-    display: flex;
-    align-items: center;
-    text-align: center;
   }
   .el-dialog {
     color: rgb(202, 249, 99);
