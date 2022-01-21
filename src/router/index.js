@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 18:56:31
- * @LastEditTime: 2020-12-28 14:26:10
+ * @LastEditTime: 2022-01-20 15:04:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\router\index.js
@@ -695,6 +695,8 @@ export const asyncRouterMap = [
         component: () => import('@/views/front/help'),
         meta: { title: '帮助中心', icon: '', role: [] }
       },
+
+
       {
         path: 'activity',
         name: 'Activity',
@@ -866,6 +868,40 @@ export const asyncRouterMap = [
             name: 'RedPacketSubject',
             component: () => import('@/views/front/redPacket/redPacketSubject'),
             meta: { title: '红包主题设置', icon: '', role: [] }
+          }
+        ]
+      },
+
+      // 春节活动管理
+      {
+        path: 'springFestival',
+        name: 'SpringFestival',
+        redirect: '/front/springFestival/springFestivalOverview',
+        meta: { title: '春节活动', icon: '', role: [] },
+        children: [
+          {
+            path: 'springFestivalOverview',
+            name: 'SpringFestivalOverview',
+            component: () => import('@/views/front/springFestival/springFestivalOverview'),
+            meta: { title: '活动数据总览', icon: '', role: [] }
+          },
+          {
+            path: 'springFestivalMysteryBox',
+            name: 'SpringFestivalMysteryBox',
+            component: () => import('@/views/front/springFestival/springFestivalMysteryBox'),
+            meta: { title: '盲盒查询', icon: '', role: [] }
+          },
+          {
+            path: 'springFestivalActivityUsers',
+            name: 'SpringFestivalActivityUsers',
+            component: () => import('@/views/front/springFestival/springFestivalActivityUsers'),
+            meta: { title: '用户数据查询', icon: '', role: [] }
+          },
+          {
+            path: 'springFestivalLuckyHash',
+            name: 'SpringFestivalLuckyHash',
+            component: () => import('@/views/front/springFestival/springFestivalLuckyHash'),
+            meta: { title: '幸运哈希数查询', icon: '', role: [] }
           }
         ]
       },
@@ -1100,9 +1136,9 @@ export const asyncRouterMap = [
         meta: { title: '财务管理', icon: '', role: [] },
         children: [
           {
-            path: 'coinForexAccount',
-            name: 'CoinForexAccount',
-            component: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
+            path: 'coinForexRecord',
+            name: 'CoinForexRecord',
+            component: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
             meta: { title: '币汇流水', icon: '', role: [] }
           },
 
@@ -1111,7 +1147,30 @@ export const asyncRouterMap = [
             name: 'CoinForexRate',
             component: () => import('@/views/coinForex/coinForexfinance/coinForexRate'),
             meta: { title: '汇率查询', icon: '', role: [] }
-          }
+          },
+
+          {
+            path: 'coinForexAccount',
+            name: 'CoinForexAccount',
+            component: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
+            meta: { title: '币汇账号', icon: '', role: [] }
+          },
+
+          // {
+          //   hidden: true,
+          //   path: 'coinForeEverydayEarning',
+          //   name: 'CoinForeEverydayEarning',
+          //   component: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
+          //   meta: { title: '每日收益', icon: '', role: [] }
+          // },
+
+          // {
+          //   hidden: true,
+          //   path: 'coinForeAccountEarning',
+          //   name: 'CoinForeAccountEarning',
+          //   component: () => import('@/views/coinForex/coinForexfinance/coinForeAccountEarning'),
+          //   meta: { title: '账号流水', icon: '', role: [] }
+          // },
         ]
       },
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2020-12-29 15:43:01
+ * @LastEditTime: 2022-01-20 21:19:36
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3455,7 +3455,7 @@ export default class api {
   }
 
   // 币汇管理/财务管理/币汇流水 列表
-  static getCoinForexAccountList(data) {
+  static getCoinForexRecordList(data) {
     return Fetch.post('/forex/admin/queryForexFlowList', data)
   }
 
@@ -3603,6 +3603,80 @@ export default class api {
   static apiSpecialAfreshFileApi(data) {
     return Fetch.post('/admin/account/add/special-reconciliation-revise', data)
   }
+
+  //  币汇管理/财务管理/币汇账号 列表
+  static apiGetCoinForexAccountList(data) {
+    return Fetch.post('/forex/admin/system/account/systemAccountStatics', data)
+  }
+
+  // 币汇管理/财务管理/每日收益 列表
+  static apiGetCoinForeEverydayEarningList(data) {
+    return Fetch.post('/forex/admin/system/account/systemAccountStaticsForDay', data)
+  }
+
+  // 币汇管理/财务管理/账号流水列表
+  static apiGetCoinForeAccountEarningList(data) {
+    return Fetch.post('/forex/admin/system/account/ForexSystemFlowRecord', data)
+  }
+
+  // 运营管理/春节活动/盲盒查询
+  static apiGetSpringFestivalMysteryBoxList(data) {
+    return Fetch.post('/admin/account/box/queryUserBoxPagination', data)
+  }
+
+  // 运营管理/春节活动/手动发放盲盒
+  static apiCreateSpringFestivalMysteryBox(data) {
+    return Fetch.post('/admin/account/box/manualControlSendBox', data)
+  }
+
+  // 运营管理/春节活动/获取等U价值列表
+  static apiGetSpringFestivalMysteryBoxEquivalentUsdts(data) {
+    return Fetch.post('/admin/account/box/equivalentUsdts', data)
+  }
+
+  // 运营管理/春节活动/盲盒查询
+  static apiGetSpringFestivalActivityUsersList(data) {
+    return Fetch.post('/admin/account/box/boxActivityRechargeRewardPagination', data)
+  }
+
+  // 运营管理/春节活动/幸运哈希查询
+  static apiGetSpringFestivalLuckyHashList(data) {
+    return Fetch.post('/admin/account/box/boxLuckyHashPagination', data)
+  }
+
+  // 运营管理/春节活动/活动数据总览
+  static apiGetSpringFestivalOverviewList(data) {
+    return Fetch.post('/admin/account/box/boxActivityStatisticsList', data)
+  }
+
+  // 运营管理/春节活动/获取盲盒奖池金额
+  static apiGetSpringFestivalGetBoxNum(data) {
+    return Fetch.post('/account/activity/getBoxNum', data)
+  }
+
+  // 运营管理/春节活动/活动数据总览统计
+  static apiGetSpringFestivalOverviewTotal(data) {
+    return Fetch.post('/admin/account/box/boxActivityStatistics', data)
+  }
+
+  // 运营管理/春节活动/手动修改盲盒金额
+  static  apieditSpringFestivalOverview(data) {
+    return Fetch.post('/account/activity/updateBoxNum', data)
+  }
+
+ 
+
+  
+
+  
+
+  
+
+   
+
+  
+
+  
 
   
 
