@@ -31,16 +31,18 @@
         </el-col>
 
         <el-col v-for="(item, index) in boxTypeList" :key="index" :span="4">
-          
           <span v-for="(valueitem, valueindex) in value" :key="valueindex">
             <template v-if="valueitem.boxType == item.value">
-              <span>{{ valueitem.inventoryToUSDT +' -'}}</span>
-              <span>{{ valueitem.issueNumToUSDT  +' -'}}</span>
-              <span>{{ valueitem.openNumToUSDT }}</span>
-              <br>
-              <span>{{ valueitem.inventorySymbolNum +' -'}}</span>
-              <span>{{ valueitem.issueSymbolNum +' -'}}</span>
-              <span>{{ valueitem.openSymbolNum }}</span>
+              <div>
+                <span>{{ valueitem.inventoryToUSDT + ' ~' }}</span>
+                <span>{{ valueitem.issueNumToUSDT + ' ~' }}</span>
+                <span>{{ valueitem.openNumToUSDT }}</span>
+              </div>
+              <div>
+                <span>{{ valueitem.inventorySymbolNum + ' ~' }}</span>
+                <span>{{ valueitem.issueSymbolNum + ' ~' }}</span>
+                <span>{{ valueitem.openSymbolNum }}</span>
+              </div>
             </template>
           </span>
         </el-col>
@@ -387,6 +389,8 @@ export default {
     display: flex;
     align-items: center;
     text-align: center;
+    border-bottom: 1px black solid;
+    margin-bottom: 10px;
   }
   .el-dialog {
     color: rgb(202, 249, 99);
