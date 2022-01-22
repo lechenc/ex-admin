@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-20 17:05:18
+ * @LastEditTime: 2022-01-22 14:44:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1372,6 +1372,10 @@ const springFestivalMysteryBoxCol = [
     type: 'filter',
     show_type: 'text',
     filters: [
+      {
+        text: '邀请充值盲盒',
+        val: 0
+      },
       {
         text: '邀请交易盲盒',
         val: 1
