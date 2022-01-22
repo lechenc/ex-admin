@@ -150,16 +150,20 @@ export default {
       formLabelWidth: '130px',
       boxTypeList: [
         {
-          label: '邀请交易盲盒',
+          label: '邀请充值盲盒',
           value: 1
         },
         {
-          label: '充值盲盒',
+          label: '邀请交易盲盒',
           value: 2
         },
         {
-          label: '幸运盲盒',
+          label: '充值盲盒',
           value: 3
+        },
+        {
+          label: '幸运盲盒',
+          value: 5
         },
         {
           label: '交易盲盒',
@@ -167,7 +171,7 @@ export default {
         },
         {
           label: '惊喜盲盒',
-          value: 5
+          value: 6
         }
       ],
       btnLoading: false,
