@@ -25,7 +25,6 @@
       </el-row>
 
       <el-row class="box-card-row" v-for="(value, key) in list" :key="key" :span="24">
-        
         <el-col v-if="!value.length" :span="3"> 0 </el-col>
         <el-col v-else :span="3">
           <!-- {{ value[0]['usdtnum'] + value[0]['symbol'] }} -->
@@ -127,7 +126,8 @@
         </el-row>
         <el-row style="color: green; font-weight: 700" :span="24">
           <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
-            {{ totalBoxTypeObj[item.type] + ':' }} {{ item.num + '个' }}
+            {{ totalBoxTypeObj[item.type] + ' :' + item.num }}
+            {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
           </el-col>
         </el-row>
       </div>
@@ -191,9 +191,9 @@ export default {
       totalBoxTypeObj: {
         0: '邀请新充值盲盒(AXS)',
         1: '邀请交易盲盒(MANA)',
-        2: '充值盲盒( USDT)',
-        3: '幸运盲盒( EPIK)',
-        4: '交易盲盒(SAND)',
+        2: '充值盲盒(USDT)',
+        3: '幸运盲盒(SAND)',
+        4: '交易盲盒(EPIK)',
         5: '惊喜盲盒'
       },
       totalDialogFormVisible: false,
