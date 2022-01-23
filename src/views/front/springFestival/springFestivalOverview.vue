@@ -122,11 +122,18 @@
     >
       <div v-for="(value, key) in totalObj" :key="key" style="margin-bottom: 20px">
         <el-row style="font-weight: 700" :span="24">
-          {{ totalUserTypeObj[value.type] + ':' }} {{ value.total + 'U' }}
+          {{ totalUserTypeObj[value.type] + ':' }} {{ value.total  }} {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : 'U' }}
         </el-row>
-        <el-row style="color: green; font-weight: 700" :span="24">
+        <el-row v-if="totalUserTypeObj[value.type].indexOf('数量') > -1" style="color: green; font-weight: 700" :span="24">
           <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
             {{ totalBoxTypeObj[item.type] + ' :' + item.num }}
+            {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
+          </el-col>
+        </el-row>
+
+        <el-row v-else style="color: green; font-weight: 700" :span="24">
+          <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
+            {{ totalCoinTypeObj[item.type] + ' :' + item.num }}
             {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
           </el-col>
         </el-row>
@@ -189,12 +196,19 @@ export default {
       },
       // 0:邀请新充值盲盒(AXS)1：邀请交易盲盒(MANA)2：充值盲盒( USDT)，3：幸运盲盒( EPIK)4：交易盲盒(SAND)
       totalBoxTypeObj: {
-        0: '邀请新充值盲盒(AXS)',
-        1: '邀请交易盲盒(MANA)',
-        2: '充值盲盒(USDT)',
-        3: '幸运盲盒(SAND)',
-        4: '交易盲盒(EPIK)',
+        0: '邀请新充值盲盒',
+        1: '邀请交易盲盒',
+        2: '充值盲盒',
+        3: '幸运盲盒',
+        4: '交易盲盒',
         5: '惊喜盲盒'
+      },
+      totalCoinTypeObj: {
+        0: 'AXS',
+        1: 'MANA',
+        2: 'USDT',
+        3: 'SAND',
+        4: 'EPIK',
       },
       totalDialogFormVisible: false,
       boxTypeList: [
