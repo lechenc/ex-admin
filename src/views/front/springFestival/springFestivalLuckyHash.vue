@@ -94,10 +94,10 @@ export default {
       this.searchCofig.forEach((v) => {
         v['value'] = ''
       })
-      this.searchCofig[0].value = [
-        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
-        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
-      ]
+      // this.searchCofig[0].value = [
+      //   this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+      //   this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      // ]
       this.getList()
     },
     // 页容变化
@@ -134,14 +134,14 @@ export default {
       this.listLoading = false
     },
     requiredParams(params) {
-      if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        params.arrivalEndTime = nowV.replace(/\//gi, '-');
-        params.arrivalStartTime = befV.replace(/\//gi, '-');
-        // 组件时间初始必须format格式
-        this.searchCofig[0].value = [befV, nowV];
-      }
+      // if (this.$util.isEmptyObject(this.search_params_obj)) {
+      //   let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
+      //   let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
+      //   params.arrivalEndTime = nowV.replace(/\//gi, '-');
+      //   params.arrivalStartTime = befV.replace(/\//gi, '-');
+      //   // 组件时间初始必须format格式
+      //   this.searchCofig[0].value = [befV, nowV];
+      // }
       if (this.search_params_obj.arrivalStartTime) {
         this.search_params_obj.arrivalEndTime = this.formatTime(this.search_params_obj.arrivalEndTime)
         this.search_params_obj.arrivalStartTime = this.formatTime(this.search_params_obj.arrivalStartTime)

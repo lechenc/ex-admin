@@ -197,28 +197,28 @@ export default {
       totalDialogFormVisible: false,
       boxTypeList: [
         {
-          label: '邀请交易盲盒',
-          value: 1,
+          label: '邀新充值盲盒数量个（AXS枚）',
+          value: 0,
           index: 0
         },
         {
-          label: '充值盲盒',
-          value: 2,
+          label: '邀新交易盲盒（MANA枚）',
+          value: 1,
           index: 1
         },
         {
-          label: '幸运盲盒',
-          value: 3,
+          label: '充值盲盒（USDT枚）',
+          value: 2,
           index: 2
         },
         {
-          label: '交易盲盒',
+          label: '交易盲盒（EPIK枚）',
           value: 4,
           index: 3
         },
         {
-          label: '惊喜盲盒',
-          value: 5,
+          label: '幸运盲盒(SAND枚)',
+          value: 3,
           index: 4
         }
       ]
