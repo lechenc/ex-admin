@@ -36,9 +36,9 @@
           <span v-for="(valueitem, valueindex) in value" :key="valueindex">
             <template v-if="valueitem.boxType == item.value">
               <div>
-                <span>{{ valueitem.inventoryToUSDT + ' ~' }}</span>
-                <span>{{ valueitem.issueNumToUSDT + ' ~' }}</span>
-                <span>{{ valueitem.openNumToUSDT }}</span>
+                <span>{{ valueitem.inventory + ' ~' }}</span>
+                <span>{{ valueitem.issueNum + ' ~' }}</span>
+                <span>{{ valueitem.openNum }}</span>
               </div>
               <div>
                 <span>{{ valueitem.inventorySymbolNum + ' ~' }}</span>
