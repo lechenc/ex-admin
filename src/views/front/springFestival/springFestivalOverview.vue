@@ -25,9 +25,11 @@
       </el-row>
 
       <el-row class="box-card-row" v-for="(value, key) in list" :key="key" :span="24">
+        
         <el-col v-if="!value.length" :span="3"> 0 </el-col>
         <el-col v-else :span="3">
-          {{ value[0]['usdtnum'] + value[0]['symbol'] }}
+          <!-- {{ value[0]['usdtnum'] + value[0]['symbol'] }} -->
+          {{ value[0]['usdtnum'] + 'U' }}
         </el-col>
 
         <el-col v-for="(item, index) in boxTypeList" :key="index" :span="4">
