@@ -209,6 +209,7 @@ export default {
         2: 'USDT',
         3: 'SAND',
         4: 'EPIK',
+        5: 'USDT',
       },
       totalDialogFormVisible: false,
       boxTypeList: [
