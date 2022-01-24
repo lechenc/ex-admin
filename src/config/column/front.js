@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-24 11:34:18
+ * @LastEditTime: 2022-01-24 18:03:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1599,7 +1599,7 @@ const springFestivalActivityUsersCol = [
     prop: 'inviteUid'
   },
   {
-    label: '用户充值金额;',
+    label: '用户充值金额',
     prop: 'inAmount'
   },
   {
@@ -1621,9 +1621,9 @@ const springFestivalActivityUsersCol = [
   },
   {
     label: '上级是否获得邀新充值盲盒',
-    prop: 'isEnable',
+    prop: 'inviteTradeBox',
     width: 150,
-    type: 'inviteTradeBox',
+    type: 'filter',
     show_type: 'text',
     filters: [
       {
