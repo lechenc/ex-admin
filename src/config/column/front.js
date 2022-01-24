@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-22 14:44:28
+ * @LastEditTime: 2022-01-24 11:34:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1459,7 +1459,7 @@ const springFestivalMysteryBoxCol = [
   },
   {
     label: '盲盒过期时间',
-    prop: 'endTime'
+    prop: 'effectiveTime'
   },
 
   {
