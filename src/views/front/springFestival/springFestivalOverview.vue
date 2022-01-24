@@ -122,19 +122,28 @@
     >
       <div v-for="(value, key) in totalObj" :key="key" style="margin-bottom: 20px">
         <el-row style="font-weight: 700" :span="24">
-          {{ totalUserTypeObj[value.type] + ':' }} {{ value.total  }} {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : 'U' }}
+          {{ totalUserTypeObj[value.type] + ':' }} {{ value.total }}
+          {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : 'U' }}
         </el-row>
-        <el-row v-if="totalUserTypeObj[value.type].indexOf('数量') > -1" style="color: green; font-weight: 700" :span="24">
+        <el-row
+          v-if="totalUserTypeObj[value.type].indexOf('数量') > -1"
+          style="color: green; font-weight: 700"
+          :span="24"
+        >
           <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
-            {{ totalBoxTypeObj[item.type] + ' :' + item.num }}
-            {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
+            <span v-if="item.type!=5">
+              {{ totalBoxTypeObj[item.type] + ' :' + item.num }}
+              {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
+            </span>
           </el-col>
         </el-row>
 
         <el-row v-else style="color: green; font-weight: 700" :span="24">
           <el-col v-for="(item, index) in value.statistic" :key="index" :span="8">
-            {{ totalCoinTypeObj[item.type] + ' :' + item.num }}
-            {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
+            <span v-if="item.type!=5">
+              {{ totalCoinTypeObj[item.type] + ' :' + item.num }}
+              {{ totalUserTypeObj[value.type].indexOf('数量') > -1 ? '个' : '枚' }}
+            </span>
           </el-col>
         </el-row>
       </div>
@@ -209,7 +218,7 @@ export default {
         2: 'USDT',
         3: 'SAND',
         4: 'EPIK',
-        5: 'USDT',
+        5: '爆仓保护符'
       },
       totalDialogFormVisible: false,
       boxTypeList: [
