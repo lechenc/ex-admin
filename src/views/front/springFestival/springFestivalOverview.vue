@@ -205,8 +205,8 @@ export default {
       },
       // 0:邀请新充值盲盒(AXS)1：邀请交易盲盒(MANA)2：充值盲盒( USDT)，3：幸运盲盒( EPIK)4：交易盲盒(SAND)
       totalBoxTypeObj: {
-        0: '邀请新充值盲盒',
-        1: '邀请交易盲盒',
+        0: '邀新充值盲盒',
+        1: '邀新交易盲盒',
         2: '充值盲盒',
         3: '幸运盲盒',
         4: '交易盲盒',
@@ -393,7 +393,7 @@ export default {
     }
   },
   mounted() {
-    let authObj = this.$util.getAuthority('SpringFestivalOverview', springFestivalOverviewCol, [])
+    let authObj = this.$util.getAuthority('SpringFestivalOverview', [], [])
     this.btnArr = authObj.btnArr || []
 
     this.configs = springFestivalOverviewCol

@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-24 18:03:41
+ * @LastEditTime: 2022-01-25 08:43:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1364,7 +1364,7 @@ const springFestivalMysteryBoxCol = [
     label: '盲盒ID',
     prop: 'boxId'
   },
-  // 1：邀请交易盲盒 ，2：充值盲盒，3：幸运盲盒，4：交易盲盒，5：惊喜盲盒
+  
   {
     label: '盲盒种类',
     prop: 'boxType',
@@ -1373,11 +1373,11 @@ const springFestivalMysteryBoxCol = [
     show_type: 'text',
     filters: [
       {
-        text: '邀请充值盲盒',
+        text: '邀新充值盲盒',
         val: 0
       },
       {
-        text: '邀请交易盲盒',
+        text: '邀新交易盲盒',
         val: 1
       },
       {
@@ -1492,7 +1492,11 @@ const springFestivalMysteryBoxConfig = [
     value: '',
     list: [
       {
-        label: '邀请交易盲盒',
+        label: '邀新充值盲盒',
+        value: 0
+      },
+      {
+        label: '邀新交易盲盒',
         value: 1
       },
       {
@@ -1779,88 +1783,6 @@ const springFestivalLuckyHashConfig = [
 ]
 
 const springFestivalOverviewCol = [
-  // 1：邀请交易盲盒 ，2：充值盲盒，3：幸运盲盒，4：交易盲盒，5：惊喜盲盒"
-
-  {
-    label: '盲盒价值',
-    arr: ['usdtnum', 'symbol'],
-    type: 'textArr',
-    join: ''
-  },
-  {
-    label: '盲盒名称',
-    prop: 'boxType',
-    width: 150,
-    type: 'filter',
-    show_type: 'text',
-    filters: [
-      {
-        text: '邀请交易盲盒',
-        val: 1
-      },
-      {
-        text: '充值盲盒',
-        val: 2
-      },
-      {
-        text: '幸运盲盒',
-        val: 3
-      },
-      {
-        text: '交易盲盒',
-        val: 4
-      },
-      {
-        text: '惊喜盲盒',
-        val: 5
-      }
-    ]
-  },
-
-  {
-    label: '数量折合U',
-    type: 'moreLabel', //  多级表头
-    arr: [
-      {
-        label: '库存量',
-        prop: 'inventoryToUSDT'
-      },
-      {
-        label: '已发量',
-        prop: 'issueNumToUSDT'
-      },
-      {
-        label: '已开量',
-        prop: 'openNumToUSDT'
-      }
-    ]
-  },
-
-  {
-    label: '币种数量',
-    type: 'moreLabel', //  多级表头
-    arr: [
-      {
-        label: '库存量',
-        prop: 'inventorySymbolNum'
-      },
-      {
-        label: '已发量',
-        prop: 'issueSymbolNum'
-      },
-      {
-        label: '已开量',
-        prop: 'openSymbolNum'
-      }
-    ]
-  },
-
-  // {
-  //   label: '库存量/已发量/已开量',
-  //   arr: ['inventoryToUSDT', 'issueNumToUSDT','openNumToUSDT','inventorySymbolNum', 'issueSymbolNum','openSymbolNum',],
-  //   type: 'textArr',
-  //   join: '/'
-  // },
 ]
 
 export {
