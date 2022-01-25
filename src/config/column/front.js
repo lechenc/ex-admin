@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-25 08:43:07
+ * @LastEditTime: 2022-01-25 14:11:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1455,7 +1455,7 @@ const springFestivalMysteryBoxCol = [
 
   {
     label: '盲盒开启时间',
-    prop: 'startTime'
+    prop: 'openTime'
   },
   {
     label: '盲盒过期时间',
@@ -1608,7 +1608,7 @@ const springFestivalActivityUsersCol = [
   },
   {
     label: '自身是否获得邀新充值盲盒',
-    prop: 'tradeBox',
+    prop: 'rechargeBox',
     width: 150,
     type: 'filter',
     show_type: 'text',
@@ -1625,7 +1625,7 @@ const springFestivalActivityUsersCol = [
   },
   {
     label: '上级是否获得邀新充值盲盒',
-    prop: 'inviteTradeBox',
+    prop: 'inviteRechargeBox',
     width: 150,
     type: 'filter',
     show_type: 'text',
@@ -1647,7 +1647,7 @@ const springFestivalActivityUsersCol = [
   },
   {
     label: '自身是否获得邀新交易盲盒',
-    prop: 'rechargeBox',
+    prop: 'tradeBox',
     width: 150,
     type: 'filter',
     show_type: 'text',
@@ -1664,7 +1664,7 @@ const springFestivalActivityUsersCol = [
   },
   {
     label: '上级是否获得邀新交易盲盒',
-    prop: 'inviteRechargeBox',
+    prop: 'inviteTradeBox',
     width: 150,
     type: 'filter',
     show_type: 'text',
