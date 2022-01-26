@@ -184,7 +184,7 @@
       <!-- 多级表头-->
       <el-table-column
         v-if="config.type === 'moreLabel'"
-        :key="config.type"
+        :key="config.label"
         :label="config.label"
         :width="config.width ? config.width : ''"
         :min-width="90"
@@ -352,6 +352,7 @@
           </span>
         </template>
       </el-table-column>
+      <!-- 多个字段拼接 -->
 
       <el-table-column
         v-if="config.type === 'textArr'"

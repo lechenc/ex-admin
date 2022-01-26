@@ -106,7 +106,7 @@ const coinForexDealListConfig = [
     prop: 'type',
     value: '',
     list: [{ label: '正常平仓', value: 0 }, { label: '爆仓', value: 1 }]
-  },
+  }
   // {
   //   type: 'select',
   //   label: '买或卖',
@@ -252,7 +252,7 @@ const coinForexEntrustListConfig = [
     label: '委托方向',
     prop: 'dealDirection',
     value: '',
-    list: [{ label: '卖', value:  0}, { label: '买', value: 1 }]
+    list: [{ label: '卖', value: 0 }, { label: '买', value: 1 }]
   }
 ]
 
@@ -301,7 +301,7 @@ const coinForexNotCloseListCol = [
     label: '交易量',
     prop: 'holdVolString'
   },
-  
+
   {
     label: '交易手数',
     prop: 'handlerNumString'
@@ -662,7 +662,7 @@ const coinForexPairsConfigsCol = [
         fn: 'importKLine',
         type: 'primary',
         alias: 'importKLine'
-      },
+      }
     ]
   }
 ]
@@ -775,7 +775,7 @@ const coinForexPairsConfigsConfig = [
 ]
 
 // 币汇管理/财务管理/币汇流水 列表
-const coinForexAccountCol = [
+const coinForexRecordCol = [
   {
     label: '时间',
     prop: 'created'
@@ -825,7 +825,7 @@ const coinForexAccountCol = [
   }
 ]
 
-const coinForexAccountConfig = [
+const coinForexRecordConfig = [
   {
     type: 'date_rank',
     label: '时间',
@@ -1050,14 +1050,276 @@ const coinForexPairsNightFeeConfig = [
   }
 ]
 
+// 币汇管理/财务管理/币汇账号 列表
+const coinForexAccountCol = [
+  {
+    label: 'UID',
+    prop: 'systemUid'
+  },
+  {
+    label: '币种',
+    prop: 'symbol'
+  },
+  {
+    label: '平仓收益',
+    prop: 'plstatistics'
+  },
+
+  {
+    label: '隔夜费',
+    prop: 'servicePriceStatistics'
+  },
+
+  {
+    label: '划转手续费',
+    prop: 'transferServicePriceStatistics'
+  },
+
+  {
+    label: '返佣',
+    prop: 'agentRebateStatistics'
+  },
+
+  {
+    label: '当前可用',
+    type: 'plusPropArr',
+    propArr: [
+      { sign: '+', propName: 'plstatistics' },
+      { sign: '+', propName: 'servicePriceStatistics' },
+      { sign: '+', propName: 'transferServicePriceStatistics' },
+      { sign: '+', propName: 'agentRebateStatistics' }
+    ]
+  },
+
+  {
+    label: '操作',
+    prop: 'action',
+    type: 'action',
+    width: 250,
+    btnGroup: [
+      {
+        label: '每日收益',
+        fn: 'everydayEarning',
+        type: 'primary'
+      },
+
+      {
+        label: '账号流水',
+        fn: 'accountEarning',
+        type: 'primary'
+      }
+    ]
+  }
+]
+
+const coinForexAccountConfig = [
+  {
+    type: 'select_search',
+    label: '币种',
+    prop: 'symbol',
+    value: '',
+    list: [{ label: 'USD', value: 1 }]
+  }
+]
+
+// 币汇管理/财务管理/每日收益 列表
+const coinForeEverydayEarningCol = [
+  {
+    label: 'UID',
+    prop: 'systemUid'
+  },
+  {
+    label: '币种',
+    prop: 'symbol'
+  },
+  {
+    label: '平仓收益',
+    prop: 'plstatistics'
+  },
+
+  {
+    label: '隔夜费',
+    prop: 'servicePriceStatistics'
+  },
+
+  {
+    label: '划转手续费',
+    prop: 'transferServicePriceStatistics'
+  },
+
+  {
+    label: '返佣',
+    prop: 'agentRebateStatistics'
+  },
+  {
+    label: '当前可用',
+    type: 'plusPropArr',
+    propArr: [
+      { sign: '+', propName: 'plstatistics' },
+      { sign: '+', propName: 'servicePriceStatistics' },
+      { sign: '+', propName: 'transferServicePriceStatistics' },
+      { sign: '+', propName: 'agentRebateStatistics' }
+    ]
+  },
+]
+
+const coinForeEverydayEarningConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  }
+]
+
+// 币汇管理/财务管理/账号流水 列表
+const coinForeAccountEarningCol = [
+  {
+    label: '时间',
+    prop: 'created'
+  },
+  {
+    label: 'UID',
+    prop: 'systemUid'
+  },
+  {
+    label: '交易品种',
+    prop: 'symbol'
+  },
+
+  {
+    label: '类型',
+    prop: 'type',
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '平仓',
+        val: 1
+      },
+      {
+        text: '爆仓',
+        val: 2
+      },
+      {
+        text: '币汇划入',
+        val: 3
+      },
+      {
+        text: '币汇转出',
+        val: 4
+      },
+      {
+        text: '手续费',
+        val: 5
+      },
+      {
+        text: '隔夜费用',
+        val: 6
+      },
+      {
+        text: '点差代理返佣',
+        val: 7
+      }
+    ]
+  },
+
+  {
+    label: '变动前账户余额',
+    prop: 'beforePrice'
+  },
+
+  {
+    label: '变动金额',
+    prop: 'changePrice'
+  },
+
+  {
+    label: '变动后账户余额',
+    prop: 'afterPrice'
+  },
+
+  {
+    label: '订单号',
+    prop: 'orderNo'
+  }
+]
+
+const coinForeAccountEarningConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    type: 'onlyNumber',
+    label: 'UID',
+    prop: 'systemUid',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'select',
+    label: '类型',
+    prop: 'type',
+    value: '',
+    list: [
+      {
+        label: '平仓',
+        value: 1
+      },
+      {
+        label: '爆仓',
+        value: 2
+      },
+      {
+        label: '币汇划入',
+        value: 3
+      },
+      {
+        label: '币汇转出',
+        value: 4
+      },
+      {
+        label: '手续费',
+        value: 5
+      },
+      {
+        label: '隔夜费用',
+        value: 6
+      },
+      {
+        label: '点差代理返佣',
+        value: 7
+      }
+    ]
+  },
+  {
+    type: 'text',
+    label: '订单号',
+    prop: 'uniquelyIdentifies',
+    value: '',
+    placeHolder: '请输入'
+  }
+]
+
 export {
+  coinForeAccountEarningCol,
+  coinForeAccountEarningConfig,
+  coinForeEverydayEarningCol,
+  coinForeEverydayEarningConfig,
+  coinForexAccountCol,
+  coinForexAccountConfig,
   coinForexPairsNightFeeCol,
   coinForexPairsNightFeeColNoBtn,
   coinForexPairsNightFeeConfig,
   coinForexNetWorthCol,
   coinForexNetWorthConfig,
-  coinForexAccountCol,
-  coinForexAccountConfig,
+  coinForexRecordCol,
+  coinForexRecordConfig,
   coinForexPairsConfigsCol,
   coinForexPairsConfigsColNoBtn,
   coinForexPairsConfigsConfig,

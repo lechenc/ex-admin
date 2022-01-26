@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2020-08-05 20:41:02
+ * @LastEditTime: 2022-01-25 14:11:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1359,7 +1359,440 @@ const activityPhaseTwoConfig = [
   }
 ]
 
+const springFestivalMysteryBoxCol = [
+  {
+    label: '盲盒ID',
+    prop: 'boxId'
+  },
+  
+  {
+    label: '盲盒种类',
+    prop: 'boxType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '邀新充值盲盒',
+        val: 0
+      },
+      {
+        text: '邀新交易盲盒',
+        val: 1
+      },
+      {
+        text: '充值盲盒',
+        val: 2
+      },
+      {
+        text: '幸运盲盒',
+        val: 3
+      },
+      {
+        text: '交易盲盒',
+        val: 4
+      },
+      {
+        text: '惊喜盲盒',
+        val: 5
+      }
+    ]
+  },
+  {
+    label: '用户UID',
+    prop: 'uid'
+  },
+  {
+    label: '盲盒获取方式',
+    prop: 'isManual',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '系统发放',
+        val: 0
+      },
+      {
+        text: '手动发放',
+        val: 1
+      }
+    ]
+  },
+  {
+    label: '盲盒状态',
+    prop: 'isEnable',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '已开启',
+        val: 1
+      },
+      {
+        text: '未开启',
+        val: 0
+      }
+    ]
+  },
+  {
+    label: '内含币种',
+    prop: 'tokenSymbol'
+  },
+  {
+    label: '币数量',
+    prop: 'tokenAmount'
+  },
+  {
+    label: '等U价值',
+    prop: 'usdtAmount'
+  },
+  {
+    label: '盲盒发放时间',
+    prop: 'createTime'
+  },
+
+  {
+    label: '盲盒开启时间',
+    prop: 'openTime'
+  },
+  {
+    label: '盲盒过期时间',
+    prop: 'effectiveTime'
+  },
+
+  {
+    label: '备注',
+    prop: 'manualRemarks'
+  }
+]
+
+const springFestivalMysteryBoxConfig = [
+  {
+    type: 'date_rank',
+    label: '盲盒开启时间',
+    prop: 'enableTimeS',
+    prop2: 'enableTimeE',
+    value: ''
+  },
+
+  {
+    type: 'date_rank',
+    label: '盲盒发放时间',
+    prop: 'createTimeS',
+    prop2: 'createTimeE',
+    value: ''
+  },
+
+  {
+    type: 'select',
+    label: '盲盒种类',
+    prop: 'boxType',
+    value: '',
+    list: [
+      {
+        label: '邀新充值盲盒',
+        value: 0
+      },
+      {
+        label: '邀新交易盲盒',
+        value: 1
+      },
+      {
+        label: '充值盲盒',
+        value: 2
+      },
+      {
+        label: '幸运盲盒',
+        value: 3
+      },
+      {
+        label: '交易盲盒',
+        value: 4
+      },
+      {
+        label: '惊喜盲盒',
+        value: 5
+      }
+    ]
+  },
+  {
+    type: 'select',
+    label: '等U价值',
+    prop: 'usdtAmount',
+    value: '',
+    list: []
+  },
+
+  {
+    type: 'select',
+    label: '盲盒开启状态',
+    prop: 'isEnable',
+    value: '',
+    list: [
+      {
+        label: '未开启',
+        value: 0
+      },
+      {
+        label: '已开启',
+        value: 1
+      }
+    ]
+  },
+
+  {
+    type: 'select',
+    label: '盲盒有效状态',
+    prop: 'isEffective',
+    value: '',
+    list: [
+      {
+        label: '有效',
+        value: 0
+      },
+      {
+        label: '失效',
+        value: 1
+      }
+    ]
+  },
+
+  {
+    type: 'onlyNumber',
+    label: '用户UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+
+  {
+    type: 'onlyNumber',
+    label: '盲盒ID',
+    prop: 'boxId',
+    value: '',
+    placeHolder: '请输入'
+  },
+
+  {
+    type: 'select',
+    label: '盲盒获取方式',
+    prop: 'isManual',
+    value: '',
+    list: [
+      {
+        label: '系统发放',
+        value: 0
+      },
+      {
+        label: '手动发放',
+        value: 1
+      }
+    ]
+  }
+]
+
+const springFestivalActivityUsersCol = [
+  {
+    label: '用户UID',
+    prop: 'uid'
+  },
+  {
+    label: '上级用户UID',
+    prop: 'inviteUid'
+  },
+  {
+    label: '用户充值金额',
+    prop: 'inAmount'
+  },
+  {
+    label: '自身是否获得邀新充值盲盒',
+    prop: 'rechargeBox',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '是',
+        val: 1
+      },
+      {
+        text: '否',
+        val: 0
+      }
+    ]
+  },
+  {
+    label: '上级是否获得邀新充值盲盒',
+    prop: 'inviteRechargeBox',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '是',
+        val: 1
+      },
+      {
+        text: '否',
+        val: 0
+      }
+    ]
+  },
+
+  {
+    label: '用户现货交易金额',
+    prop: 'cumulativeTradeAmount'
+  },
+  {
+    label: '自身是否获得邀新交易盲盒',
+    prop: 'tradeBox',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '是',
+        val: 1
+      },
+      {
+        text: '否',
+        val: 0
+      }
+    ]
+  },
+  {
+    label: '上级是否获得邀新交易盲盒',
+    prop: 'inviteTradeBox',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '是',
+        val: 1
+      },
+      {
+        text: '否',
+        val: 0
+      }
+    ]
+  },
+  {
+    label: '用户净充值金额',
+    prop: 'netAmount'
+  },
+
+  {
+    label: '用户合约交易额',
+    prop: 'contractCumulativeTradeAmount'
+  }
+]
+
+const springFestivalActivityUsersConfig = [
+  {
+    type: 'onlyNumber',
+    label: '用户UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+
+  {
+    type: 'onlyNumber',
+    label: '上级用户UID',
+    prop: 'inviteUid',
+    value: '',
+    placeHolder: '请输入'
+  }
+]
+
+const springFestivalLuckyHashCol = [
+  {
+    label: '用户UID',
+    prop: 'uid'
+  },
+  {
+    label: '单双数字',
+    prop: 'singleDouble',
+    width: 150,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '单',
+        val: 1
+      },
+      {
+        text: '双',
+        val: 2
+      }
+    ]
+  },
+
+  {
+    label: '充值到账日期',
+    prop: 'arrivalTime'
+  },
+  {
+    label: 'Txid',
+    prop: 'blockHash'
+  }
+]
+
+const springFestivalLuckyHashConfig = [
+  {
+    type: 'date_rank',
+    label: '充值到账日期',
+    prop: 'arrivalStartTime',
+    prop2: 'arrivalEndTime',
+    value: ''
+  },
+  {
+    type: 'onlyNumber',
+    label: '用户UID',
+    prop: 'uid',
+    value: '',
+    placeHolder: '请输入'
+  },
+
+  {
+    type: 'text',
+    label: 'Txid',
+    prop: 'blockHash',
+    value: '',
+    placeHolder: '请输入'
+  },
+  {
+    type: 'select',
+    label: '单双数字',
+    prop: 'singleDouble',
+    value: '',
+    list: [
+      {
+        label: '单',
+        value: 1
+      },
+      {
+        label: '双',
+        value: 2
+      }
+    ]
+  }
+]
+
+const springFestivalOverviewCol = [
+]
+
 export {
+  springFestivalOverviewCol,
+  springFestivalLuckyHashCol,
+  springFestivalLuckyHashConfig,
+  springFestivalActivityUsersCol,
+  springFestivalActivityUsersConfig,
+  springFestivalMysteryBoxConfig,
+  springFestivalMysteryBoxCol,
   activityPhaseTwoCol,
   activityPhaseTwoConfig,
   msgSendRecordCol,

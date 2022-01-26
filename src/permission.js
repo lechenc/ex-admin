@@ -315,6 +315,11 @@ const mapComponents = {
   RedPacketList: () => import('@/views/front/redPacket/redPacketList'),
   RedPacketCoin: () => import('@/views/front/redPacket/redPacketCoin'),
   RedPacketSubject: () => import('@/views/front/redPacket/redPacketSubject'),
+  // 春节活动
+  SpringFestivalMysteryBox: () => import('@/views/front/springFestival/springFestivalMysteryBox'),
+  SpringFestivalActivityUsers: () => import('@/views/front/springFestival/springFestivalActivityUsers'),
+  SpringFestivalLuckyHash: () => import('@/views/front/springFestival/springFestivalLuckyHash'),
+  SpringFestivalOverview: () => import('@/views/front/springFestival/springFestivalOverview'),
 
   Search: () => import('@/views/merchant/search'),
   SearchDetail: () => import('@/views/merchant/searchDetail'),
@@ -367,7 +372,10 @@ const mapComponents = {
   // 币汇管理
 
   // CoinForexUserList: () => import('@/views/coinForex/coinForexUser/coinForexUserList'),
+  CoinForexRecord: () => import('@/views/coinForex/coinForexfinance/coinForexRecord'),
   CoinForexAccount: () => import('@/views/coinForex/coinForexfinance/coinForexAccount'),
+  // CoinForeEverydayEarning: () => import('@/views/coinForex/coinForexfinance/coinForeEverydayEarning'),
+  // CoinForeAccountEarning: () => import('@/views/coinForex/coinForexfinance/coinForeAccountEarning'),
   CoinForexDealList: () => import('@/views/coinForex/coinForexDeal/coinForexDealList'),
   CoinForexEntrustList: () => import('@/views/coinForex/coinForexDeal/coinForexEntrustList'),
   CoinForexNotCloseList: () => import('@/views/coinForex/coinForexDeal/coinForexNotCloseList'),
