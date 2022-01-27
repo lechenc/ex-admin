@@ -202,7 +202,15 @@
         </el-table-column>
       </el-table-column>
 
-      <!-- 几个数相加 -->
+      <!-- 
+         几个数相加 
+       * @description: 
+       * @param {*} propArr prop组成的数组
+       * @param {*} propName 字段名
+       * @param {*} sign 字段的运算符 加为+ 减为-
+       * @return {*}
+       */ 
+      -->
       <el-table-column
         v-if="config.type == 'plusPropArr'"
         :key="config.label"
@@ -1132,8 +1140,16 @@ export default {
       return (row, arr) => {
         if (!arr) return '无'
         var sum = arr.reduce((prev, cur) => {
-          return Precision.plus(prev, row[cur] || 0)
+          return Precision.plus(
+            prev,
+            cur.sign == '+'
+              ? row[cur.propName]
+              : cur.sign == '-'
+              ? 0 - row[cur.propName]
+              : row[cur.propName]
+          )
         }, 0)
+        console.log('sum', sum)
         return sum
       }
     }

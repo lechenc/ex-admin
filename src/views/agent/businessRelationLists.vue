@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-04-27 14:50:11
- * @LastEditTime: 2020-11-27 14:11:23
+ * @LastEditTime: 2022-01-13 16:47:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\bitspot-bg\src\views\financial\recharge.vue
@@ -24,8 +24,10 @@
         <el-table-column prop="remark" label="备注" width="auto" min-width="290"></el-table-column>
         <el-table-column prop="feeCommission" label="手续费返佣比例" align="center" width="150"> </el-table-column>
         <el-table-column prop="packPercent" label="团队长打包比例" align="center" width="150"> </el-table-column>
-        <el-table-column prop="availableBalance" label="可用" align="center" width="150"> </el-table-column>
-        <el-table-column prop="waitAmount" label="待结算" align="center" width="150"> </el-table-column>
+        <el-table-column prop="availableBalance" label="合约可用" align="center" width="150"> </el-table-column>
+        <el-table-column prop="forexAvailableBalance" label="币汇可用" align="center" width="150"> </el-table-column>
+        <el-table-column prop="waitAmount" label="合约待结算" align="center" width="150"> </el-table-column>
+        <el-table-column prop="forexWaitAmount" label="币汇待结算" align="center" width="150"> </el-table-column>
         <el-table-column prop="ensureAmount" label="保证金" align="center" width="140"> </el-table-column>
         <el-table-column v-if="btnArr.includes('edit')" fixed="right" align="center" label="操作" width="120">
           <template slot-scope="scope">

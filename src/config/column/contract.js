@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2020-12-22 18:01:28
+ * @LastEditTime: 2022-01-12 13:04:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -9,7 +9,8 @@
 
 // import $api from '@/api/api';
 import Store from '@/store'
-const coinContractCol = [{
+const coinContractCol = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -97,7 +98,8 @@ const coinContractCol = [{
     prop: 'action',
     type: 'action',
     width: '200',
-    btnGroup: [{
+    btnGroup: [
+      {
         label: '编辑',
         fn: 'edit',
         type: 'primary',
@@ -149,7 +151,8 @@ const coinContractCol = [{
   }
 ]
 
-const coinContractColNoBtn = [{
+const coinContractColNoBtn = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -236,18 +239,21 @@ const coinContractColNoBtn = [{
     label: '操作',
     prop: 'action',
     type: 'action',
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
 const coinContractConfig = []
 
-const billContractCol = [{
+const billContractCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -264,7 +270,8 @@ const billContractCol = [{
     prop: 'positionDirection',
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '多仓',
         val: 1
       },
@@ -295,7 +302,8 @@ const billContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '爆仓平空',
         val: 1
       },
@@ -320,11 +328,11 @@ const billContractCol = [{
         val: 6
       },
       {
-        text: '币币转入合约',
+        text: '币币转入逐仓',
         val: 7
       },
       {
-        text: '合约转出币币',
+        text: '逐仓转出币币',
         val: 8
       },
       {
@@ -340,15 +348,15 @@ const billContractCol = [{
         val: 11
       },
       {
-        text: '法币转入合约',
+        text: '法币转入逐仓',
         val: 12
       },
       {
-        text: '合约转出法币',
+        text: '逐仓转出法币',
         val: 13
       },
       {
-        text: '合约划转',
+        text: '逐仓划转',
         val: 15
       },
 
@@ -388,7 +396,8 @@ const billContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '全仓',
         val: 0
       },
@@ -405,7 +414,8 @@ const billContractCol = [{
   }
 ]
 
-const billContractConfig = [{
+const billContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -451,7 +461,8 @@ const billContractConfig = [{
     label: '仓位方向',
     prop: 'positionDirection',
     value: '',
-    list: [{
+    list: [
+      {
         label: '多仓',
         value: 1
       },
@@ -466,7 +477,8 @@ const billContractConfig = [{
     label: '类型',
     prop: 'type',
     value: '',
-    list: [{
+    list: [
+      {
         label: '爆仓平空',
         value: 1
       },
@@ -491,11 +503,11 @@ const billContractConfig = [{
         value: 6
       },
       {
-        label: '币币转入合约',
+        label: '币币转入逐仓',
         value: 7
       },
       {
-        label: '合约转出币币',
+        label: '逐仓转出币币',
         value: 8
       },
       {
@@ -511,15 +523,15 @@ const billContractConfig = [{
         value: 11
       },
       {
-        label: '法币转入合约',
+        label: '法币转入逐仓',
         value: 12
       },
       {
-        label: '合约转出法币 ',
+        label: '逐仓转出法币 ',
         value: 13
       },
       {
-        label: '合约划转',
+        label: '逐仓划转',
         value: 15
       },
 
@@ -554,7 +566,8 @@ const billContractConfig = [{
     label: '仓位类型',
     prop: 'positionType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '全仓',
         value: 0
       },
@@ -566,7 +579,8 @@ const billContractConfig = [{
   }
 ]
 
-const generalEntrustContractCol = [{
+const generalEntrustContractCol = [
+  {
     label: '创建时间',
     prop: 'createTime',
     type: 'time'
@@ -593,7 +607,8 @@ const generalEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '买',
         val: 1
       },
@@ -629,7 +644,8 @@ const generalEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '待交易',
         val: 0
       },
@@ -657,7 +673,8 @@ const generalEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '限价开仓',
         val: 1
       },
@@ -685,7 +702,8 @@ const generalEntrustContractCol = [{
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '正常开仓单',
         val: 0
       },
@@ -717,7 +735,8 @@ const generalEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '全仓',
         val: 0
       },
@@ -737,7 +756,8 @@ const generalEntrustContractCol = [{
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '本金券（含券）',
         val: 1
       },
@@ -753,19 +773,22 @@ const generalEntrustContractCol = [{
     prop: 'action',
     type: 'action',
     width: 150,
-    btnGroup: [{
-      label: '一键撤销',
-      fn: 'onekeyRepeal',
-      filter_type: 'array',
-      filter_key: 'status',
-      filter_status: ['3'],
-      type: 'primary',
-      alias: 'onekeyRepeal'
-    }]
+    btnGroup: [
+      {
+        label: '一键撤销',
+        fn: 'onekeyRepeal',
+        filter_type: 'array',
+        filter_key: 'status',
+        filter_status: ['3'],
+        type: 'primary',
+        alias: 'onekeyRepeal'
+      }
+    ]
   }
 ]
 
-const generalEntrustContractColNoBtn = [{
+const generalEntrustContractColNoBtn = [
+  {
     label: '创建时间',
     prop: 'createTime',
     type: 'time'
@@ -792,7 +815,8 @@ const generalEntrustContractColNoBtn = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '买',
         val: 1
       },
@@ -828,7 +852,8 @@ const generalEntrustContractColNoBtn = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '待交易',
         val: 0
       },
@@ -856,7 +881,8 @@ const generalEntrustContractColNoBtn = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '限价开仓',
         val: 1
       },
@@ -884,7 +910,8 @@ const generalEntrustContractColNoBtn = [{
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '正常开仓单',
         val: 0
       },
@@ -916,7 +943,8 @@ const generalEntrustContractColNoBtn = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '全仓',
         val: 0
       },
@@ -936,7 +964,8 @@ const generalEntrustContractColNoBtn = [{
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '本金券（含券）',
         val: 1
       },
@@ -948,7 +977,8 @@ const generalEntrustContractColNoBtn = [{
   }
 ]
 
-const generalEntrustContractConfig = [{
+const generalEntrustContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -988,7 +1018,8 @@ const generalEntrustContractConfig = [{
     label: '委托方向',
     prop: 'type',
     value: '',
-    list: [{
+    list: [
+      {
         label: '买',
         value: 1
       },
@@ -1003,7 +1034,8 @@ const generalEntrustContractConfig = [{
     label: '平仓类型',
     prop: 'closePositionsType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '正常开仓单',
         value: 0
       },
@@ -1030,7 +1062,8 @@ const generalEntrustContractConfig = [{
     label: '委托状态',
     prop: 'status',
     value: '',
-    list: [{
+    list: [
+      {
         label: '待交易',
         value: 0
       },
@@ -1057,7 +1090,8 @@ const generalEntrustContractConfig = [{
     label: '委托价类型',
     prop: 'priceType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '限价开仓',
         value: 1
       },
@@ -1081,7 +1115,8 @@ const generalEntrustContractConfig = [{
     prop: 'isExperience',
     value: '',
     width: 150,
-    list: [{
+    list: [
+      {
         label: '本金',
         value: 0
       },
@@ -1093,7 +1128,8 @@ const generalEntrustContractConfig = [{
   }
 ]
 
-const planEntrustContractCol = [{
+const planEntrustContractCol = [
+  {
     label: '创建时间',
     prop: 'createTime',
     type: 'time'
@@ -1121,7 +1157,8 @@ const planEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '不是',
         val: 0
       },
@@ -1142,7 +1179,8 @@ const planEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '买',
         val: 1
       },
@@ -1171,7 +1209,8 @@ const planEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '待触发',
         val: 0
       },
@@ -1195,7 +1234,8 @@ const planEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '计划限价开仓',
         val: 5
       },
@@ -1223,7 +1263,8 @@ const planEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '正常开仓单',
         val: 0
       },
@@ -1255,7 +1296,8 @@ const planEntrustContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '全仓',
         val: 0
       },
@@ -1267,7 +1309,8 @@ const planEntrustContractCol = [{
   }
 ]
 
-const planEntrustContractConfig = [{
+const planEntrustContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -1307,7 +1350,8 @@ const planEntrustContractConfig = [{
     label: '委托方向',
     prop: 'type',
     value: '',
-    list: [{
+    list: [
+      {
         label: '买',
         value: 1
       },
@@ -1322,7 +1366,8 @@ const planEntrustContractConfig = [{
     label: '平仓类型',
     prop: 'closePositionsType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '正常开仓单',
         value: 0
       },
@@ -1349,7 +1394,8 @@ const planEntrustContractConfig = [{
     label: '委托状态',
     prop: 'status',
     value: '',
-    list: [{
+    list: [
+      {
         label: '待触发',
         value: 0
       },
@@ -1372,7 +1418,8 @@ const planEntrustContractConfig = [{
     label: '委托价类型',
     prop: 'priceType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '计划限价开仓',
         value: 5
       },
@@ -1395,7 +1442,8 @@ const planEntrustContractConfig = [{
     label: '是否计划止盈止损单',
     prop: 'isStop',
     value: '',
-    list: [{
+    list: [
+      {
         label: '不是',
         value: 0
       },
@@ -1411,7 +1459,8 @@ const planEntrustContractConfig = [{
   }
 ]
 
-const dealContractCol = [{
+const dealContractCol = [
+  {
     label: '时间',
     prop: 'createTime',
     type: 'time'
@@ -1463,7 +1512,8 @@ const dealContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '买成交',
         val: 1
       },
@@ -1479,7 +1529,8 @@ const dealContractCol = [{
     width: 150,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '本金券（含券）',
         val: 1
       },
@@ -1507,7 +1558,8 @@ const dealContractCol = [{
   }
 ]
 
-const dealContractConfig = [{
+const dealContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -1568,7 +1620,8 @@ const dealContractConfig = [{
     label: '成交方向',
     prop: 'direction',
     value: '',
-    list: [{
+    list: [
+      {
         label: '买成交',
         value: 1
       },
@@ -1583,17 +1636,21 @@ const dealContractConfig = [{
     label: '资金类型',
     prop: 'isExperience',
     value: '',
-    list: [{
-      label: '本金',
-      value: 0
-    }, {
-      label: '本金券（含券）',
-      value: 1
-    }]
+    list: [
+      {
+        label: '本金',
+        value: 0
+      },
+      {
+        label: '本金券（含券）',
+        value: 1
+      }
+    ]
   }
 ]
 
-const positionContractCol = [{
+const positionContractCol = [
+  {
     label: '时间',
     prop: 'createTime',
     type: 'time'
@@ -1672,7 +1729,8 @@ const positionContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '多仓',
         val: 1
       },
@@ -1688,7 +1746,8 @@ const positionContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '全仓',
         val: 0
       },
@@ -1704,7 +1763,8 @@ const positionContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '本金',
         val: 0
       },
@@ -1724,7 +1784,8 @@ const positionContractCol = [{
   }
 ]
 
-const positionContractConfig = [{
+const positionContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -1774,7 +1835,8 @@ const positionContractConfig = [{
     label: '仓位方向',
     prop: 'positionDirection',
     value: '',
-    list: [{
+    list: [
+      {
         label: '多仓',
         value: 1
       },
@@ -1805,17 +1867,21 @@ const positionContractConfig = [{
     label: '资金类型',
     prop: 'isExperience',
     value: '',
-    list: [{
-      label: '本金',
-      value: 0
-    }, {
-      label: '本金券（含券）',
-      value: 1
-    }]
+    list: [
+      {
+        label: '本金',
+        value: 0
+      },
+      {
+        label: '本金券（含券）',
+        value: 1
+      }
+    ]
   }
 ]
 
-const closeContractCol = [{
+const closeContractCol = [
+  {
     label: '创建时间',
     prop: 'createTime',
     type: 'time'
@@ -1882,7 +1948,8 @@ const closeContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '是',
         val: true
       },
@@ -1898,7 +1965,8 @@ const closeContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '平多',
         val: 1
       },
@@ -1914,7 +1982,8 @@ const closeContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '系统强平',
         val: 1
       },
@@ -1930,7 +1999,8 @@ const closeContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '全仓',
         val: 0
       },
@@ -1942,7 +2012,8 @@ const closeContractCol = [{
   }
 ]
 
-const closeContractConfig = [{
+const closeContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -1982,7 +2053,8 @@ const closeContractConfig = [{
     label: '平仓类型',
     prop: 'closePosition',
     value: '',
-    list: [{
+    list: [
+      {
         label: '系统强平',
         value: 1
       },
@@ -1997,7 +2069,8 @@ const closeContractConfig = [{
     label: '平仓方向',
     prop: 'closePositionDirection',
     value: '',
-    list: [{
+    list: [
+      {
         label: '平多',
         value: 1
       },
@@ -2012,7 +2085,8 @@ const closeContractConfig = [{
     label: '仓位类型',
     prop: 'positionType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '全仓',
         value: 0
       },
@@ -2035,7 +2109,8 @@ const closeContractConfig = [{
     label: '是否体验券平仓',
     prop: 'isExperience',
     value: '',
-    list: [{
+    list: [
+      {
         label: '是',
         value: 1
       },
@@ -2060,7 +2135,8 @@ const closeContractConfig = [{
     label: '是否盈利',
     prop: 'isProfit',
     value: '',
-    list: [{
+    list: [
+      {
         label: '是',
         value: 1
       },
@@ -2076,7 +2152,8 @@ const closeContractConfig = [{
     label: '盈亏排序',
     prop: 'profitSort',
     value: '',
-    list: [{
+    list: [
+      {
         label: '倒序',
         value: 1
       },
@@ -2088,7 +2165,8 @@ const closeContractConfig = [{
   }
 ]
 
-const serviceChargeContractCol = [{
+const serviceChargeContractCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -2130,7 +2208,8 @@ const serviceChargeContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '开仓',
         val: 1
       },
@@ -2159,7 +2238,8 @@ const serviceChargeContractCol = [{
   }
 ]
 
-const serviceChargeContractConfig = [{
+const serviceChargeContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -2202,7 +2282,8 @@ const serviceChargeContractConfig = [{
     label: '类型',
     prop: 'type',
     value: '',
-    list: [{
+    list: [
+      {
         label: '开仓',
         value: 1
       },
@@ -2234,7 +2315,8 @@ const serviceChargeContractConfig = [{
   // }
 ]
 
-const treatyAssetsContractCol = [{
+const treatyAssetsContractCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -2249,6 +2331,23 @@ const treatyAssetsContractCol = [{
   {
     label: '总资产（USDT）',
     prop: 'totalBalance'
+  },
+  {
+    label: '仓位类型',
+    prop: 'positionType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '全仓',
+        val: 0
+      },
+      {
+        text: '逐仓',
+        val: 1
+      }
+    ]
   },
   {
     label: '委托累加占用保证金金额（USDT）',
@@ -2268,7 +2367,8 @@ const treatyAssetsContractCol = [{
   }
 ]
 
-const treatyAssetsContractConfig = [{
+const treatyAssetsContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -2301,7 +2401,8 @@ const treatyAssetsContractConfig = [{
     label: '总资产排序',
     prop: 'totalBalanceSort',
     value: '',
-    list: [{
+    list: [
+      {
         label: '倒序',
         value: 1
       },
@@ -2310,10 +2411,27 @@ const treatyAssetsContractConfig = [{
         value: 0
       }
     ]
+  },
+  {
+    type: 'select',
+    label: '仓位类型',
+    prop: 'positionType',
+    value: '',
+    list: [
+      {
+        label: '全仓',
+        value: 0
+      },
+      {
+        label: '逐仓',
+        value: 1
+      }
+    ]
   }
 ]
 
-const flowRecordContractCol = [{
+const flowRecordContractCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -2326,12 +2444,30 @@ const flowRecordContractCol = [{
     prop: 'coinMarketName'
   },
   {
+    label: '仓位类型',
+    prop: 'positionType',
+    width: 100,
+    type: 'filter',
+    show_type: 'text',
+    filters: [
+      {
+        text: '全仓',
+        val: 0
+      },
+      {
+        text: '逐仓',
+        val: 1
+      }
+    ]
+  },
+  {
     label: '仓位方向',
     prop: 'positionDirection',
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '多仓',
         val: 1
       },
@@ -2351,7 +2487,8 @@ const flowRecordContractCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '爆仓平空',
         val: 1
       },
@@ -2471,7 +2608,8 @@ const flowRecordContractCol = [{
   }
 ]
 
-const flowRecordContractConfig = [{
+const flowRecordContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -2511,7 +2649,8 @@ const flowRecordContractConfig = [{
     label: '仓位方向',
     prop: 'positionDirection',
     value: '',
-    list: [{
+    list: [
+      {
         label: '多仓',
         value: 1
       },
@@ -2526,7 +2665,8 @@ const flowRecordContractConfig = [{
     label: '类型',
     prop: 'type',
     value: '',
-    list: [{
+    list: [
+      {
         label: '爆仓平空',
         value: 1
       },
@@ -2608,10 +2748,27 @@ const flowRecordContractConfig = [{
         value: '117'
       }
     ]
+  },
+  {
+    type: 'select',
+    label: '仓位类型',
+    prop: 'positionType',
+    value: '',
+    list: [
+      {
+        label: '全仓',
+        value: 0
+      },
+      {
+        label: '逐仓',
+        value: 1
+      }
+    ]
   }
 ]
 
-const historicalContractCol = [{
+const historicalContractCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -2637,7 +2794,8 @@ const historicalContractCol = [{
   }
 ]
 
-const historicalContractConfig = [{
+const historicalContractConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -2675,7 +2833,8 @@ const historicalContractConfig = [{
   }
 ]
 
-const contractRobotCol = [{
+const contractRobotCol = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -2713,7 +2872,8 @@ const contractRobotCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '未启动',
         val: 1
       },
@@ -2737,16 +2897,19 @@ const contractRobotCol = [{
     label: '操作',
     prop: 'action',
     type: 'action',
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
-const contractRobotColNoBtn = [{
+const contractRobotColNoBtn = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -2784,7 +2947,8 @@ const contractRobotColNoBtn = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '未启动',
         val: 1
       },
@@ -2806,15 +2970,18 @@ const contractRobotColNoBtn = [{
   }
 ]
 
-const contractRobotConfig = [{
-  type: 'select',
-  label: '交易对',
-  prop: 'coinMarket',
-  value: '',
-  list: []
-}]
+const contractRobotConfig = [
+  {
+    type: 'select',
+    label: '交易对',
+    prop: 'coinMarket',
+    value: '',
+    list: []
+  }
+]
 
-const gearSettingCol = [{
+const gearSettingCol = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -2871,24 +3038,29 @@ const gearSettingCol = [{
     prop: 'action',
     type: 'action',
     width: 160,
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
-const gearSettingConfig = [{
-  type: 'select',
-  label: '币对',
-  prop: 'coinMarket',
-  value: '',
-  list: []
-}]
+const gearSettingConfig = [
+  {
+    type: 'select',
+    label: '币对',
+    prop: 'coinMarket',
+    value: '',
+    list: []
+  }
+]
 
-const contractAccountConfig = [{
+const contractAccountConfig = [
+  {
     type: 'select',
     label: '币对',
     prop: 'coinMarket',
@@ -2900,7 +3072,8 @@ const contractAccountConfig = [{
     label: '费用方式',
     prop: 'modeOfCost',
     value: '',
-    list: [{
+    list: [
+      {
         label: '关闭',
         value: 0
       },
@@ -2916,7 +3089,8 @@ const contractAccountConfig = [{
   }
 ]
 
-const contractAccountCol = [{
+const contractAccountCol = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -2963,7 +3137,8 @@ const contractAccountCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '关闭',
         val: 0
       },
@@ -2982,16 +3157,19 @@ const contractAccountCol = [{
     prop: 'action',
     type: 'action',
     width: 160,
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
-const contractFundRateConfig = [{
+const contractFundRateConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -3007,7 +3185,8 @@ const contractFundRateConfig = [{
   }
 ]
 
-const contractFundRateCol = [{
+const contractFundRateCol = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -3046,24 +3225,29 @@ const contractFundRateCol = [{
     prop: 'action',
     type: 'action',
     width: 160,
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
-const riskLevelConfig = [{
-  type: 'select',
-  label: '币对',
-  prop: 'coinMarket',
-  value: '',
-  list: []
-}]
+const riskLevelConfig = [
+  {
+    type: 'select',
+    label: '币对',
+    prop: 'coinMarket',
+    value: '',
+    list: []
+  }
+]
 
-const riskLevelCol = [{
+const riskLevelCol = [
+  {
     label: 'ID',
     prop: 'id'
   },
@@ -3095,7 +3279,8 @@ const riskLevelCol = [{
     width: '130',
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '开',
         val: 1
       },
@@ -3121,16 +3306,19 @@ const riskLevelCol = [{
     prop: 'action',
     type: 'action',
     width: 160,
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
-const contractEstimateConfig = [{
+const contractEstimateConfig = [
+  {
     type: 'onlyNumber',
     label: 'UID',
     prop: 'uid',
@@ -3156,7 +3344,8 @@ const contractEstimateConfig = [{
     label: '仓位方向',
     prop: 'positionDirection',
     value: '',
-    list: [{
+    list: [
+      {
         label: '多仓',
         value: 1
       },
@@ -3198,7 +3387,8 @@ const contractEstimateConfig = [{
   }
 ]
 
-const contractEstimateCol = [{
+const contractEstimateCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -3250,26 +3440,32 @@ const contractEstimateCol = [{
     prop: 'positionDirection',
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '多仓',
-      val: 1
-    }, {
-      text: '空仓',
-      val: 2
-    }]
+    filters: [
+      {
+        text: '多仓',
+        val: 1
+      },
+      {
+        text: '空仓',
+        val: 2
+      }
+    ]
   },
   {
     label: '仓位类型',
     prop: 'positionType',
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '全仓',
-      val: 0
-    }, {
-      text: '逐仓',
-      val: 1
-    }]
+    filters: [
+      {
+        text: '全仓',
+        val: 0
+      },
+      {
+        text: '逐仓',
+        val: 1
+      }
+    ]
   },
   {
     label: '未实现盈亏',
@@ -3285,7 +3481,8 @@ const contractEstimateCol = [{
   }
 ]
 
-const contractResultCol = [{
+const contractResultCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -3337,26 +3534,32 @@ const contractResultCol = [{
     prop: 'positionDirection',
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '多仓',
-      val: 1
-    }, {
-      text: '空仓',
-      val: 2
-    }]
+    filters: [
+      {
+        text: '多仓',
+        val: 1
+      },
+      {
+        text: '空仓',
+        val: 2
+      }
+    ]
   },
   {
     label: '仓位类型',
     prop: 'positionType',
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '全仓',
-      val: 0
-    }, {
-      text: '逐仓',
-      val: 1
-    }]
+    filters: [
+      {
+        text: '全仓',
+        val: 0
+      },
+      {
+        text: '逐仓',
+        val: 1
+      }
+    ]
   },
   {
     label: '未实现盈亏',
@@ -3376,7 +3579,8 @@ const contractResultCol = [{
   }
 ]
 
-const contractResultConfig = [{
+const contractResultConfig = [
+  {
     type: 'onlyNumber',
     label: 'UID',
     prop: 'uid',
@@ -3402,7 +3606,8 @@ const contractResultConfig = [{
     label: '仓位方向',
     prop: 'positionDirection',
     value: '',
-    list: [{
+    list: [
+      {
         label: '多仓',
         value: 1
       },
@@ -3444,15 +3649,18 @@ const contractResultConfig = [{
   }
 ]
 
-const contractTacticsConfig = [{
-  type: 'select',
-  label: '币对',
-  prop: 'coinMarket',
-  value: '',
-  list: []
-}]
+const contractTacticsConfig = [
+  {
+    type: 'select',
+    label: '币对',
+    prop: 'coinMarket',
+    value: '',
+    list: []
+  }
+]
 
-const contractTacticsCol = [{
+const contractTacticsCol = [
+  {
     label: 'id',
     prop: 'id'
   },
@@ -3491,20 +3699,22 @@ const contractTacticsCol = [{
     prop: 'action',
     type: 'action',
     width: 160,
-    btnGroup: [{
-      label: '编辑',
-      fn: 'edit',
-      type: 'primary',
-      alias: 'edit'
-    }]
+    btnGroup: [
+      {
+        label: '编辑',
+        fn: 'edit',
+        type: 'primary',
+        alias: 'edit'
+      }
+    ]
   }
 ]
 
-const accountContractCol = [{
+const accountContractCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
-
 
   {
     label: '币种',
@@ -3549,11 +3759,12 @@ const accountContractCol = [{
     prop: 'action',
     type: 'action',
     width: 360,
-    btnGroup: [{
+    btnGroup: [
+      {
         label: '划转',
         fn: 'transfer',
         type: 'primary',
-        alias: 'transfer',
+        alias: 'transfer'
       },
       {
         label: '销账',
@@ -3590,15 +3801,18 @@ const accountContractCol = [{
   }
 ]
 
-const destroyBillConfig = [{
-  type: 'date_rank',
-  label: '时间',
-  prop: 'startTime',
-  prop2: 'endTime',
-  value: ''
-}]
+const destroyBillConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  }
+]
 
-const destroyBillCol = [{
+const destroyBillCol = [
+  {
     label: '订单号',
     prop: 'orderNo'
   },
@@ -3620,23 +3834,28 @@ const destroyBillCol = [{
     prop: 'action',
     type: 'action',
     width: 120,
-    btnGroup: [{
-      label: '查看详情',
-      fn: 'details',
-      type: 'primary'
-    }]
+    btnGroup: [
+      {
+        label: '查看详情',
+        fn: 'details',
+        type: 'primary'
+      }
+    ]
   }
 ]
 
-const earningsRecordConfig = [{
-  type: 'date_rank',
-  label: '时间',
-  prop: 'startTime',
-  prop2: 'endTime',
-  value: ''
-}]
+const earningsRecordConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  }
+]
 
-const earningsRecordCol = [{
+const earningsRecordCol = [
+  {
     label: '时间',
     prop: 'dataTime'
   },
@@ -3651,7 +3870,8 @@ const earningsRecordCol = [{
   {
     label: '变动资产金额',
     type: 'plusPropArr',
-    propArr: ['profitLoss', 'commission']
+    // propArr: ['profitLoss', 'commission']
+    propArr: [{ sign: '+', propName: 'profitLoss' }, { sign: '+', propName: 'commission' }]
   },
   {
     label: '变动前可用金额',
@@ -3663,7 +3883,8 @@ const earningsRecordCol = [{
   }
 ]
 
-const earningsFlowCol = [{
+const earningsFlowCol = [
+  {
     label: '创建时间',
     prop: 'createTime'
   },
@@ -3681,7 +3902,8 @@ const earningsFlowCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '资产账户之间的划转',
         val: 84
       },
@@ -3764,7 +3986,8 @@ const earningsFlowCol = [{
     prop: 'relateRecdId'
   }
 ]
-const earningsFlowConfig = [{
+const earningsFlowConfig = [
+  {
     type: 'onlyNumber',
     label: 'UID',
     prop: 'uid',
@@ -3783,7 +4006,8 @@ const earningsFlowConfig = [{
     label: '类型',
     prop: 'optType',
     value: '',
-    list: [{
+    list: [
+      {
         label: '资产账户之间的划转',
         value: 84
       },
@@ -3865,7 +4089,8 @@ const earningsFlowConfig = [{
   }
 ]
 
-const agentTransferCol = [{
+const agentTransferCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -3882,7 +4107,8 @@ const agentTransferCol = [{
     prop: 'type',
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '币币转入合约账户',
         val: 7
       },
@@ -3907,7 +4133,8 @@ const agentTransferCol = [{
   }
 ]
 
-const agentTransferfig = [{
+const agentTransferfig = [
+  {
     type: 'text',
     label: 'UID',
     prop: 'uid',
@@ -3927,7 +4154,8 @@ const agentTransferfig = [{
     prop: 'type',
     value: '',
     // 7币币转入合约账户 8：合约账户转出币币账户 12 法币转入合约账户 13 合约账户转入法币账户
-    list: [{
+    list: [
+      {
         label: '币币转入合约账户',
         value: 7
       },
@@ -3955,7 +4183,8 @@ const agentTransferfig = [{
   }
 ]
 
-const apiKeyConfigCol = [{
+const apiKeyConfigCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -3988,16 +4217,19 @@ const apiKeyConfigCol = [{
     label: '操作',
     prop: 'action',
     type: 'action',
-    btnGroup: [{
-      label: '删除',
-      fn: 'del',
-      type: 'primary',
-      alias: 'del'
-    }]
+    btnGroup: [
+      {
+        label: '删除',
+        fn: 'del',
+        type: 'primary',
+        alias: 'del'
+      }
+    ]
   }
 ]
 
-const apiKeyConfigColNoBtn = [{
+const apiKeyConfigColNoBtn = [
+  {
     label: '备注',
     prop: 'destext'
   },
@@ -4019,7 +4251,8 @@ const apiKeyConfigColNoBtn = [{
 
 const apiKeyConfigConfig = []
 
-const highFrequencyMonitorCol = [{
+const highFrequencyMonitorCol = [
+  {
     label: '用户UID',
     prop: 'uid'
   },
@@ -4066,13 +4299,16 @@ const highFrequencyMonitorCol = [{
     width: 120,
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '监控中',
-      val: 1
-    }, {
-      text: '已移出',
-      val: 2
-    }]
+    filters: [
+      {
+        text: '监控中',
+        val: 1
+      },
+      {
+        text: '已移出',
+        val: 2
+      }
+    ]
   },
 
   {
@@ -4080,19 +4316,22 @@ const highFrequencyMonitorCol = [{
     prop: 'action',
     type: 'action',
     width: 120,
-    btnGroup: [{
-      label: '移出监控',
-      fn: 'remove',
-      filter_type: 'array',
-      filter_key: 'monitorType',
-      filter_status: ['1'],
-      type: 'primary',
-      alias: 'remove'
-    }]
+    btnGroup: [
+      {
+        label: '移出监控',
+        fn: 'remove',
+        filter_type: 'array',
+        filter_key: 'monitorType',
+        filter_status: ['1'],
+        type: 'primary',
+        alias: 'remove'
+      }
+    ]
   }
 ]
 
-const highFrequencyMonitorColNoBtn = [{
+const highFrequencyMonitorColNoBtn = [
+  {
     label: '用户UID',
     prop: 'uid'
   },
@@ -4139,17 +4378,21 @@ const highFrequencyMonitorColNoBtn = [{
     width: 120,
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '监控中',
-      val: 1
-    }, {
-      text: '已移出',
-      val: 2
-    }]
+    filters: [
+      {
+        text: '监控中',
+        val: 1
+      },
+      {
+        text: '已移出',
+        val: 2
+      }
+    ]
   }
 ]
 
-const highFrequencyMonitorConfig = [{
+const highFrequencyMonitorConfig = [
+  {
     type: 'date_rank',
     label: '时间',
     prop: 'startTime',
@@ -4183,17 +4426,21 @@ const highFrequencyMonitorConfig = [{
     prop: 'monitorType',
     // 1,监控中) (2,已移出
     value: '',
-    list: [{
-      label: '监控中',
-      value: 1
-    }, {
-      label: '已移出',
-      value: 2
-    }]
+    list: [
+      {
+        label: '监控中',
+        value: 1
+      },
+      {
+        label: '已移出',
+        value: 2
+      }
+    ]
   }
 ]
 
-const contractUserListCol = [{
+const contractUserListCol = [
+  {
     label: 'UID',
     prop: 'uid'
   },
@@ -4203,7 +4450,8 @@ const contractUserListCol = [{
     width: 100,
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '普通用户',
         val: 1
       },
@@ -4348,7 +4596,8 @@ const contractUserListCol = [{
   }
 ]
 
-const contractUserListConfig = [{
+const contractUserListConfig = [
+  {
     type: 'date_rank',
     label: '创建时间',
     prop: 'createStartTime',
@@ -4388,7 +4637,8 @@ const contractUserListConfig = [{
     label: '用户类型',
     prop: 'type',
     value: '',
-    list: [{
+    list: [
+      {
         label: '普通用户',
         value: 1
       },
@@ -4471,13 +4721,16 @@ const contractUserListConfig = [{
     label: '累计合约净入金排序 ',
     prop: 'inAmountSort',
     value: '',
-    list: [{
-      label: '正序',
-      value: 1
-    }, {
-      label: '倒序',
-      value: 2
-    }]
+    list: [
+      {
+        label: '正序',
+        value: 1
+      },
+      {
+        label: '倒序',
+        value: 2
+      }
+    ]
   },
 
   {
@@ -4485,13 +4738,16 @@ const contractUserListConfig = [{
     label: '累计合约交易手续费排序',
     prop: 'feeSort',
     value: '',
-    list: [{
-      label: '正序',
-      value: 1
-    }, {
-      label: '倒序',
-      value: 2
-    }]
+    list: [
+      {
+        label: '正序',
+        value: 1
+      },
+      {
+        label: '倒序',
+        value: 2
+      }
+    ]
   },
 
   {
@@ -4499,13 +4755,16 @@ const contractUserListConfig = [{
     label: '累计合约交易盈亏排序',
     prop: 'profitSort',
     value: '',
-    list: [{
-      label: '正序',
-      value: 1
-    }, {
-      label: '倒序',
-      value: 2
-    }]
+    list: [
+      {
+        label: '正序',
+        value: 1
+      },
+      {
+        label: '倒序',
+        value: 2
+      }
+    ]
   },
 
   {
@@ -4513,13 +4772,16 @@ const contractUserListConfig = [{
     label: '累计爆仓次数排序',
     prop: 'blastSort',
     value: '',
-    list: [{
-      label: '正序',
-      value: 1
-    }, {
-      label: '倒序',
-      value: 2
-    }]
+    list: [
+      {
+        label: '正序',
+        value: 1
+      },
+      {
+        label: '倒序',
+        value: 2
+      }
+    ]
   },
 
   {
@@ -4527,13 +4789,16 @@ const contractUserListConfig = [{
     label: '累计平仓次数排序',
     prop: 'unwindSort',
     value: '',
-    list: [{
-      label: '正序',
-      value: 1
-    }, {
-      label: '倒序',
-      value: 2
-    }]
+    list: [
+      {
+        label: '正序',
+        value: 1
+      },
+      {
+        label: '倒序',
+        value: 2
+      }
+    ]
   },
 
   {
@@ -4541,28 +4806,35 @@ const contractUserListConfig = [{
     label: '累计开仓次数排序',
     prop: 'openSort',
     value: '',
-    list: [{
-      label: '正序',
-      value: 1
-    }, {
-      label: '倒序',
-      value: 2
-    }]
+    list: [
+      {
+        label: '正序',
+        value: 1
+      },
+      {
+        label: '倒序',
+        value: 2
+      }
+    ]
   }
 ]
 
-const agentPermissionConfigsCol = [{
+const agentPermissionConfigsCol = [
+  {
     label: '身份类型',
     prop: 'userType',
     type: 'filter',
     show_type: 'text',
-    filters: [{
-      text: '商务',
-      val: 1
-    }, {
-      text: '代理',
-      val: 2
-    }]
+    filters: [
+      {
+        text: '商务',
+        val: 1
+      },
+      {
+        text: '代理',
+        val: 2
+      }
+    ]
   },
   {
     label: '级别',
@@ -4571,7 +4843,8 @@ const agentPermissionConfigsCol = [{
   {
     label: '代理端是否可查看用户列表字段权限',
     type: 'moreLabel', //  多级表头
-    arr: [{
+    arr: [
+      {
         label: '手机号',
         prop: 'authorityPhone'
       },
@@ -4590,7 +4863,8 @@ const agentPermissionConfigsCol = [{
     prop: 'viewType',
     type: 'filter',
     show_type: 'text',
-    filters: [{
+    filters: [
+      {
         text: '直推用户',
         val: 1
       },
@@ -4618,7 +4892,8 @@ const agentPermissionConfigsCol = [{
     prop: 'action',
     type: 'action',
     width: 160,
-    btnGroup: [{
+    btnGroup: [
+      {
         label: '编辑',
         fn: 'edit',
         type: 'primary',

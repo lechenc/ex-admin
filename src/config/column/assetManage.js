@@ -27,7 +27,8 @@ const assetManageListCol = [
       { text: '支出账号', val: 103 },
       { text: '星球充值账号', val: 105 },
       { text: '合约账号', val: 106 },
-      { text: '合约体验金账号', val: 107 },
+      // { text: '合约体验金账号', val: 107 },
+      { text: '币汇收益账号', val: 107 },
     ],
   },
   {
@@ -67,7 +68,8 @@ const assetManageListColNoBtn = [
       { text: '支出账号', val: 103 },
       { text: '星球充值账号', val: 105 },
       { text: '合约账号', val: 106 },
-      { text: '合约体验金账号', val: 107 },
+      // { text: '合约体验金账号', val: 107 },
+      { text: '币汇收益账号', val: 107 },
     ],
   },
   {
@@ -96,7 +98,8 @@ const assetManageListConfig = [
       { label: '支出账号', value: 103 },
       { label: '星球充值账号', value: 105 },
       { label: '合约账号', value: 106 },
-      { label: '合约体验金账号', value: 107 },
+      // { label: '合约体验金账号', value: 107 },
+      { label: '币汇收益账号', value: 107 },
     ],
   },
 ];
