@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-11 17:53:57
- * @LastEditTime: 2020-12-10 15:35:35
+ * @LastEditTime: 2022-01-28 12:15:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\main.js
@@ -100,6 +100,7 @@ Vue.prototype.$emailTypeArr = [
   { label: 'Spread', value: 3 },
   { label: '阿里云', value: 4 },
   { label: 'MSG91', value: 5 },
+  { label: 'GMAIL', value: 6 },
 ]
 
 Vue.prototype.$variableCoin = 'USDT' // 默认币种
