@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-01-12 13:04:12
+ * @LastEditTime: 2022-02-07 18:38:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -372,6 +372,29 @@ const billContractCol = [
         text: '异常补发',
         val: '112'
       },
+
+      {
+        text: '币支付提币失败',
+        val: '75'
+      },
+      {
+        text: '币支付充币',
+        val: '76'
+      },
+      {
+        text: '币支付商户提现待审核',
+        val: '77'
+      },
+      {
+        text: '币支付商户提现成功',
+        val: '78'
+      },
+      {
+        text: '币支付商户提现失败',
+        val: '79'
+      },
+
+
       {
         text: '财务工资',
         val: '113'
@@ -543,6 +566,29 @@ const billContractConfig = [
         label: '开空',
         value: 19
       },
+
+      {
+        label: '币支付提币失败',
+        value: '75'
+      },
+      {
+        label: '币支付充币',
+        value: '76'
+      },
+      {
+        label: '币支付商户提现待审核',
+        value: '77'
+      },
+      {
+        label: '币支付商户提现成功',
+        value: '78'
+      },
+      {
+        label: '币支付商户提现失败',
+        value: '79'
+      },
+
+
       {
         label: '异常补发',
         value: '112'
