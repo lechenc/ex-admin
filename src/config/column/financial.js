@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-19 17:12:05
+ * @LastEditTime: 2022-02-07 16:31:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1281,9 +1281,9 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      { label: '逐仓', value: '5' },
+      // { label: '逐仓', value: '5' },
       { label: '币汇', value: '9' },
-      { label: 'U本位全仓', value: '10' },
+      // { label: 'U本位全仓', value: '10' },
     ]
   },
   {
@@ -1295,9 +1295,9 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      { label: '逐仓', value: '5' },
+      // { label: '逐仓', value: '5' },
       { label: '币汇', value: '9' },
-      { label: 'U本位全仓', value: '10' },
+      // { label: 'U本位全仓', value: '10' },
     ]
   }
 ]
