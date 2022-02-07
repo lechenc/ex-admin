@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-02-07 16:47:27
+ * @LastEditTime: 2022-02-07 17:03:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1845,6 +1845,7 @@ const coinFundsCol = [
       { text: '币币划转至全仓', val: '54' },
       { text: '合约全仓划转至法币', val: '55' },
       { text: '合约全仓划转至币币', val: '56' },
+      { text: '法币划转至合约全仓', val: '57' },
 
       { text: '币支付待审核', val: '70' },
       { text: '币支付划转成功', val: '71' },
@@ -2019,6 +2020,7 @@ const coinFundsConfig = [
       { label: '币币划转至全仓', value: '54' },
       { label: '合约全仓划转至法币', value: '55' },
       { label: '合约全仓划转至币币', value: '56' },
+      { label: '法币划转至合约全仓', value: '57' },
 
       { label: '币支付待审核', value: '70' },
       { label: '币支付划转成功', value: '71' },
