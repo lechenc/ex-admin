@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-02 18:21:13
- * @LastEditTime: 2022-02-08 11:21:43
+ * @LastEditTime: 2022-02-08 11:46:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\config\column\contractAgent.js
@@ -911,10 +911,10 @@ const agentFinancialFlowCol = [
       { label: '逐仓划转至币币', value: 51, text: '逐仓划转至币币', val: 51 },
       { label: '法币划转至逐仓', value: 52, text: '法币划转至逐仓', val: 52 },
       { label: '逐仓划转至法币', value: 53, text: '逐仓划转至法币', val: 53 },
-      { label: '币币划转至全仓', value: '54', val: '54' },
-      { label: '合约全仓划转至法币', value: '55', val: '55' },
-      { label: '合约全仓划转至币币', value: '56', val: '56' },
-      { label: '法币划转至合约全仓', value: '57', val: '57' },
+      { label: '币币划转至全仓', value: '54',text: '币币划转至全仓', val: '54' },
+      { label: '全仓划转至法币', value: '55',text: '全仓划转至法币', val: '55' },
+      { label: '全仓划转至币币', value: '56',text: '全仓划转至币币', val: '56' },
+      { label: '法币划转至全仓', value: '57',text: '法币划转至全仓', val: '57' },
       { label: '币币划转至法币', value: 10, text: '币币划转至法币', val: 10 },
       { label: '法币划转至币币', value: 11, text: '法币划转至币币', val: 11 },
       { label: '发送红包', value: '106', text: '发送红包', val: 106 },
