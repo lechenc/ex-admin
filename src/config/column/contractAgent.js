@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-02 18:21:13
- * @LastEditTime: 2022-01-13 16:59:19
+ * @LastEditTime: 2022-02-08 11:21:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\config\column\contractAgent.js
@@ -885,7 +885,44 @@ const agentFinancialFlowCol = [
     prop: 'optType',
     type: 'filter',
     show_type: 'text',
-    filters: vm.$agentFinancialFlow_optType_contract
+    filters: [
+      { label: '充币', value: 0, text: '充币', val: 0 },
+      { label: '提币待审核', value: 1, text: '提币待审核', val: 1 },
+      { label: '提币成功', value: 2, text: '提币成功', val: 2 },
+      { label: '提币失败', value: 3, text: '提币失败', val: 3 },
+      { label: '买下单', value: 4, text: '买下单', val: 4 },
+      { label: '卖下单', value: 5, text: '卖下单', val: 5 },
+      { label: '买成交', value: 6, text: '买成交', val: 6 },
+      { label: '卖成交', value: 7, text: '卖成交', val: 7 },
+      { label: '买撤单', value: 8, text: '买撤单', val: 8 },
+      { label: '卖撤单', value: 9, text: '卖撤单', val: 9 },
+      { label: '锁仓手动释放可用金额', value: 20, text: '锁仓手动释放可用金额', val: 20 },
+      { label: '锁仓冻结金额', value: 21, text: '锁仓冻结金额', val: 21 },
+      { label: '锁仓手动释放冻结金额', value: 23, text: '锁仓手动释放冻结金额', val: 23 },
+      { label: '广告下架', value: 39, text: '广告下架', val: 39 },
+      { label: '币币转入合约全仓账户', value: '76', text: '币币转入合约全仓账户', val: 76 },
+      { label: '合约全仓账户转出币币账户', value: '77', text: '合约全仓账户转出币币账户', val: 77 },
+      { label: '法币转入合约全仓账户', value: '78', text: '法币转入合约全仓账户', val: 78 },
+      { label: '合约全仓账户转入法币账户', value: '79', text: '合约全仓账户转入法币账户', val: 79 },
+      { label: '逐仓返佣', value: 88, text: '逐仓返佣', val: 88 },
+      { label: '逐仓返佣结算', value: 95, text: '逐仓返佣结算', val: 95 },
+      { label: '普通用户手续费返佣', value: 101, text: '普通用户手续费返佣', val: 101 },
+      { label: '币币划转至逐仓', value: 50, text: '币币划转至逐仓', val: 50 },
+      { label: '逐仓划转至币币', value: 51, text: '逐仓划转至币币', val: 51 },
+      { label: '法币划转至逐仓', value: 52, text: '法币划转至逐仓', val: 52 },
+      { label: '逐仓划转至法币', value: 53, text: '逐仓划转至法币', val: 53 },
+      { label: '币币划转至全仓', value: '54', val: '54' },
+      { label: '合约全仓划转至法币', value: '55', val: '55' },
+      { label: '合约全仓划转至币币', value: '56', val: '56' },
+      { label: '法币划转至合约全仓', value: '57', val: '57' },
+      { label: '币币划转至法币', value: 10, text: '币币划转至法币', val: 10 },
+      { label: '法币划转至币币', value: 11, text: '法币划转至币币', val: 11 },
+      { label: '发送红包', value: '106', text: '发送红包', val: 106 },
+      { label: '领取红包', value: '107', text: '领取红包', val: 107 },
+      { label: '过期红包退还', value: '108', text: '过期红包退还', val: 108 },
+      { label: '补充保证金', value: '109', text: '补充保证金', val: 109 },
+      { label: '释放保证金', value: '110', text: '释放保证金', val: 110 }
+    ]
   },
   {
     label: '逐仓账户',
@@ -932,7 +969,44 @@ const agentFinancialFlowConfig = [
     label: '类型',
     prop: 'optType',
     value: '',
-    list: vm.$agentFinancialFlow_optType_contract
+    list: [
+      { label: '充币', value: 0, text: '充币', val: 0 },
+      { label: '提币待审核', value: 1, text: '提币待审核', val: 1 },
+      { label: '提币成功', value: 2, text: '提币成功', val: 2 },
+      { label: '提币失败', value: 3, text: '提币失败', val: 3 },
+      { label: '买下单', value: 4, text: '买下单', val: 4 },
+      { label: '卖下单', value: 5, text: '卖下单', val: 5 },
+      { label: '买成交', value: 6, text: '买成交', val: 6 },
+      { label: '卖成交', value: 7, text: '卖成交', val: 7 },
+      { label: '买撤单', value: 8, text: '买撤单', val: 8 },
+      { label: '卖撤单', value: 9, text: '卖撤单', val: 9 },
+      { label: '锁仓手动释放可用金额', value: 20, text: '锁仓手动释放可用金额', val: 20 },
+      { label: '锁仓冻结金额', value: 21, text: '锁仓冻结金额', val: 21 },
+      { label: '锁仓手动释放冻结金额', value: 23, text: '锁仓手动释放冻结金额', val: 23 },
+      { label: '广告下架', value: 39, text: '广告下架', val: 39 },
+      { label: '币币转入合约全仓账户', value: '76', text: '币币转入合约全仓账户', val: 76 },
+      { label: '合约全仓账户转出币币账户', value: '77', text: '合约全仓账户转出币币账户', val: 77 },
+      { label: '法币转入合约全仓账户', value: '78', text: '法币转入合约全仓账户', val: 78 },
+      { label: '合约全仓账户转入法币账户', value: '79', text: '合约全仓账户转入法币账户', val: 79 },
+      { label: '逐仓返佣', value: 88, text: '逐仓返佣', val: 88 },
+      { label: '逐仓返佣结算', value: 95, text: '逐仓返佣结算', val: 95 },
+      { label: '普通用户手续费返佣', value: 101, text: '普通用户手续费返佣', val: 101 },
+      { label: '币币划转至逐仓', value: 50, text: '币币划转至逐仓', val: 50 },
+      { label: '逐仓划转至币币', value: 51, text: '逐仓划转至币币', val: 51 },
+      { label: '法币划转至逐仓', value: 52, text: '法币划转至逐仓', val: 52 },
+      { label: '逐仓划转至法币', value: 53, text: '逐仓划转至法币', val: 53 },
+      { label: '币币划转至全仓', value: '54',text: '币币划转至全仓', val: '54' },
+      { label: '全仓划转至法币', value: '55',text: '全仓划转至法币', val: '55' },
+      { label: '全仓划转至币币', value: '56',text: '全仓划转至币币', val: '56' },
+      { label: '法币划转至全仓', value: '57',text: '法币划转至全仓', val: '57' },
+      { label: '币币划转至法币', value: 10, text: '币币划转至法币', val: 10 },
+      { label: '法币划转至币币', value: 11, text: '法币划转至币币', val: 11 },
+      { label: '发送红包', value: '106', text: '发送红包', val: 106 },
+      { label: '领取红包', value: '107', text: '领取红包', val: 107 },
+      { label: '过期红包退还', value: '108', text: '过期红包退还', val: 108 },
+      { label: '补充保证金', value: '109', text: '补充保证金', val: 109 },
+      { label: '释放保证金', value: '110', text: '释放保证金', val: 110 }
+    ]
   },
   {
     type: 'text',

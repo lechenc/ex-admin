@@ -1,11 +1,11 @@
 <template>
   <div class="agentFinancialFlow-container">
-    <div class="container-btn">
+    <!-- <div class="container-btn">
       <el-radio-group @change="tabTypeChange" v-model="tabType" style="margin-bottom: 30px">
         <el-radio-button :label="1">合约</el-radio-button>
         <el-radio-button :label="2">币汇</el-radio-button>
       </el-radio-group>
-    </div>
+    </div> -->
     <div class="container-top">
       <Bsearch ref="Bsearch" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
