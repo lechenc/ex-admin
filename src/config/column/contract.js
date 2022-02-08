@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-02-07 18:38:46
+ * @LastEditTime: 2022-02-08 15:25:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -296,6 +296,9 @@ const billContractCol = [
   //   filters: 'type',
   //   filtersValue: [18, 19],
   // },
+  // 1：爆仓平空；2：爆仓平多； 3：平空；4：平多；5：开空；6：开多 7：币币转入合约逐仓账户 8：合约逐仓账户转出币币账户
+  //   * 9：资金费用 10：开仓手续费 11：平仓手续费 12 法币转入合约逐仓账户 13 合约逐仓账户转入法币账户 14 特殊调账 15 合约账户交易对之间的划转
+  //   * 76：币币转入合约全仓账户 77：合约全仓账户转出币币账户  78 法币转入合约全仓账户 79 合约全仓账户转入法币账户
   {
     label: '类型',
     prop: 'type',
@@ -328,11 +331,11 @@ const billContractCol = [
         val: 6
       },
       {
-        text: '币币转入逐仓',
+        text: '币币转入合约逐仓账户',
         val: 7
       },
       {
-        text: '逐仓转出币币',
+        text: '合约逐仓账户转出币币账户',
         val: 8
       },
       {
@@ -348,64 +351,38 @@ const billContractCol = [
         val: 11
       },
       {
-        text: '法币转入逐仓',
+        text: '法币转入合约逐仓账户',
         val: 12
       },
       {
-        text: '逐仓转出法币',
+        text: '合约逐仓账户转入法币账户',
         val: 13
       },
       {
-        text: '逐仓划转',
+        text: '特殊调账',
+        val: 14
+      },
+
+      {
+        text: '合约账户交易对之间的划转',
         val: 15
       },
 
       {
-        text: '开多',
-        val: 18
-      },
-      {
-        text: '开空',
-        val: 19
-      },
-      {
-        text: '异常补发',
-        val: '112'
-      },
-
-      {
-        text: '币支付提币失败',
-        val: '75'
-      },
-      {
-        text: '币支付充币',
+        text: '币币转入合约全仓账户',
         val: '76'
       },
       {
-        text: '币支付商户提现待审核',
+        text: '合约全仓账户转出币币账户',
         val: '77'
       },
       {
-        text: '币支付商户提现成功',
+        text: '法币转入合约全仓账户',
         val: '78'
       },
       {
-        text: '币支付商户提现失败',
+        text: '合约全仓账户转入法币账户',
         val: '79'
-      },
-
-
-      {
-        text: '财务工资',
-        val: '113'
-      },
-      {
-        text: '运营活动奖励',
-        val: '114'
-      },
-      {
-        text: '违规扣除',
-        val: '117'
       }
     ]
   },
@@ -526,11 +503,11 @@ const billContractConfig = [
         value: 6
       },
       {
-        label: '币币转入逐仓',
+        label: '币币转入合约逐仓账户',
         value: 7
       },
       {
-        label: '逐仓转出币币',
+        label: '合约逐仓账户转出币币账户',
         value: 8
       },
       {
@@ -546,64 +523,38 @@ const billContractConfig = [
         value: 11
       },
       {
-        label: '法币转入逐仓',
+        label: '法币转入合约逐仓账户',
         value: 12
       },
       {
-        label: '逐仓转出法币 ',
+        label: '合约逐仓账户转入法币账户',
         value: 13
       },
       {
-        label: '逐仓划转',
+        label: '特殊调账',
+        value: 14
+      },
+
+      {
+        label: '合约账户交易对之间的划转',
         value: 15
       },
 
       {
-        label: '开多',
-        value: 18
-      },
-      {
-        label: '开空',
-        value: 19
-      },
-
-      {
-        label: '币支付提币失败',
-        value: '75'
-      },
-      {
-        label: '币支付充币',
+        label: '币币转入合约全仓账户',
         value: '76'
       },
       {
-        label: '币支付商户提现待审核',
+        label: '合约全仓账户转出币币账户',
         value: '77'
       },
       {
-        label: '币支付商户提现成功',
+        label: '法币转入合约全仓账户',
         value: '78'
       },
       {
-        label: '币支付商户提现失败',
+        label: '合约全仓账户转入法币账户',
         value: '79'
-      },
-
-
-      {
-        label: '异常补发',
-        value: '112'
-      },
-      {
-        label: '财务工资',
-        value: '113'
-      },
-      {
-        label: '运营活动奖励',
-        value: '114'
-      },
-      {
-        label: '违规扣除',
-        value: '117'
       }
     ]
   },
