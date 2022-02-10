@@ -1260,8 +1260,8 @@ export default {
       this.coinList = this.$store.state.common.coinlist
     })
 
-    this.$store.dispatch('common/getSymbolListContract').then(() => {
-      this.contractCoinList = this.$store.state.common.symbollistContract
+    this.$store.dispatch('common/getContractCoinmarket').then(() => {
+      this.contractCoinList = this.$store.state.common.contractCoinmarket
     })
     123
 
