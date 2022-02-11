@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-02-11 10:30:07
+ * @LastEditTime: 2022-02-11 18:20:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -247,7 +247,7 @@ const rechargeConfig = [
     prop: 'chainName',
     value: '',
     list: []
-  },
+  }
   // {
   //   type: 'onlyNumber',
   //   label: '上级UID',
@@ -744,7 +744,7 @@ const extractConfig = [
     prop: 'chainName',
     value: '',
     list: []
-  },
+  }
   // {
   //   type: 'onlyNumber',
   //   label: '上级UID',
@@ -1102,11 +1102,11 @@ const extractForeignConfig = [
     list: []
   },
   {
-    type: "text",
-    label: "订单号",
-    prop: "id",
-    value: "",
-    placeHolder: "请输入订单号",
+    type: 'text',
+    label: '订单号',
+    prop: 'id',
+    value: '',
+    placeHolder: '请输入订单号'
   },
   {
     type: 'text',
@@ -1147,7 +1147,7 @@ const extractForeignConfig = [
       { label: '热提自动处理', value: 1 },
       { label: '冷提手动处理', value: 2 }
     ]
-  },
+  }
   // {
   //   type: 'select',
   //   label: '风控用户',
@@ -1204,7 +1204,7 @@ const transferCol = [
       { text: '理财', val: 3 },
       { text: '逐仓', val: 5 },
       { text: '币汇', val: 9 },
-      { text: 'U本位全仓', val: 10 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1218,7 +1218,7 @@ const transferCol = [
       { text: '理财', val: 3 },
       { text: '逐仓', val: 5 },
       { text: '币汇', val: 9 },
-      { text: 'U本位全仓', val: 10 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1282,7 +1282,7 @@ const transferConfig = [
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
       // { label: '逐仓', value: '5' },
-      { label: '币汇', value: '9' },
+      { label: '币汇', value: '9' }
       // { label: 'U本位全仓', value: '10' },
     ]
   },
@@ -1296,7 +1296,7 @@ const transferConfig = [
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
       // { label: '逐仓', value: '5' },
-      { label: '币汇', value: '9' },
+      { label: '币汇', value: '9' }
       // { label: 'U本位全仓', value: '10' },
     ]
   }
@@ -1323,8 +1323,9 @@ const spreconCol = [
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
       { text: '币汇', val: 4 },
-      { text: '合约', val: 5 },
-      { text: 'U本位全仓', val: 10 },
+      // { text: '合约', val: 5 },
+      { text: '逐仓', val: 5 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1462,7 +1463,9 @@ const spreconColNoBtn = [
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
       { text: '币汇', val: 4 },
-      { text: '合约', val: 5 },
+      // { text: '合约', val: 5 },
+      { text: '逐仓', val: 5 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1574,7 +1577,9 @@ const spreconConfig = [
       { label: '法币', value: 2 },
       //  { label: '理财', value: 3 },
       //  { label: '币汇', value: 4 },
-      { label: '合约', value: 5 }
+      // { label: '合约', value: 5 },
+      { label: '逐仓', value: 5 },
+      { label: 'U本位全仓', value: 10 }
     ]
   },
   {
@@ -1610,7 +1615,13 @@ const spreconErrorCol = [
     width: '100',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '合约', val: 5 }]
+    filters: [
+      { text: '币币', val: 1 },
+      { text: '法币', val: 2 },
+      // { text: '合约', val: 5 },
+      { text: '逐仓', val: 5 },
+      { text: 'U本位全仓', val: 10 }
+    ]
   },
   {
     label: '币种/合约账户',
@@ -2612,14 +2623,24 @@ const contractTransferCol = [
     prop: 'fromType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '逐仓', val: '5' }, { text: 'U本位全仓', val: 10 }]
+    filters: [
+      { text: '币币', val: '1' },
+      { text: '法币', val: '2' },
+      { text: '逐仓', val: '5' },
+      { text: 'U本位全仓', val: 10 }
+    ]
   },
   {
     label: 'TO账户',
     prop: 'toType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '逐仓', val: '5' }, { text: 'U本位全仓', val: 10 }]
+    filters: [
+      { text: '币币', val: '1' },
+      { text: '法币', val: '2' },
+      { text: '逐仓', val: '5' },
+      { text: 'U本位全仓', val: 10 }
+    ]
   },
   {
     label: '状态',
@@ -2667,19 +2688,28 @@ const contractTransferConfig = [
     label: 'FORM账号',
     prop: 'accountType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '逐仓', value: 5 }, { label: 'U本位全仓', value: 10 }]
+    list: [
+      { label: '币币', value: 1 },
+      { label: '法币', value: 2 },
+      { label: '逐仓', value: 5 },
+      { label: 'U本位全仓', value: 10 }
+    ]
   },
   {
     type: 'select',
     label: 'TO账号',
     prop: 'toAccountType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '逐仓', value: 5 }, { label: 'U本位全仓', value: 10 }]
+    list: [
+      { label: '币币', value: 1 },
+      { label: '法币', value: 2 },
+      { label: '逐仓', value: 5 },
+      { label: 'U本位全仓', value: 10 }
+    ]
   }
 ]
 
 const hotWalletExtractCol = [
-  
   {
     label: '链类型名称',
     prop: 'chain'
@@ -2786,9 +2816,7 @@ const hotWalletExtractCol = [
         fn: 'checkBalance',
         type: 'primary',
         alias: 'checkBalance'
-      },
-
-      
+      }
     ]
   }
 ]

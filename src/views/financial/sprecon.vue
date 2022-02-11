@@ -614,7 +614,9 @@ export default {
         { label: '法币', value: 2 },
         // { label: '理财', value: 3 },
         // { label: '币汇', value: 4 },
-        { label: '合约', value: 5 }
+        // { label: '合约', value: 5 },
+        { label: '逐仓', value: 5 },
+        { label: 'U本位全仓', value: 10 }
       ],
       reconciliationList: [
         { label: '异常补发', value: 1 },
@@ -668,8 +670,14 @@ export default {
         case 4:
           tmp = '币汇'
           break
+        // case 5:
+        //   tmp = '合约'
+        //   break
         case 5:
-          tmp = '合约'
+          tmp = '逐仓'
+          break
+        case 10:
+          tmp = 'U本位全仓'
           break
       }
       return tmp
@@ -1263,7 +1271,6 @@ export default {
     this.$store.dispatch('common/getContractCoinmarket').then(() => {
       this.contractCoinList = this.$store.state.common.contractCoinmarket
     })
-    
 
     this.spreconCheckBtnIsShow()
     this.getList()
