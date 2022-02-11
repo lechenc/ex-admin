@@ -1263,7 +1263,7 @@ export default {
     this.$store.dispatch('common/getContractCoinmarket').then(() => {
       this.contractCoinList = this.$store.state.common.contractCoinmarket
     })
-    123
+    
 
     this.spreconCheckBtnIsShow()
     this.getList()

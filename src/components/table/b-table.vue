@@ -355,9 +355,11 @@
         :min-width="120"
       >
         <template slot-scope="scope">
-          <span v-for="(item, ixx) in scope.row[config.prop]" :key="ixx" class="valueArr">
-            {{ item[config.key1] }} {{ item[config.key2] ? '(是)' : '(否)' }}
-          </span>
+          <div class="valueArrGroup">
+            <span v-for="(item, ixx) in scope.row[config.prop]" :key="ixx" class="valueArr">
+              {{ item[config.key1] }} {{ item[config.key2] ? '(是)' : '(否)' }}
+            </span>
+          </div>
         </template>
       </el-table-column>
       <!-- 多个字段拼接 -->
@@ -1316,17 +1318,22 @@ export default {
       display: flex;
     }
   }
+
+  .valueArrGroup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
   .valueArr {
     &::after {
       content: ';';
       font-family: 'iconfont';
-      display: inline-block;
     }
     &:last-child {
       &::after {
         content: '';
         font-family: 'iconfont';
-        display: inline-block;
       }
     }
   }
