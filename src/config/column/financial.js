@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-02-11 18:20:12
+ * @LastEditTime: 2022-02-11 18:37:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1569,7 +1569,7 @@ const spreconConfig = [
   },
   {
     type: 'select',
-    label: '资金账户类型',
+    label: '账户类型',
     prop: 'accountType',
     value: '',
     list: [
