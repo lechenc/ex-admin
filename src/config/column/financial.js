@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-02-11 10:08:57
+ * @LastEditTime: 2022-02-11 10:14:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -1462,8 +1462,7 @@ const spreconColNoBtn = [
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
       { text: '币汇', val: 4 },
-      { text: '逐仓', val: 5 },
-      { text: 'U本位全仓', val: 10 },
+      { text: '合约', val: 5 },
     ]
   },
   {
