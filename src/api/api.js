@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-01-27 15:46:54
+ * @LastEditTime: 2022-02-11 17:32:24
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3662,6 +3662,12 @@ export default class api {
   // 运营管理/春节活动/手动修改盲盒金额
   static  apieditSpringFestivalOverview(data) {
     return Fetch.post('/account/activity/updateBoxNum', data)
+  }
+
+  
+  // 币种管理/行情接口排序设置
+  static  apiGetMarketApiSortInfo(data) {
+    return Fetch.post('/robot/market/query', data)
   }
 
  
