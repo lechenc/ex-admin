@@ -100,7 +100,7 @@
           </el-select>
         </el-form-item>
         <!-- 其余 显示币种-->
-        <el-form-item v-else label="币种：" :label-width="formLabelWidth" prop="coinId">
+        <el-form-item v-else-if="orderForm.accountType !== 5 && orderForm.accountType !== 10" label="币种：" :label-width="formLabelWidth" prop="coinId">
           <el-select v-model="orderForm.coinId" filterable size="small">
             <el-option
               v-for="(item, idx) in coinList"
