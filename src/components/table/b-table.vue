@@ -202,7 +202,15 @@
         </el-table-column>
       </el-table-column>
 
-      <!-- 几个数相加 -->
+      <!-- 
+         几个数相加 
+       * @description: 
+       * @param {*} propArr prop组成的数组
+       * @param {*} propName 字段名
+       * @param {*} sign 字段的运算符 加为+ 减为-
+       * @return {*}
+       */ 
+      -->
       <el-table-column
         v-if="config.type == 'plusPropArr'"
         :key="config.label"
@@ -347,9 +355,11 @@
         :min-width="120"
       >
         <template slot-scope="scope">
-          <span v-for="(item, ixx) in scope.row[config.prop]" :key="ixx" class="valueArr">
-            {{ item[config.key1] }} {{ item[config.key2] ? '(是)' : '(否)' }}
-          </span>
+          <div class="valueArrGroup">
+            <span v-for="(item, ixx) in scope.row[config.prop]" :key="ixx" class="valueArr">
+              {{ item[config.key1] }} {{ item[config.key2] ? '(是)' : '(否)' }}
+            </span>
+          </div>
         </template>
       </el-table-column>
       <!-- 多个字段拼接 -->
@@ -1132,8 +1142,16 @@ export default {
       return (row, arr) => {
         if (!arr) return '无'
         var sum = arr.reduce((prev, cur) => {
-          return Precision.plus(prev, row[cur] || 0)
+          return Precision.plus(
+            prev,
+            cur.sign == '+'
+              ? row[cur.propName]
+              : cur.sign == '-'
+              ? 0 - row[cur.propName]
+              : row[cur.propName]
+          )
         }, 0)
+        console.log('sum', sum)
         return sum
       }
     }
@@ -1300,17 +1318,22 @@ export default {
       display: flex;
     }
   }
+
+  .valueArrGroup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
   .valueArr {
     &::after {
       content: ';';
       font-family: 'iconfont';
-      display: inline-block;
     }
     &:last-child {
       &::after {
         content: '';
         font-family: 'iconfont';
-        display: inline-block;
       }
     }
   }

@@ -1,30 +1,44 @@
 <template>
   <div class="agentFinancialFlow-container">
+    <!-- <div class="container-btn">
+      <el-radio-group @change="tabTypeChange" v-model="tabType" style="margin-bottom: 30px">
+        <el-radio-button :label="1">合约</el-radio-button>
+        <el-radio-button :label="2">币汇</el-radio-button>
+      </el-radio-group>
+    </div> -->
     <div class="container-top">
-      <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
+      <Bsearch ref="Bsearch" :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" />
     </div>
     <div class="container-footer">
       <icon-page :total="total" :pages="pages"></icon-page>
-      <el-pagination background @current-change="goPage" layout="total, prev, pager, next, jumper" :current-page="current_page" :page-size="pageSize" :total="total"> </el-pagination>
+      <el-pagination
+        background
+        @current-change="goPage"
+        layout="total, prev, pager, next, jumper"
+        :current-page="current_page"
+        :page-size="pageSize"
+        :total="total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { agentFinancialFlowCol, agentFinancialFlowConfig } from '@/config/column/contractAgent';
-import $api from '@/api/api';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { agentFinancialFlowCol, agentFinancialFlowConfig } from '@/config/column/contractAgent'
+import $api from '@/api/api'
 
 export default {
   name: 'AgentFinancialFlow',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
 
   data() {
@@ -42,28 +56,40 @@ export default {
       toDay: '',
       ago: '',
       curRow: {},
-    };
+      tabType: 1
+    }
   },
   methods: {
+    tabTypeChange(val) {
+      this.searchCofig[2]['value'] = ''
+      this.$refs.Bsearch.doSearch()
+      if (val === 1) {
+        this.searchCofig[2]['list'] = this.$agentFinancialFlow_optType_contract
+        this.configs[4].filters = this.$agentFinancialFlow_optType_contract
+      } else if (val === 2) {
+        this.searchCofig[2]['list'] = this.$agentFinancialFlow_optType_coinForex
+        this.configs[4].filters = this.$agentFinancialFlow_optType_coinForex
+      }
+    },
     selectChange(val) {
       if (val == 1) {
-        this.searchCofig[2].value = '';
+        this.searchCofig[2].value = ''
         this.searchCofig[2].list = [
           { label: '提币待审核', value: 1 },
           { label: '提币成功', value: 2 },
           { label: '提币失败', value: 3 },
           { label: '合约返佣结算', value: 95 },
-          { label: '合约返佣', value: 101 },
-        ];
-        this.showType = 1;
+          { label: '合约返佣', value: 101 }
+        ]
+        this.showType = 1
       } else if (val == 2) {
-        this.searchCofig[2].value = '';
-        this.searchCofig[2].list = [{ label: '团队队长返佣', value: 1 }];
-        this.showType = 2;
+        this.searchCofig[2].value = ''
+        this.searchCofig[2].list = [{ label: '团队队长返佣', value: 1 }]
+        this.showType = 2
       }
     },
     doSearch(data) {
-      this.current_page = 1;
+      this.current_page = 1
       // if (this.showType == 1) {
       //   this.configs[3].filters = [
       //     { text: '提币待审核', val: 1 },
@@ -95,18 +121,21 @@ export default {
       //     ],
       //   };
       // }
-      this.search_params_obj = data;
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
+      this.search_params_obj = {}
       this.searchCofig.forEach((v) => {
-        v['value'] = '';
-      });
-      this.searchCofig[0].value = [this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'), this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')];
+        v['value'] = ''
+      })
+      this.searchCofig[0].value = [
+        this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss'),
+        this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+      ]
       // this.searchCofig[4].value = 1;
       // this.configs[7] = {
       //   label: '操作资金类型',
@@ -132,63 +161,64 @@ export default {
       //   { label: '合约返佣', value: 88 },
       //   { label: '队长返佣', value: 95 },
       // ];
-      this.getList();
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     // 数据列表
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const params = {
         pageNum: this.current_page,
         pageSize: this.pageSize,
-        balanceType : 1,
-      };
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getBusinessAndAgentCoinChange(params);
-      if (res) {
-        const { records, total, current, pages } = res.data.data;
-        this.list = records;
-        this.total = total;
-        this.current_page = current;
-        this.pages = pages;
-        this.listLoading = false;
+        balanceType: 1,
+        tabType: this.tabType
       }
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getBusinessAndAgentCoinChange(params)
+      if (res) {
+        const { records, total, current, pages } = res.data.data
+        this.list = records
+        this.total = total
+        this.current_page = current
+        this.pages = pages
+      }
+      this.listLoading = false
     },
     requiredParams(params) {
       if (this.$util.isEmptyObject(this.search_params_obj)) {
-        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss');
-        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss');
-        params.endTime = nowV.replace(/\//gi, '-');
-        params.startTime = befV.replace(/\//gi, '-');
+        let befV = this.$util.dateFormat(this.ago, 'YYYY/MM/DD HH:mm:ss')
+        let nowV = this.$util.dateFormat(this.toDay, 'YYYY/MM/DD HH:mm:ss')
+        params.endTime = nowV.replace(/\//gi, '-')
+        params.startTime = befV.replace(/\//gi, '-')
         // 组件时间初始必须format格式
-        this.searchCofig[0].value = [befV, nowV];
+        this.searchCofig[0].value = [befV, nowV]
       }
 
       if (this.search_params_obj.startTime) {
-        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime);
-        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime);
+        this.search_params_obj.endTime = this.formatTime(this.search_params_obj.endTime)
+        this.search_params_obj.startTime = this.formatTime(this.search_params_obj.startTime)
       }
     },
     formatTime(val) {
-      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-');
-    },
+      return ~(val + '').indexOf('-') ? val : val.replace(/\//gi, '-')
+    }
   },
   mounted() {
     // let authObj = this.$util.getAuthority('AgentFinancialFlow', agentFinancialFlowCol, []);
-    this.configs = agentFinancialFlowCol;
-    this.searchCofig = this.$util.clone(agentFinancialFlowConfig);
+    this.configs = agentFinancialFlowCol
+    this.searchCofig = this.$util.clone(agentFinancialFlowConfig)
     // 初始化今天，和昨天的时间
-    this.toDay = this.$util.diyTime('toDay');
-    this.ago = this.$util.diyTime('ago');
-    this.getList();
-  },
-};
+    this.toDay = this.$util.diyTime('toDay')
+    this.ago = this.$util.diyTime('ago')
+    this.getList()
+  }
+}
 </script>
 <style lang="scss">
 .agentFinancialFlow-container {

@@ -1,11 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-12-02 18:21:13
- * @LastEditTime: 2020-12-25 18:43:07
+ * @LastEditTime: 2022-02-08 11:46:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\config\column\contractAgent.js
  */
+import Vue from 'vue'
+let vm = new Vue()
 
 const agentsListsCol = [
   {
@@ -884,38 +886,47 @@ const agentFinancialFlowCol = [
     type: 'filter',
     show_type: 'text',
     filters: [
-      // { text: '合约返佣', val: 88 },
-      { text: '充币', val: 0 },
-      { text: '提币待审核', val: 1 },
-      { text: '提币成功', val: 2 },
-      { text: '提币失败', val: 3 },
-
-      { text: '买下单', val: 4 },
-      { text: '卖下单', val: 5 },
-      { text: '买成交', val: 6 },
-      { text: '卖成交', val: 7 },
-      { text: '买撤单', val: 8 },
-      { text: '卖撤单', val: 9 },
-      { text: '锁仓手动释放可用金额', val: 20 },
-      { text: '锁仓冻结金额', val: 21 },
-      { text: '锁仓手动释放冻结金额', val: 23 },
-      { text: '广告下架', val: 39 },
-
-      { text: '合约返佣', val: 88 },
-      { text: '合约返佣结算', val: 95 },
-      { text: '普通用户手续费返佣', val: 101 },
-      { text: '币币划转至合约', val: 50 },
-      { text: '合约划转至币币', val: 51 },
-      { text: '法币划转至合约', val: 52 },
-      { text: '合约划转至法币', val: 53 },
-      { text: '币币划转至法币', val: 10 },
-      { text: '法币划转至币币', val: 11 },
-      { text: '发送红包', val: '106' },
-      { text: '领取红包', val: '107' },
-      { text: '过期红包退还', val: '108' },
-      { text: '补充保证金', val: '109' },
-      { text: '释放保证金', val: '110' }
+      { label: '充币', value: 0, text: '充币', val: 0 },
+      { label: '提币待审核', value: 1, text: '提币待审核', val: 1 },
+      { label: '提币成功', value: 2, text: '提币成功', val: 2 },
+      { label: '提币失败', value: 3, text: '提币失败', val: 3 },
+      { label: '买下单', value: 4, text: '买下单', val: 4 },
+      { label: '卖下单', value: 5, text: '卖下单', val: 5 },
+      { label: '买成交', value: 6, text: '买成交', val: 6 },
+      { label: '卖成交', value: 7, text: '卖成交', val: 7 },
+      { label: '买撤单', value: 8, text: '买撤单', val: 8 },
+      { label: '卖撤单', value: 9, text: '卖撤单', val: 9 },
+      { label: '锁仓手动释放可用金额', value: 20, text: '锁仓手动释放可用金额', val: 20 },
+      { label: '锁仓冻结金额', value: 21, text: '锁仓冻结金额', val: 21 },
+      { label: '锁仓手动释放冻结金额', value: 23, text: '锁仓手动释放冻结金额', val: 23 },
+      { label: '广告下架', value: 39, text: '广告下架', val: 39 },
+      { label: '币币转入合约全仓账户', value: '76', text: '币币转入合约全仓账户', val: 76 },
+      { label: '合约全仓账户转出币币账户', value: '77', text: '合约全仓账户转出币币账户', val: 77 },
+      { label: '法币转入合约全仓账户', value: '78', text: '法币转入合约全仓账户', val: 78 },
+      { label: '合约全仓账户转入法币账户', value: '79', text: '合约全仓账户转入法币账户', val: 79 },
+      { label: '逐仓返佣', value: 88, text: '逐仓返佣', val: 88 },
+      { label: '逐仓返佣结算', value: 95, text: '逐仓返佣结算', val: 95 },
+      { label: '普通用户手续费返佣', value: 101, text: '普通用户手续费返佣', val: 101 },
+      { label: '币币划转至逐仓', value: 50, text: '币币划转至逐仓', val: 50 },
+      { label: '逐仓划转至币币', value: 51, text: '逐仓划转至币币', val: 51 },
+      { label: '法币划转至逐仓', value: 52, text: '法币划转至逐仓', val: 52 },
+      { label: '逐仓划转至法币', value: 53, text: '逐仓划转至法币', val: 53 },
+      { label: '币币划转至全仓', value: '54',text: '币币划转至全仓', val: '54' },
+      { label: '全仓划转至法币', value: '55',text: '全仓划转至法币', val: '55' },
+      { label: '全仓划转至币币', value: '56',text: '全仓划转至币币', val: '56' },
+      { label: '法币划转至全仓', value: '57',text: '法币划转至全仓', val: '57' },
+      { label: '币币划转至法币', value: 10, text: '币币划转至法币', val: 10 },
+      { label: '法币划转至币币', value: 11, text: '法币划转至币币', val: 11 },
+      { label: '发送红包', value: '106', text: '发送红包', val: 106 },
+      { label: '领取红包', value: '107', text: '领取红包', val: 107 },
+      { label: '过期红包退还', value: '108', text: '过期红包退还', val: 108 },
+      { label: '补充保证金', value: '109', text: '补充保证金', val: 109 },
+      { label: '释放保证金', value: '110', text: '释放保证金', val: 110 }
     ]
+  },
+  {
+    label: '逐仓账户',
+    prop: 'coinName'
   },
   {
     label: '变动资产',
@@ -959,36 +970,42 @@ const agentFinancialFlowConfig = [
     prop: 'optType',
     value: '',
     list: [
-      { label: '充币', value: 0 },
-      { label: '提币待审核', value: 1 },
-      { label: '提币成功', value: 2 },
-      { label: '提币失败', value: 3 },
-
-      { label: '买下单', value: 4 },
-      { label: '卖下单', value: 5 },
-      { label: '买成交', value: 6 },
-      { label: '卖成交', value: 7 },
-      { label: '买撤单', value: 8 },
-      { label: '卖撤单', value: 9 },
-      { label: '锁仓手动释放可用金额', value: 20 },
-      { label: '锁仓冻结金额', value: 21 },
-      { label: '锁仓手动释放冻结金额', value: 23 },
-      { label: '广告下架', value: 39 },
-
-      { label: '合约返佣', value: 88 },
-      { label: '合约返佣结算', value: 95 },
-      { label: '普通用户手续费返佣', value: 101 },
-      { label: '币币划转至合约', value: 50 },
-      { label: '合约划转至币币', value: 51 },
-      { label: '法币划转至合约', value: 52 },
-      { label: '合约划转至法币', value: 53 },
-      { label: '币币划转至法币', value: 10 },
-      { label: '法币划转至币币', value: 11 },
-      { label: '发送红包', value: '106' },
-      { label: '领取红包', value: '107' },
-      { label: '过期红包退还', value: '108' },
-      { label: '补充保证金', value: '109' },
-      { label: '释放保证金', value: '110' }
+      { label: '充币', value: 0, text: '充币', val: 0 },
+      { label: '提币待审核', value: 1, text: '提币待审核', val: 1 },
+      { label: '提币成功', value: 2, text: '提币成功', val: 2 },
+      { label: '提币失败', value: 3, text: '提币失败', val: 3 },
+      { label: '买下单', value: 4, text: '买下单', val: 4 },
+      { label: '卖下单', value: 5, text: '卖下单', val: 5 },
+      { label: '买成交', value: 6, text: '买成交', val: 6 },
+      { label: '卖成交', value: 7, text: '卖成交', val: 7 },
+      { label: '买撤单', value: 8, text: '买撤单', val: 8 },
+      { label: '卖撤单', value: 9, text: '卖撤单', val: 9 },
+      { label: '锁仓手动释放可用金额', value: 20, text: '锁仓手动释放可用金额', val: 20 },
+      { label: '锁仓冻结金额', value: 21, text: '锁仓冻结金额', val: 21 },
+      { label: '锁仓手动释放冻结金额', value: 23, text: '锁仓手动释放冻结金额', val: 23 },
+      { label: '广告下架', value: 39, text: '广告下架', val: 39 },
+      { label: '币币转入合约全仓账户', value: '76', text: '币币转入合约全仓账户', val: 76 },
+      { label: '合约全仓账户转出币币账户', value: '77', text: '合约全仓账户转出币币账户', val: 77 },
+      { label: '法币转入合约全仓账户', value: '78', text: '法币转入合约全仓账户', val: 78 },
+      { label: '合约全仓账户转入法币账户', value: '79', text: '合约全仓账户转入法币账户', val: 79 },
+      { label: '逐仓返佣', value: 88, text: '逐仓返佣', val: 88 },
+      { label: '逐仓返佣结算', value: 95, text: '逐仓返佣结算', val: 95 },
+      { label: '普通用户手续费返佣', value: 101, text: '普通用户手续费返佣', val: 101 },
+      { label: '币币划转至逐仓', value: 50, text: '币币划转至逐仓', val: 50 },
+      { label: '逐仓划转至币币', value: 51, text: '逐仓划转至币币', val: 51 },
+      { label: '法币划转至逐仓', value: 52, text: '法币划转至逐仓', val: 52 },
+      { label: '逐仓划转至法币', value: 53, text: '逐仓划转至法币', val: 53 },
+      { label: '币币划转至全仓', value: '54',text: '币币划转至全仓', val: '54' },
+      { label: '全仓划转至法币', value: '55',text: '全仓划转至法币', val: '55' },
+      { label: '全仓划转至币币', value: '56',text: '全仓划转至币币', val: '56' },
+      { label: '法币划转至全仓', value: '57',text: '法币划转至全仓', val: '57' },
+      { label: '币币划转至法币', value: 10, text: '币币划转至法币', val: 10 },
+      { label: '法币划转至币币', value: 11, text: '法币划转至币币', val: 11 },
+      { label: '发送红包', value: '106', text: '发送红包', val: 106 },
+      { label: '领取红包', value: '107', text: '领取红包', val: 107 },
+      { label: '过期红包退还', value: '108', text: '过期红包退还', val: 108 },
+      { label: '补充保证金', value: '109', text: '补充保证金', val: 109 },
+      { label: '释放保证金', value: '110', text: '释放保证金', val: 110 }
     ]
   },
   {
@@ -1056,7 +1073,7 @@ const teamAssetsCol = [
   },
   {
     label: '下面整条链贡献给平台的合约盈亏合计',
-    prop: 'platformProfitLoss',
+    prop: 'platformProfitLoss'
   },
   {
     label: '自身获得团队长合计',
@@ -1150,25 +1167,40 @@ const refundRecordCol = [
     label: '最上级代理商UID',
     prop: 'topProxyUid'
   },
+  // {
+  //   label: '返佣类型',
+  //   prop: 'orderType',
+  //   width: 120,
+  //   type: 'filter',
+  //   show_type: 'text',
+  //   filters: [
+  //     { text: '合约返佣', val: 1 },
+  //     { text: '币币返佣', val: 2 },
+  //     { text: '币汇返佣', val: 3 }
+  //   ]
+  // },
   {
-    label: '返佣类型',
-    prop: 'orderType',
-    width: 120,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '合约返佣', val: 1 }, { text: '币币返佣', val: 2 }]
-  },
-  {
-    label: '币对',
+    label: '币对/交易产品',
     prop: 'coinMarket'
   },
+  // 1平仓 2 爆仓 3币汇划入 4币汇转出 5手续费 6隔夜费用 7 点差代理返佣
   {
     label: '手续费类型',
-    prop: 'positionDirection',
+    prop: 'billType',
     width: 120,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '开仓手续费', val: 10 }, { text: '平仓手续费', val: 11 }]
+    filters: [
+      { text: '平仓', val: 1 },
+      { text: '爆仓', val: 2 },
+      { text: '币汇划入', val: 3 },
+      { text: '币汇转出', val: 4 },
+      { text: '手续费', val: 5 },
+      { text: '隔夜费用', val: 6 },
+      { text: '点差代理返佣', val: 7 },
+      { text: '开仓手续费', val: 10 },
+      { text: '平仓手续费', val: 11 }
+    ]
   },
   // {
   //   label: '成交价格',
@@ -1273,8 +1305,8 @@ const refundRecordConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
-    label: '币对',
+    type: 'select_search',
+    label: '币对/交易产品',
     prop: 'coinMarket',
     value: '',
     list: []
@@ -1307,14 +1339,17 @@ const refundRecordConfig = [
   //     // { label: '合约账户转入法币账户', value: 13 },
   //   ],
   // },
-  {
-    type: 'select',
-    label: '返佣类型',
-    prop: 'orderType',
-    value: '',
-    list: [{ label: '合约返佣', value: 1 }, { label: '币币返佣', value: 2 }]
-    //, { label: '现货返佣', value: 2 }
-  },
+  // {
+  //   type: 'select',
+  //   label: '返佣类型',
+  //   prop: 'orderType',
+  //   value: '',
+  //   list: [
+  //     { label: '合约返佣', value: 1 },
+  //     { label: '币币返佣', value: 2 },
+  //     { label: '币汇返佣', value: 3 }
+  //   ]
+  // },
   // {
   //   type: 'select',
   //   label: '代理结算状态',
@@ -1342,6 +1377,24 @@ const refundRecordConfig = [
     prop: 'isReward',
     value: '',
     list: [{ label: '未结算', value: 0 }, { label: '已结算', value: 1 }]
+  },
+
+  {
+    type: 'select',
+    label: '手续费类型',
+    prop: 'billType',
+    value: '',
+    list: [
+      { label: '平仓', value: 1 },
+      { label: '爆仓', value: 2 },
+      { label: '币汇划入', value: 3 },
+      { label: '币汇转出', value: 4 },
+      { label: '手续费', value: 5 },
+      { label: '隔夜费用', value: 6 },
+      { label: '点差代理返佣', value: 7 },
+      { label: '开仓手续费', value: 10 },
+      { label: '平仓手续费', value: 11 }
+    ]
   }
 ]
 
@@ -1371,25 +1424,39 @@ const refundRecordNewCol = [
   //   label: '二级返佣UID',
   //   prop: 'agentUid',
   // },
+  // {
+  //   label: '返佣类型',
+  //   prop: 'orderType',
+  //   width: 120,
+  //   type: 'filter',
+  //   show_type: 'text',
+  //   filters: [
+  //     { text: '合约返佣', val: 1 },
+  //     { text: '币币返佣', val: 2 },
+  //     { text: '币汇返佣', val: 3 }
+  //   ]
+  // },
   {
-    label: '返佣类型',
-    prop: 'orderType',
-    width: 120,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '合约返佣', val: 1 }]
-  },
-  {
-    label: '币对',
+    label: '币对/交易产品',
     prop: 'coinMarket'
   },
   {
     label: '手续费类型',
-    prop: 'positionDirection',
+    prop: 'billType',
     width: 120,
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '开仓手续费', val: 10 }, { text: '平仓手续费', val: 11 }]
+    filters: [
+      { text: '平仓', val: 1 },
+      { text: '爆仓', val: 2 },
+      { text: '币汇划入', val: 3 },
+      { text: '币汇转出', val: 4 },
+      { text: '手续费', val: 5 },
+      { text: '隔夜费用', val: 6 },
+      { text: '点差代理返佣', val: 7 },
+      { text: '开仓手续费', val: 10 },
+      { text: '平仓手续费', val: 11 }
+    ]
   },
   // {
   //   label: '操作类型',
@@ -1422,7 +1489,7 @@ const refundRecordNewCol = [
     prop: 'positionAmount'
   },
   {
-    label: '手续费金额',
+    label: '手续费/点差金额',
     prop: 'originAmount'
   },
   // {
@@ -1491,8 +1558,8 @@ const refundRecordNewConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
-    label: '币对',
+    type: 'select_search',
+    label: '币对/交易产品',
     prop: 'coinMarket',
     value: '',
     list: []
@@ -1525,13 +1592,17 @@ const refundRecordNewConfig = [
   //     // { label: '合约账户转入法币账户', value: 13 },
   //   ],
   // },
-  {
-    type: 'select',
-    label: '返佣类型',
-    prop: 'orderType',
-    value: '',
-    list: [{ label: '合约返佣', value: 1 }, { label: '币币返佣', value: 2 }]
-  }
+  // {
+  //   type: 'select',
+  //   label: '返佣类型',
+  //   prop: 'orderType',
+  //   value: '',
+  //   list: [
+  //     { label: '合约返佣', value: 1 },
+  //     { label: '币币返佣', value: 2 },
+  //     { label: '币汇返佣', value: 3 }
+  //   ]
+  // }
   // {
   //   type: 'select',
   //   label: '用户结算状态',
@@ -1546,6 +1617,23 @@ const refundRecordNewConfig = [
   //   value: '',
   //   list: [{ label: '已结算', value: 1 }, { label: '待结算', value: 0 }],
   // },
+  {
+    type: 'select',
+    label: '手续费类型',
+    prop: 'billType',
+    value: '',
+    list: [
+      { label: '平仓', value: 1 },
+      { label: '爆仓', value: 2 },
+      { label: '币汇划入', value: 3 },
+      { label: '币汇转出', value: 4 },
+      { label: '手续费', value: 5 },
+      { label: '隔夜费用', value: 6 },
+      { label: '点差代理返佣', value: 7 },
+      { label: '开仓手续费', value: 10 },
+      { label: '平仓手续费', value: 11 }
+    ]
+  }
 ]
 
 const apportionRecordCol = [
@@ -2123,16 +2211,16 @@ const businessRefundRecordCol = [
     label: '商务UID',
     prop: 'businessUid'
   },
+  // {
+  //   label: '返佣类型',
+  //   prop: 'orderType',
+  //   width: 120,
+  //   type: 'filter',
+  //   show_type: 'text',
+  //   filters: [{ text: '合约返佣', val: 1 }, { text: '币币返佣', val: 2 }]
+  // },
   {
-    label: '返佣类型',
-    prop: 'orderType',
-    width: 120,
-    type: 'filter',
-    show_type: 'text',
-    filters: [{ text: '合约返佣', val: 1 }, { text: '币币返佣', val: 2 }]
-  },
-  {
-    label: '币对',
+    label: '币对/交易产品',
     prop: 'coinMarket'
   },
   {
@@ -2140,7 +2228,7 @@ const businessRefundRecordCol = [
     prop: 'positionAmount'
   },
   {
-    label: '手续费金额',
+    label: '手续费/点差金额',
     prop: 'originFeeAmountSum'
   },
   {
@@ -2192,20 +2280,20 @@ const businessRefundRecordConfig = [
     placeHolder: '请输入'
   },
   {
-    type: 'select',
-    label: '币对',
+    type: 'select_search',
+    label: '币对/交易产品',
     prop: 'coinMarket',
     value: '',
     list: []
   },
 
-  {
-    type: 'select',
-    label: '返佣类型',
-    prop: 'orderType',
-    value: '',
-    list: [{ label: '合约返佣', value: 1 }, { label: '币币返佣', value: 2 }]
-  },
+  // {
+  //   type: 'select',
+  //   label: '返佣类型',
+  //   prop: 'orderType',
+  //   value: '',
+  //   list: [{ label: '合约返佣', value: 1 }, { label: '币币返佣', value: 2 }]
+  // },
   {
     type: 'select',
     label: '结算状态',

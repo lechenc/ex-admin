@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-04-27 14:50:11
- * @LastEditTime: 2020-09-01 15:17:06
+ * @LastEditTime: 2022-02-10 16:53:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\bitspot-bg\src\views\financial\recharge.vue
@@ -65,7 +65,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-button size="medium" :loading="infoBtnLoading" @click="getKlineInfo" type="primary"> 查询该条K线 </el-button>
+              <el-button size="medium" :loading="infoBtnLoading" @click="getKlineInfo" :disabled="!isModify" type="primary"> 查询该条K线 </el-button>
             </el-col>
           </el-row>
 

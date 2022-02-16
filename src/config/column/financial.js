@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-01-19 17:12:05
+ * @LastEditTime: 2022-02-11 18:37:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -247,7 +247,7 @@ const rechargeConfig = [
     prop: 'chainName',
     value: '',
     list: []
-  },
+  }
   // {
   //   type: 'onlyNumber',
   //   label: '上级UID',
@@ -744,7 +744,7 @@ const extractConfig = [
     prop: 'chainName',
     value: '',
     list: []
-  },
+  }
   // {
   //   type: 'onlyNumber',
   //   label: '上级UID',
@@ -1102,11 +1102,11 @@ const extractForeignConfig = [
     list: []
   },
   {
-    type: "text",
-    label: "订单号",
-    prop: "id",
-    value: "",
-    placeHolder: "请输入订单号",
+    type: 'text',
+    label: '订单号',
+    prop: 'id',
+    value: '',
+    placeHolder: '请输入订单号'
   },
   {
     type: 'text',
@@ -1147,7 +1147,7 @@ const extractForeignConfig = [
       { label: '热提自动处理', value: 1 },
       { label: '冷提手动处理', value: 2 }
     ]
-  },
+  }
   // {
   //   type: 'select',
   //   label: '风控用户',
@@ -1202,9 +1202,9 @@ const transferCol = [
       { text: '币币', val: 1 },
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
-      // { text: '币汇', val: 4 },
-      { text: '合约', val: 5 },
-      { text: '币汇', val: 9 }
+      { text: '逐仓', val: 5 },
+      { text: '币汇', val: 9 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1216,9 +1216,9 @@ const transferCol = [
       { text: '币币', val: 1 },
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
-      // { text: '币汇', val: 4 },
-      { text: '合约', val: 5 },
-      { text: '币汇', val: 9 }
+      { text: '逐仓', val: 5 },
+      { text: '币汇', val: 9 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1281,9 +1281,9 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      // { label: '币汇', value: '4' },
-      { label: '合约', value: '5' },
+      // { label: '逐仓', value: '5' },
       { label: '币汇', value: '9' }
+      // { label: 'U本位全仓', value: '10' },
     ]
   },
   {
@@ -1295,9 +1295,9 @@ const transferConfig = [
       { label: '币币', value: '1' },
       { label: '法币', value: '2' },
       { label: '理财', value: '3' },
-      // { label: '币汇', value: '4' },
-      { label: '合约', value: '5' },
+      // { label: '逐仓', value: '5' },
       { label: '币汇', value: '9' }
+      // { label: 'U本位全仓', value: '10' },
     ]
   }
 ]
@@ -1323,7 +1323,9 @@ const spreconCol = [
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
       { text: '币汇', val: 4 },
-      { text: '合约', val: 5 }
+      // { text: '合约', val: 5 },
+      { text: '逐仓', val: 5 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1461,7 +1463,9 @@ const spreconColNoBtn = [
       { text: '法币', val: 2 },
       { text: '理财', val: 3 },
       { text: '币汇', val: 4 },
-      { text: '合约', val: 5 }
+      // { text: '合约', val: 5 },
+      { text: '逐仓', val: 5 },
+      { text: 'U本位全仓', val: 10 }
     ]
   },
   {
@@ -1565,7 +1569,7 @@ const spreconConfig = [
   },
   {
     type: 'select',
-    label: '资金账户类型',
+    label: '账户类型',
     prop: 'accountType',
     value: '',
     list: [
@@ -1573,7 +1577,9 @@ const spreconConfig = [
       { label: '法币', value: 2 },
       //  { label: '理财', value: 3 },
       //  { label: '币汇', value: 4 },
-      { label: '合约', value: 5 }
+      // { label: '合约', value: 5 },
+      { label: '逐仓', value: 5 },
+      { label: 'U本位全仓', value: 10 }
     ]
   },
   {
@@ -1609,7 +1615,13 @@ const spreconErrorCol = [
     width: '100',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: 1 }, { text: '法币', val: 2 }, { text: '合约', val: 5 }]
+    filters: [
+      { text: '币币', val: 1 },
+      { text: '法币', val: 2 },
+      // { text: '合约', val: 5 },
+      { text: '逐仓', val: 5 },
+      { text: 'U本位全仓', val: 10 }
+    ]
   },
   {
     label: '币种/合约账户',
@@ -1837,10 +1849,15 @@ const coinFundsCol = [
       { text: '返佣', val: '40' },
       { text: '升级信用额度,冻结资产', val: '41' },
       { text: '解冻信用额度，解冻资产', val: '42' },
-      { text: '币币划转至合约', val: '50' },
-      { text: '合约划转至币币', val: '51' },
-      { text: '法币划转至合约', val: '52' },
-      { text: '合约划转至法币', val: '53' },
+      { text: '币币划转至逐仓', val: '50' },
+      { text: '逐仓划转至币币', val: '51' },
+      { text: '法币划转至逐仓', val: '52' },
+      { text: '逐仓划转至法币', val: '53' },
+
+      { text: '币币划转至全仓', val: '54' },
+      { text: '全仓划转至法币', val: '55' },
+      { text: '全仓划转至币币', val: '56' },
+      { text: '法币划转至全仓', val: '57' },
 
       { text: '币支付待审核', val: '70' },
       { text: '币支付划转成功', val: '71' },
@@ -1848,10 +1865,15 @@ const coinFundsCol = [
       { text: '币支付提币待审核', val: '73' },
       { text: '币支付提币成功', val: '74' },
       { text: '币支付提币失败', val: '75' },
-      { text: '币支付充币', val: '76' },
-      { text: '币支付商户提现待审核', val: '77' },
-      { text: '币支付商户提现成功', val: '78' },
-      { text: '币支付商户提现失败', val: '79' },
+      // { text: '币支付充币', val: '76' },
+      // { text: '币支付商户提现待审核', val: '77' },
+      // { text: '币支付商户提现成功', val: '78' },
+      // { text: '币支付商户提现失败', val: '79' },
+      // 76：币币转入合约全仓账户 77：合约全仓账户转出币币账户  78 法币转入合约全仓账户 79 合约全仓账户转入法币账户
+      { text: '币币转入合约全仓账户', val: '76' },
+      { text: '合约全仓账户转出币币账户', val: '77' },
+      { text: '法币转入合约全仓账户', val: '78' },
+      { text: '合约全仓账户转入法币账户', val: '79' },
 
       { text: '活动支出', val: '100' },
       { text: '划转手续费', val: '80' },
@@ -1861,18 +1883,18 @@ const coinFundsCol = [
       { text: '资产账户划转', val: '84' },
       { text: '收益账户销账', val: '85' },
       // { text: '普通用户手续费返佣', val: '86' },
-      { text: '合约返佣', val: '88' },
-      { text: '合约收益账户销账', val: '89' },
+      { text: '逐仓返佣', val: '88' },
+      { text: '逐仓收益账户销账', val: '89' },
       {
         text: '资金费用',
         val: 94
       },
       {
-        text: '合约返佣结算',
+        text: '逐仓返佣结算',
         val: 95
       },
       {
-        text: '合约手续费',
+        text: '逐仓手续费',
         val: 96
       },
       // {
@@ -2002,10 +2024,15 @@ const coinFundsConfig = [
       { label: '返佣', value: '40' },
       { label: '升级信用额度,冻结资产', value: '41' },
       { label: '解冻信用额度，解冻资产', value: '42' },
-      { label: '币币划转至合约', value: '50' },
-      { label: '合约划转至币币', value: '51' },
-      { label: '法币划转至合约', value: '52' },
-      { label: '合约划转至法币', value: '53' },
+      { label: '币币划转至逐仓', value: '50' },
+      { label: '逐仓划转至币币', value: '51' },
+      { label: '法币划转至逐仓', value: '52' },
+      { label: '逐仓划转至法币', value: '53' },
+
+      { label: '币币划转至全仓', value: '54' },
+      { label: '全仓划转至法币', value: '55' },
+      { label: '全仓划转至币币', value: '56' },
+      { label: '法币划转至全仓', value: '57' },
 
       { label: '币支付待审核', value: '70' },
       { label: '币支付划转成功', value: '71' },
@@ -2013,10 +2040,14 @@ const coinFundsConfig = [
       { label: '币支付提币待审核', value: '73' },
       { label: '币支付提币成功', value: '74' },
       { label: '币支付提币失败', value: '75' },
-      { label: '币支付充币', value: '76' },
-      { label: '币支付商户提现待审核', value: '77' },
-      { label: '币支付商户提现成功', value: '78' },
-      { label: '币支付商户提现失败', value: '79' },
+      // { label: '币支付充币', value: '76' },
+      // { label: '币支付商户提现待审核', value: '77' },
+      // { label: '币支付商户提现成功', value: '78' },
+      // { label: '币支付商户提现失败', value: '79' },
+      { label: '币币转入合约全仓账户', value: '76' },
+      { label: '合约全仓账户转出币币账户', value: '77' },
+      { label: '法币转入合约全仓账户', value: '78' },
+      { label: '合约全仓账户转入法币账户', value: '79' },
 
       { label: '活动支出', value: '100' },
       { label: '划转手续费', value: '80' },
@@ -2026,18 +2057,18 @@ const coinFundsConfig = [
       { label: '资产账户划转', value: '84' },
       { label: '收益账户销账', value: '85' },
       // { label: '普通用户手续费返佣', value: '86' },
-      // { label: '合约返佣', value: '88' },
-      // { label: '合约收益账户销账', value: '89' },
+      // { label: '逐仓返佣', value: '88' },
+      // { label: '逐仓收益账户销账', value: '89' },
       // {
       //   label: '资金费用',
       //   value: '94',
       // },
       {
-        label: '合约返佣结算',
+        label: '逐仓返佣结算',
         value: '95'
       },
       // {
-      //   label: '合约手续费',
+      //   label: '逐仓手续费',
       //   value: '96',
       // },
       // {
@@ -2592,14 +2623,24 @@ const contractTransferCol = [
     prop: 'fromType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }]
+    filters: [
+      { text: '币币', val: '1' },
+      { text: '法币', val: '2' },
+      { text: '逐仓', val: '5' },
+      { text: 'U本位全仓', val: 10 }
+    ]
   },
   {
     label: 'TO账户',
     prop: 'toType',
     type: 'filter',
     show_type: 'text',
-    filters: [{ text: '币币', val: '1' }, { text: '法币', val: '2' }, { text: '合约', val: '5' }]
+    filters: [
+      { text: '币币', val: '1' },
+      { text: '法币', val: '2' },
+      { text: '逐仓', val: '5' },
+      { text: 'U本位全仓', val: 10 }
+    ]
   },
   {
     label: '状态',
@@ -2647,19 +2688,28 @@ const contractTransferConfig = [
     label: 'FORM账号',
     prop: 'accountType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }]
+    list: [
+      { label: '币币', value: 1 },
+      { label: '法币', value: 2 },
+      { label: '逐仓', value: 5 },
+      { label: 'U本位全仓', value: 10 }
+    ]
   },
   {
     type: 'select',
     label: 'TO账号',
     prop: 'toAccountType',
     value: '',
-    list: [{ label: '币币', value: 1 }, { label: '法币', value: 2 }, { label: '合约', value: 5 }]
+    list: [
+      { label: '币币', value: 1 },
+      { label: '法币', value: 2 },
+      { label: '逐仓', value: 5 },
+      { label: 'U本位全仓', value: 10 }
+    ]
   }
 ]
 
 const hotWalletExtractCol = [
-  
   {
     label: '链类型名称',
     prop: 'chain'
@@ -2766,9 +2816,7 @@ const hotWalletExtractCol = [
         fn: 'checkBalance',
         type: 'primary',
         alias: 'checkBalance'
-      },
-
-      
+      }
     ]
   }
 ]

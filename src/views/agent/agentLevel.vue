@@ -10,8 +10,10 @@
         <el-table-column prop="remark" label="备注"> </el-table-column>
         <el-table-column prop="commissionPercent" label="手续费返佣比例"> </el-table-column>
         <el-table-column prop="packPercent" label="团队长返佣比例"> </el-table-column>
-        <el-table-column prop="amount" label="可用"> </el-table-column>
-        <el-table-column prop="waitAmount" label="待结算"> </el-table-column>
+        <el-table-column prop="amount" label="合约可用"> </el-table-column>
+        <el-table-column prop="forexAmount" label="币汇可用"> </el-table-column>
+        <el-table-column prop="waitAmount" label="合约待结算"> </el-table-column>
+        <el-table-column prop="forexWaitAmount" label="币汇待结算"> </el-table-column>
         <el-table-column prop="ensureAmount" label="保证金"> </el-table-column>
         <el-table-column label="操作" fixed="right" width="200" prop="action">
           <template slot-scope="scope">

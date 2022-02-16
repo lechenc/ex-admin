@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-11 17:53:57
- * @LastEditTime: 2022-01-28 12:15:56
+ * @LastEditTime: 2022-02-16 18:08:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\main.js
@@ -91,7 +91,7 @@ Vue.prototype.$msgTypeArr = [
   { label: '摩杜云', value: 1 },
   { label: '美联软通', value: 2 },
   // { label: '网易网盾', value: '3' },
-  { label: 'VONAGE', value: 4 },
+  { label: 'VONAGE', value: 4 }
 ]
 // 邮件类型
 Vue.prototype.$emailTypeArr = [
@@ -105,8 +105,8 @@ Vue.prototype.$emailTypeArr = [
 
 Vue.prototype.$variableCoin = 'USDT' // 默认币种
 
-Vue.prototype.$FileSaver = FileSaver; //设置全局
-Vue.prototype.$XLSX = XLSX; //设置全局
+Vue.prototype.$FileSaver = FileSaver //设置全局
+Vue.prototype.$XLSX = XLSX //设置全局
 
 new Vue({
   el: '#app',
