@@ -100,7 +100,12 @@
           </el-select>
         </el-form-item>
         <!-- 其余 显示币种-->
-        <el-form-item v-else-if="orderForm.accountType !== 5 && orderForm.accountType !== 10" label="币种：" :label-width="formLabelWidth" prop="coinId">
+        <el-form-item
+          v-else-if="orderForm.accountType !== 5 && orderForm.accountType !== 10"
+          label="币种："
+          :label-width="formLabelWidth"
+          prop="coinId"
+        >
           <el-select v-model="orderForm.coinId" filterable size="small">
             <el-option
               v-for="(item, idx) in coinList"
@@ -247,8 +252,8 @@
           <el-col :span="24">
             <el-form-item label="格式列说明：">
               <!-- [(账户类型) 1 = 币币，2 = 法币, 5 = 合约] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 = -->
-              [(账户类型) 1 = 币币，2 = 法币，5 = 逐仓，10 = U本位全仓] &nbsp; &nbsp; [(调账类型) 1 = 异常补发，2 =
-              财务工资，3 = 运营活动奖励，4 = 违规扣除]
+              [(账户类型) 1 = 币币，2 = 法币，5 = 逐仓，10 = U本位全仓] &nbsp; &nbsp; [(调账类型) 1
+              = 异常补发，2 = 财务工资，3 = 运营活动奖励，4 = 违规扣除]
             </el-form-item>
           </el-col>
         </el-row>
@@ -440,7 +445,12 @@
           </el-select>
         </el-form-item>
         <!-- 其余 显示币种-->
-        <el-form-item v-else label="币种：" :label-width="formLabelWidth" prop="coinId">
+        <el-form-item
+          v-else-if="errorForm.accountType !== 5 && errorForm.accountType !== 10"
+          label="币种："
+          :label-width="formLabelWidth"
+          prop="coinId"
+        >
           <el-select v-model="errorForm.coinId" filterable size="small">
             <el-option
               v-for="(item, idx) in coinList"
