@@ -1169,7 +1169,7 @@ export default {
       if (!this.orderForm.accountType) {
         tip = '请先选择资金账户类型'
       }
-      if (!this.orderForm.coinId) {
+      if (!this.orderForm.accountType !== 10 && !this.orderForm.coinId) {
         tip = '请先选择币种或合约账户'
       }
       if (tip) {
