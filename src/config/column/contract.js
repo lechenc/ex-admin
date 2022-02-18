@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-02-08 15:25:11
+ * @LastEditTime: 2022-02-18 07:39:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -2510,11 +2510,11 @@ const flowRecordContractCol = [
         val: 6
       },
       {
-        text: '币币转入合约',
+        text: '币币转入合约逐仓账户',
         val: 7
       },
       {
-        text: '合约转出币币',
+        text: '合约逐仓账户转出币币',
         val: 8
       },
       {
@@ -2530,15 +2530,15 @@ const flowRecordContractCol = [
         val: 11
       },
       {
-        text: '法币转入合约',
+        text: '法币转入合约逐仓账户',
         val: 12
       },
       {
-        text: '合约转出法币 ',
+        text: '合约逐仓账户转出法币 ',
         val: 13
       },
       {
-        text: '合约划转 ',
+        text: '合约逐仓账户划转 ',
         val: 15
       },
 
@@ -2550,6 +2550,25 @@ const flowRecordContractCol = [
         text: '开空',
         val: 19
       },
+
+      {
+        text: '币币转入合约全仓账户',
+        val: '76'
+      },
+      {
+        text: '合约全仓账户转出币币账户',
+        val: '77'
+      },
+      {
+        text: '法币转入合约全仓账户',
+        val: '78'
+      },
+      {
+        text: '合约全仓账户转入法币账户',
+        val: '79'
+      },
+
+
       {
         text: '异常补发',
         val: '112'
@@ -2688,11 +2707,11 @@ const flowRecordContractConfig = [
         value: 6
       },
       {
-        label: '币币转入合约',
+        label: '币币转入合约逐仓账户',
         value: 7
       },
       {
-        label: '合约转出币币',
+        label: '合约逐仓账户转出币币',
         value: 8
       },
       {
@@ -2708,15 +2727,15 @@ const flowRecordContractConfig = [
         value: 11
       },
       {
-        label: '法币转入合约',
+        label: '法币转入合约逐仓账户',
         value: 12
       },
       {
-        label: '合约转出法币',
+        label: '合约逐仓账户转出法币',
         value: 13
       },
       {
-        label: '合约划转 ',
+        label: '合约逐仓账户划转 ',
         value: 15
       },
 
@@ -2728,6 +2747,25 @@ const flowRecordContractConfig = [
         label: '开空',
         value: 19
       },
+
+      {
+        label: '币币转入合约全仓账户',
+        value: '76'
+      },
+      {
+        label: '合约全仓账户转出币币账户',
+        value: '77'
+      },
+      {
+        label: '法币转入合约全仓账户',
+        value: '78'
+      },
+      {
+        label: '合约全仓账户转入法币账户',
+        value: '79'
+      },
+
+
       {
         label: '异常补发',
         value: '112'

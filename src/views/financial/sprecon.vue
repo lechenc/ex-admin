@@ -1172,7 +1172,7 @@ export default {
       if (this.orderForm.accountType != 10 && !this.orderForm.coinId) {
         tip = '请先选择币种或合约账户'
       }
-      console.log('this.orderForm.accountType',this.orderForm.accountType)
+      
       if (tip) {
         this.$message({
           message: tip,
@@ -1180,7 +1180,7 @@ export default {
         })
         return
       }
-      console.log('tip',tip)
+      
       const params = {
         accountType: this.orderForm.accountType + '',
         coinId: this.orderForm.coinId,
