@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 18:56:31
- * @LastEditTime: 2022-01-27 15:46:56
+ * @LastEditTime: 2022-02-11 16:40:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\router\index.js
@@ -419,7 +419,14 @@ export const asyncRouterMap = [
         name: 'TradeMarket',
         component: () => import('@/views/symbol/tradeMarket'),
         meta: { title: '交易对行情接口管理', icon: '', role: [] }
-      }
+      },
+
+      {
+        path: 'marketApiSort',
+        name: 'MarketApiSort',
+        component: () => import('@/views/symbol/marketApiSort'),
+        meta: { title: '行情接口排序设置', icon: '' }
+      },
     ]
   },
   // 财务管理

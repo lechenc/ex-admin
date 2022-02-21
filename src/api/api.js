@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-01-27 15:46:54
+ * @LastEditTime: 2022-02-21 12:05:27
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3663,6 +3663,19 @@ export default class api {
   static  apieditSpringFestivalOverview(data) {
     return Fetch.post('/account/activity/updateBoxNum', data)
   }
+
+  
+  
+
+  static apiGetMarketApiSortInfo(data) {
+    return Fetch.post('/admin/robot/market/query', data)
+  }
+
+  static apiEditMarketApiSortInfo(data) {
+    return Fetch.post('/admin/robot/market/update', data)
+  }
+
+  
 
  
 
