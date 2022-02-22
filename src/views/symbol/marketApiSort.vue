@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-04-27 14:50:11
- * @LastEditTime: 2022-02-21 13:19:56
+ * @LastEditTime: 2022-02-22 12:31:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\bitspot-bg\src\views\financial\recharge.vue
@@ -213,6 +213,12 @@ export default {
         if (valid) {
           const { phone, count, second, robotMarkets, createTime, id, updateTime, usingMarket } =
             this.form
+          let switchOnList = robotMarkets.filter((v) => {
+            return v.enable == 1
+          })
+          if (switchOnList.length > 1) {
+            return this.$message.error('只能启用一个接口')
+          }
           robotMarkets.forEach((v, idx) => {
             v.enable = v.enable ? 1 : 0
             v.sort = idx + 1
@@ -225,7 +231,7 @@ export default {
             createTime,
             id,
             updateTime,
-            usingMarket
+            usingMarket: switchOnList.length ? switchOnList[0].name : ''
           }
           this.btnLoading = true
           const res = await $api.apiEditMarketApiSortInfo(params)
