@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-02-18 07:39:35
+ * @LastEditTime: 2022-03-02 12:42:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -286,8 +286,16 @@ const billContractCol = [
     prop: 'positionAmount'
   },
   {
+    label: '资金变动前金额',
+    prop: 'beforeTotalAmount'
+  },
+  {
     label: '金额',
     prop: 'amount'
+  },
+  {
+    label: '资金变动后金额',
+    prop: 'afterTotalAmount'
   },
   // {
   //   label: '金额',
