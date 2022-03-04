@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-03-02 12:42:12
+ * @LastEditTime: 2022-03-04 10:56:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -2600,11 +2600,19 @@ const flowRecordContractCol = [
     prop: 'positionAmount'
   },
   {
+    label: '变动前金额',
+    prop: 'beforeTotalAmount'
+  },
+  {
     label: '变动金额',
     prop: 'amount',
     type: 'myShowHide',
     filters: 'type',
     filtersValue: [18, 19]
+  },
+  {
+    label: '变动后金额',
+    prop: 'afterTotalAmount'
   },
   // {
   //   label: '变动前合约保证金',
