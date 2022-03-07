@@ -1,15 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-02-21 12:05:27
+ * @LastEditTime: 2022-03-07 11:37:38
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-app-h5\src\fetch\api\api.js
  */
-import {
-  Fetch
-} from './fetch.js'
+import { Fetch } from './fetch.js'
 
 export default class api {
   // 用户管理 - 获取用户列表
@@ -3519,13 +3517,13 @@ export default class api {
     return Fetch.post('/market/get-all-contract-coinmarket', data)
   }
 
-   // 财务管理--特殊调账列表 sum
-   static apiGetSpecialReconciliationSum(data) {
+  // 财务管理--特殊调账列表 sum
+  static apiGetSpecialReconciliationSum(data) {
     return Fetch.post('/admin/account/special-reconciliation-amount-sum', data)
   }
 
-   // 币汇管理/币汇交易对设置/白名单设置 编辑配置
-   static apiEditCoinForexPairsWhiteListConfig(data) {
+  // 币汇管理/币汇交易对设置/白名单设置 编辑配置
+  static apiEditCoinForexPairsWhiteListConfig(data) {
     return Fetch.post('/forex/admin/saveUserAuth', data)
   }
 
@@ -3579,8 +3577,8 @@ export default class api {
     return Fetch.post('/user/feature/status', data)
   }
 
-   // 系统管理/IP地址管理 添加ip
-   static apiAddIpAddressListLists(data) {
+  // 系统管理/IP地址管理 添加ip
+  static apiAddIpAddressListLists(data) {
     return Fetch.post('/user/filter/ip/create', data)
   }
 
@@ -3660,12 +3658,9 @@ export default class api {
   }
 
   // 运营管理/春节活动/手动修改盲盒金额
-  static  apieditSpringFestivalOverview(data) {
+  static apieditSpringFestivalOverview(data) {
     return Fetch.post('/account/activity/updateBoxNum', data)
   }
-
-  
-  
 
   static apiGetMarketApiSortInfo(data) {
     return Fetch.post('/admin/robot/market/query', data)
@@ -3674,32 +3669,8 @@ export default class api {
   static apiEditMarketApiSortInfo(data) {
     return Fetch.post('/admin/robot/market/update', data)
   }
-
-  
-
- 
-
-  
-
-  
-
-  
-
-   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-   
-
-  
-
-
+  // 系统管理/域名失败数据统计 列表
+  static getDomainNameFailListsList(data) {
+    return Fetch.post('/user/domain/findDomainErrorRecord', data)
+  }
 }

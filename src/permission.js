@@ -270,6 +270,7 @@ const mapComponents = {
   Oplog: () => import('@/views/system/oplog'),
   ConfigPath: () => import('@/views/system/configPath'),
   DomainName: () => import('@/views/system/domainName'),
+  DomainNameFailLists: () => import('@/views/system/domainNameFailLists'),
   DomainNameFixed: () => import('@/views/system/domainNameFixed'),
   Maintenance: () => import('@/views/system/maintenance'),
   PeopleManagement: () => import('@/views/system/peopleManagement'),

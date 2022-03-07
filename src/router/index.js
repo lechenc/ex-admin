@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 18:56:31
- * @LastEditTime: 2022-02-11 16:40:05
+ * @LastEditTime: 2022-03-07 11:24:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\router\index.js
@@ -611,6 +611,12 @@ export const asyncRouterMap = [
         name: 'DomainName',
         component: () => import('@/views/system/domainName'),
         meta: { title: '域名管理', icon: '', role: [] }
+      },
+      {
+        path: 'domainNameFailLists',
+        name: 'DomainNameFailLists',
+        component: () => import('@/views/system/domainNameFailLists'),
+        meta: { title: '域名失败数据统计', icon: '', role: [] }
       },
 
       {
