@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 20:45:04
- * @LastEditTime: 2022-03-07 12:01:20
+ * @LastEditTime: 2022-03-08 10:29:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\system.js
@@ -680,10 +680,6 @@ const ipAddressColNoBtn = [
 //域名管理
 const domainNameFailListsCol = [
   {
-    label: 'UID',
-    prop: 'uid'
-  },
-  {
     label: '域名地址',
     prop: 'domainAddress'
   },
@@ -743,11 +739,6 @@ const domainNameFailListsConfig = [
     prop: 'startTime',
     prop2: 'endTime',
     value: ''
-  },
-  {
-    label: 'UID',
-    type: 'onlyNumber',
-    prop: 'UID'
   },
   {
     label: '域名地址',

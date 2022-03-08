@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-03-04 10:56:11
+ * @LastEditTime: 2022-03-08 10:32:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -502,14 +502,14 @@ const billContractConfig = [
         label: '平多',
         value: 4
       },
-      {
-        label: '开空手续费',
-        value: 5
-      },
-      {
-        label: '开多手续费',
-        value: 6
-      },
+      // {
+      //   label: '开空手续费',
+      //   value: 5
+      // },
+      // {
+      //   label: '开多手续费',
+      //   value: 6
+      // },
       {
         label: '币币转入合约逐仓账户',
         value: 7
@@ -2714,14 +2714,14 @@ const flowRecordContractConfig = [
         label: '平多',
         value: 4
       },
-      {
-        label: '开空手续费',
-        value: 5
-      },
-      {
-        label: '开多手续费',
-        value: 6
-      },
+      // {
+      //   label: '开空手续费',
+      //   value: 5
+      // },
+      // {
+      //   label: '开多手续费',
+      //   value: 6
+      // },
       {
         label: '币币转入合约逐仓账户',
         value: 7
