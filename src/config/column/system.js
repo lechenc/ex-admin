@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 20:45:04
- * @LastEditTime: 2020-08-17 18:46:40
+ * @LastEditTime: 2022-03-08 10:29:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\system.js
@@ -676,7 +676,87 @@ const ipAddressColNoBtn = [
   }
 ]
 
+
+//域名管理
+const domainNameFailListsCol = [
+  {
+    label: '域名地址',
+    prop: 'domainAddress'
+  },
+  {
+    label: '用户IP地址',
+    prop: 'userIpAddress'
+  },
+  {
+    label: '设备型号',
+    prop: 'deviceModel'
+  },
+  {
+    label: '操作系统',
+    prop: 'operatingSystem'
+  },
+  {
+    label: '运营商',
+    prop: 'operator'
+  },
+  {
+    label: '失败记录时间',
+    prop: 'created',
+  },
+  // {
+  //   label: '操作',
+  //   prop: 'action',
+  //   width: '240',
+  //   type: 'action',
+  //   btnGroup: [
+  //     {
+  //       label: '编辑',
+  //       fn: 'edit',
+  //       type: 'primary',
+  //       alias: 'edit'
+  //     },
+  //     {
+  //       label: '详情',
+  //       fn: 'detail',
+  //       type: 'primary',
+  //       alias: 'detail'
+  //     },
+  //     {
+  //       label: '删除',
+  //       fn: 'del',
+  //       type: 'danger',
+  //       alias: 'del'
+  //     }
+  //   ]
+  // }
+]
+
+//固定域名管理
+const domainNameFailListsConfig = [
+  {
+    type: 'date_rank',
+    label: '时间',
+    prop: 'startTime',
+    prop2: 'endTime',
+    value: ''
+  },
+  {
+    label: '域名地址',
+    prop: 'domainAddress'
+  },
+  {
+    label: '用户IP地址',
+    prop: 'userIpAddress'
+  },
+  {
+    label: '运营商',
+    prop: 'operator'
+  },
+]
+
 export {
+  domainNameFailListsCol,
+  domainNameFailListsConfig,
   ipAddressCol,
   ipAddressColNoBtn,
   domainNameFixedCol,

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-02-18 07:39:35
+ * @LastEditTime: 2022-03-08 10:32:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -286,8 +286,16 @@ const billContractCol = [
     prop: 'positionAmount'
   },
   {
+    label: '资金变动前金额',
+    prop: 'beforeTotalAmount'
+  },
+  {
     label: '金额',
     prop: 'amount'
+  },
+  {
+    label: '资金变动后金额',
+    prop: 'afterTotalAmount'
   },
   // {
   //   label: '金额',
@@ -494,14 +502,14 @@ const billContractConfig = [
         label: '平多',
         value: 4
       },
-      {
-        label: '开空手续费',
-        value: 5
-      },
-      {
-        label: '开多手续费',
-        value: 6
-      },
+      // {
+      //   label: '开空手续费',
+      //   value: 5
+      // },
+      // {
+      //   label: '开多手续费',
+      //   value: 6
+      // },
       {
         label: '币币转入合约逐仓账户',
         value: 7
@@ -2592,11 +2600,19 @@ const flowRecordContractCol = [
     prop: 'positionAmount'
   },
   {
+    label: '变动前金额',
+    prop: 'beforeTotalAmount'
+  },
+  {
     label: '变动金额',
     prop: 'amount',
     type: 'myShowHide',
     filters: 'type',
     filtersValue: [18, 19]
+  },
+  {
+    label: '变动后金额',
+    prop: 'afterTotalAmount'
   },
   // {
   //   label: '变动前合约保证金',
@@ -2698,14 +2714,14 @@ const flowRecordContractConfig = [
         label: '平多',
         value: 4
       },
-      {
-        label: '开空手续费',
-        value: 5
-      },
-      {
-        label: '开多手续费',
-        value: 6
-      },
+      // {
+      //   label: '开空手续费',
+      //   value: 5
+      // },
+      // {
+      //   label: '开多手续费',
+      //   value: 6
+      // },
       {
         label: '币币转入合约逐仓账户',
         value: 7
