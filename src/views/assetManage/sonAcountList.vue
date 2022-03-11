@@ -3,8 +3,18 @@
     <div class="container-top">
       <Bsearch :configs="searchCofig" @do-search="doSearch" @do-reset="doReset" />
     </div>
-    <div class="container-btn" v-if="isCURDAuth">
-      <el-button type="primary" size="medium" @click="addLine">添加账号</el-button>
+    <div class="container-btn">
+      <el-button type="primary" v-if="isCURDAuth" size="medium" @click="addLine"
+        >添加账号</el-button
+      >
+      <el-button
+        type="primary"
+        v-if="~btnArr.indexOf('refresh')"
+        size="medium"
+        @click="refreshFn"
+        :loading="refreshLoading"
+        >刷新</el-button
+      >
     </div>
     <div>
       <Btable :listLoading="listLoading" :data="list" :configs="configs" @do-handle="doHandle" />
@@ -36,18 +46,18 @@
   </div>
 </template>
 <script>
-import Bsearch from '@/components/search/b-search';
-import Btable from '@/components/table/b-table';
-import iconPage from '@/components/icon-page';
-import { sonAcountCol, sonAcountColNoBtn, sonAcountConfig } from '@/config/column/assetManage';
-import $api from '@/api/api';
+import Bsearch from '@/components/search/b-search'
+import Btable from '@/components/table/b-table'
+import iconPage from '@/components/icon-page'
+import { sonAcountCol, sonAcountColNoBtn, sonAcountConfig } from '@/config/column/assetManage'
+import $api from '@/api/api'
 
 export default {
   name: 'SonAcountList',
   components: {
     Btable,
     Bsearch,
-    iconPage,
+    iconPage
   },
   data() {
     return {
@@ -68,120 +78,140 @@ export default {
       dialogVisible: false, // 是否显示弹窗
       form: {
         id: '',
-        subUsername: '',
+        subUsername: ''
       },
       rules: {
-        subUsername: [{ required: true, message: '必填' }],
+        subUsername: [{ required: true, message: '必填' }]
       },
       curRow: {}, // 当前选定行数据
       accountList: [], //  接收账号
-    };
+      btnArr: [],
+      refreshLoading: false
+    }
   },
   methods: {
+    async refreshFn() {
+      const res = await $api.apiRefreshSonAcountList()
+
+      if (this.refreshLoading) {
+        return
+      }
+      this.refreshLoading = true
+      if (res) {
+        this.$message.success('操作成功')
+      }
+      this.refreshLoading = false
+      this.getList()
+    },
     async doHandle(data) {
-      const { fn, row } = data;
-      this.curRow = row;
+      const { fn, row } = data
+      this.curRow = row
       // 编辑币种
       if (fn === 'edit') {
-        this.title = '编辑账号';
-        this.dialogVisible = true;
+        this.title = '编辑账号'
+        this.dialogVisible = true
         this.$nextTick(() => {
-          this.$refs['form'].resetFields();
+          this.$refs['form'].resetFields()
           this.form = {
             userId: row.userId,
-            subUsername: row.realName,
-          };
-        });
+            subUsername: row.realName
+          }
+        })
       }
       if (fn === 'detail') {
         //  查看详情
-        this.$router.push({ path: '/assetManage/sonAcountDetail', query: { userId: row.userId,realName: row.realName } });
+        this.$router.push({
+          path: '/assetManage/sonAcountDetail',
+          query: { userId: row.userId, realName: row.realName }
+        })
       }
     },
     doSearch(data) {
-      this.current_page = 1;
-      this.search_params_obj = data;
+      this.current_page = 1
+      this.search_params_obj = data
       if (!this.search_params_obj.startTime && !this.search_params_obj.endTime) {
-        this.search_params_obj.flag = 1;
+        this.search_params_obj.flag = 1
       }
-      this.getList();
+      this.getList()
     },
     doReset() {
-      this.search_params_obj = {};
-      this.searchCofig.forEach(v => {
-        v['value'] = '';
-      });
-      this.getList();
+      this.search_params_obj = {}
+      this.searchCofig.forEach((v) => {
+        v['value'] = ''
+      })
+      this.getList()
     },
     // 分页
     goPage(val) {
-      this.current_page = val;
-      this.getList();
+      this.current_page = val
+      this.getList()
     },
     addLine() {
-      this.title = '添加账号';
-      this.dialogVisible = true;
+      this.title = '添加账号'
+      this.dialogVisible = true
       this.$nextTick(() => {
-        this.$refs['form'].resetFields();
+        this.$refs['form'].resetFields()
         this.form = {
           userId: '',
-          subUsername: '',
-        };
-      });
+          subUsername: ''
+        }
+      })
     },
     // 提交
     confirmOp() {
-      this.$refs['form'].validate(async valid => {
+      this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          const { userId, subUsername } = this.form;
-          const params = {};
-          this.btnLoading = true;
+          const { userId, subUsername } = this.form
+          const params = {}
+          this.btnLoading = true
           !userId
             ? Object.assign(params, { userType: parseInt(this.userType), subUsername: subUsername })
-            : Object.assign(params, { realName: subUsername, userId });
+            : Object.assign(params, { realName: subUsername, userId })
           // 新增
-          const res = !userId ? await $api.addAssetUser(params) : await $api.getEditExpendUser(params);
+          const res = !userId
+            ? await $api.addAssetUser(params)
+            : await $api.getEditExpendUser(params)
           if (res) {
-            let txt = !userId ? '添加成功' : '编辑成功';
-            this.$message({ message: txt, type: 'success' });
-            this.dialogVisible = false;
-            this.getList();
+            let txt = !userId ? '添加成功' : '编辑成功'
+            this.$message({ message: txt, type: 'success' })
+            this.dialogVisible = false
+            this.getList()
           }
-          this.btnLoading = false;
+          this.btnLoading = false
         }
-      });
+      })
     },
     // 数据列表
     async getList() {
-      if (this.listLoading) return;
+      if (this.listLoading) return
       const params = {
         pageNum: this.current_page,
-        pageSize: this.pageSize,
-      };
-      this.requiredParams(params);
-      Object.assign(params, this.search_params_obj);
-      this.listLoading = true;
-      const res = await $api.getSubExpendUserList(params);
-      if (res.data && res.data.data) {
-        const { records, total, current, pages } = res.data.data;
-        this.list = records;
-        this.total = +total;
-        this.current_page = current;
-        this.pages = pages;
+        pageSize: this.pageSize
       }
-      this.listLoading = false;
+      this.requiredParams(params)
+      Object.assign(params, this.search_params_obj)
+      this.listLoading = true
+      const res = await $api.getSubExpendUserList(params)
+      if (res.data && res.data.data) {
+        const { records, total, current, pages } = res.data.data
+        this.list = records
+        this.total = +total
+        this.current_page = current
+        this.pages = pages
+      }
+      this.listLoading = false
     },
-    requiredParams(params) {},
+    requiredParams(params) {}
   },
   mounted() {
-    let authObj = this.$util.getAuthority('SonAcountList', sonAcountCol, sonAcountColNoBtn);
-    this.configs = authObj.val;
-    this.isCURDAuth = authObj.isAdd;
-
-    this.searchCofig = this.$util.clone(sonAcountConfig);
-    this.getList();
-  },
-};
+    let authObj = this.$util.getAuthority('SonAcountList', sonAcountCol, sonAcountColNoBtn)
+    this.configs = authObj.val
+    this.isCURDAuth = authObj.isAdd
+    this.btnArr = authObj.btnArr
+    this.searchCofig = this.$util.clone(sonAcountConfig)
+    this.getList()
+  }
+}
 </script>
 <style lang="scss">
 .sonAcountList-container {

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-03-10 14:42:07
+ * @LastEditTime: 2022-03-11 14:38:59
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3702,5 +3702,10 @@ export default class api {
    // 币种管理/事务管理/消费异常事务 修复
    static apiTriggerConsumptionException(data) {
     return Fetch.post('/contract/order/rollback/triggerOrderConsumptionExceptionRollback', data)
+  }
+
+  // 资产管理/子账号列表 刷新
+  static apiRefreshSonAcountList(data) {
+    return Fetch.post('/admin/account/expend-user-refresh-coin', data)
   }
 }

@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-07-17 16:01:15
- * @LastEditTime: 2022-03-07 10:56:30
+ * @LastEditTime: 2022-03-11 14:41:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\public\config.js
  */
-window.SERVER_PATH = 'http://192.168.0.241/api'; // 开发接口地
-// window.SERVER_PATH = 'https://exchange-admin-test.alphatest.vip/api' // 测试接口地址.
+// window.SERVER_PATH = 'http://192.168.0.241/api'; // 开发接口地
+window.SERVER_PATH = 'https://exchange-admin-test.alphatest.vip/api' // 测试接口地址.
 
 // // 开发接口地址.
 // if (/241|localhost/.test(window.location.href)) {
