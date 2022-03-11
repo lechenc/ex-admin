@@ -239,6 +239,9 @@ const mapComponents = {
   CertificationConfig: () => import('@/views/check/certificationConfig'),
   TradeMarket: () => import('@/views/symbol/tradeMarket'),
   MarketApiSort: () => import('@/views/symbol/marketApiSort'),
+  TransferException: () => import('@/views/symbol/exception/transferException'),
+  OrderException: () => import('@/views/symbol/exception/orderException'),
+  ConsumptionException: () => import('@/views/symbol/exception/consumptionException'),
 
   MerchantCheck: () => import('@/views/check/merchantCheck'),
   Orderlist: () => import('@/views/exchange/orderlist'),

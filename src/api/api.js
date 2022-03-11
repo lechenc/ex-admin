@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-26 16:38:48
- * @LastEditTime: 2022-03-07 11:37:38
+ * @LastEditTime: 2022-03-10 14:42:07
  * @LastEditTime: 2020-03-31 11:47:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
@@ -3672,5 +3672,35 @@ export default class api {
   // 系统管理/域名失败数据统计 列表
   static getDomainNameFailListsList(data) {
     return Fetch.post('/user/domain/findDomainErrorRecord', data)
+  }
+  // 币种管理/事务管理/划转异常事务 列表
+  static apiGetTransferExceptionList(data) {
+    return Fetch.post('/contract-account/transfer/rollback/findTransferExceptionList', data)
+  }
+  
+   // 币种管理/事务管理/划转异常事务 修复
+   static apiTriggerTransferException(data) {
+    return Fetch.post('/contract-account/transfer/rollback/triggerTransferExceptionRollback', data)
+  }
+
+
+  // 币种管理/事务管理/下单异常事务 列表
+  static apiGetorderExceptionList(data) {
+    return Fetch.post('/contract-account/order/rollback/findOrderExceptionList', data)
+  }
+  
+   // 币种管理/事务管理/下单异常事务 修复
+   static apiTriggerOrderException(data) {
+    return Fetch.post('/contract-account/order/rollback/triggerTransferExceptionRollback', data)
+  }
+
+  // 币种管理/事务管理/消费异常事务 列表
+  static apiGetConsumptionExceptionList(data) {
+    return Fetch.post('/contract/order/rollback/findOrdersConsumptionExceptionList', data)
+  }
+  
+   // 币种管理/事务管理/消费异常事务 修复
+   static apiTriggerConsumptionException(data) {
+    return Fetch.post('/contract/order/rollback/triggerOrderConsumptionExceptionRollback', data)
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 18:56:31
- * @LastEditTime: 2022-03-07 11:24:41
+ * @LastEditTime: 2022-03-10 13:21:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\router\index.js
@@ -427,6 +427,35 @@ export const asyncRouterMap = [
         component: () => import('@/views/symbol/marketApiSort'),
         meta: { title: '行情接口排序设置', icon: '' }
       },
+
+
+      {
+        path: 'exception',
+        name: 'Exception',
+        redirect: '/symbol/exception/transferException',
+        meta: { title: '事务管理', icon: '', role: [] },
+        children: [
+          {
+            path: 'transferException',
+            name: 'TransferException',
+            component: () => import('@/views/symbol/exception/transferException'),
+            meta: { title: '划转异常事务', icon: '', role: [] }
+          },
+          {
+            path: 'orderException',
+            name: 'OrderException',
+            component: () => import('@/views/symbol/exception/orderException'),
+            meta: { title: '下单异常事务', icon: '', role: [] }
+          },
+          {
+            path: 'consumptionException',
+            name: 'ConsumptionException',
+            component: () => import('@/views/symbol/exception/consumptionException'),
+            meta: { title: '消费异常事务', icon: '', role: [] }
+          },
+          
+        ]
+      }
     ]
   },
   // 财务管理
