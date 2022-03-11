@@ -51,7 +51,7 @@ import Btable from '@/components/table/b-table'
 import iconPage from '@/components/icon-page'
 import { sonAcountCol, sonAcountColNoBtn, sonAcountConfig } from '@/config/column/assetManage'
 import $api from '@/api/api'
-
+import axios from 'axios'
 export default {
   name: 'SonAcountList',
   components: {
@@ -91,13 +91,24 @@ export default {
   },
   methods: {
     async refreshFn() {
-      const res = await $api.apiRefreshSonAcountList()
+      // const res = await $api.apiRefreshSonAcountList()
 
+      // if (this.refreshLoading) {
+      //   return
+      // }
+      // this.refreshLoading = true
+      // if (res) {
+      //   this.$message.success('操作成功')
+      // }
+      // this.refreshLoading = false
+      // this.getList()
       if (this.refreshLoading) {
         return
       }
       this.refreshLoading = true
-      if (res) {
+      const res = await axios.post('/admin/account/expend-user-refresh-coin', {})
+
+      if (res.status == 200) {
         this.$message.success('操作成功')
       }
       this.refreshLoading = false
