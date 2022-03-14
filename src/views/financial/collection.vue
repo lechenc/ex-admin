@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-05-14 18:48:00
- * @LastEditTime: 2020-11-20 15:37:06
+ * @LastEditTime: 2022-03-14 11:19:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \exchange-admin\src\views\financial\collection.vue
@@ -28,6 +28,11 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="币种" :label-width="formLabelWidth">{{ curRow.coinKey }}</el-form-item>
+          </el-col>
+        </el-row>
+         <el-row>
+          <el-col :span="24">
+            <el-form-item label="币种协议" :label-width="formLabelWidth">{{ curRow.protocol }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>

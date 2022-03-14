@@ -29,6 +29,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Bsearch from '@/components/search/b-search'
 import Btable from '@/components/table/b-table'
