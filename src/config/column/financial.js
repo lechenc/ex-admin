@@ -1,7 +1,7 @@
 /*
  * @Author: cws
  * @Date: 2020-04-08 15:58:33
- * @LastEditTime: 2022-02-11 18:37:15
+ * @LastEditTime: 2022-03-14 11:18:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\financial.js
@@ -32,6 +32,10 @@ const rechargeCol = [
   {
     label: '到账数量',
     prop: 'amount'
+  },
+  {
+    label: '归集到账数量',
+    prop: 'collectAmount'
   },
   {
     label: 'FROM地址',
@@ -119,6 +123,10 @@ const rechargeColNoBtn = [
   {
     label: '到账数量',
     prop: 'amount'
+  },
+  {
+    label: '归集到账数量',
+    prop: 'collectAmount'
   },
   {
     label: 'FROM地址',
@@ -1675,6 +1683,10 @@ const collectionCol = [
     prop: 'coinKey'
   },
   {
+    label: '币种协议',
+    prop: 'protocol'
+  },
+  {
     label: '归集地址',
     prop: 'defaultcollectionaddress'
   },
@@ -1702,6 +1714,10 @@ const collectionColNoBtn = [
   {
     label: '币种',
     prop: 'coinKey'
+  },
+  {
+    label: '币种协议',
+    prop: 'protocol'
   },
   {
     label: '归集地址',
