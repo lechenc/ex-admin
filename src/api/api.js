@@ -3685,7 +3685,7 @@ export default class api {
 
 
   // 币种管理/事务管理/下单异常事务 列表
-  static apiGetorderExceptionList(data) {
+  static apiGetOrderExceptionList(data) {
     return Fetch.post('/contract-account/order/rollback/findOrderExceptionList', data)
   }
   
