@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-03-10 13:03:38
- * @LastEditTime: 2022-03-10 14:32:36
+ * @LastEditTime: 2022-03-16 11:04:05
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \exchange-admin\src\views\symbol\exception\transferException.vue
@@ -84,10 +84,11 @@ export default {
           center: true
         })
           .then( async() => {
-            const { id, requestParameters } = row
+            const { id, requestParameters,transactionType } = row
             const params = {
               id,
-              requestParameters
+              requestParameters,
+              transactionType
             }
             const res = await $api.apiTriggerOrderException(params)
             if (res) {
