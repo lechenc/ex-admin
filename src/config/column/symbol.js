@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-09 10:01:18
- * @LastEditTime: 2022-03-10 14:39:05
+ * @LastEditTime: 2022-03-16 12:44:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \mt4-statisticsd:\阿尔法项目\alphawallet-bg\src\config\column\symbol.js
@@ -651,8 +651,14 @@ const chainTypeCol = [
     label: '操作',
     prop: 'action',
     type: 'action',
-    width: 250,
+    width: 420,
     btnGroup: [
+      {
+        label: '一键同步区块高度',
+        fn: 'onekeyStepBlockHeight',
+        type: 'primary',
+        alias: 'onekeyStepBlockHeight'
+      },
       {
         label: '编辑',
         fn: 'edit',
